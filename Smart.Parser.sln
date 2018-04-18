@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Parser", "src\Smart.Parser.csproj", "{42F10691-63BD-469C-8898-45B80CAB91A3}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -14,6 +14,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "test\Test.csproj", 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Parser.Lib", "lib\Smart.Parser.Lib.csproj", "{DCB47788-553F-495F-BDAB-1B144E0DF5B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserCommon", "ParserCommon\ParserCommon.csproj", "{A96E427B-2EEF-4BF8-933A-3AC1424B0978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSerialization", "JsonSerialization\JsonSerialization.csproj", "{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tindalos", "Tindalos\Tindalos.csproj", "{C6D0AE36-515D-4C5B-8665-49DE6E635A04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D243CD7-136D-423E-A2FB-873E2AC08121}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordParser", "WordParser\WordParser.csproj", "{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +43,27 @@ Global
 		{DCB47788-553F-495F-BDAB-1B144E0DF5B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCB47788-553F-495F-BDAB-1B144E0DF5B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCB47788-553F-495F-BDAB-1B144E0DF5B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A96E427B-2EEF-4BF8-933A-3AC1424B0978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96E427B-2EEF-4BF8-933A-3AC1424B0978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96E427B-2EEF-4BF8-933A-3AC1424B0978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96E427B-2EEF-4BF8-933A-3AC1424B0978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6D0AE36-515D-4C5B-8665-49DE6E635A04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6D0AE36-515D-4C5B-8665-49DE6E635A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6D0AE36-515D-4C5B-8665-49DE6E635A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6D0AE36-515D-4C5B-8665-49DE6E635A04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD2A9583-38EC-41A7-9E73-34858556C2B6}
 	EndGlobalSection
 EndGlobal
