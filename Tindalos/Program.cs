@@ -28,13 +28,12 @@ namespace Tindalos
         static void Main(string[] args)
         {
             //var parser = new DocXParser();
-            //parser.Parse("2016_Sotrudniki_ministerstva.docx");
-            
+            //parser.Parse("2016_Sotrudniki_ministerstva.docx");            
 
             string sourceFile = "2016_Sotrudniki_ministerstva.docx";
             var res = Process(sourceFile);
-            Console.WriteLine(DeclarationSerializer.Serialize(res.First()));
-            
+            string output = DeclarationSerializer.Serialize(res);
+            File.WriteAllText("output.json", output);
             Console.ReadKey();
         }
 

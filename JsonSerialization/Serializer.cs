@@ -16,7 +16,7 @@ namespace TI.Declarator.JsonSerialization
         private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
         private static CultureInfo RussianCulture = CultureInfo.CreateSpecificCulture("ru-ru");
 
-        private static readonly string SchemaSource = "import-schema.json";
+        private static readonly string SchemaSource = "import-schema-dicts.json";
         private static JSchema Schema;
 
         static DeclarationSerializer()
@@ -24,7 +24,25 @@ namespace TI.Declarator.JsonSerialization
             Schema = JSchema.Parse(File.ReadAllText(SchemaSource));
         }
 
-        public static string Serialize(PublicServant servant)
+        public static string Serialize(IEnumerable<PublicServant> servants)
+        {
+            var jServants = new JArray();
+            foreach (var serv in servants)
+            {
+                jServants.Add(Serialize(serv));
+            }
+
+            if (Validate(jServants))
+            {
+                return jServants.ToString();
+            }
+            else
+            {
+                throw new Exception("Could not validate JSON output");
+            }
+        }
+
+        private static JObject Serialize(PublicServant servant)
         {
             var jServ = new JObject(
                 GetPersonalData(servant),
@@ -32,14 +50,8 @@ namespace TI.Declarator.JsonSerialization
                 GetYear(servant),
                 GetIncomes(servant),
                 GetRealEstateProperties(servant));
-            if (Validate(jServ))
-            {
-                return jServ.ToString();
-            }
-            else
-            {
-                throw new Exception("Could not validate JSON output");
-            }
+
+            return jServ;
         }
 
         private static JProperty GetPersonalData(PublicServant servant)
@@ -70,13 +82,13 @@ namespace TI.Declarator.JsonSerialization
             var jIncomes = new JArray();
             jIncomes.Add(new JObject(
                 // TODO should income size really be an integer
-                new JProperty("size", (int)servant.DeclaredYearlyIncome),
+                new JProperty("size", (int?)servant.DeclaredYearlyIncome),
                 new JProperty("relative", null)));
 
             foreach (var rel in servant.Relatives)
             {
                 jIncomes.Add(new JObject(
-                new JProperty("size", (int)rel.DeclaredYearlyIncome),
+                new JProperty("size", (int?)rel.DeclaredYearlyIncome),
                 new JProperty("relative", GetRelationshipName(rel.RelationType))));
             }
 
@@ -92,25 +104,43 @@ namespace TI.Declarator.JsonSerialization
             {
                 jRealEstate.Add(new JObject(
                     new JProperty("name", prop.Name),
-                    new JProperty("type", prop.PropertyType.ToString()),
+                    new JProperty("type", GetPropertyType(prop)),
                     // TODO should property area really be an integer
                     new JProperty("square", (int)prop.Area),
-                    new JProperty("country", prop.Country.ToString()),
-                    new JProperty("region", "НЕИЗВЕСТЕН"),
+                    new JProperty("country", GetCountry(prop)),
+                    new JProperty("region", null),
                     new JProperty("own_type", GetOwnershipType(prop)),
                     new JProperty("share_type", GetShareType(prop)),
                     new JProperty("share_amount", GetOwnershipShare(prop)),
                     new JProperty("relative", null)));
             }
 
+            foreach (var rel in servant.Relatives)
+            {
+                foreach (var prop in rel.RealEstateProperties)
+                {
+                    jRealEstate.Add(new JObject(
+                        new JProperty("name", prop.Name),
+                        new JProperty("type", GetPropertyType(prop)),
+                        // TODO should property area really be an integer
+                        new JProperty("square", (int)prop.Area),
+                        new JProperty("country", GetCountry(prop)),
+                        new JProperty("region", null),
+                        new JProperty("own_type", GetOwnershipType(prop)),
+                        new JProperty("share_type", GetShareType(prop)),
+                        new JProperty("share_amount", GetOwnershipShare(prop)),
+                        new JProperty("relative", GetRelationshipName(rel.RelationType))));
+                }
+            }
+
             var res = new JProperty("real_estates", jRealEstate);
             return res;
         }
 
-        private static bool Validate(JObject jServant)
+        private static bool Validate(JArray jServants)
         {
             IList<string> comments = new List<string>();
-            bool res = jServant.IsValid(Schema, out comments);
+            bool res = jServants.IsValid(Schema, out comments);
             return res;
         }
 
@@ -122,6 +152,31 @@ namespace TI.Declarator.JsonSerialization
                 case RelationType.MaleSpouse: return "Супруг(а)";
                 case RelationType.Child: return "Ребенок";
                 default: throw new ArgumentOutOfRangeException("rt", $"Unsupported relationship type: {rt.ToString()}");
+            }
+        }
+
+        private static string GetPropertyType(RealEstateProperty prop)
+        {
+            switch(prop.PropertyType)
+            {
+                case RealEstateType.Apartment: return "Квартира";
+                case RealEstateType.Garage: return "Гараж";
+                case RealEstateType.Dacha: return "Дача";
+                case RealEstateType.HabitableHouse: return "Жилой дом";
+                case RealEstateType.PlotOfLand: return "Земельный участок";
+                case RealEstateType.ParkingSpace:
+                case RealEstateType.Other: return "Иное";
+                default: throw new ArgumentOutOfRangeException("prop.PropertyType", $"Unsupported real estate type: {prop.PropertyType.ToString()}");
+            }
+        }
+
+        private static string GetCountry(RealEstateProperty prop)
+        {
+            switch (prop.Country)
+            {
+                case Country.Undefined: return null;
+                case Country.Russia: return "Россия";
+                default: throw new ArgumentOutOfRangeException("prop.Country", $"Invalid country name: {prop.Country.ToString()}");
             }
         }
 
@@ -141,10 +196,10 @@ namespace TI.Declarator.JsonSerialization
         {
             switch(prop.OwnershipType)
             {
-                case OwnershipType.Coop: return "Совместная";
+                case OwnershipType.Coop: return "Совместная собственность";
                 case OwnershipType.Individual: return "Индивидуальная";
-                case OwnershipType.NotAnOwner: return "";
-                case OwnershipType.Shared: return "Долевая";
+                case OwnershipType.NotAnOwner: return null;
+                case OwnershipType.Shared: return "Долевая собственность";
                 default: throw new ArgumentOutOfRangeException("prop.OwnershipType", $"Unsupported ownership type: {prop.OwnershipType.ToString()}");
             }
         }

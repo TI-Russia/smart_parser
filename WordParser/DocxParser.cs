@@ -68,9 +68,7 @@ namespace TI.Declarator.WordParser
                     Relative pRel = ParseRelativeInfo(r);
                     currentServant.Relatives.Add(pRel);
                     currentPerson = pRel;
-                }
-
-                
+                }                
             }
 
             return res;
@@ -247,7 +245,10 @@ namespace TI.Declarator.WordParser
 
         private static Country ParseCountry(string strCountry)
         {
-            if (String.IsNullOrWhiteSpace(strCountry) || strCountry.Trim() == "-") return Country.Undefined;
+            if (String.IsNullOrWhiteSpace(strCountry) || strCountry.Trim() == "-")
+            {
+                return Country.Undefined;
+            }
             switch (strCountry.Trim().ToLower())
             {
                 case "беларусь": return Country.Belarus;
