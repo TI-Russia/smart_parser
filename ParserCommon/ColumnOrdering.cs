@@ -5,9 +5,9 @@ namespace TI.Declarator.ParserCommon
 {
     public class ColumnOrdering
     {
-        private Dictionary<Field, short> ColumnOrder = new Dictionary<Field, short>();
+        private Dictionary<Field, int> ColumnOrder = new Dictionary<Field, int>();
 
-        public short this[Field field]
+        public int this[Field field]
         {
             get
             {
@@ -15,7 +15,7 @@ namespace TI.Declarator.ParserCommon
             }
         }
 
-        public void Add(Field field, short order)
+        public void Add(Field field, int order)
         {
             ColumnOrder.Add(field, order);
         }

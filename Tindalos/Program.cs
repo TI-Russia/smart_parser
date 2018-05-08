@@ -30,7 +30,7 @@ namespace Tindalos
             //var parser = new DocXParser();
             //parser.Parse("2016_Sotrudniki_ministerstva.docx");            
 
-            string sourceFile = "2016_Sotrudniki_ministerstva.docx";
+            string sourceFile = "2016_Rukovoditeli_gosuchrezhdenij,_podvedomstvennyih_ministerstvu.doc";
             var res = Process(sourceFile);
             string output = DeclarationSerializer.Serialize(res);
             File.WriteAllText("output.json", output);

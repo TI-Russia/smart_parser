@@ -22,6 +22,22 @@ namespace TI.Declarator.WordParser
         {
             DocX doc = DocX.Load(filepath);
             var leadTable = doc.Tables.First();
+
+            // FIXME удалить трейсы
+            int ind = 0;
+            foreach(var cell in leadTable.Rows.First().Cells)
+            {
+                Console.WriteLine($"{ind} {cell.Paragraphs.First().Text} {cell.GridSpan}");
+                ind++;
+            }
+
+            ind = 0;
+            foreach (var cell in leadTable.Rows.Skip(1).First().Cells)
+            {
+                Console.WriteLine($"{ind} {cell.Paragraphs.First().Text} {cell.GridSpan}");
+                ind++;
+            }
+
             ColumnOrder = ExamineHeader(leadTable);
 
             return Parse(doc);
@@ -32,16 +48,52 @@ namespace TI.Declarator.WordParser
             Row header = t.Rows.First();
 
             ColumnOrdering res = new ColumnOrdering();
-            short ind = 0;
+            int colCount = 0;
+            int index = 0;
             foreach (var cell in header.Cells)
             {
                 string text = cell.Paragraphs.First().Text;
-                if (!String.IsNullOrWhiteSpace(text))
+
+                Field field;
+                if (cell.GridSpan <= 1)
                 {
-                    Field field = HeaderHelpers.GetField(text);
-                    res.Add(field, ind);
+                    if (!text.IsNullOrWhiteSpace())
+                    {
+                        field = HeaderHelpers.GetField(text);
+                        res.Add(field, index);
+                        index++;
+                        colCount++;
+                    }
                 }
-                ind++;
+                // current cell spans several columns, so the header probably occupies two rows instead of just one
+                // with the second row reserved for subheaders
+                else
+                {
+                    int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
+                    Row auxRow = t.Rows.Skip(1).First();
+                    var auxCellsIter = auxRow.Cells.GetEnumerator();
+                    auxCellsIter.MoveNext();
+                    int auxColCount = 0;
+                    
+                    while (auxColCount < colCount + span)
+                    {
+                        var auxCell = auxCellsIter.Current;
+                        if (auxColCount >= colCount)
+                        {
+                            string fullText = text + " " + auxCell.Paragraphs.First().Text;
+                            field = HeaderHelpers.GetField(fullText);
+                            res.Add(field, index);
+                            index++;
+                        }
+
+                        auxCellsIter.MoveNext();
+                        int auxSpan = auxCell.GridSpan == 0 ? 1 : auxCell.GridSpan;
+                        auxColCount += auxSpan;
+                    }
+
+                    colCount += cell.GridSpan;
+                }
+                                                     
             }
 
             return res;
