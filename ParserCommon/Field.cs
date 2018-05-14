@@ -2,13 +2,17 @@
 
 namespace TI.Declarator.ParserCommon
 {
-    public enum Field : short
+    public enum DeclarationField : short
     {
         Number,
         NameOrRelativeType,
         Occupation,
-        OwnedRealEstateType,
+        RealEstateType,
+        RealEstateArea,
+        RealEstateCountry,
         RealEstateOwnershipType,
+        OwnedRealEstateType,
+        OwnedRealEstateOwnershipType,
         OwnedRealEstateArea,
         OwnedRealEstateCountry,
         StatePropertyType,

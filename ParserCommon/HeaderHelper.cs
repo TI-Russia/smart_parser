@@ -4,21 +4,25 @@ namespace TI.Declarator.ParserCommon
 {
     public static class HeaderHelpers
     {
-        public static Field GetField(string str)
+        public static DeclarationField GetField(string str)
         {
-            if (str.IsNumber()) { return Field.Number; }
-            if (str.IsNameOrRelativeType()) { return Field.NameOrRelativeType; }
-            if (str.IsOccupation()) { return Field.Occupation; }
-            if (str.IsOwnedRealEstateType()) { return Field.OwnedRealEstateType; }
-            if (str.IsRealEstateOwnershipType()) { return Field.RealEstateOwnershipType; }
-            if (str.IsOwnedRealEstateArea()) { return Field.OwnedRealEstateArea; }
-            if (str.IsOwnedRealEstateCountry()) { return Field.OwnedRealEstateCountry; }
-            if (str.IsStatePropertyType()) { return Field.StatePropertyType; }
-            if (str.IsStatePropertyArea()) { return Field.StatePropertyArea; }
-            if (str.IsStatePropertyCountry()) { return Field.StatePropertyCountry; }
-            if (str.IsVehicle()) { return Field.Vehicle; }
-            if (str.IsDeclaredYearlyIncome()) { return Field.DeclaredYearlyIncome; }
-            if (str.IsDataSources()) { return Field.DataSources; }
+            if (str.IsNumber()) { return DeclarationField.Number; }
+            if (str.IsNameOrRelativeType()) { return DeclarationField.NameOrRelativeType; }
+            if (str.IsOccupation()) { return DeclarationField.Occupation; }
+            if (str.IsRealEstateType()) { return DeclarationField.RealEstateType; }
+            if (str.IsRealEstateArea()) { return DeclarationField.RealEstateArea; }
+            if (str.IsRealEstateCountry()) { return DeclarationField.RealEstateCountry; }
+            if (str.IsRealEstateOwnershipType()) { return DeclarationField.RealEstateOwnershipType; }
+            if (str.IsOwnedRealEstateType()) { return DeclarationField.OwnedRealEstateType; }
+            if (str.IsOwnedRealEstateOwnershipType()) { return DeclarationField.OwnedRealEstateOwnershipType; }
+            if (str.IsOwnedRealEstateArea()) { return DeclarationField.OwnedRealEstateArea; }
+            if (str.IsOwnedRealEstateCountry()) { return DeclarationField.OwnedRealEstateCountry; }
+            if (str.IsStatePropertyType()) { return DeclarationField.StatePropertyType; }
+            if (str.IsStatePropertyArea()) { return DeclarationField.StatePropertyArea; }
+            if (str.IsStatePropertyCountry()) { return DeclarationField.StatePropertyCountry; }           
+            if (str.IsVehicle()) { return DeclarationField.Vehicle; }
+            if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
+            if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
             throw new Exception("Could not determine column type.");
         }
@@ -30,62 +34,112 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsNameOrRelativeType(this string str)
         {
-            return (str.Contains("Фамилия") || str.Contains("ФИО"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("фамилия") ||
+                    strLower.Contains("фио") ||
+                    strLower.Contains("ф.и.о"));
         }
 
         private static bool IsOccupation(this string str)
         {
-            return str.Contains("Должность");
+            string strLower = str.ToLower();
+            return (strLower.Contains("должность"));
         }
 
-        private static bool IsOwnedRealEstateType(this string str)
+        private static bool IsRealEstateType(this string str)
         {
-            return (str.Contains("собственности") && str.Contains("вид объекта"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("собственности") &&
+                    strLower.Contains("пользовании") &&
+                    (strLower.Contains("вид объекта") || strLower.Contains("вид объектов") ||
+                     strLower.Contains("вид и наименование имущества")));
+        }
+
+        private static bool IsRealEstateArea(this string str)
+        {
+            string strLower = str.ToLower();
+            return (strLower.Contains("собственности") &&
+                    strLower.Contains("пользовании") &&
+                    strLower.Contains("площадь"));
+        }
+
+        private static bool IsRealEstateCountry(this string str)
+        {
+            string strLower = str.ToLower();
+            return (strLower.Contains("собственности") &&
+                    strLower.Contains("пользовании") &&
+                    strLower.Contains("страна"));
         }
 
         private static bool IsRealEstateOwnershipType(this string str)
         {
-            return (str.Contains("вид собственности"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("праве собственности") &&
+                    strLower.Contains("пользовании") &&
+                    strLower.Contains("вид собственности"));
+        }
+
+        private static bool IsOwnedRealEstateType(this string str)
+        {
+            string strLower = str.ToLower();
+            return (strLower.Contains("собственности") &&
+                    (strLower.Contains("вид объекта") || strLower.Contains("вид объектов")));
+        }
+
+        private static bool IsOwnedRealEstateOwnershipType(this string str)
+        {
+            string strLower = str.ToLower();
+            return (!strLower.Contains("пользовании") && strLower.Contains("вид собственности"));
         }
 
         private static bool IsOwnedRealEstateArea(this string str)
         {
-            return (str.Contains("собственности") && str.Contains("площадь"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("собственности") && strLower.Contains("площадь"));
         }
 
         private static bool IsOwnedRealEstateCountry(this string str)
         {
-            return (str.Contains("собственности") && str.Contains("страна"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("собственности") && strLower.Contains("страна"));
         }
 
         private static bool IsStatePropertyType(this string str)
         {
-            return (str.Contains("пользовании") && str.Contains("вид объекта"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("пользовании") &&
+                    (strLower.Contains("вид объекта") || strLower.Contains("вид объектов")));
         }
 
         private static bool IsStatePropertyArea(this string str)
         {
-            return (str.Contains("пользовании") && str.Contains("площадь"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("пользовании") && strLower.Contains("площадь"));
         }
 
         private static bool IsStatePropertyCountry(this string str)
         {
-            return (str.Contains("пользовании") && str.Contains("страна"));
+            string strLower = str.ToLower();
+            return (strLower.Contains("пользовании") && strLower.Contains("страна"));
         }
 
         private static bool IsVehicle(this string str)
         {
-            return str.Contains("Транспорт");
+            string strLower = str.ToLower();
+            return (strLower.Contains("транспорт") && (!str.Contains("источник")));
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)
         {
-            return str.Contains("годовой доход");
+            string strLower = str.ToLower();
+            return (strLower.Contains("годовой доход") || strLower.Contains("годового дохода") ||
+                    strLower.Contains("сумма дохода") || strLower.Contains("декларированный доход"));
         }
 
         private static bool IsDataSources(this string str)
         {
-            return str.Contains("Сведения");
+            string strLower = str.ToLower();
+            return strLower.Contains("сведения");
         }
     }
 }

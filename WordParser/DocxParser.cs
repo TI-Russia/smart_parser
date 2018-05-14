@@ -43,18 +43,34 @@ namespace TI.Declarator.WordParser
             return Parse(doc);
         }
 
-        private ColumnOrdering ExamineHeader(Table t)
+        public ColumnOrdering Scan(string filepath)
         {
-            Row header = t.Rows.First();
+            DocX doc = DocX.Load(filepath);
+            var leadTable = doc.Tables.First();
+
+            ColumnOrder = ExamineHeader(leadTable);
+
+            return ColumnOrder;
+        }
+
+        public ColumnOrdering ExamineHeader(Table t)
+        {
+            int headerRowNum = 0;
+            while (t.Rows[headerRowNum].Cells.Count <= 2)
+            {
+                headerRowNum++;
+            }
+
+            var header = t.Rows[headerRowNum];
 
             ColumnOrdering res = new ColumnOrdering();
             int colCount = 0;
             int index = 0;
             foreach (var cell in header.Cells)
             {
-                string text = cell.Paragraphs.First().Text;
+                string text = cell.GetText(true);
 
-                Field field;
+                DeclarationField field;
                 if (cell.GridSpan <= 1)
                 {
                     if (!text.IsNullOrWhiteSpace())
@@ -70,7 +86,7 @@ namespace TI.Declarator.WordParser
                 else
                 {
                     int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
-                    Row auxRow = t.Rows.Skip(1).First();
+                    Row auxRow = t.Rows[headerRowNum + 1];
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
                     auxCellsIter.MoveNext();
                     int auxColCount = 0;
@@ -80,7 +96,7 @@ namespace TI.Declarator.WordParser
                         var auxCell = auxCellsIter.Current;
                         if (auxColCount >= colCount)
                         {
-                            string fullText = text + " " + auxCell.Paragraphs.First().Text;
+                            string fullText = text + " " + auxCell.GetText(true);
                             field = HeaderHelpers.GetField(fullText);
                             res.Add(field, index);
                             index++;
@@ -128,22 +144,22 @@ namespace TI.Declarator.WordParser
 
         private bool IsPublicServantInfo(Row r)
         {
-            string nameOrRelativeType = GetContents(r, Field.NameOrRelativeType);
+            string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType);
             return (nameOrRelativeType.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Count() == 3);
         }
 
         private bool IsRelativeInfo(Row r)
         {
-            return (!GetContents(r, Field.NameOrRelativeType).IsNullOrWhiteSpace()
-                    && GetContents(r, Field.Occupation).IsNullOrWhiteSpace());
+            return (!GetContents(r, DeclarationField.NameOrRelativeType).IsNullOrWhiteSpace()
+                    && GetContents(r, DeclarationField.Occupation).IsNullOrWhiteSpace());
         }
 
         private PublicServant ParsePublicServantInfo(Row r)
         {
-            string occ = GetContents(r, Field.Occupation);
+            string occ = GetContents(r, DeclarationField.Occupation);
             var res = new PublicServant()
             {
-                Name = GetContents(r, Field.NameOrRelativeType),
+                Name = GetContents(r, DeclarationField.NameOrRelativeType),
                 Occupation = occ
             };
 
@@ -156,7 +172,7 @@ namespace TI.Declarator.WordParser
         {
             var res = new Relative()
             {
-                RelationType = ParseRelationType(GetContents(r, Field.NameOrRelativeType))
+                RelationType = ParseRelationType(GetContents(r, DeclarationField.NameOrRelativeType))
             };
 
             FillPersonProperties(r, res);
@@ -164,9 +180,9 @@ namespace TI.Declarator.WordParser
             return res;
         }
 
-        private string GetContents(Row r, Field f)
+        private string GetContents(Row r, DeclarationField f)
         {
-            return r.Cells[ColumnOrder[f]].GetText().Trim();
+            return r.Cells[ColumnOrder[f].Value].GetText().Trim();
         }
 
         private void FillPersonProperties(Row r, Person p)
@@ -177,11 +193,11 @@ namespace TI.Declarator.WordParser
             var stateProperty = ParseStateProperty(r);
             if (stateProperty != null) { p.RealEstateProperties.Add(stateProperty); }
 
-            string vehicle = GetContents(r, Field.Vehicle);
+            string vehicle = GetContents(r, DeclarationField.Vehicle);
             if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-") { p.Vehicles.Add(vehicle); }
 
-            p.DeclaredYearlyIncome = ParseDeclaredIncome(GetContents(r, Field.DeclaredYearlyIncome));
-            p.DataSources = ParseDataSources(GetContents(r, Field.DataSources));
+            p.DeclaredYearlyIncome = ParseDeclaredIncome(GetContents(r, DeclarationField.DeclaredYearlyIncome));
+            p.DataSources = ParseDataSources(GetContents(r, DeclarationField.DataSources));
         }
 
         private static RelationType ParseRelationType(string strRel)
@@ -197,36 +213,36 @@ namespace TI.Declarator.WordParser
 
         private RealEstateProperty ParseOwnedProperty(Row r)
         {
-            string estateType = GetContents(r, Field.OwnedRealEstateType);
+            string estateType = GetContents(r, DeclarationField.OwnedRealEstateType);
             if (String.IsNullOrWhiteSpace(estateType) || estateType.Trim() == "-") return null;
 
             RealEstateType propertyType = ParseRealEstateType(estateType);
-            OwnershipType ownershipType = ParseOwnershipType(GetContents(r, Field.RealEstateOwnershipType));
-            string share = ParseOwnershipShare(GetContents(r, Field.RealEstateOwnershipType), ownershipType);
+            OwnershipType ownershipType = ParseOwnershipType(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType));
+            string share = ParseOwnershipShare(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType), ownershipType);
             decimal? area;
-            string areaStr = GetContents(r, Field.OwnedRealEstateArea).Trim();
+            string areaStr = GetContents(r, DeclarationField.OwnedRealEstateArea).Trim();
             if (String.IsNullOrWhiteSpace(areaStr) || areaStr == "-")
             {
                 area = null;
             }
             else
             {
-                area = GetContents(r, Field.OwnedRealEstateArea).ParseDecimalValue();
+                area = GetContents(r, DeclarationField.OwnedRealEstateArea).ParseDecimalValue();
             }
-            Country country = ParseCountry(GetContents(r, Field.OwnedRealEstateCountry));
+            Country country = ParseCountry(GetContents(r, DeclarationField.OwnedRealEstateCountry));
             return new RealEstateProperty(ownershipType, propertyType, country, area, estateType, share);
         }
 
         private RealEstateProperty ParseStateProperty(Row r)
         {
-            string propType = GetContents(r, Field.StatePropertyType);
+            string propType = GetContents(r, DeclarationField.StatePropertyType);
             if (string.IsNullOrWhiteSpace(propType) || propType.Trim() == "-") return null;
 
             RealEstateType propertyType = ParseRealEstateType(propType);
             OwnershipType ownershipType = OwnershipType.NotAnOwner;
             string share = "";
             decimal? area;
-            string areaStr = GetContents(r, Field.StatePropertyArea).Trim();
+            string areaStr = GetContents(r, DeclarationField.StatePropertyArea).Trim();
             if (String.IsNullOrWhiteSpace(areaStr) || areaStr == "-")
             {
                 area = null;
@@ -235,7 +251,7 @@ namespace TI.Declarator.WordParser
             {
                 area = areaStr.ParseDecimalValue();
             }
-            Country country = ParseCountry(GetContents(r, Field.StatePropertyCountry));
+            Country country = ParseCountry(GetContents(r, DeclarationField.StatePropertyCountry));
             return new RealEstateProperty(ownershipType, propertyType, country, area, propType, share);
         }
 

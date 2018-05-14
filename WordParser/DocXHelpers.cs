@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 
 using Xceed.Words.NET;
+
+using TI.Declarator.ParserCommon;
 
 
 namespace TI.Declarator.WordParser
 {
     public static class DocXHelpers
     {
-        public static string GetText(this Cell c)
+        public static string GetText(this Cell c, bool Unbastardize = false)
         {
             var res = new StringBuilder();
             foreach (var p in c.Paragraphs)
@@ -18,6 +19,10 @@ namespace TI.Declarator.WordParser
                 res.Append(" ");
             }
 
+            if (Unbastardize)
+            {
+                return res.ToString().RemoveStupidTranslit();
+            }
             return res.ToString();
         }
     }

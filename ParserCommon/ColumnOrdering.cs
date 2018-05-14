@@ -5,17 +5,24 @@ namespace TI.Declarator.ParserCommon
 {
     public class ColumnOrdering
     {
-        private Dictionary<Field, int> ColumnOrder = new Dictionary<Field, int>();
+        private Dictionary<DeclarationField, int> ColumnOrder = new Dictionary<DeclarationField, int>();
 
-        public int this[Field field]
+        public int? this[DeclarationField field]
         {
             get
             {
-                return ColumnOrder[field];
+                if (ColumnOrder.ContainsKey(field))
+                {
+                    return ColumnOrder[field];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
-        public void Add(Field field, int order)
+        public void Add(DeclarationField field, int order)
         {
             ColumnOrder.Add(field, order);
         }

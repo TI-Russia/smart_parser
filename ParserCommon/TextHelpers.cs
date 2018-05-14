@@ -27,9 +27,22 @@ namespace TI.Declarator.ParserCommon
             return String.IsNullOrWhiteSpace(str);
         }
 
+        /// <summary>
+        /// Replaces Latin characters that accidentally found their way into Russian words
+        /// with their Cyrillic counterparts. Use with caution.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string RemoveStupidTranslit(this string str)
         {
-            return str.Replace('C', 'С').Replace('c', 'с');
+            return str.Replace('A', 'А').Replace('a', 'а')
+                      .Replace('C', 'С').Replace('c', 'с')
+                      .Replace('E', 'Е').Replace('e', 'е')
+                      .Replace('M', 'М')
+                      .Replace('O', 'О').Replace('o', 'о')
+                      .Replace('P', 'Р').Replace('p', 'р')
+                      .Replace('T', 'Т')
+                      .Replace('X', 'Х').Replace('x', 'х');
         }
     }
 }
