@@ -16,7 +16,7 @@ namespace Smart.Parser.Adapters
         public virtual string Text { set; get; }
     };
 
-    interface IAdapter
+    public interface IAdapter
     {
         Cell GetCell(string cellNum);
         int GetRowsCount();

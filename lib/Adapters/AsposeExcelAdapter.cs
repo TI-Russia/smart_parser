@@ -20,18 +20,18 @@ namespace Smart.Parser.Adapters
     {
         public AsposeExcelCell(Aspose.Cells.Cell cell)
         {
-            IsEmpty = cell.ToString() == "";
+            IsEmpty = cell.Type == Aspose.Cells.CellValueType.IsNull;
             IsHeader = cell.IsMerged;
             BackgroundColor = cell.GetStyle().BackgroundColor.ToString();
             ForegroundColor = cell.GetStyle().ForegroundColor.ToString();
             Text = cell.ToString();
         }
     }
-    class AsposeExcelAdapter : IAdapter
+    public class AsposeExcelAdapter : IAdapter
     {
-        public static IAdapter CreateAsposeExcelAdapter()
+        public static IAdapter CreateAsposeExcelAdapter(string fileName)
         {
-            return null;
+            return new AsposeExcelAdapter(fileName);
         }
 
         Cell IAdapter.GetCell(string cellNum)

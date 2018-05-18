@@ -15,11 +15,14 @@
 
     public class Person
     {
+        public void setRelationType(int relType) { }
         public string name { get; set; }
         public string family_name { get; set; }
         public string given_name { get; set; }
         public string patronymic_name { get; set; }
         public string role { get; set; }
+
+        public int id { get; set; }
     }
 
     public class Office
@@ -69,3 +72,9 @@
     }
 
 }
+
+
+
+
+
+
