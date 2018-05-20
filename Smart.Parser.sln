@@ -22,6 +22,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tindalos", "Tindalos\Tindalos.csproj", "{C6D0AE36-515D-4C5B-8665-49DE6E635A04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D243CD7-136D-423E-A2FB-873E2AC08121}"
+	ProjectSection(SolutionItems) = preProject
+		Tindalos_readme.txt = Tindalos_readme.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordParser", "WordParser\WordParser.csproj", "{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}"
 EndProject

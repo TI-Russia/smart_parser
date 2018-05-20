@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 using Microsoft.Office.Interop.Word;
 
@@ -13,6 +14,7 @@ namespace Tindalos
 {
     class Tindalos
     {
+        private static readonly string ErrorsFile = "errors.log";
         private static Dictionary<String, RealEstateType> PropertyTypes = new Dictionary<string, RealEstateType>();
 
         static Tindalos()
@@ -27,17 +29,24 @@ namespace Tindalos
 
         static void Main(string[] args)
         {
-            //var parser = new DocXParser();
-            //parser.Parse("2016_Sotrudniki_ministerstva.docx");            
+            string arg = String.Join(" ", args).Trim(new char[] {'"'});
+            if (Directory.Exists(arg))
+            {
+                ScanDir(arg);
+            }
+            else if (File.Exists(arg))
+            {
+                string outputFile = Path.GetFileNameWithoutExtension(arg) + ".txt";
+                ScanFile(arg, outputFile);
+            }
+            else
+            {
+                Console.WriteLine($"File or directory {arg} not found.");
+            }
+            //var dir = @"d:\lab\Transparency\Declarations\min_trans";
+            //ScanDir(dir);            
 
-            //string sourceFile = "2016_Rukovoditeli_gosuchrezhdenij,_podvedomstvennyih_ministerstvu.doc";
-            //var res = Process(sourceFile);
-            //string output = DeclarationSerializer.Serialize(res);
-            //File.WriteAllText("output.json", output);
-            var dir = @"d:\lab\Transparency\Declarations\min_trans";
-            ScanDir(dir);            
-
-            Console.WriteLine("Finished");
+            Console.WriteLine("Finished. Press any key.");
             Console.ReadKey();
         }
 
@@ -73,49 +82,66 @@ namespace Tindalos
 
         private static void ScanDir(string dir)
         {
-            var oldOut = Console.Out;
-            string dirName = new DirectoryInfo(dir).Name;
-            using (TextWriter tw = File.CreateText(dirName + ".txt"))
-            {
-                Console.SetOut(tw);
-                foreach (string fileName in Directory.GetFiles(dir))
-                {
-                    string ext = Path.GetExtension(fileName);
-                    switch (ext)
-                    {
-                        case ".doc": string docXName = Doc2DocX(fileName); ScanDocX(docXName); break;
-                        case ".docx": ScanDocX(fileName); break;
-                        default: break;
-                    }
-                }
+            Console.WriteLine($"Scanning directory {dir}");
 
-                foreach (string subdir in Directory.GetDirectories(dir))
-                {
-                    ScanDir(subdir);
-                }
+            string dirName = new DirectoryInfo(dir).Name;
+            string outputFile = dirName + ".txt";
+            foreach (string fileName in Directory.GetFiles(dir))
+            {
+                ScanFile(fileName, outputFile);
             }
 
-            Console.SetOut(oldOut);
+            foreach (string subdir in Directory.GetDirectories(dir))
+            {
+                ScanDir(subdir);
+            }
         }
 
-        private static void ScanDocX(string fileName)
+        private static void ScanFile(string fileName, string outputFile = null)
+        {
+            Console.WriteLine($"Scanning file {fileName}");
+
+            try
+            { 
+                string ext = Path.GetExtension(fileName);
+                switch (ext)
+                {
+                    case ".doc": string docXName = Doc2DocX(fileName); ScanDocX(docXName, outputFile); break;
+                    case ".docx": ScanDocX(fileName); break;
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllLines(ErrorsFile, new string[] { fileName, ex.ToString() });
+                Console.WriteLine($"There was an error scanning {fileName}. See {ErrorsFile} for details");
+            }
+        }
+
+        private static void ScanDocX(string fileName, string outputFile = null)
         {
             var parser = new DocXParser(null);
             var co = parser.Scan(fileName);
 
-            Console.WriteLine(fileName);
-            foreach (var fieldObj in Enum.GetValues(typeof(DeclarationField)))
+            if (outputFile != null)
             {
-
-                var field = (DeclarationField)fieldObj;
-                var colNumber = co[field];
-                if (colNumber.HasValue)
+                var outBuilder = new StringBuilder();
+                outBuilder.AppendLine(fileName);
+                foreach (var fieldObj in Enum.GetValues(typeof(DeclarationField)))
                 {
-                    Console.Write($"{field} {colNumber}|");
+
+                    var field = (DeclarationField)fieldObj;
+                    var colNumber = co[field];
+                    if (colNumber.HasValue)
+                    {
+                        outBuilder.Append($"{field} {colNumber}|");
+                    }
                 }
+                outBuilder.AppendLine();
+                outBuilder.AppendLine();
+
+                File.AppendAllText(outputFile, outBuilder.ToString());
             }
-            Console.WriteLine();
-            Console.WriteLine();
         }
 
     }

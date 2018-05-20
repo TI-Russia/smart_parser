@@ -21,7 +21,7 @@ namespace TI.Declarator.WordParser
 
             if (Unbastardize)
             {
-                return res.ToString().RemoveStupidTranslit();
+                return res.ToString().RemoveStupidTranslit().Replace("  ", " ").Trim();
             }
             return res.ToString();
         }
