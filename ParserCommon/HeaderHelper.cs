@@ -24,12 +24,12 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
-            throw new Exception("Could not determine column type.");
+            throw new Exception($"Could not determine column type for header {str}.");
         }
 
         private static bool IsNumber(this string str)
         {
-            return str.Contains("№");
+            return str.Contains("№") || str.Contains("N п/п");
         }
 
         private static bool IsNameOrRelativeType(this string str)
@@ -126,7 +126,8 @@ namespace TI.Declarator.ParserCommon
         private static bool IsVehicle(this string str)
         {
             string strLower = str.ToLower();
-            return (strLower.Contains("транспорт") && (!str.Contains("источник")));
+            return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
+                    (!str.Contains("источник")));
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)
@@ -139,7 +140,7 @@ namespace TI.Declarator.ParserCommon
         private static bool IsDataSources(this string str)
         {
             string strLower = str.ToLower();
-            return strLower.Contains("сведения");
+            return strLower.Contains("сведен");
         }
     }
 }

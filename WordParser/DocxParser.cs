@@ -23,21 +23,6 @@ namespace TI.Declarator.WordParser
             DocX doc = DocX.Load(filepath);
             var leadTable = doc.Tables.First();
 
-            // FIXME удалить трейсы
-            int ind = 0;
-            foreach(var cell in leadTable.Rows.First().Cells)
-            {
-                Console.WriteLine($"{ind} {cell.Paragraphs.First().Text} {cell.GridSpan}");
-                ind++;
-            }
-
-            ind = 0;
-            foreach (var cell in leadTable.Rows.Skip(1).First().Cells)
-            {
-                Console.WriteLine($"{ind} {cell.Paragraphs.First().Text} {cell.GridSpan}");
-                ind++;
-            }
-
             ColumnOrder = ExamineHeader(leadTable);
 
             return Parse(doc);
@@ -56,7 +41,7 @@ namespace TI.Declarator.WordParser
         public ColumnOrdering ExamineHeader(Table t)
         {
             int headerRowNum = 0;
-            while (t.Rows[headerRowNum].Cells.Count <= 2)
+            while (!IsHeader(t.Rows[headerRowNum]))
             {
                 headerRowNum++;
             }
@@ -113,6 +98,12 @@ namespace TI.Declarator.WordParser
             }
 
             return res;
+        }
+
+        private bool IsHeader(Row r)
+        {
+            return (r.Cells.Count > 2) &&
+                   (r.Cells.First().GetText(true) != "1");
         }
 
         private IEnumerable<PublicServant> Parse(DocX doc, int rowOffset = 1)
