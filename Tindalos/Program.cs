@@ -107,7 +107,7 @@ namespace Tindalos
                 switch (ext)
                 {
                     case ".doc": string docXName = Doc2DocX(fileName); ScanDocX(docXName, outputFile); break;
-                    case ".docx": ScanDocX(fileName); break;
+                    case ".docx": ScanDocX(fileName, outputFile); break;
                     default: break;
                 }
             }
