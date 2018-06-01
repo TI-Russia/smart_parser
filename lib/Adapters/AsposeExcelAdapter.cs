@@ -40,6 +40,12 @@ namespace Smart.Parser.Adapters
 
             return new AsposeExcelCell(cell);
         }
+        Cell IAdapter.GetCell(int row, int column)
+        {
+            Aspose.Cells.Cell cell = worksheet.Cells.GetCell(row, column);
+            return new AsposeExcelCell(cell);
+        }
+
         int IAdapter.GetRowsCount()
         {
             return worksheet.Cells.Rows.Count;

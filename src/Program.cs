@@ -3,60 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Smart.Parser.Adapters;
+using Smart.Parser.Lib;
 
-namespace smart_parser
+namespace Smart.Parser
 {
     class Program
     {
-        static void Main(string[] args)
+        static void ShowHelp()
         {
+            Console.WriteLine("Usage: {0}.exe [options] [declaration file]", typeof(Program).Assembly.GetName().Name);
+            Console.WriteLine("Options:");
+            Console.WriteLine("    -h                    - show this help.");
+        }
+        /**
+         * Command line parameters
+         * 
+         * 
+         */
+        public static int Main(string[] args)
+        {
+            string declarationFile = string.Empty;
+
+            for (int i = 0; i < args.Length; ++i)
+            {
+                if (args[i].StartsWith("-"))
+                {
+                    switch (args[i])
+                    {
+                        case "-h":
+                        case "/h":
+                        case "--help":
+                        case "/?":
+                            ShowHelp();
+                            return 1;
+
+                        case "-q":
+                            break;
+
+                    }
+                }
+                if (declarationFile == string.Empty)
+                    declarationFile = args[i];
+                else
+                {
+                    ShowHelp();
+                    return 1;
+                }
+
+            }
+
+            string xlsxFile = declarationFile;
+            IAdapter adapter = AsposeExcelAdapter.CreateAsposeExcelAdapter(xlsxFile);
+            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
+
+            parser.Process();
+
+
+            return 0;
         }
     }
-}
 
-
-public class Office
-{
-    public string name { get; set; }
-    public string url { get; set; }
-    public string type { get; set; }
-    public string region { get; set; }
-}
-
-public class Document
-{
-    public string type { get; set; }
-    public string name { get; set; }
-    public string url { get; set; }
-    public string page_url { get; set; }
-}
-
-public class Income
-{
-    public float size { get; set; }
-    public string relative { get; set; }
-}
-
-public class Real_Estates
-{
-    public string name { get; set; }
-    public string type { get; set; }
-    public float square { get; set; }
-    public string country { get; set; }
-    public string region { get; set; }
-    public string own_type { get; set; }
-    public string share_type { get; set; }
-    public float? share_amount { get; set; }
-    public string relative { get; set; }
-    public string comment { get; set; }
-}
-
-public class Vehicle
-{
-    public string full_name { get; set; }
-    public string type { get; set; }
-    public string brand { get; set; }
-    public string model { get; set; }
-    public object manufacture_year { get; set; }
-    public object relative { get; set; }
 }

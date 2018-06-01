@@ -10,6 +10,7 @@ namespace Smart.Parser.Lib
 
     public class Organization
     {
+
         public Organization(string name, string folder, int person_first, int person_last, bool topLevel)
         {
             this.name = name;
@@ -28,6 +29,9 @@ namespace Smart.Parser.Lib
 
     public class Parser
     {
+        public int FirstDataRow { set { personsTableStart = value; } get { return personsTableStart; } }
+        public int NameOrRelativeTypeColumn { set; get; } = 1;
+
         public Parser(IAdapter adapter)
         {
             Adapter = adapter;
@@ -41,9 +45,8 @@ namespace Smart.Parser.Lib
             //int personsTableEnd = 231;
             for (int i = personsTableStart; i <= personsTableEnd; i++)
             {
-                string cellAddress = "A" + i;
                 //qDebug() << "person discovery - processing: " << cellAddress;
-                Cell currentCell = Adapter.GetCell(cellAddress);
+                Cell currentCell = Adapter.GetCell(i, NameOrRelativeTypeColumn);
                 if (!currentCell.IsEmpty && !currentCell.IsHeader)
                 {
                     personStarts.Add(i);
@@ -146,6 +149,8 @@ namespace Smart.Parser.Lib
         */
         Person buildSinglePerson(int boundsBegin, int boundsEnd)
         {
+            return null; 
+#if false
             //qDebug() << "buildSinglePerson init: bounds " + QString::number(bounds.first) + " - " + QString::number(bounds.second);
             Person person = new Person();
             string  personName = Adapter.GetCell("A" + boundsBegin).Text;
@@ -160,61 +165,51 @@ namespace Smart.Parser.Lib
                 for (int i = organPersons.Count() - 1; i >= 0; i--)
                 {
                     Person currentPerson = organPersons[i];
-                    if (!currentPerson.name.isNull())
+                    if (!string.IsNullOrEmpty(currentPerson.name))
                     {
-                        person.setRelativeOf(currentPerson.getId());
-                        break;
-                    }
-                }
-                foreach (Person currentPerson in organPersons.Reverse())
-                {
-
-                }
-                QListIterator<Person> personIterator(organPersons);
-                personIterator.toBack();
-                while (personIterator.hasPrevious())
-                {
-                    Person currentPerson = personIterator.previous();
-                    if (!currentPerson.getName().isNull())
-                    {
-                        person.setRelativeOf(currentPerson.getId());
+                        person.id = currentPerson.id;
                         break;
                     }
                 }
             }
-            person.setPosition(m_adapter.getExcelCell("B" + QString::number(bounds.first)).cellText() + " " + currentOrg.name);
+            string positionText = Adapter.GetCell("B" + boundsBegin.ToString()).Text;
+
+            person.role = positionText; // + currentOrg.name
+            //person.po.setPosition(positionText + " " + currentOrg.name);
             //ExcelCell cell;
-            for (int i = bounds.first; i <= bounds.second; i++)
+            for (int i = boundsBegin; i <= boundsEnd; i++)
             {
-                ExcelCell cell = m_adapter.getExcelCell("C" + QString::number(i));
-                if (!cell.isEmpty)
+                Cell cell = Adapter.GetCell("C" + i);
+                //ExcelCell cell = Adapter.Cell("C" + QString::number(i));
+                if (!cell.IsEmpty)
                 {
                     //Realty* realty = new Realty();
-                    Realty realty;
-                    realty.setRealtyName(cell.cellText());
-                    realty.setRealtyType(1);
+                    Real_Estates realty = new Real_Estates();
+                    realty.name = cell.Text;
+                    //realty.setRealtyType(1);
                     int objectType = 0;
-                    if (objectTypes.indexOf(cell.cellText()) != -1)
+                    if (objectTypes.ContainsKey(cell.Text))
                     {
-                        objectType = objectTypes.indexOf(cell.cellText());
+                        objectTypes.TryGetValue(cell.Text, out objectType);
                     }
-                    realty.setObjectType(objectType);
-                    cell = m_adapter.getExcelCell("D" + QString::number(i));
+                    realty.type = cell.Text;
+                    //realty.setObjectType(objectType);
+                    cell = Adapter.GetCell("D" + i);
                     int ownershipType = 0;
                     double ownershipPart = 0;
-                    QString text = cell.cellText().trimmed();
-                    if (!ownershipTypes.contains(text))
+                    string text = cell.Text.Trim();
+                    if (!ownershipTypes.ContainsKey(text))
                     {
-                        if (text.indexOf("-") != -1) // pre 2015 version
+                        if (text.IndexOf("-") != -1) // pre 2015 version
                         {
-                            QString option = text.split("-").at(0).trimmed();
-                            if (option == QString(u8"общая долевая"))
+                            string option = text.Split('-')[0].Trim();
+                            if (option == "общая долевая")
                             {
                                 ownershipType = 3;
-                                QString ownershipPartText = text.split("-").at(1).trimmed();
-                                if (ownershipPartText.indexOf("/") != -1)
+                                string ownershipPartText = text.Split('-')[1].Trim();
+                                if (ownershipPartText.IndexOf("/") != -1)
                                 {
-                                    ownershipPart = ownershipPartText.split("/").at(0).toDouble() / ownershipPartText.split("/").at(1).toDouble();
+                                    ownershipPart = Convert.ToDouble(ownershipPartText.Split('/')[0]) / Convert.ToDouble(ownershipPartText.Split('/')[1]);
                                 }
                             }
                         }
@@ -222,78 +217,81 @@ namespace Smart.Parser.Lib
                         {
                             //    ownershipType = 0;
                             //}
-                            QStringList parts = text.split(" ");
-                            if (parts.size() == 2 && parts.at(0) == QString(u8"долевая"))
+                            String[] parts = text.Split(' ');
+                            if (parts.Length == 2 && parts[0] == "долевая")
                             {
                                 ownershipType = 3;
-                                QStringList fraction = parts.at(1).split("/");
-                                if (fraction.size() == 2)
+                                String[] fraction = parts[1].Split('/');
+                                if (fraction.Length == 2)
                                 {
-                                    ownershipPart = fraction.at(0).toDouble() / fraction.at(1).toDouble();
+                                    ownershipPart = Convert.ToDouble(fraction[0]) / Convert.ToDouble(fraction[1]);
                                 }
                                 else
                                 {
-                                    qDebug() << "error: cannot parse ownership text " << text;
+                                    //qDebug() << "error: cannot parse ownership text " << text;
                                     errorCount++;
                                 }
                             }
                             else
                             {
-                                qDebug() << "error: cannot parse ownership text " << text;
+                                //qDebug() << "error: cannot parse ownership text " << text;
                                 errorCount++;
                             }
                         }
                     }
                     else
                     {
-                        ownershipType = ownershipTypes.value(text);
+                         ownershipTypes.TryGetValue(text, out ownershipType);
                     }
-                    realty.setOwnershipPart(ownershipPart);
-                    realty.setOwnershipType(ownershipType);
-                    realty.setOwnershipText(text);
-                    cell = m_adapter.getExcelCell("E" + QString::number(i));
-                    QString number = cell.cellText().split(" ").join("");
-                    number = number.replace(QString(","), QString("."));
-                    double square = number.toDouble();
-                    realty.setSquare(square);
-                    cell = m_adapter.getExcelCell("F" + QString::number(i));
+                    realty.share_amount = (float)ownershipPart;
+                    //realty.setOwnershipType(o`wnershipType);
+                    //realty..setOwnershipText(text);
+
+                    cell = Adapter.GetCell("E" + i);
+                    string number = cell.Text.Replace(" ", "");
+                    number = number.Replace(",", ".");
+                    double square = Convert.ToDouble(number);
+                    realty.square = (float)square;
+                    cell = Adapter.GetCell("F" + i);
+                    string countryStr = cell.Text;
                     int country;
-                    if (!cell.isEmpty && countries.indexOf(cell.cellText()) != -1)
-                    {
-                        country = countries.indexOf(cell.cellText());
-                    }
-                    else
-                    {
-                        country = 0;
-                    }
-                    realty.setCountry(country);
-                    person.addRealty(realty);
+                    //if (!cell.IsEmpty)
+                    //{
+                    //    if ( && countries.indexOf(cell.cellText()) != -1)
+                    //    country = countries.indexOf(cell.cellText());
+                    //}
+                    //else
+                    //{
+                    //    country = 0;
+                    //}
+                    realty.country = countryStr;
+                    //person..addRealty(realty);
                 }
                 else
                 {
                     break;
                 }
             }
-            for (int i = bounds.first; i <= bounds.second; i++)
+            for (int i = boundsBegin; i <= boundsEnd; i++)
             {
-                ExcelCell cell = m_adapter.getExcelCell("G" + QString::number(i));
-                if (!cell.isEmpty)
+                Cell cell = Adapter.GetCell("G" + i);
+                if (!cell.IsEmpty)
                 {
-                    Realty realty;
-                    realty.setRealtyName(cell.cellText());
-                    realty.setRealtyType(2);
+                    Real_Estates realty = new Real_Estates();
+                    realty.name = cell.Text;
+                    //realty.setRealtyType(2);
                     int objectType = 0;
                     if (objectTypes.indexOf(cell.cellText()) != -1)
                     {
                         objectType = objectTypes.indexOf(cell.cellText());
                     }
                     realty.setObjectType(objectType);
-                    cell = m_adapter.getExcelCell("H" + QString::number(i));
-                    QString number = cell.cellText().split(" ").join("");
-                    number = number.replace(QString(","), QString("."));
-                    double square = cell.cellText().toDouble();
+                    cell = Adapter.Cell("H" + QString::number(i));
+                    string number = cell.cellText().split(" ").join("");
+                    number = number.Replace(",", ".");
+                    double square = Convert.ToDouble(cell.Text);
                     realty.setSquare(square);
-                    cell = m_adapter.getExcelCell("I" + QString::number(i));
+                    cell = Adapter.Cell("I" + QString::number(i));
                     int country;
                     if (!cell.isEmpty && countries.indexOf(cell.cellText()) != -1)
                     {
@@ -311,9 +309,9 @@ namespace Smart.Parser.Lib
                     break;
                 }
             }
-            for (int i = bounds.first; i <= bounds.second; i++)
+            for (int i = boundsBegin; i <= boundsEnd; i++)
             {
-                ExcelCell cell = m_adapter.getExcelCell("J" + QString::number(i));
+                ExcelCell cell = Adapter.Cell("J" + QString::number(i));
                 if (!cell.isEmpty)
                 {
                     Transport transport;
@@ -325,7 +323,7 @@ namespace Smart.Parser.Lib
                     break;
                 }
             }
-            ExcelCell cell = m_adapter.getExcelCell("K" + QString::number(bounds.first));
+            ExcelCell cell = Adapter.Cell("K" + QString::number(bounds.first));
             QString incomeText = cell.cellText();
             if (incomeText.indexOf("(") != -1)
             {
@@ -345,10 +343,11 @@ namespace Smart.Parser.Lib
                 incomeText = incomeText.replace(QString(","), QString("."));
                 person.setIncome(incomeText.toDouble());
             }
-            cell = m_adapter.getExcelCell("L" + QString::number(bounds.first));
+            cell = Adapter.Cell("L" + QString::number(bounds.first));
             person.setIncomeSource(cell.cellText());
             organPersons.append(person);
             return person;
+#endif
         }
 
         void singlePersonToJSON(Person person)
@@ -456,6 +455,9 @@ namespace Smart.Parser.Lib
         }
 
         IAdapter Adapter { get; set; }
+
+
+
         int personsTableStart = 4;
 
         List<Tuple<int, int>> personBounds = new List<Tuple<int, int>>();
@@ -467,6 +469,10 @@ namespace Smart.Parser.Lib
 
         List<string> relationTypes = new List<string>();
 
+        Dictionary<string, int> ownershipTypes = new Dictionary<string, int>();
+        Dictionary<string, int> objectTypes = new Dictionary<string, int>();
+
+        int errorCount = 0;
 
     }
 }

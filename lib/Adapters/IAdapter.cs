@@ -19,6 +19,7 @@ namespace Smart.Parser.Adapters
     public interface IAdapter
     {
         Cell GetCell(string cellNum);
+        Cell GetCell(int row, int column);
         int GetRowsCount();
     }
 }
