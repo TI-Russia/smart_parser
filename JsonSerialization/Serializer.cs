@@ -58,10 +58,11 @@ namespace TI.Declarator.JsonSerialization
         {
             return new JProperty("person", new JObject(
                                               new JProperty("name", servant.Name),
+                                              new JProperty("name_raw", servant.Name),
                                               new JProperty("family_name", servant.FamilyName),
                                               new JProperty("first_name", servant.GivenName),
                                               new JProperty("patronymic_name", servant.Patronymic),
-                                              new JProperty("role", servant.Occupation)));
+                                              new JProperty("role", new JArray(servant.Occupation))));
         }
 
         private static JProperty GetInstitutiondata(PublicServant servant)
@@ -198,7 +199,8 @@ namespace TI.Declarator.JsonSerialization
             {
                 case OwnershipType.Coop: return "Совместная собственность";
                 case OwnershipType.Individual: return "Индивидуальная";
-                case OwnershipType.NotAnOwner: return null;
+                // This is by design; non-ownership is still considered an individual ownership
+                case OwnershipType.NotAnOwner: return "Индивидуальная";
                 case OwnershipType.Shared: return "Долевая собственность";
                 default: throw new ArgumentOutOfRangeException("prop.OwnershipType", $"Unsupported ownership type: {prop.OwnershipType.ToString()}");
             }

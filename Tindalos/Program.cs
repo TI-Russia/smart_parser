@@ -29,7 +29,23 @@ namespace Tindalos
 
         static void Main(string[] args)
         {
-            string arg = String.Join(" ", args).Trim(new char[] {'"'});
+            //Test();
+            Scan(args);
+        }
+
+        static void Test()
+        {
+            string sourceFile = "2016_Sotrudniki_ministerstva.docx";
+            var res = Process(sourceFile);
+            Console.WriteLine(DeclarationSerializer.Serialize(res));
+            string output = DeclarationSerializer.Serialize(res);
+            File.WriteAllText("output.json", output);
+            Console.ReadKey();
+        }
+
+        static void Scan(string[] args)
+        {
+            string arg = String.Join(" ", args).Trim(new char[] { '"' });
             if (Directory.Exists(arg))
             {
                 ScanDir(arg);
@@ -42,9 +58,7 @@ namespace Tindalos
             else
             {
                 Console.WriteLine($"File or directory {arg} not found.");
-            }
-            //var dir = @"d:\lab\Transparency\Declarations\min_trans";
-            //ScanDir(dir);            
+            }                     
 
             Console.WriteLine("Finished. Press any key.");
             Console.ReadKey();
