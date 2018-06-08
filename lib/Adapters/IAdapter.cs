@@ -8,7 +8,10 @@ namespace Smart.Parser.Adapters
 {
     public class Cell
     {
-        public virtual bool IsHeader { set; get; }
+        public virtual bool IsMerged { set; get; } = false;
+        public virtual int FirstMergedRow { set; get; } = -1;
+        public virtual int MergedRowsCount { set; get; } = -1;
+        public virtual bool IsHeader { set; get; } = false;
         public virtual bool IsEmpty { set; get; }
         public virtual string BackgroundColor { set; get; }
         public virtual string ForegroundColor { set; get; }

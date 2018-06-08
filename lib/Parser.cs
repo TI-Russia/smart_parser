@@ -1,6 +1,7 @@
 ﻿using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -445,7 +446,18 @@ namespace Smart.Parser.Lib
             //qDebug() << "total errors: " << errorCount;
         }
 
+        public void DumpColumn(int column)
+        {
+            int personsTableEnd = Adapter.GetRowsCount() - 1;
+            //StreamWriter standardOutput = new StreamWriter(Console.OpenStandardOutput());
+            for (int i = personsTableStart; i <= personsTableEnd; i++)
+            {
+                //qDebug() << "person discovery - processing: " << cellAddress;
+                Cell currentCell = Adapter.GetCell(i, NameOrRelativeTypeColumn);
 
+                Console.WriteLine(JsonWriter.SerializeCell(currentCell));
+            }
+        }
         public void Process()
         {
             getPersonsBounds();
