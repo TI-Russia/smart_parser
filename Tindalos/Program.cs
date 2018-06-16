@@ -29,8 +29,8 @@ namespace Tindalos
 
         static void Main(string[] args)
         {
-            //Test();
-            Scan(args);
+            Test();
+            //Scan(args);
         }
 
         static void Test()

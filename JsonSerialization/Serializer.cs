@@ -49,7 +49,8 @@ namespace TI.Declarator.JsonSerialization
                 GetInstitutiondata(servant),
                 GetYear(servant),
                 GetIncomes(servant),
-                GetRealEstateProperties(servant));
+                GetRealEstateProperties(servant),
+                GetVehicles(servant));
 
             return jServ;
         }
@@ -59,9 +60,9 @@ namespace TI.Declarator.JsonSerialization
             return new JProperty("person", new JObject(
                                               new JProperty("name", servant.Name),
                                               new JProperty("name_raw", servant.Name),
-                                              new JProperty("family_name", servant.FamilyName),
-                                              new JProperty("first_name", servant.GivenName),
-                                              new JProperty("patronymic_name", servant.Patronymic),
+                                              //new JProperty("family_name", servant.FamilyName),
+                                              //new JProperty("first_name", servant.GivenName),
+                                              //new JProperty("patronymic_name", servant.Patronymic),
                                               new JProperty("role", new JArray(servant.Occupation))));
         }
 
@@ -135,6 +136,28 @@ namespace TI.Declarator.JsonSerialization
             }
 
             var res = new JProperty("real_estates", jRealEstate);
+            return res;
+        }
+
+        private static JProperty GetVehicles(PublicServant servant)
+        {
+            var jVehicles = new JArray();
+            foreach (string vehicleInfo in servant.Vehicles)
+            {
+                jVehicles.Add(new JObject(
+                    new JProperty("text", vehicleInfo)));
+            }
+
+            foreach (var rel in servant.Relatives)
+            {
+                foreach (string vehicleInfo in rel.Vehicles)
+                {
+                    jVehicles.Add(new JObject(
+                        new JProperty("text", vehicleInfo)));
+                }
+            }
+
+            var res = new JProperty("vehicles", jVehicles);
             return res;
         }
 
