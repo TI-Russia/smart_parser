@@ -30,7 +30,7 @@ namespace Tindalos
         static void Main(string[] args)
         {
             Scan(args);
-            Test();
+            //Test();
         }
 
         static void Test()
