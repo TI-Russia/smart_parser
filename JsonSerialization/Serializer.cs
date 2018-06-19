@@ -24,12 +24,12 @@ namespace TI.Declarator.JsonSerialization
             Schema = JSchema.Parse(File.ReadAllText(SchemaSource));
         }
 
-        public static string Serialize(IEnumerable<PublicServant> servants)
+        public static string Serialize(Declaration declaration)
         {
             var jServants = new JArray();
-            foreach (var serv in servants)
+            foreach (var serv in declaration.Declarants)
             {
-                jServants.Add(Serialize(serv));
+                jServants.Add(Serialize(serv, declaration.Properties));
             }
 
             if (Validate(jServants))
@@ -42,12 +42,12 @@ namespace TI.Declarator.JsonSerialization
             }
         }
 
-        private static JObject Serialize(PublicServant servant)
+        private static JObject Serialize(PublicServant servant, DeclarationProperties declarationProperties)
         {
             var jServ = new JObject(
                 GetPersonalData(servant),
                 GetInstitutiondata(servant),
-                GetYear(servant),
+                GetYear(declarationProperties),
                 GetIncomes(servant),
                 GetRealEstateProperties(servant),
                 GetVehicles(servant));
@@ -73,10 +73,16 @@ namespace TI.Declarator.JsonSerialization
                                             new JProperty("name", "Министерство странных походок")));
         }
 
-        private static JProperty GetYear(PublicServant servant)
+        private static JProperty GetYear(DeclarationProperties declarationInfo)
         {
             // TODO extract year from file name or document title
-            return new JProperty("year", 3000);
+            if (declarationInfo.Year.HasValue)
+            { 
+                return new JProperty("year", declarationInfo.Year.Value);
+            }
+            {
+                throw new Exception("Error serializing declaration: year is missing");
+            }
         }
 
         private static JProperty GetIncomes(PublicServant servant)

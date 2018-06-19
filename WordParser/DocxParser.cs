@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 using TI.Declarator.ParserCommon;
 using Xceed.Words.NET;
@@ -9,7 +10,7 @@ namespace TI.Declarator.WordParser
 {
     public class DocXParser : IDeclarationParser
     {
-        private ColumnOrdering ColumnOrder;
+        private DeclarationProperties DeclarationProperties;        
         private Dictionary<string, RealEstateType> PropertyTypes;
 
         public DocXParser(Dictionary<string, RealEstateType> propertyTypes)
@@ -18,29 +19,35 @@ namespace TI.Declarator.WordParser
         }
 
 
-        public IEnumerable<PublicServant> Parse(string filepath)
+        public Declaration Parse(string filepath)
         {
             DocX doc = DocX.Load(filepath);
             var leadTable = doc.Tables.First();
-
-            ColumnOrder = ExamineHeader(leadTable);
+            DeclarationProperties = Scan(filepath);
 
             return Parse(doc);
         }
 
-        public ColumnOrdering Scan(string filepath)
+        public DeclarationProperties Scan(string filepath)
         {
             DocX doc = DocX.Load(filepath);
             var leadTable = doc.Tables.First();
 
-            ColumnOrder = ExamineHeader(leadTable);
+            string fileName = Path.GetFileName(filepath);
+            int? year = fileName.ExtractYear();
+            ColumnOrdering ordering = ExamineHeader(leadTable);
 
-            return ColumnOrder;
+            return new DeclarationProperties()
+            {
+                ColumnOrdering = ordering,
+                Year = year
+            };
         }
 
         public ColumnOrdering ExamineHeader(Table t)
         {
             int headerRowNum = 0;
+
             while (!IsHeader(t.Rows[headerRowNum]))
             {
                 headerRowNum++;
@@ -106,10 +113,10 @@ namespace TI.Declarator.WordParser
                    (r.Cells.First().GetText(true) != "1");
         }
 
-        private IEnumerable<PublicServant> Parse(DocX doc, int rowOffset = 1)
+        private Declaration Parse(DocX doc, int rowOffset = 1)
         {
             var leadTable = doc.Tables.First();
-            var res = new List<PublicServant>();
+            var servants = new List<PublicServant>();
             PublicServant currentServant = null;
             Person currentPerson = null;
             foreach (Row r in leadTable.Rows.Skip(rowOffset))
@@ -120,17 +127,21 @@ namespace TI.Declarator.WordParser
                     currentServant = pServ;
                     currentPerson = pServ;
 
-                    res.Add(pServ);
+                    servants.Add(pServ);
                 }
                 else if (IsRelativeInfo(r))
                 {
                     Relative pRel = ParseRelativeInfo(r);
                     currentServant.Relatives.Add(pRel);
                     currentPerson = pRel;
-                }                
+                }
             }
 
-            return res;
+            return new Declaration()
+            {
+                Declarants = servants,
+                Properties = DeclarationProperties
+            };
         }
 
         private bool IsPublicServantInfo(Row r)
@@ -173,7 +184,7 @@ namespace TI.Declarator.WordParser
 
         private string GetContents(Row r, DeclarationField f)
         {
-            return r.Cells[ColumnOrder[f].Value].GetText().Trim();
+            return r.Cells[DeclarationProperties.ColumnOrdering[f].Value].GetText().Trim();
         }
 
         private void FillPersonProperties(Row r, Person p)

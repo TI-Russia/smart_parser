@@ -29,14 +29,14 @@ namespace Tindalos
 
         static void Main(string[] args)
         {
+            Scan(args);
             Test();
-            //Scan(args);
         }
 
         static void Test()
         {
             string sourceFile = "2016_Sotrudniki_ministerstva.docx";
-            var res = Process(sourceFile);
+            Declaration res = Process(sourceFile);
             Console.WriteLine(DeclarationSerializer.Serialize(res));
             string output = DeclarationSerializer.Serialize(res);
             File.WriteAllText("output.json", output);
@@ -64,7 +64,7 @@ namespace Tindalos
             Console.ReadKey();
         }
 
-        private static IEnumerable<PublicServant> Process(string fileName)
+        private static Declaration Process(string fileName)
         {
             string ext = Path.GetExtension(fileName);
             switch (ext)
@@ -88,7 +88,7 @@ namespace Tindalos
             return docXPath;
         }
 
-        private static IEnumerable<PublicServant> ParseDocX(string fileName, Dictionary<String, RealEstateType> propertyTypes)
+        private static Declaration ParseDocX(string fileName, Dictionary<String, RealEstateType> propertyTypes)
         {
             var parser = new DocXParser(PropertyTypes);
             return parser.Parse(fileName);
@@ -135,7 +135,7 @@ namespace Tindalos
         private static void ScanDocX(string fileName, string outputFile = null)
         {
             var parser = new DocXParser(null);
-            var co = parser.Scan(fileName);
+            var co = parser.Scan(fileName).ColumnOrdering;
 
             if (outputFile != null)
             {
