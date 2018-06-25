@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Parser", "src\Smart.Parser.csproj", "{42F10691-63BD-469C-8898-45B80CAB91A3}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordParser", "WordParser\WordParser.csproj", "{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelParser", "ExcelParser\ExcelParser.csproj", "{977FA48C-ECAD-4588-996E-E777BAC0B807}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
