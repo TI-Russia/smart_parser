@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Xml.Linq;
 
 using TI.Declarator.ParserCommon;
 using Xceed.Words.NET;
@@ -10,6 +11,8 @@ namespace TI.Declarator.WordParser
 {
     public class DocXParser : IDeclarationParser
     {
+        private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+
         private DeclarationProperties DeclarationProperties;        
         private Dictionary<string, RealEstateType> PropertyTypes;
 
@@ -31,16 +34,19 @@ namespace TI.Declarator.WordParser
         public DeclarationProperties Scan(string filepath)
         {
             DocX doc = DocX.Load(filepath);
+            string title = GetTitle(doc);
             var leadTable = doc.Tables.First();
 
             string fileName = Path.GetFileName(filepath);
             int? year = fileName.ExtractYear();
+            if (!year.HasValue) year = title.ExtractYear();
             ColumnOrdering ordering = ExamineHeader(leadTable);
 
             return new DeclarationProperties()
             {
                 ColumnOrdering = ordering,
-                Year = year
+                Year = year,
+                Title = title
             };
         }
 
@@ -105,6 +111,15 @@ namespace TI.Declarator.WordParser
             }
 
             return res;
+        }
+
+        private string GetTitle(DocX doc)
+        {
+            var docBody = doc.Xml.Elements(WordXNamespace + "body");
+            var titleParagraphs = doc.Xml.Elements().TakeWhile(el => el.Name.ToString() != $"{{{WordXNamespace}}}tbl");
+
+            return titleParagraphs.Select(p => p.Value)
+                                  .Aggregate("", (str1, str2) => str1  + '\n' + str2);
         }
 
         private bool IsHeader(Row r)
