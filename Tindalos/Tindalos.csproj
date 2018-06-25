@@ -71,6 +71,18 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc" />
+    <None Include="testfiles\B - min_sport_2011_Sotrudniki_ministerstva.doc" />
+    <None Include="testfiles\C - min_east_2015_Rukovoditeli_i_sotrudniki_ministerstva.xlsx" />
+    <None Include="testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx" />
+    <None Include="testfiles\D - min_health_2012_1Zamestiteli_Ministra.xls" />
+    <None Include="testfiles\E - min_sport_2012_Rukovoditeli_gospredpriyatij,_podvedomstvennyih_ministerstvu.doc" />
+    <None Include="testfiles\F - min_cult_2012_Sotrudniki_ministerstva.doc" />
+    <None Include="testfiles\F - min_def_2011_Sotrudniki_ministerstva.xls" />
+    <None Include="testfiles\G - min_def_2016_Sotrudniki_ministerstva_%28ne_ukazanyi_dolzhnosti%29.xlsx" />
+    <None Include="testfiles\J - min_ind_2014_Rukovoditeli_ministerstva.doc" />
+    <None Include="testfiles\M - min_agr_2012   MinSelXoz_Rukovodstvo - 01.xls" />
+    <None Include="testfiles\N - min_trans_dohod_2010.doc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
