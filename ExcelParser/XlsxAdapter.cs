@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
@@ -51,6 +52,29 @@ namespace TI.Declarator.ExcelParser
                 cellContents = cell.ToString();
             }
 
+            string backgroundColor;
+            if (cell.CellStyle.FillBackgroundColorColor?.RGB == null)
+            {
+                backgroundColor = null;
+            }
+            else
+            {
+                backgroundColor = cell.CellStyle.FillBackgroundColorColor.RGB.Select(v => v.ToString("X2"))
+                                                                             .Aggregate("", (str1, str2) => str1 + str2);
+            }
+
+            string foregroundColor;
+            if (cell.CellStyle.FillForegroundColorColor?.RGB == null)
+            {
+                foregroundColor = null;
+            }
+            else
+            {
+                foregroundColor = cell.CellStyle.FillForegroundColorColor.RGB.Select(v => v.ToString("X2"))
+                                                                             .Aggregate("", (str1, str2) => str1 + str2);
+            }
+
+
             return new Cell
             {
                 IsMerged = isMergedCell,
@@ -59,8 +83,8 @@ namespace TI.Declarator.ExcelParser
                 // FIXME to init this property we need a formal definition of "header cell"
                 IsHeader = false,
                 IsEmpty = cellContents.IsNullOrWhiteSpace(),
-                BackgroundColor = cell.CellStyle.FillForegroundColorColor.ToString(),
-                ForegroundColor = cell.CellStyle.FillBackgroundColorColor.ToString(),
+                BackgroundColor = backgroundColor,
+                ForegroundColor = foregroundColor,
                 Text = cellContents,
             };
         }
