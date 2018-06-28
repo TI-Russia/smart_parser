@@ -26,5 +26,13 @@ namespace TI.Declarator.ParserCommon
         {
             ColumnOrder.Add(field, order);
         }
+
+        public bool OwnershipTypeInSeparateField
+        {
+            get
+            {
+                return ColumnOrder.ContainsKey(DeclarationField.OwnedRealEstateOwnershipType);
+            }
+        }
     }
 }

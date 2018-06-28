@@ -25,7 +25,6 @@ namespace TI.Declarator.WordParser
         public Declaration Parse(string filepath)
         {
             DocX doc = DocX.Load(filepath);
-            var leadTable = doc.Tables.First();
             DeclarationProperties = Scan(filepath);
 
             return Parse(doc);
@@ -232,9 +231,9 @@ namespace TI.Declarator.WordParser
         {
             string estateType = GetContents(r, DeclarationField.OwnedRealEstateType);
             if (String.IsNullOrWhiteSpace(estateType) || estateType.Trim() == "-") return null;
-
             RealEstateType propertyType = ParseRealEstateType(estateType);
             OwnershipType ownershipType = ParseOwnershipType(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType));
+
             string share = ParseOwnershipShare(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType), ownershipType);
             decimal? area;
             string areaStr = GetContents(r, DeclarationField.OwnedRealEstateArea).Trim();

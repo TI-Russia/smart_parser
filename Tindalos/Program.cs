@@ -30,16 +30,16 @@ namespace Tindalos
         static void Main(string[] args)
         {
             Scan(args);
-            //Test();
+            //Test(@"regression\2016_Rukovoditeli_gosuchrezhdenij,_podvedomstvennyih_ministerstvu.doc");
         }
 
-        static void Test()
-        {
-            string sourceFile = "2016_Sotrudniki_ministerstva.docx";
-            Declaration res = Process(sourceFile);
+        static void Test(string filename)
+        {            
+            Declaration res = Process(filename);
             Console.WriteLine(DeclarationSerializer.Serialize(res));
             string output = DeclarationSerializer.Serialize(res);
-            File.WriteAllText("output.json", output);
+            string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
+            File.WriteAllText(outputFileName, output);
             Console.ReadKey();
         }
 
