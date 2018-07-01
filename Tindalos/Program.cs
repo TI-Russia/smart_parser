@@ -30,7 +30,8 @@ namespace Tindalos
         static void Main(string[] args)
         {
             Scan(args);
-            //Test(@"regression\2016_Rukovoditeli_gosuchrezhdenij,_podvedomstvennyih_ministerstvu.doc");
+            //Test(@"regression\2016_Sotrudniki_ministerstva.docx");
+            //Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
         }
 
         static void Test(string filename)

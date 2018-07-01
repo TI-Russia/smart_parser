@@ -188,12 +188,17 @@ namespace TI.Declarator.JsonSerialization
         private static string GetPropertyType(RealEstateProperty prop)
         {
             switch(prop.PropertyType)
-            {
-                case RealEstateType.Apartment: return "Квартира";
+            {                
+                case RealEstateType.Apartment:
+                case RealEstateType.Room: return "Квартира";
                 case RealEstateType.Garage: return "Гараж";
-                case RealEstateType.Dacha: return "Дача";
+                case RealEstateType.Dacha:
+                case RealEstateType.DachaHouse: return "Дача";
                 case RealEstateType.HabitableHouse: return "Жилой дом";
+                case RealEstateType.GardenPlot:
                 case RealEstateType.PlotOfLand: return "Земельный участок";
+                case RealEstateType.Building:
+                case RealEstateType.HabitableSpace:
                 case RealEstateType.ParkingSpace:
                 case RealEstateType.Other: return "Иное";
                 default: throw new ArgumentOutOfRangeException("prop.PropertyType", $"Unsupported real estate type: {prop.PropertyType.ToString()}");
@@ -205,6 +210,7 @@ namespace TI.Declarator.JsonSerialization
             switch (prop.Country)
             {
                 case Country.Undefined: return null;
+                case Country.France: return "Франция";
                 case Country.Russia: return "Россия";
                 default: throw new ArgumentOutOfRangeException("prop.Country", $"Invalid country name: {prop.Country.ToString()}");
             }
@@ -247,6 +253,10 @@ namespace TI.Declarator.JsonSerialization
                 else if (ownedShare == "½")
                 {
                     return 0.5M;
+                }
+                else if (ownedShare == "¼")
+                {
+                    return 0.25M;
                 }
                 else if (ownedShare.Contains("/"))
                 {

@@ -13,7 +13,7 @@ namespace TI.Declarator.WordParser
     {
         private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
-        private DeclarationProperties DeclarationProperties;        
+        private DeclarationProperties DeclarationProperties;
         private Dictionary<string, RealEstateType> PropertyTypes;
 
         public DocXParser(Dictionary<string, RealEstateType> propertyTypes)
@@ -72,7 +72,7 @@ namespace TI.Declarator.WordParser
                 {
                     if (!text.IsNullOrWhiteSpace())
                     {
-                        field = HeaderHelpers.GetField(text);
+                        field = HeaderHelpers.GetField(text.Replace('\n', ' '));
                         res.Add(field, index);
                         index++;
                         colCount++;
@@ -87,7 +87,7 @@ namespace TI.Declarator.WordParser
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
                     auxCellsIter.MoveNext();
                     int auxColCount = 0;
-                    
+
                     while (auxColCount < colCount + span)
                     {
                         var auxCell = auxCellsIter.Current;
@@ -106,7 +106,7 @@ namespace TI.Declarator.WordParser
 
                     colCount += cell.GridSpan;
                 }
-                                                     
+
             }
 
             return res;
@@ -118,7 +118,7 @@ namespace TI.Declarator.WordParser
             var titleParagraphs = doc.Xml.Elements().TakeWhile(el => el.Name.ToString() != $"{{{WordXNamespace}}}tbl");
 
             return titleParagraphs.Select(p => p.Value)
-                                  .Aggregate("", (str1, str2) => str1  + '\n' + str2);
+                                  .Aggregate("", (str1, str2) => str1 + '\n' + str2);
         }
 
         private bool IsHeader(Row r)
@@ -160,7 +160,7 @@ namespace TI.Declarator.WordParser
 
         private bool IsPublicServantInfo(Row r)
         {
-            string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType);
+            string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType).CleanWhitespace();
             return (nameOrRelativeType.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Count() == 3);
         }
 
@@ -204,76 +204,120 @@ namespace TI.Declarator.WordParser
         private void FillPersonProperties(Row r, Person p)
         {
             var ownedProperty = ParseOwnedProperty(r);
-            if (ownedProperty != null) { p.RealEstateProperties.Add(ownedProperty); }
+            if (ownedProperty != null) { p.RealEstateProperties.AddRange(ownedProperty); }
 
             var stateProperty = ParseStateProperty(r);
-            if (stateProperty != null) { p.RealEstateProperties.Add(stateProperty); }
+            if (stateProperty != null) { p.RealEstateProperties.AddRange(stateProperty); }
 
             string vehicle = GetContents(r, DeclarationField.Vehicle);
             if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-") { p.Vehicles.Add(vehicle); }
 
             p.DeclaredYearlyIncome = ParseDeclaredIncome(GetContents(r, DeclarationField.DeclaredYearlyIncome));
-            p.DataSources = ParseDataSources(GetContents(r, DeclarationField.DataSources));
+            if (DeclarationProperties.ColumnOrdering[DeclarationField.DataSources] != null)
+            {
+                p.DataSources = ParseDataSources(GetContents(r, DeclarationField.DataSources));
+            }
+            
         }
 
         private static RelationType ParseRelationType(string strRel)
         {
-            switch (strRel.ToLower().Trim().RemoveStupidTranslit())
+            switch (strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit())
             {
                 case "супруг": return RelationType.MaleSpouse;
                 case "супруга": return RelationType.FemaleSpouse;
+                case "несовершен-нолетняя дочь": return RelationType.Child;
+                case "несовершенно-летняя дочь": return RelationType.Child;
+                case "несовершеннолет-няя дочь": return RelationType.Child;
+                case "несовершеннолетняя дочь": return RelationType.Child;
+                case "несовершенно-летний сын": return RelationType.Child;
+                case "несовершеннолет-ний сын": return RelationType.Child;                                               
+                case "несовершеннолетний сын": return RelationType.Child;
                 case "несовершеннолетний ребенок": return RelationType.Child;
                 default: throw new ArgumentOutOfRangeException(strRel, $"Неизвестный тип родственника: {strRel}");
             }
         }
 
-        private RealEstateProperty ParseOwnedProperty(Row r)
+        private IEnumerable<RealEstateProperty> ParseOwnedProperty(Row r)
         {
-            string estateType = GetContents(r, DeclarationField.OwnedRealEstateType);
-            if (String.IsNullOrWhiteSpace(estateType) || estateType.Trim() == "-") return null;
-            RealEstateType propertyType = ParseRealEstateType(estateType);
-            OwnershipType ownershipType = ParseOwnershipType(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType));
+            IEnumerable<RealEstateType> propertyTypes;
+            IEnumerable<OwnershipType> ownershipTypes;
+            IEnumerable<string> shares;
+            string estateTypeStr = GetContents(r, DeclarationField.OwnedRealEstateType);
+            if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-") return null;
 
-            string share = ParseOwnershipShare(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType), ownershipType);
-            decimal? area;
-            string areaStr = GetContents(r, DeclarationField.OwnedRealEstateArea).Trim();
-            if (String.IsNullOrWhiteSpace(areaStr) || areaStr == "-")
+            if (DeclarationProperties.ColumnOrdering.OwnershipTypeInSeparateField)
             {
-                area = null;
+                propertyTypes = ParseRealEstateTypes(estateTypeStr);
+                ownershipTypes = ParseOwnershipTypes(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType));
+                shares = ParseOwnershipShares(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType), ownershipTypes);
             }
             else
             {
-                area = GetContents(r, DeclarationField.OwnedRealEstateArea).ParseDecimalValue();
+                var combinedData = ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
+
+                propertyTypes = combinedData.Select(tup => tup.Item1);
+                ownershipTypes = combinedData.Select(tup => tup.Item2);
+                shares = combinedData.Select(tup => tup.Item3);
             }
-            Country country = ParseCountry(GetContents(r, DeclarationField.OwnedRealEstateCountry));
-            return new RealEstateProperty(ownershipType, propertyType, country, area, estateType, share);
+
+            decimal? area;
+            string areaStr = GetContents(r, DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+            IEnumerable<decimal?> areas = ParseAreas(areaStr);
+            
+            IEnumerable<Country> countries = ParseCountries(GetContents(r, DeclarationField.OwnedRealEstateCountry));
+
+            var res = new List<RealEstateProperty>();
+
+            for (int i = 0; i < propertyTypes.Count(); i++)
+            {
+                res.Add(new RealEstateProperty(ownershipTypes.ElementAt(i), propertyTypes.ElementAt(i), countries.ElementAtOrDefault(i), areas.ElementAt(i), estateTypeStr, shares.ElementAt(i)));
+            }
+            return res;
         }
 
-        private RealEstateProperty ParseStateProperty(Row r)
+        private IEnumerable<RealEstateProperty> ParseStateProperty(Row r)
         {
-            string propType = GetContents(r, DeclarationField.StatePropertyType);
-            if (string.IsNullOrWhiteSpace(propType) || propType.Trim() == "-") return null;
+            IEnumerable<RealEstateType> propertyTypes;
+            string propTypeStr = GetContents(r, DeclarationField.StatePropertyType);
+            if (string.IsNullOrWhiteSpace(propTypeStr) || propTypeStr.Trim() == "-") return null;
 
-            RealEstateType propertyType = ParseRealEstateType(propType);
-            OwnershipType ownershipType = OwnershipType.NotAnOwner;
-            string share = "";
-            decimal? area;
-            string areaStr = GetContents(r, DeclarationField.StatePropertyArea).Trim();
-            if (String.IsNullOrWhiteSpace(areaStr) || areaStr == "-")
+            if (DeclarationProperties.ColumnOrdering.OwnershipTypeInSeparateField)
             {
-                area = null;
+                propertyTypes = ParseRealEstateTypes(propTypeStr);
             }
             else
             {
-                area = areaStr.ParseDecimalValue();
+                propertyTypes = ParseStatePropertyTypesWithUsageInfo(propTypeStr.Replace("\\0", ")"));
             }
-            Country country = ParseCountry(GetContents(r, DeclarationField.StatePropertyCountry));
-            return new RealEstateProperty(ownershipType, propertyType, country, area, propType, share);
+
+                
+            OwnershipType ownershipType = OwnershipType.NotAnOwner;
+            string share = "";
+            string areaStr = GetContents(r, DeclarationField.StatePropertyArea).Trim();
+            IEnumerable<decimal?> areas = ParseAreas(areaStr);
+
+
+            IEnumerable<Country> countries = ParseCountries(GetContents(r, DeclarationField.StatePropertyCountry));
+
+            var res = new List<RealEstateProperty>();
+            for (int i = 0; i < propertyTypes.Count(); i++)
+            {
+                res.Add(new RealEstateProperty(ownershipType, propertyTypes.ElementAt(i), countries.ElementAt(i), areas.ElementAt(i), propTypeStr, share));
+            }
+
+            return res;
+        }
+
+        private IEnumerable<RealEstateType> ParseRealEstateTypes(string strTypes)
+        {
+            return new List<RealEstateType>() { ParseRealEstateType(strTypes) };
         }
 
         private RealEstateType ParseRealEstateType(string strType)
         {
-            string key = strType.ToLower().Trim('\"').Trim();
+            string key = strType.ToLower().RemoveStupidTranslit().Trim('\"').Replace('\n', ' ').Replace(';', ' ').Replace("  ", " ").Trim();
+
             if (PropertyTypes.ContainsKey(key))
             {
                 return PropertyTypes[key];
@@ -284,26 +328,115 @@ namespace TI.Declarator.WordParser
             }
         }
 
+        private static IEnumerable<OwnershipType> ParseOwnershipTypes(string strOwn)
+        {
+            return new List<OwnershipType>() { ParseOwnershipType(strOwn) };
+        }
+
         private static OwnershipType ParseOwnershipType(string strOwn)
         {
             string str = strOwn.ToLower().Trim();
-            if (str.StartsWith("индивидуальная")) return OwnershipType.Individual;
-            if (str.StartsWith("собственность")) return OwnershipType.Individual;
-            if (str.StartsWith("общая совместная")) return OwnershipType.Coop;
-            if (str.StartsWith("совместная")) return OwnershipType.Coop;
+            OwnershipType res;
+            if (str.StartsWith("индивидуальная")) res = OwnershipType.Individual;
+            else if (str.StartsWith("собственность")) res = OwnershipType.Individual;
+            else if (str.StartsWith("общая совместная")) res = OwnershipType.Coop;
+            else if (str.StartsWith("совместная")) res = OwnershipType.Coop;
 
-            if (str.StartsWith("делевая")) return OwnershipType.Shared;
-            if (str.StartsWith("долевая")) return OwnershipType.Shared;
-            if (str.StartsWith("долеявая")) return OwnershipType.Shared;
-            if (str.StartsWith("общая долевая")) return OwnershipType.Shared;
-            if (str.StartsWith("общая, долевая")) return OwnershipType.Shared;
-            if (str.StartsWith("общедолевая")) return OwnershipType.Shared;
+            else if (str.StartsWith("делевая")) res = OwnershipType.Shared;
+            else if (str.StartsWith("долевая")) res = OwnershipType.Shared;
+            else if (str.StartsWith("долеявая")) res = OwnershipType.Shared;
+            else if (str.StartsWith("общая долевая")) res = OwnershipType.Shared;
+            else if (str.StartsWith("общая, долевая")) res = OwnershipType.Shared;
+            else if (str.StartsWith("общедолевая")) res = OwnershipType.Shared;
 
-            if (str.StartsWith("общая")) return OwnershipType.Coop;
+            else if (str.StartsWith("общая")) res = OwnershipType.Coop;
 
-            if (String.IsNullOrWhiteSpace(str) || str == "-") return OwnershipType.NotAnOwner;
+            else if (String.IsNullOrWhiteSpace(str) || str == "-") res = OwnershipType.NotAnOwner;
+            else throw new ArgumentOutOfRangeException("strOwn", $"Неизвестный тип собственности: {strOwn}");
 
-            throw new ArgumentOutOfRangeException("strOwn", $"Неизвестный тип собственности: {strOwn}");
+            return res;
+        }
+
+        private IEnumerable<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
+        {
+            var res = new List<Tuple<RealEstateType, OwnershipType, string>>();
+
+            int startingPos = 0;
+            int rightParenPos = -1;
+            int leftParenPos = strPropInfo.IndexOf('(', startingPos);
+            while (leftParenPos != -1)
+            {
+                rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
+                if (rightParenPos == -1)
+                {
+                    throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
+                }
+
+                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
+                if (ContainsOwnershipType(strOwnType))
+                {
+                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos);
+                    RealEstateType realEstateType = ParseRealEstateType(strPropType);
+                    OwnershipType ownershipType = ParseOwnershipType(strOwnType);
+                    string share = ParseOwnershipShare(strOwnType, ownershipType);
+                    res.Add(Tuple.Create(realEstateType, ownershipType, share));
+
+                    startingPos = rightParenPos + 1;
+                }
+
+                leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
+            }
+
+            return res;
+        }
+
+        private IEnumerable<RealEstateType> ParseStatePropertyTypesWithUsageInfo(string strPropInfo)
+        {
+            var res = new List<RealEstateType>();
+
+            int startingPos = 0;
+            int rightParenPos = -1;
+            int leftParenPos = strPropInfo.IndexOf('(', startingPos);
+            while (leftParenPos != -1)
+            {
+                rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
+                if (rightParenPos == -1)
+                {
+                    throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
+                }
+
+                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
+                if (ContainsOwnershipType(strOwnType))
+                {
+                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos);
+                    RealEstateType realEstateType = ParseRealEstateType(strPropType);
+                    res.Add(realEstateType);
+
+                    startingPos = rightParenPos + 1;
+                }
+
+                leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
+            }
+
+            return res;
+        }
+
+        private static bool ContainsOwnershipType(string str)
+        {
+            string strProc = str.Trim().ToLower();
+            return (str.Contains("индивидуальная") || str.Contains("долевая") || str.Contains("общая"));
+        }
+
+        private static IEnumerable<string> ParseOwnershipShares(string strOwn, IEnumerable<OwnershipType> ownTypes)
+        {
+            var res = new List<string>();
+            foreach (var ownType in ownTypes)
+            {
+                // FIXME на самом деле тут ещё нужно строковый параметр на отдельные подстроки разбивать
+                res.Add(ParseOwnershipShare(strOwn, ownType));
+            }
+
+            return res;
         }
 
         private static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
@@ -324,7 +457,45 @@ namespace TI.Declarator.WordParser
                 return res;
             }
             else
+            { 
                 return "";
+            }
+        }
+
+        private static readonly string[] AreaSeparators = new string[] { "\n", " " };
+        private static IEnumerable<decimal?> ParseAreas(string strAreas)
+        {
+            var res = new List<decimal?>();
+            foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
+            {
+                decimal? area;
+                if (String.IsNullOrWhiteSpace(str) || str == "-")
+                {
+                    area = null;
+                }
+                else
+                {
+                    area = str.ParseDecimalValue();
+                }
+
+                res.Add(area);
+            }
+
+            return res;
+        }
+
+        private static readonly string[] CountrySeparators = new string[] { "\n" };
+        private static IEnumerable<Country> ParseCountries(string strCountries)
+        {
+            var res = new List<Country>();
+            var parts = strCountries.Split(CountrySeparators, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var part in parts)
+            {
+                res.Add(ParseCountry(part));
+            }
+
+            return res;
         }
 
         private static Country ParseCountry(string strCountry)
@@ -341,7 +512,9 @@ namespace TI.Declarator.WordParser
                 case "грузия": return Country.Georgia;
                 case "казахстан": return Country.Kazakhstan;
                 case "российская федерация": return Country.Russia;
+                case "россии": return Country.Russia;
                 case "россия": return Country.Russia;
+                case "россия-": return Country.Russia;
                 case "сша": return Country.Usa;
                 case "таиланд": return Country.Thailand;
                 case "украина": return Country.Ukraine;

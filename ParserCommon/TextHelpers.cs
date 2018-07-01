@@ -62,5 +62,10 @@ namespace TI.Declarator.ParserCommon
                       .Replace('T', 'Т')
                       .Replace('X', 'Х').Replace('x', 'х');
         }
+
+        public static string CleanWhitespace(this string str)
+        {
+            return str.Replace('\n', ' ').Trim();
+        }
     }
 }

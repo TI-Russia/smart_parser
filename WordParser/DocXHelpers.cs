@@ -16,7 +16,7 @@ namespace TI.Declarator.WordParser
             foreach (var p in c.Paragraphs)
             {
                 res.Append(p.Text);
-                res.Append(" ");
+                res.Append("\n");
             }
 
             if (Unbastardize)
