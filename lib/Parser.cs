@@ -38,7 +38,7 @@ namespace Smart.Parser.Lib
             Adapter = adapter;
         }
 
-        public void getPersonsBounds()
+        public void getPersonsBounds(List<Tuple<int, int>> personBounds, List<int> headerPositions)
         {
             List<int> personStarts = new List<int>();
 
@@ -150,12 +150,13 @@ namespace Smart.Parser.Lib
         */
         Person buildSinglePerson(int boundsBegin, int boundsEnd)
         {
-            return null; 
-#if false
+            //return null; 
             //qDebug() << "buildSinglePerson init: bounds " + QString::number(bounds.first) + " - " + QString::number(bounds.second);
             Person person = new Person();
             string  personName = Adapter.GetCell("A" + boundsBegin).Text;
+            person.name = personName;
             person.id = (organPersons.Count() + 1);
+#if false
             if (relationTypes.IndexOf(personName) == -1)
             {
                 person.name = personName;
@@ -347,8 +348,8 @@ namespace Smart.Parser.Lib
             cell = Adapter.Cell("L" + QString::number(bounds.first));
             person.setIncomeSource(cell.cellText());
             organPersons.append(person);
-            return person;
 #endif
+            return person;
         }
 
         void singlePersonToJSON(Person person)
@@ -460,7 +461,7 @@ namespace Smart.Parser.Lib
         }
         public void Process()
         {
-            getPersonsBounds();
+            getPersonsBounds(personBounds, headerPositions);
             getOrgansBounds();
             buildOrganList();
             buildOrgansJSON();
