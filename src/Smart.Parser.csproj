@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>smart_parser</RootNamespace>
     <AssemblyName>smart_parser</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,9 +50,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
+      <Project>{16e41c56-7cd2-4e16-a469-4af4f7facb71}</Project>
+      <Name>JsonSerialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj">
       <Project>{dcb47788-553f-495f-bdab-1b144e0df5b1}</Project>
       <Name>Smart.Parser.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
+      <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>
+      <Name>ParserCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

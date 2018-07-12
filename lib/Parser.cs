@@ -1,10 +1,13 @@
-﻿using Smart.Parser.Adapters;
+﻿using CsvHelper;
+using Parser.Lib;
+using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Lib
 {
@@ -28,14 +31,23 @@ namespace Smart.Parser.Lib
         public bool topLevel = false;
     };
 
+    public class ParserParams
+    {
+        public int FirstDataRow { get; set; }
+        public int LastDataRow { get; set; }
+        public int NameColumn { get; set; }
+    };
+
+
     public class Parser
     {
         public int FirstDataRow { set { personsTableStart = value; } get { return personsTableStart; } }
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
-        public Parser(IAdapter adapter)
+        public Parser(IAdapter adapter, ParserParams parserParams = null)
         {
             Adapter = adapter;
+            this.parserParams = parserParams;
         }
 
         public void getPersonsBounds(List<Tuple<int, int>> personBounds, List<int> headerPositions)
@@ -119,7 +131,7 @@ namespace Smart.Parser.Lib
                     {
                         organPersonBoundsBegin = personNum;
                         firstPerson = personNum;
-                        Cell header = Adapter.GetCell("A" + (organPair.Item1 - 1));
+                        Cell header = Adapter.GetCell(1, (organPair.Item1 - 1));
 
                         orgName = header.Text;
                         topLevel = header.ForegroundColor == "ff00b0f0";
@@ -153,7 +165,7 @@ namespace Smart.Parser.Lib
             //return null; 
             //qDebug() << "buildSinglePerson init: bounds " + QString::number(bounds.first) + " - " + QString::number(bounds.second);
             Person person = new Person();
-            string  personName = Adapter.GetCell("A" + boundsBegin).Text;
+            string  personName = Adapter.GetCell(1,  boundsBegin).Text;
             person.name = personName;
             person.id = (organPersons.Count() + 1);
 #if false
@@ -352,12 +364,14 @@ namespace Smart.Parser.Lib
             return person;
         }
 
-        void singlePersonToJSON(Person person)
+        string singlePersonToJSON(Person person)
         {
+            return JsonWriter.CreateJson(person);
         }
 
-        void personListToJSON(List<Person> personList)
+        string personListToJSON(List<Person> personList)
         {
+            StringBuilder jsonBuilder = new StringBuilder();
             //QListIterator<Person> iter(personList);
             int current = 1;
             int all = personList.Count();
@@ -365,9 +379,11 @@ namespace Smart.Parser.Lib
             foreach(Person person in personList)
             {
                 //qDebug() << "converting to XML: " + QString::number(current) + " of " + QString::number(all);
-                singlePersonToJSON(person);
+                jsonBuilder.Append(singlePersonToJSON(person));
                 current++;
             }
+
+            return jsonBuilder.ToString();
         }
 
         List<Person> buildPersonObjects(List<Tuple<int, int>> bounds)
@@ -451,13 +467,35 @@ namespace Smart.Parser.Lib
         {
             int personsTableEnd = Adapter.GetRowsCount() - 1;
             //StreamWriter standardOutput = new StreamWriter(Console.OpenStandardOutput());
-            for (int i = personsTableStart; i <= personsTableEnd; i++)
+            for (int i = 0; i <= personsTableEnd; i++)
             {
                 //qDebug() << "person discovery - processing: " << cellAddress;
                 Cell currentCell = Adapter.GetCell(i, NameOrRelativeTypeColumn);
 
                 Console.WriteLine(JsonWriter.SerializeCell(currentCell));
             }
+        }
+
+        public void ExportCSV(string csvFile)
+        {
+            int rowCount = Adapter.GetRowsCount();
+            int colCount = Adapter.GetColsCount();
+
+            var stream = new FileStream(csvFile, FileMode.Create);
+            var writer = new StreamWriter(stream) { AutoFlush = true };
+
+            var csv = new CsvWriter(writer);
+
+            for (int r = 0; r < rowCount; r++)
+            {
+                for (int c = 0; c < colCount; c++)
+                {
+                    string value = Adapter.GetCell(r, c).Text;
+                    csv.WriteField(value);
+                }
+                csv.NextRecord();
+            }
+            csv.Flush();
         }
         public void Process()
         {
@@ -466,6 +504,44 @@ namespace Smart.Parser.Lib
             buildOrganList();
             buildOrgansJSON();
         }
+
+        public Declaration Parse()
+        {
+            List<PublicServant> servants = new List<PublicServant>();
+            PublicServant currentServant = null;
+            Person currentPerson = null;
+            int rowOffset = 0;
+
+            for (int r = rowOffset; r < Adapter.GetRowsCount(); r++)
+            {
+                string name = Adapter.GetDeclarationField(r, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                if (name.Split(new char[] { ' ', '.'}, StringSplitOptions.RemoveEmptyEntries).Length == 3)
+                {
+                    string occ = "";
+                    try
+                    {
+                        occ = Adapter.GetDeclarationField(r, DeclarationField.Occupation).Text;
+                    }
+                    catch (Exception e)
+                    { }
+                    Logger.Info("Servant " + name);
+                    PublicServant pServ = new PublicServant()
+                    {
+                        Name = name,
+                        Occupation = occ
+                    };
+                    servants.Add(pServ);
+                }
+            }
+
+            return new Declaration()
+            {
+                Declarants = servants,
+                Properties = new DeclarationProperties() { Title = "title", Year = 2010, MinistryName = "Ministry" }
+            };
+
+        }
+
 
         IAdapter Adapter { get; set; }
 
@@ -486,6 +562,7 @@ namespace Smart.Parser.Lib
         Dictionary<string, int> objectTypes = new Dictionary<string, int>();
 
         int errorCount = 0;
+        ParserParams parserParams;
 
     }
 }

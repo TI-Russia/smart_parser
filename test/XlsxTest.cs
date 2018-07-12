@@ -13,10 +13,10 @@ namespace test
         public void XlsxTypeCTest()
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract.xlsx");
-            IAdapter adapter = AsposeExcelAdapter.CreateAsposeExcelAdapter(xlsxFile);
-            Parser parser = new Parser(adapter);
+            IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
+            //Parser parser = new Parser(adapter);
 
-            parser.Process();
+            //parser.Process();
         }
     }
 }

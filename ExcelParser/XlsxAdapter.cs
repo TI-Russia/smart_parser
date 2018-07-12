@@ -10,7 +10,7 @@ using TI.Declarator.ParserCommon;
 
 namespace TI.Declarator.ExcelParser
 {
-    class XlsxAdapter : IAdapter
+    class XlsxAdapter : AdapterBase, IAdapter
     {
         private XSSFWorkbook WorkBook;
         public XlsxAdapter(string filename)
@@ -89,6 +89,12 @@ namespace TI.Declarator.ExcelParser
             };
         }
 
+        public Cell GetDeclarationField(int row, DeclarationField field)
+        {
+            return GetCell(row, Field2Col(field));
+        }
+
+
         public int GetRowsCount()
         {
             ISheet defaultSheet = WorkBook.GetSheetAt(0);
@@ -104,6 +110,12 @@ namespace TI.Declarator.ExcelParser
                 return numRows + 1;
             }
         }
+
+        public int GetColsCount()
+        {
+            throw new NotImplementedException();
+        }
+
 
         private CellRangeAddress GetMergedRegion(ISheet sheet, ICell cell)
         {
