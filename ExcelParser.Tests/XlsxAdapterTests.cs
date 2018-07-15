@@ -43,7 +43,7 @@ namespace ExcelParser.Tests
             // by row/column indexes and through cell reference
             // note that in the first case the indexes are zero-based
             Cell cell1 = adapter.GetCell(0, 13);
-            Cell cell2 = adapter.GetCell("N1");
+            Cell cell2 = adapter.GetCell(13, 1);
 
             // Check that it is indeed the same cell
             Assert.IsNotNull(cell1);
@@ -67,7 +67,7 @@ namespace ExcelParser.Tests
         {
             /// A merged empty cell that contains nothing
             var adapter = XlsxParser.GetAdapter("Test.xlsx");
-            Cell cell1 = adapter.GetCell("C76");
+            Cell cell1 = adapter.GetCell(2, 75);
             Assert.IsNotNull(cell1);
             Assert.AreEqual(true, cell1.IsEmpty);
             Assert.AreEqual("", cell1.Text);

@@ -5,7 +5,7 @@ namespace TI.Declarator.ParserCommon
 {
     public class ColumnOrdering
     {
-        private Dictionary<DeclarationField, int> ColumnOrder = new Dictionary<DeclarationField, int>();
+        public Dictionary<DeclarationField, int> ColumnOrder = new Dictionary<DeclarationField, int>();
 
         public int? this[DeclarationField field]
         {

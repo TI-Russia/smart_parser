@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,15 +53,25 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DocAdapterTest.cs" />
     <Compile Include="TestJsonWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtil.cs" />
+    <Compile Include="XlsxAdapterTest.cs" />
     <Compile Include="XlsxTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExcelParser\ExcelParser.csproj">
+      <Project>{977fa48c-ecad-4588-996e-e777bac0b807}</Project>
+      <Name>ExcelParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj">
       <Project>{DCB47788-553F-495F-BDAB-1B144E0DF5B1}</Project>
       <Name>Smart.Parser.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
+      <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>
+      <Name>ParserCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

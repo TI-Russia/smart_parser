@@ -24,22 +24,19 @@ namespace TI.Declarator.JsonSerialization
             Schema = JSchema.Parse(File.ReadAllText(SchemaSource));
         }
 
-        public static string Serialize(Declaration declaration)
+        public static string Serialize(Declaration declaration, bool validate = true)
         {
             var jServants = new JArray();
-            foreach (var serv in declaration.Declarants)
+            foreach (PublicServant serv in declaration.Declarants)
             {
                 jServants.Add(Serialize(serv, declaration.Properties));
             }
 
-            if (Validate(jServants))
-            {
-                return jServants.ToString();
-            }
-            else
+            if (validate && !Validate(jServants))
             {
                 throw new Exception("Could not validate JSON output");
             }
+            return jServants.ToString();
         }
 
         private static JObject Serialize(PublicServant servant, DeclarationProperties declarationProperties)
