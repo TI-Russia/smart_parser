@@ -194,6 +194,7 @@ namespace TI.Declarator.JsonSerialization
                 case RealEstateType.Garage: return "Гараж";
                 case RealEstateType.Dacha:
                 case RealEstateType.DachaHouse: return "Дача";
+                case RealEstateType.House: return "Жилой дом";
                 case RealEstateType.HabitableHouse: return "Жилой дом";
                 case RealEstateType.GardenPlot:
                 case RealEstateType.PlotOfLand: return "Земельный участок";

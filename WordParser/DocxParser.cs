@@ -161,12 +161,15 @@ namespace TI.Declarator.WordParser
         private bool IsPublicServantInfo(Row r)
         {
             string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType).CleanWhitespace();
-            return (nameOrRelativeType.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Count() == 3);
+            return (nameOrRelativeType.Split(new char[] { ' ', '.' }, StringSplitOptions.RemoveEmptyEntries).Count() == 3);
         }
 
         private bool IsRelativeInfo(Row r)
         {
-            return (!GetContents(r, DeclarationField.NameOrRelativeType).IsNullOrWhiteSpace()
+            string relationshipStr = GetContents(r, DeclarationField.NameOrRelativeType).ToLower();
+            return (!relationshipStr.IsNullOrWhiteSpace()
+                    && (!relationshipStr.Contains("фамилия")) 
+                    && (!relationshipStr.Contains("фио"))
                     && GetContents(r, DeclarationField.Occupation).IsNullOrWhiteSpace());
         }
 
@@ -280,7 +283,7 @@ namespace TI.Declarator.WordParser
         {
             IEnumerable<RealEstateType> propertyTypes;
             string propTypeStr = GetContents(r, DeclarationField.StatePropertyType);
-            if (string.IsNullOrWhiteSpace(propTypeStr) || propTypeStr.Trim() == "-") return null;
+            if (string.IsNullOrWhiteSpace(propTypeStr) || propTypeStr.Trim() == "-" || propTypeStr.Trim() == "-\n-") return null;
 
             if (DeclarationProperties.ColumnOrdering.OwnershipTypeInSeparateField)
             {
@@ -316,7 +319,13 @@ namespace TI.Declarator.WordParser
 
         private RealEstateType ParseRealEstateType(string strType)
         {
-            string key = strType.ToLower().RemoveStupidTranslit().Trim('\"').Replace('\n', ' ').Replace(';', ' ').Replace("  ", " ").Trim();
+            string key = strType.ToLower().RemoveStupidTranslit()
+                                          .Trim('\"')
+                                          .Replace('\n', ' ')
+                                          .Replace(';', ' ')
+                                          .Replace("   ", " ")
+                                          .Replace("  ", " ")
+                                          .Trim();
 
             if (PropertyTypes.ContainsKey(key))
             {
@@ -539,8 +548,21 @@ namespace TI.Declarator.WordParser
 
         private static decimal? ParseDeclaredIncome(string strIncome)
         {
-            if (String.IsNullOrWhiteSpace(strIncome) || strIncome.Trim() == "-") return null;
-            else return strIncome.ParseDecimalValue();
+            if (String.IsNullOrWhiteSpace(strIncome) || strIncome.Trim() == "-" || strIncome.Trim() == "–") return null;
+            else
+            {
+                int leftParenPos = strIncome.IndexOf("(");
+                if (leftParenPos == -1)
+                {
+                    return strIncome.ParseDecimalValue();
+                }
+                else
+                {
+                    return strIncome.Substring(0, leftParenPos).ParseDecimalValue();
+                }
+                
+            }
+                
         }
 
         private static string ParseDataSources(string src)

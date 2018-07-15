@@ -72,12 +72,17 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="regression\2016_Sotrudniki_ministerstva.json" />
+    <None Include="regression\A - min_res_2011_Sotrudniki_ministerstva.json" />
     <None Include="testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="testfiles\B - min_sport_2011_Sotrudniki_ministerstva.doc" />
+    <None Include="testfiles\B - min_sport_2011_Sotrudniki_ministerstva.doc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="testfiles\C - min_east_2015_Rukovoditeli_i_sotrudniki_ministerstva.xlsx" />
-    <None Include="testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx" />
+    <None Include="testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="testfiles\D - min_health_2012_1Zamestiteli_Ministra.xls" />
     <None Include="testfiles\E - min_sport_2012_Rukovoditeli_gospredpriyatij,_podvedomstvennyih_ministerstvu.doc" />
     <None Include="testfiles\F - min_cult_2012_Sotrudniki_ministerstva.doc" />
