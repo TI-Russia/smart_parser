@@ -68,11 +68,13 @@
     <Compile Include="Adapters\AsposeExcelAdapter.cs" />
     <Compile Include="Adapters\AsposeLicense.cs" />
     <Compile Include="Adapters\IAdapter.cs" />
-    <Compile Include="Data.cs" />
+    <Compile Include="ColumnDetector.cs" />
+    <Compile Include="DataHelper.cs" />
     <Compile Include="JsonWriter.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,6 +84,9 @@
       <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>
       <Name>ParserCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PropertyDictionary.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

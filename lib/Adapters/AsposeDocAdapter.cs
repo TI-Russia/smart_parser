@@ -13,6 +13,8 @@ namespace Smart.Parser.Adapters
     {
         public AsposeDocCell(Aspose.Words.Tables.Cell cell)
         {
+            if (cell == null)
+                return;
 
             String cellText = cell.ToString(Aspose.Words.SaveFormat.Text).Trim();
 
@@ -37,31 +39,27 @@ namespace Smart.Parser.Adapters
         }
     }
 
-    public class AsposeDocAdapter : AdapterBase, IAdapter
+    public class AsposeDocAdapter : IAdapter
     {
         public static IAdapter CreateAdapter(string fileName)
         {
             return new AsposeDocAdapter(fileName);
         }
 
-        public Cell GetCell(int row, int column)
+        public override Cell GetCell(int row, int column)
         {
             Aspose.Words.Tables.Cell cell = table.Rows[row].Cells[column];
             return new AsposeDocCell(cell);
         }
 
-        public Cell GetDeclarationField(int row, DeclarationField field)
-        {
-            return GetCell(row, Field2Col(field));
-        }
 
 
-        public int GetRowsCount()
+        public override int GetRowsCount()
         {
             return table.Rows.Count;
         }
 
-        public int GetColsCount()
+        public override int GetColsCount()
         {
             return table.Rows[0].Count;
         }

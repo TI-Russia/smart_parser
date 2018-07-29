@@ -24,7 +24,14 @@ namespace Smart.Parser.Adapters
             }
             return index;
         }
+        public int GetColsCount(int Row)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         private ColumnOrdering columnOrdering = null;
     }
+
 }

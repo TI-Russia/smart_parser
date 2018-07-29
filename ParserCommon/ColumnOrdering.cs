@@ -34,5 +34,6 @@ namespace TI.Declarator.ParserCommon
                 return ColumnOrder.ContainsKey(DeclarationField.OwnedRealEstateOwnershipType);
             }
         }
+        public int FirstDataRow { get; set; } = 1;
     }
 }

@@ -9,10 +9,12 @@ namespace TI.Declarator.ParserCommon
             if (str.IsNumber()) { return DeclarationField.Number; }
             if (str.IsNameOrRelativeType()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
+            /*
             if (str.IsRealEstateType()) { return DeclarationField.RealEstateType; }
             if (str.IsRealEstateArea()) { return DeclarationField.RealEstateArea; }
             if (str.IsRealEstateCountry()) { return DeclarationField.RealEstateCountry; }
             if (str.IsRealEstateOwnershipType()) { return DeclarationField.RealEstateOwnershipType; }
+            */
             if (str.IsOwnedRealEstateType()) { return DeclarationField.OwnedRealEstateType; }
             if (str.IsOwnedRealEstateOwnershipType()) { return DeclarationField.OwnedRealEstateOwnershipType; }
             if (str.IsOwnedRealEstateArea()) { return DeclarationField.OwnedRealEstateArea; }
@@ -25,6 +27,11 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
             throw new Exception($"Could not determine column type for header {str}.");
+        }
+
+        private static string NormalizeString(string str)
+        {
+            return string.Join(" ", str.ToLower().Split(new char[] {' ', '\n', '\t'}, StringSplitOptions.RemoveEmptyEntries));
         }
 
         private static bool IsNumber(this string str)
@@ -43,7 +50,8 @@ namespace TI.Declarator.ParserCommon
         private static bool IsOccupation(this string str)
         {
             string strLower = str.ToLower();
-            return (strLower.Contains("должность"));
+            return (strLower.Contains("должность") || 
+                    strLower.Contains("должностей"));
         }
 
         private static bool IsRealEstateType(this string str)
@@ -81,9 +89,12 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateType(this string str)
         {
-            string strLower = str.ToLower();
+            string strLower = NormalizeString(str);//str.ToLower();
+
             return (strLower.Contains("собственности") &&
-                    (strLower.Contains("вид объекта") || strLower.Contains("вид объектов")));
+                    (strLower.Contains("вид объекта") || 
+                     strLower.Contains("вид объектов") ||
+                     strLower.Contains("вид недвижимости") ));
         }
 
         private static bool IsOwnedRealEstateOwnershipType(this string str)
@@ -106,9 +117,12 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsStatePropertyType(this string str)
         {
-            string strLower = str.ToLower();
+            string strLower = NormalizeString(str);//str.ToLower();
+
             return (strLower.Contains("пользовании") &&
-                    (strLower.Contains("вид объекта") || strLower.Contains("вид объектов")));
+                    (strLower.Contains("вид объекта") ||
+                     strLower.Contains("вид объектов") ||
+                     strLower.Contains("вид недвижимости") ));
         }
 
         private static bool IsStatePropertyArea(this string str)
@@ -132,7 +146,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsDeclaredYearlyIncome(this string str)
         {
-            string strLower = str.ToLower();
+            string strLower = NormalizeString(str);
             return (strLower.Contains("годовой доход") || strLower.Contains("годового дохода") ||
                     strLower.Contains("сумма дохода") || strLower.Contains("декларированный доход"));
         }

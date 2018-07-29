@@ -11,13 +11,6 @@ namespace test
     public class TestJsonWriter
     {
         [TestMethod]
-        public void TestJson()
-        {
-            string jsonFile = Path.Combine(TestUtil.GetTestDataPath(), "example.json");
-            RootObject data = JsonWriter.ReadJson(jsonFile);
-            Assert.AreEqual(data.person.family_name, "Бродский");
-        }
-        [TestMethod]
         public void TestColumnOrderJson()
         {
             ColumnOrdering co = new ColumnOrdering();

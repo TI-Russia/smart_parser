@@ -10,7 +10,7 @@ using TI.Declarator.ParserCommon;
 
 namespace TI.Declarator.ExcelParser
 {
-    class XlsxAdapter : AdapterBase, IAdapter
+    class XlsxAdapter : IAdapter
     {
         private XSSFWorkbook WorkBook;
         public XlsxAdapter(string filename)
@@ -24,7 +24,7 @@ namespace TI.Declarator.ExcelParser
             return GetCell(cellRef.Row, cellRef.Col);
         }
 
-        public Cell GetCell(int row, int column)
+        public override Cell GetCell(int row, int column)
         {
             ISheet defaultSheet = WorkBook.GetSheetAt(0);
             ICell cell = defaultSheet.GetRow(row).GetCell(column);
@@ -89,13 +89,8 @@ namespace TI.Declarator.ExcelParser
             };
         }
 
-        public Cell GetDeclarationField(int row, DeclarationField field)
-        {
-            return GetCell(row, Field2Col(field));
-        }
 
-
-        public int GetRowsCount()
+        public override int GetRowsCount()
         {
             ISheet defaultSheet = WorkBook.GetSheetAt(0);
             int numRows = defaultSheet.LastRowNum;
@@ -111,7 +106,7 @@ namespace TI.Declarator.ExcelParser
             }
         }
 
-        public int GetColsCount()
+        public override int GetColsCount()
         {
             throw new NotImplementedException();
         }

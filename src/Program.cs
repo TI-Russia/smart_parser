@@ -30,15 +30,14 @@ namespace Smart.Parser
          */
         public static int Main(string[] args)
         {
+            var dict = PropertyDictionary.PropertyTypes;
             string declarationFile = string.Empty;
             int dumpColumn = -1;
             string outFile = "";
             string exportFile = "";
-            ParserParams parserParams = null;
             ColumnOrdering columnOrdering = null;
 
             Logger.Setup();
-
             Logger.Info("Command line: " + String.Join(" ", args));
 
             for (int i = 0; i < args.Length; ++i)
@@ -109,28 +108,10 @@ namespace Smart.Parser
                             break;
 
                         default:
-                            string option = args[i].Substring(1);
-                            PropertyInfo prop = typeof(ParserParams).GetProperties().FirstOrDefault(f => f.Name == option);
-                            if (prop != null)
-                            {
-                                if (parserParams == null)
-                                {
-                                    parserParams = new ParserParams();
-                                }
-                                if (i + 1 == args.Length)
-                                {
-                                    ShowHelp();
-                                    return 1;
-                                }
-
-                                prop.SetValue(parserParams, args[++i], null);
-                            }
-                            else
                             {
                                 Console.WriteLine("Invalid option " + args[i]);
                                 return 1;
                             }
-                            break;
                     }
                     continue;
                 }
@@ -164,13 +145,11 @@ namespace Smart.Parser
                     adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
                     break;
                 default:
-                    Console.WriteLine("Unknown file extension " + extension);
+                    Logger.Error("Unknown file extension " + extension);
                     return 1;
             }
 
-            adapter.SetColumnOrdering(columnOrdering);
-
-            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, parserParams);
+            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
 
             if (dumpColumn >= 0)
             {
@@ -184,8 +163,32 @@ namespace Smart.Parser
                 return 0;
             }
 
+            if (columnOrdering == null)
+            {
+                columnOrdering = ColumnDetector.ExamineHeader(adapter);
+            }
+            adapter.ColumnOrdering = columnOrdering;
+
             Logger.Info("Parsing file " + declarationFile);
-            Declaration declaration = parser.Parse();
+            Logger.SetupLogFile(Path.GetFileName(declarationFile) + ".log");
+
+            Logger.Info("Column ordering: ");
+            foreach (var ordering in columnOrdering.ColumnOrder)
+            {
+                Logger.Info(ordering.ToString());
+            }
+
+
+            Declaration declaration = null;
+            try
+            {
+                declaration = parser.Parse();
+            }
+            catch(Exception e)
+            {
+                Logger.Info("Parsing error " + e.ToString());
+                return 1;
+            }
 
             string output = DeclarationSerializer.Serialize(declaration, false);
 
@@ -194,6 +197,16 @@ namespace Smart.Parser
             {
                 Logger.Info("Writing json to " + outFile);
                 File.WriteAllText(outFile, output);
+            }
+
+            if (Logger.Errors.Count() > 0)
+            {
+                Logger.Info("*** Errors ({0}):", Logger.Errors.Count());
+
+                foreach (string e in Logger.Errors)
+                {
+                    Logger.Info(e);
+                }
             }
 
             return 0;

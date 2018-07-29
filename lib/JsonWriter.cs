@@ -21,12 +21,6 @@ namespace Smart.Parser.Lib
         }
 
 
-        static public RootObject ReadJson(string file)
-        {
-            string jsonText = System.IO.File.ReadAllText(file);
-            return JsonConvert.DeserializeObject<RootObject>(jsonText);
-        }
-
         static public T ReadJson<T>(string file)
         {
             string jsonText = System.IO.File.ReadAllText(file);

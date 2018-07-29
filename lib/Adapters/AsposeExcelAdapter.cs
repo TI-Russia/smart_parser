@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,10 +37,11 @@ namespace Smart.Parser.Adapters
             {
                 FirstMergedRow = cell.GetMergedRange().FirstRow;
                 MergedRowsCount = cell.GetMergedRange().RowCount;
+                MergedColsCount = cell.GetMergedRange().ColumnCount;
             }
         }
     }
-    public class AsposeExcelAdapter : AdapterBase, IAdapter
+    public class AsposeExcelAdapter : IAdapter
     {
         public static IAdapter CreateAdapter(string fileName)
         {
@@ -57,26 +59,56 @@ namespace Smart.Parser.Adapters
         //    return this.GetCell(row, column);
         //}
 
-        public Cell GetDeclarationField(int row, DeclarationField field)
-        {
-            return GetCell(row, Field2Col(field));
-        }
 
-        public Cell GetCell(int row, int column)
+        public override Cell GetCell(int row, int column)
         {
             Aspose.Cells.Cell cell = worksheet.Cells.GetCell(row, column);
             return new AsposeExcelCell(cell);
         }
 
-        public int GetRowsCount()
+        public override int GetRowsCount()
         {
             return totalRows;
         }
 
-        public int GetColsCount()
+        public override int GetColsCount()
         {
             return totalColumns;
         }
+
+        public override List<Cell> GetCells(int row)
+        {
+            int index = 0;
+            List<Cell> result = new List<Cell>();
+            IEnumerator enumerator = worksheet.Cells.Rows[row].GetEnumerator();
+            int range_end = -1;
+            while (enumerator.MoveNext())
+            {
+                Aspose.Cells.Cell cell = (Aspose.Cells.Cell)enumerator.Current;
+                if (index < range_end)
+                {
+                    index++;
+                    continue;
+                }
+
+                result.Add(new AsposeExcelCell(cell));
+
+                if (cell.IsMerged)
+                {
+                    int first = cell.GetMergedRange().FirstColumn;
+                    int count = cell.GetMergedRange().ColumnCount;
+                    range_end = first + count;
+                }
+                index++;
+            }
+            return result;
+        }
+
+        public override int GetColsCount(int row)
+        {
+            return GetCells(row).Count();
+        }
+
 
         private AsposeExcelAdapter(string fileName)
         {
