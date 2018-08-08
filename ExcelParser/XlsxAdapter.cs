@@ -10,7 +10,7 @@ using TI.Declarator.ParserCommon;
 
 namespace TI.Declarator.ExcelParser
 {
-    class XlsxAdapter : IAdapter
+    public class XlsxAdapter : IAdapter
     {
         private XSSFWorkbook WorkBook;
         public XlsxAdapter(string filename)

@@ -32,29 +32,24 @@ namespace ExcelParser.Tests
         }
 
         /// <summary>
-        /// Get cell by its alphanumeric index (e.g. G18)
+        /// Get cell by its row and column numbers
         /// </summary>
         [TestMethod]
         [DeploymentItem("Test.xlsx")]
         public void GetCellByIndex()
         {
             var adapter = XlsxParser.GetAdapter("Test.xlsx");
-            // We try to get the same cell using 2 different approaches:
-            // by row/column indexes and through cell reference
-            // note that in the first case the indexes are zero-based
             Cell cell1 = adapter.GetCell(0, 13);
-            Cell cell2 = adapter.GetCell(13, 1);
 
             // Check that it is indeed the same cell
             Assert.IsNotNull(cell1);
-            Assert.IsNotNull(cell2);
 
-            Assert.AreEqual(cell1.IsMerged, cell2.IsMerged);
-            Assert.AreEqual(cell1.MergedRowsCount, cell2.MergedRowsCount);
-            Assert.AreEqual(cell1.IsEmpty, cell2.IsEmpty);
-            Assert.AreEqual(cell1.BackgroundColor, cell2.BackgroundColor);
-            Assert.AreEqual(cell1.ForegroundColor, cell2.ForegroundColor);
-            Assert.AreEqual(cell1.Text, cell2.Text);
+            Assert.AreEqual(false, cell1.IsMerged);
+            Assert.AreEqual(1, cell1.MergedRowsCount);
+            Assert.AreEqual(false, cell1.IsEmpty);
+            Assert.AreEqual(null, cell1.BackgroundColor);
+            Assert.AreEqual("5B9BD5", cell1.ForegroundColor);
+            Assert.AreEqual("TestCell", cell1.Text);
         }
 
 
@@ -67,7 +62,7 @@ namespace ExcelParser.Tests
         {
             /// A merged empty cell that contains nothing
             var adapter = XlsxParser.GetAdapter("Test.xlsx");
-            Cell cell1 = adapter.GetCell(2, 75);
+            Cell cell1 = adapter.GetCell(75, 2);
             Assert.IsNotNull(cell1);
             Assert.AreEqual(true, cell1.IsEmpty);
             Assert.AreEqual("", cell1.Text);
