@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using NPOI.SS.UserModel;
@@ -24,6 +25,32 @@ namespace TI.Declarator.ExcelParser
             return GetCell(cellRef.Row, cellRef.Col);
         }
 
+        public override List<Cell> GetCells(int row)
+        {
+            ISheet defaultSheet = WorkBook.GetSheetAt(0);
+            int index = 0;
+            List<Cell> result = new List<Cell>();
+            while (true)
+            {
+                var cell = GetCell(row, index);
+
+                if (cell == null) break;
+                result.Add(cell);
+
+                if (cell.IsMerged)
+                {
+                    int count = cell.MergedColsCount;
+                    index += count;
+                }
+                else
+                {
+                    index++;
+                }
+            }
+
+            return result;
+        }
+
         public override Cell GetCell(int row, int column)
         {
             ISheet defaultSheet = WorkBook.GetSheetAt(0);
@@ -35,6 +62,7 @@ namespace TI.Declarator.ExcelParser
             bool isMergedCell = cell.IsMergedCell;
             int firstMergedRow;
             int mergedRowsCount;
+            int mergedColsCount;
             if (isMergedCell)
             {
                 CellRangeAddress mergedRegion = GetMergedRegion(defaultSheet, cell);
@@ -44,11 +72,16 @@ namespace TI.Declarator.ExcelParser
                 cellContents = defaultSheet.GetRow(mergedRegion.FirstRow)
                                            .GetCell(mergedRegion.FirstColumn)
                                            .ToString();
+
+                mergedColsCount = mergedRegion.LastColumn - mergedRegion.FirstColumn + 1;
+                
             }
             else
             {
                 firstMergedRow = cell.RowIndex;
                 mergedRowsCount = 1;
+
+                mergedColsCount = 1;
                 cellContents = cell.ToString();
             }
 
@@ -80,6 +113,7 @@ namespace TI.Declarator.ExcelParser
                 IsMerged = isMergedCell,
                 FirstMergedRow = firstMergedRow,
                 MergedRowsCount = mergedRowsCount,
+                MergedColsCount = mergedColsCount,
                 // FIXME to init this property we need a formal definition of "header cell"
                 IsHeader = false,
                 IsEmpty = cellContents.IsNullOrWhiteSpace(),
@@ -108,7 +142,12 @@ namespace TI.Declarator.ExcelParser
 
         public override int GetColsCount()
         {
-            throw new NotImplementedException();
+            return WorkBook.GetSheetAt(0).GetRow(0).Cells.Count;
+        }
+
+        public override int GetColsCount(int row)
+        {
+            return GetCells(row).Count();
         }
 
 
