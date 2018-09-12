@@ -114,6 +114,7 @@
 иное недвижимое имущество=>Other
 квартира=>Apartment
 квартира 1/3=>Apartment
+квартира, 1/2=>Apartment
 квартрира=>Apartment
 квартира общая долевая (1/2)=>Apartment
 квартира с хозпостройкой=>Apartment
@@ -143,6 +144,7 @@
 машино-место=>ParkingSpace
 машиноместо=>ParkingSpace
 машиноместо в гараже=>ParkingSpace
+машиноместо на автостоянке=>ParkingSpace
 металлический гаражный тент=>Garage
 механическая мастерская=>Other
 объект ижс=>HabitableHouse

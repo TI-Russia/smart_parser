@@ -160,7 +160,7 @@ namespace TI.Declarator.WordParser
 
         private bool IsPublicServantInfo(Row r)
         {
-            string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType).CleanWhitespace();
+            string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType).CleanWhitespace().Replace("- ", "-");
             return (nameOrRelativeType.Split(new char[] { ' ', '.' }, StringSplitOptions.RemoveEmptyEntries).Count() == 3);
         }
 
@@ -225,7 +225,7 @@ namespace TI.Declarator.WordParser
 
         private static RelationType ParseRelationType(string strRel)
         {
-            switch (strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit())
+            switch (strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit().Replace("- ", "-").Replace("-\n", "-"))
             {
                 case "супруг": return RelationType.MaleSpouse;
                 case "супруга": return RelationType.FemaleSpouse;
@@ -423,6 +423,7 @@ namespace TI.Declarator.WordParser
 
                     startingPos = rightParenPos + 1;
                 }
+                // FIXME else what?
 
                 leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
             }
@@ -433,7 +434,8 @@ namespace TI.Declarator.WordParser
         private static bool ContainsOwnershipType(string str)
         {
             string strProc = str.Trim().ToLower();
-            return (str.Contains("индивидуальная") || str.Contains("долевая") || str.Contains("общая"));
+            return (str.Contains("индивидуальная") || str.Contains("долевая") || str.Contains("общая") || str.Contains("аренда") ||
+                    str.Contains("пользование") || str.Contains("предоставление") || str.Contains("найм"));
         }
 
         private static IEnumerable<string> ParseOwnershipShares(string strOwn, IEnumerable<OwnershipType> ownTypes)
