@@ -64,6 +64,10 @@ namespace Smart.Parser.Adapters
             return table.Rows[0].Count;
         }
 
+        public override string GetTitle()
+        {
+            return title;
+        }
 
 
         private AsposeDocAdapter(string fileName)
@@ -79,8 +83,23 @@ namespace Smart.Parser.Adapters
 
 
             table = (Aspose.Words.Tables.Table)tables[0];
+
+            Aspose.Words.Node node = table;
+            while (node.PreviousSibling != null)
+            { 
+                node = node.PreviousSibling;
+            }
+            string text = "";
+            while (node.NextSibling != table)
+            {
+                text += node.ToTxt();
+                node = node.NextSibling;
+            }
+
+            title = text;
         }
 
         private Aspose.Words.Tables.Table table;
+        private string title;
     }
 }

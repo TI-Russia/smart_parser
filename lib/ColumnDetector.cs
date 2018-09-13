@@ -31,6 +31,7 @@ namespace Smart.Parser.Lib
         static public ColumnOrdering ExamineHeader(IAdapter t)
         {
             int headerRowNum = 0;
+            int auxRowCount = 0;
 
             while (!IsHeader(t.Rows[headerRowNum]))
             {
@@ -61,6 +62,7 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
+                    auxRowCount = 1;
                     int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
                     Row auxRow = t.Rows[headerRowNum+1];
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
@@ -88,7 +90,7 @@ namespace Smart.Parser.Lib
 
             }
 
-            res.FirstDataRow = headerRowNum + 1;
+            res.FirstDataRow = headerRowNum + 1 + auxRowCount;
 
             return res;
         }

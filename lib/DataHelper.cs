@@ -56,7 +56,7 @@ namespace Smart.Parser.Lib
             switch (strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit())
             {
                 case "супруг": return RelationType.MaleSpouse;
-                case "суруга": return RelationType.MaleSpouse;
+                case "суруга": return RelationType.FemaleSpouse;
                 case "супруга": return RelationType.FemaleSpouse;
                 case "несовершен-нолетняя дочь": return RelationType.Child;
                 case "несовершенно-летняя дочь": return RelationType.Child;
@@ -172,13 +172,54 @@ namespace Smart.Parser.Lib
             return res;
         }
 
+        static public Tuple<RealEstateType, OwnershipType, string> ParsePropertyAndOwnershipType(string strPropInfo)
+        {
+            int leftParenPos = strPropInfo.IndexOf('(');
+            string strPropType = strPropInfo.Substring(0, leftParenPos > 0 ? leftParenPos : strPropInfo.Length).Trim();
+            RealEstateType realEstateType = ParseRealEstateType(strPropType);
+            OwnershipType ownershipType = OwnershipType.Individual;
+            string share = "1";
+
+            int rightParenPos = -1;
+            if (leftParenPos != -1)
+            {
+                rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
+                if (rightParenPos == -1)
+                {
+                    throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
+                }
+
+                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
+                if (ContainsOwnershipType(strOwnType))
+                {
+                    ownershipType = ParseOwnershipType(strOwnType);
+                    share = ParseOwnershipShare(strOwnType, ownershipType);
+
+                }
+            }
+
+            return Tuple.Create(realEstateType, ownershipType, share);
+        }
+
+
         static public IEnumerable<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
         {
             var res = new List<Tuple<RealEstateType, OwnershipType, string>>();
 
+
             int startingPos = 0;
             int rightParenPos = -1;
             int leftParenPos = strPropInfo.IndexOf('(', startingPos);
+
+            if (leftParenPos < 0)
+            {
+                RealEstateType realEstateType = ParseRealEstateType(strPropInfo);
+                OwnershipType ownershipType = OwnershipType.Individual;
+                string share = "1";
+                res.Add(Tuple.Create(realEstateType, ownershipType, share));
+
+                return res;
+            }
             while (leftParenPos != -1)
             {
                 rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
@@ -190,7 +231,7 @@ namespace Smart.Parser.Lib
                 string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
                 if (ContainsOwnershipType(strOwnType))
                 {
-                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos);
+                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos).Trim();
                     RealEstateType realEstateType = ParseRealEstateType(strPropType);
                     OwnershipType ownershipType = ParseOwnershipType(strOwnType);
                     string share = ParseOwnershipShare(strOwnType, ownershipType);
@@ -348,6 +389,7 @@ namespace Smart.Parser.Lib
                 case "франция": return Country.France;
                 case "туркмения": return Country.Turkmenistan;
                 case "черногория": return Country.Montenegro;
+                case "ukraine": return Country.Ukraine;
                 default: throw new ArgumentOutOfRangeException();
             }
         }

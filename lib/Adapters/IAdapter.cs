@@ -128,7 +128,10 @@ namespace Smart.Parser.Adapters
 
 
         public ColumnOrdering ColumnOrdering { get; set; }
-
+        public virtual string GetTitle()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

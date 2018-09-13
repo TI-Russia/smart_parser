@@ -108,6 +108,10 @@ namespace Smart.Parser.Adapters
         {
             return GetCells(row).Count();
         }
+        public override string GetTitle()
+        {
+            return title;
+        }
 
 
         private AsposeExcelAdapter(string fileName)
@@ -116,10 +120,32 @@ namespace Smart.Parser.Adapters
             worksheet = workbook.Worksheets[0];
             totalRows = worksheet.Cells.Rows.Count;
             totalColumns = worksheet.Cells.MaxColumn + 1;
+
+            FindTitle();
+        }
+
+        private void FindTitle()
+        {
+            int row = 0;
+            string text = "";
+            while (row < GetRowsCount())
+            {
+                Cell cell = GetCell(row, 0);
+                if (cell.IsMerged && cell.MergedColsCount > 3)
+                {
+                    text += cell.Text;
+                    row += cell.MergedRowsCount;
+                }
+                else
+                    break;
+            }
+
+            title = text;
         }
 
         private Aspose.Cells.Worksheet worksheet;
         private int totalRows;
         private int totalColumns;
+        private string title;
     }
 }

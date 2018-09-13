@@ -92,34 +92,24 @@ namespace Smart.Parser.Lib
                 {
                     occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
                 }
-                catch(Exception)
-                {}
-
+                catch (Exception)
+                { }
                 string declaredYearlyIncomeStr = Adapter.GetDeclarationField(row, DeclarationField.DeclaredYearlyIncome).Text;
                 decimal? declaredYearlyIncome = DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
 
                 if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    Logger.Info("{0} Servant {1} Occupation {2} Income {3}", row, nameOrRelativeType, occupationStr, declaredYearlyIncome);
+                    Logger.Info("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
                     PublicServant pServ = new PublicServant()
                     {
                         Name = nameOrRelativeType,
                         Occupation = occupationStr
                     };
-                    try
-                    {
-                        FillPersonProperties(Adapter.Rows[row], pServ);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                        continue;
-                    }
+
                     currentServant = pServ;
                     currentPerson = pServ;
                     servants.Add(pServ);
-
-
+                    currentPerson.DeclaredYearlyIncome = declaredYearlyIncome;
                 }
                 else if (DataHelper.IsRelativeInfo(nameOrRelativeType, occupationStr))
                 {
@@ -135,28 +125,30 @@ namespace Smart.Parser.Lib
                         RelationType = relationType
                     };
 
-                    try
-                    {
-                        FillPersonProperties(Adapter.Rows[row], pRel);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                        continue;
-                    }
 
-                    Logger.Info("{0} Relative {1} Relation {2} Income {3}", row, nameOrRelativeType, relationType.ToString(), declaredYearlyIncome);
+                    Logger.Info("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
 
                     currentServant.Relatives.Add(pRel);
                     currentPerson = pRel;
-                }
-                else
-                {
+                    currentPerson.DeclaredYearlyIncome = declaredYearlyIncome;
                 }
 
                 if (currentPerson == null)
+                {
+                    Logger.Error("***ERROR No current person({0})", row);
                     continue;
-                currentPerson.DeclaredYearlyIncome = declaredYearlyIncome;
+                }
+
+                try
+                {
+                    FillPersonProperties(Adapter.Rows[row], currentPerson);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error("***ERROR row({0}) {1}", row, e.Message);
+                    continue;
+                }
+
             }
 
             return new Declaration()
@@ -192,18 +184,35 @@ namespace Smart.Parser.Lib
             return res;
         }
 
+        private string GetVehicleString(Row r)
+        {
+            if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.Vehicle))
+            {
+                return r.GetContents(DeclarationField.Vehicle);
+            }
+            return (r.GetContents(DeclarationField.VehicleType) + " " + r.GetContents(DeclarationField.VehicleModel)).Trim();
+        }
+
         private void FillPersonProperties(Row r, Person p)
         {
             var ownedProperty = ParseOwnedProperty(r);
-            if (ownedProperty != null) { p.RealEstateProperties.AddRange(ownedProperty); }
+            if (ownedProperty != null && ownedProperty.Count() > 0)
+            {
+                p.RealEstateProperties.AddRange(ownedProperty);
+            }
 
             var stateProperty = ParseStateProperty(r);
-            if (stateProperty != null) { p.RealEstateProperties.AddRange(stateProperty); }
+            if (stateProperty != null && stateProperty.Count() > 0)
+            {
+                p.RealEstateProperties.AddRange(stateProperty);
+            }
 
-            string vehicle = r.GetContents(DeclarationField.Vehicle);
-            if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-") { p.Vehicles.Add(vehicle); }
+            string vehicle = GetVehicleString(r); // r.GetContents(DeclarationField.Vehicle);
+            if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-")
+            {
+                p.Vehicles.Add(vehicle);
+            }
 
-            p.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(r.GetContents(DeclarationField.DeclaredYearlyIncome));
             if (r.ColumnOrdering[DeclarationField.DataSources] != null)
             {
                 p.DataSources = DataHelper.ParseDataSources(r.GetContents(DeclarationField.DataSources));
@@ -216,7 +225,10 @@ namespace Smart.Parser.Lib
             IEnumerable<OwnershipType> ownershipTypes;
             IEnumerable<string> shares;
             string estateTypeStr = r.GetContents(DeclarationField.OwnedRealEstateType);
-            if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-") return null;
+            if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
+            {
+                return null;
+            }
 
             if (r.ColumnOrdering.OwnershipTypeInSeparateField)
             {

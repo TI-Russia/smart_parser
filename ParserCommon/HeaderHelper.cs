@@ -21,7 +21,9 @@ namespace TI.Declarator.ParserCommon
             if (str.IsOwnedRealEstateCountry()) { return DeclarationField.OwnedRealEstateCountry; }
             if (str.IsStatePropertyType()) { return DeclarationField.StatePropertyType; }
             if (str.IsStatePropertyArea()) { return DeclarationField.StatePropertyArea; }
-            if (str.IsStatePropertyCountry()) { return DeclarationField.StatePropertyCountry; }           
+            if (str.IsStatePropertyCountry()) { return DeclarationField.StatePropertyCountry; }
+            if (str.IsVehicleType()) { return DeclarationField.VehicleType; }
+            if (str.IsVehicleModel()) { return DeclarationField.VehicleModel; }
             if (str.IsVehicle()) { return DeclarationField.Vehicle; }
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
@@ -142,6 +144,20 @@ namespace TI.Declarator.ParserCommon
             string strLower = str.ToLower();
             return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
                     (!str.Contains("источник")));
+        }
+
+        private static bool IsVehicleType(this string str)
+        {
+            string strLower = str.ToLower();
+            return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
+                    ((str.Contains("вид") && !str.Contains("марк"))));
+        }
+
+        private static bool IsVehicleModel(this string str)
+        {
+            string strLower = str.ToLower();
+            return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
+                    ((str.Contains("марка") && !str.Contains("вид"))));
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)

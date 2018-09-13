@@ -21,5 +21,7 @@ namespace TI.Declarator.ParserCommon
         Vehicle,
         DeclaredYearlyIncome,
         DataSources,
+        VehicleType,
+        VehicleModel,
     }
 }

@@ -187,6 +187,7 @@ namespace TI.Declarator.JsonSerialization
             switch(prop.PropertyType)
             {                
                 case RealEstateType.Apartment:
+                case RealEstateType.Rooms: return "Квартира";
                 case RealEstateType.Room: return "Квартира";
                 case RealEstateType.Garage: return "Гараж";
                 case RealEstateType.Dacha:
@@ -210,7 +211,13 @@ namespace TI.Declarator.JsonSerialization
                 case Country.Undefined: return null;
                 case Country.France: return "Франция";
                 case Country.Russia: return "Россия";
-                default: throw new ArgumentOutOfRangeException("prop.Country", $"Invalid country name: {prop.Country.ToString()}");
+                case Country.Ukraine: return "Украина";
+                case Country.Kazakhstan: return "Казахстан";
+                case Country.Bulgaria: return "Болгария";
+                default:
+                    Console.Write("Invalid country name: { prop.Country.ToString()}");
+                    return prop.Country.ToString();
+                    //throw new ArgumentOutOfRangeException("prop.Country", $"Invalid country name: {prop.Country.ToString()}");
             }
         }
 

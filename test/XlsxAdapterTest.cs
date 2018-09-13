@@ -12,11 +12,11 @@ namespace test
         [TestMethod]
         public void XlsxTypeCTest()
         {
-            string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "c_sample.xlsx");
+            string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract.xlsx");
 
-            IAdapter adapter = XlsxParser.GetAdapter("Test.xlsx");
+            //IAdapter adapter = XlsxParser.GetAdapter(xlsxFile);
 
-            //IAdapter adapter = AsposeExcelAdapter.CreateAsposeExcelAdapter(xlsxFile);
+            IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
             //Parser parser = new Parser(adapter);
 
             //parser.Process();
