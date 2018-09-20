@@ -99,6 +99,11 @@ namespace Smart.Parser.Adapters
             return new Row(this, row);
         }
 
+        public bool HasDeclarationField(DeclarationField field)
+        {
+            return ColumnOrdering.ColumnOrder.ContainsKey(field);
+        }
+
         public Cell GetDeclarationField(int row, DeclarationField field)
         {
             return GetCell(row, Field2Col(field));

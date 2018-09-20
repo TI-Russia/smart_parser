@@ -30,7 +30,6 @@ namespace Smart.Parser
          */
         public static int Main(string[] args)
         {
-            var dict = PropertyDictionary.PropertyTypes;
             string declarationFile = string.Empty;
             int dumpColumn = -1;
             string outFile = "";
@@ -133,6 +132,7 @@ namespace Smart.Parser
 
             IAdapter adapter = null;
             string extension = Path.GetExtension(declarationFile);
+            string defaultOut = Path.GetFileNameWithoutExtension(declarationFile) + ".json";
 
             switch (extension)
             {
@@ -169,7 +169,7 @@ namespace Smart.Parser
             }
             adapter.ColumnOrdering = columnOrdering;
 
-            Logger.Info("Parsing file " + declarationFile);
+            Logger.SetLoggingLevel(Logger.LogLevel.Error);
             Logger.SetupLogFile(Path.GetFileName(declarationFile) + ".log");
 
             Logger.Info("Column ordering: ");
@@ -193,11 +193,12 @@ namespace Smart.Parser
             string output = DeclarationSerializer.Serialize(declaration, false);
 
             Logger.Info("Output size: " + output.Length);
-            if (outFile != "")
+            if (String.IsNullOrEmpty(outFile))
             {
-                Logger.Info("Writing json to " + outFile);
-                File.WriteAllText(outFile, output);
+                outFile = defaultOut;
             }
+            Logger.Info("Writing json to " + outFile);
+            File.WriteAllText(outFile, output);
 
             if (Logger.Errors.Count() > 0)
             {

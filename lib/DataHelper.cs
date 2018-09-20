@@ -133,14 +133,12 @@ namespace Smart.Parser.Lib
                                           .Replace("  ", " ")
                                           .Trim();
 
-            if (PropertyDictionary.PropertyTypes.ContainsKey(key))
+            RealEstateType type;
+            if (PropertyDictionary.ParseParseRealEstateType(key, out type))
             {
-                return PropertyDictionary.PropertyTypes[key];
+                return type;
             }
-            else
-            {
-                throw new ArgumentOutOfRangeException("strType", $"Неизвестный тип недвижимости: {strType}");
-            }
+            throw new ArgumentOutOfRangeException("strType", $"Неизвестный тип недвижимости: {strType} ({key})");
         }
 
         public static IEnumerable<OwnershipType> ParseOwnershipTypes(string strOwn)
@@ -152,19 +150,19 @@ namespace Smart.Parser.Lib
         {
             string str = strOwn.ToLower().Trim();
             OwnershipType res;
-            if (str.StartsWith("индивидуальная")) res = OwnershipType.Individual;
-            else if (str.StartsWith("собственность")) res = OwnershipType.Individual;
-            else if (str.StartsWith("общая совместная")) res = OwnershipType.Coop;
-            else if (str.StartsWith("совместная")) res = OwnershipType.Coop;
+            if (str.Contains("индивидуальная")) res = OwnershipType.Individual;
+            else if (str.Contains("собственность")) res = OwnershipType.Individual;
+            else if (str.Contains("общая совместная")) res = OwnershipType.Coop;
+            else if (str.Contains("совместная")) res = OwnershipType.Coop;
 
-            else if (str.StartsWith("делевая")) res = OwnershipType.Shared;
-            else if (str.StartsWith("долевая")) res = OwnershipType.Shared;
-            else if (str.StartsWith("долеявая")) res = OwnershipType.Shared;
-            else if (str.StartsWith("общая долевая")) res = OwnershipType.Shared;
-            else if (str.StartsWith("общая, долевая")) res = OwnershipType.Shared;
-            else if (str.StartsWith("общедолевая")) res = OwnershipType.Shared;
+            else if (str.Contains("делевая")) res = OwnershipType.Shared;
+            else if (str.Contains("долевая")) res = OwnershipType.Shared;
+            else if (str.Contains("долеявая")) res = OwnershipType.Shared;
+            else if (str.Contains("общая долевая")) res = OwnershipType.Shared;
+            else if (str.Contains("общая, долевая")) res = OwnershipType.Shared;
+            else if (str.Contains("общедолевая")) res = OwnershipType.Shared;
 
-            else if (str.StartsWith("общая")) res = OwnershipType.Coop;
+            else if (str.Contains("общая")) res = OwnershipType.Coop;
 
             else if (String.IsNullOrWhiteSpace(str) || str == "-") res = OwnershipType.NotAnOwner;
             else throw new ArgumentOutOfRangeException("strOwn", $"Неизвестный тип собственности: {strOwn}");
@@ -210,8 +208,10 @@ namespace Smart.Parser.Lib
             int startingPos = 0;
             int rightParenPos = -1;
             int leftParenPos = strPropInfo.IndexOf('(', startingPos);
+            bool containOwnershipType = ContainsOwnershipType(strPropInfo);
 
-            if (leftParenPos < 0)
+
+            if (leftParenPos < 0 && !containOwnershipType)
             {
                 RealEstateType realEstateType = ParseRealEstateType(strPropInfo);
                 OwnershipType ownershipType = OwnershipType.Individual;
@@ -220,6 +220,15 @@ namespace Smart.Parser.Lib
 
                 return res;
             }
+            if (strPropInfo.Contains(","))
+            {
+                string[] values = strPropInfo.Split(',');
+                RealEstateType realEstateType = ParseRealEstateType(values[0]);
+                OwnershipType ownershipType = ParseOwnershipType(strPropInfo);
+                string share = ParseOwnershipShare(values[1], ownershipType);
+                res.Add(Tuple.Create(realEstateType, ownershipType, share));
+            }
+
             while (leftParenPos != -1)
             {
                 rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
@@ -324,6 +333,10 @@ namespace Smart.Parser.Lib
             var res = new List<decimal?>();
             foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
+                if (str.Contains("м")) // м. п.м, и т.д.
+                {
+                    continue;
+                }
                 decimal? area;
                 if (String.IsNullOrWhiteSpace(str) || str == "-")
                 {
@@ -390,6 +403,9 @@ namespace Smart.Parser.Lib
                 case "туркмения": return Country.Turkmenistan;
                 case "черногория": return Country.Montenegro;
                 case "ukraine": return Country.Ukraine;
+                case "мексика": return Country.Mexico;
+                case "абхазия": return Country.Abkhazia;
+                case "южная осетия": return Country.SouthOssetia;
                 default: throw new ArgumentOutOfRangeException();
             }
         }

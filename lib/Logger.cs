@@ -31,7 +31,7 @@ namespace Parser.Lib
 
             layout.ActivateOptions();
             appender.ActivateOptions();
-            BasicConfigurator.Configure(new IAppender[]{ appender, consoleAppender });
+            BasicConfigurator.Configure(new IAppender[] { appender, consoleAppender });
             //BasicConfigurator.Configure(consoleAppender);
 
 
@@ -57,9 +57,29 @@ namespace Parser.Lib
             }
         }
 
+        public enum LogLevel
+        {
+            Debug = 0,
+            Info,
+            Error
+        };
+        static public void SetLoggingLevel(LogLevel level)
+        {
+            log4net.Core.Level[] levels = { log4net.Core.Level.Debug, log4net.Core.Level.Info, log4net.Core.Level.Error };
+            ((log4net.Repository.Hierarchy.Hierarchy) LogManager.GetRepository()).Root.Level = levels[(int)level];
+            ((log4net.Repository.Hierarchy.Hierarchy) LogManager.GetRepository()).RaiseConfigurationChanged(EventArgs.Empty);
+        }
+        public static ILog Log { get { return log; } }
+
         private static ILog log;
-        static public void Info(string info, params object[] par) { log.Info(String.Format(info, par)); }
-        static public void Info(string info) { log.Info(String.Format(info)); }
+        static public void Info(string info, params object[] par)
+        {
+            log.Info(String.Format(info, par));
+        }
+        static public void Info(string info)
+        {
+            log.Info(String.Format(info));
+        }
         static public void Error(string info, params object[] par)
         {
             string message = String.Format(info, par);

@@ -12,14 +12,14 @@ namespace TI.Declarator.ParserCommon
         {
             decimal res;
             string processedVal = val.Replace(" ", "");
-            try
+            if (!Decimal.TryParse(processedVal, NumberStyles.Any, RussianCulture, out res))
             {
-                res = Decimal.Parse(processedVal, RussianCulture);
+                if (!Decimal.TryParse(processedVal, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+                {
+                    throw new Exception("can't parse value '" + processedVal + "' as decimal");
+                }
             }
-            catch (FormatException fEx)
-            {
-                res = Decimal.Parse(processedVal, CultureInfo.InvariantCulture);
-            }
+            
 
             return res;
         }

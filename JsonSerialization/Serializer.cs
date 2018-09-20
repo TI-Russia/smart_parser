@@ -111,7 +111,7 @@ namespace TI.Declarator.JsonSerialization
                     new JProperty("name", prop.Name),
                     new JProperty("type", GetPropertyType(prop)),
                     // TODO should property area really be an integer
-                    new JProperty("square", (int)prop.Area),
+                    new JProperty("square", /*(int)*/prop.Area),
                     new JProperty("country", GetCountry(prop)),
                     new JProperty("region", null),
                     new JProperty("own_type", GetOwnershipType(prop)),
@@ -128,7 +128,7 @@ namespace TI.Declarator.JsonSerialization
                         new JProperty("name", prop.Name),
                         new JProperty("type", GetPropertyType(prop)),
                         // TODO should property area really be an integer
-                        new JProperty("square", (int)prop.Area),
+                        new JProperty("square", /*(int)*/prop.Area),
                         new JProperty("country", GetCountry(prop)),
                         new JProperty("region", null),
                         new JProperty("own_type", GetOwnershipType(prop)),
@@ -276,7 +276,14 @@ namespace TI.Declarator.JsonSerialization
                     decimal factor = 1.0M;
                     if (ownedShare.EndsWith("%")) { factor = 0.01M; }
                     string shareStr = ownedShare.TrimEnd('%');
-                    return Decimal.Parse(shareStr, RussianCulture) * factor;
+                    Decimal value;
+                    if (!Decimal.TryParse(shareStr, NumberStyles.Any, RussianCulture, out value))
+                    {
+                        // TBD: Log error
+                        return 0;
+                    }
+
+                    return value * factor;
                 }
             }
             else

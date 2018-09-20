@@ -88,12 +88,11 @@ namespace Smart.Parser.Lib
             {
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
                 string occupationStr = "";
-                try
+                if (Adapter.HasDeclarationField(DeclarationField.Occupation))
                 {
                     occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
                 }
-                catch (Exception)
-                { }
+
                 string declaredYearlyIncomeStr = Adapter.GetDeclarationField(row, DeclarationField.DeclaredYearlyIncome).Text;
                 decimal? declaredYearlyIncome = DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
 
@@ -255,7 +254,13 @@ namespace Smart.Parser.Lib
 
             for (int i = 0; i < propertyTypes.Count(); i++)
             {
-                res.Add(new RealEstateProperty(ownershipTypes.ElementAt(i), propertyTypes.ElementAt(i), countries.ElementAtOrDefault(i), areas.ElementAt(i), estateTypeStr, shares.ElementAt(i)));
+                res.Add(new RealEstateProperty(
+                    ownershipTypes.ElementAt(i), 
+                    propertyTypes.ElementAt(i), 
+                    countries.ElementAtOrDefault(i), 
+                    areas.Count() > 0 ? areas.ElementAt(i) : null, 
+                    estateTypeStr, 
+                    shares.ElementAt(i)));
             }
             return res;
         }
@@ -287,7 +292,12 @@ namespace Smart.Parser.Lib
             var res = new List<RealEstateProperty>();
             for (int i = 0; i < propertyTypes.Count(); i++)
             {
-                res.Add(new RealEstateProperty(ownershipType, propertyTypes.ElementAt(i), countries.ElementAt(i), areas.ElementAt(i), propTypeStr, share));
+                decimal? area = null;
+                if (areas.Count() > i)
+                {
+                    area = areas.ElementAt(i);
+                }
+                res.Add(new RealEstateProperty(ownershipType, propertyTypes.ElementAt(i), countries.ElementAt(i), area, propTypeStr, share));
             }
 
             return res;

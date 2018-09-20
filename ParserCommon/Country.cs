@@ -29,6 +29,10 @@ namespace TI.Declarator.ParserCommon
         Finland = 1022,
         France = 1023,
         Turkmenistan = 1024,
-        Montenegro = 1025
+        Montenegro = 1025,
+        Mexico,
+        Abkhazia,
+        SouthOssetia
+
     }
 }
