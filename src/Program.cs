@@ -35,6 +35,8 @@ namespace Smart.Parser
             string outFile = "";
             string exportFile = "";
             ColumnOrdering columnOrdering = null;
+            string verbose = "";
+            Logger.LogLevel verboseLevel = Logger.LogLevel.Error;
 
             Logger.Setup();
             Logger.Info("Command line: " + String.Join(" ", args));
@@ -103,6 +105,30 @@ namespace Smart.Parser
                             }
                             break;
 
+                        case "-v":
+                            if (i + 1 < args.Length)
+                            {
+                                verbose = args[++i];
+                                switch (verbose)
+                                {
+                                    case "info": verboseLevel = Logger.LogLevel.Info; break;
+                                    case "error": verboseLevel = Logger.LogLevel.Error; break;
+                                    case "debug": verboseLevel = Logger.LogLevel.Debug; break;
+                                    default:
+                                        {
+                                            ShowHelp();
+                                            return 1;
+                                        }
+                                }
+                            }
+                            else
+                            {
+                                ShowHelp();
+                                return 1;
+                            }
+                            break;
+
+
                         case "-q":
                             break;
 
@@ -169,7 +195,7 @@ namespace Smart.Parser
             }
             adapter.ColumnOrdering = columnOrdering;
 
-            Logger.SetLoggingLevel(Logger.LogLevel.Error);
+            Logger.SetLoggingLevel(verboseLevel);
             Logger.SetupLogFile(Path.GetFileName(declarationFile) + ".log");
 
             Logger.Info("Column ordering: ");

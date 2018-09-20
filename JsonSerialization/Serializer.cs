@@ -214,8 +214,32 @@ namespace TI.Declarator.JsonSerialization
                 case Country.Ukraine: return "Украина";
                 case Country.Kazakhstan: return "Казахстан";
                 case Country.Bulgaria: return "Болгария";
+                case Country.Belarus: return "Беларусь";
+                case Country.Georgia: return "Грузия";
+                case Country.Lithuania: return "Литва";
+                case Country.Portugal: return "Португалия";
+                case Country.Usa: return "США";
+                case Country.Thailand: return "Тайланд";
+                case Country.Hungary: return "Венгрия";
+                case Country.Latvia: return "Латвия";
+                case Country.Uzbekistan: return "Узбекистан";
+                case Country.Armenia: return "Армения";
+                case Country.Turkey: return "Турция";
+                case Country.Spain: return "Испания";
+                case Country.Estonia: return "Эстония";
+                case Country.Mongolia: return "Монголия";
+                case Country.Tajikistan: return "Таджикистан";
+                case Country.CzechRepublic: return "Чехия";
+                case Country.Kyrgyzstan: return "Киргизия";
+                case Country.Finland: return "Финляндия";
+                case Country.Turkmenistan: return "Туркмения";
+                case Country.Montenegro: return "Черногория";
+                case Country.Mexico: return "Мексика";
+                case Country.Abkhazia: return "Абхазия";
+                case Country.SouthOssetia: return "Южная Осетия";
+
                 default:
-                    Console.Write("Invalid country name: { prop.Country.ToString()}");
+                    Console.Write($"Invalid country name: {prop.Country.ToString()}");
                     return prop.Country.ToString();
                     //throw new ArgumentOutOfRangeException("prop.Country", $"Invalid country name: {prop.Country.ToString()}");
             }
@@ -280,6 +304,7 @@ namespace TI.Declarator.JsonSerialization
                     if (!Decimal.TryParse(shareStr, NumberStyles.Any, RussianCulture, out value))
                     {
                         // TBD: Log error
+                        Console.Write($"can't parse ownedShare: {ownedShare}");
                         return 0;
                     }
 

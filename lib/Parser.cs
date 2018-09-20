@@ -218,11 +218,11 @@ namespace Smart.Parser.Lib
             }
         }
 
-        private IEnumerable<RealEstateProperty> ParseOwnedProperty(Row r)
+        private List<RealEstateProperty> ParseOwnedProperty(Row r)
         {
-            IEnumerable<RealEstateType> propertyTypes;
-            IEnumerable<OwnershipType> ownershipTypes;
-            IEnumerable<string> shares;
+            List<RealEstateType> propertyTypes;
+            List<OwnershipType> ownershipTypes;
+            List<string> shares;
             string estateTypeStr = r.GetContents(DeclarationField.OwnedRealEstateType);
             if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
             {
@@ -231,34 +231,35 @@ namespace Smart.Parser.Lib
 
             if (r.ColumnOrdering.OwnershipTypeInSeparateField)
             {
-                propertyTypes = DataHelper.ParseRealEstateTypes(estateTypeStr);
-                ownershipTypes = DataHelper.ParseOwnershipTypes(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType));
-                shares = DataHelper.ParseOwnershipShares(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType), ownershipTypes);
+                propertyTypes = DataHelper.ParseRealEstateTypes(estateTypeStr).ToList();
+                ownershipTypes = DataHelper.ParseOwnershipTypes(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType)).ToList();
+                shares = DataHelper.ParseOwnershipShares(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType), ownershipTypes).ToList();
             }
             else
             {
                 var combinedData = DataHelper.ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
 
-                propertyTypes = combinedData.Select(tup => tup.Item1);
-                ownershipTypes = combinedData.Select(tup => tup.Item2);
-                shares = combinedData.Select(tup => tup.Item3);
+                propertyTypes = combinedData.Select(tup => tup.Item1).ToList();
+                ownershipTypes = combinedData.Select(tup => tup.Item2).ToList();
+                shares = combinedData.Select(tup => tup.Item3).ToList();
             }
 
             decimal? area;
             string areaStr = r.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
-            IEnumerable<decimal?> areas = DataHelper.ParseAreas(areaStr);
+            List<decimal?> areas = DataHelper.ParseAreas(areaStr).ToList();
 
-            IEnumerable<Country> countries = DataHelper.ParseCountries(r.GetContents(DeclarationField.OwnedRealEstateCountry));
+            List<Country> countries = DataHelper.ParseCountries(r.GetContents(DeclarationField.OwnedRealEstateCountry)).ToList();
 
             var res = new List<RealEstateProperty>();
 
+            // TBD: check all array have same size
             for (int i = 0; i < propertyTypes.Count(); i++)
             {
                 res.Add(new RealEstateProperty(
                     ownershipTypes.ElementAt(i), 
-                    propertyTypes.ElementAt(i), 
+                    propertyTypes.ElementAt(i),
                     countries.ElementAtOrDefault(i), 
-                    areas.Count() > 0 ? areas.ElementAt(i) : null, 
+                    areas.ElementAtOrDefault(i), 
                     estateTypeStr, 
                     shares.ElementAt(i)));
             }
