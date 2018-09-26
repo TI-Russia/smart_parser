@@ -156,6 +156,11 @@ namespace Smart.Parser
                 return 1;
             }
 
+            if (declarationFile.Contains("*") || declarationFile.Contains("?"))
+            {
+                return ParseMultipleFiles(declarationFile);
+            }
+
             IAdapter adapter = null;
             string extension = Path.GetExtension(declarationFile);
             string defaultOut = Path.GetFileNameWithoutExtension(declarationFile) + ".json";
@@ -164,11 +169,26 @@ namespace Smart.Parser
             {
                 case ".doc":
                 case ".docx":
+                    if (!AsposeLicense.Licensed)
+                    {
+                        throw new Exception("doc and docx file format is not supported");
+                    }
                     adapter = AsposeDocAdapter.CreateAdapter(declarationFile);
                     break;
                 case ".xls":
                 case ".xlsx":
-                    adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                    if (!AsposeLicense.Licensed && extension == ".xls")
+                    {
+                        throw new Exception("xls file format is not supported");
+                    }
+                    if (AsposeLicense.Licensed)
+                    { 
+                        adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                    }
+                    else
+                    { 
+                        adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
+                    }
                     break;
                 default:
                     Logger.Error("Unknown file extension " + extension);
@@ -196,7 +216,7 @@ namespace Smart.Parser
             adapter.ColumnOrdering = columnOrdering;
 
             Logger.SetLoggingLevel(verboseLevel);
-            Logger.SetupLogFile(Path.GetFileName(declarationFile) + ".log");
+            Logger.SetLogFileName("second", Path.GetFileName(declarationFile) + ".log");
 
             Logger.Info("Column ordering: ");
             foreach (var ordering in columnOrdering.ColumnOrder)
@@ -238,6 +258,115 @@ namespace Smart.Parser
 
             return 0;
         }
+
+        public static int ParseMultipleFiles(string fileMask)
+        {
+            Logger.Info("Parsing files by mask " + fileMask);
+
+            string[] files = Directory.GetFiles(Path.GetDirectoryName(fileMask), Path.GetFileName(fileMask),
+                SearchOption.AllDirectories);
+
+            Logger.Info("Found {0} files", files.Count());
+
+            foreach (string file in files)
+            {
+                Logger.Info("Parsing file " + file);
+                try
+                {
+                    Logger.SetOutSecond();
+                    ParseOneFile(file);
+                }
+                catch (Exception e)
+                {
+                    Logger.Info("Parsing Exception " + e.ToString());
+                    Logger.Info("Stack: " + e.StackTrace);
+                }
+                finally
+                {
+                    Logger.SetOutMain();
+                }
+                if (Logger.Errors.Count() > 0)
+                {
+                    Logger.Info(" Parsing errors ({0})", Logger.Errors.Count());
+
+                    foreach (string e in Logger.Errors)
+                    {
+                        Logger.Info(e);
+                    }
+                }
+            }
+
+
+            return 0;
+        }
+
+
+
+        public static int ParseOneFile(string declarationFile)
+        {
+            IAdapter adapter = null;
+            string extension = Path.GetExtension(declarationFile);
+            string outFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
+            string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
+            Logger.SetLogFileName("second", logFile);
+
+
+            switch (extension)
+            {
+                case ".doc":
+                case ".docx":
+                    if (!AsposeLicense.Licensed)
+                    {
+                        throw new Exception("doc and docx file format is not supported");
+                    }
+                    adapter = AsposeDocAdapter.CreateAdapter(declarationFile);
+                    break;
+                case ".xls":
+                case ".xlsx":
+                    if (!AsposeLicense.Licensed && extension == ".xls")
+                    {
+                        throw new Exception("xls file format is not supported");
+                    }
+                    if (AsposeLicense.Licensed)
+                    {
+                        adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                    }
+                    else
+                    {
+                        adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
+                    }
+                    break;
+                default:
+                    Logger.Error("Unknown file extension " + extension);
+                    return 1;
+            }
+
+            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
+
+            var columnOrdering = ColumnDetector.ExamineHeader(adapter);
+
+            adapter.ColumnOrdering = columnOrdering;
+
+
+            Logger.Info("Column ordering: ");
+            foreach (var ordering in columnOrdering.ColumnOrder)
+            {
+                Logger.Info(ordering.ToString());
+            }
+
+            Declaration declaration = parser.Parse();
+
+            string output = DeclarationSerializer.Serialize(declaration, false);
+
+            Logger.Info("Output size: " + output.Length);
+
+            Logger.Info("Writing json to " + outFile);
+            File.WriteAllText(outFile, output);
+
+            return 0;
+
+        }
+
     }
 
 }

@@ -51,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExcelParser\ExcelParser.csproj">
+      <Project>{977fa48c-ecad-4588-996e-e777bac0b807}</Project>
+      <Name>ExcelParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
       <Project>{16e41c56-7cd2-4e16-a469-4af4f7facb71}</Project>
       <Name>JsonSerialization</Name>

@@ -4,48 +4,52 @@ using log4net.Config;
 using log4net.Layout;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Parser.Lib
 {
+
+
     public class Logger
     {
-        public static void Setup(string logFileName = "smart_parser.log")
+        private static void LoadConfig()
         {
-            LogManager.Shutdown();
-
-            var layout = new PatternLayout(@"%date %-5level %message%newline");
-            var appender = new RollingFileAppender
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.log4net.config"))
             {
-                File = logFileName,
-                Layout = layout
-            };
-            var consoleAppender = new ConsoleAppender();
-            consoleAppender.Layout = new log4net.Layout.PatternLayout(@"%date %-5level %message%newline");
-            consoleAppender.Threshold = log4net.Core.Level.Debug;
-            consoleAppender.ActivateOptions();
-            var appender2 = new ColoredConsoleAppender();
-
-
-            layout.ActivateOptions();
-            appender.ActivateOptions();
-            BasicConfigurator.Configure(new IAppender[] { appender, consoleAppender });
-            //BasicConfigurator.Configure(consoleAppender);
-
-
-            log = LogManager.GetLogger("Smart.Parser");
+                log4net.Config.XmlConfigurator.Configure(stream);
+            }
         }
 
-        public static void SetupLogFile(string logFileName)
+        public static void Setup(string logFileName = "")
         {
-            XmlConfigurator.Configure();
+            Errors.Clear();
+            if (String.IsNullOrEmpty(logFileName))
+            {
+                logFileName = "smart_parser_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".log";
+            }
+            LoadConfig();
+            SetLogFileName("Main", logFileName);
+            mainLog = LogManager.GetLogger("Main");
+            secondLog = LogManager.GetLogger("Second");
+            log = mainLog;
+        }
+
+        public static void SetLogFileName(string logger, string logFileName)
+        {
+            Errors.Clear();
+            //XmlConfigurator.Configure();
             log4net.Repository.Hierarchy.Hierarchy h =
             (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository();
-            foreach (IAppender a in h.Root.Appenders)
+
+            foreach (log4net.Appender.IAppender a in
+           log4net.LogManager.GetRepository().GetAppenders())
             {
-                if (a is FileAppender)
+                if (a is FileAppender && a.Name == logger)
                 {
                     FileAppender fa = (FileAppender)a;
 
@@ -70,8 +74,21 @@ namespace Parser.Lib
             ((log4net.Repository.Hierarchy.Hierarchy) LogManager.GetRepository()).RaiseConfigurationChanged(EventArgs.Empty);
         }
         public static ILog Log { get { return log; } }
+        public static ILog SecondLog { get { return secondLog; } }
 
         private static ILog log;
+        private static ILog mainLog;
+        private static ILog secondLog;
+
+        static public void SetOutMain()
+        {
+            log = mainLog;
+        }
+        static public void SetOutSecond()
+        {
+            log = secondLog;
+        }
+
         static public void Info(string info, params object[] par)
         {
             log.Info(String.Format(info, par));
@@ -86,6 +103,22 @@ namespace Parser.Lib
             log.Error(message);
             Errors.Add(message);
         }
+
+        static public void Info2(string info, params object[] par)
+        {
+            secondLog.Info(String.Format(info, par));
+        }
+        static public void Info2(string info)
+        {
+            secondLog.Info(String.Format(info));
+        }
+        static public void Error2(string info, params object[] par)
+        {
+            string message = String.Format(info, par);
+            secondLog.Error(message);
+            Errors.Add(message);
+        }
+
 
         public static List<string> Errors { get; } = new List<string>();
     }

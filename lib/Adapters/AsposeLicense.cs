@@ -14,6 +14,8 @@ namespace Smart.Parser.Adapters
             Aspose.Words.License word_license = new Aspose.Words.License();
             cell_license.SetLicense(file);
             word_license.SetLicense(file);
+            Licensed = true;
         }
+        public static bool Licensed { set; get; } = false;
     }
 }
