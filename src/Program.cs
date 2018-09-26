@@ -216,7 +216,7 @@ namespace Smart.Parser
             adapter.ColumnOrdering = columnOrdering;
 
             Logger.SetLoggingLevel(verboseLevel);
-            Logger.SetLogFileName("second", Path.GetFileName(declarationFile) + ".log");
+            Logger.SetSecondLogFileName(Path.GetFileName(declarationFile) + ".log");
 
             Logger.Info("Column ordering: ");
             foreach (var ordering in columnOrdering.ColumnOrder)
@@ -268,23 +268,49 @@ namespace Smart.Parser
 
             Logger.Info("Found {0} files", files.Count());
 
+            var parse_results = new Dictionary<string, List<string>>
+            {
+                { "ok", new List<string>() },
+                { "error", new List<string>() },
+                { "too_many_errors", new List<string>() },
+                { "exception", new List<string>() },
+            };
+
             foreach (string file in files)
             {
                 Logger.Info("Parsing file " + file);
+                bool caught = false;
                 try
                 {
                     Logger.SetOutSecond();
                     ParseOneFile(file);
                 }
+                catch (SmartParserException e)
+                {
+                    caught = true;
+                    Logger.Info("Parsing Exception " + e.ToString());
+                    parse_results["too_many_errors"].Add(file);
+                }
                 catch (Exception e)
                 {
+                    caught = true;
                     Logger.Info("Parsing Exception " + e.ToString());
                     Logger.Info("Stack: " + e.StackTrace);
+                    parse_results["exception"].Add(file);
                 }
                 finally
                 {
                     Logger.SetOutMain();
                 }
+                if (!caught && Logger.Errors.Count() > 0)
+                {
+                    parse_results["error"].Add(file);
+                }
+                if (!caught && Logger.Errors.Count() == 0)
+                {
+                    parse_results["ok"].Add(file);
+                }
+
                 if (Logger.Errors.Count() > 0)
                 {
                     Logger.Info(" Parsing errors ({0})", Logger.Errors.Count());
@@ -296,6 +322,16 @@ namespace Smart.Parser
                 }
             }
 
+            Logger.Info("Parsing Results:");
+
+            foreach (var key_value in parse_results)
+            {
+                Logger.Info("Result: {0} ({1})", key_value.Key, key_value.Value.Count());
+                foreach (string file in key_value.Value)
+                {
+                    Logger.Info(file);
+                }
+            }
 
             return 0;
         }
@@ -308,7 +344,7 @@ namespace Smart.Parser
             string extension = Path.GetExtension(declarationFile);
             string outFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
-            Logger.SetLogFileName("second", logFile);
+            Logger.SetSecondLogFileName(logFile);
 
 
             switch (extension)

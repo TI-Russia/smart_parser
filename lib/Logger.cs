@@ -16,6 +16,8 @@ namespace Parser.Lib
 
     public class Logger
     {
+        private const int MaxErrorCount = 50;
+
         private static void LoadConfig()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
@@ -39,8 +41,14 @@ namespace Parser.Lib
             log = mainLog;
         }
 
-        public static void SetLogFileName(string logger, string logFileName)
+        public static void SetSecondLogFileName(string logFileName)
         {
+            SetLogFileName("Second", logFileName);
+        }
+
+        private static void SetLogFileName(string logger, string logFileName)
+        {
+            bool found = false;
             Errors.Clear();
             //XmlConfigurator.Configure();
             log4net.Repository.Hierarchy.Hierarchy h =
@@ -56,8 +64,13 @@ namespace Parser.Lib
                     fa.AppendToFile = false;
                     fa.File = logFileName;
                     fa.ActivateOptions();
+                    found = true;
                     break;
                 }
+            }
+            if (!found)
+            {
+                throw new Exception("Cannot find Appender " + logger);
             }
         }
 
@@ -102,6 +115,10 @@ namespace Parser.Lib
             string message = String.Format(info, par);
             log.Error(message);
             Errors.Add(message);
+            if (Errors.Count() > MaxErrorCount)
+            {
+                throw new SmartParserException("Error count exceed " + MaxErrorCount.ToString());
+            }
         }
 
         static public void Info2(string info, params object[] par)
