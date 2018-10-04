@@ -15,6 +15,7 @@ namespace Tindalos
     class Tindalos
     {
         private static readonly string ErrorsFile = "errors.log";
+        private static readonly string RegressionDir = "regression";
         private static Dictionary<String, RealEstateType> PropertyTypes = new Dictionary<string, RealEstateType>();
 
         static Tindalos()
@@ -29,20 +30,71 @@ namespace Tindalos
 
         static void Main(string[] args)
         {
-            Scan(args);
-            
-            //Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
-            //Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+            //Scan(args);
+
+            //RegressionTest(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
+            Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+
+            Console.WriteLine("Press any key..");
+            Console.ReadKey();
         }
 
-        static void Test(string filename)
+    
+        static string Test(string filename)
         {            
             Declaration res = Process(filename);
             Console.WriteLine(DeclarationSerializer.Serialize(res));
             string output = DeclarationSerializer.Serialize(res);
             string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
             File.WriteAllText(outputFileName, output);
-            Console.ReadKey();
+
+            return outputFileName;            
+        }
+
+        static bool RegressionTest(string filename)
+        {
+            Console.WriteLine($"Running regression test on {filename}.");
+            string outputFileName = Test(filename);
+
+            string expectedOutputFile = Path.Combine("regression", outputFileName); ;
+            if (!File.Exists(expectedOutputFile))
+            {
+                Console.WriteLine($"Could not find expected output file {expectedOutputFile}");
+                return false;
+            }
+
+            var actualOutput = File.ReadLines(outputFileName);
+            var expectedOutput = File.ReadLines(expectedOutputFile);
+            if (actualOutput.SequenceEqual(expectedOutput))
+            {
+                Console.WriteLine("Actual output matches expected output (files are identical)");
+                return true;
+            }
+            else
+            {
+                // lines in the files are numbered starting with 1, not 0
+                // to make tracing changes in text editor or merge tool easier
+                int lineNumber = 1;
+                foreach (var zipLines in actualOutput.Zip(expectedOutput, Tuple.Create))
+                {
+                    if (zipLines.Item1 != zipLines.Item2)
+                    {
+                        Console.WriteLine($"Expected and actual file differ. First mismatch on line {lineNumber}");
+                        break;
+                    }
+
+                    lineNumber++;
+                }
+
+                if (actualOutput.Count() != expectedOutput.Count())
+                {
+                    Console.WriteLine("Number of lines differs in expected and actual file");
+                    Console.WriteLine($"Expected number of lines: {expectedOutput.Count()}");
+                    Console.WriteLine($"Actual number of lines: {actualOutput.Count()}");
+                }
+
+                return false;
+            }
         }
 
         static void Scan(string[] args)

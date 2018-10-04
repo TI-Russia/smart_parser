@@ -72,7 +72,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="regression\2016_Sotrudniki_ministerstva.json" />
-    <None Include="regression\A - min_res_2011_Sotrudniki_ministerstva.json" />
+    <None Include="regression\A - min_res_2011_Sotrudniki_ministerstva.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
