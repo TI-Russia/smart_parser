@@ -16,7 +16,7 @@ namespace Parser.Lib
 
     public class Logger
     {
-        private const int MaxErrorCount = 50;
+        private const int MaxErrorCount = 150;
 
         private static void LoadConfig()
         {

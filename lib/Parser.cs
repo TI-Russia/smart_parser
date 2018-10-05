@@ -101,7 +101,7 @@ namespace Smart.Parser.Lib
                     Logger.Info("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
                     PublicServant pServ = new PublicServant()
                     {
-                        Name = nameOrRelativeType,
+                        Name = DataHelper.NormalizeName(nameOrRelativeType),
                         Occupation = occupationStr
                     };
 
@@ -192,6 +192,8 @@ namespace Smart.Parser.Lib
             return (r.GetContents(DeclarationField.VehicleType) + " " + r.GetContents(DeclarationField.VehicleModel)).Trim();
         }
 
+
+        //////////////////////////////////////////////////
         private void FillPersonProperties(Row r, Person p)
         {
             var ownedProperty = ParseOwnedProperty(r);
@@ -200,10 +202,20 @@ namespace Smart.Parser.Lib
                 p.RealEstateProperties.AddRange(ownedProperty);
             }
 
-            var stateProperty = ParseStateProperty(r);
-            if (stateProperty != null && stateProperty.Count() > 0)
+            string statePropTypeStr = r.GetContents(DeclarationField.StatePropertyType);
+            if (!string.IsNullOrWhiteSpace(statePropTypeStr) && statePropTypeStr.Trim() != "-" && statePropTypeStr.Trim() != "-\n-")
             {
-                p.RealEstateProperties.AddRange(stateProperty);
+                string statePropAreaStr = r.GetContents(DeclarationField.StatePropertyArea);
+                string statePropCountryStr = r.GetContents(DeclarationField.StatePropertyCountry);
+
+                var propertyType = DataHelper.ParseRealEstateType(statePropTypeStr);
+                decimal? area = DataHelper.ParseArea(statePropAreaStr);
+                Country country = DataHelper.ParseCountry(statePropCountryStr);
+
+                RealEstateProperty stateProperty =
+                    new RealEstateProperty(OwnershipType.NotAnOwner, propertyType, country, area, statePropTypeStr);
+
+                p.RealEstateProperties.Add(stateProperty);
             }
 
             string vehicle = GetVehicleString(r); // r.GetContents(DeclarationField.Vehicle);
