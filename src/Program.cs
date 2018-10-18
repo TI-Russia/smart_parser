@@ -236,7 +236,16 @@ namespace Smart.Parser
                 return 1;
             }
 
-            string output = DeclarationSerializer.Serialize(declaration, false);
+            string output = "";
+            try
+            {
+                output = DeclarationSerializer.Serialize(declaration, true);
+            }
+            catch (Exception e)
+            {
+                Logger.Info("Serialization error " + e.ToString());
+                return 1;
+            }
 
             Logger.Info("Output size: " + output.Length);
             if (String.IsNullOrEmpty(outFile))
@@ -333,6 +342,15 @@ namespace Smart.Parser
                 }
             }
 
+            if (Logger.UnknownRealEstate.Count() > 0)
+            {
+                Logger.Info("UnknownRealEstate.Count: {0}", Logger.UnknownRealEstate.Count());
+                string content = string.Join("\n", Logger.UnknownRealEstate);
+                string dictfile = Path.Combine(Path.GetDirectoryName(fileMask), "UnknownRealEstate.txt");
+                File.WriteAllText(dictfile, content);
+                Logger.Info("Output UnknownRealEstate to file {0}", dictfile);
+            }
+
             return 0;
         }
 
@@ -392,7 +410,7 @@ namespace Smart.Parser
 
             Declaration declaration = parser.Parse();
 
-            string output = DeclarationSerializer.Serialize(declaration, false);
+            string output = DeclarationSerializer.Serialize(declaration, true);
 
             Logger.Info("Output size: " + output.Length);
 

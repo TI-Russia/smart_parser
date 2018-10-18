@@ -142,6 +142,11 @@ namespace Smart.Parser.Lib
                 {
                     FillPersonProperties(Adapter.Rows[row], currentPerson);
                 }
+                catch (UnknownRealEstateTypeException e)
+                {
+                    Logger.UnknownRealEstateType(e.StrType);
+                    continue;
+                }
                 catch (Exception e)
                 {
                     Logger.Error("***ERROR row({0}) {1}", row, e.Message);

@@ -110,6 +110,10 @@ namespace Parser.Lib
         {
             log.Info(String.Format(info));
         }
+        static public void UnknownRealEstateType(string info)
+        {
+            UnknownRealEstate.Add(info);
+        }
         static public void Error(string info, params object[] par)
         {
             string message = String.Format(info, par);
@@ -136,7 +140,7 @@ namespace Parser.Lib
             Errors.Add(message);
         }
 
-
         public static List<string> Errors { get; } = new List<string>();
+        public static HashSet<string> UnknownRealEstate { get; } = new HashSet<string>();
     }
 }

@@ -142,7 +142,7 @@ namespace Smart.Parser.Lib
             {
                 return type;
             }
-            throw new ArgumentOutOfRangeException("strType", $"Неизвестный тип недвижимости: {strType} ({key})");
+            throw new UnknownRealEstateTypeException(key);
         }
 
         public static IEnumerable<OwnershipType> ParseOwnershipTypes(string strOwn)
