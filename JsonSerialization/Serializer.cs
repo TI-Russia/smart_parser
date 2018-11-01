@@ -109,13 +109,18 @@ namespace TI.Declarator.JsonSerialization
             foreach (var prop in servant.RealEstateProperties)
             {
                 jRealEstate.Add(new JObject(
+                    // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
                     new JProperty("name", prop.Name),
+                    // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
                     new JProperty("type", GetPropertyType(prop)),
                     // TODO should property area really be an integer
                     new JProperty("square", /*(int)*/prop.Area),
+                    // "country_raw"
                     new JProperty("country", GetCountry(prop)),
                     new JProperty("region", null),
+                    // "own_type_raw"
                     new JProperty("own_type", GetOwnershipType(prop)),
+                    // "share_type_raw"
                     new JProperty("share_type", GetShareType(prop)),
                     new JProperty("share_amount", GetOwnershipShare(prop)),
                     new JProperty("relative", null)));

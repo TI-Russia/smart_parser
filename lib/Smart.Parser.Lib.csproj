@@ -70,6 +70,7 @@
     <Compile Include="Adapters\IAdapter.cs" />
     <Compile Include="ColumnDetector.cs" />
     <Compile Include="DataHelper.cs" />
+    <Compile Include="DeclaratorApiPatterns.cs" />
     <Compile Include="JsonWriter.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Parser.cs" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\log4net.config" />
+    <EmbeddedResource Include="Resources\patterns.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">

@@ -282,7 +282,7 @@ namespace Smart.Parser.Lib
             }
             return res;
         }
-
+#if false
         private IEnumerable<RealEstateProperty> ParseStateProperty(Row r)
         {
             IEnumerable<RealEstateType> propertyTypes;
@@ -320,6 +320,7 @@ namespace Smart.Parser.Lib
 
             return res;
         }
+#endif
 
 
 
