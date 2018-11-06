@@ -393,7 +393,7 @@ namespace TI.Declarator.WordParser
                     startingPos = rightParenPos + 1;
                 }
 
-                leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
+                leftParenPos = strPropInfo.IndexOf('(', rightParenPos);
             }
 
             return res;
@@ -434,8 +434,8 @@ namespace TI.Declarator.WordParser
         private static bool ContainsOwnershipType(string str)
         {
             string strProc = str.Trim().ToLower();
-            return (str.Contains("индивидуальная") || str.Contains("долевая") || str.Contains("общая") || str.Contains("аренда") ||
-                    str.Contains("пользование") || str.Contains("предоставление") || str.Contains("найм"));
+            return (strProc.Contains("индивидуальная") || strProc.Contains("долевая") || strProc.Contains("общая") || strProc.Contains("аренда") ||
+                    strProc.Contains("пользование") || strProc.Contains("предоставление") || strProc.Contains("найм"));
         }
 
         private static IEnumerable<string> ParseOwnershipShares(string strOwn, IEnumerable<OwnershipType> ownTypes)
@@ -518,6 +518,7 @@ namespace TI.Declarator.WordParser
             switch (strCountry.Trim().ToLower())
             {
                 case "беларусь": return Country.Belarus;
+                case "бельгия": return Country.Belgium;
                 case "республика беларусь": return Country.Belarus;
                 case "венгрия": return Country.Hungary;
                 case "грузия": return Country.Georgia;
@@ -550,7 +551,8 @@ namespace TI.Declarator.WordParser
 
         private static decimal? ParseDeclaredIncome(string strIncome)
         {
-            if (String.IsNullOrWhiteSpace(strIncome) || strIncome.Trim() == "-" || strIncome.Trim() == "–") return null;
+            if (String.IsNullOrWhiteSpace(strIncome) || strIncome.Trim() == "-" || strIncome.Trim() == "–"
+                || strIncome.Contains("нет")) return null;
             else
             {
                 int leftParenPos = strIncome.IndexOf("(");

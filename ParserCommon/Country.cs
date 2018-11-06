@@ -32,7 +32,7 @@ namespace TI.Declarator.ParserCommon
         Montenegro = 1025,
         Mexico,
         Abkhazia,
-        SouthOssetia
-
+        SouthOssetia,
+        Belgium
     }
 }
