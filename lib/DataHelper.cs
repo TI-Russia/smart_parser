@@ -10,6 +10,10 @@ namespace Smart.Parser.Lib
 {
     public class DataHelper
     {
+        static public string NormalizeName(string name)
+        {
+            return String.Join(" ", name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+        }
         static public bool IsPublicServantInfo(string nameOrRelativeType)
         {
             // Исправляем инициал, слипшийся с фамилией БуровЮ.В.
@@ -123,7 +127,7 @@ namespace Smart.Parser.Lib
             return new List<RealEstateType>() { ParseRealEstateType(strTypes) };
         }
 
-        private static RealEstateType ParseRealEstateType(string strType)
+        public static RealEstateType ParseRealEstateType(string strType)
         {
             string key = strType.ToLower().RemoveStupidTranslit()
                                           .Trim('\"')
@@ -138,7 +142,7 @@ namespace Smart.Parser.Lib
             {
                 return type;
             }
-            throw new ArgumentOutOfRangeException("strType", $"Неизвестный тип недвижимости: {strType} ({key})");
+            throw new UnknownRealEstateTypeException(key);
         }
 
         public static IEnumerable<OwnershipType> ParseOwnershipTypes(string strOwn)
@@ -150,7 +154,7 @@ namespace Smart.Parser.Lib
         {
             string str = strOwn.ToLower().Trim();
             OwnershipType res;
-            if (str.Contains("индивидуальная")) res = OwnershipType.Individual;
+            if (str.Contains("индивид")) res = OwnershipType.Individual;
             else if (str.Contains("собственность")) res = OwnershipType.Individual;
             else if (str.Contains("общая совместная")) res = OwnershipType.Coop;
             else if (str.Contains("совместная")) res = OwnershipType.Coop;
@@ -252,6 +256,11 @@ namespace Smart.Parser.Lib
                 leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
             }
 
+            if (res.Count() == 0)
+            {
+                throw new Exception("func ParsePropertyAndOwnershipTypes: cannot parse " + strPropInfo);
+            }
+
             return res;
         }
 
@@ -282,6 +291,10 @@ namespace Smart.Parser.Lib
 
                 leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
             }
+            if (res.Count() == 0)
+            {
+                throw new Exception("Cannot parse string " + strPropInfo);
+            }
 
             return res;
         }
@@ -289,7 +302,7 @@ namespace Smart.Parser.Lib
         private static bool ContainsOwnershipType(string str)
         {
             string strProc = str.Trim().ToLower();
-            return (str.Contains("индивидуальная") || str.Contains("долевая") || str.Contains("общая"));
+            return (str.Contains("индивид") || str.Contains("долевая") || str.Contains("общая"));
         }
 
         public static IEnumerable<string> ParseOwnershipShares(string strOwn, IEnumerable<OwnershipType> ownTypes)
@@ -328,6 +341,26 @@ namespace Smart.Parser.Lib
         }
 
         private static readonly string[] AreaSeparators = new string[] { "\n", " " };
+
+        public static decimal? ParseArea(string strAreas)
+        {
+            foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
+            {
+                decimal? area;
+                if (String.IsNullOrWhiteSpace(str) || str == "-")
+                {
+                    area = null;
+                }
+                else
+                {
+                    area = str.ParseDecimalValue();
+                }
+
+                return area;
+            }
+            return null;
+        }
+
         public static IEnumerable<decimal?> ParseAreas(string strAreas)
         {
             var res = new List<decimal?>();
@@ -354,6 +387,8 @@ namespace Smart.Parser.Lib
         }
 
         private static readonly string[] CountrySeparators = new string[] { "\n" };
+
+
         public static IEnumerable<Country> ParseCountries(string strCountries)
         {
             var res = new List<Country>();
@@ -367,7 +402,7 @@ namespace Smart.Parser.Lib
             return res;
         }
 
-        private static Country ParseCountry(string strCountry)
+        public static Country ParseCountry(string strCountry)
         {
             if (String.IsNullOrWhiteSpace(strCountry) || strCountry.Trim() == "-")
             {

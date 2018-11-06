@@ -32,9 +32,10 @@ namespace TI.Declarator.JsonSerialization
                 jServants.Add(Serialize(serv, declaration.Properties));
             }
 
-            if (validate && !Validate(jServants))
+            string comments;
+            if (validate && !Validate(jServants, out comments))
             {
-                throw new Exception("Could not validate JSON output");
+                throw new Exception("Could not validate JSON output: " + comments);
             }
             return jServants.ToString();
         }
@@ -108,13 +109,18 @@ namespace TI.Declarator.JsonSerialization
             foreach (var prop in servant.RealEstateProperties)
             {
                 jRealEstate.Add(new JObject(
+                    // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
                     new JProperty("name", prop.Name),
+                    // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
                     new JProperty("type", GetPropertyType(prop)),
                     // TODO should property area really be an integer
                     new JProperty("square", /*(int)*/prop.Area),
+                    // "country_raw"
                     new JProperty("country", GetCountry(prop)),
                     new JProperty("region", null),
+                    // "own_type_raw"
                     new JProperty("own_type", GetOwnershipType(prop)),
+                    // "share_type_raw"
                     new JProperty("share_type", GetShareType(prop)),
                     new JProperty("share_amount", GetOwnershipShare(prop)),
                     new JProperty("relative", null)));
@@ -145,18 +151,20 @@ namespace TI.Declarator.JsonSerialization
         private static JProperty GetVehicles(PublicServant servant)
         {
             var jVehicles = new JArray();
-            foreach (string vehicleInfo in servant.Vehicles)
+            foreach (var vehicleInfo in servant.Vehicles)
             {
                 jVehicles.Add(new JObject(
-                    new JProperty("text", vehicleInfo)));
+                    new JProperty("text", vehicleInfo.Text),
+                    new JProperty("relative", null)));
             }
 
             foreach (var rel in servant.Relatives)
             {
-                foreach (string vehicleInfo in rel.Vehicles)
+                foreach (var vehicleInfo in rel.Vehicles)
                 {
                     jVehicles.Add(new JObject(
-                        new JProperty("text", vehicleInfo)));
+                        new JProperty("text", vehicleInfo.Text),
+                        new JProperty("relative", GetRelationshipName(rel.RelationType))));
                 }
             }
 
@@ -164,10 +172,11 @@ namespace TI.Declarator.JsonSerialization
             return res;
         }
 
-        private static bool Validate(JArray jServants)
+        private static bool Validate(JArray jServants, out string message)
         {
             IList<string> comments = new List<string>();
             bool res = jServants.IsValid(Schema, out comments);
+            message = string.Join(" ", comments);
             return res;
         }
 

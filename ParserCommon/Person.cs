@@ -10,7 +10,7 @@ namespace TI.Declarator.ParserCommon
         private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
 
         public List<RealEstateProperty> RealEstateProperties = new List<RealEstateProperty>();
-        public List<string> Vehicles = new List<string>();
+        public List<Vechicle> Vehicles = new List<Vechicle>();
 
         public decimal? DeclaredYearlyIncome;
 
@@ -89,7 +89,7 @@ namespace TI.Declarator.ParserCommon
             }
             else
             {
-                foreach (string vehicle in Vehicles)
+                foreach (var vehicle in Vehicles)
                 {
                     res.Add(new XElement("transport",
                               new XElement("transportName", vehicle)));

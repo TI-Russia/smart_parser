@@ -1,0 +1,5494 @@
+{
+  "count": 686, 
+  "next": "https://declarator.org/api/patterns/?page=2", 
+  "previous": null, 
+  "results": [
+    {
+      "data": "\"россия\"", 
+      "id": 626, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "1/2 дома", 
+      "id": 283, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "1/2 жилого дома", 
+      "id": 284, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "2 комнатный номер", 
+      "id": 56, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "2 комнатный номер", 
+      "id": 254, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "35/1000 доля в праве общей долевой собственности", 
+      "id": 333, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\((суб)?аренда\\)", 
+      "id": 111, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "\\b(?:авто|)стоянк", 
+      "id": 220, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bLand\\sRover\\b", 
+      "id": 692, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Land Rover"
+    }, 
+    {
+      "data": "\\bMerc?s?edes\\s?\\-?\\s?Benz\\b", 
+      "id": 690, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Mercedes-Benz"
+    }, 
+    {
+      "data": "\\bа(?:/|\\\\|;)(?:м\\s+|)лег?к[а-я]+\\b", 
+      "id": 160, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bа/(?:м\\s+|)грузовой\\b", 
+      "id": 167, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль грузовой"
+    }, 
+    {
+      "data": "\\bа/автоприцеп\\b", 
+      "id": 149, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bа/м грузовой\\b", 
+      "id": 168, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль грузовой"
+    }, 
+    {
+      "data": "\\bа/м\\b", 
+      "id": 214, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bа/м\\s+автобус\\b", 
+      "id": 157, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "\\bа/м\\s+прицеп\\b", 
+      "id": 150, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bа/м\\s+фургон\\b", 
+      "id": 172, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "\\bа/п\\b", 
+      "id": 156, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bа/прицеп\\b", 
+      "id": 151, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bа/прицеп\\s+легковой\\b", 
+      "id": 148, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bа?ппартаменты\\b", 
+      "id": 255, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bавтобус\\b", 
+      "id": 171, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "\\bавтокран\\b", 
+      "id": 174, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль грузовой"
+    }, 
+    {
+      "data": "\\bавтомобиль\\s+(?!груз[а-я]+)\\b", 
+      "id": 164, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bавтомобиль\\s+легковой\\b", 
+      "id": 163, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bавтомобильный\\s+прицеп\\b", 
+      "id": 146, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bавтоприцеп\\b", 
+      "id": 152, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bавтоприцеп\\s+легковой\\b", 
+      "id": 147, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bАльпина\\b", 
+      "id": 662, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Alpina"
+    }, 
+    {
+      "data": "\\bам\\s+легковая\\b", 
+      "id": 166, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bангар\\b", 
+      "id": 216, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bАро\\b", 
+      "id": 655, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Aro"
+    }, 
+    {
+      "data": "\\bАуди\\b", 
+      "id": 688, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Audi"
+    }, 
+    {
+      "data": "\\bБаня\\b", 
+      "id": 565, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bбассейн\\b", 
+      "id": 593, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bбезвозмездное пользование\\b", 
+      "id": 53, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "In free use "
+    }, 
+    {
+      "data": "\\bБентли\\b", 
+      "id": 689, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Bentley"
+    }, 
+    {
+      "data": "\\bбеседка\\b", 
+      "id": 594, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bБИД\\b", 
+      "id": 676, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "BYD"
+    }, 
+    {
+      "data": "\\bБмв\\b", 
+      "id": 638, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "BMW"
+    }, 
+    {
+      "data": "\\bбокс\\b", 
+      "id": 217, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bболотоход\\b", 
+      "id": 184, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bБомбардье\\b", 
+      "id": 681, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Bombardier"
+    }, 
+    {
+      "data": "\\bБрильянс\\b", 
+      "id": 664, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Brilliance"
+    }, 
+    {
+      "data": "\\bБугатти\\b", 
+      "id": 687, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Bugatti"
+    }, 
+    {
+      "data": "\\bбудка охраны\\b", 
+      "id": 580, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bв/т\\s+моторная\\s+лодка\\b", 
+      "id": 193, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bвертолёт\\b", 
+      "id": 158, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Воздушный транспорт"
+    }, 
+    {
+      "data": "\\bводный\\s+транспорт\\b", 
+      "id": 175, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bвозмездное пользование\\b", 
+      "id": 112, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "\\bВольво\\b", 
+      "id": 686, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Volvo"
+    }, 
+    {
+      "data": "\\bгазопровод\\b", 
+      "id": 583, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bгараж\\b", 
+      "id": 218, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bгаражный\\b", 
+      "id": 219, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bгидроцикл\\b", 
+      "id": 177, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bглиссер\\b", 
+      "id": 197, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bгостевой дом\\b", 
+      "id": 282, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "\\bгостиница\\b", 
+      "id": 581, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bДаймлер\\b", 
+      "id": 665, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Daimler"
+    }, 
+    {
+      "data": "\\bДайхатцу\\b", 
+      "id": 642, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Daihatsu"
+    }, 
+    {
+      "data": "\\bдача\\b", 
+      "id": 310, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bдачный дом(?:ик|)\\b", 
+      "id": 311, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bДжили\\b", 
+      "id": 640, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Geely"
+    }, 
+    {
+      "data": "\\bДжиндей\\b", 
+      "id": 633, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Jindei"
+    }, 
+    {
+      "data": "\\bДжинетта\\b", 
+      "id": 643, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Ginetta"
+    }, 
+    {
+      "data": "\\bДжип\\b", 
+      "id": 647, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Jeep"
+    }, 
+    {
+      "data": "\\bджип\\b", 
+      "id": 165, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bдля индивидуального жилищного строительства\\b", 
+      "id": 251, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "\\bДодж\\b", 
+      "id": 668, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Dodge"
+    }, 
+    {
+      "data": "\\bДолевое участие в строительстве\\b", 
+      "id": 10, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "\\bДолевое участие в строительстве\\b", 
+      "id": 122, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "\\bдом нежилой\\b", 
+      "id": 312, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bдом(?:ик|) садовый\\b", 
+      "id": 314, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bдом[^а-я]+$", 
+      "id": 315, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bдом\\, назначение нежилое\\b", 
+      "id": 585, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bдомовладен", 
+      "id": 279, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "\\bДонинвест\\b", 
+      "id": 679, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Doninvest"
+    }, 
+    {
+      "data": "\\bжилищное\\b", 
+      "id": 259, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bжило(?:й|го)?\\b", 
+      "id": 277, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "\\bжилое (?:помещение|строение)\\b", 
+      "id": 261, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bжилой блок\\b", 
+      "id": 262, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bжилье\\b", 
+      "id": 260, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bздание колбасного цеха\\b", 
+      "id": 586, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание конефермы\\b", 
+      "id": 590, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание котельной\\b", 
+      "id": 587, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание КПП\\b", 
+      "id": 566, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание летнего домика\\b", 
+      "id": 317, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bздание литейного цеха\\b", 
+      "id": 578, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание магазина\\b", 
+      "id": 416, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание мебельного цеха\\b", 
+      "id": 589, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bЗдание нежилое\\b", 
+      "id": 417, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание основного производства\\b", 
+      "id": 597, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание ПТО\\b", 
+      "id": 579, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание рыболовецкого стана\\b", 
+      "id": 591, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание свинарника\\b", 
+      "id": 584, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание склада\\b", 
+      "id": 576, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание трансформаторной подстанции\\b", 
+      "id": 609, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bздание туалета\\b", 
+      "id": 588, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bземельный\\b", 
+      "id": 240, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    },
+    {
+      "data": "\\bземли\\b", 
+      "id": 241, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "\\bИран\\b", 
+      "id": 645, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Iran Khodro"
+    }, 
+    {
+      "data": "\\bкаиер\\s\\b", 
+      "id": 180, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bкатер\\b", 
+      "id": 179, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bквадр(?:о|а)цикл\\b", 
+      "id": 181, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bквартир(?:а|ы|е)\\b", 
+      "id": 256, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bкладовая\\b", 
+      "id": 604, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bколодец смотровой\\b", 
+      "id": 592, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bкоммунал", 
+      "id": 131, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "\\bкомнат(?:а|ы|е)\\b", 
+      "id": 257, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bконтрольно\\-пропускной пункт\\b", 
+      "id": 607, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bкотельная\\b", 
+      "id": 605, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bкоттедж\\b", 
+      "id": 278, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "\\bКрайслер\\b", 
+      "id": 649, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Chrysler"
+    }, 
+    {
+      "data": "\\bЛамборджини\\b", 
+      "id": 661, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Lamborghini"
+    }, 
+    {
+      "data": "\\bлегковой\\s+а/м\\b", 
+      "id": 161, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bлегковой\\s+автомобиль\\b", 
+      "id": 162, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "\\bлегковой\\s+прицеп\\b", 
+      "id": 153, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bЛексус\\b", 
+      "id": 666, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Lexus"
+    }, 
+    {
+      "data": "\\bЛифан\\b", 
+      "id": 651, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Lifan"
+    }, 
+    {
+      "data": "\\bлодка\\b", 
+      "id": 212, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bлодка\\s+\\(катер\\)\\s+", 
+      "id": 178, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bлодка\\s+пвх\\b", 
+      "id": 187, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bлодочный\\s+мотор\\b", 
+      "id": 188, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bм/лодка\\b", 
+      "id": 196, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bМагазин\\b", 
+      "id": 415, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bМазда\\b", 
+      "id": 667, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Mazda"
+    }, 
+    {
+      "data": "\\bМайбах\\b", 
+      "id": 677, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Maybach"
+    }, 
+    {
+      "data": "\\bмаломерное\\s+судно\\b", 
+      "id": 189, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bМарути\\b", 
+      "id": 673, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Maruti"
+    }, 
+    {
+      "data": "\\bмашино\\s*\\-\\s*место\\b", 
+      "id": 234, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bмашиноместо\\b", 
+      "id": 236, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bМеркюри\\b", 
+      "id": 652, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Mercury"
+    }, 
+    {
+      "data": "\\bМерседес\\s?\\-?\\s?Бенц\\b", 
+      "id": 691, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Mercedes-Benz"
+    }, 
+    {
+      "data": "\\bместо в ГСК\\b", 
+      "id": 235, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bМицубиши\\b", 
+      "id": 650, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Mitsubishi"
+    }, 
+    {
+      "data": "\\bмо?тоцикл?\\b", 
+      "id": 198, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмопед\\b", 
+      "id": 192, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмото/тр.\\s+средство\\b", 
+      "id": 200, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмото/тр.\\s+средство\\s+квардоцикл\\b", 
+      "id": 182, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмото\\b", 
+      "id": 204, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмото\\s+тр./средство\\b", 
+      "id": 203, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмотовездеход\\b", 
+      "id": 183, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмотолодка\\b", 
+      "id": 195, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bмотор\\b", 
+      "id": 213, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bмоторная\\s+лодка\\b", 
+      "id": 194, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bмоторная\\s+лодка\\s+пвх\\b", 
+      "id": 159, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bмотороллер\\b", 
+      "id": 190, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмотосредство\\b", 
+      "id": 202, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмототрансп.\\s+средство\\b", 
+      "id": 201, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмототранспортное\\s+средство\\b", 
+      "id": 199, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bмототранспортные\\s+средства\\b", 
+      "id": 205, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bна[ёе]м\\b", 
+      "id": 63, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "\\bнавес\\b", 
+      "id": 600, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bнадувная\\s+лодка\\b", 
+      "id": 185, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bнаём\\b", 
+      "id": 110, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "\\bнежил(ое|ые) помещени[яе]\\b", 
+      "id": 412, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bнежилая постройка\\b", 
+      "id": 414, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bнежилое встроенное помещение\\b", 
+      "id": 575, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bНежилое здание\\b", 
+      "id": 413, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bнежилое строение\\b", 
+      "id": 601, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bнежилое хозяйственное помещение\\b", 
+      "id": 610, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bнежилой дом\\b", 
+      "id": 313, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bнезавершенный строительством объект готовностью\\s?\\d?\\d?\\%?\\b", 
+      "id": 560, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bНиссан\\b", 
+      "id": 684, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Nissan"
+    }, 
+    {
+      "data": "\\bОбщая долевая\\b", 
+      "id": 20, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "\\bОбщая долевая\\b", 
+      "id": 127, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "\\bОбщая кооперативная аренда\\b", 
+      "id": 46, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "\\bОбщая кооперативная аренда\\b", 
+      "id": 135, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "\\bобщежит", 
+      "id": 258, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "\\bОвоще\\-?хранилище\\b", 
+      "id": 577, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bОпель\\b", 
+      "id": 660, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Opel"
+    }, 
+    {
+      "data": "\\bочистное сооружение\\b", 
+      "id": 602, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bПагани\\b", 
+      "id": 658, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Pagani"
+    }, 
+    {
+      "data": "\\bпаркинге?\\b", 
+      "id": 222, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bпарковочн", 
+      "id": 221, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bпарусное\\s+судно\\b", 
+      "id": 176, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bПежо\\b", 
+      "id": 678, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Peugeot"
+    }, 
+    {
+      "data": "\\bпогреб\\b", 
+      "id": 603, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bпогрузчик\\s+фронтальный\\b", 
+      "id": 206, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автомобиль грузовой"
+    }, 
+    {
+      "data": "\\bпод размещение объектов капитального строительства\\b", 
+      "id": 252, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "\\bподвал\\b", 
+      "id": 598, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bполуприцеп\\b", 
+      "id": 154, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bПорше\\b", 
+      "id": 685, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Porsche"
+    }, 
+    {
+      "data": "\\bпостоянное бессрочное пользование\\b", 
+      "id": 114, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "\\bприцеп\\(полуприцеп\\)\\s+", 
+      "id": 145, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bприцеп\\b", 
+      "id": 155, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bприцеп\\s+к\\s+а/м\\s+легковому\\b", 
+      "id": 144, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Автоприцеп"
+    }, 
+    {
+      "data": "\\bпроизводственное здание\\b", 
+      "id": 572, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bПротон\\b", 
+      "id": 637, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Proton"
+    }, 
+    {
+      "data": "\\bпроходная\\b", 
+      "id": 599, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bрезервуар запаса воды\\b", 
+      "id": 570, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bрезинов(?:ая|ые)\\s+лодк(?:а|и)\\b", 
+      "id": 186, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Водный транспорт"
+    }, 
+    {
+      "data": "\\bРено\\b", 
+      "id": 674, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Renault"
+    }, 
+    {
+      "data": "\\bРовер\\b", 
+      "id": 683, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Land Rover"
+    }, 
+    {
+      "data": "\\bс/х машина\\b", 
+      "id": 207, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Сельхоз техника"
+    }, 
+    {
+      "data": "\\bсадовый дом(?:ик|)\\b", 
+      "id": 316, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "\\bСамсунг\\b", 
+      "id": 670, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Samsung"
+    }, 
+    {
+      "data": "\\bсарай\\b", 
+      "id": 582, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bСатурн\\b", 
+      "id": 644, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Saturn"
+    },
+    {
+      "data": "\\bСеат\\b", 
+      "id": 635, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "SEAT"
+    }, 
+    {
+      "data": "\\bсеть (газо|водо)провода\\b", 
+      "id": 569, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bсеть наружного освещения\\b", 
+      "id": 568, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bсеть электроснабжения\\b", 
+      "id": 567, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bсеть\\b.+\\bканализации\\b", 
+      "id": 564, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bСитроен\\b", 
+      "id": 653, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Citroen"
+    }, 
+    {
+      "data": "\\bскважина минеральной воды\\b", 
+      "id": 608, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bсклад\\-магазин\\b", 
+      "id": 562, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bСклад\\b", 
+      "id": 561, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bскутер\\b", 
+      "id": 191, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Мототранспортное средство"
+    }, 
+    {
+      "data": "\\bслужебн", 
+      "id": 69, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Служебное жилье"
+    }, 
+    {
+      "data": "\\bснегоболотоход\\b", 
+      "id": 209, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "\\bснегоход\\b", 
+      "id": 210, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "\\bСтояночное место\\b", 
+      "id": 237, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\bСубару\\b", 
+      "id": 682, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Subaru"
+    }, 
+    {
+      "data": "\\bСузуки\\b", 
+      "id": 634, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Suzuki"
+    }, 
+    {
+      "data": "\\bтаунхау(?:з|с)\\b", 
+      "id": 280, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "\\bТианма\\b", 
+      "id": 656, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Tianma"
+    }, 
+    {
+      "data": "\\bТойота\\b", 
+      "id": 672, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Toyota"
+    }, 
+    {
+      "data": "\\bтопочная\\b", 
+      "id": 595, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bтрактор\\b", 
+      "id": 211, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Сельхоз техника"
+    }, 
+    {
+      "data": "\\bтрансформаторная подстанция\\b", 
+      "id": 596, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bУчастие в долевом строительстве\\b", 
+      "id": 32, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "\\bУчастие в долевом строительстве\\b", 
+      "id": 130, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "\\bучастки\\b", 
+      "id": 239, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "\\bучасток\\b", 
+      "id": 238, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "\\bфактиче", 
+      "id": 71, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Provision for use "
+    }, 
+    {
+      "data": "\\bФеррари\\b", 
+      "id": 648, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Ferrari"
+    }, 
+    {
+      "data": "\\bФиат\\b", 
+      "id": 639, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Fiat"
+    }, 
+    {
+      "data": "\\bФольксваген\\b", 
+      "id": 659, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Volkswagen"
+    }, 
+    {
+      "data": "\\bФорд\\b", 
+      "id": 636, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Ford"
+    }, 
+    {
+      "data": "\\bфургон\\b", 
+      "id": 173, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "\\bХаммер\\b", 
+      "id": 675, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Hummer"
+    }, 
+    {
+      "data": "\\bХарлей-дэвидсон\\b", 
+      "id": 669, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Harley-Davidson"
+    }, 
+    {
+      "data": "\\bХёнде\\b", 
+      "id": 663, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Hyundai"
+    }, 
+    {
+      "data": "\\bХозяйственная постройка\\b", 
+      "id": 573, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bХозяйственное строение\\b", 
+      "id": 571, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bХозяйственный блок\\b", 
+      "id": 563, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bХолден\\b", 
+      "id": 641, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Holden"
+    }, 
+    {
+      "data": "\\bХонда\\b", 
+      "id": 671, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Honda"
+    }, 
+    {
+      "data": "\\bХундай\\b", 
+      "id": 657, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Hyundai"
+    }, 
+    {
+      "data": "\\bцех лесопиления и деревеобработки\\b", 
+      "id": 606, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "\\bЧангфен\\b", 
+      "id": 654, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "ChangFeng"
+    }, 
+    {
+      "data": "\\bчастный дом\\b", 
+      "id": 281, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "\\bчастный сервитут\\b", 
+      "id": 113, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "\\bчасть земельного участка\\b", 
+      "id": 253, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "\\bШевроле\\b", 
+      "id": 680, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Chevrolet"
+    }, 
+    {
+      "data": "\\bШуангхуан\\b", 
+      "id": 646, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "carbrand", 
+      "value": "Shuanghuan"
+    }, 
+    {
+      "data": "\\bэллинг\\b", 
+      "id": 223, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "\\Объект незавершенного строительства\\b", 
+      "id": 574, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "½ частного дома", 
+      "id": 302, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "автовесы", 
+      "id": 543, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "автозаправочная станция", 
+      "id": 352, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "автомобили грузовые", 
+      "id": 170, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "vehicletype", 
+      "value": "Автомобиль грузовой"
+    }, 
+    {
+      "data": "Автомобили Легковые", 
+      "id": 215, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "vehicletype", 
+      "value": "Автомобиль легковой"
+    }, 
+    {
+      "data": "Автомоечный комплекс", 
+      "id": 334, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Административное здание", 
+      "id": 335, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Административное здание 2х этажное", 
+      "id": 336, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "АЗС многотопливная", 
+      "id": 548, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "апартамент", 
+      "id": 265, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Аренда", 
+      "id": 57, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "Аренда", 
+      "id": 79, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Аренда", 
+      "id": 337, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Аренда жилого помещения", 
+      "id": 338, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Артезианская скважина", 
+      "id": 339, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "асфальтобетонная площадка", 
+      "id": 546, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Баня Бытовая постройка", 
+      "id": 340, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Баня(гостевой дом)", 
+      "id": 341, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Баталерка нежилая", 
+      "id": 342, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "безвозмездное пользование", 
+      "id": 108, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Беларуссия", 
+      "id": 612, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Belarus"
+    }, 
+    {
+      "data": "Белорусь", 
+      "id": 613, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Belarus"
+    }, 
+    {
+      "data": "Беседка", 
+      "id": 343, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Блок", 
+      "id": 344, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Блок для рыболовов-любителей", 
+      "id": 345, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Бытовое здание", 
+      "id": 346, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "В собственности", 
+      "id": 2, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "В собственности", 
+      "id": 80, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "В собстенности", 
+      "id": 1, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Веранда", 
+      "id": 347, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "водопровод", 
+      "id": 348, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Военная ипотека", 
+      "id": 34, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Военная ипотека", 
+      "id": 81, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Военный городок", 
+      "id": 350, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Временная постройка", 
+      "id": 349, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "газозаправочная станция", 
+      "id": 353, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Газопровод", 
+      "id": 351, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Гаражк", 
+      "id": 224, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Гостевой дом", 
+      "id": 285, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Гостиничный номер", 
+      "id": 272, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Государственная", 
+      "id": 64, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Служебное жилье"
+    }, 
+    {
+      "data": "Грузовой", 
+      "id": 169, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "vehicletype", 
+      "value": "Автомобиль грузовой"
+    }, 
+    {
+      "data": "Дачнный дом", 
+      "id": 321, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "дачное строение", 
+      "id": 319, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Дачный летний домик", 
+      "id": 318, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Дачныйдом", 
+      "id": 320, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Для размещения гаражей", 
+      "id": 242, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Договор долевого строительства", 
+      "id": 3, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Договор долевого строительства", 
+      "id": 115, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Договор долевого участия", 
+      "id": 9, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    },
+    {
+      "data": "Договор долевого участия", 
+      "id": 121, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Договор на использование земель", 
+      "id": 35, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Договор соц. найма", 
+      "id": 58, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "Договор соц. найма", 
+      "id": 82, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Договор социального найма", 
+      "id": 59, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "Договор социального найма", 
+      "id": 83, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Договор участия в долевом строительстве", 
+      "id": 4, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Договор участия в долевом строительстве", 
+      "id": 116, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Долевая", 
+      "id": 5, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Долевая", 
+      "id": 117, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Долевое строительство", 
+      "id": 6, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Долевое строительство", 
+      "id": 354, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Долевое строительство", 
+      "id": 118, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Доля в праве", 
+      "id": 7, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Доля в праве", 
+      "id": 119, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Доля земельного участка в праве общей долевой собственности под многоквартирным домом", 
+      "id": 8, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Доля земельного участка в праве общей долевой собственности под многоквартирным домом", 
+      "id": 120, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Дом", 
+      "id": 286, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Дом (дачного типа)", 
+      "id": 325, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Дом (недостроенное строительство)", 
+      "id": 287, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Дом (нежилой)", 
+      "id": 326, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Дом (незавершенное строительство)", 
+      "id": 288, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Дом гостевой", 
+      "id": 289, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Дом для отдыха", 
+      "id": 324, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Дом летний", 
+      "id": 322, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Дом на этапе строительства", 
+      "id": 290, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "дом охраны", 
+      "id": 539, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Дом с гаражом", 
+      "id": 291, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Дом с приусадебным участком", 
+      "id": 292, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Дом с участком", 
+      "id": 293, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "дом торжеств", 
+      "id": 536, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Дома", 
+      "id": 294, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Домик рыбака", 
+      "id": 369, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Домовладение", 
+      "id": 11, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Домовладение", 
+      "id": 295, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Домовладение", 
+      "id": 84, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "досуговый центр", 
+      "id": 541, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Жил.дома ,часть жилого дома", 
+      "id": 274, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Жил.строение без права рип", 
+      "id": 275, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Жилая площадь", 
+      "id": 273, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Жилодой дом", 
+      "id": 296, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "жилое здание", 
+      "id": 307, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Жилое служебное помещение", 
+      "id": 355, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Жилые помещения", 
+      "id": 276, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Здание", 
+      "id": 370, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание (жилое)", 
+      "id": 306, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Здание - проходная", 
+      "id": 371, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание дома охотника", 
+      "id": 323, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "здание душевых", 
+      "id": 551, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание конторы экономической службы", 
+      "id": 558, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание котельной", 
+      "id": 373, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание кухни с пристройкой", 
+      "id": 537, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание магазина", 
+      "id": 374, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание магазина (гараж)", 
+      "id": 375, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание моторного цеха 1этажное", 
+      "id": 376, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание незавершенного строительства", 
+      "id": 377, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание охранника", 
+      "id": 540, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание павильона", 
+      "id": 378, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание под коммерческую деятельность", 
+      "id": 379, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание проходной", 
+      "id": 372, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание склад", 
+      "id": 380, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание сто", 
+      "id": 381, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание сто \"животно водства\" 1 этажное", 
+      "id": 382, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание столовой", 
+      "id": 545, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание храма", 
+      "id": 407, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание цеха", 
+      "id": 383, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "здание цеха сборки сельхозмашин", 
+      "id": 553, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Здание-хозяйственная пристройка", 
+      "id": 384, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Земельный участок", 
+      "id": 12, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Земельный участок", 
+      "id": 85, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Ижс", 
+      "id": 13, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Ижс", 
+      "id": 86, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Инвидуальная", 
+      "id": 15, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Инвидуальная", 
+      "id": 88, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Индив\\w+ная", 
+      "id": 14, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Индив\\w+ная", 
+      "id": 87, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Индив\\w+ное", 
+      "id": 107, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Индивидуальная (коммерческий найм)", 
+      "id": 385, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Индивидуальная колясочная", 
+      "id": 386, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Индивидуальный", 
+      "id": 17, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Индивидуальный", 
+      "id": 90, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "индивидуальный дом", 
+      "id": 305, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Индидуальная", 
+      "id": 16, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Индидуальная", 
+      "id": 89, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Иное недвижимое имущество", 
+      "id": 387, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "иные транспортные средства", 
+      "id": 143, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "vehicletype", 
+      "value": "Иное"
+    }, 
+    {
+      "data": "Ипотека", 
+      "id": 36, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Ипотека", 
+      "id": 91, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Ипотека в силу закона", 
+      "id": 37, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Ипотека в силу закона", 
+      "id": 92, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Ипотека в силу закона", 
+      "id": 388, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кабинет", 
+      "id": 389, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кабинет фактиче предоставл.", 
+      "id": 390, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "кабинка-овощехранилище", 
+      "id": 391, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Казарма", 
+      "id": 392, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Казарма пансиона", 
+      "id": 38, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Казарма пансиона", 
+      "id": 393, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Казарменное положение", 
+      "id": 394, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Казахскан", 
+      "id": 617, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Kazakhstan"
+    }, 
+    {
+      "data": "Кафе", 
+      "id": 356, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    },
+    {
+      "data": "Кафе-бар", 
+      "id": 357, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кваритира", 
+      "id": 263, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Кваритра", 
+      "id": 264, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Квартира", 
+      "id": 18, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Квартира", 
+      "id": 93, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Квартира", 
+      "id": 623, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Квартира (соц. найм)", 
+      "id": 54, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In free use "
+    }, 
+    {
+      "data": "Кладовая", 
+      "id": 358, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кладовая комната", 
+      "id": 359, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кладовка", 
+      "id": 360, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кладовка (овощехранилище)", 
+      "id": 361, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "кладовое помещение", 
+      "id": 532, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Койка -место", 
+      "id": 362, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Койко-место", 
+      "id": 363, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Койко-место в общежитии", 
+      "id": 364, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Колодец", 
+      "id": 365, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Колхозный", 
+      "id": 366, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Команата в служебном здании", 
+      "id": 266, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Комната в коммунальной квартире", 
+      "id": 268, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Комнатный блок", 
+      "id": 267, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Конюшня", 
+      "id": 367, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Кооператив", 
+      "id": 39, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Кооператив", 
+      "id": 123, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Кооперативная", 
+      "id": 41, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Кооперативная", 
+      "id": 125, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Кооперативный", 
+      "id": 40, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Кооперативный", 
+      "id": 124, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Коопиративная", 
+      "id": 42, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Коопиративная", 
+      "id": 126, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Котельная", 
+      "id": 395, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Култаевское с/п", 
+      "id": 624, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Культурно-спортивный комплекс", 
+      "id": 368, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Легенькая", 
+      "id": 396, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Летний дом", 
+      "id": 328, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Летняя кухня", 
+      "id": 397, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Магазин", 
+      "id": 398, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Магазин непродовольственных товаров", 
+      "id": 399, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "мансарда над хозяйственным блоком", 
+      "id": 547, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Место в казарме", 
+      "id": 400, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Место для парковки автомобиля", 
+      "id": 225, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "место на подземной парковке", 
+      "id": 226, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Молдавия", 
+      "id": 620, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Молдова"
+    }, 
+    {
+      "data": "Музейный комплекс", 
+      "id": 401, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Муниципальная жилая комната", 
+      "id": 55, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In free use "
+    }, 
+    {
+      "data": "Муниципальная собственность", 
+      "id": 65, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Служебное жилье"
+    }, 
+    {
+      "data": "На родителей", 
+      "id": 43, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Навес", 
+      "id": 403, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Навесы", 
+      "id": 404, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Надводная постройка", 
+      "id": 402, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "наём на срок полномочий депутата", 
+      "id": 109, 
+      "is_case": false, 
+      "is_regex": true, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Не жилое помещение", 
+      "id": 405, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Не жилой дом", 
+      "id": 406, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Не указано", 
+      "id": 622, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Недостроенный дом", 
+      "id": 299, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Нежилая хозяйственная постройка", 
+      "id": 409, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилое", 
+      "id": 44, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Нежилое", 
+      "id": 94, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Нежилое здание-магазин", 
+      "id": 410, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилое помещение", 
+      "id": 411, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилое помещение (подвал)", 
+      "id": 418, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилое помещение в гостинично-офисном центре", 
+      "id": 419, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилое сооружение", 
+      "id": 420, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "нежилое сооружение хозблок", 
+      "id": 559, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилое строение", 
+      "id": 421, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нежилой дачныйдом", 
+      "id": 329, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Нежилой дом", 
+      "id": 408, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Незавершенное строительство", 
+      "id": 422, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Незавершенное строительство (здание)", 
+      "id": 423, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "незавершенный строительством дом", 
+      "id": 309, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "незавершенный строительством объект", 
+      "id": 534, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Незаконченный объект строительства", 
+      "id": 424, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Незаконченный объект строительства (индивидуальня)", 
+      "id": 425, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нжс", 
+      "id": 426, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Нис", 
+      "id": 45, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Нис", 
+      "id": 95, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Номер", 
+      "id": 269, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Номер", 
+      "id": 60, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "Номер в гостинице", 
+      "id": 270, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "номер в пансионате", 
+      "id": 555, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Номер гостиницы", 
+      "id": 271, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Apartment"
+    }, 
+    {
+      "data": "Номер гостиницы", 
+      "id": 61, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "Общая", 
+      "id": 19, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Общая", 
+      "id": 132, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Общая долевея", 
+      "id": 21, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Общая долевея", 
+      "id": 128, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Общая с банком", 
+      "id": 22, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Общая с банком", 
+      "id": 133, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Общая собственность", 
+      "id": 23, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Общая собственность", 
+      "id": 134, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Общая совмесная", 
+      "id": 24, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Общая совмесная", 
+      "id": 136, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Общая совместная", 
+      "id": 25, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Общая совместная", 
+      "id": 137, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Общедолевая собственность жилолго дома", 
+      "id": 436, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Общественно жилая застройка", 
+      "id": 427, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Объект", 
+      "id": 428, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "объект индивидуального жилищного строительства", 
+      "id": 308, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Объект недвижимости нежилого фонда", 
+      "id": 429, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Объект неза вершенного строительства", 
+      "id": 430, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Объект незавершго строительства", 
+      "id": 431, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    },
+    {
+      "data": "Объект незавершенного дачного строительства", 
+      "id": 330, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Объект незавершенного строительства (дом)", 
+      "id": 300, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Объект незавершенный строительством", 
+      "id": 432, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Объект незавершонный строительством", 
+      "id": 433, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Объекты незавершенного строительства 56 %", 
+      "id": 435, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Объекты незавершонный строительством", 
+      "id": 434, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Овощная яма", 
+      "id": 437, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Овощная ячейка", 
+      "id": 438, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Ограждение", 
+      "id": 439, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Остатки построек", 
+      "id": 440, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Остатки построек жилого дома", 
+      "id": 441, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Отдельный дом", 
+      "id": 301, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "открытая терраса", 
+      "id": 533, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Офис", 
+      "id": 442, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Офисное помещение", 
+      "id": 443, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Охотничий домик", 
+      "id": 444, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Паевая", 
+      "id": 26, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Паевая", 
+      "id": 129, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Partially in property "
+    }, 
+    {
+      "data": "Пай", 
+      "id": 445, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Пай", 
+      "id": 243, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Паковочное место", 
+      "id": 227, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Пансион", 
+      "id": 446, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Пансионат", 
+      "id": 447, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Паргинг", 
+      "id": 228, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Паркитнг", 
+      "id": 229, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Парковка", 
+      "id": 230, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Парковое место", 
+      "id": 231, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "По ипотеке", 
+      "id": 47, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "По ипотеке", 
+      "id": 96, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Погреб", 
+      "id": 448, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Погребная ячейка", 
+      "id": 449, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Под хранение авотранспорта личного пользования", 
+      "id": 232, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Подвал", 
+      "id": 450, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Подвальное нежилое помещение", 
+      "id": 452, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Подвальное помещение", 
+      "id": 451, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Подземная парковка", 
+      "id": 233, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Garage"
+    }, 
+    {
+      "data": "Подсобное помещение", 
+      "id": 453, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Подсобное хозяйство", 
+      "id": 454, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Пожарный проезд м/у жилыми домами", 
+      "id": 245, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Пожизненное наследуемое владение", 
+      "id": 455, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Полная", 
+      "id": 27, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Полная", 
+      "id": 97, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Полуподвальное помещение", 
+      "id": 456, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение", 
+      "id": 457, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение (аренда)", 
+      "id": 458, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение в казарме", 
+      "id": 459, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение нежилое", 
+      "id": 460, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение офиса", 
+      "id": 461, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение под магазин", 
+      "id": 462, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение подвальное", 
+      "id": 463, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение при в/ч", 
+      "id": 464, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Помещение торгового зала", 
+      "id": 465, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "При войсковой части", 
+      "id": 466, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Придомовая хозяйственная постройка (сарай)", 
+      "id": 467, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Приспособл Помещение", 
+      "id": 468, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Приспособл. помещение", 
+      "id": 469, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Приспособленное помещение", 
+      "id": 470, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Приусадебное хозяйство", 
+      "id": 471, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Производственный цех", 
+      "id": 472, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "ремонтная мастерская", 
+      "id": 542, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Респ. беларусь", 
+      "id": 614, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Belarus"
+    }, 
+    {
+      "data": "Республика абхазия", 
+      "id": 611, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Abkhazia"
+    }, 
+    {
+      "data": "Республика беларусь", 
+      "id": 615, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Belarus"
+    }, 
+    {
+      "data": "Республика Белоруссия", 
+      "id": 616, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Belarus"
+    }, 
+    {
+      "data": "Республика молдова", 
+      "id": 621, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Молдова"
+    }, 
+    {
+      "data": "Республика татарстан", 
+      "id": 625, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Республика южная осетия", 
+      "id": 618, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Other"
+    }, 
+    {
+      "data": "России", 
+      "id": 627, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Россиия", 
+      "id": 628, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Россия 0 россия", 
+      "id": 629, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Россия россия", 
+      "id": 630, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Россия россия россия", 
+      "id": 631, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "Рынок", 
+      "id": 473, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "С обременением", 
+      "id": 50, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "С обременением", 
+      "id": 98, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Сад", 
+      "id": 247, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Садовая кладовая", 
+      "id": 474, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Садовое строение", 
+      "id": 475, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Садовы дом", 
+      "id": 332, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Садовый", 
+      "id": 248, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Садовый участо с деревянным домиком", 
+      "id": 249, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Самосторой", 
+      "id": 476, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Санузел", 
+      "id": 477, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Саовый дом", 
+      "id": 331, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Сарай", 
+      "id": 478, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Сарай с погребом", 
+      "id": 479, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "сельскохозяйственная техника", 
+      "id": 208, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "vehicletype", 
+      "value": "Сельхоз техника"
+    }, 
+    {
+      "data": "Сельхозн-азначения", 
+      "id": 48, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Сельхозн-азначения", 
+      "id": 138, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "скважина на воду", 
+      "id": 554, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Складское нежилое помещение", 
+      "id": 480, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Сливная яма", 
+      "id": 481, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "слип", 
+      "id": 244, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Служебная", 
+      "id": 66, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Служебное жилье"
+    }, 
+    {
+      "data": "Служебная", 
+      "id": 99, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Служебное", 
+      "id": 67, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Служебное жилье"
+    }, 
+    {
+      "data": "Служебное", 
+      "id": 100, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Служебное", 
+      "id": 482, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Служебное помещение", 
+      "id": 483, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Служебное помещениее", 
+      "id": 484, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    },    {
+      "data": "Служебное помещений", 
+      "id": 485, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Снт", 
+      "id": 49, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Снт", 
+      "id": 139, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Снт", 
+      "id": 250, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Собственность", 
+      "id": 28, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Собственность", 
+      "id": 101, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Собственность не оформлена", 
+      "id": 51, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Собственность не оформлена", 
+      "id": 102, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Совместная", 
+      "id": 30, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Совместная", 
+      "id": 141, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Совместная долевая", 
+      "id": 31, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Совместная долевая", 
+      "id": 142, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Соглашениеоб уступке прав требования по договору 2014г.", 
+      "id": 52, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "In use "
+    }, 
+    {
+      "data": "Соглашениеоб уступке прав требования по договору 2014г.", 
+      "id": 103, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Соместная", 
+      "id": 29, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Соместная", 
+      "id": 140, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Joint ownership "
+    }, 
+    {
+      "data": "Сооружение", 
+      "id": 486, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Сооружение \"нефтесклад\"-азс", 
+      "id": 487, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Сооружение - газопровод низкого давления", 
+      "id": 488, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "сооружение инженерно-коммуникационное", 
+      "id": 530, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "сооружение, газовотопливное хранилище", 
+      "id": 549, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "сооружение: железнодорожный тупик", 
+      "id": 544, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "сооружения топливной промышленности", 
+      "id": 550, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Социальный найм", 
+      "id": 62, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Lease "
+    }, 
+    {
+      "data": "Социальный найм", 
+      "id": 104, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Социальный найм", 
+      "id": 489, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Ст \"березка\"", 
+      "id": 490, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Сторящееся жилье", 
+      "id": 491, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Строени", 
+      "id": 492, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Строение", 
+      "id": 493, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Строение жилое", 
+      "id": 303, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Строящийся дом", 
+      "id": 304, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Татарстан", 
+      "id": 632, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Russia "
+    }, 
+    {
+      "data": "творческая мастерская", 
+      "id": 538, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Теплица", 
+      "id": 494, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "торгово-бытовой объект", 
+      "id": 535, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Торгово-офисное здание", 
+      "id": 496, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Торговое помещение", 
+      "id": 495, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Торговые павильоны", 
+      "id": 497, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "торговый комплекс (нежилое)", 
+      "id": 552, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Торговый павилион", 
+      "id": 498, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Торговый павильон", 
+      "id": 499, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Трансформаторная подстанция", 
+      "id": 500, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Тренажерный зал", 
+      "id": 501, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Туалет (уборная)", 
+      "id": 502, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Уборная", 
+      "id": 503, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Участие в долевом строительстве", 
+      "id": 504, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Участник долевого строительства", 
+      "id": 505, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Федеральная", 
+      "id": 68, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Служебное жилье"
+    }, 
+    {
+      "data": "Фундамент", 
+      "id": 506, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Функциональное помещение", 
+      "id": 507, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хоз Строение", 
+      "id": 508, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хоз. постройка", 
+      "id": 509, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хоз. строение", 
+      "id": 510, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хоз.подвал", 
+      "id": 511, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хоз.постройка", 
+      "id": 512, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хоз.строение", 
+      "id": 513, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозблок", 
+      "id": 514, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозблок для инвентаря", 
+      "id": 515, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозпостройка", 
+      "id": 516, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозпостройка № 5", 
+      "id": 517, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозстроение", 
+      "id": 518, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйсвенное строение", 
+      "id": 519, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйственая постройка", 
+      "id": 521, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйственая постройка (нежилая)", 
+      "id": 522, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйственная кладовая (подвал)", 
+      "id": 523, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйственная постройка", 
+      "id": 524, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "хозяйственное помещение", 
+      "id": 520, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйственные постройки (незавершенное строительство)", 
+      "id": 526, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Хозяйствые постройки", 
+      "id": 525, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "хутор", 
+      "id": 327, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Dacha"
+    }, 
+    {
+      "data": "Цоколное помещение", 
+      "id": 527, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Частная гостиница", 
+      "id": 528, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Частная собственность", 
+      "id": 33, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Ownership"
+    }, 
+    {
+      "data": "Частная собственность", 
+      "id": 105, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Частный дом (безвозмездное пользование)", 
+      "id": 72, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Provision for use "
+    }, 
+    {
+      "data": "Часть дома", 
+      "id": 297, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Часть домовладения", 
+      "id": 298, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Residential house"
+    }, 
+    {
+      "data": "Часть здания", 
+      "id": 529, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "часть земельного участка", 
+      "id": 246, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Land plot"
+    }, 
+    {
+      "data": "Южная осетия", 
+      "id": 619, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "country", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Юридически не оформлен", 
+      "id": 70, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "owntype", 
+      "value": "Provision for use "
+    }, 
+    {
+      "data": "Юридически не оформлен", 
+      "id": 106, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "sharetype", 
+      "value": "Individual"
+    }, 
+    {
+      "data": "Яма", 
+      "id": 531, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Ячейка в овоще хранилище", 
+      "id": 556, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }, 
+    {
+      "data": "Ячейка овощехранилища", 
+      "id": 557, 
+      "is_case": false, 
+      "is_regex": false, 
+      "type": "realestatetype", 
+      "value": "Other"
+    }
+  ]
+}

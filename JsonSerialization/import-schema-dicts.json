@@ -551,7 +551,8 @@
                 "items": {
                     "$id": "/properties/vehicles/items", 
                     "required": [
-                        "text"
+                      "text",
+                      "relative"
                     ], 
                     "type": "object", 
                     "properties": {

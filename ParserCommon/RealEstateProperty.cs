@@ -17,6 +17,7 @@ namespace TI.Declarator.ParserCommon
         public string OwnedShare { get; }
 
         public string Name { get; }
+        public string Text { get; }
 
         public RealEstateProperty(OwnershipType ownType, RealEstateType propType, Country country, decimal? area, string name, string share = "")
         {
