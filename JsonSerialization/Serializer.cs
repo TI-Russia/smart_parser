@@ -44,7 +44,7 @@ namespace TI.Declarator.JsonSerialization
         {
             var jServ = new JObject(
                 GetPersonalData(servant),
-                GetInstitutiondata(servant),
+                //GetInstitutiondata(servant),
                 GetYear(declarationProperties),
                 GetIncomes(servant),
                 GetRealEstateProperties(servant),
@@ -114,7 +114,7 @@ namespace TI.Declarator.JsonSerialization
                     // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
                     new JProperty("type", GetPropertyType(prop)),
                     // TODO should property area really be an integer
-                    new JProperty("square", /*(int)*/prop.Area),
+                    new JProperty("square", prop.Area),
                     // "country_raw"
                     new JProperty("country", GetCountry(prop)),
                     new JProperty("region", null),
@@ -189,6 +189,10 @@ namespace TI.Declarator.JsonSerialization
                 case RelationType.Child: return "Ребенок";
                 default: throw new ArgumentOutOfRangeException("rt", $"Unsupported relationship type: {rt.ToString()}");
             }
+        }
+        private static string GetAreaString(RealEstateProperty prop)
+        {
+            return prop.Area == null ? "null" : prop.Area.Value.ToString("#.##");
         }
 
         private static string GetPropertyType(RealEstateProperty prop)
