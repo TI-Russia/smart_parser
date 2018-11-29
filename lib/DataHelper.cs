@@ -124,7 +124,7 @@ namespace Smart.Parser.Lib
 
         public static IEnumerable<RealEstateType> ParseRealEstateTypes(string strTypes)
         {
-            return new List<RealEstateType>() { ParseRealEstateType(strTypes) };
+            return new List<RealEstateType>() { DeclaratorApiPatterns.ParseRealEstateType(strTypes) };
         }
 
         public static RealEstateType ParseRealEstateType(string strType)
@@ -204,7 +204,7 @@ namespace Smart.Parser.Lib
         }
 
 
-        static public IEnumerable<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
+        static public List<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
         {
             var res = new List<Tuple<RealEstateType, OwnershipType, string>>();
 
@@ -377,7 +377,14 @@ namespace Smart.Parser.Lib
                 }
                 else
                 {
-                    area = str.ParseDecimalValue();
+                    try
+                    { 
+                        area = str.ParseDecimalValue();
+                    }
+                    catch 
+                    {
+                        area = null;
+                    }
                 }
 
                 res.Add(area);

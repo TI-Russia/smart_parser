@@ -50,6 +50,10 @@
       <Project>{16e41c56-7cd2-4e16-a469-4af4f7facb71}</Project>
       <Name>JsonSerialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
+      <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>
+      <Name>ParserCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
