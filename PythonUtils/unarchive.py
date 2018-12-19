@@ -22,10 +22,17 @@ if not os.path.isdir(folder):
 
 with zipfile.ZipFile(args.filename, 'r') as brokenzip:
     for name in brokenzip.namelist():
+        if not name:
+            continue
+
+        if name.endswith("/"):
+            os.makedirs(os.path.join(folder, name))
+            continue
+
         fp = brokenzip.open(name)
 
         res = chardet.detect(name)
-        if res['confidence'] > 0.5:
+        if res['confidence'] > 0.1:
             if res['encoding'] == 'IBM866':
                 name = name.decode(res['encoding'])
 
