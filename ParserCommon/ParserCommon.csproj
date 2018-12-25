@@ -60,6 +60,7 @@
     <Compile Include="RelationType.cs" />
     <Compile Include="Relative.cs" />
     <Compile Include="TextHelpers.cs" />
+    <Compile Include="UnknownEntry.cs" />
     <Compile Include="UnknownRealEstateTypeException.cs" />
     <Compile Include="Vechicle.cs" />
     <Compile Include="XmlHelpers.cs" />

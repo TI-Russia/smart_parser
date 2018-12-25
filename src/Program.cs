@@ -30,10 +30,12 @@ namespace Smart.Parser
          */
         public static int Main(string[] args)
         {
+            DeclaratorApiPatterns patterns;
             string declarationFile = string.Empty;
             int dumpColumn = -1;
             string outFile = "";
             string exportFile = "";
+            string logFile = "";
             ColumnOrdering columnOrdering = null;
             string verbose = "";
             Logger.LogLevel verboseLevel = Logger.LogLevel.Error;
@@ -93,6 +95,17 @@ namespace Smart.Parser
                                 return 1;
                             }
                             break;
+
+                        case "-log":
+                            if (i + 1 < args.Length)
+                                logFile = args[++i];
+                            else
+                            {
+                                ShowHelp();
+                                return 1;
+                            }
+                            break;
+
 
 
                         case "-o":
@@ -215,8 +228,13 @@ namespace Smart.Parser
             }
             adapter.ColumnOrdering = columnOrdering;
 
+            if (logFile == "")
+            {
+                logFile = Path.GetFileName(declarationFile) + ".log";
+            }
+
             Logger.SetLoggingLevel(verboseLevel);
-            Logger.SetSecondLogFileName(Path.GetFileName(declarationFile) + ".log");
+            Logger.SetSecondLogFileName(logFile);
 
             Logger.Info("Column ordering: ");
             foreach (var ordering in columnOrdering.ColumnOrder)

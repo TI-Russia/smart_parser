@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
 
@@ -190,17 +191,23 @@ namespace Smart.Parser.Lib
 
         private string GetVehicleString(Row r)
         {
+            string vehicle = "";
             if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.Vehicle))
             {
-                return r.GetContents(DeclarationField.Vehicle);
+                vehicle = r.GetContents(DeclarationField.Vehicle);
             }
-            return (r.GetContents(DeclarationField.VehicleType) + " " + r.GetContents(DeclarationField.VehicleModel)).Trim();
+            else
+            {
+                vehicle = (r.GetContents(DeclarationField.VehicleType) + " " + r.GetContents(DeclarationField.VehicleModel)).Trim();
+            }
+            return Regex.Replace(vehicle, @"\s{2,}", " ");
         }
 
 
         //////////////////////////////////////////////////
         private void FillPersonProperties(Row r, Person p)
         {
+            // колонка "объекты, находящие в собственности"
             var ownedProperty = ParseOwnedProperty(r);
             if (ownedProperty != null && ownedProperty.Count() > 0)
             {
@@ -213,7 +220,7 @@ namespace Smart.Parser.Lib
                 string statePropAreaStr = r.GetContents(DeclarationField.StatePropertyArea);
                 string statePropCountryStr = r.GetContents(DeclarationField.StatePropertyCountry);
 
-                var propertyType = DataHelper.ParseRealEstateType(statePropTypeStr);
+                var propertyType = DeclaratorApiPatterns.ParseRealEstateType(statePropTypeStr);
                 decimal? area = DataHelper.ParseArea(statePropAreaStr);
                 Country country = DataHelper.ParseCountry(statePropCountryStr);
 
@@ -235,6 +242,7 @@ namespace Smart.Parser.Lib
             }
         }
 
+        // парсинг недвижимости, находящейся в собственности, вычисляется share_type
         private List<RealEstateProperty> ParseOwnedProperty(Row r)
         {
             List<RealEstateType> propertyTypes;
@@ -246,6 +254,8 @@ namespace Smart.Parser.Lib
                 return null;
             }
 
+            // колонка с типом недвижимости отдельно
+            // 
             if (r.ColumnOrdering.OwnershipTypeInSeparateField)
             {
                 propertyTypes = DataHelper.ParseRealEstateTypes(estateTypeStr).ToList();
