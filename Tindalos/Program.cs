@@ -6,6 +6,7 @@ using System.Text;
 
 using Microsoft.Office.Interop.Word;
 
+using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 using TI.Declarator.ParserCommon;
 using TI.Declarator.WordParser;
@@ -33,7 +34,18 @@ namespace Tindalos
             //Scan(args);
 
             //RegressionTest(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
-            Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+            //Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+
+            var ue = new UnknownEntry
+            {
+                Contents = "квортира",
+                EntryType = "realestatetype",
+                FileName = "imaginary_file.docx",
+                DocumentFileId = "1337",
+                WordPageNumber = 3
+            };
+
+            ApiClient.ReportUnknownEntry(ue);
 
             Console.WriteLine("Press any key..");
             Console.ReadKey();
