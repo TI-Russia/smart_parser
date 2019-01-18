@@ -230,6 +230,7 @@ namespace Smart.Parser.Lib
                 p.RealEstateProperties.Add(stateProperty);
             }
 
+            // автомобиль
             string vehicle = GetVehicleString(r); // r.GetContents(DeclarationField.Vehicle);
             if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-")
             {
@@ -243,6 +244,13 @@ namespace Smart.Parser.Lib
         }
 
         // парсинг недвижимости, находящейся в собственности, вычисляется share_type
+
+        // используются колонки OwnedRealEstateType
+        // OwnershipTypeInSeparateField
+        // OwnedRealEstateOwnershipType
+        // OwnedRealEstateArea
+        // OwnedRealEstateCountry
+        // 
         private List<RealEstateProperty> ParseOwnedProperty(Row r)
         {
             List<RealEstateType> propertyTypes;
@@ -262,7 +270,7 @@ namespace Smart.Parser.Lib
                 ownershipTypes = DataHelper.ParseOwnershipTypes(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType)).ToList();
                 shares = DataHelper.ParseOwnershipShares(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType), ownershipTypes).ToList();
             }
-            else
+            else // колонка содержить тип недвижимости и тип собственности
             {
                 var combinedData = DataHelper.ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
 

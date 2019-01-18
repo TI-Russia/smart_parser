@@ -154,6 +154,17 @@ namespace Smart.Parser.Lib
                 { "Дача", RealEstateType.Dacha }
             };
 
+
+        static Dictionary<string, OwnershipType> OwnershipTypeMap =
+            new Dictionary<string, OwnershipType>()
+            {
+                { "Наём (аренда)", OwnershipType.Lease}, 
+                { "В пользовании", OwnershipType.InUse},
+                { "Служебное жилье", OwnershipType.Corp},
+                { "В собственности", OwnershipType.Ownership },
+                { "Фактическое предоставление", OwnershipType.ProvisionForUse}
+            };
+
         public static RealEstateType ParseRealEstateType(string text)
         {
             string normalized = NormalizeText(text);
@@ -167,6 +178,16 @@ namespace Smart.Parser.Lib
             return RealEstateTypeMap[value];
         }
 
+        public static OwnershipType ParseOwnershipType(string text)
+        {
+            string normalized = NormalizeText(text);
+            string value = GetValue(normalized, "owntype");
+            if (value.IsNullOrWhiteSpace())
+            {
+                throw new UnknownRealEstateTypeException(normalized);
+            }
+            return OwnershipTypeMap[value];
+        }
 
     }
 }

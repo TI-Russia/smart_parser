@@ -16,4 +16,16 @@ namespace TI.Declarator.ParserCommon
 
         public string StrType;
     }
+
+    public class UnknownOwnershipTypeException : Exception
+    {
+        public UnknownOwnershipTypeException(string strType)
+            : base("Неизвестный тип владения собственностью:" + strType)
+        {
+            StrType = strType;
+        }
+
+        public string StrType;
+    }
+
 }

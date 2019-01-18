@@ -137,12 +137,15 @@ namespace Smart.Parser.Lib
                                           .Replace("  ", " ")
                                           .Trim();
 
-            RealEstateType type;
+            RealEstateType type = DeclaratorApiPatterns.ParseRealEstateType(key);
+            return type;
+/*
             if (PropertyDictionary.ParseParseRealEstateType(key, out type))
             {
                 return type;
             }
             throw new UnknownRealEstateTypeException(key);
+            */
         }
 
         public static IEnumerable<OwnershipType> ParseOwnershipTypes(string strOwn)
@@ -153,7 +156,15 @@ namespace Smart.Parser.Lib
         private static OwnershipType ParseOwnershipType(string strOwn)
         {
             string str = strOwn.ToLower().Trim();
-            OwnershipType res;
+            OwnershipType res = DeclaratorApiPatterns.ParseOwnershipType(strOwn);
+            return res;
+            /*
+
+            if (PropertyDictionary.ParseParseRealEstateType(key, out type))
+            {
+                return type;
+            }
+
             if (str.Contains("индивид")) res = OwnershipType.Individual;
             else if (str.Contains("собственность")) res = OwnershipType.Individual;
             else if (str.Contains("общая совместная")) res = OwnershipType.Coop;
@@ -172,6 +183,7 @@ namespace Smart.Parser.Lib
             else throw new ArgumentOutOfRangeException("strOwn", $"Неизвестный тип собственности: {strOwn}");
 
             return res;
+            */
         }
 
         static public Tuple<RealEstateType, OwnershipType, string> ParsePropertyAndOwnershipType(string strPropInfo)
@@ -242,9 +254,10 @@ namespace Smart.Parser.Lib
                 }
 
                 string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
-                if (ContainsOwnershipType(strOwnType))
+                string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos).Trim();
+
+                //if (ContainsOwnershipType(strOwnType))
                 {
-                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos).Trim();
                     RealEstateType realEstateType = ParseRealEstateType(strPropType);
                     OwnershipType ownershipType = ParseOwnershipType(strOwnType);
                     string share = ParseOwnershipShare(strOwnType, ownershipType);
