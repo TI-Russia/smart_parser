@@ -225,7 +225,7 @@ namespace Smart.Parser.Lib
                 Country country = DataHelper.ParseCountry(statePropCountryStr);
 
                 RealEstateProperty stateProperty =
-                    new RealEstateProperty(OwnershipType.NotAnOwner, propertyType, country, area, statePropTypeStr);
+                    new RealEstateProperty(OwnershipType.InUse/*.NotAnOwner*/, propertyType, country, area, statePropTypeStr);
 
                 p.RealEstateProperties.Add(stateProperty);
             }

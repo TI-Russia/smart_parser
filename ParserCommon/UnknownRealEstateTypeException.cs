@@ -28,4 +28,15 @@ namespace TI.Declarator.ParserCommon
         public string StrType;
     }
 
+    public class UnknownCountryException : Exception
+    {
+        public UnknownCountryException(string country)
+            : base("Неизвестная страна:" + country)
+        {
+            StrType = country;
+        }
+
+        public string StrType;
+    }
+
 }

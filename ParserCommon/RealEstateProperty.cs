@@ -29,7 +29,7 @@ namespace TI.Declarator.ParserCommon
             this.OwnedShare = share;
         }
 
-
+        /*
         private static RealEstateType ConvertToPluginFriendlyType(RealEstateType propertyType)
         {
             switch (propertyType)
@@ -40,7 +40,7 @@ namespace TI.Declarator.ParserCommon
                 case RealEstateType.DachaBuilding: return RealEstateType.Dacha;
                 case RealEstateType.DachaHouse: return RealEstateType.Dacha;
                 case RealEstateType.Garage: return RealEstateType.Garage;
-                case RealEstateType.GardenPlot: return RealEstateType.PlotOfLand;
+                //case RealEstateType.GardenPlot: return RealEstateType.PlotOfLand;
                 case RealEstateType.HabitableBuilding: return RealEstateType.HabitableHouse;
                 case RealEstateType.HabitableHouse: return RealEstateType.HabitableHouse;
                 case RealEstateType.HabitableSpace: return RealEstateType.Apartment;
@@ -51,10 +51,11 @@ namespace TI.Declarator.ParserCommon
                 case RealEstateType.PlotOfLand: return RealEstateType.PlotOfLand;
                 case RealEstateType.Room: return RealEstateType.Apartment;
                 case RealEstateType.Rooms: return RealEstateType.Apartment;
-                case RealEstateType.Undefined: return RealEstateType.Undefined;
+                //case RealEstateType.Undefined: return RealEstateType.Undefined;
                 case RealEstateType.UnfinishedBuilding: return RealEstateType.Other;
                 default: throw new ArgumentOutOfRangeException("Unexpected real estate type:" + propertyType.ToString());
             }
         }
+        */
     }
 }

@@ -30,6 +30,9 @@ namespace Smart.Parser.Lib
     public class DeclaratorApiPatterns
     {
         /*
+         * API that return 
+         */
+        /*
          realestatetype - гараж, квартира и т.д.
          */
         static Dictionary<string, string> realestatetypeDict = new Dictionary<string, string>();
@@ -44,12 +47,10 @@ namespace Smart.Parser.Lib
         static Dictionary<string, string> owntypeDict = new Dictionary<string, string>();
         static List<string> owntypeRegex = new List<string>();
 
-        /*
-        sharetype:
-            Долевая, совместная, индивидуальная
-        */
-        static Dictionary<string, string> sharetypeDict = new Dictionary<string, string>();
-        static List<string> sharetypeRegex = new List<string>();
+        static Dictionary<T1, T2> ReverseDict<T1, T2>(Dictionary<T2, T1> src)
+        {
+            return src.ToList().ToDictionary<KeyValuePair<T2, T1>, T1, T2>(obj => obj.Value, obj => obj.Key);
+        }
 
         static DeclaratorApiPatterns()
         {
@@ -73,12 +74,6 @@ namespace Smart.Parser.Lib
                             owntypeRegex.Add(pattern.value);
                         else 
                             owntypeDict[pattern.data.ToLower()] = pattern.value;
-                        break;
-                    case "sharetype":
-                        if (pattern.is_regex)
-                            sharetypeRegex.Add(pattern.value);
-                        else
-                            sharetypeDict[pattern.data.ToLower()] = pattern.value;
                         break;
                     case "carbrand":
                     case "vehicletype":
@@ -146,24 +141,31 @@ namespace Smart.Parser.Lib
         static Dictionary<string, RealEstateType> RealEstateTypeMap =
             new Dictionary<string, RealEstateType>()
             {
-                { "Жилой дом", RealEstateType.House},
+                { "Жилой дом", RealEstateType.ResidentialHouse},
                 { "Квартира", RealEstateType.Apartment },
                 { "Иное", RealEstateType.Other },
                 { "Гараж", RealEstateType.Garage },
                 { "Земельный участок", RealEstateType.PlotOfLand },
-                { "Дача", RealEstateType.Dacha }
+                { "Дача", RealEstateType.Dacha },
+                { "Линейный объект", RealEstateType.LinearObject }
             };
-
+        static Dictionary<RealEstateType, string> RealEstateRevMap = ReverseDict(RealEstateTypeMap);
 
         static Dictionary<string, OwnershipType> OwnershipTypeMap =
             new Dictionary<string, OwnershipType>()
             {
-                { "Наём (аренда)", OwnershipType.Lease}, 
+                { "Индивидуальная", OwnershipType.Individual},
+                { "Совместная собственность", OwnershipType.Joint},
+                { "Долевая собственность", OwnershipType.Shared},
                 { "В пользовании", OwnershipType.InUse},
-                { "Служебное жилье", OwnershipType.Corp},
+                { "Наём (аренда)", OwnershipType.Lease}, 
+                { "Служебное жилье", OwnershipType.ServiceHousing},
                 { "В собственности", OwnershipType.Ownership },
                 { "Фактическое предоставление", OwnershipType.ProvisionForUse}
             };
+        static Dictionary<OwnershipType, string> OwnershipRevMap = ReverseDict(OwnershipTypeMap);
+
+
 
         public static RealEstateType ParseRealEstateType(string text)
         {
@@ -178,16 +180,52 @@ namespace Smart.Parser.Lib
             return RealEstateTypeMap[value];
         }
 
+        public static string RealEstateTypeToString(RealEstateType real_type)
+        {
+            try
+            {
+                return RealEstateRevMap[real_type];
+            }
+            catch
+            {
+                throw new UnknownRealEstateTypeException(real_type.ToString());
+            }
+        }
+
         public static OwnershipType ParseOwnershipType(string text)
         {
             string normalized = NormalizeText(text);
             string value = GetValue(normalized, "owntype");
             if (value.IsNullOrWhiteSpace())
             {
-                throw new UnknownRealEstateTypeException(normalized);
+                throw new UnknownOwnershipTypeException(normalized);
             }
             return OwnershipTypeMap[value];
         }
+
+        public static string OwnershipTypeToString(OwnershipType own_type)
+        {
+            try
+            {
+                return OwnershipRevMap[own_type];
+            }
+            catch 
+            {
+                throw new UnknownOwnershipTypeException(own_type.ToString());
+            }
+        }
+
+        public static string ParseCountry(string text)
+        {
+            string value = GetValue(text, "country");
+            if (value.IsNullOrWhiteSpace())
+            {
+                throw new UnknownCountryException(text);
+            }
+            return value;
+        }
+
+
 
     }
 }

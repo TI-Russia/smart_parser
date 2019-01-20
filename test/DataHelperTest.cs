@@ -19,7 +19,7 @@ namespace test
                 DataHelper.ParsePropertyAndOwnershipTypes("квартира    (совместная)");
 
             Assert.AreEqual(result[0].Item1, RealEstateType.Apartment);
-            Assert.AreEqual(result[0].Item2, OwnershipType.Ownership);
+            Assert.AreEqual(result[0].Item2, OwnershipType.Joint);
         }
     }
 }
