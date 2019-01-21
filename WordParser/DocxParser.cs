@@ -294,8 +294,8 @@ namespace TI.Declarator.WordParser
                 propertyTypes = ParseStatePropertyTypesWithUsageInfo(propTypeStr.Replace("\\0", ")"));
             }
 
-                
-            OwnershipType ownershipType = OwnershipType.NotAnOwner;
+
+            OwnershipType ownershipType = OwnershipType.InUse; // OwnershipType.NotAnOwner;
             string share = "";
             string areaStr = GetContents(r, DeclarationField.StatePropertyArea).Trim();
             IEnumerable<decimal?> areas = ParseAreas(areaStr);

@@ -8,6 +8,7 @@ using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 
 using TI.Declarator.ParserCommon;
+using Smart.Parser.Lib;
 
 namespace TI.Declarator.JsonSerialization
 {
@@ -112,7 +113,7 @@ namespace TI.Declarator.JsonSerialization
                     // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
                     new JProperty("name", prop.Name),
                     // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
-                    new JProperty("type", GetPropertyType(prop)),
+                    new JProperty("type", GetPropertyType(prop.PropertyType)),
                     // TODO should property area really be an integer
                     new JProperty("square", prop.Area),
                     // "country_raw"
@@ -132,7 +133,7 @@ namespace TI.Declarator.JsonSerialization
                 {
                     jRealEstate.Add(new JObject(
                         new JProperty("name", prop.Name),
-                        new JProperty("type", GetPropertyType(prop)),
+                        new JProperty("type", GetPropertyType(prop.PropertyType)),
                         // TODO should property area really be an integer
                         new JProperty("square", /*(int)*/prop.Area),
                         new JProperty("country", GetCountry(prop)),
@@ -195,9 +196,11 @@ namespace TI.Declarator.JsonSerialization
             return prop.Area == null ? "null" : prop.Area.Value.ToString("#.##");
         }
 
-        private static string GetPropertyType(RealEstateProperty prop)
+        private static string GetPropertyType(RealEstateType propertyType)
         {
-            switch(prop.PropertyType)
+            return DeclaratorApiPatterns.RealEstateTypeToString(propertyType);
+            /*
+            switch (propertyType)
             {                
                 case RealEstateType.Apartment:
                 case RealEstateType.Rooms: return "Квартира";
@@ -207,7 +210,7 @@ namespace TI.Declarator.JsonSerialization
                 case RealEstateType.DachaHouse: return "Дача";
                 case RealEstateType.House: return "Жилой дом";
                 case RealEstateType.HabitableHouse: return "Жилой дом";
-                case RealEstateType.GardenPlot:
+                //case RealEstateType.GardenPlot:
                 case RealEstateType.PlotOfLand: return "Земельный участок";
                 case RealEstateType.Building:
                 case RealEstateType.HabitableSpace:
@@ -215,6 +218,7 @@ namespace TI.Declarator.JsonSerialization
                 case RealEstateType.Other: return "Иное";
                 default: throw new ArgumentOutOfRangeException("prop.PropertyType", $"Unsupported real estate type: {prop.PropertyType.ToString()}");
             }
+            */
         }
 
         private static string GetCountry(RealEstateProperty prop)
@@ -260,7 +264,7 @@ namespace TI.Declarator.JsonSerialization
 
         private static string GetOwnershipType(RealEstateProperty prop)
         {
-            if (prop.OwnershipType == OwnershipType.NotAnOwner)
+            if (prop.OwnershipType.NotAnOwner()/* == OwnershipType.NotAnOwner*/)
             {
                 return "В пользовании";
             }
@@ -272,7 +276,7 @@ namespace TI.Declarator.JsonSerialization
 
         private static string GetShareType(RealEstateProperty prop)
         {
-            switch(prop.OwnershipType)
+            switch (prop.OwnershipType)
             {
                 case OwnershipType.Coop: return "Совместная собственность";
                 case OwnershipType.Individual: return "Индивидуальная";

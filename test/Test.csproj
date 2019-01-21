@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ColumnDetectorTest.cs" />
+    <Compile Include="DataHelperTest.cs" />
     <Compile Include="DocAdapterTest.cs" />
     <Compile Include="TestApiPatterns.cs" />
     <Compile Include="TestJsonWriter.cs" />

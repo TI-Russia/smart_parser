@@ -2,34 +2,40 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Text;
 
 using TI.Declarator.JsonSerialization;
 using TI.Declarator.ParserCommon;
 
-namespace DeclaratorApiClient
+namespace TI.Declarator.DeclaratorApiClient
 {
-    public class ApiClient
+    public static class ApiClient
     {
         private static readonly string ReportUnknownEntryUrl = "https://declarator.org/api/unknown_entry/";
 
-        private HttpClient HttpClient { get; set; }
+        private static HttpClient HttpClient { get; set; }
 
-        public ApiClient()
+        private static readonly string Username = "david_parsers";
+        private static readonly string Password = "2OoHdAU9";
+
+        static ApiClient()
         {
             HttpClient = new HttpClient();
+
+            byte[] authBytes = Encoding.ASCII.GetBytes($"{Username}:{Password}");
+            string basicAuthInfo = Convert.ToBase64String(authBytes);
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthInfo);
         }
-        public void ReportUnknownEntry(UnknownEntry ue)
+        public static void ReportUnknownEntry(UnknownEntry ue)
         {
             var reportReq = WebRequest.CreateHttp(ReportUnknownEntryUrl);
-            reportReq.ContentType = "application/json";
-            reportReq.Method = "POST";
-
-            using (var sw = new StreamWriter(reportReq.GetRequestStream()))
-            {
-                sw.Write(MiscSerializer.Serialize(ue));
-            }
-
-            var httpResponse = reportReq.GetResponse();
+            string jsonContents = MiscSerializer.Serialize(ue);
+            
+            var httpResponseTask = HttpClient.PostAsJsonAsync(ReportUnknownEntryUrl, jsonContents);
+            httpResponseTask.Wait();
+            var httpResponse = httpResponseTask.Result;
 
             // TODO maybe do something with the response, like error handling
         }

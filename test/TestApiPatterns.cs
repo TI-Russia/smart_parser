@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TI.Declarator.ParserCommon;
 
 namespace test
 {
@@ -14,10 +15,21 @@ namespace test
         [TestMethod]
         public void TestPatterns()
         {
-            string value = DeclaratorApiPatterns.GetValue("\"россия\"", "country");
-            Assert.IsTrue(value=="Russia");
-            Assert.IsTrue(DeclaratorApiPatterns.GetValue("а/м супер пурер машина", "vehicletype") == "Автомобиль легковой");
-            Assert.IsTrue(DeclaratorApiPatterns.GetValue("жилой дом(незавершенное строительство)", "realestatetype") == "Residential house");
+            string value = DeclaratorApiPatterns.ParseCountry("\"россия\"");
+            Assert.AreEqual(value, "Россия");
+            try
+            {
+                DeclaratorApiPatterns.ParseCountry("неправильная страна");
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is UnknownCountryException);
+            }
+
+            Assert.AreEqual(DeclaratorApiPatterns.GetValue("жилой дом(незавершенное строительство)", "realestatetype"), "Жилой дом");
+
+            Assert.AreEqual(DeclaratorApiPatterns.GetValue("а/м супер пурер машина", "vehicletype"), "Автомобиль легковой");
         }
     }
 }

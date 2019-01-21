@@ -16,16 +16,6 @@ namespace TI.Declarator.ParserCommon
 
         public string DataSources = "";
 
-        public IEnumerable<XElement> ContentsToXml()
-        {
-            List<XElement> contentsXml = new List<XElement>();
-            contentsXml.Add(RealEstateToXml());
-            contentsXml.Add(VehiclesToXml());
-            contentsXml.Add(IncomeToXml());
-            contentsXml.Add(IncomeCommentsToXml());
-            contentsXml.Add(IncomeSourcesToXml());
-            return contentsXml;
-        }
 
         private XElement IncomeToXml()
         {
@@ -62,41 +52,5 @@ namespace TI.Declarator.ParserCommon
             return res;
         }
 
-        private XElement RealEstateToXml()
-        {
-            var res = new XElement("realties");
-            if (RealEstateProperties.Count == 0)
-            {
-                res.Add(XmlHelpers.Nil());
-            }
-            else
-            {
-                foreach (var prop in RealEstateProperties)
-                {
-                    res.Add(prop.ToXml());
-                }
-            }
-
-            return res;
-        }
-
-        private XElement VehiclesToXml()
-        {
-            var res = new XElement("transports");
-            if (Vehicles.Count == 0)
-            {
-                res.Add(XmlHelpers.Nil());
-            }
-            else
-            {
-                foreach (var vehicle in Vehicles)
-                {
-                    res.Add(new XElement("transport",
-                              new XElement("transportName", vehicle)));
-                }
-            }
-
-            return res;
-        }
     }
 }

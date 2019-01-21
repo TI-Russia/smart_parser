@@ -98,6 +98,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeclaratorApiClient\DeclaratorApiClient.csproj">
+      <Project>{1ac51d57-9cad-435d-ace5-aba84d287253}</Project>
+      <Name>DeclaratorApiClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
       <Project>{16e41c56-7cd2-4e16-a469-4af4f7facb71}</Project>
       <Name>JsonSerialization</Name>
