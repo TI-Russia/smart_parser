@@ -104,10 +104,12 @@ namespace Parser.Lib
 
         static public void Info(string info, params object[] par)
         {
+            if (log == null) return;
             log.Info(String.Format(info, par));
         }
         static public void Info(string info)
         {
+            if (log == null) return;
             log.Info(String.Format(info));
         }
         static public void UnknownRealEstateType(string info)

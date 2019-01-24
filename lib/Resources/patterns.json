@@ -1994,7 +1994,7 @@
     }, 
     {
         "id": 574, 
-        "data": "\\Объект незавершенного строительства\\b", 
+        "data": "\\bОбъект незавершенного строительства\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "realestatetype", 
@@ -2463,14 +2463,6 @@
         "is_case": false, 
         "type": "owntype", 
         "value": "Долевая собственность"
-    }, 
-    {
-        "id": 5, 
-        "data": "Долевая", 
-        "is_regex": false, 
-        "is_case": false, 
-        "type": "owntype", 
-        "value": "В собственности"
     }, 
     {
         "id": 117, 
@@ -4865,28 +4857,12 @@
         "value": "Индивидуальная"
     }, 
     {
-        "id": 30, 
-        "data": "Совместная", 
-        "is_regex": false, 
-        "is_case": false, 
-        "type": "owntype", 
-        "value": "В собственности"
-    }, 
-    {
         "id": 141, 
         "data": "Совместная", 
         "is_regex": false, 
         "is_case": false, 
         "type": "owntype", 
         "value": "Совместная собственность"
-    }, 
-    {
-        "id": 31, 
-        "data": "Совместная долевая", 
-        "is_regex": false, 
-        "is_case": false, 
-        "type": "owntype", 
-        "value": "В собственности"
     }, 
     {
         "id": 142, 
@@ -4911,14 +4887,6 @@
         "is_case": false, 
         "type": "owntype", 
         "value": "Индивидуальная"
-    }, 
-    {
-        "id": 29, 
-        "data": "Соместная", 
-        "is_regex": false, 
-        "is_case": false, 
-        "type": "owntype", 
-        "value": "В собственности"
     }, 
     {
         "id": 140, 

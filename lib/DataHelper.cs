@@ -153,10 +153,27 @@ namespace Smart.Parser.Lib
             return new List<OwnershipType>() { ParseOwnershipType(strOwn) };
         }
 
+
+        public static OwnershipType ParseOwnershipTypeAndShare(string strOwn, out string share)
+        {
+            var parts = Regex.Split(strOwn, "[ ,]+");
+            OwnershipType res = DeclaratorApiPatterns.ParseOwnershipType(parts[0]);
+            if (parts.Length > 1)
+                share = parts[1];
+            else
+                share = "";
+
+            return res;
+        }
+
         private static OwnershipType ParseOwnershipType(string strOwn)
         {
             string str = strOwn.ToLower().Trim();
-            OwnershipType res = DeclaratorApiPatterns.ParseOwnershipType(strOwn);
+            if (String.IsNullOrWhiteSpace(str) || str == "-")
+                return OwnershipType.InUse;
+
+            var parts = Regex.Split(str, "[ ,]+");
+            OwnershipType res = DeclaratorApiPatterns.ParseOwnershipType(parts[0]);
             return res;
             /*
 
@@ -335,6 +352,7 @@ namespace Smart.Parser.Lib
             string res = strOwn;
             if (ownType == OwnershipType.Shared)
             {
+                /*
                 String[] strToRemove = new String[] { "Общедолевая", "Общая долевая", "Общая, долевая", "Делевая", "Долевая", "Долеявая",
                                                       "Общая, долевая", "Доля", "Доли", "Долей", "Размер", " ", "(", ")" };
                 foreach (string str in strToRemove)
@@ -344,13 +362,15 @@ namespace Smart.Parser.Lib
                 }
 
                 res = res.Trim(',');
+                */
+                var parts = Regex.Split(strOwn.ToLower().Trim(), "[ ,]+");
+                if (parts.Length > 1)
+                    return parts[1];
+
 
                 return res;
             }
-            else
-            {
-                return "";
-            }
+            return "";
         }
 
         private static readonly string[] AreaSeparators = new string[] { "\n", " " };
@@ -373,8 +393,9 @@ namespace Smart.Parser.Lib
             }
             return null;
         }
+        
 
-        public static IEnumerable<decimal?> ParseAreas(string strAreas)
+        public static List<decimal?> ParseAreas(string strAreas)
         {
             var res = new List<decimal?>();
             foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
@@ -383,8 +404,20 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
+
                 decimal? area;
-                if (String.IsNullOrWhiteSpace(str) || str == "-")
+                var match =  Regex.Match(str, "(\\d+)/(\\d+)");
+                if (match.Success)
+                {
+                    string d1 = match.Groups[1].Value;
+                    string d2 = match.Groups[2].Value;
+                    area = d1.ParseDecimalValue() / d2.ParseDecimalValue();
+                }
+                else if (Regex.Match(str, "[а-я]+").Success)
+                {
+                    area = null;
+                }
+                else if (String.IsNullOrWhiteSpace(str) || str == "-")
                 {
                     area = null;
                 }
