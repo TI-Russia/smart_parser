@@ -278,11 +278,13 @@ namespace TI.Declarator.JsonSerialization
         {
             switch (prop.OwnershipType)
             {
-                case OwnershipType.Coop: return "Совместная собственность";
+                case OwnershipType.Joint: return "Совместная собственность";
                 case OwnershipType.Individual: return "Индивидуальная";
                 // This is by design; non-ownership is still considered an individual ownership
                 case OwnershipType.NotAnOwner: return "Индивидуальная";
                 case OwnershipType.Shared: return "Долевая собственность";
+                case OwnershipType.Ownership: return "В собственности";
+                case OwnershipType.InUse: return "В пользовании";
                 default: throw new ArgumentOutOfRangeException("prop.OwnershipType", $"Unsupported ownership type: {prop.OwnershipType.ToString()}");
             }
         }

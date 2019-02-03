@@ -267,8 +267,9 @@ namespace Smart.Parser.Lib
             if (r.ColumnOrdering.OwnershipTypeInSeparateField)
             {
                 propertyTypes = DataHelper.ParseRealEstateTypes(estateTypeStr).ToList();
-                ownershipTypes = DataHelper.ParseOwnershipTypes(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType)).ToList();
-                shares = DataHelper.ParseOwnershipShares(r.GetContents(DeclarationField.OwnedRealEstateOwnershipType), ownershipTypes).ToList();
+                string ownershipStr = r.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
+                ownershipTypes = DataHelper.ParseOwnershipTypes(ownershipStr).ToList();
+                shares = DataHelper.ParseOwnershipShares(ownershipStr, ownershipTypes).ToList();
             }
             else // колонка содержить тип недвижимости и тип собственности
             {

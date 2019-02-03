@@ -20,6 +20,18 @@ namespace test
 
             Assert.AreEqual(result[0].Item1, RealEstateType.Apartment);
             Assert.AreEqual(result[0].Item2, OwnershipType.Joint);
+
+
+            string share;
+            var ownType = DataHelper.ParseOwnershipTypeAndShare("долевая, 1/4", out share);
+            Assert.AreEqual(ownType, OwnershipType.Shared);
+            Assert.AreEqual(share, "1/4");
+
+
+            var area = DataHelper.ParseAreas("1/500")[0];
+            Assert.AreEqual(area.Value.ToString(), "0,002");
+            
+
         }
     }
 }

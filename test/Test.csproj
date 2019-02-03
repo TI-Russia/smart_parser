@@ -68,6 +68,10 @@
       <Project>{977fa48c-ecad-4588-996e-e777bac0b807}</Project>
       <Name>ExcelParser</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
+      <Project>{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}</Project>
+      <Name>JsonSerialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj">
       <Project>{DCB47788-553F-495F-BDAB-1B144E0DF5B1}</Project>
       <Name>Smart.Parser.Lib</Name>

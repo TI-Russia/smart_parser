@@ -348,8 +348,8 @@ namespace TI.Declarator.WordParser
             OwnershipType res;
             if (str.StartsWith("индивидуальная")) res = OwnershipType.Individual;
             else if (str.StartsWith("собственность")) res = OwnershipType.Individual;
-            else if (str.StartsWith("общая совместная")) res = OwnershipType.Coop;
-            else if (str.StartsWith("совместная")) res = OwnershipType.Coop;
+            else if (str.StartsWith("общая совместная")) res = OwnershipType.Joint;
+            else if (str.StartsWith("совместная")) res = OwnershipType.Joint;
 
             else if (str.StartsWith("делевая")) res = OwnershipType.Shared;
             else if (str.StartsWith("долевая")) res = OwnershipType.Shared;
@@ -358,7 +358,7 @@ namespace TI.Declarator.WordParser
             else if (str.StartsWith("общая, долевая")) res = OwnershipType.Shared;
             else if (str.StartsWith("общедолевая")) res = OwnershipType.Shared;
 
-            else if (str.StartsWith("общая")) res = OwnershipType.Coop;
+            else if (str.StartsWith("общая")) res = OwnershipType.Joint;
 
             else if (String.IsNullOrWhiteSpace(str) || str == "-") res = OwnershipType.NotAnOwner;
             else throw new ArgumentOutOfRangeException("strOwn", $"Неизвестный тип собственности: {strOwn}");

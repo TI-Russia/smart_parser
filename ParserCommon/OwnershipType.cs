@@ -21,14 +21,14 @@ namespace TI.Declarator.ParserCommon
     {
         NotAnOwner = 0, // To Be Deleted
         Individual = 1, // "Индивидуальная"
-        Coop = 2,
-        Joint = Coop, // "Совместная собственность" 
+        //Coop = 2,
+        Joint = 2, // "Совместная собственность" 
         Shared = 3, // "Долевая собственность"
         InUse, // "В пользовании"
         Lease, // "Наём (аренда)"
         ServiceHousing, // "Служебное жилье"
         ProvisionForUse,  // "Фактическое предоставление"
-        Ownership
+        Ownership // В собственности
     }
 
     public static class OwnershipTypeMethods
