@@ -17,8 +17,8 @@ namespace TI.Declarator.DeclaratorApiClient
 
         private static HttpClient HttpClient { get; set; }
 
-        private static readonly string Username = "david_parsers";
-        private static readonly string Password = "2OoHdAU9";
+        private static readonly string Username = "username";
+        private static readonly string Password = "password";
 
         static ApiClient()
         {
@@ -32,12 +32,13 @@ namespace TI.Declarator.DeclaratorApiClient
         {
             var reportReq = WebRequest.CreateHttp(ReportUnknownEntryUrl);
             string jsonContents = MiscSerializer.Serialize(ue);
-            
-            var httpResponseTask = HttpClient.PostAsJsonAsync(ReportUnknownEntryUrl, jsonContents);
-            httpResponseTask.Wait();
-            var httpResponse = httpResponseTask.Result;
+            var contents = new StringContent(jsonContents, Encoding.UTF8, "application/json");            
+            var httpResponse = HttpClient.PostAsync(ReportUnknownEntryUrl, contents).Result;
 
-            // TODO maybe do something with the response, like error handling
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new DeclaratorApiException(httpResponse, "Could not report unknown entry to Declarator API");
+            }            
         }
     }
 }
