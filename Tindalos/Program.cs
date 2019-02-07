@@ -34,18 +34,18 @@ namespace Tindalos
             //Scan(args);
 
             //RegressionTest(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
-            //Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+            Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
 
-            var ue = new UnknownEntry
-            {
-                Contents = "квортира",
-                EntryType = "realestatetype",
-                FileName = "imaginary_file.docx",
-                DocumentFileId = "1337",
-                WordPageNumber = 3
-            };
+            //var ue = new UnknownEntry
+            //{
+            //    Contents = "квортира",
+            //    EntryType = "realestatetype",
+            //    FileName = "imaginary_file.docx",
+            //    DocumentFileId = "1337",
+            //    WordPageNumber = 3
+            //};
 
-            ApiClient.ReportUnknownEntry(ue);
+            //ApiClient.ReportUnknownEntry(ue);
 
             Console.WriteLine("Press any key..");
             Console.ReadKey();
@@ -57,6 +57,11 @@ namespace Tindalos
             Declaration res = Process(filename);
             Console.WriteLine(DeclarationSerializer.Serialize(res));
             string output = DeclarationSerializer.Serialize(res);
+
+            string validationResult = ApiClient.ValidateParserOutput(output);
+            string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(filename) + ".json";
+            File.WriteAllText(errorsFileName, validationResult);
+
             string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
             File.WriteAllText(outputFileName, output);
 

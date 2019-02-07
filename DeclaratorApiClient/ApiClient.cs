@@ -14,6 +14,7 @@ namespace TI.Declarator.DeclaratorApiClient
     public static class ApiClient
     {
         private static readonly string ReportUnknownEntryUrl = "https://declarator.org/api/unknown_entry/";
+        private static readonly string ValidateOutputUrl = "https://declarator.org/api/jsonfile/validate/";
 
         private static HttpClient HttpClient { get; set; }
 
@@ -30,7 +31,6 @@ namespace TI.Declarator.DeclaratorApiClient
         }
         public static void ReportUnknownEntry(UnknownEntry ue)
         {
-            var reportReq = WebRequest.CreateHttp(ReportUnknownEntryUrl);
             string jsonContents = MiscSerializer.Serialize(ue);
             var contents = new StringContent(jsonContents, Encoding.UTF8, "application/json");            
             var httpResponse = HttpClient.PostAsync(ReportUnknownEntryUrl, contents).Result;
@@ -38,7 +38,20 @@ namespace TI.Declarator.DeclaratorApiClient
             if (!httpResponse.IsSuccessStatusCode)
             {
                 throw new DeclaratorApiException(httpResponse, "Could not report unknown entry to Declarator API");
-            }            
+            }
+        }
+
+        public static string ValidateParserOutput(string jsonOutput)
+        {
+            var contents = new StringContent(jsonOutput, Encoding.UTF8, "application/json");
+            var httpResponse = HttpClient.PostAsync(ValidateOutputUrl, contents).Result;
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new DeclaratorApiException(httpResponse, "Could not validate parser output");
+            }
+
+            return httpResponse.Content.ReadAsStringAsync().Result;
         }
     }
 }
