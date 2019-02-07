@@ -147,7 +147,7 @@ namespace Smart.Parser.Lib
                 { "Гараж", RealEstateType.Garage },
                 { "Земельный участок", RealEstateType.PlotOfLand },
                 { "Дача", RealEstateType.Dacha },
-                { "Линейный объект", RealEstateType.LinearObject }
+                { "Линейный объект", RealEstateType.InfrastructureFacility }
             };
         static Dictionary<RealEstateType, string> RealEstateRevMap = ReverseDict(RealEstateTypeMap);
 
