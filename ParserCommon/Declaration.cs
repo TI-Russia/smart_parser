@@ -5,7 +5,15 @@ namespace TI.Declarator.ParserCommon
 {
     public class Declaration
     {
-        public IEnumerable<PublicServant> Declarants { get; set; }
+        public List<PublicServant> Declarants { get; set; } = new List<PublicServant>();
         public DeclarationProperties Properties { get; set; }
+        public List<DeclarationSection> Sections { get; set; } = new List<DeclarationSection>();
     }
+
+    public class DeclarationSection
+    {
+        public string Name { get; set; }
+        public int Row { get; set; }
+    }
+
 }

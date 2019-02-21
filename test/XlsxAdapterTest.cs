@@ -32,5 +32,18 @@ namespace test
 
             //parser.Process();
         }
+        [TestMethod]
+        public void XlsxTest2()
+        {
+            string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract2.xlsx");
+            IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
+
+            var columnOrdering = ColumnDetector.ExamineHeader(adapter);
+            adapter.ColumnOrdering = columnOrdering;
+            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
+            Declaration declaration = parser.Parse();
+
+            string output = DeclarationSerializer.Serialize(declaration, true);
+        }
     }
 }

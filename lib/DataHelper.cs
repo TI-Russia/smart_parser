@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.Lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,15 @@ namespace Smart.Parser.Lib
             {
                 return true;
             }
+            if (parts == 4)
+            {
+                return true;
+            }
+            if (parts == 2)
+            {
+                return true;
+            }
+
 
             bool onlySecondName = (parts == 1) && (ParseRelationType(nameOrRelativeType, false) == RelationType.Error);
             if (onlySecondName)
@@ -54,6 +64,7 @@ namespace Smart.Parser.Lib
                     && (!relationshipStr.Contains("фио"))
                     && occupationStr.IsNullOrWhiteSpace());
         }
+
 
         public static RelationType ParseRelationType(string strRel, bool throwException = true)
         {
@@ -165,16 +176,38 @@ namespace Smart.Parser.Lib
 
             return res;
         }
+        public static OwnershipType ParseOwnershipType(string strOwn)
+        {
+            OwnershipType ownershipType = TryParseOwnershipType(strOwn);
+            if (ownershipType == OwnershipType.None)
+                throw new UnknownOwnershipTypeException(strOwn);
+            return ownershipType;
+        }
 
-        private static OwnershipType ParseOwnershipType(string strOwn)
+        public static OwnershipType TryParseOwnershipType(string strOwn)
         {
             string str = strOwn.ToLower().Trim();
             if (String.IsNullOrWhiteSpace(str) || str == "-")
                 return OwnershipType.InUse;
 
-            var parts = Regex.Split(str, "[ ,]+");
-            OwnershipType res = DeclaratorApiPatterns.ParseOwnershipType(parts[0]);
-            return res;
+            //var parts = Regex.Split(str, "[ ,]+");
+            var parts = Regex.Split(str, "[0-9,\\(\\)]+");
+
+            OwnershipType result = OwnershipType.None;
+            foreach (var s in parts)
+            {
+                OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
+                if (res != OwnershipType.None)
+                {
+                    result = res;
+                }
+            }
+
+            //if (res == OwnershipType.None)
+            //    throw new UnknownOwnershipTypeException(strOwn);
+
+
+            return result;
             /*
 
             if (PropertyDictionary.ParseParseRealEstateType(key, out type))
@@ -202,7 +235,7 @@ namespace Smart.Parser.Lib
             return res;
             */
         }
-
+        /*
         static public Tuple<RealEstateType, OwnershipType, string> ParsePropertyAndOwnershipType(string strPropInfo)
         {
             int leftParenPos = strPropInfo.IndexOf('(');
@@ -232,6 +265,42 @@ namespace Smart.Parser.Lib
             return Tuple.Create(realEstateType, ownershipType, share);
         }
 
+        */
+
+        /*
+         *  "квартира           (безвозмездное, бессрочное пользование)"
+         *  
+         *  "Квартира долевая , 2/3"
+         *  
+            квартира
+            (совместная)  
+         */
+        static public Tuple<RealEstateType, OwnershipType, string> ParseCombinedRealEstateColumn(string strPropInfo)
+        {
+            string share = "1";
+            // слово до запятой или до скобки
+            var match = Regex.Match(strPropInfo, "[,(]+");
+            string realEstateStr = strPropInfo;
+            string rest = "";
+            if (match.Success)
+            {
+                realEstateStr = strPropInfo.Substring(0, match.Index);
+                rest = strPropInfo.Substring(match.Index + 1);
+            }
+
+            RealEstateType realEstateType = ParseRealEstateType(realEstateStr);
+            OwnershipType ownershipType = OwnershipType.InUse;
+            share = ParseOwnershipShare(rest, ownershipType);
+            if (rest != "")
+            {
+                OwnershipType t = TryParseOwnershipType(rest);
+                if (t != OwnershipType.None)
+                {
+                    ownershipType = t; 
+                }
+            }
+            return Tuple.Create(realEstateType, ownershipType, share);
+        }
 
         static public List<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
         {
@@ -253,14 +322,14 @@ namespace Smart.Parser.Lib
 
                 return res;
             }
-            if (strPropInfo.Contains(","))
-            {
-                string[] values = strPropInfo.Split(',');
-                RealEstateType realEstateType = ParseRealEstateType(values[0]);
-                OwnershipType ownershipType = ParseOwnershipType(strPropInfo);
-                string share = ParseOwnershipShare(values[1], ownershipType);
-                res.Add(Tuple.Create(realEstateType, ownershipType, share));
-            }
+            //if (strPropInfo.Contains(","))
+            //{
+            //    string[] values = strPropInfo.Split(',');
+            //    RealEstateType realEstateType = ParseRealEstateType(values[0]);
+            //    OwnershipType ownershipType = ParseOwnershipType(strPropInfo);
+            //    string share = ParseOwnershipShare(values[1], ownershipType);
+            //    res.Add(Tuple.Create(realEstateType, ownershipType, share));
+            //}
 
             while (leftParenPos != -1)
             {
@@ -347,10 +416,10 @@ namespace Smart.Parser.Lib
             return res;
         }
 
-        private static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
+        public static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
         {
             string res = strOwn;
-            if (ownType == OwnershipType.Shared)
+            //if (ownType == OwnershipType.Shared)
             {
                 /*
                 String[] strToRemove = new String[] { "Общедолевая", "Общая долевая", "Общая, долевая", "Делевая", "Долевая", "Долеявая",
@@ -364,9 +433,14 @@ namespace Smart.Parser.Lib
                 res = res.Trim(',');
                 */
                 var parts = Regex.Split(strOwn.ToLower().Trim(), "[ ,]+");
-                if (parts.Length > 1)
-                    return parts[1];
+                //if (parts.Length > 1)
+                //    return parts[1];
 
+                var match = Regex.Match(strOwn, "\\d+/?\\d+");
+                if (match.Success)
+                {
+                    return match.Value;
+                }
 
                 return res;
             }
@@ -377,21 +451,14 @@ namespace Smart.Parser.Lib
 
         public static decimal? ParseArea(string strAreas)
         {
-            foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
+            decimal? area = null;
+            var match = Regex.Match(strAreas, "\\d+[,.]?(\\d+)?");
+            if (match.Success)
             {
-                decimal? area;
-                if (String.IsNullOrWhiteSpace(str) || str == "-")
-                {
-                    area = null;
-                }
-                else
-                {
-                    area = str.ParseDecimalValue();
-                }
 
-                return area;
+                area = match.Value.ParseDecimalValue();
             }
-            return null;
+            return area;
         }
         
 
@@ -494,7 +561,7 @@ namespace Smart.Parser.Lib
                 case "мексика": return Country.Mexico;
                 case "абхазия": return Country.Abkhazia;
                 case "южная осетия": return Country.SouthOssetia;
-                default: throw new ArgumentOutOfRangeException();
+                default: throw new SmartParserException("Wrong country name: " + strCountry);
             }
         }
 

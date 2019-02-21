@@ -19,6 +19,7 @@ namespace TI.Declarator.ParserCommon
 {
     public enum OwnershipType
     {
+        None = -1, 
         NotAnOwner = 0, // To Be Deleted
         Individual = 1, // "Индивидуальная"
         //Coop = 2,
@@ -28,7 +29,8 @@ namespace TI.Declarator.ParserCommon
         Lease, // "Наём (аренда)"
         ServiceHousing, // "Служебное жилье"
         ProvisionForUse,  // "Фактическое предоставление"
-        Ownership // В собственности
+        Ownership, // В собственности
+        InFreeUse // "Безвозмездное пользование"
     }
 
     public static class OwnershipTypeMethods

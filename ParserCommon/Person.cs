@@ -16,6 +16,8 @@ namespace TI.Declarator.ParserCommon
 
         public string DataSources = "";
 
+        public int RangeLow { set; get; }
+        public int RangeHigh { set; get; }
 
         private XElement IncomeToXml()
         {

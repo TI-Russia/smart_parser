@@ -72,6 +72,7 @@ namespace Smart.Parser.Adapters
 
         private AsposeDocAdapter(string fileName)
         {
+            DocumentFile = fileName;
             Aspose.Words.Document doc = new Aspose.Words.Document(fileName);
             Aspose.Words.NodeCollection tables = doc.GetChildNodes(Aspose.Words.NodeType.Table, true);
 

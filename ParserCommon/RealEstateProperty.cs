@@ -9,15 +9,18 @@ namespace TI.Declarator.ParserCommon
         private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
         private static CultureInfo RussianCulture = CultureInfo.CreateSpecificCulture("ru-ru");
 
-        public OwnershipType OwnershipType { get; }
-        public RealEstateType PropertyType { get; }
+        public OwnershipType OwnershipType { set;  get; }
+        public RealEstateType PropertyType { set; get; }
 
-        public Country Country { get; }
-        public decimal? Area { get; }
-        public string OwnedShare { get; }
+        public Country Country { set; get; }
+        public decimal? Area { set; get; }
+        public string OwnedShare { set; get; }
 
-        public string Name { get; }
-        public string Text { get; }
+        public string Name { set; get; }
+        public string Text { set; get; }
+
+        public RealEstateProperty()
+        {}
 
         public RealEstateProperty(OwnershipType ownType, RealEstateType propType, Country country, decimal? area, string name, string share = "")
         {

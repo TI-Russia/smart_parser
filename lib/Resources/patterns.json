@@ -290,7 +290,7 @@
     }, 
     {
         "id": 53, 
-        "data": "\\bбезвозмездное пользование\\b", 
+        "data": "\\bбезвозмездное\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "owntype", 

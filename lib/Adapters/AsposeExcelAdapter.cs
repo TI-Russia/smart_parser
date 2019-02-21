@@ -116,6 +116,7 @@ namespace Smart.Parser.Adapters
 
         private AsposeExcelAdapter(string fileName)
         {
+            DocumentFile = fileName;
             Aspose.Cells.Workbook workbook = new Aspose.Cells.Workbook(fileName);
             worksheet = workbook.Worksheets[0];
             totalRows = worksheet.Cells.Rows.Count;

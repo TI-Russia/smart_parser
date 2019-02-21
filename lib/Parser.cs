@@ -80,6 +80,201 @@ namespace Smart.Parser.Lib
 
         public Declaration Parse()
         {
+            Declaration declaration = new Declaration()
+            {
+                Properties = new DeclarationProperties() { Title = "title", Year = 2010, MinistryName = "Ministry" }
+            };
+
+            int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
+            PublicServant currentServant = null;
+            TI.Declarator.ParserCommon.Person currentPerson = null;
+            int merged_col_count = 0;
+
+            int row = rowOffset;
+            for (row = rowOffset; row < Adapter.GetRowsCount(); row++)
+            {
+                // строка - разделитель
+                if (Adapter.GetCell(row, 0).MergedColsCount > 1)
+                {
+                    string name = Adapter.GetCell(row, 0).Text;
+                    declaration.Sections.Add(new DeclarationSection() { Row = row, Name = name });
+                    continue;
+                }
+
+                merged_col_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedColsCount;
+
+                string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                string occupationStr = "";
+                if (Adapter.HasDeclarationField(DeclarationField.Occupation))
+                {
+                    occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
+                }
+
+
+
+                if (String.IsNullOrWhiteSpace(nameOrRelativeType))
+                {
+                    if (currentPerson == null)
+                    {
+                        throw new SmartParserException(
+                            string.Format("No Person  at row {0}", row));
+                    }
+                    continue;
+                }
+                if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
+                {
+                    //Logger.Info("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
+                    if (currentPerson != null)
+                    {
+                        currentPerson.RangeHigh = row - 1;
+                    }
+                    currentServant = new PublicServant()
+                    {
+                        Name = DataHelper.NormalizeName(nameOrRelativeType),
+                        Occupation = occupationStr
+                    };
+
+                    declaration.Declarants.Add(currentServant);
+                    currentPerson = currentServant;
+                    currentPerson.RangeLow = row;
+
+                }
+                else if (DataHelper.IsRelativeInfo(nameOrRelativeType, occupationStr))
+                {
+                    if (currentServant == null)
+                    {
+                        // ошибка
+                        throw new SmartParserException(
+                            string.Format("Relative {0} at row {1} without main Person", nameOrRelativeType, row));
+                    }
+                    currentPerson.RangeHigh = row - 1;
+                    Relative relative = new Relative();
+                    currentServant.Relatives.Add(relative);
+                    currentPerson = relative;
+                    currentPerson.RangeLow = row;
+
+                    RelationType relationType = DataHelper.ParseRelationType(nameOrRelativeType);
+                    relative.RelationType = relationType;
+
+
+                    //Logger.Info("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
+                }
+                else
+                {
+                    // error
+                    throw new SmartParserException(
+                        string.Format("Wrong string {0} at row {1}", nameOrRelativeType, row));
+                }
+                if (merged_col_count > 1)
+                {
+                    row += merged_col_count - 1;
+                }
+            }
+            if (currentPerson != null)
+            {
+                currentPerson.RangeHigh = row - 1;
+            }
+
+
+            Logger.Info("Parsed {0} declarants", declaration.Declarants.Count());
+
+            ParsePersonalProperties(declaration);
+
+            return declaration;
+        }
+
+        public Declaration ParsePersonalProperties(Declaration declaration)
+        {
+            foreach (PublicServant servant in declaration.Declarants)
+            {
+                List<Person> servantAndRel = new List<Person>() { servant };
+                servantAndRel.AddRange(servant.Relatives);
+
+                foreach (Person person in servantAndRel)
+                {
+                    bool firstRow = true;
+                    for (int row = person.RangeLow; row <= person.RangeHigh; row++)
+                    {
+                        Row r = Adapter.GetRow(row);
+
+                        if (firstRow)
+                        {
+                            // парсим доход
+                            string declaredYearlyIncomeStr = Adapter.GetDeclarationField(row, DeclarationField.DeclaredYearlyIncome).Text;
+                            decimal? declaredYearlyIncome = null;
+                            try
+                            {
+                                declaredYearlyIncome = DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Error("***ERROR row({0}) wrong income: {1}", row, e.Message);
+                            }
+                            person.DeclaredYearlyIncome = declaredYearlyIncome;
+                            firstRow = false;
+                        }
+
+
+                        // Парсим недвижимость в собственности
+                        string estateTypeStr = r.GetContents(DeclarationField.OwnedRealEstateType);
+                        string ownTypeStr = null;
+                        if (r.ColumnOrdering.OwnershipTypeInSeparateField)
+                        {
+                            ownTypeStr = r.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
+                        }
+                        string areaStr = r.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+                        string countryStr = r.GetContents(DeclarationField.OwnedRealEstateCountry);
+
+                        RealEstateProperty ownedProperty = null;
+                        try
+                        {
+                            ownedProperty = ParseOwnedProperty(estateTypeStr, ownTypeStr, areaStr, countryStr);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Error("***ERROR row({0}) {1}", row, e.Message);
+                        }
+
+                        if (ownedProperty != null)
+                        {
+                            person.RealEstateProperties.Add(ownedProperty);
+                        }
+
+                        // Парсим недвижимость в пользовании
+                        string statePropTypeStr = r.GetContents(DeclarationField.StatePropertyType);
+                        string statePropAreaStr = r.GetContents(DeclarationField.StatePropertyArea);
+                        string statePropCountryStr = r.GetContents(DeclarationField.StatePropertyCountry);
+
+                        RealEstateProperty stateProperty = null;
+                        try
+                        {
+                            stateProperty = ParseStateProperty(statePropTypeStr, statePropAreaStr, statePropCountryStr);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Error("***ERROR row({0}) {1}", row, e.Message);
+                        }
+
+                        if (stateProperty != null)
+                        {
+                            person.RealEstateProperties.Add(stateProperty);
+                        }
+
+                        // Парсим транспортные средства
+                        string vehicle = GetVehicleString(Adapter.GetRow(row)); // r.GetContents(DeclarationField.Vehicle);
+                        if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-")
+                        {
+                            person.Vehicles.Add(vehicle);
+                        }
+                    }
+                }
+            }
+
+            return declaration;
+        }
+
+        public Declaration Parse2()
+        {
             List<PublicServant> servants = new List<PublicServant>();
             PublicServant currentServant = null;
             TI.Declarator.ParserCommon.Person currentPerson = null;
@@ -243,6 +438,116 @@ namespace Smart.Parser.Lib
             }
         }
 
+        public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
+        {
+            if (string.IsNullOrWhiteSpace(statePropTypeStr) || statePropTypeStr.Trim() == "-" || statePropTypeStr.Trim() == "-\n-")
+            {
+                return null;
+            }
+
+
+            var propertyType = DeclaratorApiPatterns.ParseRealEstateType(statePropTypeStr);
+            decimal? area = DataHelper.ParseArea(statePropAreaStr);
+            Country country = DataHelper.ParseCountry(statePropCountryStr);
+
+            RealEstateProperty stateProperty =
+            new RealEstateProperty(OwnershipType.InUse/*.NotAnOwner*/, propertyType, country, area, statePropTypeStr)
+            {
+                OwnershipType = OwnershipType.InUse,
+                PropertyType = propertyType,
+                Country = country,
+                Area = area,
+                Name = statePropTypeStr
+            };
+
+            return stateProperty;
+
+        }
+
+    // 
+    public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
+        {
+            decimal? area = DataHelper.ParseArea(areaStr);
+            Country country = DataHelper.ParseCountry(countryStr);
+
+            if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
+            {
+                return null;
+            }
+
+            RealEstateType realEstateType = RealEstateType.Other;
+            OwnershipType ownershipType = OwnershipType.None;
+            string share = "";
+
+            // колонка с типом недвижимости отдельно
+            if (ownTypeStr != null)
+            {
+                realEstateType = DataHelper.ParseRealEstateType(estateTypeStr);
+                ownershipType = DataHelper.ParseOwnershipType(ownTypeStr);
+                share = DataHelper.ParseOwnershipShare(ownTypeStr, ownershipType);
+            }
+            else // колонка содержит тип недвижимости и тип собственности
+            {
+                var combinedData = DataHelper.ParseCombinedRealEstateColumn(estateTypeStr.CleanWhitespace());
+                //static public Tuple<RealEstateType, OwnershipType, string> ParseStatePropertyTypeColumn(string strPropInfo)
+
+                realEstateType = combinedData.Item1;
+                ownershipType = combinedData.Item2;
+                share = combinedData.Item3;
+            }
+
+            RealEstateProperty realEstateProperty = new RealEstateProperty()
+            {
+                OwnershipType = ownershipType,
+                PropertyType = realEstateType,
+                Country = country,
+                Area = area,
+                OwnedShare = share,
+                Name = estateTypeStr,
+                Text = ""
+            };
+
+            return realEstateProperty;
+        }
+
+        public List<RealEstateProperty> ParseOwnedProperty(IAdapter adapter, int firstRow, int lastRow)
+        {
+            for (int row = firstRow; row < lastRow; row++)
+            {
+                var cell = adapter.GetDeclarationField(row, DeclarationField.OwnedRealEstateType);
+
+                string estateTypeStr = cell.GetText(true);
+                if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
+                {
+                    return null;
+                }
+
+                if (adapter.ColumnOrdering.OwnershipTypeInSeparateField)
+                {
+                    // колонка с типом недвижимости отдельно
+                }
+                else // колонка содержит тип недвижимости и тип собственности
+                {
+                    var combinedData = DataHelper.ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
+
+                    //propertyTypes = combinedData.Select(tup => tup.Item1).ToList();
+                    //ownershipTypes = combinedData.Select(tup => tup.Item2).ToList();
+                    //shares = combinedData.Select(tup => tup.Item3).ToList();
+                }
+
+
+                string areaStr = adapter.GetContents(row, DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+                decimal? area = DataHelper.ParseArea(areaStr);
+
+                Country country= DataHelper.ParseCountry(adapter.GetContents(row, DeclarationField.OwnedRealEstateCountry));
+
+                if (cell.MergedRowsCount > 1)
+                    row += cell.MergedRowsCount - 1;
+            }
+
+            return null;
+        }
+
         // парсинг недвижимости, находящейся в собственности, вычисляется share_type
 
         // используются колонки OwnedRealEstateType
@@ -263,7 +568,6 @@ namespace Smart.Parser.Lib
             }
 
             // колонка с типом недвижимости отдельно
-            // 
             if (r.ColumnOrdering.OwnershipTypeInSeparateField)
             {
                 propertyTypes = DataHelper.ParseRealEstateTypes(estateTypeStr).ToList();
@@ -271,7 +575,7 @@ namespace Smart.Parser.Lib
                 ownershipTypes = DataHelper.ParseOwnershipTypes(ownershipStr).ToList();
                 shares = DataHelper.ParseOwnershipShares(ownershipStr, ownershipTypes).ToList();
             }
-            else // колонка содержить тип недвижимости и тип собственности
+            else // колонка содержит тип недвижимости и тип собственности
             {
                 var combinedData = DataHelper.ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
 

@@ -72,7 +72,7 @@ namespace Smart.Parser.Lib
                     case "owntype":
                         if (pattern.is_regex)
                             owntypeRegex.Add(pattern.value);
-                        else 
+                        else
                             owntypeDict[pattern.data.ToLower()] = pattern.value;
                         break;
                     case "carbrand":
@@ -82,6 +82,12 @@ namespace Smart.Parser.Lib
                         throw new Exception("unknown pattern.type " + pattern.type);
                 }
             }
+            BuildCustomDicts();
+        }
+
+        static void BuildCustomDicts()
+        {
+            realestatetypeDict["совместная"] = "Совместная собственность";
         }
 
         static string GetResourceText()
@@ -161,7 +167,8 @@ namespace Smart.Parser.Lib
                 { "Наём (аренда)", OwnershipType.Lease}, 
                 { "Служебное жилье", OwnershipType.ServiceHousing},
                 { "В собственности", OwnershipType.Ownership },
-                { "Фактическое предоставление", OwnershipType.ProvisionForUse}
+                { "Фактическое предоставление", OwnershipType.ProvisionForUse},
+                { "Безвозмездное пользование", OwnershipType. InFreeUse }
             };
         static Dictionary<OwnershipType, string> OwnershipRevMap = ReverseDict(OwnershipTypeMap);
 
@@ -191,16 +198,25 @@ namespace Smart.Parser.Lib
                 throw new UnknownRealEstateTypeException(real_type.ToString());
             }
         }
-
-        public static OwnershipType ParseOwnershipType(string text)
+        public static OwnershipType TryParseOwnershipType(string text)
         {
             string normalized = NormalizeText(text);
             string value = GetValue(normalized, "owntype");
             if (value.IsNullOrWhiteSpace())
             {
-                throw new UnknownOwnershipTypeException(normalized);
+                return OwnershipType.None;
             }
             return OwnershipTypeMap[value];
+        }
+
+        public static OwnershipType ParseOwnershipType(string text)
+        {
+            OwnershipType type = TryParseOwnershipType(text);
+            if (type == OwnershipType.None)
+            {
+                throw new UnknownOwnershipTypeException(text);
+            }
+            return type;
         }
 
         public static string OwnershipTypeToString(OwnershipType own_type)

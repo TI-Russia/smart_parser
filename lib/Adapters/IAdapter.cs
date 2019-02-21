@@ -109,6 +109,11 @@ namespace Smart.Parser.Adapters
             return GetCell(row, Field2Col(field));
         }
 
+        public string GetContents(int row, DeclarationField field)
+        {
+            return GetDeclarationField(row, field).GetText(true);
+        }
+
 
         abstract public int GetRowsCount();
         abstract public int GetColsCount();
@@ -137,6 +142,8 @@ namespace Smart.Parser.Adapters
         {
             throw new NotImplementedException();
         }
+
+        public string DocumentFile { set; get; }
 
     }
 }
