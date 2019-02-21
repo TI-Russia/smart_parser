@@ -96,6 +96,7 @@
     <None Include="testfiles\N - min_trans_dohod_2010.doc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="validation_feedback_example.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DeclaratorApiClient\DeclaratorApiClient.csproj">

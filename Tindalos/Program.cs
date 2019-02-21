@@ -60,6 +60,8 @@ namespace Tindalos
 
             string validationResult = ApiClient.ValidateParserOutput(output);
             string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(filename) + ".json";
+
+            var rep = MiscSerializer.DeserializeValidationReport(validationResult);
             File.WriteAllText(errorsFileName, validationResult);
 
             string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";

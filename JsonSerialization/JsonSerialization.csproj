@@ -53,6 +53,7 @@
     <Compile Include="DeclarationSerializer.cs" />
     <Compile Include="MiscSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="import-schema-dicts.json">

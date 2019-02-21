@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using TI.Declarator.ParserCommon;
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace TI.Declarator.JsonSerialization
@@ -22,6 +24,11 @@ namespace TI.Declarator.JsonSerialization
             };
 
             return res.ToString();
+        }
+
+        public static List<ValidationReport> DeserializeValidationReport(string json)
+        {
+            return JsonConvert.DeserializeObject<List<ValidationReport>>(json);
         }
     }
 }
