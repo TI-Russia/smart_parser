@@ -286,6 +286,17 @@
                 150.33
               ]
             },
+            "square_raw": {
+              "$id": "/properties/real_estates/items/properties/square_raw",
+              "type": ["null", "string"],
+              "title": "Площадь, в квадратных метрах (сырое значение)",
+              "default": 0,
+              "examples": [
+                "100",
+                "200.333",
+                "20,5"
+              ]
+            },
             "country": {
               "$id": "/properties/real_estates/items/properties/country",
               "title": "Страна расположения недвижимости (словарное значение)",
@@ -346,7 +357,7 @@
             },
             "share_amount_raw": {
               "$id": "/properties/real_estates/items/properties/share_amount_raw",
-              "title": "Доля собственности (строковое значение)",
+              "title": "Доля в совместной собственности (строковое значение)",
               "type": ["null", "string"],
               "default": 0,
               "examples": [
