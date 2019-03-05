@@ -1,0 +1,5151 @@
+[
+  {
+    "person": {
+      "name": "Абалян Авак Геньевич",
+      "name_raw": "Абалян Авак Геньевич",
+      "role": [
+        "Заместитель директора Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 6220926,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 63,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 104,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 104,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 104,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ФОЛЬКСВАГЕН Tuareg"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Аверьянова Лариса Дмитриевна",
+      "name_raw": "Аверьянова Лариса Дмитриевна",
+      "role": [
+        "Начальник отдела формирования и реализации единого календарного плана Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1562888,
+        "relative": null
+      },
+      {
+        "size": 590687,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 63,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 63,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ФОЛЬКСВАГЕН Jetta"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Алексеев Владимир Владиславович",
+      "name_raw": "Алексеев Владимир Владиславович",
+      "role": [
+        "Заместитель директора Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 4343001,
+        "relative": null
+      },
+      {
+        "size": 453026,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 147,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1500,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 147,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 147,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль BMW 535 GT"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Андреева Ирина Евгеньевна",
+      "name_raw": "Андреева Ирина Евгеньевна",
+      "role": [
+        "Заместитель директора Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1740941,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 63,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 63,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Антонов Антон Валерьевич",
+      "name_raw": "Антонов Антон Валерьевич",
+      "role": [
+        "Заместитель директора Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1910020,
+        "relative": null
+      },
+      {
+        "size": 392883,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 600,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 600,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ТОЙОТА Wish"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Бабкин Виктор Владимирович",
+      "name_raw": "Бабкин Виктор Владимирович",
+      "role": [
+        "Заместитель директора Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1888105,
+        "relative": null
+      },
+      {
+        "size": 14445,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный\nучасток",
+        "type": "Земельный участок",
+        "square": 100000,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.0018066847335140018066847335,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный\nучасток",
+        "type": "Земельный участок",
+        "square": 7622,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ТОЙОТА минивэн"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Байрамов Вадим Мурадович",
+      "name_raw": "Байрамов Вадим Мурадович",
+      "role": [
+        "Директор Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2216707,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 131,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 131,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль \nБМВ Х5"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Баранов Антон Юрьевич",
+      "name_raw": "Баранов Антон Юрьевич",
+      "role": [
+        "Начальник отдела по обеспечению деятельности министерства Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1192923,
+        "relative": null
+      },
+      {
+        "size": 590026,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 61,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1200,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 61,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 61,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 61,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль МИЦУБИСИ Outlander"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Барышева Алла Алексеевна",
+      "name_raw": "Барышева Алла Алексеевна",
+      "role": [
+        "Начальник отдела реализации и оценки эффективности госпрограмм Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1316338,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ХОНДА Pilot"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Башелутсков Петр Павлович",
+      "name_raw": "Башелутсков Петр Павлович",
+      "role": [
+        "Начальник отдела внутреннего финансового контроля и мониторинга Департамента бюджетного учета, внутреннего финансового контроля и аудита"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1354281,
+        "relative": null
+      },
+      {
+        "size": 1692406,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 43,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Жилой дом, дача",
+        "type": "Дача",
+        "square": 79,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Брюханова Елена Сергеевна",
+      "name_raw": "Брюханова Елена Сергеевна",
+      "role": [
+        "Начальник отдела анализа и прогноза инвестиционных проектов Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1229767,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 60,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 60,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль BMW 520i"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Вараксин Павел Андреевич",
+      "name_raw": "Вараксин Павел Андреевич",
+      "role": [
+        "Заместитель директора Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1589837,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Вервицкий Павел Миронович",
+      "name_raw": "Вервицкий Павел Миронович",
+      "role": [
+        "Начальник юридического отдела Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 8817547,
+        "relative": null
+      },
+      {
+        "size": 309187,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 39,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 39,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 39,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 39,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль МАЗДА CX-5"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Владимирская Елена Владимировна",
+      "name_raw": "Владимирская Елена Владимировна",
+      "role": [
+        "Директор Департамента бюджетного учёта, внутреннего финансового контроля и аудита"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2853392,
+        "relative": null
+      },
+      {
+        "size": 517500,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 99,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1382,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 99,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль VOLVO XC 60"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Влазнева Оксана Валерьевна",
+      "name_raw": "Влазнева Оксана Валерьевна",
+      "role": [
+        "Заместитель директора Департамента координации подготовки к чемпионату мира по футболу"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1669733,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 41,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Габдуллина Луиза Римовна",
+      "name_raw": "Габдуллина Луиза Римовна",
+      "role": [
+        "Заместитель директора Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1224028,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 85,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль \nМАЗДА 3"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Гамова Ольга Олеговна",
+      "name_raw": "Гамова Ольга Олеговна",
+      "role": [
+        "Начальник отдела управления государственным имуществом Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1112703,
+        "relative": null
+      },
+      {
+        "size": 2819329,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 62,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 62,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль Volvo XC 60"
+      },
+      {
+        "text": "легковой автомобиль Volvo XC 60"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Ганоль Ирина Анатольевна",
+      "name_raw": "Ганоль Ирина Анатольевна",
+      "role": [
+        "Начальник отдела финансирования бюджетных учреждений Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1507080,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 76,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Глазов Василий Алексеевич",
+      "name_raw": "Глазов Василий Алексеевич",
+      "role": [
+        "Начальник отдела государственного заказчика федеральных целевых программ Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1276991,
+        "relative": null
+      },
+      {
+        "size": 603737,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 60,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 60,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль Mazda CX-5"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Глухов Алексей Викторович",
+      "name_raw": "Глухов Алексей Викторович",
+      "role": [
+        "Заместитель директора Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1733064,
+        "relative": null
+      },
+      {
+        "size": 1720125,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 50,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль КИА Ceed"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Григорьева Ирина Игоревна",
+      "name_raw": "Григорьева Ирина Игоревна",
+      "role": [
+        "Начальник отдела развития олимпийских видов спорта и проведения соревнований на территории Российской Федерации Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1258169,
+        "relative": null
+      },
+      {
+        "size": 272383,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1087,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 30,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.6206896551724137931034482759,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 30,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.2068965517241379310344827586,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 30,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ТОЙОТА CAMRY"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Гришин Борис Владимирович",
+      "name_raw": "Гришин Борис Владимирович",
+      "role": [
+        "Директор Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2587889,
+        "relative": null
+      },
+      {
+        "size": 19552831,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 544,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 95,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 552,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 117,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.25,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 95,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль\nLexus NX 200,\nНИССАН Qashqai"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Двуреченская Эльвира Львовна",
+      "name_raw": "Двуреченская Эльвира Львовна",
+      "role": [
+        "Начальник отдела финансирования капитального строительства и межбюджетных трансфертов Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1285105,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 51,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 36,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 51,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 51,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Дмитриева Анна Львовна",
+      "name_raw": "Дмитриева Анна Львовна",
+      "role": [
+        "Заместитель директора Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2073949,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 30,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Долганов Дмитрий Иванович",
+      "name_raw": "Долганов Дмитрий Иванович",
+      "role": [
+        "Начальник отдела подготовки спортивного резерва сборных команд Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1280223,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль БМВ 318i"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Долгополова Ирина Рэмовна",
+      "name_raw": "Долгополова Ирина Рэмовна",
+      "role": [
+        "Начальник отдела межведомственного взаимодействия по реализации программных мероприятий Департамента координации подготовки к чемпионату мира по футболу"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1135481,
+        "relative": null
+      },
+      {
+        "size": 1524031,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 62,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.75,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 42,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 42,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль НИССАН Qashqai"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Дробнов Евгений Васильевич",
+      "name_raw": "Дробнов Евгений Васильевич",
+      "role": [
+        "Начальник отдела взаимодействия по реализации непрограммных мероприятий Департамента координации подготовки чемпионата мира по футболу"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1161171,
+        "relative": null
+      },
+      {
+        "size": 607925,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1200,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 62,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 62,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Дроздов Алексей Сергеевич",
+      "name_raw": "Дроздов Алексей Сергеевич",
+      "role": [
+        "Заместитель директора Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": null,
+        "relative": null
+      },
+      {
+        "size": 626925,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 36,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 36,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Евсеев Сергей Петрович",
+      "name_raw": "Евсеев Сергей Петрович",
+      "role": [
+        "Директор Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 3787072,
+        "relative": null
+      },
+      {
+        "size": 2503351,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 117,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 619,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 117,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль\nФОЛЬКСВАГЕН Multivan"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Емельянова Ольга Николаевна",
+      "name_raw": "Емельянова Ольга Николаевна",
+      "role": [
+        "Начальник отдела государственной службы и кадров Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1372518,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 39,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Захарова Алла Анатольевна",
+      "name_raw": "Захарова Алла Анатольевна",
+      "role": [
+        "Начальник отдела государственных закупок Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1289671,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 32,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Кедров Александр Юрьевич",
+      "name_raw": "Кедров Александр Юрьевич",
+      "role": [
+        "Начальник отдела мобилизационной подготовки Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1872120,
+        "relative": null
+      },
+      {
+        "size": 180000,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 993,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Козырев-Гаджиев Дмитрий Намикович",
+      "name_raw": "Козырев-Гаджиев Дмитрий Намикович",
+      "role": [
+        "Начальник отдела законопроектной деятельности Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1482358,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Иное недвижимое имущество",
+        "type": "Иное",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ВОЛЬВО ХС70"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Косилов Сергей Васильевич",
+      "name_raw": "Косилов Сергей Васильевич",
+      "role": [
+        "Заместитель Министра спорта Российской Федерации"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 3585956,
+        "relative": null
+      },
+      {
+        "size": 960623,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ШКОДА ОCTAVIA"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Красняк Евгений Александрович",
+      "name_raw": "Красняк Евгений Александрович",
+      "role": [
+        "Начальник отдела межведомственного взаимодействия и оргработы Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1225583,
+        "relative": null
+      },
+      {
+        "size": 1119404,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 52,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 52,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 52,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ВОЛЬВО XC60"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Кузнецова Антонина Михайловна",
+      "name_raw": "Кузнецова Антонина Михайловна",
+      "role": [
+        "Заместитель директора Департамента управления делами и контроля-начальник отдела"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2226401,
+        "relative": null
+      },
+      {
+        "size": 277287,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 2500,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 50,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ТАЙОТА Rav4"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Лагутин Олег Анатольевич",
+      "name_raw": "Лагутин Олег Анатольевич",
+      "role": [
+        "Директор Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2150919,
+        "relative": null
+      },
+      {
+        "size": 1572757,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1500,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 800,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 125,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 125,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Ларионова Марина Александровна",
+      "name_raw": "Ларионова Марина Александровна",
+      "role": [
+        "Начальник отдела документационного обеспечения Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1280330,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 68,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 30,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Лебедев Егор Витальевич",
+      "name_raw": "Лебедев Егор Витальевич",
+      "role": [
+        "Начальник отдела адаптивной физической культуры и спорта Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1179447,
+        "relative": null
+      },
+      {
+        "size": 1606784,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 673,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 98,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 673,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 42,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 42,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль КИА Sportage"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Лебедева Нина Фаритовна",
+      "name_raw": "Лебедева Нина Фаритовна",
+      "role": [
+        "Начальник отдела финансового аудита Департамента бюджетного учета, внутреннего финансового контроля и аудита"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1093442,
+        "relative": null
+      },
+      {
+        "size": 1131440,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 64,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 32,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 32,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 32,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль СИТРОЕН c-crosser"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Ленда Юлия Борисовна",
+      "name_raw": "Ленда Юлия Борисовна",
+      "role": [
+        "Директор Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 3445646,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 37,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Леонов Кирилл Александрович",
+      "name_raw": "Леонов Кирилл Александрович",
+      "role": [
+        "Начальник отдела развития спортивной инфраструктуры для чемпионата мира по футболу Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2426100,
+        "relative": null
+      },
+      {
+        "size": 828441,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 74,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 43,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 74,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль СААБ 9-5"
+      },
+      {
+        "text": "легковой автомобиль АУДИ A5"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Лопанова Татьяна Васильевна",
+      "name_raw": "Лопанова Татьяна Васильевна",
+      "role": [
+        "Начальник отдела летних видов спорта Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1163004,
+        "relative": null
+      },
+      {
+        "size": 1976125,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 48,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 48,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 48,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль КИА CEEʹD"
+      },
+      {
+        "text": "легковой автомобиль ЛЭНД РОВЕР Дискавери 4"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Лукичева Анастасия Юрьевна",
+      "name_raw": "Лукичева Анастасия Юрьевна",
+      "role": [
+        "Начальник отдела физической культуры и массового спорта Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1749516,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 600,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль СУЗУКИ Vitara"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Макухин Вячеслав Юрьевич",
+      "name_raw": "Макухин Вячеслав Юрьевич",
+      "role": [
+        "Начальник отдела информационных технологий Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1216457,
+        "relative": null
+      },
+      {
+        "size": 1673000,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 43,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 43,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 43,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ФОЛЬКСВАГЕН Touarеg"
+      },
+      {
+        "text": "легковой автомобиль АУДИ S6"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Малиц Владимир Николаевич",
+      "name_raw": "Малиц Владимир Николаевич",
+      "role": [
+        "Директор Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2724167,
+        "relative": null
+      },
+      {
+        "size": 280000,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 262,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 49,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "водный транспорт SaVA 500"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Матлашевский Владимир Викторович",
+      "name_raw": "Матлашевский Владимир Викторович",
+      "role": [
+        "Заместитель директора департамента координации подготовки к чемпионату мира по футболу"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1761281,
+        "relative": null
+      },
+      {
+        "size": 1943900,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельные участки",
+        "type": "Земельный участок",
+        "square": 1826,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ТОЙОТА ЛЕКСУС GX 460"
+      },
+      {
+        "text": "легковой автомобиль ТОЙОТА ЛЕКСУС RX450H"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Мелешков Юрий Викторович",
+      "name_raw": "Мелешков Юрий Викторович",
+      "role": [
+        "Советник Министра спорта Российской Федерации"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2196260,
+        "relative": null
+      },
+      {
+        "size": 454434,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Гараж",
+        "type": "Гараж",
+        "square": 17,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 62,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 69,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль АУДИ Q 7"
+      },
+      {
+        "text": "легковой автомобиль ФОЛЬКСВАГЕН Туарег"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Миронова Светлана Викторовна",
+      "name_raw": "Миронова Светлана Викторовна",
+      "role": [
+        "Директор Департамента координации подготовки к чемпионату мира по футболу"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2446500,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 600,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Морозов Алексей Алексеевич",
+      "name_raw": "Морозов Алексей Алексеевич",
+      "role": [
+        "Директор Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2170081,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1250,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Музалева Анна Юрьевна",
+      "name_raw": "Музалева Анна Юрьевна",
+      "role": [
+        "Начальник отдела по профилактике коррупционных и иных правонарушений Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1266256,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 52,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 52,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Мучкинова Герензала Константиновна",
+      "name_raw": "Мучкинова Герензала Константиновна",
+      "role": [
+        "Начальник отдела протокольно-организационной работы Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1275933,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Новиков Павел Владимирович",
+      "name_raw": "Новиков Павел Владимирович",
+      "role": [
+        "Заместитель Министра спорта Российской Федерации"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 3837184,
+        "relative": null
+      },
+      {
+        "size": 563486,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 358600,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 102,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1000,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 102,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 102,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 244,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 102,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 244,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль УАЗ Hunter"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Новикова Екатерина Сергеевна",
+      "name_raw": "Новикова Екатерина Сергеевна",
+      "role": [
+        "Начальник отдела по исполнению федеральных целевых программ и капстроительству Департамента бюджетного учета, внутреннего финансового контроля и аудита"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": null,
+        "relative": null
+      },
+      {
+        "size": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 801,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 56,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 56,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 56,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль МАЗДА СХ-5"
+      },
+      {
+        "text": "легковой автомобиль Mitsubishi Outlander"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Орлов Кирилл Анатольевич",
+      "name_raw": "Орлов Кирилл Анатольевич",
+      "role": [
+        "Заместитель директора Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1811033,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 54,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Паршикова Наталья Владимировна",
+      "name_raw": "Паршикова Наталья Владимировна",
+      "role": [
+        "Статс-секретарь - заместитель Министра"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 4668238,
+        "relative": null
+      },
+      {
+        "size": 4334780,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1250,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1250,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ВАЗ Lada 212140"
+      },
+      {
+        "text": "легковой автомобиль МИЦУБИСИ OUTLANDER"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Петипак Елена Владимировна",
+      "name_raw": "Петипак Елена Владимировна",
+      "role": [
+        "Начальник отдела экспертизы ведомственных нормативных правовых актов Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1272323,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 46,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль \nКИА рио"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Плешаков Алексей Михайлович",
+      "name_raw": "Плешаков Алексей Михайлович",
+      "role": [
+        "Начальник отдела развития неолимпийских видов спорта Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1228816,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 72,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Жилой дом",
+        "type": "Жилой дом",
+        "square": 1152,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Жилой дом",
+        "type": "Жилой дом",
+        "square": 1152,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Жилой дом",
+        "type": "Жилой дом",
+        "square": 1152,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ФОЛЬКСВАГЕН Jetta"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Погасова Елена Александровна",
+      "name_raw": "Погасова Елена Александровна",
+      "role": [
+        "Начальник отдела расчетов оплаты труда, исполнения хоздоговоров, учета основных средств Департамента бюджетного учёта, внутреннего финансового контроля и аудита"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 428707,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 79,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 59,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 79,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 79,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль \nVOLVO V50"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Поскотин Сергей Васильевич",
+      "name_raw": "Поскотин Сергей Васильевич",
+      "role": [
+        "Начальник отдела материально-технического обеспечений Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1264435,
+        "relative": null
+      },
+      {
+        "size": 1041091,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 680,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль\nУАЗ 31519"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Пуховская Марианна Николаевна",
+      "name_raw": "Пуховская Марианна Николаевна",
+      "role": [
+        "Начальник отдела школьного и студенческого спорта Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1906052,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль Audi A1"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Ржевская Татьяна Геннадьевна",
+      "name_raw": "Ржевская Татьяна Геннадьевна",
+      "role": [
+        "Заместитель директора Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1851374,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 73,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.25,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Ромашина Екатерина Вячеславовна",
+      "name_raw": "Ромашина Екатерина Вячеславовна",
+      "role": [
+        "Начальник отдела нормативно-правового отраслевого обеспечения Правового департамента"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1245999,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 3339,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Росляков Александр Валериевич",
+      "name_raw": "Росляков Александр Валериевич",
+      "role": [
+        "Директор Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2217096,
+        "relative": null
+      },
+      {
+        "size": 1182367,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Жилой дом, дачи",
+        "type": "Дача",
+        "square": 89,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 138,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 138,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 138,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль АУДИ Q5"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Сараева Людмила Анатольевна",
+      "name_raw": "Сараева Людмила Анатольевна",
+      "role": [
+        "Заместитель директора Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1881973,
+        "relative": null
+      },
+      {
+        "size": 657917,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 72,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Гараж",
+        "type": "Гараж",
+        "square": 18,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 75,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Седая Марина Владимировна",
+      "name_raw": "Седая Марина Владимировна",
+      "role": [
+        "Начальник отдела формирования бюджета и ресурсного обеспечения госпрограмм Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1305535,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 56,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.25,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Селькова Татьяна Викторовна",
+      "name_raw": "Селькова Татьяна Викторовна",
+      "role": [
+        "Начальник отдела государственных и ведомственных наград Департамента управления делами и контроля"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1237233,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 2500,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль Дайхатсу териос"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Смирницкий Сергей Игоревич",
+      "name_raw": "Смирницкий Сергей Игоревич",
+      "role": [
+        "Заместитель директора Департамента инвестиционного развития и управления государственным имуществом"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1934410,
+        "relative": null
+      },
+      {
+        "size": 9391716,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1390,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 72,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 50,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль НИССАН Qashqai"
+      },
+      {
+        "text": "легковой автомобиль ХУНДАЙ Solaris"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Тарасова Ирина Викторовна",
+      "name_raw": "Тарасова Ирина Викторовна",
+      "role": [
+        "Начальник отдела финансирования международных мероприятий сборных команд Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1175648,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 70,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 40,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль РЕНО Logan"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Телегин Владимир Львович",
+      "name_raw": "Телегин Владимир Львович",
+      "role": [
+        "Начальник отдела игровых видов спорта Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1239849,
+        "relative": null
+      },
+      {
+        "size": 849630,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 2000,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 38,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ВОЛЬВО ХС 90"
+      },
+      {
+        "text": "легковой автомобиль ТОЙОТА RAV 4"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Тимошина Анжела Николаевна",
+      "name_raw": "Тимошина Анжела Николаевна",
+      "role": [
+        "Начальник отдела координации подготовки к Олимпийским играм и межведомственного взаимодействия Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 380057,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль НИССАН Qashqai"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Тимощук Александр Васильевич",
+      "name_raw": "Тимощук Александр Васильевич",
+      "role": [
+        "Начальник отдела государственного регулирования деятельности спортивных федераций Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1100259,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 72,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Титова Елена Васильевна",
+      "name_raw": "Титова Елена Васильевна",
+      "role": [
+        "Начальник отдела финансового обеспечения спортивных мероприятий и субсидий организациям Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1502613,
+        "relative": null
+      },
+      {
+        "size": 1234220,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 77,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 77,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ФОЛЬКСВАГЕН Гольф"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Титова Юлия Валерьевна",
+      "name_raw": "Титова Юлия Валерьевна",
+      "role": [
+        "Начальник отдела пресс-службы Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1201937,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 53,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.1666666666666666666666666667,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 64,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль КИА Ceed"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Тихомиров Михаил Васильевич",
+      "name_raw": "Тихомиров Михаил Васильевич",
+      "role": [
+        "Начальник отдела мониторинга и региональной политики Департамента развития физической культуры и массового спорта"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1450079,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Иное недвижимое имущество",
+        "type": "Иное",
+        "square": 9,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль Грейт Волл hover 5"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Тихонов Денис Станиславович",
+      "name_raw": "Тихонов Денис Станиславович",
+      "role": [
+        "Начальник отдела подготовки стадионов для чемпионата мира по футболу"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1881501,
+        "relative": null
+      },
+      {
+        "size": 1462979,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 125,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 125,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Томилова Марина Владимировна",
+      "name_raw": "Томилова Марина Владимировна",
+      "role": [
+        "Заместитель Министра спорта Российской Федерации"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": null,
+        "relative": null
+      },
+      {
+        "size": 794426,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 36,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 36,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ТОЙОТА HILUX"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Филина Ирина Николаевна",
+      "name_raw": "Филина Ирина Николаевна",
+      "role": [
+        "Заместитель директора Департамента бюджетного учёта, внутреннего финансового контроля и аудита"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1745965,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 59,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Фомиченко Татьяна Германовна",
+      "name_raw": "Фомиченко Татьяна Германовна",
+      "role": [
+        "Начальник отдела науки и научно-методического обеспечения Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1480773,
+        "relative": null
+      },
+      {
+        "size": 221619,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 45,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Машиноместо",
+        "type": "Иное",
+        "square": 14,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 44,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль НИССАН X-Trail"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Фураев Владимир Александрович",
+      "name_raw": "Фураев Владимир Александрович",
+      "role": [
+        "Начальник отдела учреждений профессионального образования Департамента науки и образования"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1217236,
+        "relative": null
+      },
+      {
+        "size": 412912,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 33,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 33,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль\nФОРД Fusion"
+      },
+      {
+        "text": "легковой автомобиль\nФОРД Kuga"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Цеханова Елена Сергеевна",
+      "name_raw": "Цеханова Елена Сергеевна",
+      "role": [
+        "Заместитель директора Департамента организации бюджетного процесса"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1705898,
+        "relative": null
+      },
+      {
+        "size": 1601633,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 565,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 47,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 1500,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 64,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ХОНДА CR-V"
+      },
+      {
+        "text": "легковой автомобиль ХОНДА CR-V"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Цыганков Алексей Евгеньевич",
+      "name_raw": "Цыганков Алексей Евгеньевич",
+      "role": [
+        "Заместитель директора Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 2020160,
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 59,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 43,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль БМВ 520i"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Чумаков Виктор Викторович",
+      "name_raw": "Чумаков Виктор Викторович",
+      "role": [
+        "Начальник отдела зимних видов спорта Департамента спорта высших достижений"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1269524,
+        "relative": null
+      },
+      {
+        "size": 355818,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 10,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Жилой дом",
+        "type": "Жилой дом",
+        "square": 85,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 10,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль ШКОДА Октавия"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Щербакова Татьяна Евгеньевна",
+      "name_raw": "Щербакова Татьяна Евгеньевна",
+      "role": [
+        ""
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1297861,
+        "relative": null
+      },
+      {
+        "size": 4469221,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 70,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": null
+      },
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 159,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 58,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 70,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 70,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль \nNissan, Qushkai"
+      }
+    ]
+  },
+  {
+    "person": {
+      "name": "Якубов Артем Семенович",
+      "name_raw": "Якубов Артем Семенович",
+      "role": [
+        "Начальник отдела международного сотрудничества Департамента государственной политики в сфере спорта и международного сотрудничества"
+      ]
+    },
+    "office": {
+      "name": "Министерство странных походок"
+    },
+    "year": 2016,
+    "incomes": [
+      {
+        "size": 1293500,
+        "relative": null
+      },
+      {
+        "size": 0,
+        "relative": "Супруг(а)"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      },
+      {
+        "size": 0,
+        "relative": "Ребенок"
+      }
+    ],
+    "real_estates": [
+      {
+        "name": "Земельный участок",
+        "type": "Земельный участок",
+        "square": 543,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 78,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "name": "Квартира",
+        "type": "Квартира",
+        "square": 51,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.3333333333333333333333333333,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Жилой дом",
+        "type": "Жилой дом",
+        "square": 266,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "name": "Жилой дом",
+        "type": "Жилой дом",
+        "square": 266,
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "name": "Квартира Общая долевая (1/2)",
+        "type": "Квартира",
+        "square": 38,
+        "country": null,
+        "region": null,
+        "own_type": "В собственности",
+        "share_type": "Долевая собственность",
+        "share_amount": 0.5,
+        "relative": "Ребенок"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": "легковой автомобиль\nХундай Гранд Старекс"
+      }
+    ]
+  }
+]
