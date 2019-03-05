@@ -13,7 +13,7 @@ using TI.Declarator.WordParser;
 
 namespace Tindalos
 {
-    class Tindalos
+    public class Tindalos
     {
         private static readonly string ErrorsFile = "errors.log";
         private static readonly string RegressionDir = "regression";
@@ -137,7 +137,7 @@ namespace Tindalos
             Console.ReadKey();
         }
 
-        private static Declaration Process(string fileName)
+        public static Declaration Process(string fileName)
         {
             string ext = Path.GetExtension(fileName);
             switch (ext)

@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelParser.Tests", "ExcelP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeclaratorApiClient", "DeclaratorApiClient\DeclaratorApiClient.csproj", "{1AC51D57-9CAD-435D-ACE5-ABA84D287253}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{AFB7E7EE-969C-47DC-9FEF-780909E20975}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{1AC51D57-9CAD-435D-ACE5-ABA84D287253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AC51D57-9CAD-435D-ACE5-ABA84D287253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AC51D57-9CAD-435D-ACE5-ABA84D287253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
