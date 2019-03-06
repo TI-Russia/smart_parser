@@ -46,12 +46,37 @@ namespace test
 
             string test3 = "земельный участок ИЖС                             (общая, долевая, 1/2 доли)";
             var tuple3 = DataHelper.ParseCombinedRealEstateColumn(test3);
+            Assert.AreEqual(tuple3.Item1, RealEstateType.PlotOfLand);
+            Assert.AreEqual(tuple3.Item2, OwnershipType.Shared);
+            Assert.AreEqual(tuple3.Item3, "1/2");
+
             string test4 = "долевая 1/249";
             OwnershipType ownershipType = DataHelper.TryParseOwnershipType(test4);
             Assert.AreEqual(ownershipType, OwnershipType.Shared);
             share = DataHelper.ParseOwnershipShare(test4, ownershipType);
 
+            string test5 = "жилой дом (незавершенное строительство)";
+            var tuple5 = DataHelper.ParseCombinedRealEstateColumn(test5);
+            Assert.AreEqual(tuple5.Item1, RealEstateType.ResidentialHouse);
+            Assert.AreEqual(tuple5.Item2, OwnershipType.Ownership);
+            Assert.AreEqual(tuple5.Item3, "");
+
+
+            string test6 = "квартира\n(совместная)";
+            var tuple6 = DataHelper.ParseCombinedRealEstateColumn(test6);
+            Assert.AreEqual(tuple6.Item1, RealEstateType.Apartment);
+            Assert.AreEqual(tuple6.Item2, OwnershipType.Joint);
+            Assert.AreEqual(tuple6.Item3, "");
+
+            string test7 = "Квартира долевая , 2/3";
+            var tuple7 = DataHelper.ParseCombinedRealEstateColumn(test7);
+            Assert.AreEqual(tuple7.Item1, RealEstateType.Apartment);
+            Assert.AreEqual(tuple7.Item2, OwnershipType.Shared);
+            Assert.AreEqual(tuple7.Item3, "2/3");
+
         }
+
+
 
         [TestMethod]
         public void TestParseNames()

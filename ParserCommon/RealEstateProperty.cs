@@ -16,6 +16,12 @@ namespace TI.Declarator.ParserCommon
         public decimal? Area { set; get; }
         public string OwnedShare { set; get; }
 
+        public string square_raw { set; get; }
+        public string share_amount_raw { set; get; }
+        public string country_raw { set; get; }
+        public string type_raw { set; get; }
+        public string own_type_raw { set; get; }
+
         public string Name { set; get; }
         public string Text { set; get; }
 

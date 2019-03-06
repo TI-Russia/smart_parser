@@ -61,6 +61,24 @@ namespace TI.Declarator.ParserCommon
                     return false;
             }
         }
+        public static string ToJsonString(this OwnershipType t)
+        {
+            switch (t)
+            {
+                case OwnershipType.Individual: return "Индивидуальная";
+                case OwnershipType.Joint:  return "Совместная собственность";
+                case OwnershipType.Shared: return "Долевая собственность";
+                case OwnershipType.InUse:  return "В пользовании";
+                case OwnershipType.Lease:  return "Наём (аренда)";
+                case OwnershipType.ServiceHousing: return "Служебное жилье";
+                case OwnershipType.ProvisionForUse: return "Фактическое предоставление";
+                case OwnershipType.Ownership: return "В собственности";
+                case OwnershipType.InFreeUse: return "Безвозмездное пользование";
+                default:
+                    throw new ArgumentOutOfRangeException("");
+
+            }
+    }
     }
 }
 

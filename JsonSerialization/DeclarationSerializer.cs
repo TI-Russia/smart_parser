@@ -94,13 +94,55 @@ namespace TI.Declarator.JsonSerialization
 
             foreach (var rel in servant.Relatives)
             {
-                jIncomes.Add(new JObject(
-                new JProperty("size", (int?)rel.DeclaredYearlyIncome),
-                new JProperty("relative", GetRelationshipName(rel.RelationType))));
+                var income = (int?)rel.DeclaredYearlyIncome;
+                if (income.HasValue)
+                {
+                    jIncomes.Add(new JObject(
+                    new JProperty("size", income),
+                    new JProperty("relative", GetRelationshipName(rel.RelationType))));
+                }
             }
 
             var res = new JProperty("incomes", jIncomes);
             return res;            
+        }
+
+        private static void AddNotNullProp(JObject jobj, string prop, object val)
+        {
+            if (val != null)
+            {
+                jobj.Add(new JProperty(prop, val));
+            }
+        }
+
+        private static JObject GetRealEstate(RealEstateProperty prop, string relationshipName = null)
+        {
+            JObject jRealEstate = new JObject();
+
+            // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
+            //jRealEstate.Add(new JProperty("name", prop.Name));
+            // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
+            jRealEstate.Add(new JProperty("type", GetPropertyType(prop.PropertyType)));
+            // TODO should property area really be an integer
+            jRealEstate.Add(new JProperty("square", prop.Area));
+            // "country_raw"
+            jRealEstate.Add(new JProperty("country", GetCountry(prop)));
+            jRealEstate.Add(new JProperty("region", null));
+            // "own_type_raw"
+            jRealEstate.Add(new JProperty("own_type", GetOwnershipType(prop)));
+            // "share_type_raw"
+            //new JProperty("share_type", GetShareType(prop)),
+            jRealEstate.Add(new JProperty("share_amount", GetOwnershipShare(prop)));
+
+            jRealEstate.Add(new JProperty("relative", relationshipName));
+
+            AddNotNullProp(jRealEstate, "square_raw", prop.square_raw);
+            AddNotNullProp(jRealEstate, "share_amount_raw", prop.share_amount_raw);
+            AddNotNullProp(jRealEstate, "country_raw", prop.country_raw);
+            AddNotNullProp(jRealEstate, "type_raw", prop.type_raw);
+            AddNotNullProp(jRealEstate, "own_type_raw", prop.own_type_raw);
+
+            return jRealEstate;
         }
 
         private static JProperty GetRealEstateProperties(PublicServant servant)
@@ -109,6 +151,11 @@ namespace TI.Declarator.JsonSerialization
 
             foreach (var prop in servant.RealEstateProperties)
             {
+                jRealEstate.Add(GetRealEstate(prop));
+
+
+
+                /*
                 jRealEstate.Add(new JObject(
                     // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
                     new JProperty("name", prop.Name),
@@ -122,15 +169,18 @@ namespace TI.Declarator.JsonSerialization
                     // "own_type_raw"
                     new JProperty("own_type", GetOwnershipType(prop)),
                     // "share_type_raw"
-                    new JProperty("share_type", GetShareType(prop)),
+                    //new JProperty("share_type", GetShareType(prop)),
                     new JProperty("share_amount", GetOwnershipShare(prop)),
                     new JProperty("relative", null)));
+                    */
             }
 
             foreach (var rel in servant.Relatives)
             {
                 foreach (var prop in rel.RealEstateProperties)
                 {
+                    jRealEstate.Add(GetRealEstate(prop, GetRelationshipName(rel.RelationType)));
+                    #if false
                     jRealEstate.Add(new JObject(
                         new JProperty("name", prop.Name),
                         new JProperty("type", GetPropertyType(prop.PropertyType)),
@@ -139,9 +189,11 @@ namespace TI.Declarator.JsonSerialization
                         new JProperty("country", GetCountry(prop)),
                         new JProperty("region", null),
                         new JProperty("own_type", GetOwnershipType(prop)),
-                        new JProperty("share_type", GetShareType(prop)),
+                        //new JProperty("share_type", GetShareType(prop)),
                         new JProperty("share_amount", GetOwnershipShare(prop)),
                         new JProperty("relative", GetRelationshipName(rel.RelationType))));
+                    */
+                    #endif
                 }
             }
 
@@ -198,6 +250,10 @@ namespace TI.Declarator.JsonSerialization
 
         private static string GetPropertyType(RealEstateType propertyType)
         {
+            if (propertyType == RealEstateType.None)
+            {
+                return null;
+            }
             return DeclaratorApiPatterns.RealEstateTypeToString(propertyType);
             /*
             switch (propertyType)
@@ -264,6 +320,7 @@ namespace TI.Declarator.JsonSerialization
 
         private static string GetOwnershipType(RealEstateProperty prop)
         {
+            return prop.OwnershipType.ToJsonString();
             if (prop.OwnershipType.NotAnOwner()/* == OwnershipType.NotAnOwner*/)
             {
                 return "В пользовании";
@@ -276,6 +333,7 @@ namespace TI.Declarator.JsonSerialization
 
         private static string GetShareType(RealEstateProperty prop)
         {
+            return prop.OwnershipType.ToJsonString();
             switch (prop.OwnershipType)
             {
                 case OwnershipType.Joint: return "Совместная собственность";

@@ -17,6 +17,10 @@ namespace Smart.Parser.Lib
         }
         static public bool IsPublicServantInfo(string nameOrRelativeType)
         {
+            if (ParseRelationType(nameOrRelativeType, false) != RelationType.Error)
+            {
+                return false;
+            }
             // Исправляем инициал, слипшийся с фамилией БуровЮ.В.
             Regex regex = new Regex("([а-я])([А-Я]\\.)", RegexOptions.Compiled);
 
@@ -140,6 +144,18 @@ namespace Smart.Parser.Lib
 
         public static RealEstateType ParseRealEstateType(string strType)
         {
+            RealEstateType type = TryParseRealEstateType(strType);
+
+            if (type == RealEstateType.None)
+            {
+                throw new UnknownRealEstateTypeException(strType);
+            }
+            return type;
+        }
+
+
+        public static RealEstateType TryParseRealEstateType(string strType)
+        {
             string key = strType.ToLower().RemoveStupidTranslit()
                                           .Trim('\"')
                                           .Replace('\n', ' ')
@@ -148,7 +164,7 @@ namespace Smart.Parser.Lib
                                           .Replace("  ", " ")
                                           .Trim();
 
-            RealEstateType type = DeclaratorApiPatterns.ParseRealEstateType(key);
+            RealEstateType type = DeclaratorApiPatterns.TryParseRealEstateType(key);
             return type;
 /*
             if (PropertyDictionary.ParseParseRealEstateType(key, out type))
@@ -195,6 +211,19 @@ namespace Smart.Parser.Lib
 
             OwnershipType result = OwnershipType.None;
             foreach (var s in parts)
+            {
+                OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
+                if (res != OwnershipType.None)
+                {
+                    result = res;
+                }
+            }
+            if (result != OwnershipType.None)
+            {
+                return result;
+            }
+            var parts2 = Regex.Split(str, "[ 0-9,\\(\\)]+");
+            foreach (var s in parts2)
             {
                 OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
                 if (res != OwnershipType.None)
@@ -282,14 +311,16 @@ namespace Smart.Parser.Lib
             var match = Regex.Match(strPropInfo, "[,(]+");
             string realEstateStr = strPropInfo;
             string rest = "";
+            string sep = "";
             if (match.Success)
             {
                 realEstateStr = strPropInfo.Substring(0, match.Index);
                 rest = strPropInfo.Substring(match.Index + 1);
+                sep = strPropInfo.Substring(match.Index, 1);
             }
 
-            RealEstateType realEstateType = ParseRealEstateType(realEstateStr);
-            OwnershipType ownershipType = OwnershipType.InUse;
+            RealEstateType realEstateType = TryParseRealEstateType(realEstateStr);
+            OwnershipType ownershipType = TryParseOwnershipType(realEstateStr);
             share = ParseOwnershipShare(rest, ownershipType);
             if (rest != "")
             {
@@ -298,6 +329,10 @@ namespace Smart.Parser.Lib
                 {
                     ownershipType = t; 
                 }
+            }
+            if (ownershipType == OwnershipType.None)
+            {
+                ownershipType = OwnershipType.Ownership;
             }
             return Tuple.Create(realEstateType, ownershipType, share);
         }
@@ -442,7 +477,7 @@ namespace Smart.Parser.Lib
                     return match.Value;
                 }
 
-                return res;
+                return "";
             }
             return "";
         }
@@ -521,8 +556,18 @@ namespace Smart.Parser.Lib
 
             return res;
         }
-
         public static Country ParseCountry(string strCountry)
+        {
+            Country country = TryParseCountry(strCountry);
+            if (country == Country.Undefined)
+            {
+                throw new SmartParserException("Wrong country name: " + strCountry);
+            }
+
+            return country;
+        }
+
+        public static Country TryParseCountry(string strCountry)
         {
             if (String.IsNullOrWhiteSpace(strCountry) || strCountry.Trim() == "-")
             {
@@ -561,8 +606,9 @@ namespace Smart.Parser.Lib
                 case "мексика": return Country.Mexico;
                 case "абхазия": return Country.Abkhazia;
                 case "южная осетия": return Country.SouthOssetia;
-                default: throw new SmartParserException("Wrong country name: " + strCountry);
+                //default:
             }
+            return Country.Undefined;//throw new SmartParserException("Wrong country name: " + strCountry);
         }
 
     }

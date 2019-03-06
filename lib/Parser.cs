@@ -183,6 +183,29 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
+        public void CheckProperty(RealEstateProperty prop)
+        {
+            if (prop == null)
+            {
+                return;
+            }
+
+            if (prop.Country == 0)
+            {
+                Logger.Error("***ERROR row({0}) wrong country: {1}", CurrentRow, prop.country_raw);
+            }
+            if (prop.OwnershipType == 0)
+            {
+                Logger.Error("***ERROR row({0}) wrong ownership type: {1}", CurrentRow, prop.own_type_raw);
+            }
+            if (prop.PropertyType == 0)
+            {
+                Logger.Error("***ERROR row({0}) wrong property type: {1}", CurrentRow, prop.type_raw);
+            }
+        }
+
+
+
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
             foreach (PublicServant servant in declaration.Declarants)
@@ -195,6 +218,7 @@ namespace Smart.Parser.Lib
                     bool firstRow = true;
                     for (int row = person.RangeLow; row <= person.RangeHigh; row++)
                     {
+                        CurrentRow = row;
                         Row r = Adapter.GetRow(row);
 
                         if (firstRow)
@@ -237,6 +261,7 @@ namespace Smart.Parser.Lib
 
                         if (ownedProperty != null)
                         {
+                            CheckProperty(ownedProperty);
                             person.RealEstateProperties.Add(ownedProperty);
                         }
 
@@ -254,6 +279,7 @@ namespace Smart.Parser.Lib
                         {
                             Logger.Error("***ERROR row({0}) {1}", row, e.Message);
                         }
+                        CheckProperty(stateProperty);
 
                         if (stateProperty != null)
                         {
@@ -444,36 +470,39 @@ namespace Smart.Parser.Lib
             {
                 return null;
             }
+            RealEstateProperty stateProperty = new RealEstateProperty();
 
 
-            var propertyType = DeclaratorApiPatterns.ParseRealEstateType(statePropTypeStr);
+            var propertyType = DeclaratorApiPatterns.TryParseRealEstateType(statePropTypeStr);
             decimal? area = DataHelper.ParseArea(statePropAreaStr);
-            Country country = DataHelper.ParseCountry(statePropCountryStr);
+            Country country = DataHelper.TryParseCountry(statePropCountryStr);
 
-            RealEstateProperty stateProperty =
-            new RealEstateProperty(OwnershipType.InUse/*.NotAnOwner*/, propertyType, country, area, statePropTypeStr)
-            {
-                OwnershipType = OwnershipType.InUse,
-                PropertyType = propertyType,
-                Country = country,
-                Area = area,
-                Name = statePropTypeStr
-            };
+            stateProperty.PropertyType = propertyType;
+            stateProperty.type_raw = statePropTypeStr;
+            stateProperty.Area = area;
+            stateProperty.square_raw = statePropAreaStr;
+            stateProperty.Country = country;
+            stateProperty.country_raw = statePropCountryStr;
+            stateProperty.OwnershipType = OwnershipType.InUse;
 
             return stateProperty;
-
         }
 
-    // 
-    public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
+        // 
+        public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
         {
-            decimal? area = DataHelper.ParseArea(areaStr);
-            Country country = DataHelper.ParseCountry(countryStr);
-
             if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
             {
                 return null;
             }
+
+            RealEstateProperty realEstateProperty = new RealEstateProperty();
+
+            realEstateProperty.Area = DataHelper.ParseArea(areaStr);
+            realEstateProperty.square_raw = areaStr;
+
+            realEstateProperty.Country = DataHelper.TryParseCountry(countryStr);
+            realEstateProperty.country_raw = countryStr;
 
             RealEstateType realEstateType = RealEstateType.Other;
             OwnershipType ownershipType = OwnershipType.None;
@@ -482,9 +511,17 @@ namespace Smart.Parser.Lib
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)
             {
-                realEstateType = DataHelper.ParseRealEstateType(estateTypeStr);
-                ownershipType = DataHelper.ParseOwnershipType(ownTypeStr);
+                realEstateType = DataHelper.TryParseRealEstateType(estateTypeStr);
+                ownershipType = DataHelper.TryParseOwnershipType(ownTypeStr);
                 share = DataHelper.ParseOwnershipShare(ownTypeStr, ownershipType);
+
+                realEstateProperty.PropertyType = realEstateType;
+                realEstateProperty.OwnershipType = ownershipType;
+                realEstateProperty.OwnedShare = share;
+
+                realEstateProperty.type_raw = estateTypeStr;
+                realEstateProperty.own_type_raw = ownTypeStr;
+                realEstateProperty.share_amount_raw = ownTypeStr;
             }
             else // колонка содержит тип недвижимости и тип собственности
             {
@@ -494,18 +531,16 @@ namespace Smart.Parser.Lib
                 realEstateType = combinedData.Item1;
                 ownershipType = combinedData.Item2;
                 share = combinedData.Item3;
-            }
 
-            RealEstateProperty realEstateProperty = new RealEstateProperty()
-            {
-                OwnershipType = ownershipType,
-                PropertyType = realEstateType,
-                Country = country,
-                Area = area,
-                OwnedShare = share,
-                Name = estateTypeStr,
-                Text = ""
-            };
+                realEstateProperty.PropertyType = realEstateType;
+                realEstateProperty.OwnershipType = ownershipType;
+                realEstateProperty.OwnedShare = share;
+
+                realEstateProperty.type_raw = estateTypeStr;
+                //realEstateProperty.own_type_raw = estateTypeStr;
+                //realEstateProperty.share_amount_raw = estateTypeStr;
+
+            }
 
             return realEstateProperty;
         }
@@ -539,7 +574,7 @@ namespace Smart.Parser.Lib
                 string areaStr = adapter.GetContents(row, DeclarationField.OwnedRealEstateArea).CleanWhitespace();
                 decimal? area = DataHelper.ParseArea(areaStr);
 
-                Country country= DataHelper.ParseCountry(adapter.GetContents(row, DeclarationField.OwnedRealEstateCountry));
+                Country country = DataHelper.ParseCountry(adapter.GetContents(row, DeclarationField.OwnedRealEstateCountry));
 
                 if (cell.MergedRowsCount > 1)
                     row += cell.MergedRowsCount - 1;
@@ -596,11 +631,11 @@ namespace Smart.Parser.Lib
             for (int i = 0; i < propertyTypes.Count(); i++)
             {
                 res.Add(new RealEstateProperty(
-                    ownershipTypes.ElementAt(i), 
+                    ownershipTypes.ElementAt(i),
                     propertyTypes.ElementAt(i),
-                    countries.ElementAtOrDefault(i), 
-                    areas.ElementAtOrDefault(i), 
-                    estateTypeStr, 
+                    countries.ElementAtOrDefault(i),
+                    areas.ElementAtOrDefault(i),
+                    estateTypeStr,
                     shares.ElementAt(i)));
             }
             return res;
@@ -648,6 +683,7 @@ namespace Smart.Parser.Lib
 
 
         IAdapter Adapter { get; set; }
+        static int CurrentRow { get; set;  } = -1;
 
         List<Tuple<int, int>> personBounds = new List<Tuple<int, int>>();
         List<Tuple<int, int>> organsBounds = new List<Tuple<int, int>>();

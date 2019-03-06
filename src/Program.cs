@@ -241,6 +241,7 @@ namespace Smart.Parser
             {
                 Logger.Info(ordering.ToString());
             }
+            Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
 
 
             Declaration declaration = null;
@@ -257,7 +258,7 @@ namespace Smart.Parser
             string output = "";
             try
             {
-                output = DeclarationSerializer.Serialize(declaration, true);
+                output = DeclarationSerializer.Serialize(declaration, false);
             }
             catch (Exception e)
             {

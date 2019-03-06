@@ -16,6 +16,7 @@ https://declarator.org/api/realestate-type/
 
     public enum RealEstateType
     {
+        None = 0, // ошибка
         PlotOfLand = 1,
         Garage = 2,
         ResidentialHouse = 3,
@@ -24,4 +25,5 @@ https://declarator.org/api/realestate-type/
         Other = 6,
         InfrastructureFacility = 7,
     }
+
 }

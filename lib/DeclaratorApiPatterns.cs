@@ -174,18 +174,29 @@ namespace Smart.Parser.Lib
 
 
 
-        public static RealEstateType ParseRealEstateType(string text)
+        public static RealEstateType TryParseRealEstateType(string text)
         {
             string normalized = NormalizeText(text);
             string value = GetValue(normalized, "realestatetype");
 
             if (value.IsNullOrWhiteSpace())
             {
-                throw new UnknownRealEstateTypeException(normalized);
+                return RealEstateType.None;
             }
 
             return RealEstateTypeMap[value];
         }
+
+        public static RealEstateType ParseRealEstateType(string text)
+        {
+            RealEstateType type = TryParseRealEstateType(text);
+            if (type == RealEstateType.None)
+            {
+                throw new UnknownRealEstateTypeException(text);
+            }
+            return type;
+        }
+
 
         public static string RealEstateTypeToString(RealEstateType real_type)
         {
