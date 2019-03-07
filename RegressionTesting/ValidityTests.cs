@@ -62,6 +62,7 @@ namespace RegressionTesting
         #endregion
 
         private const string SamplesDirectory = "regression_samples";
+
         private const string WordFilesDirectory = @"Word";
         private const string WordLogFile = "word_files.log";
 
@@ -78,7 +79,7 @@ namespace RegressionTesting
         public void TestWordParser()
         {
             int nFailedComparisons = 0;
-            foreach (var filename in Directory.GetFiles(WordFilesDirectory, "*.docx"))
+            foreach (var filename in Directory.GetFiles(WordFilesDirectory, "*.doc?"))
             {
                 Declaration res = Tindalos.Tindalos.Process(filename);
                 string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
@@ -90,7 +91,36 @@ namespace RegressionTesting
                 if (!isValid) { nFailedComparisons++; }
             }
 
-            Assert.AreEqual(0, nFailedComparisons, $"{nFailedComparisons} output files are not valid. Comparison log can be found in {WordLogFilePath}");
+            Assert.AreEqual(0, nFailedComparisons, $"doc/docx parser test: {nFailedComparisons} output files are not valid. Comparison log can be found in {WordLogFilePath}");
+        }
+
+        private const string ExcelFilesDirectory = @"Excel";
+        private const string ExcelLogFile = "excel_files.log";
+
+        private string ExcelLogFilePath
+        {
+            get { return Path.GetFullPath(ExcelLogFile); }
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestExcelParser()
+        {
+            int nFailedComparisons = 0;
+            foreach (var filename in Directory.GetFiles(ExcelFilesDirectory, "*.xls?"))
+            {
+                Smart.Parser.Program.ParseOneFile(filename);
+                string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
+
+                string expectedFile = Path.Combine(ExcelFilesDirectory, outputFileName);
+                bool isValid = TestValidity(expectedFile, outputFileName, ExcelLogFile);
+
+                if (!isValid) { nFailedComparisons++; }
+            }
+
+            Assert.AreEqual(0, nFailedComparisons, $"xls/xlsx parser test: {nFailedComparisons} output files are not valid. Comparison log can be found in {ExcelLogFilePath}");
         }
 
         private static bool TestValidity(string expectedFile, string actualFile, string logFile)

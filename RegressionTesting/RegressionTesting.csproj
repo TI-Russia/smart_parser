@@ -61,6 +61,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="regression_samples\Excel\C - min_east_2015_Rukovoditeli_i_sotrudniki_ministerstva.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\Excel\C - min_east_2015_Rukovoditeli_i_sotrudniki_ministerstva.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\Word\2016_Sotrudniki_ministerstva.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -76,6 +82,10 @@
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
       <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>
       <Name>ParserCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Smart.Parser.csproj">
+      <Project>{42f10691-63bd-469c-8898-45b80cab91a3}</Project>
+      <Name>Smart.Parser</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tindalos\Tindalos.csproj">
       <Project>{c6d0ae36-515d-4c5b-8665-49de6e635a04}</Project>

@@ -13,7 +13,7 @@ using TI.Declarator.JsonSerialization;
 
 namespace Smart.Parser
 {
-    class Program
+    public class Program
     {
         static void ShowHelp()
         {
