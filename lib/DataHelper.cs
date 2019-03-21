@@ -160,6 +160,7 @@ namespace Smart.Parser.Lib
                                           .Trim('\"')
                                           .Replace('\n', ' ')
                                           .Replace(';', ' ')
+                                          .Replace("не имеет", "")
                                           .Replace("   ", " ")
                                           .Replace("  ", " ")
                                           .Trim();
@@ -559,7 +560,7 @@ namespace Smart.Parser.Lib
         public static Country ParseCountry(string strCountry)
         {
             Country country = TryParseCountry(strCountry);
-            if (country == Country.Undefined)
+            if (country == Country.Error)
             {
                 throw new SmartParserException("Wrong country name: " + strCountry);
             }
@@ -569,14 +570,15 @@ namespace Smart.Parser.Lib
 
         public static Country TryParseCountry(string strCountry)
         {
-            if (String.IsNullOrWhiteSpace(strCountry) || strCountry.Trim() == "-")
+            if (strCountry.Trim() == "" || strCountry.Trim() == "-")
             {
-                return Country.Undefined;
+                return Country.None;
             }
             switch (strCountry.Trim().ToLower())
             {
                 case "беларусь": return Country.Belarus;
                 case "республика беларусь": return Country.Belarus;
+                case "белоруссия": return Country.Belarus;
                 case "венгрия": return Country.Hungary;
                 case "грузия": return Country.Georgia;
                 case "казахстан": return Country.Kazakhstan;
@@ -608,7 +610,7 @@ namespace Smart.Parser.Lib
                 case "южная осетия": return Country.SouthOssetia;
                 //default:
             }
-            return Country.Undefined;//throw new SmartParserException("Wrong country name: " + strCountry);
+            return Country.Error;//throw new SmartParserException("Wrong country name: " + strCountry);
         }
 
     }

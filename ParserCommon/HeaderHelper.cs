@@ -6,6 +6,16 @@ namespace TI.Declarator.ParserCommon
     {
         public static DeclarationField GetField(string str)
         {
+            DeclarationField field = TryGetField(str);
+            if (field == DeclarationField.None)
+            {
+                throw new Exception($"Could not determine column type for header {str}.");
+            }
+            return field;
+        }
+
+        public static DeclarationField TryGetField(string str)
+        {
             if (str.IsNumber()) { return DeclarationField.Number; }
             if (str.IsNameOrRelativeType()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
@@ -28,7 +38,8 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
-            throw new Exception($"Could not determine column type for header {str}.");
+            return DeclarationField.None;
+            //throw new Exception($"Could not determine column type for header {str}.");
         }
 
         private static string NormalizeString(string str)

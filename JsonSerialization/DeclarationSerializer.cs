@@ -121,6 +121,7 @@ namespace TI.Declarator.JsonSerialization
 
             // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
             //jRealEstate.Add(new JProperty("name", prop.Name));
+            jRealEstate.Add(new JProperty("text", prop.Text));
             // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
             jRealEstate.Add(new JProperty("type", GetPropertyType(prop.PropertyType)));
             // TODO should property area really be an integer
@@ -281,7 +282,8 @@ namespace TI.Declarator.JsonSerialization
         {
             switch (prop.Country)
             {
-                case Country.Undefined: return null;
+                case Country.Error: return null;
+                case Country.None: return null;
                 case Country.France: return "Франция";
                 case Country.Russia: return "Россия";
                 case Country.Ukraine: return "Украина";

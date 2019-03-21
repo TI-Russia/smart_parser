@@ -56,6 +56,7 @@
     <Compile Include="ColumnDetectorTest.cs" />
     <Compile Include="DataHelperTest.cs" />
     <Compile Include="DocAdapterTest.cs" />
+    <Compile Include="HeaderHelperTest.cs" />
     <Compile Include="TestApiPatterns.cs" />
     <Compile Include="TestJsonWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

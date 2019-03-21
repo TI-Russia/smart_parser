@@ -8,6 +8,13 @@ using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Lib
 {
+    public class ColumnDetectorException : Exception
+    {
+        public ColumnDetectorException(string message) : base(message)
+        {
+        }
+    }
+
     public class ColumnDetector
     {
         static private bool IsHeader(Row r)
@@ -24,8 +31,21 @@ namespace Smart.Parser.Lib
                 return false;
             }
 
+            string first = cells.First().GetText(true);
+
             return (cells.Count > 2) &&
                    (cells.First().GetText(true) != "1");
+        }
+        static private bool IsEmptyRow(Row r)
+        {
+            var cells = r.Cells;
+            string text = "";
+            foreach (var cell in cells)
+            {
+                text += cell.GetText();
+            }
+
+            return (text.Trim() == "");
         }
 
         static public ColumnOrdering ExamineHeader(IAdapter t)
@@ -43,16 +63,31 @@ namespace Smart.Parser.Lib
             ColumnOrdering res = new ColumnOrdering();
             int colCount = 0;
             int index = 0;
+            int headerRows = 1;
             foreach (var cell in header.Cells)
             {
                 string text = cell.GetText(true);
 
+                if (text == "")
+                {
+                    break;
+                }
+
+                if (cell.MergedRowsCount > 1)
+                {
+                    headerRows = Math.Max(headerRows, cell.MergedRowsCount);
+                }
+
                 DeclarationField field;
-                if (cell.GridSpan <= 1)
+                if (cell.MergedColsCount <= 1)
                 {
                     if (!text.IsNullOrWhiteSpace())
                     {
                         field = HeaderHelpers.GetField(text.Replace('\n', ' '));
+                        if (field == DeclarationField.None)
+                        {
+                            throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerRowNum, colCount));
+                        }
                         res.Add(field, index);
                         index++;
                         colCount++;
@@ -75,7 +110,11 @@ namespace Smart.Parser.Lib
                         if (auxColCount >= colCount)
                         {
                             string fullText = text + " " + auxCell.GetText(true);
-                            field = HeaderHelpers.GetField(fullText);
+                            field = HeaderHelpers.TryGetField(fullText);
+                            if (field == DeclarationField.None)
+                            {
+                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerRowNum + 1, auxColCount));
+                            }
                             res.Add(field, index);
                             index++;
                         }
@@ -90,7 +129,18 @@ namespace Smart.Parser.Lib
 
             }
 
-            res.FirstDataRow = headerRowNum + 1 + auxRowCount;
+            int firstDataRow = headerRowNum + headerRows;// + auxRowCount;
+            string cellText1 = t.GetCell(firstDataRow, 0).GetText();
+            string cellText2 = t.GetCell(firstDataRow, 1).GetText();
+            if (cellText1 == "1" && cellText2 == "2")
+            {
+                firstDataRow++;
+            }
+
+
+            res.FirstDataRow = firstDataRow;
+
+
 
             return res;
         }

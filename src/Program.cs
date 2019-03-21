@@ -244,6 +244,8 @@ namespace Smart.Parser
             Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
 
 
+            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
+
             Declaration declaration = null;
             try
             {
@@ -426,10 +428,12 @@ namespace Smart.Parser
             {
                 Logger.Info(ordering.ToString());
             }
+            Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
+            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
 
             Declaration declaration = parser.Parse();
 
-            string output = DeclarationSerializer.Serialize(declaration, true);
+            string output = DeclarationSerializer.Serialize(declaration, false/*true*/);
 
             Logger.Info("Output size: " + output.Length);
 
