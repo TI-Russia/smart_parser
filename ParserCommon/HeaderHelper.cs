@@ -2,6 +2,9 @@
 
 namespace TI.Declarator.ParserCommon
 {
+    /*
+     Объекты недвижимости, находящиеся в пользовании 
+     */
     public static class HeaderHelpers
     {
         public static DeclarationField GetField(string str)
@@ -112,7 +115,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateOwnershipType(this string str)
         {
-            string strLower = str.ToLower();
+            string strLower = str.Replace("  ", " ").ToLower();
             return (!strLower.Contains("пользовании") && strLower.Contains("вид собственности"));
         }
 

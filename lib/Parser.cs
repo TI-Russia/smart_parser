@@ -163,7 +163,7 @@ namespace Smart.Parser.Lib
                 {
                     // error
                     throw new SmartParserException(
-                        string.Format("Wrong string {0} at row {1}", nameOrRelativeType, row));
+                        string.Format("Wrong nameOrRelativeType {0} (occupation {2}) at row {1}", nameOrRelativeType, row, occupationStr));
                 }
                 if (merged_col_count > 1)
                 {

@@ -174,108 +174,131 @@ namespace Smart.Parser
                 return ParseMultipleFiles(declarationFile);
             }
 
-            IAdapter adapter = null;
-            string extension = Path.GetExtension(declarationFile);
-            string defaultOut = Path.GetFileNameWithoutExtension(declarationFile) + ".json";
 
-            switch (extension)
-            {
-                case ".doc":
-                case ".docx":
-                    if (!AsposeLicense.Licensed)
-                    {
-                        throw new Exception("doc and docx file format is not supported");
-                    }
-                    adapter = AsposeDocAdapter.CreateAdapter(declarationFile);
-                    break;
-                case ".xls":
-                case ".xlsx":
-                    if (!AsposeLicense.Licensed && extension == ".xls")
-                    {
-                        throw new Exception("xls file format is not supported");
-                    }
-                    if (AsposeLicense.Licensed)
-                    { 
-                        adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
-                    }
-                    else
-                    { 
-                        adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
-                    }
-                    break;
-                default:
-                    Logger.Error("Unknown file extension " + extension);
-                    return 1;
-            }
-
-            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
-
-            if (dumpColumn >= 0)
-            {
-                parser.DumpColumn(dumpColumn);
-                return 0;
-            }
-
-            if (exportFile != "")
-            {
-                parser.ExportCSV(exportFile);
-                return 0;
-            }
-
-            if (columnOrdering == null)
-            {
-                columnOrdering = ColumnDetector.ExamineHeader(adapter);
-            }
-            adapter.ColumnOrdering = columnOrdering;
-
-            if (logFile == "")
-            {
-                logFile = Path.GetFileName(declarationFile) + ".log";
-            }
-
-            Logger.SetLoggingLevel(verboseLevel);
-            Logger.SetSecondLogFileName(logFile);
-
-            Logger.Info("Column ordering: ");
-            foreach (var ordering in columnOrdering.ColumnOrder)
-            {
-                Logger.Info(ordering.ToString());
-            }
-            Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
-
-
-            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
-
-            Declaration declaration = null;
             try
             {
-                declaration = parser.Parse();
+                Logger.SetOutSecond();
+                ParseOneFile(declarationFile);
             }
-            catch(Exception e)
+            catch (SmartParserException e)
             {
-                Logger.Info("Parsing error " + e.ToString());
-                return 1;
-            }
-
-            string output = "";
-            try
-            {
-                output = DeclarationSerializer.Serialize(declaration, false);
+                Logger.Info("Parsing Exception " + e.ToString());
             }
             catch (Exception e)
             {
-                Logger.Info("Serialization error " + e.ToString());
-                return 1;
+                Logger.Info("Parsing Exception " + e.ToString());
+                Logger.Info("Stack: " + e.StackTrace);
             }
-
-            Logger.Info("Output size: " + output.Length);
-            if (String.IsNullOrEmpty(outFile))
+            finally
             {
-                outFile = defaultOut;
+                Logger.SetOutMain();
             }
-            Logger.Info("Writing json to " + outFile);
-            File.WriteAllText(outFile, output);
 
+            /*
+                        IAdapter adapter = null;
+                        string extension = Path.GetExtension(declarationFile);
+                        string defaultOut = Path.GetFileNameWithoutExtension(declarationFile) + ".json";
+
+                        switch (extension)
+                        {
+                            case ".doc":
+                            case ".docx":
+                                if (!AsposeLicense.Licensed)
+                                {
+                                    throw new Exception("doc and docx file format is not supported");
+                                }
+                                adapter = AsposeDocAdapter.CreateAdapter(declarationFile);
+                                break;
+                            case ".xls":
+                            case ".xlsx":
+                                if (!AsposeLicense.Licensed && extension == ".xls")
+                                {
+                                    throw new Exception("xls file format is not supported");
+                                }
+                                if (AsposeLicense.Licensed)
+                                { 
+                                    adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                                }
+                                else
+                                { 
+                                    adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
+                                }
+                                break;
+                            default:
+                                Logger.Error("Unknown file extension " + extension);
+                                return 1;
+                        }
+
+                        Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
+
+                        if (dumpColumn >= 0)
+                        {
+                            parser.DumpColumn(dumpColumn);
+                            return 0;
+                        }
+
+                        if (exportFile != "")
+                        {
+                            parser.ExportCSV(exportFile);
+                            return 0;
+                        }
+
+
+                        if (logFile == "")
+                        {
+                            logFile = Path.GetFileName(declarationFile) + ".log";
+                        }
+
+                        Logger.SetLoggingLevel(verboseLevel);
+                        Logger.SetSecondLogFileName(logFile);
+
+                        if (columnOrdering == null)
+                        {
+                            columnOrdering = ColumnDetector.ExamineHeader(adapter);
+                        }
+                        adapter.ColumnOrdering = columnOrdering;
+
+
+                        Logger.Info("Column ordering: ");
+                        foreach (var ordering in columnOrdering.ColumnOrder)
+                        {
+                            Logger.Info(ordering.ToString());
+                        }
+                        Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
+
+
+                        Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
+
+                        Declaration declaration = null;
+                        try
+                        {
+                            declaration = parser.Parse();
+                        }
+                        catch(Exception e)
+                        {
+                            Logger.Info("Parsing error " + e.ToString());
+                            return 1;
+                        }
+
+                        string output = "";
+                        try
+                        {
+                            output = DeclarationSerializer.Serialize(declaration, false);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Info("Serialization error " + e.ToString());
+                            return 1;
+                        }
+
+                        Logger.Info("Output size: " + output.Length);
+                        if (String.IsNullOrEmpty(outFile))
+                        {
+                            outFile = defaultOut;
+                        }
+                        Logger.Info("Writing json to " + outFile);
+                        File.WriteAllText(outFile, output);
+            */
             if (Logger.Errors.Count() > 0)
             {
                 Logger.Info("*** Errors ({0}):", Logger.Errors.Count());

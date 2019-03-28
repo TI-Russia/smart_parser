@@ -66,7 +66,7 @@ namespace Smart.Parser.Lib
             return (!relationshipStr.IsNullOrWhiteSpace()
                     && (!relationshipStr.Contains("фамилия"))
                     && (!relationshipStr.Contains("фио"))
-                    && occupationStr.IsNullOrWhiteSpace());
+                    && occupationStr.Length <= 1);
         }
 
 

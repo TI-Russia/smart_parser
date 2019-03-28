@@ -118,7 +118,27 @@ namespace Smart.Parser.Adapters
         {
             DocumentFile = fileName;
             Aspose.Cells.Workbook workbook = new Aspose.Cells.Workbook(fileName);
-            worksheet = workbook.Worksheets[0];
+            // if there are multiple worksheets it is a problem
+            // generate exception if more then one non-hidden worksheet
+            //worksheet = workbook.Worksheets[0];
+            int wsCount = 0;
+            worksheet = null;
+            foreach (var ws in workbook.Worksheets)
+            {
+                if (ws.IsVisible)
+                {
+                    wsCount++;
+                    if (worksheet == null)
+                    {
+                        worksheet = ws;
+                    }
+                }
+            }
+            if (wsCount == 0)
+            {
+                throw new Exception(String.Format("Excel sheet {0} has no visible worksheets", fileName));
+            }
+
             totalRows = worksheet.Cells.Rows.Count;
             totalColumns = worksheet.Cells.MaxColumn + 1;
 

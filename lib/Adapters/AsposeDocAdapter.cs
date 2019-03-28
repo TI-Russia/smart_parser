@@ -1,5 +1,6 @@
 ﻿using Smart.Parser.Adapters;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,28 @@ namespace Smart.Parser.Adapters
         {
             Aspose.Words.Tables.Cell cell = table.Rows[row].Cells[column];
             return new AsposeDocCell(cell);
+        }
+
+        public override List<Cell> GetCells(int row)
+        {
+            int index = 0;
+            List<Cell> result = new List<Cell>();
+            IEnumerator enumerator = table.Rows[row].GetEnumerator();
+            int range_end = -1;
+            while (enumerator.MoveNext())
+            {
+                Aspose.Words.Tables.Cell cell = (Aspose.Words.Tables.Cell)enumerator.Current;
+                if (index < range_end)
+                {
+                    index++;
+                    continue;
+                }
+
+                result.Add(new AsposeDocCell(cell));
+
+                index++;
+            }
+            return result;
         }
 
 

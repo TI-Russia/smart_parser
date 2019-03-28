@@ -1,4 +1,5 @@
-﻿using Smart.Parser.Adapters;
+﻿using Parser.Lib;
+using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,15 @@ namespace Smart.Parser.Lib
         {
             var cells = r.Cells;
             string text = "";
+            int nonEmptyCellCount = 0;
             foreach (var cell in cells)
             {
+                string cellText = cell.GetText(true);
+                if (!String.IsNullOrWhiteSpace(cellText))
+                {
+                    nonEmptyCellCount++;
+                }
+
                 text += cell.GetText();
             }
 
@@ -33,7 +41,7 @@ namespace Smart.Parser.Lib
 
             string first = cells.First().GetText(true);
 
-            return (cells.Count > 2) &&
+            return (nonEmptyCellCount > 3) &&
                    (cells.First().GetText(true) != "1");
         }
         static private bool IsEmptyRow(Row r)
@@ -52,10 +60,16 @@ namespace Smart.Parser.Lib
         {
             int headerRowNum = 0;
             int auxRowCount = 0;
+            
 
             while (!IsHeader(t.Rows[headerRowNum]))
             {
                 headerRowNum++;
+
+                if (headerRowNum >= t.GetRowsCount())
+                {
+                    throw new ColumnDetectorException(String.Format("Headers not found"));
+                }
             }
 
             var header = t.Rows[headerRowNum];
@@ -99,7 +113,8 @@ namespace Smart.Parser.Lib
                 {
                     auxRowCount = 1;
                     int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
-                    Row auxRow = t.Rows[headerRowNum+1];
+                    int rowSpan = cell.MergedRowsCount;
+                    Row auxRow = t.Rows[headerRowNum + rowSpan];
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
                     auxCellsIter.MoveNext();
                     int auxColCount = 0;
@@ -109,11 +124,12 @@ namespace Smart.Parser.Lib
                         var auxCell = auxCellsIter.Current;
                         if (auxColCount >= colCount)
                         {
-                            string fullText = text + " " + auxCell.GetText(true);
+                            string cellText = auxCell.GetText(true);
+                            string fullText = text + " " + cellText;
                             field = HeaderHelpers.TryGetField(fullText);
                             if (field == DeclarationField.None)
                             {
-                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerRowNum + 1, auxColCount));
+                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", headerRowNum + 1, auxColCount, cellText));
                             }
                             res.Add(field, index);
                             index++;
@@ -140,7 +156,10 @@ namespace Smart.Parser.Lib
 
             res.FirstDataRow = firstDataRow;
 
-
+            if (res.ColumnOrder.Count() == 0)
+            {
+                throw new SmartParserException("cannot find headers");
+            }
 
             return res;
         }
