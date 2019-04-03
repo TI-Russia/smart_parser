@@ -169,7 +169,7 @@ namespace Smart.Parser
                 return 1;
             }
 
-            if (declarationFile.Contains("*") || declarationFile.Contains("?"))
+            if (declarationFile.Contains("*") || declarationFile.Contains("?") || declarationFile.StartsWith("@"))
             {
                 return ParseMultipleFiles(declarationFile);
             }
@@ -314,10 +314,22 @@ namespace Smart.Parser
 
         public static int ParseMultipleFiles(string fileMask)
         {
-            Logger.Info("Parsing files by mask " + fileMask);
+            string[] files = null;
+            if (fileMask.StartsWith("@"))
+            {
+                string fileName = fileMask.Substring(1);
+                Logger.Info("Reading files list from " + fileName);
 
-            string[] files = Directory.GetFiles(Path.GetDirectoryName(fileMask), Path.GetFileName(fileMask),
-                SearchOption.AllDirectories);
+                files = File.ReadAllLines(fileName).ToArray();
+
+            }
+            else
+            { 
+                Logger.Info("Parsing files by mask " + fileMask);
+
+                files = Directory.GetFiles(Path.GetDirectoryName(fileMask), Path.GetFileName(fileMask),
+                    SearchOption.AllDirectories);
+            }
 
             Logger.Info("Found {0} files", files.Count());
 

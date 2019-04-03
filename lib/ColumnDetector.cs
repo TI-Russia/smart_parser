@@ -119,14 +119,26 @@ namespace Smart.Parser.Lib
                     auxCellsIter.MoveNext();
                     int auxColCount = 0;
 
+                    field = DeclarationField.None;
                     while (auxColCount < colCount + span)
                     {
                         var auxCell = auxCellsIter.Current;
                         if (auxColCount >= colCount)
                         {
                             string cellText = auxCell.GetText(true);
-                            string fullText = text + " " + cellText;
-                            field = HeaderHelpers.TryGetField(fullText);
+
+                            //  пустая колонка страны (предыдущая колонка - площадь
+                            if (cellText == "" && field == DeclarationField.StatePropertyArea)
+                            {
+                                field = DeclarationField.StatePropertyCountry;
+                            }
+                            else
+                            {
+                                string fullText = text + " " + cellText;
+                                field = HeaderHelpers.TryGetField(fullText);
+                            }
+
+
                             if (field == DeclarationField.None)
                             {
                                 throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", headerRowNum + 1, auxColCount, cellText));

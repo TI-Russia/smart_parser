@@ -153,7 +153,12 @@ namespace Smart.Parser.Lib
                     currentPerson = relative;
                     currentPerson.RangeLow = row;
 
-                    RelationType relationType = DataHelper.ParseRelationType(nameOrRelativeType);
+                    RelationType relationType = DataHelper.ParseRelationType(nameOrRelativeType, false);
+                    if (relationType == RelationType.Error)
+                    {
+                        throw new SmartParserException(
+                            string.Format("Wrong relative name '{0}' at row {1} ", nameOrRelativeType, row));
+                    }
                     relative.RelationType = relationType;
 
 

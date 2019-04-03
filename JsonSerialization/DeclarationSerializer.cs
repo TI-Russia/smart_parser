@@ -89,12 +89,12 @@ namespace TI.Declarator.JsonSerialization
             var jIncomes = new JArray();
             jIncomes.Add(new JObject(
                 // TODO should income size really be an integer
-                new JProperty("size", (int?)servant.DeclaredYearlyIncome),
+                new JProperty("size", servant.DeclaredYearlyIncome),
                 new JProperty("relative", null)));
 
             foreach (var rel in servant.Relatives)
             {
-                var income = (int?)rel.DeclaredYearlyIncome;
+                var income = rel.DeclaredYearlyIncome;
                 if (income.HasValue)
                 {
                     jIncomes.Add(new JObject(
