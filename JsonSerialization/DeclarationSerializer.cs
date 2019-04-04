@@ -147,10 +147,14 @@ namespace TI.Declarator.JsonSerialization
         private static JProperty GetIncomes(PublicServant servant)
         {
             var jIncomes = new JArray();
-            jIncomes.Add(new JObject(
-                // TODO should income size really be an integer
-                new JProperty("size", servant.DeclaredYearlyIncome),
-                new JProperty("relative", null)));
+            
+            if (servant.DeclaredYearlyIncome.HasValue)
+            { 
+                jIncomes.Add(new JObject(
+                    // TODO should income size really be an integer
+                    new JProperty("size", servant.DeclaredYearlyIncome ?? 0m),
+                    new JProperty("relative", null)));
+            }
 
             foreach (var rel in servant.Relatives)
             {
