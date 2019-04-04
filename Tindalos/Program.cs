@@ -55,8 +55,8 @@ namespace Tindalos
         static string Test(string filename)
         {            
             Declaration res = Process(filename);
-            Console.WriteLine(DeclarationSerializer.Serialize(res));
             string output = DeclarationSerializer.Serialize(res);
+            //Console.WriteLine(output);
 
             string validationResult = ApiClient.ValidateParserOutput(output);
             string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(filename) + ".json";

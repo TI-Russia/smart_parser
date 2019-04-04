@@ -119,7 +119,7 @@ namespace TI.Declarator.JsonSerialization
         {
             JObject jRealEstate = new JObject();
 
-            // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
+            // "text" - "Полная строка наименования недвижимости, которая была в оригинальном документе (сырое значение)",
             //jRealEstate.Add(new JProperty("name", prop.Name));
             jRealEstate.Add(new JProperty("text", prop.Text));
             // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",

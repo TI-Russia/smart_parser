@@ -36,6 +36,7 @@ namespace TI.Declarator.ParserCommon
             this.Area = area;
             this.Name = name;
             this.OwnedShare = share;
+            this.Text = name;
         }
 
         /*
