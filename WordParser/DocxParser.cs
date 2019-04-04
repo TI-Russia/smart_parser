@@ -243,14 +243,17 @@ namespace TI.Declarator.WordParser
 
         private IEnumerable<RealEstateProperty> ParseOwnedProperty(Row r)
         {
+            IEnumerable<string> originalNames;
             IEnumerable<RealEstateType> propertyTypes;
             IEnumerable<OwnershipType> ownershipTypes;
-            IEnumerable<string> shares;
+            IEnumerable<string> shares;            
             string estateTypeStr = GetContents(r, DeclarationField.OwnedRealEstateType);
             if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-") return null;
 
+            // FIXME all this splitting/recombining data stuff should be replaced with simpler logic
             if (DeclarationProperties.ColumnOrdering.OwnershipTypeInSeparateField)
             {
+                originalNames = new List<string>() { estateTypeStr };
                 propertyTypes = ParseRealEstateTypes(estateTypeStr);
                 ownershipTypes = ParseOwnershipTypes(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType));
                 shares = ParseOwnershipShares(GetContents(r, DeclarationField.OwnedRealEstateOwnershipType), ownershipTypes);
@@ -259,9 +262,10 @@ namespace TI.Declarator.WordParser
             {
                 var combinedData = ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
 
-                propertyTypes = combinedData.Select(tup => tup.Item1);
-                ownershipTypes = combinedData.Select(tup => tup.Item2);
-                shares = combinedData.Select(tup => tup.Item3);
+                propertyTypes = combinedData.Select(info => info.Type);
+                ownershipTypes = combinedData.Select(info => info.OwnershipType);
+                shares = combinedData.Select(info => info.ShareText);
+                originalNames = combinedData.Select(info => info.OriginalName);
             }
 
             decimal? area;
@@ -274,7 +278,7 @@ namespace TI.Declarator.WordParser
 
             for (int i = 0; i < propertyTypes.Count(); i++)
             {
-                res.Add(new RealEstateProperty(ownershipTypes.ElementAt(i), propertyTypes.ElementAt(i), countries.ElementAtOrDefault(i), areas.ElementAt(i), estateTypeStr, shares.ElementAt(i)));
+                res.Add(new RealEstateProperty(ownershipTypes.ElementAt(i), propertyTypes.ElementAt(i), countries.ElementAtOrDefault(i), areas.ElementAt(i), originalNames.ElementAt(i), shares.ElementAt(i)));
             }
             return res;
         }
@@ -366,9 +370,17 @@ namespace TI.Declarator.WordParser
             return res;
         }
 
-        private IEnumerable<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
+        private class RealEstateInfo
         {
-            var res = new List<Tuple<RealEstateType, OwnershipType, string>>();
+            public string OriginalName { get; set; }
+            public RealEstateType Type { get; set; }
+            public OwnershipType OwnershipType { get; set; }
+            public string ShareText { get; set; }
+        }
+
+        private IEnumerable<RealEstateInfo> ParsePropertyAndOwnershipTypes(string strPropInfo)
+        {
+            var res = new List<RealEstateInfo>();
 
             int startingPos = 0;
             int rightParenPos = -1;
@@ -388,7 +400,13 @@ namespace TI.Declarator.WordParser
                     RealEstateType realEstateType = ParseRealEstateType(strPropType);
                     OwnershipType ownershipType = ParseOwnershipType(strOwnType);
                     string share = ParseOwnershipShare(strOwnType, ownershipType);
-                    res.Add(Tuple.Create(realEstateType, ownershipType, share));
+                    res.Add(new RealEstateInfo()
+                    {
+                        OriginalName = strPropType,
+                        Type = realEstateType,
+                        OwnershipType = ownershipType,
+                        ShareText = share
+                    });
 
                     startingPos = rightParenPos + 1;
                 }
