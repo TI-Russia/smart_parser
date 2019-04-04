@@ -63,6 +63,9 @@ namespace Smart.Parser.Lib
 
         static public bool IsRelativeInfo(string relationshipStr, string occupationStr)
         {
+            if (ParseRelationType(relationshipStr, false) != RelationType.Error)
+                return true;
+
             return (!relationshipStr.IsNullOrWhiteSpace()
                     && (!relationshipStr.Contains("фамилия"))
                     && (!relationshipStr.Contains("фио"))
@@ -106,6 +109,7 @@ namespace Smart.Parser.Lib
 
         public static decimal? ParseDeclaredIncome(string strIncome)
         {
+            Decimal result;
             if (String.IsNullOrWhiteSpace(strIncome) || strIncome.Trim() == "-" || strIncome.Trim() == "–")
                 return null;
             else
@@ -115,11 +119,11 @@ namespace Smart.Parser.Lib
                     int leftParenPos = strIncome.IndexOf("(");
                     if (leftParenPos == -1)
                     {
-                        return strIncome.ParseDecimalValue();
+                        result = strIncome.ParseDecimalValue();
                     }
                     else
                     {
-                        return strIncome.Substring(0, leftParenPos).ParseDecimalValue();
+                        result = strIncome.Substring(0, leftParenPos).ParseDecimalValue();
                     }
                 }
                 catch (Exception)
@@ -128,6 +132,9 @@ namespace Smart.Parser.Lib
                 }
 
             }
+
+            result = 1;
+            return Decimal.Round(result, 2);
 
         }
         public static string ParseDataSources(string src)
@@ -487,12 +494,16 @@ namespace Smart.Parser.Lib
 
         public static decimal? ParseArea(string strAreas)
         {
+            if (Regex.Match(strAreas, "[а-я]+", RegexOptions.IgnoreCase).Success)
+                return null;
+
             decimal? area = null;
             var match = Regex.Match(strAreas, "\\d+[,.]?(\\d+)?");
             if (match.Success)
             {
 
-                area = match.Value.ParseDecimalValue();
+                Decimal d = match.Value.ParseDecimalValue();
+                area = Decimal.Round(d, 2);
             }
             return area;
         }
@@ -544,7 +555,7 @@ namespace Smart.Parser.Lib
 
         private static readonly string[] CountrySeparators = new string[] { "\n" };
 
-
+        /*
         public static IEnumerable<Country> ParseCountries(string strCountries)
         {
             var res = new List<Country>();
@@ -567,7 +578,7 @@ namespace Smart.Parser.Lib
 
             return country;
         }
-
+        */
         public static Country TryParseCountry(string strCountry)
         {
             if (strCountry.Trim() == "" || strCountry.Trim() == "-")

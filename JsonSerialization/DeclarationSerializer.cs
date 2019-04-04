@@ -12,6 +12,57 @@ using Smart.Parser.Lib;
 
 namespace TI.Declarator.JsonSerialization
 {
+    public class DecimalJsonConverter : JsonConverter
+    {
+        public DecimalJsonConverter(params Type[] types)
+        {
+        }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            JToken t = JToken.FromObject(value);
+
+            if (t.Type != JTokenType.Object)
+            {
+                Decimal d = (Decimal)t;
+                //int count = BitConverter.GetBytes(decimal.GetBits(d)[3])[2];
+                string s = d.ToString();
+                writer.WriteValue(s);
+            }
+            else
+            {
+                JObject o = (JObject)t;
+                o.WriteTo(writer);
+            }
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException("Unnecessary because CanRead is false. The type will skip the converter.");
+        }
+
+        public override bool CanRead
+        {
+            get { return false; }
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(Decimal);
+        }
+    }
+
+    public class RealEstateValidator : JsonValidator
+    {
+        public override void Validate(JToken value, JsonValidatorContext context)
+        {
+        }
+        public override bool CanValidate(JSchema schema)
+        {
+            return true;
+        }
+    }
+
     public static class DeclarationSerializer
     {
         private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
@@ -19,10 +70,15 @@ namespace TI.Declarator.JsonSerialization
 
         private static readonly string SchemaSource = "import-schema-dicts.json";
         private static JSchema Schema;
+        private static JSchemaReaderSettings SchemaSettings;
 
         static DeclarationSerializer()
         {
-            Schema = JSchema.Parse(File.ReadAllText(SchemaSource));
+            SchemaSettings = new JSchemaReaderSettings
+            {
+                Validators = new List<JsonValidator> { new RealEstateValidator() }
+            };
+            Schema = JSchema.Parse(File.ReadAllText(SchemaSource), SchemaSettings);
         }
 
         public static string Serialize(Declaration declaration, bool validate = true)
@@ -38,7 +94,11 @@ namespace TI.Declarator.JsonSerialization
             {
                 throw new Exception("Could not validate JSON output: " + comments);
             }
-            return jServants.ToString();
+
+            string json = JsonConvert.SerializeObject(jServants, Formatting.Indented, new DecimalJsonConverter());
+
+            return json;
+            //return jServants.ToString();
         }
 
         private static JObject Serialize(PublicServant servant, DeclarationProperties declarationProperties)
@@ -127,7 +187,7 @@ namespace TI.Declarator.JsonSerialization
             // TODO should property area really be an integer
             jRealEstate.Add(new JProperty("square", prop.Area));
             // "country_raw"
-            jRealEstate.Add(new JProperty("country", GetCountry(prop)));
+            jRealEstate.Add(new JProperty("country", prop.CountryStr != null ? prop.CountryStr : GetCountry(prop)));
             jRealEstate.Add(new JProperty("region", null));
             // "own_type_raw"
             jRealEstate.Add(new JProperty("own_type", GetOwnershipType(prop)));
@@ -229,8 +289,29 @@ namespace TI.Declarator.JsonSerialization
         private static bool Validate(JArray jServants, out string message)
         {
             IList<string> comments = new List<string>();
-            bool res = jServants.IsValid(Schema, out comments);
-            message = string.Join(" ", comments);
+
+            StringWriter stringWriter = new StringWriter();
+            JsonTextWriter writer = new JsonTextWriter(stringWriter);
+            JSchemaValidatingWriter validatingWriter = new JSchemaValidatingWriter(writer);
+            validatingWriter.Schema = Schema;
+            JsonSerializer serializer = new JsonSerializer();
+
+            List<string> messages = new List<string>();
+            SchemaValidationEventHandler handler  = 
+                delegate (object sender, SchemaValidationEventArgs e) 
+                {
+                    if (e.Message.StartsWith("Value null is not defined in enum"))
+                        return;
+                    messages.Add(e.Message);
+                };
+            validatingWriter.ValidationEventHandler += handler;
+
+            serializer.Serialize(validatingWriter, jServants);
+
+
+            //bool res = jServants.IsValid(Schema, out comments);
+            bool res = messages.Count == 0;
+            message = string.Join(" ", messages);
             return res;
         }
 

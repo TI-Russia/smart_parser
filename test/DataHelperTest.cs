@@ -12,6 +12,15 @@ namespace test
     [TestClass]
     public class DataHelperTest
     {
+
+        [TestMethod]
+        public void TestParseArea()
+        {
+            string area = "доля 1/1876 от 802898980";
+            Decimal? result = DataHelper.ParseArea(area);
+
+            Assert.IsNull(result);
+        }
         [TestMethod]
         public void TestParsePropertyAndOwnershipTypes()
         {

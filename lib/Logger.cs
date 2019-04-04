@@ -123,8 +123,21 @@ namespace Parser.Lib
         {
             UnknownRealEstate.Add(info);
         }
+        static public void Error(int row, string info, params object[] par)
+        {
+            if (log == null) return;
+            string message = String.Format(info, par);
+            log.Error(string.Format("row {0}: {1}", row,  message));
+            Errors.Add(message);
+            if (Errors.Count() > MaxErrorCount)
+            {
+                throw new SmartParserException("Error count exceed " + MaxErrorCount.ToString());
+            }
+        }
+
         static public void Error(string info, params object[] par)
         {
+            if (log == null) return;
             string message = String.Format(info, par);
             log.Error(message);
             Errors.Add(message);
@@ -149,7 +162,7 @@ namespace Parser.Lib
             Errors.Add(message);
         }
 
-        public static List<string> Errors { get; } = new List<string>();
+        public static HashSet<string> Errors { get; } = new HashSet<string>();
         public static HashSet<string> UnknownRealEstate { get; } = new HashSet<string>();
     }
 }

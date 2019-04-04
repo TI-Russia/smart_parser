@@ -195,17 +195,17 @@ namespace Smart.Parser.Lib
                 return;
             }
 
-            if (prop.Country == 0)
+            if (String.IsNullOrEmpty(prop.CountryStr))
             {
-                Logger.Error("***ERROR row({0}) wrong country: {1}", CurrentRow, prop.country_raw);
+                Logger.Error(CurrentRow, "wrong country: {0}", prop.country_raw);
             }
             if (prop.OwnershipType == 0)
             {
-                Logger.Error("***ERROR row({0}) wrong ownership type: {1}", CurrentRow, prop.own_type_raw);
+                Logger.Error(CurrentRow, "wrong ownership type: {0}", prop.own_type_raw);
             }
             if (prop.PropertyType == 0)
             {
-                Logger.Error("***ERROR row({0}) wrong property type: {1}", CurrentRow, prop.type_raw);
+                Logger.Error(CurrentRow, "wrong property type: {0}", prop.type_raw);
             }
         }
 
@@ -303,7 +303,7 @@ namespace Smart.Parser.Lib
 
             return declaration;
         }
-
+        /*
         public Declaration Parse2()
         {
             List<PublicServant> servants = new List<PublicServant>();
@@ -389,7 +389,8 @@ namespace Smart.Parser.Lib
             };
 
         }
-
+        */
+        /*
         private PublicServant ParsePublicServantInfo(Row r)
         {
             string occ = r.GetContents(DeclarationField.Occupation);
@@ -403,6 +404,8 @@ namespace Smart.Parser.Lib
 
             return res;
         }
+        */
+        /*
         private Relative ParseRelativeInfo(Row r)
         {
             var res = new Relative()
@@ -414,6 +417,7 @@ namespace Smart.Parser.Lib
 
             return res;
         }
+        */
 
         private string GetVehicleString(Row r)
         {
@@ -430,7 +434,7 @@ namespace Smart.Parser.Lib
         }
 
 
-        //////////////////////////////////////////////////
+#if false
         private void FillPersonProperties(Row r, Person p)
         {
             // колонка "объекты, находящие в собственности"
@@ -468,6 +472,7 @@ namespace Smart.Parser.Lib
                 p.DataSources = DataHelper.ParseDataSources(r.GetContents(DeclarationField.DataSources));
             }
         }
+#endif
 
         public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
         {
@@ -482,6 +487,7 @@ namespace Smart.Parser.Lib
             var propertyType = DeclaratorApiPatterns.TryParseRealEstateType(statePropTypeStr);
             decimal? area = DataHelper.ParseArea(statePropAreaStr);
             Country country = DataHelper.TryParseCountry(statePropCountryStr);
+            string countryStr = DeclaratorApiPatterns.TryParseCountry(statePropCountryStr);
 
             stateProperty.Text = statePropTypeStr;
             stateProperty.PropertyType = propertyType;
@@ -489,6 +495,7 @@ namespace Smart.Parser.Lib
             stateProperty.Area = area;
             stateProperty.square_raw = statePropAreaStr;
             stateProperty.Country = country;
+            stateProperty.CountryStr = countryStr;
             stateProperty.country_raw = statePropCountryStr;
             stateProperty.OwnershipType = OwnershipType.InUse;
 
@@ -509,7 +516,8 @@ namespace Smart.Parser.Lib
             realEstateProperty.Area = DataHelper.ParseArea(areaStr);
             realEstateProperty.square_raw = areaStr;
 
-            realEstateProperty.Country = DataHelper.TryParseCountry(countryStr);
+            //realEstateProperty.Country = DataHelper.TryParseCountry(countryStr);
+            realEstateProperty.CountryStr = DeclaratorApiPatterns.TryParseCountry(countryStr);//. DataHelper.TryParseCountry(countryStr);
             realEstateProperty.country_raw = countryStr;
 
             RealEstateType realEstateType = RealEstateType.Other;
@@ -553,7 +561,7 @@ namespace Smart.Parser.Lib
             realEstateProperty.Text = estateTypeStr;
             return realEstateProperty;
         }
-
+        /*
         public List<RealEstateProperty> ParseOwnedProperty(IAdapter adapter, int firstRow, int lastRow)
         {
             for (int row = firstRow; row < lastRow; row++)
@@ -591,7 +599,7 @@ namespace Smart.Parser.Lib
 
             return null;
         }
-
+        */
         // парсинг недвижимости, находящейся в собственности, вычисляется share_type
 
         // используются колонки OwnedRealEstateType
@@ -600,6 +608,8 @@ namespace Smart.Parser.Lib
         // OwnedRealEstateArea
         // OwnedRealEstateCountry
         // 
+#if false
+
         private List<RealEstateProperty> ParseOwnedProperty(Row r)
         {
             List<RealEstateType> propertyTypes;
@@ -649,7 +659,6 @@ namespace Smart.Parser.Lib
             }
             return res;
         }
-#if false
         private IEnumerable<RealEstateProperty> ParseStateProperty(Row r)
         {
             IEnumerable<RealEstateType> propertyTypes;
