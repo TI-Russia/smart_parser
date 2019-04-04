@@ -83,6 +83,15 @@
                 "Представитель Губернатора Санкт-Петербурга в Законодательном Собрании Санкт-Петербурга"
               ]
             }
+          },
+          "department": {
+            "$id": "/properties/party_raw",
+            "type": ["string", "null"],
+            "title": "Департамент в органе власти",
+            "default": "",
+            "examples": [
+              "Отдел по борьбе с коррупцией"
+            ]
           }
         },
         "required": [
@@ -213,6 +222,16 @@
               "default": 0,
               "examples": [
                 1474895
+              ]
+            },
+            "comment": {
+              "$id": "/properties/incomes/items/properties/comment",
+              "type": ["string", "null"],
+              "title": "Комментарий к доходу (часто указывается в скобках около размера дохода)",
+              "default": null,
+              "examples": [
+                "Доход от продажи квартиры",
+                "продажа акций на сумму 123556 руб."
               ]
             },
             "relative": {

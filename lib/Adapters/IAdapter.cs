@@ -83,7 +83,7 @@ namespace Smart.Parser.Adapters
         abstract public Cell GetCell(int row, int column);
         public virtual List<Cell> GetCells(int row)
         {
-            return null; 
+            throw new NotImplementedException();
         }
 
         public Rows Rows

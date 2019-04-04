@@ -24,6 +24,10 @@ namespace TI.Declarator.ParserCommon
 
         public void Add(DeclarationField field, int order)
         {
+            if (ColumnOrder.ContainsKey(field))
+            {
+                return;
+            }
             ColumnOrder.Add(field, order);
         }
 

@@ -4,7 +4,9 @@ namespace TI.Declarator.ParserCommon
 {
     public enum Country
     {
-        Undefined = 0,
+        Error = 0,
+        None = -1,
+        Undefined = - 1, 
         Belarus = 1,
         Georgia = 2,
         Kazakhstan = 3,

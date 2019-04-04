@@ -2,9 +2,22 @@
 
 namespace TI.Declarator.ParserCommon
 {
+    /*
+     Объекты недвижимости, находящиеся в пользовании 
+     */
     public static class HeaderHelpers
     {
         public static DeclarationField GetField(string str)
+        {
+            DeclarationField field = TryGetField(str);
+            if (field == DeclarationField.None)
+            {
+                throw new Exception($"Could not determine column type for header {str}.");
+            }
+            return field;
+        }
+
+        public static DeclarationField TryGetField(string str)
         {
             if (str.IsNumber()) { return DeclarationField.Number; }
             if (str.IsNameOrRelativeType()) { return DeclarationField.NameOrRelativeType; }
@@ -28,7 +41,8 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
-            throw new Exception($"Could not determine column type for header {str}.");
+            return DeclarationField.None;
+            //throw new Exception($"Could not determine column type for header {str}.");
         }
 
         private static string NormalizeString(string str)
@@ -101,7 +115,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateOwnershipType(this string str)
         {
-            string strLower = str.ToLower();
+            string strLower = str.Replace("  ", " ").ToLower();
             return (!strLower.Contains("пользовании") && strLower.Contains("вид собственности"));
         }
 

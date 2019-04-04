@@ -153,7 +153,12 @@ namespace Smart.Parser.Lib
                     currentPerson = relative;
                     currentPerson.RangeLow = row;
 
-                    RelationType relationType = DataHelper.ParseRelationType(nameOrRelativeType);
+                    RelationType relationType = DataHelper.ParseRelationType(nameOrRelativeType, false);
+                    if (relationType == RelationType.Error)
+                    {
+                        throw new SmartParserException(
+                            string.Format("Wrong relative name '{0}' at row {1} ", nameOrRelativeType, row));
+                    }
                     relative.RelationType = relationType;
 
 
@@ -163,7 +168,7 @@ namespace Smart.Parser.Lib
                 {
                     // error
                     throw new SmartParserException(
-                        string.Format("Wrong string {0} at row {1}", nameOrRelativeType, row));
+                        string.Format("Wrong nameOrRelativeType {0} (occupation {2}) at row {1}", nameOrRelativeType, row, occupationStr));
                 }
                 if (merged_col_count > 1)
                 {
@@ -466,7 +471,8 @@ namespace Smart.Parser.Lib
 
         public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
         {
-            if (string.IsNullOrWhiteSpace(statePropTypeStr) || statePropTypeStr.Trim() == "-" || statePropTypeStr.Trim() == "-\n-")
+            if (string.IsNullOrWhiteSpace(statePropTypeStr) || 
+                statePropTypeStr.Trim() == "-" || statePropTypeStr.Trim() == "-\n-" || statePropTypeStr.Trim() == "не имеет")
             {
                 return null;
             }
@@ -477,6 +483,7 @@ namespace Smart.Parser.Lib
             decimal? area = DataHelper.ParseArea(statePropAreaStr);
             Country country = DataHelper.TryParseCountry(statePropCountryStr);
 
+            stateProperty.Text = statePropTypeStr;
             stateProperty.PropertyType = propertyType;
             stateProperty.type_raw = statePropTypeStr;
             stateProperty.Area = area;
@@ -491,7 +498,8 @@ namespace Smart.Parser.Lib
         // 
         public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
         {
-            if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
+            if (String.IsNullOrWhiteSpace(estateTypeStr) || 
+                estateTypeStr.Trim() == "-" || estateTypeStr.Trim() == "не имеет")
             {
                 return null;
             }
@@ -542,6 +550,7 @@ namespace Smart.Parser.Lib
 
             }
 
+            realEstateProperty.Text = estateTypeStr;
             return realEstateProperty;
         }
 
