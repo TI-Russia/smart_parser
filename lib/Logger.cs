@@ -41,12 +41,19 @@ namespace Parser.Lib
             log = mainLog;
         }
 
+        public static void SetupForTests(string mainLogName, string auxLogName)
+        {
+            mainLog = LogManager.GetLogger(mainLogName);
+            secondLog = LogManager.GetLogger("auxLogName");
+            log = mainLog;
+        }
+
         public static void SetSecondLogFileName(string logFileName)
         {
             SetLogFileName("Second", logFileName);
         }
 
-        private static void SetLogFileName(string logger, string logFileName)
+        public static void SetLogFileName(string logger, string logFileName)
         {
             bool found = false;
             Errors.Clear();

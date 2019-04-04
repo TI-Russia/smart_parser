@@ -104,10 +104,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
         public void TestExcelParser()
         {
+            SetupLog4Net();
+
             int nFailedComparisons = 0;
             foreach (var filename in Directory.GetFiles(ExcelFilesDirectory, "*.xls?"))
             {
@@ -121,6 +124,14 @@ namespace RegressionTesting
             }
 
             Assert.AreEqual(0, nFailedComparisons, $"xls/xlsx parser test: {nFailedComparisons} output files are not valid. Comparison log can be found in {ExcelLogFilePath}");
+        }
+
+        private static void SetupLog4Net()
+        {
+            log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
+            Parser.Lib.Logger.SetLogFileName("Main", "excel-parser-main.log");
+            Parser.Lib.Logger.SetSecondLogFileName("excel-parser-aux.log");
+            Parser.Lib.Logger.SetupForTests("Main", "Second");
         }
 
         private static bool TestValidity(string expectedFile, string actualFile, string logFile)
