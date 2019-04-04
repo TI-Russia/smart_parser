@@ -79,6 +79,7 @@ namespace RegressionTesting
         public void TestWordParser()
         {
             int nFailedComparisons = 0;
+            int nComparisons = 0;
             foreach (var filename in Directory.GetFiles(WordFilesDirectory, "*.doc?"))
             {
                 Declaration res = Tindalos.Tindalos.Process(filename);
@@ -87,11 +88,12 @@ namespace RegressionTesting
 
                 string expectedFile = Path.Combine(WordFilesDirectory, outputFileName);
                 bool isValid = TestValidity(expectedFile, outputFileName, WordLogFile);
-
+               
                 if (!isValid) { nFailedComparisons++; }
+                nComparisons++;
             }
 
-            Assert.AreEqual(0, nFailedComparisons, $"doc/docx parser test: {nFailedComparisons} output files are not valid. Comparison log can be found in {WordLogFilePath}");
+            Assert.AreEqual(0, nFailedComparisons, $"doc/docx parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {WordLogFilePath}");
         }
 
         private const string ExcelFilesDirectory = @"Excel";
@@ -112,6 +114,7 @@ namespace RegressionTesting
             SetupLog4Net();
 
             int nFailedComparisons = 0;
+            int nComparisons = 0;
             foreach (var filename in Directory.GetFiles(ExcelFilesDirectory, "*.xls?"))
             {
                 var workingCopy = Path.GetFileName(filename);
@@ -123,9 +126,10 @@ namespace RegressionTesting
                 bool isValid = TestValidity(expectedFile, outputFileName, ExcelLogFile);
 
                 if (!isValid) { nFailedComparisons++; }
+                nComparisons++;
             }
 
-            Assert.AreEqual(0, nFailedComparisons, $"xls/xlsx parser test: {nFailedComparisons} output files are not valid. Comparison log can be found in {ExcelLogFilePath}");
+            Assert.AreEqual(0, nFailedComparisons, $"xls/xlsx parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {ExcelLogFilePath}");
         }
 
         private static void SetupLog4Net()
