@@ -88,6 +88,63 @@ namespace Smart.Parser.Lib
         static void BuildCustomDicts()
         {
             realestatetypeDict["совместная"] = "Совместная собственность";
+            string[] countries =
+            {
+                "абхазия",
+                "великобритания",
+                "туркменистан",
+                "белоруссия",
+                "армения",
+                "куба",
+                "корея",
+                "дания",
+                "бельгия",
+                "вьетнам",
+                "китай",
+                "аргентина",
+                "япония",
+                "черногория",
+                "германия",
+                "швеция",
+                "пакистан",
+                "швейцария",
+                "таджикистан",
+                "испания",
+                "бразилия",
+                "таиланд",
+                "турция",
+                "узбекистан",
+                "киргизия",
+                "беларусь",
+                "никарагуа",
+                "малайзия",
+                "украина",
+                "сша",
+                "австрия",
+                "чехия",
+                "латвия",
+                "индия",
+                "канада",
+                "франция",
+                "сербия",
+                "марокко",
+                "нидерланды",
+                "норвегия",
+                "литва",
+                "финляндия",
+                "венгрия",
+                "казахстан",
+                "польша",
+                "египет",
+                "словакия",
+                "болгария",
+                "иран"
+            };
+            foreach (var c in countries)
+                countryDict[c] = c;
+
+            countryDict["россия"] = "россия";
+            countryDict["республика болгария"] = "болгария";
         }
 
         static string GetResourceText()
@@ -173,7 +230,6 @@ namespace Smart.Parser.Lib
         static Dictionary<OwnershipType, string> OwnershipRevMap = ReverseDict(OwnershipTypeMap);
 
 
-
         public static RealEstateType TryParseRealEstateType(string text)
         {
             string normalized = NormalizeText(text);
@@ -242,9 +298,23 @@ namespace Smart.Parser.Lib
             }
         }
 
+        public static string TryParseCountry(string country)
+        {
+            string normalized = NormalizeText(country);
+
+            string value = null;
+            countryDict.TryGetValue(normalized, out value);
+            if (value != null)
+            { 
+                value =  char.ToUpper(value[0]) + value.Substring(1);
+            }
+
+            return value; 
+        }
+
         public static string ParseCountry(string text)
         {
-            string value = GetValue(text, "country");
+            string value = TryParseCountry(text);
             if (value.IsNullOrWhiteSpace())
             {
                 throw new UnknownCountryException(text);

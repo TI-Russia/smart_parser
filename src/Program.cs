@@ -182,12 +182,12 @@ namespace Smart.Parser
             }
             catch (SmartParserException e)
             {
-                Logger.Info("Parsing Exception " + e.ToString());
+                Logger.Error("Parsing Exception " + e.ToString());
             }
             catch (Exception e)
             {
-                Logger.Info("Parsing Exception " + e.ToString());
-                Logger.Info("Stack: " + e.StackTrace);
+                Logger.Error("Unknown Parsing Exception " + e.ToString());
+                //Logger.Info("Stack: " + e.StackTrace);
             }
             finally
             {
@@ -353,26 +353,32 @@ namespace Smart.Parser
                 catch (SmartParserException e)
                 {
                     caught = true;
-                    Logger.Info("Parsing Exception " + e.ToString());
-                    parse_results["too_many_errors"].Add(file);
+                    Logger.Error("Parsing Exception " + e.ToString());
+                    parse_results["exception"].Add(file);
                 }
                 catch (Exception e)
                 {
                     caught = true;
-                    Logger.Info("Parsing Exception " + e.ToString());
-                    Logger.Info("Stack: " + e.StackTrace);
+                    Logger.Error("Parsing Exception " + e.ToString());
+                    //Logger.Info("Stack: " + e.StackTrace);
                     parse_results["exception"].Add(file);
                 }
                 finally
                 {
                     Logger.SetOutMain();
                 }
+                if (caught)
+                {
+                    Logger.Info("Result: Exception");
+                }
                 if (!caught && Logger.Errors.Count() > 0)
                 {
+                    Logger.Info("Result: error");
                     parse_results["error"].Add(file);
                 }
                 if (!caught && Logger.Errors.Count() == 0)
                 {
+                    Logger.Info("Result: OK");
                     parse_results["ok"].Add(file);
                 }
 
@@ -468,7 +474,7 @@ namespace Smart.Parser
 
             Declaration declaration = parser.Parse();
 
-            string output = DeclarationSerializer.Serialize(declaration, false/*true*/);
+            string output = DeclarationSerializer.Serialize(declaration, true);
 
             Logger.Info("Output size: " + output.Length);
 

@@ -13,6 +13,7 @@ namespace TI.Declarator.ParserCommon
         public RealEstateType PropertyType { set; get; }
 
         public Country Country { set; get; }
+        public string CountryStr { set; get; }
         public decimal? Area { set; get; }
         public string OwnedShare { set; get; }
 
