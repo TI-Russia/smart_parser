@@ -114,7 +114,9 @@ namespace RegressionTesting
             int nFailedComparisons = 0;
             foreach (var filename in Directory.GetFiles(ExcelFilesDirectory, "*.xls?"))
             {
-                Smart.Parser.Program.ParseOneFile(filename);
+                var workingCopy = Path.GetFileName(filename);
+                File.Copy(filename, workingCopy);
+                Smart.Parser.Program.ParseOneFile(workingCopy);
                 string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
 
                 string expectedFile = Path.Combine(ExcelFilesDirectory, outputFileName);
