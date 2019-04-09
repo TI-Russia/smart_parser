@@ -151,15 +151,14 @@ namespace TI.Declarator.JsonSerialization
             if (servant.DeclaredYearlyIncome.HasValue)
             { 
                 jIncomes.Add(new JObject(
-                    // TODO should income size really be an integer
-                    new JProperty("size", servant.DeclaredYearlyIncome ?? 0m),
+                    new JProperty("size", servant.DeclaredYearlyIncome),
                     new JProperty("relative", null)));
             }
 
             foreach (var rel in servant.Relatives)
             {
                 var income = rel.DeclaredYearlyIncome;
-                if (income.HasValue)
+                if (income.HasValue && income > 0.0m)
                 {
                     jIncomes.Add(new JObject(
                     new JProperty("size", income),
@@ -188,7 +187,6 @@ namespace TI.Declarator.JsonSerialization
             jRealEstate.Add(new JProperty("text", prop.Text));
             // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
             jRealEstate.Add(new JProperty("type", GetPropertyType(prop.PropertyType)));
-            // TODO should property area really be an integer
             jRealEstate.Add(new JProperty("square", prop.Area));
             // "country_raw"
             jRealEstate.Add(new JProperty("country", prop.CountryStr != null ? prop.CountryStr : GetCountry(prop)));

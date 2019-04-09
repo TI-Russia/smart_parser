@@ -142,7 +142,7 @@ namespace RegressionTesting
 
         private static bool TestValidity(string expectedFile, string actualFile, string logFile)
         {
-            Console.WriteLine($"Running regression test on {actualFile}.");
+            Log(logFile, ($"Running regression test on {actualFile}."));
 
             if (!File.Exists(expectedFile))
             {

@@ -75,7 +75,6 @@
     <None Include="regression\A - min_res_2011_Sotrudniki_ministerstva.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="regression\C - min_health_2015_Sotrudniki_ministerstva.json" />
     <None Include="testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
