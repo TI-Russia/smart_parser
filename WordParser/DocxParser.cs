@@ -268,7 +268,6 @@ namespace TI.Declarator.WordParser
                 originalNames = combinedData.Select(info => info.OriginalName);
             }
 
-            decimal? area;
             string areaStr = GetContents(r, DeclarationField.OwnedRealEstateArea).CleanWhitespace();
             IEnumerable<decimal?> areas = ParseAreas(areaStr);
             
