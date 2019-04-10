@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TI.Declarator.ParserCommon;
+using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 
 namespace RegressionTesting
@@ -123,6 +124,7 @@ namespace RegressionTesting
                 string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
 
                 string expectedFile = Path.Combine(ExcelFilesDirectory, outputFileName);
+
                 bool isValid = TestValidity(expectedFile, outputFileName, ExcelLogFile);
 
                 if (!isValid) { nFailedComparisons++; }
@@ -147,6 +149,11 @@ namespace RegressionTesting
             if (!File.Exists(expectedFile))
             {
                 throw new FileNotFoundException($"Could not find expected output file {expectedFile}");
+            }
+
+            if (!IsExpectedFileValid(expectedFile, logFile))
+            {
+                return false;
             }
 
             if (!File.Exists(actualFile))
@@ -186,6 +193,26 @@ namespace RegressionTesting
 
                 return false;
             }
+        }
+
+        private static bool IsExpectedFileValid(string expectedFile, string logFile)
+        {
+            string expectedOutput = File.ReadAllText(expectedFile);
+            string validationResult = ApiClient.ValidateParserOutput(expectedOutput);
+
+            if (validationResult != "[]")
+            {
+                string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(expectedFile) + ".json";
+                File.WriteAllText(errorsFileName, validationResult);
+                Log(logFile, $"Expected file {expectedFile} is no longer valid." +
+                    $" Please ensure it conforms to the latest schema and validation requirements.");
+                Log(logFile, $"Validation errors are listed in {Path.GetFullPath(errorsFileName)}");
+                //var rep = MiscSerializer.DeserializeValidationReport(validationResult);
+
+                return false;
+            }
+
+            return true;
         }
 
         private static void Log(string logFileName, string contents)

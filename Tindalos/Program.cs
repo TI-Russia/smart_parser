@@ -30,7 +30,8 @@ namespace Tindalos
         static void Main(string[] args)
         {
             //Scan(args);
-            Test(@"regression\2016_Sotrudniki_ministerstva.docx");
+            //Test(@"regression\2016_Sotrudniki_ministerstva.docx");
+            Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
             //Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
 
             //var ue = new UnknownEntry
@@ -53,7 +54,6 @@ namespace Tindalos
         {            
             Declaration res = Process(filename);
             string output = DeclarationSerializer.Serialize(res);
-            //Console.WriteLine(output);
 
             string validationResult = ApiClient.ValidateParserOutput(output);
             string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(filename) + ".json";

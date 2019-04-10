@@ -78,7 +78,7 @@ namespace TI.Declarator.WordParser
                         colCount++;
                     }
                 }
-                // current cell spans several columns, so the header probably occupies two rows instead of just one
+                // current cell spans several columns, so the header PROBABLY occupies two rows instead of just one
                 // with the second row reserved for subheaders
                 else
                 {

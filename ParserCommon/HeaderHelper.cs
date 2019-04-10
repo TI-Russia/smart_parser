@@ -22,12 +22,12 @@ namespace TI.Declarator.ParserCommon
             if (str.IsNumber()) { return DeclarationField.Number; }
             if (str.IsNameOrRelativeType()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
-            /*
-            if (str.IsRealEstateType()) { return DeclarationField.RealEstateType; }
-            if (str.IsRealEstateArea()) { return DeclarationField.RealEstateArea; }
-            if (str.IsRealEstateCountry()) { return DeclarationField.RealEstateCountry; }
-            if (str.IsRealEstateOwnershipType()) { return DeclarationField.RealEstateOwnershipType; }
-            */
+
+            if (str.IsMixedRealEstateType()) { return DeclarationField.MixedRealEstateType; }
+            if (str.IsMixedRealEstateArea()) { return DeclarationField.MixedRealEstateArea; }
+            if (str.IsMixedRealEstateCountry()) { return DeclarationField.MixedRealEstateCountry; }
+            if (str.IsMixedRealEstateOwnershipType()) { return DeclarationField.MixedRealEstateOwnershipType; }
+
             if (str.IsOwnedRealEstateType()) { return DeclarationField.OwnedRealEstateType; }
             if (str.IsOwnedRealEstateOwnershipType()) { return DeclarationField.OwnedRealEstateOwnershipType; }
             if (str.IsOwnedRealEstateArea()) { return DeclarationField.OwnedRealEstateArea; }
@@ -70,7 +70,7 @@ namespace TI.Declarator.ParserCommon
                     strLower.Contains("должностей"));
         }
 
-        private static bool IsRealEstateType(this string str)
+        private static bool IsMixedRealEstateType(this string str)
         {
             string strLower = str.ToLower();
             return (strLower.Contains("собственности") &&
@@ -79,7 +79,7 @@ namespace TI.Declarator.ParserCommon
                      strLower.Contains("вид и наименование имущества")));
         }
 
-        private static bool IsRealEstateArea(this string str)
+        private static bool IsMixedRealEstateArea(this string str)
         {
             string strLower = str.ToLower();
             return (strLower.Contains("собственности") &&
@@ -87,7 +87,7 @@ namespace TI.Declarator.ParserCommon
                     strLower.Contains("площадь"));
         }
 
-        private static bool IsRealEstateCountry(this string str)
+        private static bool IsMixedRealEstateCountry(this string str)
         {
             string strLower = str.ToLower();
             return (strLower.Contains("собственности") &&
@@ -95,7 +95,7 @@ namespace TI.Declarator.ParserCommon
                     strLower.Contains("страна"));
         }
 
-        private static bool IsRealEstateOwnershipType(this string str)
+        private static bool IsMixedRealEstateOwnershipType(this string str)
         {
             string strLower = str.ToLower();
             return (strLower.Contains("праве собственности") &&
