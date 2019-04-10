@@ -10,7 +10,7 @@ namespace TI.Declarator.ParserCommon
         private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
 
         public List<RealEstateProperty> RealEstateProperties = new List<RealEstateProperty>();
-        public List<Vechicle> Vehicles = new List<Vechicle>();
+        public List<Vehicle> Vehicles = new List<Vehicle>();
 
         public decimal? DeclaredYearlyIncome;
 

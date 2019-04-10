@@ -12,6 +12,19 @@ namespace test
     [TestClass]
     public class DataHelperTest
     {
+        [TestMethod]
+        public void TestVechicle()
+        {
+            string vechicleString = "автомобили легковые: Toyota Camry, Mercedes Benz E 250";
+            bool result = DataHelper.ParseVehicle(vechicleString, null);
+            Assert.IsTrue(result);
+            List<Vehicle> vechicles = new List<Vehicle>();
+            result = DataHelper.ParseVehicle(vechicleString, vechicles);
+
+            Assert.AreEqual(vechicles.Count, 2);
+            Assert.AreEqual(vechicles[0].Text, "Toyota Camry");
+            Assert.AreEqual(vechicles[1].Text, "Mercedes Benz E 250");
+        }
 
         [TestMethod]
         public void TestParseArea()
@@ -82,9 +95,19 @@ namespace test
             Assert.AreEqual(tuple7.Item1, RealEstateType.Apartment);
             Assert.AreEqual(tuple7.Item2, OwnershipType.Shared);
             Assert.AreEqual(tuple7.Item3, "2/3");
-
         }
 
+        [TestMethod]
+        public void TestParsePropertyAndOwnershipTypes2()
+        {
+            string test8 = "жилая блок-секция (общая долевая, 3/4)";
+            var tuple8 = DataHelper.ParseCombinedRealEstateColumn(test8);
+            Assert.AreEqual(tuple8.Item3, "3/4");
+
+            string test9 = "квартира (общая долевая, 1/4)";
+            var tuple9 = DataHelper.ParseCombinedRealEstateColumn(test9);
+            Assert.AreEqual(tuple9.Item3, "1/4");
+        }
 
 
         [TestMethod]

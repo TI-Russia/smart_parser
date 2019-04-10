@@ -7,18 +7,22 @@ using System.Xml.Linq;
 
 namespace TI.Declarator.ParserCommon
 {
-    public class Vechicle
+    public class Vehicle
     {
-        public Vechicle(string text)
+        public Vehicle(string text)
         {
             Text = text;
         }
 
         public string Text;
 
-        public static implicit operator Vechicle(string v)
+        public static implicit operator Vehicle(string v)
         {
-            return new Vechicle(v);
+            return new Vehicle(v);
+        }
+        public static implicit operator string(Vehicle v)
+        {
+            return v.Text;
         }
     }
 }

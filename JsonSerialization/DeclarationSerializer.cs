@@ -83,6 +83,18 @@ namespace TI.Declarator.JsonSerialization
 
         public static string Serialize(Declaration declaration, bool validate = true)
         {
+            string comments = null;
+            string jsonString = Serialize(declaration, ref comments);
+            if (validate && comments != null)
+            {
+                throw new Exception("Could not validate JSON output: " + comments);
+            }
+
+            return jsonString;
+        }
+
+        public static string Serialize(Declaration declaration, ref string comment)
+        {
             var jServants = new JArray();
             foreach (PublicServant serv in declaration.Declarants)
             {
@@ -90,10 +102,7 @@ namespace TI.Declarator.JsonSerialization
             }
 
             string comments;
-            if (validate && !Validate(jServants, out comments))
-            {
-                throw new Exception("Could not validate JSON output: " + comments);
-            }
+            Validate(jServants, out comments);
 
             string json = JsonConvert.SerializeObject(jServants, Formatting.Indented, new DecimalJsonConverter());
 
@@ -416,7 +425,7 @@ namespace TI.Declarator.JsonSerialization
         private static decimal? GetOwnershipShare(RealEstateProperty prop)
         {
             string ownedShare = prop.OwnedShare;
-            if (prop.OwnershipType == OwnershipType.Shared)
+            //if (prop.OwnershipType == OwnershipType.Shared)
             {
                 if (ownedShare.IsNullOrWhiteSpace())
                 {
@@ -454,10 +463,10 @@ namespace TI.Declarator.JsonSerialization
                     return value * factor;
                 }
             }
-            else
-            {
-                return null;
-            }
+            //else
+            //{
+            //    return null;
+            //}
         }
     }
 }

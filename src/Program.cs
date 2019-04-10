@@ -474,7 +474,8 @@ namespace Smart.Parser
 
             Declaration declaration = parser.Parse();
 
-            string output = DeclarationSerializer.Serialize(declaration, true);
+            string schema_errors = null;
+            string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
 
             Logger.Info("Output size: " + output.Length);
 

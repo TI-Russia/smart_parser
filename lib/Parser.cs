@@ -255,6 +255,7 @@ namespace Smart.Parser.Lib
                         string countryStr = r.GetContents(DeclarationField.OwnedRealEstateCountry);
 
                         RealEstateProperty ownedProperty = null;
+
                         try
                         {
                             ownedProperty = ParseOwnedProperty(estateTypeStr, ownTypeStr, areaStr, countryStr);
@@ -292,132 +293,16 @@ namespace Smart.Parser.Lib
                         }
 
                         // Парсим транспортные средства
-                        string vehicle = GetVehicleString(Adapter.GetRow(row)); // r.GetContents(DeclarationField.Vehicle);
-                        if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-")
-                        {
-                            person.Vehicles.Add(vehicle);
-                        }
+                        string vehicleStr = GetVehicleString(Adapter.GetRow(row)); // r.GetContents(DeclarationField.Vehicle);
+                        List<Vehicle> vehicles = new List<Vehicle>();
+                        DataHelper.ParseVehicle(vehicleStr, vehicles);
+                        person.Vehicles.AddRange(vehicles);
                     }
                 }
             }
 
             return declaration;
         }
-        /*
-        public Declaration Parse2()
-        {
-            List<PublicServant> servants = new List<PublicServant>();
-            PublicServant currentServant = null;
-            TI.Declarator.ParserCommon.Person currentPerson = null;
-            int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
-
-            for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
-            {
-                string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
-                string occupationStr = "";
-                if (Adapter.HasDeclarationField(DeclarationField.Occupation))
-                {
-                    occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
-                }
-
-                string declaredYearlyIncomeStr = Adapter.GetDeclarationField(row, DeclarationField.DeclaredYearlyIncome).Text;
-                decimal? declaredYearlyIncome = DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
-
-                if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
-                {
-                    Logger.Info("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
-                    PublicServant pServ = new PublicServant()
-                    {
-                        Name = DataHelper.NormalizeName(nameOrRelativeType),
-                        Occupation = occupationStr
-                    };
-
-                    currentServant = pServ;
-                    currentPerson = pServ;
-                    servants.Add(pServ);
-                    currentPerson.DeclaredYearlyIncome = declaredYearlyIncome;
-                }
-                else if (DataHelper.IsRelativeInfo(nameOrRelativeType, occupationStr))
-                {
-                    RelationType relationType = DataHelper.ParseRelationType(nameOrRelativeType, false);
-
-                    if (relationType == RelationType.Error)
-                    {
-                        Logger.Error("***ERROR row({0}) unknown relation type {1}", row, nameOrRelativeType);
-                        continue;
-                    }
-                    Relative pRel = new Relative()
-                    {
-                        RelationType = relationType
-                    };
-
-
-                    Logger.Info("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
-
-                    currentServant.Relatives.Add(pRel);
-                    currentPerson = pRel;
-                    currentPerson.DeclaredYearlyIncome = declaredYearlyIncome;
-                }
-
-                if (currentPerson == null)
-                {
-                    Logger.Error("***ERROR No current person({0})", row);
-                    continue;
-                }
-
-                try
-                {
-                    FillPersonProperties(Adapter.Rows[row], currentPerson);
-                }
-                catch (UnknownRealEstateTypeException e)
-                {
-                    Logger.UnknownRealEstateType(e.StrType);
-                    continue;
-                }
-                catch (Exception e)
-                {
-                    Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                    continue;
-                }
-
-            }
-
-            return new Declaration()
-            {
-                Declarants = servants,
-                Properties = new DeclarationProperties() { Title = "title", Year = 2010, MinistryName = "Ministry" }
-            };
-
-        }
-        */
-        /*
-        private PublicServant ParsePublicServantInfo(Row r)
-        {
-            string occ = r.GetContents(DeclarationField.Occupation);
-            var res = new PublicServant()
-            {
-                Name = r.GetContents(DeclarationField.NameOrRelativeType),
-                Occupation = occ
-            };
-
-            FillPersonProperties(r, res);
-
-            return res;
-        }
-        */
-        /*
-        private Relative ParseRelativeInfo(Row r)
-        {
-            var res = new Relative()
-            {
-                RelationType = DataHelper.ParseRelationType(r.GetContents(DeclarationField.NameOrRelativeType))
-            };
-
-            FillPersonProperties(r, res);
-
-            return res;
-        }
-        */
 
         private string GetVehicleString(Row r)
         {
@@ -433,51 +318,14 @@ namespace Smart.Parser.Lib
             return Regex.Replace(vehicle, @"\s{2,}", " ");
         }
 
-
-#if false
-        private void FillPersonProperties(Row r, Person p)
+        static public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
         {
-            // колонка "объекты, находящие в собственности"
-            var ownedProperty = ParseOwnedProperty(r);
-            if (ownedProperty != null && ownedProperty.Count() > 0)
-            {
-                p.RealEstateProperties.AddRange(ownedProperty);
-            }
-
-            string statePropTypeStr = r.GetContents(DeclarationField.StatePropertyType);
-            if (!string.IsNullOrWhiteSpace(statePropTypeStr) && statePropTypeStr.Trim() != "-" && statePropTypeStr.Trim() != "-\n-")
-            {
-                string statePropAreaStr = r.GetContents(DeclarationField.StatePropertyArea);
-                string statePropCountryStr = r.GetContents(DeclarationField.StatePropertyCountry);
-
-                var propertyType = DeclaratorApiPatterns.ParseRealEstateType(statePropTypeStr);
-                decimal? area = DataHelper.ParseArea(statePropAreaStr);
-                Country country = DataHelper.ParseCountry(statePropCountryStr);
-
-                RealEstateProperty stateProperty =
-                    new RealEstateProperty(OwnershipType.InUse/*.NotAnOwner*/, propertyType, country, area, statePropTypeStr);
-
-                p.RealEstateProperties.Add(stateProperty);
-            }
-
-            // автомобиль
-            string vehicle = GetVehicleString(r); // r.GetContents(DeclarationField.Vehicle);
-            if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-")
-            {
-                p.Vehicles.Add(vehicle);
-            }
-
-            if (r.ColumnOrdering[DeclarationField.DataSources] != null)
-            {
-                p.DataSources = DataHelper.ParseDataSources(r.GetContents(DeclarationField.DataSources));
-            }
-        }
-#endif
-
-        public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
-        {
+            statePropTypeStr = statePropTypeStr.Trim();
             if (string.IsNullOrWhiteSpace(statePropTypeStr) || 
-                statePropTypeStr.Trim() == "-" || statePropTypeStr.Trim() == "-\n-" || statePropTypeStr.Trim() == "не имеет")
+                statePropTypeStr == "-" ||
+                statePropTypeStr == "_" ||
+                statePropTypeStr == "-\n-" || 
+                statePropTypeStr == "не имеет")
             {
                 return null;
             }
@@ -489,6 +337,8 @@ namespace Smart.Parser.Lib
             Country country = DataHelper.TryParseCountry(statePropCountryStr);
             string countryStr = DeclaratorApiPatterns.TryParseCountry(statePropCountryStr);
 
+            var combinedData = DataHelper.ParseCombinedRealEstateColumn(statePropTypeStr.CleanWhitespace());
+
             stateProperty.Text = statePropTypeStr;
             stateProperty.PropertyType = propertyType;
             stateProperty.type_raw = statePropTypeStr;
@@ -498,15 +348,20 @@ namespace Smart.Parser.Lib
             stateProperty.CountryStr = countryStr;
             stateProperty.country_raw = statePropCountryStr;
             stateProperty.OwnershipType = OwnershipType.InUse;
+            stateProperty.OwnedShare = combinedData.Item3;
+
 
             return stateProperty;
         }
 
         // 
-        public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
+        static public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
         {
+            estateTypeStr = estateTypeStr.Trim();
             if (String.IsNullOrWhiteSpace(estateTypeStr) || 
-                estateTypeStr.Trim() == "-" || estateTypeStr.Trim() == "не имеет")
+                estateTypeStr.Trim() == "-" ||
+                estateTypeStr.Trim() == "_" ||
+                estateTypeStr == "не имеет")
             {
                 return null;
             }

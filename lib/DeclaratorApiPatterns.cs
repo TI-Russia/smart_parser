@@ -77,6 +77,7 @@ namespace Smart.Parser.Lib
                         break;
                     case "carbrand":
                     case "vehicletype":
+                    case "relative":
                         break;
                     default:
                         throw new Exception("unknown pattern.type " + pattern.type);

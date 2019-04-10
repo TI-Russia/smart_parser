@@ -62,7 +62,7 @@
     <Compile Include="TextHelpers.cs" />
     <Compile Include="UnknownEntry.cs" />
     <Compile Include="UnknownRealEstateTypeException.cs" />
-    <Compile Include="Vechicle.cs" />
+    <Compile Include="Vehicle.cs" />
     <Compile Include="XmlHelpers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

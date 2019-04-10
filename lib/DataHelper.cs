@@ -98,6 +98,8 @@ namespace Smart.Parser.Lib
                 case "сын жены": return RelationType.Child;
                 case "дочь жены": return RelationType.Child;
                 case "несовершеннолетний ребёнок": return RelationType.Child;
+                case "племяница супруги": return RelationType.MaleSpouse;
+                case "подопечный": return RelationType.MaleSpouse;
                 default:
                     if (throwException)
                     {
@@ -624,5 +626,29 @@ namespace Smart.Parser.Lib
             return Country.Error;//throw new SmartParserException("Wrong country name: " + strCountry);
         }
 
+        static public bool ParseVehicle(string vechicleString, List<Vehicle> vechicles)
+        {
+            string normalVehicleStr = vechicleString.ToLower().Trim();
+            if (String.IsNullOrEmpty(normalVehicleStr) || 
+                normalVehicleStr == "не имеет" ||
+                normalVehicleStr == "-" ||
+                normalVehicleStr == "_")
+            {
+                return false;
+            }
+            var match = Regex.Match(vechicleString, @".+:(.+,.+)");
+            if (match.Success)
+            {
+                if (vechicles != null)
+                {
+                    vechicles.AddRange(match.Groups[1].ToString().Split(',').Select(x => new Vehicle(x.Trim())));
+                }
+            }
+            else
+            {
+                vechicles.Add(new Vehicle(vechicleString));
+            }
+            return true;
+        }
     }
 }

@@ -1,5 +1,6 @@
 {
-  "results": [
+  "results": 
+  [
     {
         "id": 626, 
         "data": "\"россия\"", 
@@ -47,6 +48,14 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Иное"
+    }, 
+    {
+        "id": 699, 
+        "data": "Rвартира", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Квартира"
     }, 
     {
         "id": 111, 
@@ -177,6 +186,14 @@
         "value": "Квартира"
     }, 
     {
+        "id": 152, 
+        "data": "\\bав?а?топри?цепт?\\b", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автоприцеп"
+    }, 
+    {
         "id": 171, 
         "data": "\\bавтобус\\b", 
         "is_regex": true, 
@@ -201,6 +218,14 @@
         "value": "Автомобиль легковой"
     }, 
     {
+        "id": 695, 
+        "data": "\\bавтомобиль\\s+грузовой\\b", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль грузовой"
+    }, 
+    {
         "id": 163, 
         "data": "\\bавтомобиль\\s+легковой\\b", 
         "is_regex": true, 
@@ -211,14 +236,6 @@
     {
         "id": 146, 
         "data": "\\bавтомобильный\\s+прицеп\\b", 
-        "is_regex": true, 
-        "is_case": false, 
-        "type": "vehicletype", 
-        "value": "Автоприцеп"
-    }, 
-    {
-        "id": 152, 
-        "data": "\\bавтоприцеп\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
@@ -290,7 +307,7 @@
     }, 
     {
         "id": 53, 
-        "data": "\\bбезвозмездное\\b", 
+        "data": "\\bбезвозмездное пользование\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "owntype", 
@@ -833,20 +850,20 @@
         "value": "Водный транспорт"
     }, 
     {
+        "id": 256, 
+        "data": "\\bква?ртр?ит?р?(?:а|ы|е)\\b", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Квартира"
+    }, 
+    {
         "id": 181, 
         "data": "\\bквадр(?:о|а)цикл\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
         "value": "Мототранспортное средство"
-    }, 
-    {
-        "id": 256, 
-        "data": "\\bквартир(?:а|ы|е)\\b", 
-        "is_regex": true, 
-        "is_case": false, 
-        "type": "realestatetype", 
-        "value": "Квартира"
     }, 
     {
         "id": 604, 
@@ -1050,7 +1067,7 @@
     }, 
     {
         "id": 236, 
-        "data": "\\bмашиноместо\\b", 
+        "data": "\\bмашино\\s?-?место\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "realestatetype", 
@@ -1194,7 +1211,7 @@
     }, 
     {
         "id": 201, 
-        "data": "\\bмототрансп.\\s+средство\\b", 
+        "data": "\\bмототрансп?.?\\s+средство\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
@@ -1202,7 +1219,7 @@
     }, 
     {
         "id": 199, 
-        "data": "\\bмототранспортное\\s+средство\\b", 
+        "data": "\\bмототранспортное\\s*средст?во?а?\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
@@ -1361,6 +1378,14 @@
         "value": "Квартира"
     }, 
     {
+        "id": 574, 
+        "data": "\\bОбъект незавершенного строительства\\b", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Иное"
+    }, 
+    {
         "id": 577, 
         "data": "\\bОвоще\\-?хранилище\\b", 
         "is_regex": true, 
@@ -1481,16 +1506,16 @@
         "value": "Индивидуальная"
     }, 
     {
-        "id": 145, 
-        "data": "\\bприцеп\\(полуприцеп\\)\\s+", 
+        "id": 155, 
+        "data": "\\bприце[пвм]и?\\b", 
         "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
         "value": "Автоприцеп"
     }, 
     {
-        "id": 155, 
-        "data": "\\bприцеп\\b", 
+        "id": 145, 
+        "data": "\\bприцеп\\(полуприцеп\\)\\s+", 
         "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
@@ -1881,6 +1906,14 @@
         "value": "Hyundai"
     }, 
     {
+        "id": 514, 
+        "data": "\\bХоз.?\\s?блок\\b", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Иное"
+    }, 
+    {
         "id": 573, 
         "data": "\\bХозяйственная постройка\\b", 
         "is_regex": true, 
@@ -1993,20 +2026,28 @@
         "value": "Гараж"
     }, 
     {
-        "id": 574, 
-        "data": "\\bОбъект незавершенного строительства\\b", 
-        "is_regex": true, 
-        "is_case": false, 
-        "type": "realestatetype", 
-        "value": "Иное"
-    }, 
-    {
         "id": 302, 
         "data": "½ частного дома", 
         "is_regex": false, 
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Жилой дом"
+    }, 
+    {
+        "id": 696, 
+        "data": "а\\/м? легковой", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
+    }, 
+    {
+        "id": 697, 
+        "data": "автобетономешалка", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Иное"
     }, 
     {
         "id": 543, 
@@ -2023,6 +2064,22 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Иное"
+    }, 
+    {
+        "id": 698, 
+        "data": "автомбиль легковой", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
+    }, 
+    {
+        "id": 700, 
+        "data": "автомоби?т?л?ь(ной)?\\s?легковой", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
     }, 
     {
         "id": 170, 
@@ -2047,6 +2104,22 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Иное"
+    }, 
+    {
+        "id": 701, 
+        "data": "Автомоибль легковой", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
+    }, 
+    {
+        "id": 702, 
+        "data": "Автомом?р?биль легковой", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
     }, 
     {
         "id": 335, 
@@ -2241,6 +2314,22 @@
         "value": "Иное"
     }, 
     {
+        "id": 704, 
+        "data": "водное транспортное средство", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Водный транспорт"
+    }, 
+    {
+        "id": 703, 
+        "data": "ВодныйТранспорт", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Водный транспорт"
+    }, 
+    {
         "id": 348, 
         "data": "водопровод", 
         "is_regex": false, 
@@ -2361,12 +2450,36 @@
         "value": "Дача"
     }, 
     {
+        "id": 706, 
+        "data": "дачный(летний\\s)?домик", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Жилой дом"
+    }, 
+    {
         "id": 320, 
         "data": "Дачныйдом", 
         "is_regex": false, 
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Дача"
+    }, 
+    {
+        "id": 708, 
+        "data": "дачныйучасток", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Земельный участок"
+    }, 
+    {
+        "id": 705, 
+        "data": "двигатель\\s+лодочный", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Водный транспорт"
     }, 
     {
         "id": 242, 
@@ -2463,6 +2576,14 @@
         "is_case": false, 
         "type": "owntype", 
         "value": "Долевая собственность"
+    }, 
+    {
+        "id": 5, 
+        "data": "Долевая", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "В собственности"
     }, 
     {
         "id": 117, 
@@ -2735,6 +2856,14 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Иное"
+    }, 
+    {
+        "id": 707, 
+        "data": "жилойс?c?\\s?дом", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Жилой дом"
     }, 
     {
         "id": 276, 
@@ -3073,6 +3202,14 @@
         "value": "Иное"
     }, 
     {
+        "id": 714, 
+        "data": "иное\\s*недвижимое\\s*имущество", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "realestatetype", 
+        "value": "Иное"
+    }, 
+    {
         "id": 143, 
         "data": "иные транспортные средства", 
         "is_regex": false, 
@@ -3215,6 +3352,22 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Квартира"
+    }, 
+    {
+        "id": 18, 
+        "data": "Квартира", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "В собственности"
+    }, 
+    {
+        "id": 93, 
+        "data": "Квартира", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "Индивидуальная"
     }, 
     {
         "id": 623, 
@@ -3441,6 +3594,22 @@
         "value": "Иное"
     }, 
     {
+        "id": 715, 
+        "data": "Легко?вой\\sавтомобиль?", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
+    }, 
+    {
+        "id": 711, 
+        "data": "Ленд\\sКруи?зер", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
+    }, 
+    {
         "id": 328, 
         "data": "Летний дом", 
         "is_regex": false, 
@@ -3505,12 +3674,36 @@
         "value": "Гараж"
     }, 
     {
+        "id": 716, 
+        "data": "микроавтобус", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Автомобиль легковой"
+    }, 
+    {
         "id": 620, 
         "data": "Молдавия", 
         "is_regex": false, 
         "is_case": false, 
         "type": "country", 
         "value": "Молдова"
+    }, 
+    {
+        "id": 717, 
+        "data": "Мототранспорт", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Мототранспортное средство"
+    }, 
+    {
+        "id": 709, 
+        "data": "Мотоц[тим]к?л", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Мототранспортное средство"
     }, 
     {
         "id": 401, 
@@ -3591,6 +3784,14 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Иное"
+    }, 
+    {
+        "id": 694, 
+        "data": "Не указан[ао]", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "country", 
+        "value": "Россия"
     }, 
     {
         "id": 622, 
@@ -4511,14 +4712,14 @@
         "is_case": false, 
         "type": "country", 
         "value": "Прочее"
-    }, 
+    },
     {
-        "id": 627, 
-        "data": "России", 
-        "is_regex": false, 
-        "is_case": false, 
-        "type": "country", 
-        "value": "Россия"
+      "id": 627,
+      "data": "России",
+      "is_regex": false,
+      "is_case": false,
+      "type": "country",
+      "value": "Россия"
     }, 
     {
         "id": 628, 
@@ -4667,7 +4868,7 @@
     {
         "id": 208, 
         "data": "сельскохозяйственная техника", 
-        "is_regex": false, 
+        "is_regex": true, 
         "is_case": false, 
         "type": "vehicletype", 
         "value": "Сельхоз техника"
@@ -4841,12 +5042,36 @@
         "value": "Индивидуальная"
     }, 
     {
+        "id": 710, 
+        "data": "совеместная", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "Совместная собственность"
+    }, 
+    {
+        "id": 30, 
+        "data": "Совместная", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "В собственности"
+    }, 
+    {
         "id": 141, 
         "data": "Совместная", 
         "is_regex": false, 
         "is_case": false, 
         "type": "owntype", 
         "value": "Совместная собственность"
+    }, 
+    {
+        "id": 31, 
+        "data": "Совместная долевая", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "В собственности"
     }, 
     {
         "id": 142, 
@@ -4871,6 +5096,14 @@
         "is_case": false, 
         "type": "owntype", 
         "value": "Индивидуальная"
+    }, 
+    {
+        "id": 29, 
+        "data": "Соместная", 
+        "is_regex": false, 
+        "is_case": false, 
+        "type": "owntype", 
+        "value": "В собственности"
     }, 
     {
         "id": 140, 
@@ -5007,6 +5240,14 @@
         "is_case": false, 
         "type": "realestatetype", 
         "value": "Жилой дом"
+    }, 
+    {
+        "id": 693, 
+        "data": "Супруга?", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "relative", 
+        "value": "Супруг(а)"
     }, 
     {
         "id": 632, 
@@ -5209,14 +5450,6 @@
         "value": "Иное"
     }, 
     {
-        "id": 514, 
-        "data": "Хозблок", 
-        "is_regex": false, 
-        "is_case": false, 
-        "type": "realestatetype", 
-        "value": "Иное"
-    }, 
-    {
         "id": 515, 
         "data": "Хозблок для инвентаря", 
         "is_regex": false, 
@@ -5393,6 +5626,14 @@
         "value": "Земельный участок"
     }, 
     {
+        "id": 712, 
+        "data": "экск(а|о)ватор", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Иное"
+    }, 
+    {
         "id": 619, 
         "data": "Южная осетия", 
         "is_regex": false, 
@@ -5425,6 +5666,14 @@
         "value": "Иное"
     }, 
     {
+        "id": 713, 
+        "data": "Яхта", 
+        "is_regex": true, 
+        "is_case": false, 
+        "type": "vehicletype", 
+        "value": "Водный транспорт"
+    }, 
+    {
         "id": 556, 
         "data": "Ячейка в овоще хранилище", 
         "is_regex": false, 
@@ -5440,4 +5689,6 @@
         "type": "realestatetype", 
         "value": "Иное"
     }
-]}
+  ]
+
+}
