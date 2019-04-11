@@ -47,8 +47,8 @@
     <Compile Include="ColumnOrdering.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Declaration.cs" />
-    <Compile Include="DeclarationProperties.cs" />
     <Compile Include="DeclarationField.cs" />
+    <Compile Include="DeclarationProperties.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="IDeclarationParser.cs" />
     <Compile Include="OwnershipType.cs" />
