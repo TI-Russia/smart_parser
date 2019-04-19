@@ -81,7 +81,15 @@ namespace TI.Declarator.JsonSerialization
             Schema = JSchema.Parse(File.ReadAllText(SchemaSource), SchemaSettings);
         }
 
-        public static string Serialize(Declaration declaration, bool validate = true)
+        public static string Serialize(Declaration declaration)
+        {
+            string comment = null;
+            string result = Serialize(declaration, ref comment);
+
+            return result;
+        }
+
+        public static string Serialize(Declaration declaration, bool validate)
         {
             string comments = null;
             string jsonString = Serialize(declaration, ref comments);
@@ -276,20 +284,26 @@ namespace TI.Declarator.JsonSerialization
         private static JProperty GetVehicles(PublicServant servant)
         {
             var jVehicles = new JArray();
+
+
             foreach (var vehicleInfo in servant.Vehicles)
             {
-                jVehicles.Add(new JObject(
-                    new JProperty("text", vehicleInfo.Text),
-                    new JProperty("relative", null)));
+                JObject jVehicle = new JObject();
+                jVehicle.Add(new JProperty("text", vehicleInfo.Text));
+                jVehicle.Add(new JProperty("relative", null));
+                AddNotNullProp(jVehicle, "type", vehicleInfo.Type);
+                jVehicles.Add(jVehicle);
             }
 
             foreach (var rel in servant.Relatives)
             {
                 foreach (var vehicleInfo in rel.Vehicles)
                 {
-                    jVehicles.Add(new JObject(
-                        new JProperty("text", vehicleInfo.Text),
-                        new JProperty("relative", GetRelationshipName(rel.RelationType))));
+                    JObject jVehicle = new JObject();
+                    jVehicle.Add(new JProperty("text", vehicleInfo.Text));
+                    jVehicle.Add(new JProperty("relative", null));
+                    AddNotNullProp(jVehicle, "type", vehicleInfo.Type);
+                    jVehicles.Add(jVehicle);
                 }
             }
 

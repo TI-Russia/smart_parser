@@ -108,6 +108,11 @@ namespace Parser.Lib
         {
             log = secondLog;
         }
+        static public void Debug(string info, params object[] par)
+        {
+            if (log == null) return;
+            log.Debug(String.Format(info, par));
+        }
 
         static public void Info(string info, params object[] par)
         {

@@ -100,6 +100,8 @@ namespace Smart.Parser.Lib
                 case "несовершеннолетний ребёнок": return RelationType.Child;
                 case "племяница супруги": return RelationType.MaleSpouse;
                 case "подопечный": return RelationType.MaleSpouse;
+                case "ребёнок": return RelationType.Child;
+                case "ребенок": return RelationType.Child;
                 default:
                     if (throwException)
                     {
@@ -135,7 +137,6 @@ namespace Smart.Parser.Lib
 
             }
 
-            result = 1;
             return Decimal.Round(result, 2);
 
         }
@@ -210,16 +211,16 @@ namespace Smart.Parser.Lib
             return ownershipType;
         }
 
-        public static OwnershipType TryParseOwnershipType(string strOwn)
+        public static OwnershipType TryParseOwnershipType(string strOwn, OwnershipType defaultType = OwnershipType.None)
         {
             string str = strOwn.ToLower().Trim();
             if (String.IsNullOrWhiteSpace(str) || str == "-")
-                return OwnershipType.InUse;
+                return defaultType; // OwnershipType.InUse;
 
             //var parts = Regex.Split(str, "[ ,]+");
             var parts = Regex.Split(str, "[0-9,\\(\\)]+");
 
-            OwnershipType result = OwnershipType.None;
+            OwnershipType result = defaultType; // OwnershipType.None;
             foreach (var s in parts)
             {
                 OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
@@ -314,7 +315,7 @@ namespace Smart.Parser.Lib
             квартира
             (совместная)  
          */
-        static public Tuple<RealEstateType, OwnershipType, string> ParseCombinedRealEstateColumn(string strPropInfo)
+        static public Tuple<RealEstateType, OwnershipType, string> ParseCombinedRealEstateColumn(string strPropInfo, OwnershipType defaultOwnershipType = OwnershipType.Ownership)
         {
             string share = "1";
             // слово до запятой или до скобки
@@ -342,11 +343,11 @@ namespace Smart.Parser.Lib
             }
             if (ownershipType == OwnershipType.None)
             {
-                ownershipType = OwnershipType.Ownership;
+                ownershipType = defaultOwnershipType;
             }
             return Tuple.Create(realEstateType, ownershipType, share);
         }
-
+        
         static public List<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
         {
             var res = new List<Tuple<RealEstateType, OwnershipType, string>>();
@@ -628,6 +629,15 @@ namespace Smart.Parser.Lib
 
         static public bool ParseVehicle(string vechicleString, List<Vehicle> vechicles)
         {
+            string[] vehicleTypeDict = {
+                "автомобили легковые:",
+                "мототранспортные средства:",
+                "водный транспорт:",
+                "иные транспортные средства:",
+                "воздушный транспорт:",
+                "сельскохозяйственная техника:"
+            };
+            var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")");
             string normalVehicleStr = vechicleString.ToLower().Trim();
             if (String.IsNullOrEmpty(normalVehicleStr) || 
                 normalVehicleStr == "не имеет" ||
@@ -636,6 +646,40 @@ namespace Smart.Parser.Lib
             {
                 return false;
             }
+
+            var matchType = vehicleTypeRegex.Match(vechicleString);
+            if (matchType.Success)
+            {
+                int last_end = -1;
+                string last_type = null;
+                string vechicleItemStr = null;
+                string[] items = null;
+                foreach (Match itemMatch in vehicleTypeRegex.Matches(vechicleString))
+                {
+                    int begin = itemMatch.Index;
+                    int end = itemMatch.Index + itemMatch.Length;
+                    if (last_end > 0)
+                    {
+                        vechicleItemStr = vechicleString.Substring(last_end, begin - last_end);
+                        items = vechicleItemStr.Split(',');
+                        foreach (var item in items)
+                        {
+                            vechicles.Add(new Vehicle(item.Trim(), last_type));
+                        }
+                    }
+                    last_end = end;
+                    last_type = itemMatch.Value.TrimEnd(':');
+                }
+                vechicleItemStr = vechicleString.Substring(last_end);
+                items = vechicleItemStr.Split(',');
+                foreach (var item in items)
+                {
+                    vechicles.Add(new Vehicle(item.Trim(), last_type));
+                }
+
+                return true;
+            }
+
             var match = Regex.Match(vechicleString, @".+:(.+,.+)");
             if (match.Success)
             {

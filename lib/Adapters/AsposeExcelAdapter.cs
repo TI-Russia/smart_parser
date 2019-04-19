@@ -76,16 +76,30 @@ namespace Smart.Parser.Adapters
             return totalColumns;
         }
 
-        public override List<Cell> GetCells(int row)
+        public override List<Cell> GetCells(int rowIndex)
         {
             int index = 0;
             List<Cell> result = new List<Cell>();
-            IEnumerator enumerator = worksheet.Cells.Rows[row].GetEnumerator();
+            Aspose.Cells.Row row = worksheet.Cells.Rows[rowIndex];
+            Aspose.Cells.Cell firstCell = row.FirstCell;
+            Aspose.Cells.Cell lastCell = row.LastCell;
+
+            for (int i = 0; i <= lastCell.Column; i++)
+            {
+                Aspose.Cells.Cell cell = row.GetCellOrNull(i);
+                result.Add(new AsposeExcelCell(cell));
+                if (cell != null && cell.IsMerged && cell.GetMergedRange().ColumnCount > 1)
+                {
+                    i += cell.GetMergedRange().ColumnCount - 1;
+                }
+            }
+            /*
+            IEnumerator enumerator = worksheet.Cells.Rows[rowIndex].GetEnumerator();
             int range_end = -1;
             while (enumerator.MoveNext())
             {
                 Aspose.Cells.Cell cell = (Aspose.Cells.Cell)enumerator.Current;
-                if (index < range_end)
+                if (cell.Column < range_end)
                 {
                     index++;
                     continue;
@@ -101,6 +115,7 @@ namespace Smart.Parser.Adapters
                 }
                 index++;
             }
+            */
             return result;
         }
 

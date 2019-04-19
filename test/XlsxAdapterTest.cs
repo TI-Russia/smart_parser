@@ -27,7 +27,8 @@ namespace test
 
             Declaration declaration = parser.Parse();
 
-            string output = DeclarationSerializer.Serialize(declaration, true);
+            string comments = "";
+            string output = DeclarationSerializer.Serialize(declaration, ref comments);
 
 
             //parser.Process();
@@ -43,7 +44,8 @@ namespace test
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
             Declaration declaration = parser.Parse();
 
-            string output = DeclarationSerializer.Serialize(declaration, true);
+            string comments = "";
+            string output = DeclarationSerializer.Serialize(declaration, ref comments);
         }
     }
 }

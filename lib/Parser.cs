@@ -82,8 +82,9 @@ namespace Smart.Parser.Lib
         {
             Declaration declaration = new Declaration()
             {
-                Properties = new DeclarationProperties() { Title = "title", Year = 2010, MinistryName = "Ministry" }
+                Properties = new DeclarationProperties() { Title = "title", Year = 2018, MinistryName = "Ministry" }
             };
+            totalIncome = 0;
 
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
             PublicServant currentServant = null;
@@ -123,7 +124,7 @@ namespace Smart.Parser.Lib
                 }
                 if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    //Logger.Info("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
+                    //Logger.Debug("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
                     if (currentPerson != null)
                     {
                         currentPerson.RangeHigh = row - 1;
@@ -162,7 +163,7 @@ namespace Smart.Parser.Lib
                     relative.RelationType = relationType;
 
 
-                    //Logger.Info("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
+                    //Logger.Debug("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
                 }
                 else
                 {
@@ -240,6 +241,7 @@ namespace Smart.Parser.Lib
                                 Logger.Error("***ERROR row({0}) wrong income: {1}", row, e.Message);
                             }
                             person.DeclaredYearlyIncome = declaredYearlyIncome;
+                            totalIncome += declaredYearlyIncome == null ? 0 : declaredYearlyIncome.Value;
                             firstRow = false;
                         }
 
@@ -301,6 +303,7 @@ namespace Smart.Parser.Lib
                 }
             }
 
+            Logger.Info("Total income: {0}", totalIncome);
             return declaration;
         }
 
@@ -337,7 +340,7 @@ namespace Smart.Parser.Lib
             Country country = DataHelper.TryParseCountry(statePropCountryStr);
             string countryStr = DeclaratorApiPatterns.TryParseCountry(statePropCountryStr);
 
-            var combinedData = DataHelper.ParseCombinedRealEstateColumn(statePropTypeStr.CleanWhitespace());
+            var combinedData = DataHelper.ParseCombinedRealEstateColumn(statePropTypeStr.CleanWhitespace(), OwnershipType.InUse);
 
             stateProperty.Text = statePropTypeStr;
             stateProperty.PropertyType = propertyType;
@@ -347,7 +350,7 @@ namespace Smart.Parser.Lib
             stateProperty.Country = country;
             stateProperty.CountryStr = countryStr;
             stateProperty.country_raw = statePropCountryStr;
-            stateProperty.OwnershipType = OwnershipType.InUse;
+            stateProperty.OwnershipType = combinedData.Item2;
             stateProperty.OwnedShare = combinedData.Item3;
 
 
@@ -376,14 +379,14 @@ namespace Smart.Parser.Lib
             realEstateProperty.country_raw = countryStr;
 
             RealEstateType realEstateType = RealEstateType.Other;
-            OwnershipType ownershipType = OwnershipType.None;
+            OwnershipType ownershipType = OwnershipType.Ownership;
             string share = "";
 
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)
             {
                 realEstateType = DataHelper.TryParseRealEstateType(estateTypeStr);
-                ownershipType = DataHelper.TryParseOwnershipType(ownTypeStr);
+                ownershipType = DataHelper.TryParseOwnershipType(ownTypeStr, OwnershipType.Ownership);
                 share = DataHelper.ParseOwnershipShare(ownTypeStr, ownershipType);
 
                 realEstateProperty.PropertyType = realEstateType;
@@ -569,6 +572,8 @@ namespace Smart.Parser.Lib
 
         Dictionary<string, int> ownershipTypes = new Dictionary<string, int>();
         Dictionary<string, int> objectTypes = new Dictionary<string, int>();
+
+        Decimal totalIncome = 0;
 
     }
 }

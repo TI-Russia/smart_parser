@@ -139,12 +139,16 @@ namespace Smart.Parser.Lib
                 "египет",
                 "словакия",
                 "болгария",
-                "иран"
+                "иран",
+                "грузия",
+                "италия",
+                "кипр"
             };
             foreach (var c in countries)
                 countryDict[c] = c;
 
             countryDict["россия"] = "россия";
+            countryDict[""] = "россия";
             countryDict["республика болгария"] = "болгария";
         }
 
