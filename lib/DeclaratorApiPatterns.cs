@@ -142,7 +142,8 @@ namespace Smart.Parser.Lib
                 "иран",
                 "грузия",
                 "италия",
-                "кипр"
+                "кипр",
+                "мексика"
             };
             foreach (var c in countries)
                 countryDict[c] = c;
@@ -305,6 +306,11 @@ namespace Smart.Parser.Lib
 
         public static string TryParseCountry(string country)
         {
+            if (country.Trim() == "" || country.Trim() == "-")
+            {
+                return "";
+            }
+
             string normalized = NormalizeText(country);
 
             string value = null;

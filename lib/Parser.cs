@@ -98,8 +98,11 @@ namespace Smart.Parser.Lib
                 if (Adapter.GetCell(row, 0).MergedColsCount > 1)
                 {
                     string name = Adapter.GetCell(row, 0).Text;
-                    declaration.Sections.Add(new DeclarationSection() { Row = row, Name = name });
-                    continue;
+                    if (name.Length > 5)
+                    {
+                        declaration.Sections.Add(new DeclarationSection() { Row = row, Name = name });
+                        continue;
+                    }
                 }
 
                 merged_col_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedColsCount;

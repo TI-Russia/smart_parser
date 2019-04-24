@@ -41,7 +41,7 @@ namespace Smart.Parser.Lib
 
             string first = cells.First().GetText(true);
 
-            return (nonEmptyCellCount > 3) &&
+            return (nonEmptyCellCount > 5) &&
                    (cells.First().GetText(true) != "1");
         }
         static private bool IsEmptyRow(Row r)
@@ -102,7 +102,7 @@ namespace Smart.Parser.Lib
                         {
                             throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerRowNum, colCount));
                         }
-                        res.Add(field, index);
+                        res.Add(field, cell.Col);
                         index++;
                         colCount++;
                     }
@@ -143,7 +143,7 @@ namespace Smart.Parser.Lib
                             {
                                 throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", headerRowNum + 1, auxColCount, cellText));
                             }
-                            res.Add(field, index);
+                            res.Add(field, auxCell.Col);
                             index++;
                         }
 
@@ -164,7 +164,6 @@ namespace Smart.Parser.Lib
             {
                 firstDataRow++;
             }
-
 
             res.FirstDataRow = firstDataRow;
 

@@ -7,6 +7,12 @@ namespace TI.Declarator.ParserCommon
      */
     public static class HeaderHelpers
     {
+        public static bool IsSecondLevelHeader(string str)
+        {
+            string strLower = str.ToLower();
+            return (strLower.Contains("объекты") ||
+                    strLower.Contains("недвижимости"));
+        }
         public static DeclarationField GetField(string str)
         {
             DeclarationField field = TryGetField(str);

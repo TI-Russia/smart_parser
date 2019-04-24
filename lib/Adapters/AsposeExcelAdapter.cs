@@ -39,6 +39,8 @@ namespace Smart.Parser.Adapters
                 MergedRowsCount = cell.GetMergedRange().RowCount;
                 MergedColsCount = cell.GetMergedRange().ColumnCount;
             }
+            Row = cell.Row;
+            Col = cell.Column;
         }
     }
     public class AsposeExcelAdapter : IAdapter
@@ -83,6 +85,8 @@ namespace Smart.Parser.Adapters
             Aspose.Cells.Row row = worksheet.Cells.Rows[rowIndex];
             Aspose.Cells.Cell firstCell = row.FirstCell;
             Aspose.Cells.Cell lastCell = row.LastCell;
+            if (lastCell == null)
+                return result;
 
             for (int i = 0; i <= lastCell.Column; i++)
             {

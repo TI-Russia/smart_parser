@@ -28,6 +28,9 @@ namespace Smart.Parser.Adapters
             return Text;
         }
 
+        public int Row { get; set; } = -1;
+        public int Col { get; set; } = -1;
+
     };
 
     public class Row

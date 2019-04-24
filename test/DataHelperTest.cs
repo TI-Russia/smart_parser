@@ -94,6 +94,10 @@ namespace test
 
             Assert.AreEqual(ownershipType, OwnershipType.Shared);
             Assert.AreEqual(share, "1/2");
+
+            s = "(общая совместная собственность)";
+            ownershipType = DataHelper.TryParseOwnershipType(s);
+            Assert.AreEqual(ownershipType, OwnershipType.Joint);
         }
 
         [TestMethod]
