@@ -92,10 +92,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="regression_samples\Word\A - min_res_2011_Sotrudniki_ministerstva.doc">
+    <None Include="regression_samples\Word\ignored\A - min_res_2011_Sotrudniki_ministerstva.doc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Word\A - min_res_2011_Sotrudniki_ministerstva.json">
+    <None Include="regression_samples\Word\ignored\A - min_res_2011_Sotrudniki_ministerstva.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\Word\C - min_health_2015_Sotrudniki_ministerstva.docx">
