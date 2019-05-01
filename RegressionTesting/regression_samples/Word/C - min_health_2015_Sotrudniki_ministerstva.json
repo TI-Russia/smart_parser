@@ -40,9 +40,39 @@
         "relative": null
       },
       {
+        "text": "Комната",
+        "type": "Квартира",
+        "square": "70,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "1680,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "114,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,6666666666666666666666666667",
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "109,3",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -102,9 +132,149 @@
         "relative": null
       },
       {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "1500",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "182,1",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "146,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Гаражный бокс",
+        "type": "Гараж",
+        "square": "17,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Подвал",
+        "type": "Иное",
+        "square": "7,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Баня",
+        "type": "Иное",
+        "square": "88,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Сторожка",
+        "type": "Иное",
+        "square": "19,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Квартира",
         "type": "Квартира",
         "square": "78,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "86,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "2,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "4,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "5,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "196,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "258,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "15,1",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -153,6 +323,16 @@
         "text": "Квартира",
         "type": "Квартира",
         "square": "67,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "15,2",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -249,6 +429,16 @@
         "own_type": "Долевая собственность",
         "share_amount": "0,5",
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "Гараж-бокс",
+        "type": "Гараж",
+        "square": "17,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
       }
     ],
     "vehicles": [
@@ -305,6 +495,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
+        "share_amount": "0,6666666666666666666666666667",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "64,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "44,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
         "share_amount": "0,3333333333333333333333333333",
         "relative": "Супруг(а)"
       },
@@ -312,6 +522,46 @@
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "2006,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом (Незавершенное строительство)",
+        "type": "Жилой дом",
+        "square": "312,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Гараж (Незавершенное строительство)",
+        "type": "Иное",
+        "square": "128,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Гараж",
+        "type": "Гараж",
+        "square": "21,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Гараж",
+        "type": "Гараж",
+        "square": "26,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -350,6 +600,46 @@
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "693,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,3333333333333333333333333333",
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "129,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,3333333333333333333333333333",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "62,1",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "62,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,25",
+        "relative": null
+      },
+      {
+        "text": "Баня",
+        "type": "Иное",
+        "square": "35,6",
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
@@ -400,6 +690,36 @@
         "relative": null
       },
       {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "56,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "110,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "35,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "953,0",
@@ -416,6 +736,36 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "7321,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,034",
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "226,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Встроенное нежилое помещение",
+        "type": "Иное",
+        "square": "137,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -504,6 +854,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "58,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "34,0",
+        "relative": null
+      },
+      {
+        "text": "Хозяйственный блок",
+        "type": "Иное",
+        "square": "20,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -532,6 +902,26 @@
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "351,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "258,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "76,7",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -619,11 +1009,51 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "43,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "38,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Апартаменты",
+        "type": "Иное",
+        "square": "78,0",
+        "country": "Болгария",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,25",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "57,9",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
         "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Апартаменты",
+        "type": "Иное",
+        "square": "78,0",
+        "country": "Болгария",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,25",
         "relative": "Супруг(а)"
       }
     ],
@@ -665,9 +1095,109 @@
         "relative": null
       },
       {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "698,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "52,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "3000,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "150,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "1535,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "530,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "103,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "66,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "48,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "66,1",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "34,7",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -702,6 +1232,16 @@
         "text": "Квартира",
         "type": "Квартира",
         "square": "72,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "56,88",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -834,6 +1374,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "75,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "62,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -874,9 +1434,79 @@
         "relative": null
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "35,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "41,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "66,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "81,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный\n\nучасток",
         "type": "Земельный участок",
         "square": "2000,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "35,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "41,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "66,10",
         "country": "Россия",
         "region": null,
         "own_type": "Совместная собственность",
@@ -946,9 +1576,34 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "64,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "64,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
-    "vehicles": []
+    "vehicles": [
+      {
+        "text": "а/м легковой Mercedes-Benz ML",
+        "relative": null
+      }
+    ]
   },
   {
     "person": {
@@ -981,12 +1636,82 @@
         "relative": null
       },
       {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "54000,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "127000,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "45,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "100,90",
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "37,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "машиноместо",
+        "type": "Иное",
+        "square": "13,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "100,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "67,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -1138,6 +1863,16 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "52,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "50,20",
         "country": "Россия",
         "region": null,
@@ -1206,6 +1941,16 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "54,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "62,70",
         "country": "Россия",
         "region": null,
@@ -1256,6 +2001,46 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "48,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "48,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "48,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "48,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -1290,6 +2075,16 @@
         "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "62,80",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -1314,6 +2109,46 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "85,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "71,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "61,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "100,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "177,50",
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
@@ -1376,6 +2211,16 @@
         "region": null,
         "own_type": "В пользовании",
         "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "119,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
         "relative": "Ребенок"
       }
     ],
@@ -1406,6 +2251,36 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "77,80",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "57,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "37,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "парковочная конструкция",
+        "type": "Иное",
+        "square": "0,00",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -1477,6 +2352,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "комната",
+        "type": "Квартира",
+        "square": "14,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -1666,6 +2551,16 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "56,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -1698,6 +2593,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "32,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": null
       },
@@ -1756,6 +2661,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "76,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
         "share_amount": null,
         "relative": null
       },
@@ -1856,6 +2771,16 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "жилой дом",
+        "type": "Жилой дом",
+        "square": "252,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
       }
     ],
     "vehicles": [
@@ -1935,6 +2860,26 @@
         "relative": null
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "53,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "78,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "земельный участок",
         "type": "Земельный участок",
         "square": "1000,0",
@@ -1951,6 +2896,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "земельный участок",
+        "type": "Земельный участок",
+        "square": "1000,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "78,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -1982,9 +2947,74 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "61,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "гараж",
+        "type": "Гараж",
+        "square": "18,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "1000,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "61,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "29,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "18,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
-    "vehicles": []
+    "vehicles": [
+      {
+        "text": "а/м легковой Toyota Avensis",
+        "relative": null
+      }
+    ]
   },
   {
     "person": {
@@ -2009,6 +3039,56 @@
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "73,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "50,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "40,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "73,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "50,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
       }
@@ -2053,6 +3133,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "38,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "75,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
       }
@@ -2108,6 +3208,26 @@
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "1200,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "36,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "58,80",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -2177,9 +3297,59 @@
         "relative": null
       },
       {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "64,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "65,0",
+        "country": "Болгария",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "71,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "1499,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "64,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "71,9",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -2225,6 +3395,16 @@
         "relative": null
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "65,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "57205,00",
@@ -2241,6 +3421,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "15,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -2276,6 +3466,16 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "42,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "33,00",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -2403,9 +3603,39 @@
         "relative": null
       },
       {
+        "text": "Дом дачный",
+        "type": "Дача",
+        "square": "130,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "56,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "81,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "28,10",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -2552,9 +3782,34 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "64,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "64,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
-    "vehicles": []
+    "vehicles": [
+      {
+        "text": "а/м легковой Mercedes 150A",
+        "relative": null
+      }
+    ]
   },
   {
     "person": {
@@ -2581,6 +3836,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "86,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "46,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -2601,6 +3876,16 @@
       }
     ],
     "real_estates": [
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "69,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
       {
         "text": "квартира",
         "type": "Квартира",
@@ -2683,6 +3968,36 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Дом дачный",
+        "type": "Дача",
+        "square": "30,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "49,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "38,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -2712,9 +4027,34 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "750,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "52,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
-    "vehicles": []
+    "vehicles": [
+      {
+        "text": "а/м легковой Kia Ceed",
+        "relative": null
+      }
+    ]
   },
   {
     "person": {
@@ -2768,6 +4108,76 @@
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "547,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом (1/2)",
+        "type": "Жилой дом",
+        "square": "49,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "49,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "89,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "128,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "машиноместо",
+        "type": "Иное",
+        "square": "16,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "машиноместо",
+        "type": "Иное",
+        "square": "16,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
       }
@@ -2854,6 +4264,16 @@
         "square": "82,00",
         "country": "Россия",
         "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "82,00",
+        "country": "Россия",
+        "region": null,
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": "Ребенок"
@@ -2915,6 +4335,16 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "баня",
+        "type": "Иное",
+        "square": "45,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
       }
     ],
     "vehicles": [
@@ -2965,9 +4395,49 @@
         "relative": null
       },
       {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "504,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Дом дачный",
+        "type": "Дача",
+        "square": "117,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "63,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "50,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "63,60",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -3046,6 +4516,26 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "62,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "62,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -3085,6 +4575,26 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "9,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "62,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "12,00",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -3148,6 +4658,16 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "36,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -3182,6 +4702,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "97,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "60,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -3211,6 +4751,66 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Земельный участок под ИЖС",
+        "type": "Земельный участок",
+        "square": "800,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Дом дачный",
+        "type": "Дача",
+        "square": "170,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "77,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "78,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,7",
+        "relative": null
+      },
+      {
+        "text": "Машино место",
+        "type": "Иное",
+        "square": "18,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Гараж",
+        "type": "Гараж",
+        "square": "41,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -3235,6 +4835,36 @@
         "text": "Земельный участок садовый",
         "type": "Земельный участок",
         "square": "600,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "50,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "58,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,5",
+        "relative": null
+      },
+      {
+        "text": "Жилое строение",
+        "type": "Жилой дом",
+        "square": "21,3",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -3314,6 +4944,16 @@
         "relative": null
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "78,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Квартира",
         "type": "Квартира",
         "square": "62,0",
@@ -3336,7 +4976,37 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "42,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "78,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "61,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "78,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -3356,7 +5026,27 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "78,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "61,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "78,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -3412,9 +5102,29 @@
         "relative": "Супруг(а)"
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "68,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
         "text": "Жилой дом",
         "type": "Жилой дом",
         "square": "56,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "68,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -3453,6 +5163,26 @@
         "region": null,
         "own_type": "Совместная собственность",
         "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "46,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,1666666666666666666666666667",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "46,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,3333333333333333333333333333",
         "relative": null
       },
       {
@@ -3555,6 +5285,16 @@
         "region": null,
         "own_type": "Совместная собственность",
         "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "80,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
         "relative": "Супруг(а)"
       }
     ],
@@ -3613,6 +5353,16 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "108,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "29,0",
         "country": "Россия",
         "region": null,
@@ -3623,7 +5373,27 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "108,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "29,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "108,7",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -3825,6 +5595,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Дом",
+        "type": "Жилой дом",
+        "square": "92,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "21,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -4045,6 +5835,26 @@
         "relative": null
       },
       {
+        "text": "машино-место",
+        "type": "Иное",
+        "square": "20,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "нежилое помещение",
+        "type": "Иное",
+        "square": "3556,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "80,0",
@@ -4111,6 +5921,36 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "35,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "84,80",
+        "country": "Испания",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "помещение свободного назначения",
+        "type": "Иное",
+        "square": "38,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "38,70",
         "country": "Россия",
         "region": null,
@@ -4125,6 +5965,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "84,80",
+        "country": "Испания",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "гараж бокс",
+        "type": "Гараж",
+        "square": "16,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -4160,6 +6020,16 @@
         "text": "дом",
         "type": "Жилой дом",
         "square": "43,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "37,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -4269,6 +6139,36 @@
         "relative": null
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "63,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "131,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "124,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Машино-место",
         "type": "Иное",
         "square": "20,00",
@@ -4285,6 +6185,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "21,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       },
@@ -4397,6 +6307,16 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "68,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "66,10",
         "country": "Россия",
         "region": null,
@@ -4417,7 +6337,27 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "68,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "38,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "68,00",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -4447,6 +6387,36 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "73,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "75,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "107,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "37,8",
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
@@ -4496,6 +6466,16 @@
         "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "38,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -4530,6 +6510,66 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "86,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "43,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "86,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "86,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "43,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "86,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "43,20",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -4574,6 +6614,26 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "148,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "45,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -4609,6 +6669,16 @@
         "relative": null
       },
       {
+        "text": "гараж бокс",
+        "type": "Гараж",
+        "square": "22,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "жилой дом",
         "type": "Жилой дом",
         "square": "170,3",
@@ -4625,6 +6695,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "земельный   участок",
+        "type": "Земельный участок",
+        "square": "1100",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -4667,9 +6747,69 @@
         "relative": null
       },
       {
+        "text": "жилой дом",
+        "type": "Жилой дом",
+        "square": "220,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "68,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "80,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "98,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "земельный   участок",
         "type": "Земельный участок",
         "square": "1400",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "38,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "баня",
+        "type": "Иное",
+        "square": "50,0",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -4737,6 +6877,16 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "64,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "53,0",
         "country": "Россия",
         "region": null,
@@ -4776,6 +6926,16 @@
         "text": "земельный  участок",
         "type": "Земельный участок",
         "square": "4000,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "64,1",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -4841,6 +7001,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "51,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
         "share_amount": null,
         "relative": null
       },
@@ -5065,6 +7235,36 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "35,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,5",
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "45,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,5",
+        "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "14,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "45,0",
         "country": "Россия",
         "region": null,
@@ -5079,6 +7279,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "75,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,3333333333333333333333333333",
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "14,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -5114,6 +7334,16 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "42,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "48,9",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -5218,6 +7448,36 @@
         "relative": null
       },
       {
+        "text": "Земельный участок для ЛПХ",
+        "type": "Земельный участок",
+        "square": "1500,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "42,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,1",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "64,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,6666666666666666666666666667",
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "64,9",
@@ -5301,6 +7561,26 @@
         "relative": null
       },
       {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "59,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "38,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,5",
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "38,0",
@@ -5353,6 +7633,16 @@
         "own_type": "Долевая собственность",
         "share_amount": "0,3333333333333333333333333333",
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "34,3",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -5377,6 +7667,16 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "40,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "55,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -5421,6 +7721,16 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "40,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -5449,6 +7759,26 @@
         "text": "Земельный участок под ИЖС",
         "type": "Земельный участок",
         "square": "1080,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "284,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "73,2",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -5617,6 +7947,36 @@
         "relative": null
       },
       {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Дом дачный",
+        "type": "Дача",
+        "square": "63,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Баня",
+        "type": "Иное",
+        "square": "20,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Квартира",
         "type": "Квартира",
         "square": "64,9",
@@ -5696,6 +8056,26 @@
         "region": null,
         "own_type": "Долевая собственность",
         "share_amount": "0,3333333333333333333333333333",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "83,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "61,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,3333333333333333333333333333",
         "relative": "Супруг(а)"
       },
       {
@@ -5751,6 +8131,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "38,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "85,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,6666666666666666666666666667",
+        "relative": null
       }
     ],
     "vehicles": [
@@ -5791,9 +8191,49 @@
         "relative": null
       },
       {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "71,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "131,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "10,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,1",
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "1122,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "45,7",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -5813,6 +8253,16 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "131,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "45,7",
         "country": "Россия",
         "region": null,
@@ -5823,7 +8273,27 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "131,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "43,4",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "131,7",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -6112,6 +8582,16 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "44,1",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "55,5",
         "country": "Россия",
         "region": null,
@@ -6221,6 +8701,36 @@
         "relative": null
       },
       {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "600,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "72,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "20,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,3333333333333333333333333333",
+        "relative": null
+      },
+      {
         "text": "Квартира",
         "type": "Квартира",
         "square": "20,2",
@@ -6281,6 +8791,16 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "36,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "44,6",
         "country": "Россия",
         "region": null,
@@ -6325,6 +8845,26 @@
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "3000",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Дом дачный",
+        "type": "Дача",
+        "square": "52,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Гараж",
+        "type": "Гараж",
+        "square": "27,0",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -6486,6 +9026,66 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "81,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "100,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "1500,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "147,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "6,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "6,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -6540,6 +9140,16 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "51,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
       }
     ],
     "vehicles": [
@@ -6569,6 +9179,16 @@
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "1500,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "45,40",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -6656,6 +9276,16 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "10,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
       }
     ],
     "vehicles": [
@@ -6690,6 +9320,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "13,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "12,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -6719,6 +9369,16 @@
         "text": "Жилой дом",
         "type": "Жилой дом",
         "square": "175,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "40,00",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -6962,6 +9622,16 @@
         "square": "20,0",
         "country": "Россия",
         "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "комната",
+        "type": "Квартира",
+        "square": "20,0",
+        "country": "Россия",
+        "region": null,
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": "Ребенок"
@@ -6989,6 +9659,16 @@
         "text": "Квартира",
         "type": "Квартира",
         "square": "62,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "45,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -7098,6 +9778,36 @@
         "relative": "Супруг(а)"
       },
       {
+        "text": "земельный участок",
+        "type": "Земельный участок",
+        "square": "850,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "жилой дом",
+        "type": "Жилой дом",
+        "square": "20,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "70,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "70,0",
@@ -7149,6 +9859,16 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "147,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "47,20",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
@@ -7226,10 +9946,60 @@
       {
         "text": "Земельный участок под ИЖС",
         "type": "Земельный участок",
+        "square": "877,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "88,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Земельный участок под ИЖС",
+        "type": "Земельный участок",
         "square": "840,0",
         "country": "Россия",
         "region": null,
         "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Земельный участок под ИЖС",
+        "type": "Земельный участок",
+        "square": "877,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "88,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Нежилое помещение",
+        "type": "Иное",
+        "square": "17,2",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       },
@@ -7296,12 +10066,72 @@
         "relative": null
       },
       {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "18,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок под ИЖС",
         "type": "Земельный участок",
         "square": "715,0",
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Земельный участок для ЛПХ",
+        "type": "Земельный участок",
+        "square": "3151,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "75,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "59,1",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "60,6",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Машино-место",
+        "type": "Иное",
+        "square": "18,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -7573,7 +10403,27 @@
       {
         "text": "Квартира",
         "type": "Квартира",
+        "square": "59,8",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
         "square": "31,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "59,8",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -7702,6 +10552,16 @@
         "square": "42,60",
         "country": "Россия",
         "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "42,60",
+        "country": "Россия",
+        "region": null,
         "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": "Супруг(а)"
@@ -7719,7 +10579,27 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "42,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "53,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "42,60",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -7759,6 +10639,56 @@
         "own_type": "Совместная собственность",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "73,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "гараж",
+        "type": "Гараж",
+        "square": "24,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "49,80",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "56,80",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "56,80",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": [
@@ -7793,9 +10723,24 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "54,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
       }
     ],
-    "vehicles": []
+    "vehicles": [
+      {
+        "text": "а/м легковой Kia Rio",
+        "relative": null
+      }
+    ]
   },
   {
     "person": {
@@ -7820,6 +10765,66 @@
         "country": "Россия",
         "region": null,
         "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "46,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "42,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "53,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "42,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "53,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "42,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
       }
@@ -7854,6 +10859,36 @@
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "75,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "75,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "75,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
       }
@@ -7924,6 +10959,26 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "жилой дом",
+        "type": "Жилой дом",
+        "square": "166,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "хозяйственная постройка",
+        "type": "Иное",
+        "square": "35,84",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
       }
     ],
     "vehicles": [
@@ -7984,6 +11039,26 @@
         "relative": "Супруг(а)"
       },
       {
+        "text": "садовый дом",
+        "type": "Дача",
+        "square": "110,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "хозяйственная постройка",
+        "type": "Иное",
+        "square": "66,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "72,40",
@@ -8007,6 +11082,14 @@
     "vehicles": [
       {
         "text": "а/м легковой Mitsubishi Pajero",
+        "relative": null
+      },
+      {
+        "text": "а/м легковой Nissan Juke",
+        "relative": null
+      },
+      {
+        "text": "Прицеп Laker Heavy Duty",
         "relative": null
       }
     ]
@@ -8087,6 +11170,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "дом садовый",
+        "type": "Дача",
+        "square": "55,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "57,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -8287,6 +11390,16 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "гараж-бокс",
+        "type": "Гараж",
+        "square": "18,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
       }
     ],
     "vehicles": []
@@ -8324,6 +11437,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "33,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
         "share_amount": null,
         "relative": null
       }
@@ -8365,6 +11488,16 @@
         "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "43,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
       }
     ],
     "vehicles": []
@@ -8400,6 +11533,16 @@
         "relative": null
       },
       {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "53,70",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "земельный участок",
         "type": "Земельный участок",
         "square": "25,0",
@@ -8416,6 +11559,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "гараж",
+        "type": "Гараж",
+        "square": "41,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       }
@@ -8499,7 +11652,27 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "54,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "32,0",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "54,0",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -8594,6 +11767,16 @@
       {
         "text": "квартира",
         "type": "Квартира",
+        "square": "33,50",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
         "square": "74,30",
         "country": "Россия",
         "region": null,
@@ -8679,6 +11862,26 @@
         "relative": null
       },
       {
+        "text": "дом дачный",
+        "type": "Дача",
+        "square": "71,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "58,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "квартира",
         "type": "Квартира",
         "square": "60,50",
@@ -8732,6 +11935,16 @@
         "relative": null
       },
       {
+        "text": "гараж",
+        "type": "Гараж",
+        "square": "18,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
         "text": "Земельный участок",
         "type": "Земельный участок",
         "square": "1050,00",
@@ -8748,6 +11961,26 @@
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "47,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "машиноместо",
+        "type": "Иное",
+        "square": "27,40",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
       },
@@ -8813,6 +12046,26 @@
         "text": "квартира",
         "type": "Квартира",
         "square": "55,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "55,90",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира",
+        "type": "Квартира",
+        "square": "58,30",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",

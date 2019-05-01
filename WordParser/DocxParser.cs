@@ -12,13 +12,22 @@ namespace TI.Declarator.WordParser
     public class DocXParser : IDeclarationParser
     {
         private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+        private static Dictionary<string, RealEstateType> PropertyTypes = new Dictionary<string, RealEstateType>();
 
         private DeclarationProperties DeclarationProperties;
-        private Dictionary<string, RealEstateType> PropertyTypes;
-
-        public DocXParser(Dictionary<string, RealEstateType> propertyTypes)
+        
+        static DocXParser()
         {
-            this.PropertyTypes = propertyTypes;
+            foreach (var l in File.ReadAllLines("PropertyDictionary.txt"))
+            {
+                string[] keyvalue = l.Split(new string[] { "=>" }, StringSplitOptions.None);
+                RealEstateType value = (RealEstateType)Enum.Parse(typeof(RealEstateType), keyvalue[1]);
+                PropertyTypes.Add(keyvalue[0], value);
+            }
+        }
+
+        public DocXParser()
+        {
         }
 
 

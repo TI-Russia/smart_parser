@@ -19,18 +19,13 @@ namespace Tindalos
 
         static Tindalos()
         {
-            foreach (var l in File.ReadAllLines("PropertyDictionary.txt"))
-            {
-                string[] keyvalue = l.Split(new string[] { "=>" }, StringSplitOptions.None);
-                RealEstateType value = (RealEstateType)Enum.Parse(typeof(RealEstateType), keyvalue[1]);
-                PropertyTypes.Add(keyvalue[0], value);
-            }
+
         }
 
         static void Main(string[] args)
         {
             //Scan(args);
-            //Test(@"regression\2016_Sotrudniki_ministerstva.docx");
+            Test(@"regression\2016_Sotrudniki_ministerstva.docx");
             //Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
             Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
 
@@ -93,8 +88,8 @@ namespace Tindalos
             string ext = Path.GetExtension(fileName);
             switch (ext)
             {
-                case ".doc": string docXName = Doc2DocX(fileName); return ParseDocX(docXName, PropertyTypes);
-                case ".docx": return ParseDocX(fileName, PropertyTypes);
+                case ".doc": string docXName = Doc2DocX(fileName); return ParseDocX(docXName);
+                case ".docx": return ParseDocX(fileName);
                 default: throw new Exception(@"Unsupported format in file {fileName}");
             }
         }
@@ -112,9 +107,9 @@ namespace Tindalos
             return docXPath;
         }
 
-        private static Declaration ParseDocX(string fileName, Dictionary<String, RealEstateType> propertyTypes)
+        private static Declaration ParseDocX(string fileName)
         {
-            var parser = new DocXParser(PropertyTypes);
+            var parser = new DocXParser();
             return parser.Parse(fileName);
         }
 
@@ -158,7 +153,7 @@ namespace Tindalos
 
         private static void ScanDocX(string fileName, string outputFile = null)
         {
-            var parser = new DocXParser(null);
+            var parser = new DocXParser();
             var co = parser.Scan(fileName).ColumnOrdering;
 
             if (outputFile != null)
