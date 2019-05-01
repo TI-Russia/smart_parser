@@ -25,5 +25,22 @@ namespace TI.Declarator.WordParser
             }
             return res.ToString();
         }
+
+        /// <summary>
+        /// Get text representation for given row. Used mostly for debug purposes
+        /// </summary>
+        /// <param name="r"></param>
+        public static string Stringify(this Xceed.Words.NET.Row r)
+        {
+            var resSb = new StringBuilder();
+
+            foreach (var c in r.Cells)
+            {
+                resSb.Append(c.GetText());
+                resSb.Append(" | ");
+            }
+
+            return resSb.ToString();
+        }
     }
 }
