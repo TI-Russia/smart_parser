@@ -66,10 +66,36 @@ namespace RegressionTesting
 
         private const string WordFilesDirectory = @"Word";
         private const string WordLogFile = "word_files.log";
+        private const string SampleWordLogFile = "sample_word_files.log";
 
         private string WordLogFilePath
         {
             get { return Path.GetFullPath(WordLogFile); }
+        }
+
+        private string SampleWordLogFilePath
+        {
+            get { return Path.GetFullPath(SampleWordLogFile); }
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestWordSampleFiles()
+        {
+            int nChecks = 0;
+            int nFailedChecks = 0;
+            foreach (var sampleFile in Directory.GetFiles(WordFilesDirectory, "*.json"))
+            {
+                nChecks++;
+                if (!IsSampleFileValid(sampleFile, SampleWordLogFilePath))
+                {
+                    nFailedChecks++;
+                }
+            }
+
+            Assert.AreEqual(0, nFailedChecks, $"Sample files validation test: {nFailedChecks} out of {nChecks} sample files are not valid. Validation log can be found in {SampleWordLogFilePath}");
         }
 
         [TestMethod]
@@ -88,7 +114,7 @@ namespace RegressionTesting
                 File.WriteAllText(outputFileName, DeclarationSerializer.Serialize(res));
 
                 string expectedFile = Path.Combine(WordFilesDirectory, outputFileName);
-                bool isValid = TestValidity(expectedFile, outputFileName, WordLogFile);
+                bool isValid = TestValidity(expectedFile, outputFileName, WordLogFilePath);
                
                 if (!isValid) { nFailedComparisons++; }
                 nComparisons++;
@@ -151,11 +177,6 @@ namespace RegressionTesting
                 throw new FileNotFoundException($"Could not find expected output file {expectedFile}");
             }
 
-            if (!IsExpectedFileValid(expectedFile, logFile))
-            {
-                return false;
-            }
-
             if (!File.Exists(actualFile))
             {
                 throw new FileNotFoundException($"Could not find actual output file {actualFile}");
@@ -195,7 +216,7 @@ namespace RegressionTesting
             }
         }
 
-        private static bool IsExpectedFileValid(string expectedFile, string logFile)
+        private static bool IsSampleFileValid(string expectedFile, string logFile)
         {
             string expectedOutput = File.ReadAllText(expectedFile);
             string validationResult = ApiClient.ValidateParserOutput(expectedOutput);
@@ -207,7 +228,6 @@ namespace RegressionTesting
                 Log(logFile, $"Expected file {expectedFile} is no longer valid." +
                     $" Please ensure it conforms to the latest schema and validation requirements.");
                 Log(logFile, $"Validation errors are listed in {Path.GetFullPath(errorsFileName)}");
-                //var rep = MiscSerializer.DeserializeValidationReport(validationResult);
 
                 return false;
             }
