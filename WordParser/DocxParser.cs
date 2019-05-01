@@ -149,6 +149,10 @@ namespace TI.Declarator.WordParser
                     currentServant.Relatives.Add(pRel);
                     currentPerson = pRel;
                 }
+                else if (ContainsValidData(r))
+                {
+                    FillPersonProperties(r, currentPerson);
+                }
             }
 
             return new Declaration()
@@ -171,6 +175,13 @@ namespace TI.Declarator.WordParser
                     && (!relationshipStr.Contains("фамилия")) 
                     && (!relationshipStr.Contains("фио"))
                     && GetContents(r, DeclarationField.Occupation).IsNullOrWhiteSpace());
+        }
+
+        // FIXME: need more criteria, obviously
+        private bool ContainsValidData(Row r)
+        {
+            string huh = GetContents(r, DeclarationField.Number);
+            return !(huh.Contains("№") || r.Stringify().Contains("вид объекта"));
         }
 
         private PublicServant ParsePublicServantInfo(Row r)
@@ -215,12 +226,18 @@ namespace TI.Declarator.WordParser
             string vehicle = GetContents(r, DeclarationField.Vehicle);
             if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-") { p.Vehicles.Add(vehicle); }
 
-            p.DeclaredYearlyIncome = ParseDeclaredIncome(GetContents(r, DeclarationField.DeclaredYearlyIncome));
-            if (DeclarationProperties.ColumnOrdering[DeclarationField.DataSources] != null)
+            if (!p.DeclaredYearlyIncome.HasValue)
             {
-                p.DataSources = ParseDataSources(GetContents(r, DeclarationField.DataSources));
+                p.DeclaredYearlyIncome = ParseDeclaredIncome(GetContents(r, DeclarationField.DeclaredYearlyIncome));
             }
             
+            if (p.DataSources.IsNullOrWhiteSpace())
+            {
+                if (DeclarationProperties.ColumnOrdering[DeclarationField.DataSources] != null)
+                {
+                    p.DataSources = ParseDataSources(GetContents(r, DeclarationField.DataSources));
+                }
+            }            
         }
 
         private static RelationType ParseRelationType(string strRel)
