@@ -15,6 +15,7 @@ namespace TI.Declarator.WordParser
         private static Dictionary<string, RealEstateType> PropertyTypes = new Dictionary<string, RealEstateType>();
 
         private DeclarationProperties DeclarationProperties;
+        private List<string> StringifiedHeaderRows = new List<String>();
         
         static DocXParser()
         {
@@ -68,6 +69,7 @@ namespace TI.Declarator.WordParser
             }
 
             var header = t.Rows[headerRowNum];
+            StringifiedHeaderRows.Add(header.Stringify());
 
             ColumnOrdering res = new ColumnOrdering();
             int colCount = 0;
@@ -93,6 +95,7 @@ namespace TI.Declarator.WordParser
                 {
                     int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
                     Row auxRow = t.Rows[headerRowNum + 1];
+                    StringifiedHeaderRows.Add(auxRow.Stringify());
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
                     auxCellsIter.MoveNext();
                     int auxColCount = 0;
@@ -189,8 +192,15 @@ namespace TI.Declarator.WordParser
         // FIXME: need more criteria, obviously
         private bool ContainsValidData(Row r)
         {
-            string huh = GetContents(r, DeclarationField.Number);
-            return !(huh.Contains("№") || r.Stringify().Contains("вид объекта"));
+            string rowStr = r.Stringify();
+            foreach(var headerStr in StringifiedHeaderRows)
+            {
+                if (rowStr == headerStr)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private PublicServant ParsePublicServantInfo(Row r)

@@ -27,7 +27,7 @@ namespace TI.Declarator.WordParser
         }
 
         /// <summary>
-        /// Get text representation for given row. Used mostly for debug purposes
+        /// Get plaintext-with-separators representation for given row
         /// </summary>
         /// <param name="r"></param>
         public static string Stringify(this Xceed.Words.NET.Row r)
