@@ -630,7 +630,7 @@ namespace Smart.Parser.Lib
         static public bool ParseVehicle(string vechicleString, List<Vehicle> vechicles)
         {
             string[] vehicleTypeDict = {
-                "автомобили легковые:",
+                @"автомобил. легков..[:|\n]",
                 "мототранспортные средства:",
                 "водный транспорт:",
                 "иные транспортные средства:",
@@ -638,7 +638,8 @@ namespace Smart.Parser.Lib
                 "сельскохозяйственная техника:",
                 "автомобили грузовые:"
             };
-            var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")");
+            vechicleString = vechicleString.Trim();
+            var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")", RegexOptions.IgnoreCase);
             string normalVehicleStr = vechicleString.ToLower().Trim();
             if (String.IsNullOrEmpty(normalVehicleStr) || 
                 normalVehicleStr == "не имеет" ||
@@ -669,7 +670,7 @@ namespace Smart.Parser.Lib
                         }
                     }
                     last_end = end;
-                    last_type = itemMatch.Value.TrimEnd(':');
+                    last_type = itemMatch.Value.TrimEnd(':', '\n');
                 }
                 vechicleItemStr = vechicleString.Substring(last_end);
                 items = vechicleItemStr.Split(',');
