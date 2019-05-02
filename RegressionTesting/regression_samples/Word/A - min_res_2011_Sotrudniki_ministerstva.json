@@ -4025,6 +4025,26 @@
         "relative": null
       },
       {
+        "text": "квартира ",
+        "type": "Квартира",
+        "square": "54,1",
+        "country": "Украина",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "  гараж ",
+        "type": "Гараж",
+        "square": "18",
+        "country": "Украина",
+        "region": null,
+        "own_type": "Совместная собственность",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
         "text": "квартира\n(социальный найм)",
         "type": "Квартира",
         "square": "76,5",
@@ -7285,6 +7305,16 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира\n(безвозмездное, бессрочное)",
+        "type": "Квартира",
+        "square": "52,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
       }
     ],
     "vehicles": [
@@ -7638,7 +7668,38 @@
         "relative": "Супруг(а)"
       }
     ],
-    "real_estates": [],
+    "real_estates": [
+      {
+        "text": "квартира\n(член семьи собственника жилья)",
+        "type": "Квартира",
+        "square": "62,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира\n(член семьи нанимателя)",
+        "type": "Квартира",
+        "square": "80",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира\n(член семьи собственника жилья)",
+        "type": "Квартира",
+        "square": "62,9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
+      }
+    ],
     "vehicles": [
       {
         "text": "а/м \nOpel Astra",
@@ -7685,6 +7746,26 @@
         "own_type": "Индивидуальная",
         "share_amount": null,
         "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира\n(член семьи собственника жилья)",
+        "type": "Квартира",
+        "square": "43,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "квартира\n(член семьи собственника жилья)",
+        "type": "Квартира",
+        "square": "43,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": "Ребенок"
       }
     ],
     "vehicles": [
@@ -7731,6 +7812,16 @@
         "country": "Россия",
         "region": null,
         "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира\n(наследство)",
+        "type": "Квартира",
+        "square": "58,5",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
         "share_amount": null,
         "relative": null
       },
@@ -7913,7 +8004,18 @@
         "relative": null
       }
     ],
-    "real_estates": [],
+    "real_estates": [
+      {
+        "text": "комната\n(общежитие)",
+        "type": "Квартира",
+        "square": "9",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
     "vehicles": []
   },
   {
@@ -7940,6 +8042,16 @@
         "text": "квартира (безвозмездное пользование)\n\nквартира (муниципальная)",
         "type": "Квартира",
         "square": "39,7",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "квартира (безвозмездное пользование)\n\nквартира (муниципальная)",
+        "type": "Квартира",
+        "square": "37,1",
         "country": "Россия",
         "region": null,
         "own_type": "В пользовании",
@@ -9217,6 +9329,16 @@
         "region": null,
         "own_type": "Долевая собственность",
         "share_amount": "0,5",
+        "relative": "Супруг(а)"
+      },
+      {
+        "text": "гараж (кооператив)",
+        "type": "Гараж",
+        "square": "18",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
         "relative": "Супруг(а)"
       }
     ],

@@ -189,7 +189,7 @@ namespace TI.Declarator.WordParser
                     && GetContents(r, DeclarationField.Occupation).IsNullOrWhiteSpace());
         }
 
-        // FIXME: need more criteria, obviously
+        // TODO: need more criteria, obviously
         private bool ContainsValidData(Row r)
         {
             string rowStr = r.Stringify();
@@ -383,10 +383,11 @@ namespace TI.Declarator.WordParser
 
         private static OwnershipType ParseOwnershipType(string strOwn)
         {
-            string str = strOwn.ToLower().Trim();
+            string str = strOwn.ToLower().Trim().RemoveStupidTranslit();
             OwnershipType res;
             if (str.StartsWith("индивидуальная")) res = OwnershipType.Individual;
             else if (str.StartsWith("собственность")) res = OwnershipType.Individual;
+            else if (str.StartsWith("кооперативная")) res = OwnershipType.Joint;
             else if (str.StartsWith("общая совместная")) res = OwnershipType.Joint;
             else if (str.StartsWith("совместная")) res = OwnershipType.Joint;
 
@@ -467,16 +468,22 @@ namespace TI.Declarator.WordParser
                     throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
                 }
 
-                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
-                if (ContainsOwnershipType(strOwnType))
+                string strPropAux = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
+                string strPropType = null;
+                if (ContainsOwnershipType(strPropAux))
                 {
-                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos);
-                    RealEstateType realEstateType = ParseRealEstateType(strPropType);
-                    res.Add(realEstateType);
+                    strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos);
 
-                    startingPos = rightParenPos + 1;
                 }
-                // FIXME else what?
+                else
+                {
+                    strPropType = strPropInfo.Substring(startingPos, rightParenPos + 1);
+                }
+
+                strPropType = strPropType.Replace('\n', ' ');
+                RealEstateType realEstateType = ParseRealEstateType(strPropType);
+                res.Add(realEstateType);
+                startingPos = rightParenPos + 1;
 
                 leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
             }
@@ -487,8 +494,19 @@ namespace TI.Declarator.WordParser
         private static bool ContainsOwnershipType(string str)
         {
             string strProc = str.Trim().ToLower();
-            return (strProc.Contains("индивидуальная") || strProc.Contains("долевая") || strProc.Contains("общая") || strProc.Contains("аренда") ||
-                    strProc.Contains("пользование") || strProc.Contains("предоставление") || strProc.Contains("найм"));
+            return (strProc.Contains("индивидуальная") || 
+                    strProc.Contains("долевая") ||
+                    strProc.Contains("общая") ||
+                    strProc.Contains("кооператив") ||
+                    strProc.Contains("аренда") ||
+                    strProc.Contains("муниципальная") ||
+                    strProc.Contains("пользование") ||
+                    strProc.Contains("предоставление") ||
+                    strProc.Contains("найм") ||
+                    strProc.Contains("член семьи нанимателя") ||
+                    strProc.Contains("член семьи собственника") ||
+                    strProc.Contains("безвозмездное") ||
+                    strProc.Contains("наследство"));
         }
 
         private static IEnumerable<string> ParseOwnershipShares(string strOwn, IEnumerable<OwnershipType> ownTypes)

@@ -125,10 +125,11 @@
 квартиры=>Apartment
 квартиры-студии=>Apartment
 кладовая=>Other
-комната=>Apartment	
+комната=>Apartment
+комната (общежитие)=>Apartment
 комната в 3-х комнатной квартире=>Apartment
-комнаты=>Apartment
 комната в коммунальной квартире=>Apartment
+комнаты=>Apartment
 комнаты в коммунальной квартире=>Apartment
 конюшня=>Other
 коровник=>Other

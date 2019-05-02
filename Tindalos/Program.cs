@@ -25,9 +25,9 @@ namespace Tindalos
         static void Main(string[] args)
         {
             //Scan(args);
-            Test(@"regression\2016_Sotrudniki_ministerstva.docx");
-            //Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
-            Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+            //Test(@"regression\2016_Sotrudniki_ministerstva.docx");
+            Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
+            //Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
 
             //var ue = new UnknownEntry
             //{
