@@ -59,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj">
+      <Project>{dcb47788-553f-495f-bdab-1b144e0df5b1}</Project>
+      <Name>Smart.Parser.Lib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
       <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>
       <Name>ParserCommon</Name>

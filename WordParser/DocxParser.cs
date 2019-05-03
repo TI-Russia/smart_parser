@@ -4,8 +4,10 @@ using System.Linq;
 using System.IO;
 using System.Xml.Linq;
 
-using TI.Declarator.ParserCommon;
 using Xceed.Words.NET;
+
+using Smart.Parser.Lib;
+using TI.Declarator.ParserCommon;
 
 namespace TI.Declarator.WordParser
 {
@@ -244,8 +246,23 @@ namespace TI.Declarator.WordParser
             var stateProperty = ParseStateProperty(r);
             if (stateProperty != null) { p.RealEstateProperties.AddRange(stateProperty); }
 
-            string vehicle = GetContents(r, DeclarationField.Vehicle);
-            if (!String.IsNullOrEmpty(vehicle) && vehicle.Trim() != "-") { p.Vehicles.Add(vehicle); }
+            string vehicleStr = GetContents(r, DeclarationField.Vehicle).CleanWhitespace()
+                                                                        .CoalesceWhitespace()
+                                                                        .Trim();
+            if (!String.IsNullOrEmpty(vehicleStr) && vehicleStr.Trim() != "-")
+            {
+                var vehicleList = new List<Vehicle>();
+                bool parseVehiclesResult = DataHelper.ParseVehicle(vehicleStr, vehicleList);
+                if (parseVehiclesResult)
+                {
+                    p.Vehicles.AddRange(vehicleList);
+                }
+                else
+                {
+                    throw new Exception($"Could not extract vehicle list from '{vehicleStr}'");
+                }
+                
+            }
 
             if (!p.DeclaredYearlyIncome.HasValue)
             {

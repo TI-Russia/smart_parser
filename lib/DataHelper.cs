@@ -636,7 +636,10 @@ namespace Smart.Parser.Lib
                 "иные транспортные средства:",
                 "воздушный транспорт:",
                 "сельскохозяйственная техника:",
-                "автомобили грузовые:"
+                "автомобили грузовые:",
+                "легковой автомобиль",
+                "а/м легковой",
+                "а/м"
             };
             vechicleString = vechicleString.Trim();
             var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")", RegexOptions.IgnoreCase);
