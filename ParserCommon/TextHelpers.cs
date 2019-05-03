@@ -6,8 +6,9 @@ namespace TI.Declarator.ParserCommon
 {
     public static class TextHelpers
     {
-        private static CultureInfo RussianCulture = CultureInfo.CreateSpecificCulture("ru-ru");
-        private static Regex YearRegexString = new Regex("[0-9]{4}");
+        
+        private static readonly CultureInfo RussianCulture = CultureInfo.CreateSpecificCulture("ru-ru");
+        private static readonly Regex ExtractYearRegex = new Regex("[0-9]{4}", RegexOptions.Compiled);
         public static decimal ParseDecimalValue(this string val)
         {
             decimal res;
@@ -37,7 +38,7 @@ namespace TI.Declarator.ParserCommon
         /// <returns></returns>
         public static int? ExtractYear(this string str)
         {
-            Match m = YearRegexString.Match(str);
+            Match m = ExtractYearRegex.Match(str);
             if (m.Success)
             {
                 return Int32.Parse(m.Groups[0].Value);
@@ -66,6 +67,11 @@ namespace TI.Declarator.ParserCommon
         public static string CleanWhitespace(this string str)
         {
             return str.Replace('\n', ' ').Trim();
+        }
+
+        public static string CoalesceWhitespace(this string str)
+        {
+            return Regex.Replace(str, @"[ ]+", " ");
         }
     }
 }

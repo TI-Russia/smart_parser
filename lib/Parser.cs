@@ -134,6 +134,7 @@ namespace Smart.Parser.Lib
                     }
                     currentServant = new PublicServant()
                     {
+                        NameRaw = nameOrRelativeType,
                         Name = DataHelper.NormalizeName(nameOrRelativeType),
                         Occupation = occupationStr
                     };

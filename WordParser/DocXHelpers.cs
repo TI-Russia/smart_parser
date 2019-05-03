@@ -21,9 +21,19 @@ namespace TI.Declarator.WordParser
 
             if (Unbastardize)
             {
-                return res.ToString().RemoveStupidTranslit().Replace("  ", " ").Trim();
+                return res.ToString().Unbastardize();
             }
             return res.ToString();
+        }
+
+        /// <summary>
+        /// Removes translit and whitespace glitches commonly found in declaration fields
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string Unbastardize(this string str)
+        {
+            return str.ToString().RemoveStupidTranslit().Replace("  ", " ").Trim();
         }
 
         /// <summary>

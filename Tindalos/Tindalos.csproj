@@ -63,9 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="regression\2016_Rukovoditeli_gosuchrezhdenij,_podvedomstvennyih_ministerstvu.doc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc">

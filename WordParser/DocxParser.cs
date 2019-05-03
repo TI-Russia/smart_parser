@@ -206,9 +206,11 @@ namespace TI.Declarator.WordParser
         private PublicServant ParsePublicServantInfo(Row r)
         {
             string occ = GetContents(r, DeclarationField.Occupation);
+            string name = GetContents(r, DeclarationField.NameOrRelativeType);
             var res = new PublicServant()
             {
-                Name = GetContents(r, DeclarationField.NameOrRelativeType),
+                NameRaw = name,
+                Name = name.RemoveStupidTranslit().Replace('\n', ' ').CoalesceWhitespace().Trim(),
                 Occupation = occ
             };
 

@@ -135,7 +135,7 @@ namespace TI.Declarator.JsonSerialization
         {
             return new JProperty("person", new JObject(
                                               new JProperty("name", servant.Name),
-                                              new JProperty("name_raw", servant.Name),
+                                              new JProperty("name_raw", servant.NameRaw),
                                               //new JProperty("family_name", servant.FamilyName),
                                               //new JProperty("first_name", servant.GivenName),
                                               //new JProperty("patronymic_name", servant.Patronymic),
