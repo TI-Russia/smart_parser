@@ -88,6 +88,30 @@
     <None Include="testfiles\N - min_trans_dohod_2010.doc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="to_process\min_ind\2009_Sotrudniki_ministerstva.pdf" />
+    <None Include="to_process\min_ind\2010_Sotrudniki_ministerstva.pdf" />
+    <None Include="to_process\min_ind\2011_Sotrudniki_ministerstva.pdf" />
+    <None Include="to_process\min_ind\2012_Sotrudniki_ministerstva.pdf" />
+    <None Include="to_process\min_ind\2013_Svedeniya_o_dokhodakh-rukovodstvo.docx" />
+    <None Include="to_process\min_ind\2013_Svedeniya_o_dokhodakh_po_podvedomstvennym_organizatsiyam.docx" />
+    <None Include="to_process\min_ind\2013_Svedeniya_o_dokhodakh_po_tsentralnomu_apparatu.docx" />
+    <None Include="to_process\min_ind\2014_Rukovoditeli_ministerstva.doc" />
+    <None Include="to_process\min_ind\2014_Rukovoditeli_podvedomstvennyih_uchrezhdenij.docx" />
+    <None Include="to_process\min_ind\2014_Sotrudniki_ministerstva,_rukovoditeli_territorial%27nyih_upravlenij.docx" />
+    <None Include="to_process\min_ind\2015_Rukovoditeli_ministerstva.docx" />
+    <None Include="to_process\min_ind\2015_Rukovoditeli_podvedomstvennyih_uchrezhdenij.docx" />
+    <None Include="to_process\min_ind\2015_Rukovoditeli_podvedomstvennyih_uchrezhdenij_%28utochnyonnyie%29.docx" />
+    <None Include="to_process\min_ind\2015_Sotrudniki_ministerstva,_rukovoditeli_territorial%27nyih_upravlenij.docx" />
+    <None Include="to_process\min_ind\2015_Sotrudniki_ministerstva,_rukovoditeli_territorial%27nyih_upravlenij_%28utochnyonnyie%29.docx" />
+    <None Include="to_process\min_ind\2016_Rukovoditeli_ministerstva.docx" />
+    <None Include="to_process\min_ind\2016_Rukovoditeli_podvedomstvennyih_uchrezhdenij.docx" />
+    <None Include="to_process\min_ind\2016_Sotrudniki_ministerstva.docx" />
+    <None Include="to_process\min_ind\2016_Sotrudniki_ministerstva_%28utochnyonnyie%29.docx" />
+    <None Include="to_process\min_ind\2017_Rukovoditeli_ministerstva_%28utochnionnye%29.docx" />
+    <None Include="to_process\min_ind\2017_Rukovoditeli_podvedomstvennykh_uchrezhdenii_%28utochnionnye%29.docx" />
+    <None Include="to_process\min_ind\2017_Sotrudniki_ministerstva_%28utochnionnye%29.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="validation_feedback_example.json" />
   </ItemGroup>
   <ItemGroup>
@@ -108,5 +132,6 @@
       <Name>WordParser</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

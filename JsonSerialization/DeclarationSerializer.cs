@@ -104,7 +104,7 @@ namespace TI.Declarator.JsonSerialization
         public static string Serialize(Declaration declaration, ref string comment)
         {
             var jServants = new JArray();
-            foreach (PublicServant serv in declaration.Declarants)
+            foreach (PublicServant serv in declaration.PublicServants)
             {
                 jServants.Add(Serialize(serv, declaration.Properties));
             }

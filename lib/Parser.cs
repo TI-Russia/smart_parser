@@ -139,7 +139,7 @@ namespace Smart.Parser.Lib
                         Occupation = occupationStr
                     };
 
-                    declaration.Declarants.Add(currentServant);
+                    declaration.PublicServants.Add(currentServant);
                     currentPerson = currentServant;
                     currentPerson.RangeLow = row;
 
@@ -186,7 +186,7 @@ namespace Smart.Parser.Lib
             }
 
 
-            Logger.Info("Parsed {0} declarants", declaration.Declarants.Count());
+            Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
 
             ParsePersonalProperties(declaration);
 
@@ -218,7 +218,7 @@ namespace Smart.Parser.Lib
 
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
-            foreach (PublicServant servant in declaration.Declarants)
+            foreach (PublicServant servant in declaration.PublicServants)
             {
                 List<Person> servantAndRel = new List<Person>() { servant };
                 servantAndRel.AddRange(servant.Relatives);

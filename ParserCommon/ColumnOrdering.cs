@@ -22,6 +22,11 @@ namespace TI.Declarator.ParserCommon
             }
         }
 
+        public bool ContainsField(DeclarationField field)
+        {
+            return ColumnOrder.ContainsKey(field);
+        }
+
         public void Add(DeclarationField field, int order)
         {
             if (ColumnOrder.ContainsKey(field))

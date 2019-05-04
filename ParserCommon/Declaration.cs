@@ -5,7 +5,7 @@ namespace TI.Declarator.ParserCommon
 {
     public class Declaration
     {
-        public List<PublicServant> Declarants { get; set; } = new List<PublicServant>();
+        public List<PublicServant> PublicServants { get; set; } = new List<PublicServant>();
         public DeclarationProperties Properties { get; set; }
         public List<DeclarationSection> Sections { get; set; } = new List<DeclarationSection>();
     }

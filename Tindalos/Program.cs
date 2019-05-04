@@ -28,6 +28,7 @@ namespace Tindalos
             //Test(@"testfiles\2016_Sotrudniki_ministerstva.docx");
             //Test(@"testfiles\A - min_res_2011_Sotrudniki_ministerstva.doc");
             Test(@"testfiles\C - min_health_2015_Sotrudniki_ministerstva.docx");
+            //Test(@"to_process\min_ind\2017_Sotrudniki_ministerstva_(utochnionnye).docx");
 
             //var ue = new UnknownEntry
             //{
@@ -154,7 +155,7 @@ namespace Tindalos
         private static void ScanDocX(string fileName, string outputFile = null)
         {
             var parser = new DocXParser();
-            var co = parser.Scan(fileName).ColumnOrdering;
+            var co = parser.ScanProperties(fileName).ColumnOrdering;
 
             if (outputFile != null)
             {

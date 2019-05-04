@@ -37,12 +37,12 @@ namespace TI.Declarator.WordParser
         public Declaration Parse(string filepath)
         {
             DocX doc = DocX.Load(filepath);
-            DeclarationProperties = Scan(filepath);
+            DeclarationProperties = ScanProperties(filepath);
 
             return Parse(doc);
         }
 
-        public DeclarationProperties Scan(string filepath)
+        public DeclarationProperties ScanProperties(string filepath)
         {
             DocX doc = DocX.Load(filepath);
             string title = GetTitle(doc);
@@ -147,8 +147,19 @@ namespace TI.Declarator.WordParser
             var servants = new List<PublicServant>();
             PublicServant currentServant = null;
             Person currentPerson = null;
+            int? expectedCount = null;
+            bool containsEntryNumbers = DeclarationProperties.ColumnOrdering.ContainsField(DeclarationField.Number);
             foreach (Row r in leadTable.Rows.Skip(rowOffset))
             {
+                if (containsEntryNumbers)
+                {
+                    int? entryNumber = GetEntryNumber(r);
+                    if (entryNumber.HasValue)
+                    {
+                        expectedCount = entryNumber;
+                    }
+                }
+                
                 if (IsPublicServantInfo(r))
                 {
                     PublicServant pServ = ParsePublicServantInfo(r);
@@ -169,11 +180,29 @@ namespace TI.Declarator.WordParser
                 }
             }
 
+            CheckEntriesNumber(expectedCount, servants);
+
             return new Declaration()
             {
-                Declarants = servants,
+                PublicServants = servants,
                 Properties = DeclarationProperties
             };
+        }
+
+        private int? GetEntryNumber(Row r)
+        {
+            string currNumStr = GetContents(r, DeclarationField.Number).Unbastardize();
+            int currNum = 0;
+            bool success = Int32.TryParse(currNumStr, out currNum);
+            if (success)
+            {
+                return currNum;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         private bool IsPublicServantInfo(Row r)
@@ -191,7 +220,7 @@ namespace TI.Declarator.WordParser
                     && GetContents(r, DeclarationField.Occupation).IsNullOrWhiteSpace());
         }
 
-        // TODO: need more criteria, obviously
+        // TODO: needs more criteria, obviously
         private bool ContainsValidData(Row r)
         {
             string rowStr = r.Stringify();
@@ -276,6 +305,31 @@ namespace TI.Declarator.WordParser
                     p.DataSources = ParseDataSources(GetContents(r, DeclarationField.DataSources));
                 }
             }            
+        }
+
+        private static void CheckEntriesNumber(int? expectedCount, IEnumerable<PublicServant> publicServants)
+        {
+            if (!expectedCount.HasValue)
+            {
+                return;
+            }
+
+            int servantsCount = publicServants.Count();
+            if (expectedCount.Value == servantsCount)
+            {
+                return;
+            }
+
+            int totalCount = servantsCount + publicServants.Select(ps => ps.Relatives.Count()).Sum();
+            if (expectedCount.Value == totalCount + 1)
+            {
+                return;
+            }
+
+            //throw new Exception($"Parsing error: number of source entries ({expectedCount.Value}) " +
+            //                    $"does not match public servants count ({servantsCount}) " +
+            //                    $"or total number of individuals ({totalCount}) " +
+            //                    $"in parser output");
         }
 
         private static RelationType ParseRelationType(string strRel)

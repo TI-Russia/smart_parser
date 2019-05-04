@@ -59,8 +59,7 @@ namespace Smart.Parser.Lib
         static public ColumnOrdering ExamineHeader(IAdapter t)
         {
             int headerRowNum = 0;
-            int auxRowCount = 0;
-            
+            int auxRowCount = 0;            
 
             while (!IsHeader(t.Rows[headerRowNum]))
             {
