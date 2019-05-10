@@ -1,5 +1,5 @@
 from unittest import TestCase
-from declarator_pdf import read_tsv_table, process_pdf_declarator, write_to_tsv
+from declarator_pdf import read_tsv_table, TTableJoiner, write_to_tsv
 
 
 
@@ -15,7 +15,7 @@ class TestSingleValue(TestCase):
         tables.append(read_tsv_table(localfile("0.tsv")))
         tables.append(read_tsv_table(localfile("2.tsv")))
         canon_table = read_tsv_table(localfile("result.tsv"))
-        main_table = process_pdf_declarator(tables)
+        main_table = TTableJoiner(tables).process_pdf_declarator()
         print ("test page cell break")
         write_to_tsv(main_table, "debug.tsv")
         self.assertEqual(main_table, canon_table)

@@ -1,6 +1,6 @@
 from unittest import TestCase
 import camelot
-from declarator_pdf import read_tsv_table, process_pdf_declarator, get_page_tables, write_to_tsv
+from declarator_pdf import read_tsv_table, TTableJoiner, get_page_tables, write_to_tsv
 
 def localfile(filename):
     import os
@@ -12,7 +12,7 @@ class TestSingleLine(TestCase):
     def test(self):
         tables = camelot.read_pdf(localfile("test.pdf"), "all", suppress_stdout=True)
         tables = get_page_tables(t.df for t in tables._tables)
-        main_table = process_pdf_declarator(tables)
+        main_table = TTableJoiner(tables).process_pdf_declarator()
         canon_table = read_tsv_table(localfile("result.tsv"))
         print ("test single line pdf")
         #write_to_tsv(main_table, "debug.tsv")
