@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Xml.Linq;
+using System.Text;
 
 using Xceed.Words.NET;
 
@@ -34,12 +35,12 @@ namespace TI.Declarator.WordParser
         }
 
 
-        public Declaration Parse(string filepath)
+        public Declaration Parse(string filepath, bool verbose = false)
         {
             DocX doc = DocX.Load(filepath);
             DeclarationProperties = ScanProperties(filepath);
 
-            return Parse(doc);
+            return Parse(doc, 1, verbose);
         }
 
         public DeclarationProperties ScanProperties(string filepath)
@@ -141,7 +142,19 @@ namespace TI.Declarator.WordParser
                    (r.Cells.First().GetText(true) != "1");
         }
 
-        private Declaration Parse(DocX doc, int rowOffset = 1)
+        void DebugPrintRow(Row r)
+        {
+            var outBuilder = new StringBuilder();
+            int colNumber = 0;
+            foreach (var cell in r.Cells) {
+                string value = cell.GetText().Trim();
+                outBuilder.Append($"{colNumber}:{value}\n");
+                ++colNumber;
+            }
+            Console.WriteLine(outBuilder);
+        }
+
+        private Declaration Parse(DocX doc, int rowOffset = 1, bool verbose = false)
         {
             var leadTable = doc.Tables.First();
             var servants = new List<PublicServant>();
@@ -149,8 +162,13 @@ namespace TI.Declarator.WordParser
             Person currentPerson = null;
             int? expectedCount = null;
             bool containsEntryNumbers = DeclarationProperties.ColumnOrdering.ContainsField(DeclarationField.Number);
+
             foreach (Row r in leadTable.Rows.Skip(rowOffset))
             {
+                if (verbose)
+                {
+                    DebugPrintRow(r);
+                }
                 if (containsEntryNumbers)
                 {
                     int? entryNumber = GetEntryNumber(r);
@@ -180,7 +198,7 @@ namespace TI.Declarator.WordParser
                 }
             }
 
-            CheckEntriesNumber(expectedCount, servants);
+            CheckEntriesNumber(expectedCount, servants, verbose);
 
             return new Declaration()
             {
@@ -193,6 +211,7 @@ namespace TI.Declarator.WordParser
         {
             string currNumStr = GetContents(r, DeclarationField.Number).Unbastardize();
             int currNum = 0;
+            currNumStr = currNumStr.TrimEnd('.');
             bool success = Int32.TryParse(currNumStr, out currNum);
             if (success)
             {
@@ -307,7 +326,7 @@ namespace TI.Declarator.WordParser
             }            
         }
 
-        private static void CheckEntriesNumber(int? expectedCount, IEnumerable<PublicServant> publicServants)
+        private static void CheckEntriesNumber(int? expectedCount, IEnumerable<PublicServant> publicServants, bool verbose)
         {
             if (!expectedCount.HasValue)
             {
@@ -325,11 +344,13 @@ namespace TI.Declarator.WordParser
             {
                 return;
             }
-
-            //throw new Exception($"Parsing error: number of source entries ({expectedCount.Value}) " +
-            //                    $"does not match public servants count ({servantsCount}) " +
-            //                    $"or total number of individuals ({totalCount}) " +
-            //                    $"in parser output");
+            if (verbose)
+            {
+                Console.WriteLine($"Parsing error: number of source entries ({expectedCount.Value}) " +
+                                $"does not match public servants count ({servantsCount}) " +
+                                $"or total number of individuals ({totalCount}) " +
+                                $"in parser output");
+            }
         }
 
         private static RelationType ParseRelationType(string strRel)
@@ -621,6 +642,11 @@ namespace TI.Declarator.WordParser
         private static IEnumerable<decimal?> ParseAreas(string strAreas)
         {
             var res = new List<decimal?>();
+            if (strAreas.StartsWith("не "))
+            {
+                res.Add(null);
+                return res;
+            }
             foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
                 decimal? area;
@@ -643,11 +669,17 @@ namespace TI.Declarator.WordParser
         private static IEnumerable<Country> ParseCountries(string strCountries)
         {
             var res = new List<Country>();
-            var parts = strCountries.Split(CountrySeparators, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var part in parts)
+            if (strCountries == "Российская\nФедерация")
             {
-                res.Add(ParseCountry(part));
+                res.Add(Country.Russia);
+            }
+            else {
+                var parts = strCountries.Split(CountrySeparators, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var part in parts)
+                {
+                    res.Add(ParseCountry(part));
+                }
             }
 
             return res;
