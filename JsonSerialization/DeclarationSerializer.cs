@@ -418,6 +418,7 @@ namespace TI.Declarator.JsonSerialization
                 case Country.Mexico: return "Мексика";
                 case Country.Abkhazia: return "Абхазия";
                 case Country.SouthOssetia: return "Южная Осетия";
+                case Country.UnitedKingdom: return "Великобритания";
 
                 default:
                     Console.Write($"Invalid country name: {prop.Country.ToString()}");

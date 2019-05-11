@@ -35,6 +35,7 @@ namespace TI.Declarator.ParserCommon
         Mexico,
         Abkhazia,
         SouthOssetia,
-        Belgium
+        Belgium,
+        UnitedKingdom
     }
 }
