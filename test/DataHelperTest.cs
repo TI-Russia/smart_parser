@@ -24,22 +24,37 @@ namespace test
         [TestMethod]
         public void TestParsePropertyAndOwnershipTypes()
         {
-            var result2 = DataHelper.ParsePropertyAndOwnershipTypes("земельный участок\n(общая, долевая, 1/2 доли)");
-            Assert.AreEqual(result2[0].Item1, RealEstateType.PlotOfLand);
-            //Assert.AreEqual(result2[0].Item2, OwnershipType.Joint);
-            Assert.AreEqual(result2[0].Item3, "1/2");
+            string test6 = "квартира\n(совместная)";
+            var tuple6 = DataHelper.ParseCombinedRealEstateColumn(test6);
+            Assert.AreEqual(tuple6.Item1, RealEstateType.Apartment);
+            Assert.AreEqual(tuple6.Item2, OwnershipType.Joint);
+            Assert.AreEqual(tuple6.Item3, "");
 
-            List<Tuple<RealEstateType, OwnershipType, string>> result =
-                DataHelper.ParsePropertyAndOwnershipTypes("квартира    (совместная)");
 
-            Assert.AreEqual(result[0].Item1, RealEstateType.Apartment);
-            Assert.AreEqual(result[0].Item2, OwnershipType.Joint);
+
+
+            string test3 = "земельный участок ИЖС                             (общая, долевая, 1/2 доли)";
+            var tuple3 = DataHelper.ParseCombinedRealEstateColumn(test3);
+            Assert.AreEqual(tuple3.Item1, RealEstateType.PlotOfLand);
+            Assert.AreEqual(tuple3.Item2, OwnershipType.Shared);
+            Assert.AreEqual(tuple3.Item3, "1/2");
+
+            //var result2 = DataHelper.ParsePropertyAndOwnershipTypes("земельный участок\n(общая, долевая, 1/2 доли)");
+            //Assert.AreEqual(result2[0].Item1, RealEstateType.PlotOfLand);
+            ////Assert.AreEqual(result2[0].Item2, OwnershipType.Joint);
+            //Assert.AreEqual(result2[0].Item3, "1/2");
+            //
+            //List<Tuple<RealEstateType, OwnershipType, string>> result =
+            //    DataHelper.ParsePropertyAndOwnershipTypes("квартира    (совместная)");
+            //
+            //Assert.AreEqual(result[0].Item1, RealEstateType.Apartment);
+            //Assert.AreEqual(result[0].Item2, OwnershipType.Joint);
 
 
             string share;
-            var ownType = DataHelper.ParseOwnershipTypeAndShare("долевая, 1/4", out share);
-            Assert.AreEqual(ownType, OwnershipType.Shared);
-            Assert.AreEqual(share, "1/4");
+            //var ownType = DataHelper.ParseOwnershipTypeAndShare("долевая, 1/4", out share);
+            //Assert.AreEqual(ownType, OwnershipType.Shared);
+            //Assert.AreEqual(share, "1/4");
 
 
             var area = DataHelper.ParseAreas("1/500")[0];
@@ -53,11 +68,6 @@ namespace test
 
 
 
-            string test3 = "земельный участок ИЖС                             (общая, долевая, 1/2 доли)";
-            var tuple3 = DataHelper.ParseCombinedRealEstateColumn(test3);
-            Assert.AreEqual(tuple3.Item1, RealEstateType.PlotOfLand);
-            Assert.AreEqual(tuple3.Item2, OwnershipType.Shared);
-            Assert.AreEqual(tuple3.Item3, "1/2");
 
             string test4 = "долевая 1/249";
             OwnershipType ownershipType = DataHelper.TryParseOwnershipType(test4);
@@ -70,12 +80,6 @@ namespace test
             Assert.AreEqual(tuple5.Item2, OwnershipType.Ownership);
             Assert.AreEqual(tuple5.Item3, "");
 
-
-            string test6 = "квартира\n(совместная)";
-            var tuple6 = DataHelper.ParseCombinedRealEstateColumn(test6);
-            Assert.AreEqual(tuple6.Item1, RealEstateType.Apartment);
-            Assert.AreEqual(tuple6.Item2, OwnershipType.Joint);
-            Assert.AreEqual(tuple6.Item3, "");
 
             string test7 = "Квартира долевая , 2/3";
             var tuple7 = DataHelper.ParseCombinedRealEstateColumn(test7);
@@ -121,6 +125,12 @@ namespace test
             Assert.IsTrue(result);
             result = DataHelper.IsPublicServantInfo("Блохин В.");
             Assert.IsTrue(result);
+
+            result = DataHelper.IsPublicServantInfo("Ибрагимов С.-Э.С.-А.");
+            Assert.IsTrue(result);
+
+            result = DataHelper.IsPublicServantInfo("ВИЛИСОВА ГАЛИНА ИВАНОВНА");
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -155,6 +165,14 @@ namespace test
             Assert.AreEqual(vechicles.Count, 1);
             Assert.AreEqual(vechicles[0].Text, "Hyundai Tucson");
             Assert.AreEqual(vechicles[0].Type, "Автомобиль легковой");
+
+            vechicleString = "Автомобиль легковой Jeep Compass";
+            result = DataHelper.ParseVehicle(vechicleString, vechicles);
+            Assert.IsTrue(result);
+            Assert.AreEqual(vechicles.Count, 1);
+            Assert.AreEqual("Jeep Compass", vechicles[0].Text);
+            Assert.AreEqual("Автомобиль легковой", vechicles[0].Type);
+
 
         }
 

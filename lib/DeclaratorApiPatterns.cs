@@ -35,8 +35,10 @@ namespace Smart.Parser.Lib
         /*
          realestatetype - гараж, квартира и т.д.
          */
-        static Dictionary<string, string> realestatetypeDict = new Dictionary<string, string>();
-        static List<string> realestatetypeRegex = new List<string>();
+        static Dictionary<string, RealEstateType> realestatetypeDict = new Dictionary<string, RealEstateType>();
+        //static Regex realestatetypeRegex;
+        //static string realestatetypeRegexString;
+        static Dictionary<RealEstateType, Regex> realestatetypeRegexes = new Dictionary<RealEstateType, Regex>();
 
         static Dictionary<string, string> countryDict = new Dictionary<string, string>();
         /*
@@ -54,26 +56,41 @@ namespace Smart.Parser.Lib
 
         static DeclaratorApiPatterns()
         {
+            Dictionary<RealEstateType, List<string>>  realestatetypeRegexList = new Dictionary<RealEstateType, List<string>>();
             foreach (Result pattern in Patterns.results)
             {
                 switch (pattern.type)
                 {
                     case "realestatetype":
+                        RealEstateType value = RealEstateTypeMap[pattern.value];
                         if (pattern.is_regex)
-                            realestatetypeRegex.Add(pattern.value);
+                        {
+                            if (!realestatetypeRegexList.ContainsKey(value))
+                            {
+                                realestatetypeRegexList[value] = new List<string>() { pattern.data };
+                            }
+                            else
+                            {
+                                realestatetypeRegexList[value].Add(pattern.data);
+                            }
+
+                            //System.Diagnostics.Debug.WriteLine(String.Format("{0} - {1}", pattern.data, pattern.value));
+                        }
                         else
-                            realestatetypeDict[pattern.data.ToLower()] = pattern.value;
-                        break;
-                    case "country":
-                        if (pattern.is_regex)
-                            throw new Exception("Regex not supproted");
-                        countryDict[pattern.data.ToLower()] = pattern.value;
+                        {
+                            realestatetypeDict[pattern.data.ToLower()] = value;
+                        }
                         break;
                     case "owntype":
                         if (pattern.is_regex)
                             owntypeRegex.Add(pattern.value);
                         else
                             owntypeDict[pattern.data.ToLower()] = pattern.value;
+                        break;
+                    case "country":
+                        if (pattern.is_regex)
+                            throw new Exception("Regex not supproted");
+                        countryDict[pattern.data.ToLower()] = pattern.value;
                         break;
                     case "carbrand":
                     case "vehicletype":
@@ -83,12 +100,20 @@ namespace Smart.Parser.Lib
                         throw new Exception("unknown pattern.type " + pattern.type);
                 }
             }
+
+            // build realestate regex
+            foreach (var pair in realestatetypeRegexList)
+            {
+                string realestatetypeRegexString = "(" + String.Join("|", pair.Value) + ")";
+                realestatetypeRegexes[pair.Key] = new Regex(realestatetypeRegexString, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            }
+
             BuildCustomDicts();
         }
 
         static void BuildCustomDicts()
         {
-            realestatetypeDict["совместная"] = "Совместная собственность";
+            //realestatetypeDict["совместная"] = RealEstateType.S"Совместная собственность";
             string[] countries =
             {
                 "абхазия",
@@ -239,6 +264,19 @@ namespace Smart.Parser.Lib
         public static RealEstateType TryParseRealEstateType(string text)
         {
             string normalized = NormalizeText(text);
+
+            foreach (var pair in realestatetypeRegexes)
+            {
+                if (pair.Value.IsMatch(normalized))
+                    return pair.Key;
+            }
+
+            RealEstateType result = RealEstateType.None;
+
+            realestatetypeDict.TryGetValue(text, out result);
+
+            return result;
+
             string value = GetValue(normalized, "realestatetype");
 
             if (value.IsNullOrWhiteSpace())

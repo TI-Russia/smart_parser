@@ -459,6 +459,9 @@ namespace TI.Declarator.JsonSerialization
                     var num = Decimal.Parse(parts[0]);
                     var den = Decimal.Parse(parts[1]);
                     // Убираем ненужные нули в хвосте и, при необходимости, десятичный разделитель
+
+                    if (den == 0)
+                        return null;
                     return (num / den);
                 }
                 else
