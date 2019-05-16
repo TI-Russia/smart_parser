@@ -85,7 +85,7 @@
             }
           },
           "department": {
-            "$id": "/properties/party_raw",
+            "$id": "/properties/person/properties/department",
             "type": ["string", "null"],
             "title": "Департамент в органе власти",
             "default": "",
