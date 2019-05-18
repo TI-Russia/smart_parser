@@ -418,6 +418,7 @@ namespace TI.Declarator.JsonSerialization
                 case Country.Mexico: return "Мексика";
                 case Country.Abkhazia: return "Абхазия";
                 case Country.SouthOssetia: return "Южная Осетия";
+                case Country.UnitedKingdom: return "Великобритания";
 
                 default:
                     Console.Write($"Invalid country name: {prop.Country.ToString()}");
@@ -459,6 +460,9 @@ namespace TI.Declarator.JsonSerialization
                     var num = Decimal.Parse(parts[0]);
                     var den = Decimal.Parse(parts[1]);
                     // Убираем ненужные нули в хвосте и, при необходимости, десятичный разделитель
+
+                    if (den == 0)
+                        return null;
                     return (num / den);
                 }
                 else

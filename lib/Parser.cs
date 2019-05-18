@@ -36,6 +36,9 @@ namespace Smart.Parser.Lib
 
     public class Parser
     {
+        DateTime FirstPassStartTime;
+        DateTime SecondPassStartTime;
+
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
         public Parser(IAdapter adapter)
@@ -80,6 +83,7 @@ namespace Smart.Parser.Lib
 
         public Declaration Parse()
         {
+            FirstPassStartTime = DateTime.Now;
             Declaration declaration = new Declaration()
             {
                 Properties = new DeclarationProperties() { Title = "title", Year = 2018, MinistryName = "Ministry" }
@@ -218,8 +222,20 @@ namespace Smart.Parser.Lib
 
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
+            SecondPassStartTime = DateTime.Now;
+            int count = 0;
+            int total_count = declaration.PublicServants.Count();
+
             foreach (PublicServant servant in declaration.PublicServants)
             {
+                count++;
+                if (count % 1000 == 0)
+                {
+                    double time_sec = DateTime.Now.Subtract(SecondPassStartTime).TotalSeconds;
+                    Logger.Info("Done: {0:0.00}%", 100.0 * count / total_count);
+
+                    Logger.Info("Rate: {0:0.00} declarant in second", count / time_sec );
+                }
                 List<Person> servantAndRel = new List<Person>() { servant };
                 servantAndRel.AddRange(servant.Relatives);
 
@@ -308,6 +324,10 @@ namespace Smart.Parser.Lib
             }
 
             Logger.Info("Total income: {0}", totalIncome);
+            double seconds = DateTime.Now.Subtract(FirstPassStartTime).TotalSeconds;
+            Logger.Info("Final Rate: {0:0.00} declarant in second", count / seconds);
+            double total_seconds = DateTime.Now.Subtract(FirstPassStartTime).TotalSeconds;
+            Logger.Info("Total time: {0:0.00} seconds", total_seconds);
             return declaration;
         }
 
@@ -423,144 +443,6 @@ namespace Smart.Parser.Lib
             realEstateProperty.Text = estateTypeStr;
             return realEstateProperty;
         }
-        /*
-        public List<RealEstateProperty> ParseOwnedProperty(IAdapter adapter, int firstRow, int lastRow)
-        {
-            for (int row = firstRow; row < lastRow; row++)
-            {
-                var cell = adapter.GetDeclarationField(row, DeclarationField.OwnedRealEstateType);
-
-                string estateTypeStr = cell.GetText(true);
-                if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
-                {
-                    return null;
-                }
-
-                if (adapter.ColumnOrdering.OwnershipTypeInSeparateField)
-                {
-                    // колонка с типом недвижимости отдельно
-                }
-                else // колонка содержит тип недвижимости и тип собственности
-                {
-                    var combinedData = DataHelper.ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
-
-                    //propertyTypes = combinedData.Select(tup => tup.Item1).ToList();
-                    //ownershipTypes = combinedData.Select(tup => tup.Item2).ToList();
-                    //shares = combinedData.Select(tup => tup.Item3).ToList();
-                }
-
-
-                string areaStr = adapter.GetContents(row, DeclarationField.OwnedRealEstateArea).CleanWhitespace();
-                decimal? area = DataHelper.ParseArea(areaStr);
-
-                Country country = DataHelper.ParseCountry(adapter.GetContents(row, DeclarationField.OwnedRealEstateCountry));
-
-                if (cell.MergedRowsCount > 1)
-                    row += cell.MergedRowsCount - 1;
-            }
-
-            return null;
-        }
-        */
-        // парсинг недвижимости, находящейся в собственности, вычисляется share_type
-
-        // используются колонки OwnedRealEstateType
-        // OwnershipTypeInSeparateField
-        // OwnedRealEstateOwnershipType
-        // OwnedRealEstateArea
-        // OwnedRealEstateCountry
-        // 
-#if false
-
-        private List<RealEstateProperty> ParseOwnedProperty(Row r)
-        {
-            List<RealEstateType> propertyTypes;
-            List<OwnershipType> ownershipTypes;
-            List<string> shares;
-            string estateTypeStr = r.GetContents(DeclarationField.OwnedRealEstateType);
-            if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-")
-            {
-                return null;
-            }
-
-            // колонка с типом недвижимости отдельно
-            if (r.ColumnOrdering.OwnershipTypeInSeparateField)
-            {
-                propertyTypes = DataHelper.ParseRealEstateTypes(estateTypeStr).ToList();
-                string ownershipStr = r.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
-                ownershipTypes = DataHelper.ParseOwnershipTypes(ownershipStr).ToList();
-                shares = DataHelper.ParseOwnershipShares(ownershipStr, ownershipTypes).ToList();
-            }
-            else // колонка содержит тип недвижимости и тип собственности
-            {
-                var combinedData = DataHelper.ParsePropertyAndOwnershipTypes(estateTypeStr.CleanWhitespace());
-
-                propertyTypes = combinedData.Select(tup => tup.Item1).ToList();
-                ownershipTypes = combinedData.Select(tup => tup.Item2).ToList();
-                shares = combinedData.Select(tup => tup.Item3).ToList();
-            }
-
-            decimal? area;
-            string areaStr = r.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
-            List<decimal?> areas = DataHelper.ParseAreas(areaStr).ToList();
-
-            List<Country> countries = DataHelper.ParseCountries(r.GetContents(DeclarationField.OwnedRealEstateCountry)).ToList();
-
-            var res = new List<RealEstateProperty>();
-
-            // TBD: check all array have same size
-            for (int i = 0; i < propertyTypes.Count(); i++)
-            {
-                res.Add(new RealEstateProperty(
-                    ownershipTypes.ElementAt(i),
-                    propertyTypes.ElementAt(i),
-                    countries.ElementAtOrDefault(i),
-                    areas.ElementAtOrDefault(i),
-                    estateTypeStr,
-                    shares.ElementAt(i)));
-            }
-            return res;
-        }
-        private IEnumerable<RealEstateProperty> ParseStateProperty(Row r)
-        {
-            IEnumerable<RealEstateType> propertyTypes;
-            string propTypeStr = r.GetContents(DeclarationField.StatePropertyType);
-            if (string.IsNullOrWhiteSpace(propTypeStr) || propTypeStr.Trim() == "-" || propTypeStr.Trim() == "-\n-") return null;
-
-            if (r.ColumnOrdering.OwnershipTypeInSeparateField)
-            {
-                propertyTypes = DataHelper.ParseRealEstateTypes(propTypeStr);
-            }
-            else
-            {
-                propertyTypes = DataHelper.ParseStatePropertyTypesWithUsageInfo(propTypeStr.Replace("\\0", ")"));
-            }
-
-
-            OwnershipType ownershipType = OwnershipType.NotAnOwner;
-            string share = "";
-            string areaStr = r.GetContents(DeclarationField.StatePropertyArea).Trim();
-            IEnumerable<decimal?> areas = DataHelper.ParseAreas(areaStr);
-
-
-            IEnumerable<Country> countries = DataHelper.ParseCountries(r.GetContents(DeclarationField.StatePropertyCountry));
-
-            var res = new List<RealEstateProperty>();
-            for (int i = 0; i < propertyTypes.Count(); i++)
-            {
-                decimal? area = null;
-                if (areas.Count() > i)
-                {
-                    area = areas.ElementAt(i);
-                }
-                res.Add(new RealEstateProperty(ownershipType, propertyTypes.ElementAt(i), countries.ElementAt(i), area, propTypeStr, share));
-            }
-
-            return res;
-        }
-#endif
-
-
 
         IAdapter Adapter { get; set; }
         static int CurrentRow { get; set;  } = -1;

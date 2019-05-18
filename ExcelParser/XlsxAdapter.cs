@@ -120,6 +120,8 @@ namespace TI.Declarator.ExcelParser
                 BackgroundColor = backgroundColor,
                 ForegroundColor = foregroundColor,
                 Text = cellContents,
+                Row = row,
+                Col = column,
             };
         }
 

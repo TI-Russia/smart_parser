@@ -31,5 +31,24 @@ namespace test
 
             Assert.AreEqual(DeclaratorApiPatterns.GetValue("а/м супер пурер машина", "vehicletype"), "Автомобиль легковой");
         }
+        [TestMethod]
+        public void TestParseRealEstateType()
+        {
+            RealEstateType value = DeclaratorApiPatterns.ParseRealEstateType("Rвартира");
+            Assert.AreEqual(value, RealEstateType.Apartment);
+
+            value = DeclaratorApiPatterns.ParseRealEstateType("беседка");
+            Assert.AreEqual(value, RealEstateType.Other);
+            value = DeclaratorApiPatterns.ParseRealEstateType("бокс");
+            Assert.AreEqual(value, RealEstateType.Garage);
+
+            value = DeclaratorApiPatterns.ParseRealEstateType("гостевой дом");
+            Assert.AreEqual(value, RealEstateType.ResidentialHouse);
+
+            value = DeclaratorApiPatterns.ParseRealEstateType("1/2 дома");
+            Assert.AreEqual(value, RealEstateType.ResidentialHouse);
+
+        }
+
     }
-}
+    }

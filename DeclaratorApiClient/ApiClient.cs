@@ -18,8 +18,8 @@ namespace TI.Declarator.DeclaratorApiClient
 
         private static HttpClient HttpClient { get; set; }
 
-        private static readonly string Username = "username";
-        private static readonly string Password = "password";
+        private static readonly string Username = "david_parsers";
+        private static readonly string Password = "vMrkq002";
 
         static ApiClient()
         {

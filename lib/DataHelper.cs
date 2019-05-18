@@ -29,30 +29,33 @@ namespace Smart.Parser.Lib
             });
 
             // Исправляем слипшийся инициалы с фамилией Буров ЮВ
-            Regex regex2 = new Regex("( [А-Я])([А-Я])", RegexOptions.Compiled);
+            Regex regex2 = new Regex("( [А-Я])([А-Я])$", RegexOptions.Compiled);
 
             nameOrRelativeType = regex2.Replace(nameOrRelativeType, delegate (Match m) {
                 return m.Groups[1].Value + " " + m.Groups[2].Value;
             });
 
+            // Ибрагимов С.-Э.С.-А.
 
-            int parts = nameOrRelativeType.Split(new char[] { ' ', '.', ',' }, StringSplitOptions.RemoveEmptyEntries).Count();
-            bool threePart = parts == 3;
+            var parts = nameOrRelativeType.Split(new char[] { ' ', '.', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                
+            int parts_count = parts.Where(s => s.Length > 2 ).Count();
+            bool threePart = parts_count == 3;
             if (threePart)
             {
                 return true;
             }
-            if (parts == 4)
+            if (parts_count == 4)
             {
                 return true;
             }
-            if (parts == 2)
+            if (parts_count == 2)
             {
                 return true;
             }
 
 
-            bool onlySecondName = (parts == 1) && (ParseRelationType(nameOrRelativeType, false) == RelationType.Error);
+            bool onlySecondName = (parts_count == 1) && (ParseRelationType(nameOrRelativeType, false) == RelationType.Error);
             if (onlySecondName)
             {
                 return true;
@@ -146,24 +149,6 @@ namespace Smart.Parser.Lib
             else return src;
         }
 
-
-        public static IEnumerable<RealEstateType> ParseRealEstateTypes(string strTypes)
-        {
-            return new List<RealEstateType>() { DeclaratorApiPatterns.ParseRealEstateType(strTypes) };
-        }
-
-        public static RealEstateType ParseRealEstateType(string strType)
-        {
-            RealEstateType type = TryParseRealEstateType(strType);
-
-            if (type == RealEstateType.None)
-            {
-                throw new UnknownRealEstateTypeException(strType);
-            }
-            return type;
-        }
-
-
         public static RealEstateType TryParseRealEstateType(string strType)
         {
             string key = strType.ToLower().RemoveStupidTranslit()
@@ -186,39 +171,20 @@ namespace Smart.Parser.Lib
             */
         }
 
-        public static IEnumerable<OwnershipType> ParseOwnershipTypes(string strOwn)
-        {
-            return new List<OwnershipType>() { ParseOwnershipType(strOwn) };
-        }
-
-
-        public static OwnershipType ParseOwnershipTypeAndShare(string strOwn, out string share)
-        {
-            var parts = Regex.Split(strOwn, "[ ,]+");
-            OwnershipType res = DeclaratorApiPatterns.ParseOwnershipType(parts[0]);
-            if (parts.Length > 1)
-                share = parts[1];
-            else
-                share = "";
-
-            return res;
-        }
-        public static OwnershipType ParseOwnershipType(string strOwn)
-        {
-            OwnershipType ownershipType = TryParseOwnershipType(strOwn);
-            if (ownershipType == OwnershipType.None)
-                throw new UnknownOwnershipTypeException(strOwn);
-            return ownershipType;
-        }
-
         public static OwnershipType TryParseOwnershipType(string strOwn, OwnershipType defaultType = OwnershipType.None)
         {
             string str = strOwn.ToLower().Trim();
             if (String.IsNullOrWhiteSpace(str) || str == "-")
                 return defaultType; // OwnershipType.InUse;
 
+            OwnershipType resultWholeString = DeclaratorApiPatterns.TryParseOwnershipType(str);
+            if (resultWholeString != OwnershipType.None)
+            {
+                return resultWholeString;
+            }
+
             //var parts = Regex.Split(str, "[ ,]+");
-            var parts = Regex.Split(str, "[0-9,\\(\\)]+");
+            var parts = Regex.Split(str, "[ /0-9,\\(\\)]+");
 
             OwnershipType result = defaultType; // OwnershipType.None;
             foreach (var s in parts)
@@ -233,8 +199,9 @@ namespace Smart.Parser.Lib
             {
                 return result;
             }
+            /*
             var parts2 = Regex.Split(str, "[ 0-9,\\(\\)]+");
-            foreach (var s in parts2)
+            foreach (var s in parts2.Reverse())
             {
                 OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
                 if (res != OwnershipType.None)
@@ -242,12 +209,13 @@ namespace Smart.Parser.Lib
                     result = res;
                 }
             }
+            */
 
             //if (res == OwnershipType.None)
             //    throw new UnknownOwnershipTypeException(strOwn);
 
 
-            return result;
+            return defaultType;
             /*
 
             if (PropertyDictionary.ParseParseRealEstateType(key, out type))
@@ -275,37 +243,6 @@ namespace Smart.Parser.Lib
             return res;
             */
         }
-        /*
-        static public Tuple<RealEstateType, OwnershipType, string> ParsePropertyAndOwnershipType(string strPropInfo)
-        {
-            int leftParenPos = strPropInfo.IndexOf('(');
-            string strPropType = strPropInfo.Substring(0, leftParenPos > 0 ? leftParenPos : strPropInfo.Length).Trim();
-            RealEstateType realEstateType = ParseRealEstateType(strPropType);
-            OwnershipType ownershipType = OwnershipType.Individual;
-            string share = "1";
-
-            int rightParenPos = -1;
-            if (leftParenPos != -1)
-            {
-                rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
-                if (rightParenPos == -1)
-                {
-                    throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
-                }
-
-                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
-                if (ContainsOwnershipType(strOwnType))
-                {
-                    ownershipType = ParseOwnershipType(strOwnType);
-                    share = ParseOwnershipShare(strOwnType, ownershipType);
-
-                }
-            }
-
-            return Tuple.Create(realEstateType, ownershipType, share);
-        }
-
-        */
 
         /*
          *  "квартира           (безвозмездное, бессрочное пользование)"
@@ -346,120 +283,6 @@ namespace Smart.Parser.Lib
                 ownershipType = defaultOwnershipType;
             }
             return Tuple.Create(realEstateType, ownershipType, share);
-        }
-        
-        static public List<Tuple<RealEstateType, OwnershipType, string>> ParsePropertyAndOwnershipTypes(string strPropInfo)
-        {
-            var res = new List<Tuple<RealEstateType, OwnershipType, string>>();
-
-
-            int startingPos = 0;
-            int rightParenPos = -1;
-            int leftParenPos = strPropInfo.IndexOf('(', startingPos);
-            bool containOwnershipType = ContainsOwnershipType(strPropInfo);
-
-
-            if (leftParenPos < 0 && !containOwnershipType)
-            {
-                RealEstateType realEstateType = ParseRealEstateType(strPropInfo);
-                OwnershipType ownershipType = OwnershipType.Individual;
-                string share = "1";
-                res.Add(Tuple.Create(realEstateType, ownershipType, share));
-
-                return res;
-            }
-            //if (strPropInfo.Contains(","))
-            //{
-            //    string[] values = strPropInfo.Split(',');
-            //    RealEstateType realEstateType = ParseRealEstateType(values[0]);
-            //    OwnershipType ownershipType = ParseOwnershipType(strPropInfo);
-            //    string share = ParseOwnershipShare(values[1], ownershipType);
-            //    res.Add(Tuple.Create(realEstateType, ownershipType, share));
-            //}
-
-            while (leftParenPos != -1)
-            {
-                rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
-                if (rightParenPos == -1)
-                {
-                    throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
-                }
-
-                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
-                string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos).Trim();
-
-                //if (ContainsOwnershipType(strOwnType))
-                {
-                    RealEstateType realEstateType = ParseRealEstateType(strPropType);
-                    OwnershipType ownershipType = ParseOwnershipType(strOwnType);
-                    string share = ParseOwnershipShare(strOwnType, ownershipType);
-                    res.Add(Tuple.Create(realEstateType, ownershipType, share));
-
-                    startingPos = rightParenPos + 1;
-                }
-
-                leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
-            }
-
-            if (res.Count() == 0)
-            {
-                throw new Exception("func ParsePropertyAndOwnershipTypes: cannot parse " + strPropInfo);
-            }
-
-            return res;
-        }
-
-        static public IEnumerable<RealEstateType> ParseStatePropertyTypesWithUsageInfo(string strPropInfo)
-        {
-            var res = new List<RealEstateType>();
-
-            int startingPos = 0;
-            int rightParenPos = -1;
-            int leftParenPos = strPropInfo.IndexOf('(', startingPos);
-            while (leftParenPos != -1)
-            {
-                rightParenPos = strPropInfo.IndexOf(')', leftParenPos);
-                if (rightParenPos == -1)
-                {
-                    throw new Exception($"Expected closing parenthesis after left parenthesis was encountered at pos#{leftParenPos} in string {strPropInfo}");
-                }
-
-                string strOwnType = strPropInfo.Substring(leftParenPos + 1, rightParenPos - leftParenPos - 1);
-                if (ContainsOwnershipType(strOwnType))
-                {
-                    string strPropType = strPropInfo.Substring(startingPos, leftParenPos - startingPos);
-                    RealEstateType realEstateType = ParseRealEstateType(strPropType);
-                    res.Add(realEstateType);
-
-                    startingPos = rightParenPos + 1;
-                }
-
-                leftParenPos = strPropInfo.IndexOf('(', rightParenPos + 1);
-            }
-            if (res.Count() == 0)
-            {
-                throw new Exception("Cannot parse string " + strPropInfo);
-            }
-
-            return res;
-        }
-
-        private static bool ContainsOwnershipType(string str)
-        {
-            string strProc = str.Trim().ToLower();
-            return (str.Contains("индивид") || str.Contains("долевая") || str.Contains("общая"));
-        }
-
-        public static IEnumerable<string> ParseOwnershipShares(string strOwn, IEnumerable<OwnershipType> ownTypes)
-        {
-            var res = new List<string>();
-            foreach (var ownType in ownTypes)
-            {
-                // FIXME на самом деле тут ещё нужно строковый параметр на отдельные подстроки разбивать
-                res.Add(ParseOwnershipShare(strOwn, ownType));
-            }
-
-            return res;
         }
 
         public static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
@@ -558,30 +381,6 @@ namespace Smart.Parser.Lib
 
         private static readonly string[] CountrySeparators = new string[] { "\n" };
 
-        /*
-        public static IEnumerable<Country> ParseCountries(string strCountries)
-        {
-            var res = new List<Country>();
-            var parts = strCountries.Split(CountrySeparators, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var part in parts)
-            {
-                res.Add(ParseCountry(part));
-            }
-
-            return res;
-        }
-        public static Country ParseCountry(string strCountry)
-        {
-            Country country = TryParseCountry(strCountry);
-            if (country == Country.Error)
-            {
-                throw new SmartParserException("Wrong country name: " + strCountry);
-            }
-
-            return country;
-        }
-        */
         public static Country TryParseCountry(string strCountry)
         {
             if (strCountry.Trim() == "" || strCountry.Trim() == "-")
@@ -627,10 +426,11 @@ namespace Smart.Parser.Lib
             return Country.Error;//throw new SmartParserException("Wrong country name: " + strCountry);
         }
 
-        static public bool ParseVehicle(string vechicleString, List<Vehicle> vechicles)
+        static public bool ParseVehicle(string vechicleString, List<Vehicle> vehicles)
         {
+            vehicles.Clear();
             string[] vehicleTypeDict = {
-                @"автомобил. легков..[:|\n]",
+                @"автомобил. легков..[:|\n ]",
                 "мототранспортные средства:",
                 "водный транспорт:",
                 "иные транспортные средства:",
@@ -669,17 +469,17 @@ namespace Smart.Parser.Lib
                         items = vechicleItemStr.Split(',');
                         foreach (var item in items)
                         {
-                            vechicles.Add(new Vehicle(item.Trim(), last_type));
+                            vehicles.Add(new Vehicle(item.Trim(), last_type));
                         }
                     }
                     last_end = end;
-                    last_type = itemMatch.Value.TrimEnd(':', '\n');
+                    last_type = itemMatch.Value.TrimEnd(':', '\n', ' ');
                 }
                 vechicleItemStr = vechicleString.Substring(last_end);
                 items = vechicleItemStr.Split(',');
                 foreach (var item in items)
                 {
-                    vechicles.Add(new Vehicle(item.Trim(), last_type));
+                    vehicles.Add(new Vehicle(item.Trim(), last_type));
                 }
 
                 return true;
@@ -688,14 +488,14 @@ namespace Smart.Parser.Lib
             var match = Regex.Match(vechicleString, @".+:(.+,.+)");
             if (match.Success)
             {
-                if (vechicles != null)
+                if (vehicles != null)
                 {
-                    vechicles.AddRange(match.Groups[1].ToString().Split(',').Select(x => new Vehicle(x.Trim())));
+                    vehicles.AddRange(match.Groups[1].ToString().Split(',').Select(x => new Vehicle(x.Trim())));
                 }
             }
             else
             {
-                vechicles.Add(new Vehicle(vechicleString));
+                vehicles.Add(new Vehicle(vechicleString));
             }
             return true;
         }

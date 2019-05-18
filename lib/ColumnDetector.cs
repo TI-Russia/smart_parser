@@ -41,7 +41,7 @@ namespace Smart.Parser.Lib
 
             string first = cells.First().GetText(true);
 
-            return (nonEmptyCellCount > 5) &&
+            return (nonEmptyCellCount > 4) &&
                    (cells.First().GetText(true) != "1");
         }
         static private bool IsEmptyRow(Row r)
@@ -83,7 +83,7 @@ namespace Smart.Parser.Lib
 
                 if (text == "")
                 {
-                    break;
+                    continue;
                 }
 
                 if (cell.MergedRowsCount > 1)
@@ -115,16 +115,24 @@ namespace Smart.Parser.Lib
                     int rowSpan = cell.MergedRowsCount;
                     Row auxRow = t.Rows[headerRowNum + rowSpan];
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
-                    auxCellsIter.MoveNext();
-                    int auxColCount = 0;
+                    //auxCellsIter.MoveNext();
+                    //int auxColCount = 0;
 
                     field = DeclarationField.None;
-                    while (auxColCount < colCount + span)
+                    while (auxCellsIter.MoveNext()/* auxColCount < colCount + span*/)
                     {
                         var auxCell = auxCellsIter.Current;
-                        if (auxColCount >= colCount)
+                        if (auxCell.Col < cell.Col)
+                            continue;
+                        if (auxCell.Col >= cell.Col + cell.GridSpan)
+                            break;
+
+
+
+                        //if (auxColCount >= colCount)
                         {
                             string cellText = auxCell.GetText(true);
+                            string fullText = text + " " + cellText;
 
                             //  пустая колонка страны (предыдущая колонка - площадь
                             if (cellText == "" && field == DeclarationField.StatePropertyArea)
@@ -133,22 +141,21 @@ namespace Smart.Parser.Lib
                             }
                             else
                             {
-                                string fullText = text + " " + cellText;
                                 field = HeaderHelpers.TryGetField(fullText);
                             }
 
 
                             if (field == DeclarationField.None)
                             {
-                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", headerRowNum + 1, auxColCount, cellText));
+                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", auxCell.Row, auxCell.Col, cellText));
                             }
                             res.Add(field, auxCell.Col);
                             index++;
                         }
 
-                        auxCellsIter.MoveNext();
-                        int auxSpan = auxCell.GridSpan == 0 ? 1 : auxCell.GridSpan;
-                        auxColCount += auxSpan;
+                        //auxCellsIter.MoveNext();
+                        //int auxSpan = auxCell.GridSpan == 0 ? 1 : auxCell.GridSpan;
+                        //auxColCount += auxSpan;
                     }
 
                     colCount += cell.GridSpan;

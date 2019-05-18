@@ -160,8 +160,8 @@ namespace TI.Declarator.WordParser
             var servants = new List<PublicServant>();
             PublicServant currentServant = null;
             Person currentPerson = null;
-            int? expectedCount = null;
             bool containsEntryNumbers = DeclarationProperties.ColumnOrdering.ContainsField(DeclarationField.Number);
+            int? expectedCount = containsEntryNumbers ? 0 : (int?) null;
 
             foreach (Row r in leadTable.Rows.Skip(rowOffset))
             {
@@ -172,9 +172,11 @@ namespace TI.Declarator.WordParser
                 if (containsEntryNumbers)
                 {
                     int? entryNumber = GetEntryNumber(r);
+                    // Numbers in the source document might contain gaps,
+                    // so we don't rely on their values, counting their occurences instead
                     if (entryNumber.HasValue)
                     {
-                        expectedCount = entryNumber;
+                        expectedCount++;
                     }
                 }
                 
@@ -216,7 +218,7 @@ namespace TI.Declarator.WordParser
 
         private int? GetEntryNumber(Row r)
         {
-            string currNumStr = GetContents(r, DeclarationField.Number).Unbastardize();
+            string currNumStr = GetContents(r, DeclarationField.Number).Unbastardize().Replace(".", "");
             int currNum = 0;
             currNumStr = currNumStr.TrimEnd('.');
             bool success = Int32.TryParse(currNumStr, out currNum);
@@ -282,7 +284,11 @@ namespace TI.Declarator.WordParser
 
         private PublicServant ParsePublicServantInfo(Row r)
         {
-            string occ = GetContents(r, DeclarationField.Occupation);
+            string occ = GetContents(r, DeclarationField.Occupation).RemoveStupidTranslit()
+                                                                    .Replace("-\n", "")
+                                                                    .Replace('\n', ' ')
+                                                                    .CoalesceWhitespace()
+                                                                    .Trim();
             string name = GetContents(r, DeclarationField.NameOrRelativeType);
             var res = new PublicServant()
             {
@@ -327,7 +333,8 @@ namespace TI.Declarator.WordParser
 
             string vehicleStr = GetContents(r, DeclarationField.Vehicle).CleanWhitespace()
                                                                         .CoalesceWhitespace()
-                                                                        .Trim();
+                                                                        .Trim()
+                                                                        .Trim('-');
             if (!String.IsNullOrEmpty(vehicleStr) && vehicleStr.Trim() != "-")
             {
                 var vehicleList = new List<Vehicle>();
@@ -375,6 +382,7 @@ namespace TI.Declarator.WordParser
             {
                 return;
             }
+
             if (verbose)
             {
                 Console.WriteLine($"Parsing error: number of source entries ({expectedCount.Value}) " +
@@ -382,6 +390,11 @@ namespace TI.Declarator.WordParser
                                 $"or total number of individuals ({totalCount}) " +
                                 $"in parser output");
             }
+
+            //throw new Exception($"Parsing error: number of source entries ({expectedCount.Value}) " +
+            //                    $"does not match public servants count ({servantsCount}) " +
+            //                    $"or total number of individuals ({totalCount}) " +
+            //                    $"in parser output");
         }
 
         private static RelationType ParseRelationType(string strRel)
@@ -491,9 +504,14 @@ namespace TI.Declarator.WordParser
                                           .Replace("  ", " ")
                                           .Trim();
 
+            string tweakedKey = key.Replace("-", "");
             if (PropertyTypes.ContainsKey(key))
             {
                 return PropertyTypes[key];
+            }
+            else if (PropertyTypes.ContainsKey(tweakedKey))
+            {
+                return PropertyTypes[tweakedKey];
             }
             else
             {
@@ -681,7 +699,7 @@ namespace TI.Declarator.WordParser
             foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
                 decimal? area;
-                if (String.IsNullOrWhiteSpace(str) || str == "-")
+                if (String.IsNullOrWhiteSpace(str) || str == "-" || str == "не" || str == "установ-лено")
                 {
                     area = null;
                 }
@@ -752,6 +770,7 @@ namespace TI.Declarator.WordParser
                 case "франция": return Country.France;
                 case "туркмения": return Country.Turkmenistan;
                 case "черногория": return Country.Montenegro;
+                case "великобритания": return Country.UnitedKingdom;
                 default: throw new ArgumentOutOfRangeException();
             }
         }
