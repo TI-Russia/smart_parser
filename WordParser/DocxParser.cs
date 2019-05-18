@@ -140,7 +140,7 @@ namespace TI.Declarator.WordParser
         {
             return (r.Cells.Count > 2) &&
                    (r.Cells.First().GetText(true) != "1");
-        }
+        }   
 
         void DebugPrintRow(Row r)
         {
@@ -196,6 +196,13 @@ namespace TI.Declarator.WordParser
                 {
                     FillPersonProperties(r, currentPerson);
                 }
+                else
+                {
+                    if (verbose)
+                    {
+                        Console.WriteLine("skip line, the index would break");
+                    }
+                }
             }
 
             CheckEntriesNumber(expectedCount, servants, verbose);
@@ -227,8 +234,28 @@ namespace TI.Declarator.WordParser
         private bool IsPublicServantInfo(Row r)
         {
             string nameOrRelativeType = GetContents(r, DeclarationField.NameOrRelativeType).CleanWhitespace().Replace("- ", "-");
-            return (nameOrRelativeType.Split(new char[] { ' ', '.' }, StringSplitOptions.RemoveEmptyEntries).Count() == 3);
-        }
+            if (nameOrRelativeType.Length == 0)
+            {
+                return false;
+            }
+
+            if (Char.IsUpper(nameOrRelativeType[0])) {
+                int tokensCount = nameOrRelativeType.Split(new char[] { ' ', '.' }, StringSplitOptions.RemoveEmptyEntries).Count();
+                if (tokensCount == 3)
+                {
+                    return true; // normal FIO, like Путин В.В. или Путин Владимир Владимирович
+                }
+            }
+            try {
+                var dummy = ParseRelationType(nameOrRelativeType);
+                return false;
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+
+            }
+            return true;
+        }   
 
         private bool IsRelativeInfo(Row r)
         {
@@ -281,8 +308,12 @@ namespace TI.Declarator.WordParser
             return res;
         }
 
-        private string GetContents(Row r, DeclarationField f)
+        private string GetContents(Row r, DeclarationField f, bool skipEmpty=false)
         {
+            if (skipEmpty && !DeclarationProperties.ColumnOrdering.ContainsField(f))
+            {
+                return "";
+            }
             return r.Cells[DeclarationProperties.ColumnOrdering[f].Value].GetText().Trim();
         }
 
@@ -355,20 +386,20 @@ namespace TI.Declarator.WordParser
 
         private static RelationType ParseRelationType(string strRel)
         {
-            switch (strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit().Replace("- ", "-").Replace("-\n", "-"))
+            string key = strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit().Replace("- ", "-").Replace("-\n", "-");
+            if (key.Contains("сын") || key.Contains("дочь") || key.Contains("ребенок"))
             {
-                case "супруг": return RelationType.MaleSpouse;
-                case "супруга": return RelationType.FemaleSpouse;
-                case "несовершен-нолетняя дочь": return RelationType.Child;
-                case "несовершенно-летняя дочь": return RelationType.Child;
-                case "несовершеннолет-няя дочь": return RelationType.Child;
-                case "несовершеннолетняя дочь": return RelationType.Child;
-                case "несовершенно-летний сын": return RelationType.Child;
-                case "несовершеннолет-ний сын": return RelationType.Child;                                               
-                case "несовершеннолетний сын": return RelationType.Child;
-                case "несовершеннолетний ребенок": return RelationType.Child;
-                default: throw new ArgumentOutOfRangeException(strRel, $"Неизвестный тип родственника: {strRel}");
+                return RelationType.Child;
             }
+            if (key.Contains("супруга"))
+            {
+                return RelationType.FemaleSpouse;
+            }
+            if (key.Contains("супруг"))
+            {
+                return RelationType.MaleSpouse;
+            }
+            throw new ArgumentOutOfRangeException(strRel, $"Неизвестный тип родственника: {strRel}");
         }
 
         private IEnumerable<RealEstateProperty> ParseOwnedProperty(Row r)
@@ -376,8 +407,8 @@ namespace TI.Declarator.WordParser
             IEnumerable<string> originalNames;
             IEnumerable<RealEstateType> propertyTypes;
             IEnumerable<OwnershipType> ownershipTypes;
-            IEnumerable<string> shares;            
-            string estateTypeStr = GetContents(r, DeclarationField.OwnedRealEstateType);
+            IEnumerable<string> shares;
+            string estateTypeStr = GetContents(r, DeclarationField.OwnedRealEstateType, true);
             if (String.IsNullOrWhiteSpace(estateTypeStr) || estateTypeStr.Trim() == "-") return null;
 
             // FIXME all this splitting/recombining data stuff should be replaced with simpler logic
@@ -415,7 +446,7 @@ namespace TI.Declarator.WordParser
         private IEnumerable<RealEstateProperty> ParseStateProperty(Row r)
         {
             IEnumerable<RealEstateType> propertyTypes;
-            string propTypeStr = GetContents(r, DeclarationField.StatePropertyType);
+            string propTypeStr = GetContents(r, DeclarationField.StatePropertyType, true);
             if (string.IsNullOrWhiteSpace(propTypeStr) || propTypeStr.Trim() == "-" || propTypeStr.Trim() == "-\n-") return null;
 
             if (DeclarationProperties.ColumnOrdering.OwnershipTypeInSeparateField)
