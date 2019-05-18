@@ -134,6 +134,7 @@ namespace Tindalos
             switch (ext)
             {
                 case ".html":
+                case ".pdf":
                 case ".doc": return ParseDocX(Doc2DocX(fileName));
                 case ".docx": return ParseDocX(fileName);
                 default: throw new Exception(@"Unsupported format in file {fileName}");
@@ -152,6 +153,7 @@ namespace Tindalos
 
             return docXPath;
         }
+
 
         private static Declaration ParseDocX(string fileName)
         {
@@ -193,6 +195,7 @@ namespace Tindalos
                 switch (ext)
                 {
                     case ".html":
+                    case ".pdf":
                     case ".doc":  ScanDocX(Doc2DocX(fileName)); break;
                     case ".docx": ScanDocX(fileName); break;
                     default: break;
