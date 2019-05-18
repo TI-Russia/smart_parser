@@ -16,6 +16,5 @@ class TestSingleValue(TestCase):
         tables.append(read_tsv_table(localfile("2.tsv")))
         canon_table = read_tsv_table(localfile("result.tsv"))
         main_table = TTableJoiner(tables).process_pdf_declarator()
-        print ("test page cell break")
-        write_to_tsv(main_table, "debug.tsv")
+        write_to_tsv(main_table, localfile("debug.tsv"))
         self.assertEqual(main_table, canon_table)

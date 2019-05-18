@@ -13,5 +13,5 @@ class TestNoPersonIndex(TestCase):
         tables.append(read_tsv_table(localfile("0.tsv")))
         canon_table = read_tsv_table(localfile("result.tsv"))
         main_table = TTableJoiner(tables).process_pdf_declarator()
-        write_to_tsv(main_table, "debug.tsv")
+        write_to_tsv(main_table, localfile("debug.tsv"))
         self.assertEqual(main_table, canon_table)

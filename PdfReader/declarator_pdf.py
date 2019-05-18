@@ -1,19 +1,30 @@
 import camelot
 import csv
+import os
 import re
 import argparse
 from collections import defaultdict
+from collocs.bigrams import tokenize, read_bigrams
 
 VERBOSE = False
+BIGRAMS_FILE = os.path.join( os.path.dirname(os.path.abspath(__file__)), "collocs/bigrams.txt")
+BIGRAMS = read_bigrams(BIGRAMS_FILE) if os.path.exists(BIGRAMS_FILE) else defaultdict(float)
 
 def delete_thrash_chars(v):
     # убираем все переносы, хотя может случиться, что перенос идет по дефису, например, гараж-бокс
-    v = re.sub("- *\n *", "", v)
-    v = v.replace ("\n", " ")
+    v = re.sub(u"([а-я])(- *\n *)", r"\1", v)
+    v = v.replace ("\n", "\\n")
     v = v.strip()
     if v == "-":
         return ""
     return v
+
+def prettify_strings(table):
+    for r in table:
+        for i in range(len(r)):
+            r[i] = r[i].replace("\\n", " ")
+            r[i] = " ".join(r[i].split())
+    return table
 
 
 def read_tsv_table(filename):
@@ -57,19 +68,19 @@ def add_subheader(header, sub_header):
     return new_header
 
 
-def join_to_the_last_row(last_row, row):
+def glue_to_the_last_row(last_row, row):
     for k in range(len(last_row)):
         if row[k] != "":
             last_row[k] = last_row[k] + " " + row[k]
 
 
-def try_single_value_in_row(row):
+def check_single_value_in_row(row):
     if len(list(x for x in row if x != "")) <= 1:
         return True
     return False
 
 
-def try_depended_columns(row, depended_columns):
+def check_depended_columns(row, depended_columns):
     for i in range(1, len(row)):
         if row[i] != "" and i in depended_columns and row[i - 1] == "":
             if VERBOSE:
@@ -77,12 +88,42 @@ def try_depended_columns(row, depended_columns):
             return True
     return False
 
-
-def find_position_column(row):
+def check_bigrams(row, last_row):
+    if  len(row) != len (last_row):
+        return False
     for i in range(len(row)):
-        if row[i].lower().find(u"должность") != -1:
+        tokens1 = tokenize(last_row[i])
+        tokens2 = tokenize(row[i])
+        if len(tokens1) > 0 and len(tokens2) > 0:
+            bigram = " ".join([tokens1[-1], tokens2[0]])
+            if BIGRAMS[bigram] > 0:
+                return True
+    return False
+
+
+def check_merge_predicates(row, depended_columns, last_row):
+    return (check_depended_columns(row, depended_columns) or
+        check_single_value_in_row(row) or
+        check_bigrams (row, last_row));
+
+
+def find_column(row, word):
+    for i in range(len(row)):
+        if row[i].lower().find(word) != -1:
             return i
     return -1;
+
+def replace_eolns(s):
+    s.replace ('\\n', ' ')
+    return s
+
+def is_empty_row(s):
+    if len(s) == 0:
+        return True
+    for x in s:
+        if len(x) > 0:
+            return False
+    return True
 
 class TTableJoiner:
     def __init__(self, tables, verbose=False):
@@ -95,7 +136,27 @@ class TTableJoiner:
         self.move_single_column_rows_to_title()
         first_row = self.tables[0][0]
         self.has_person_index = first_row[0].startswith(u'№')
-        self.position_column = find_position_column(first_row)
+        self.occupation_column = find_column(first_row, u"должность")
+        self.fio_column = find_column(first_row, u"фамилия")
+        self.break_by_eolns =  self.check_eoln_format()
+        self.detect_header()
+        self.build_depended_columns()
+
+    def check_eoln_format(self):
+        if self.fio_column == -1:
+            return False
+        for row in self.tables[0]:
+            fio_value = row[self.fio_column].lower()
+            lines = fio_value.split("\\n")
+            first_line_not_relative = False
+            for i in range(len(lines)):
+                if i == 0:
+                    first_line_not_relative = lines[i].find(u"супруг") == -1
+                else:
+                    if first_line_not_relative and (lines[i].find(u"супруг") != -1):
+                        return True
+        return False
+
 
     def move_single_column_rows_to_title(self):
         new_table = []
@@ -109,9 +170,10 @@ class TTableJoiner:
                 new_table.append (row)
         self.tables[0] = new_table
 
-    def try_to_merge_to_the_last_row(self, body, row, depended_columns):
-        if (try_depended_columns(row, depended_columns) or
-                try_single_value_in_row(row)):
+    def add_or_glue(self, row, body, can_glue=False):
+        if len(body) == 0:
+            can_glue = False
+        if can_glue and check_merge_predicates(row, self.depended_columns, body[-1]):
             if VERBOSE:
                 row_str = "\t".join(row)
                 print("add line to the prev page: " + row_str)
@@ -119,11 +181,12 @@ class TTableJoiner:
             if self.has_person_index and row[0] != "":
                 if VERBOSE:
                     print("skip joining because the first cell is not empty: " + row[0])
-                return False
-            assert (len(body) > 0)
-            join_to_the_last_row(body[len(body) - 1], row)
-            return True
-        return False
+                body.append(list(row))
+            else:
+                assert (len(body) > 0)
+                glue_to_the_last_row(body[len(body) - 1], row)
+        else:
+            body.append(list(row))
 
     def build_depended_columns(self):
         null_and_value_bigrams = defaultdict(int)
@@ -140,21 +203,22 @@ class TTableJoiner:
                     max_row = max(i, max_row)
                 rows_count += 1
 
-        depended_columns = set()
+        self.depended_columns = set()
         min_level = 0.05
         for i in range(1, max_row):
             if value_unigrams[i] >= 3:
                 level = float(null_and_value_bigrams[i]) / value_unigrams[i]
                 if level < min_level:  # fuzzy comparing for typos
-                    depended_columns.add(i)
+                    self.depended_columns.add(i)
                     if VERBOSE:
                         print(
                             "set column {} as depended ({} / {} < {})".format(i, null_and_value_bigrams[i], rows_count,
                                                                               min_level))
-        return depended_columns
+        if VERBOSE:
+            print ("depended columns:" + str(self.depended_columns))
 
-    def find_header(self):
-        header = None
+    def detect_header(self):
+        self.header = None
         header_lines_count = 0
         for row in self.tables[0]:
             first_cell = row[0].strip()
@@ -163,31 +227,50 @@ class TTableJoiner:
                     break
             elif header_lines_count > 0 and len(first_cell) > 0:
                 break
-            header = add_subheader(header, row)
+            self.header = add_subheader(self.header, row)
             header_lines_count += 1
             assert (header_lines_count <= 2)
         self.tables[0][0:header_lines_count] = [] # delete header
-        return header
+        if VERBOSE:
+            print ("header:" + str(self.header))
 
-    def add_person_index(self, header, body):
-        if self.has_person_index or self.position_column ==  -1:
+
+    def add_person_index(self, body):
+        if self.has_person_index or self.occupation_column ==  -1:
             return
-        header.insert(0, u"№")
+        self.header.insert(0, u"№")
         person_index = 1
         for row in body:
-            if row[self.position_column] != '':
+            if row[self.occupation_column] != '':
                 row.insert(0, str(person_index))
                 person_index += 1
             else:
                 row.insert(0, '')
 
+    def divide_by_eoln(self, united_row, body):
+        rows = []
+        matrix = list()
+        for value in tuple(united_row[1:]):
+            matrix.append (list(map(delete_thrash_chars, value.split("\\n"))))
+
+        max_lines_count = max (len(l) for l in matrix)
+        for l in matrix:
+            for i  in range (len(l), max_lines_count):
+                l.append('')
+
+        # transpose matrix by eoln
+        matrix = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
+
+        for i in range(len(matrix)):
+            row = matrix[i]
+            if self.has_person_index:
+                row.insert(0, '')
+            can_glue = i > 0 and row[self.fio_column] == ""
+            self.add_or_glue(row, body, can_glue)
+
+
     def process_pdf_declarator(self):
         body = []
-        header = self.find_header()
-        depended_columns = self.build_depended_columns()
-        if VERBOSE:
-            print ("header:" + str(header))
-            print ("depended columns:" + str(depended_columns))
         table_no = 0
         for table in self.tables:
             if VERBOSE:
@@ -195,11 +278,14 @@ class TTableJoiner:
                 table_no += 1
             table_row_no = 0
             for row in table:
-                if table_row_no > 0 or not self.try_to_merge_to_the_last_row(body, row, depended_columns):
-                    body.append (list(row))
+                if self.break_by_eolns:
+                    self.divide_by_eoln(row, body)
+                else:
+                    self.add_or_glue(row, body, (table_row_no == 0))
                 table_row_no += 1
-        self.add_person_index(header, body)
-        return [header] + body
+        self.add_person_index(body)
+        out_table = [self.header] + body
+        return prettify_strings([self.header] + body)
 
 
 def get_page_tables(dataframes):
@@ -208,7 +294,8 @@ def get_page_tables(dataframes):
         table = []
         for row in df.itertuples():
             row = list(map(delete_thrash_chars, tuple(row)[1:]))
-            table.append (row)
+            if not is_empty_row(row):
+                table.append (row)
         tables.append (table)
     return tables
 
@@ -225,18 +312,43 @@ def parse_args():
     parser.add_argument('--output-html', dest="output_html", default=None)
     parser.add_argument('-p', '--pages', dest="pages", default="all")
     parser.add_argument('-v', '--verbose', dest="verbose", default=False, action="store_true")
+    parser.add_argument('--dont-split-text', dest="split_text", default=True, action="store_false")
     parser.add_argument('--write-pages-tsv', dest="write_pages_tsv", default=False, action="store_true")
+    parser.add_argument('--bigrams', dest="bigrams_file", default=BIGRAMS_FILE)
     return parser.parse_args()
+
+
+def camelot_read_pdf(filename, pages="all", split_text=True):
+    return camelot.read_pdf(filename, pages,
+                              suppress_stdout=True,
+                              split_text=split_text,
+                              line_scale=40,
+                              #shift_text=[''],
+                              #line_tol=5,
+                              layout_kwargs={'detect_vertical': False}
+                            )
+
+
+def camelot_read_pdf_baseline(filename, pages="all", split_text=True):
+    return camelot.read_pdf(filename, pages,
+                              suppress_stdout=True,
+                              split_text=split_text,
+                              line_scale=40,
+                              layout_kwargs={'detect_vertical': False})
 
 
 if __name__ == "__main__":
     args = parse_args()
     VERBOSE = args.verbose
-    for x in args.input:
-        #tables = camelot.read_pdf(x, args.pages, suppress_stdout=True)
-        tables = camelot.read_pdf(x, args.pages, suppress_stdout=True, split_text=True)
-
+    BIGRAMS = read_bigrams(args.bigrams_file)
+    for filename in args.input:
+        tables = camelot_read_pdf(filename, args.pages, args.split_text)
+        if len(tables._tables) == 0:
+            sys.exit(1)
         tables = get_page_tables(t.df for t in tables._tables)
+        if len(tables) == 0 or len(tables[0]) == 0:
+            print ("No table found, possibly ocr needed")
+            sys.exit(1)
         if args.write_pages_tsv:
             write_page_tables(tables)
         main_table = TTableJoiner(tables).process_pdf_declarator ()
