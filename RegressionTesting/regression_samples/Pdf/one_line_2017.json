@@ -1,0 +1,31 @@
+[
+  {
+    "person": {
+      "name": "Абрамов Иван Андреевич",
+      "name_raw": "Абрамов Иван Андреевич",
+      "role": [
+        "Начальник отдела"
+      ]
+    },
+    "year": 2017,
+    "incomes": [
+      {
+        "size": "1462642,81",
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "71,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  }
+]
