@@ -1,0 +1,140 @@
+[
+  {
+    "person": {
+      "name": "Абрамов Иван Андреевич",
+      "name_raw": "Абрамов Иван  Андреевич",
+      "role": [
+        "Начальник отдела"
+      ]
+    },
+    "year": 2017,
+    "incomes": [
+      {
+        "size": "1462642,81",
+        "relative": null
+      }
+    ],
+    "real_estates": [
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "71,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      }
+    ],
+    "vehicles": []
+  },
+  {
+    "person": {
+      "name": "Ачкасов Павел Викторович",
+      "name_raw": "Ачкасов Павел  Викторович",
+      "role": [
+        "Начальник отдела"
+      ]
+    },
+    "year": 2017,
+    "incomes": [
+      {
+        "size": "1309210,43",
+        "relative": null
+      },
+      {
+        "size": "575924,00",
+        "relative": "Супруг(а)"
+      }
+    ],
+    "real_estates": [
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "2072,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "36,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "В пользовании",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Земельный участок",
+        "type": "Земельный участок",
+        "square": "428,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Жилой дом",
+        "type": "Жилой дом",
+        "square": "208,60",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "35,10",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "193,30",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,5",
+        "relative": null
+      },
+      {
+        "text": "Гараж",
+        "type": "Гараж",
+        "square": "18,20",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Долевая собственность",
+        "share_amount": "0,5",
+        "relative": null
+      },
+      {
+        "text": "Квартира",
+        "type": "Квартира",
+        "square": "36,00",
+        "country": "Россия",
+        "region": null,
+        "own_type": "Индивидуальная",
+        "share_amount": null,
+        "relative": "Супруг(а)"
+      }
+    ],
+    "vehicles": [
+      {
+        "text": ": Ford S-Max",
+        "relative": null,
+        "type": "Легковой автомобиль"
+      }
+    ]
+  }
+]
