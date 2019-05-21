@@ -9,5 +9,6 @@ namespace TI.Declarator.ParserCommon
 
         public int? Year { get; set; }
         public string MinistryName { get; set; }
+        public string SheetName { get; set; }
     }
 }

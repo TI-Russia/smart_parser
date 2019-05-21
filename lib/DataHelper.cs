@@ -21,6 +21,7 @@ namespace Smart.Parser.Lib
             {
                 return false;
             }
+            return true;
             // Исправляем инициал, слипшийся с фамилией БуровЮ.В.
             Regex regex = new Regex("([а-я])([А-Я]\\.)", RegexOptions.Compiled);
 

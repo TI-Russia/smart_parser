@@ -153,5 +153,20 @@ namespace Smart.Parser.Adapters
 
         public string DocumentFile { set; get; }
 
+        public virtual int GetWorkSheetCount()
+        {
+            return 1;
+        }
+
+        public virtual void SetCurrentWorksheet(int sheetIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual string GetWorksheetName()
+        {
+            return null;
+        }
+
     }
 }

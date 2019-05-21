@@ -259,6 +259,7 @@ namespace Smart.Parser
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
             Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
 
+            Logger.Info(String.Format("Parsing {0}", declarationFile));
 
             switch (extension)
             {
@@ -301,10 +302,25 @@ namespace Smart.Parser
                 Logger.Error("Cannot find adapter for " + declarationFile);
                 return 1;
             }
+            if (adapter.GetWorkSheetCount() > 1)
+            {
+                Logger.Info(String.Format("File has multiple ({0}) worksheets", adapter.GetWorkSheetCount()));
+                for (int sheetIndex = 0; sheetIndex < adapter.GetWorkSheetCount(); sheetIndex++)
+                {
+                    string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
+                    Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
+                    adapter.SetCurrentWorksheet(sheetIndex);
+                    ParseOneFile(adapter, curOutFile);
+
+                }
+            }
+            else
+            {
+                ParseOneFile(adapter, outFile);
+            }
+#if false
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
-
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
-
             adapter.ColumnOrdering = columnOrdering;
 
 
@@ -323,13 +339,71 @@ namespace Smart.Parser
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
 
+            if (!String.IsNullOrEmpty(schema_errors))
+            {
+                Logger.Error("Json schema errors:" + schema_errors);
+            }
+            else
+            {
+                Logger.Info("Json schema OK");
+            }
             Logger.Info("Output size: " + output.Length);
 
             Logger.Info("Writing json to " + outFile);
             File.WriteAllText(outFile, output);
-
+#endif
             return 0;
+        }
 
+        public static int ParseOneFile(IAdapter adapter, string outFile)
+        {
+            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
+            var columnOrdering = ColumnDetector.ExamineHeader(adapter);
+            adapter.ColumnOrdering = columnOrdering;
+
+
+            Logger.Info("Column ordering: ");
+            foreach (var ordering in columnOrdering.ColumnOrder)
+            {
+                Logger.Info(ordering.ToString());
+            }
+            Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
+//            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
+            if (ColumnsOnly)
+                return 0;
+
+            if (columnOrdering.Title != null)
+            {
+                Logger.Info("Declaration Title: {0} ", columnOrdering.Title.Substring(0, 80));
+            }
+            if (columnOrdering.Year != null)
+            {
+                Logger.Info("Declaration Year: {0} ", columnOrdering.Year.Value);
+            }
+            if (columnOrdering.MinistryName != null)
+            {
+                Logger.Info("Declaration Ministry: {0} ", columnOrdering.MinistryName);
+            }
+
+
+            Declaration declaration = parser.Parse();
+
+            string schema_errors = null;
+            string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
+
+            if (!String.IsNullOrEmpty(schema_errors))
+            {
+                Logger.Error("Json schema errors:" + schema_errors);
+            }
+            else
+            {
+                Logger.Info("Json schema OK");
+            }
+            Logger.Info("Output size: " + output.Length);
+
+            Logger.Info("Writing json to " + outFile);
+            File.WriteAllText(outFile, output);
+            return 0;
         }
 
     }

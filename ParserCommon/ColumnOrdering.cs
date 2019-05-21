@@ -44,5 +44,9 @@ namespace TI.Declarator.ParserCommon
             }
         }
         public int FirstDataRow { get; set; } = 1;
+        public string Title { get; set; }
+        public string MinistryName { get; set; }
+        public string Section { get; set; }
+        public int? Year { get; set; }
     }
 }

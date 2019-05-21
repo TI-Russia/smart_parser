@@ -84,42 +84,50 @@ namespace Smart.Parser.Lib
         public Declaration Parse()
         {
             FirstPassStartTime = DateTime.Now;
+            DeclarationProperties properties = new DeclarationProperties()
+            {
+                Title = Adapter.ColumnOrdering.Title,
+                MinistryName = Adapter.ColumnOrdering.MinistryName,
+                Year = Adapter.ColumnOrdering.Year,
+                SheetName = Adapter.GetWorksheetName()
+            };
+
             Declaration declaration = new Declaration()
             {
-                Properties = new DeclarationProperties() { Title = "title", Year = 2018, MinistryName = "Ministry" }
+                Properties = properties
             };
             totalIncome = 0;
 
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
             PublicServant currentServant = null;
             TI.Declarator.ParserCommon.Person currentPerson = null;
+            int merged_row_count = 0;
 
             int row = rowOffset;
+            DeclarationSection currentSection = null;
+
+            if (Adapter.ColumnOrdering.Section != null)
+            {
+                currentSection = new DeclarationSection() { Row = row, Name = Adapter.ColumnOrdering.Section };
+                declaration.Sections.Add(currentSection);
+            }
             for (row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
                 // строка - разделитель
-                if (Adapter.GetCell(row, 0) == null)
+                string name;
+                if (ColumnDetector.IsSection(Adapter.GetRow(row), out name))
+                //if (Adapter.GetCell(row, 0).MergedColsCount > 1)
                 {
+                    //string name = Adapter.GetCell(row, 0).Text;
+                    //if (name.Length > 5)
+                    //{
+                    currentSection = new DeclarationSection() { Row = row, Name = name };
+                    declaration.Sections.Add(currentSection);
                     continue;
-                }
-                if (Adapter.GetCell(row, 0).MergedColsCount > 1)
-                {
-                    string name = Adapter.GetCell(row, 0).Text;
-                    if (name.Length > 5)
-                    {
-                        Logger.Debug(String.Format("find section at line {0}", row));
-                        declaration.Sections.Add(new DeclarationSection() { Row = row, Name = name });
-                        currentServant = null;
-                        if (currentPerson != null)
-                        {
-                            currentPerson.RangeHigh = row - 1;
-                        }
-                        currentPerson = null;
-                        continue;
-                    }
+                    //}
                 }
 
-                int merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
+                merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
                 string occupationStr = "";
@@ -152,6 +160,10 @@ namespace Smart.Parser.Lib
                         Name = DataHelper.NormalizeName(nameOrRelativeType),
                         Occupation = occupationStr
                     };
+                    if (currentSection != null)
+                    {
+                        currentServant.Department = currentSection.Name;
+                    }
 
                     declaration.PublicServants.Add(currentServant);
                     currentPerson = currentServant;
@@ -255,11 +267,7 @@ namespace Smart.Parser.Lib
                     for (int row = person.RangeLow; row <= person.RangeHigh; row++)
                     {
                         CurrentRow = row;
-                        Row currRow = Adapter.GetRow(row);
-                        if (currRow == null || currRow.Cells.Count == 0)
-                        {
-                            continue;
-                        }
+                        Row r = Adapter.GetRow(row);
 
                         if (firstRow)
                         {
@@ -281,14 +289,14 @@ namespace Smart.Parser.Lib
 
 
                         // Парсим недвижимость в собственности
-                        string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
+                        string estateTypeStr = r.GetContents(DeclarationField.OwnedRealEstateType);
                         string ownTypeStr = null;
-                        if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
+                        if (r.ColumnOrdering.OwnershipTypeInSeparateField)
                         {
-                            ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
+                            ownTypeStr = r.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
                         }
-                        string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
-                        string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
+                        string areaStr = r.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+                        string countryStr = r.GetContents(DeclarationField.OwnedRealEstateCountry);
 
                         RealEstateProperty ownedProperty = null;
 
@@ -308,9 +316,9 @@ namespace Smart.Parser.Lib
                         }
 
                         // Парсим недвижимость в пользовании
-                        string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
-                        string statePropAreaStr = currRow.GetContents(DeclarationField.StatePropertyArea);
-                        string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
+                        string statePropTypeStr = r.GetContents(DeclarationField.StatePropertyType);
+                        string statePropAreaStr = r.GetContents(DeclarationField.StatePropertyArea);
+                        string statePropCountryStr = r.GetContents(DeclarationField.StatePropertyCountry);
 
                         RealEstateProperty stateProperty = null;
                         try
@@ -329,7 +337,7 @@ namespace Smart.Parser.Lib
                         }
 
                         // Парсим транспортные средства
-                        string vehicleStr = GetVehicleString(currRow); // r.GetContents(DeclarationField.Vehicle);
+                        string vehicleStr = GetVehicleString(Adapter.GetRow(row)); // r.GetContents(DeclarationField.Vehicle);
                         List<Vehicle> vehicles = new List<Vehicle>();
                         DataHelper.ParseVehicle(vehicleStr, vehicles);
                         person.Vehicles.AddRange(vehicles);
@@ -461,19 +469,6 @@ namespace Smart.Parser.Lib
         IAdapter Adapter { get; set; }
         static int CurrentRow { get; set;  } = -1;
 
-        List<Tuple<int, int>> personBounds = new List<Tuple<int, int>>();
-        List<Tuple<int, int>> organsBounds = new List<Tuple<int, int>>();
-        List<int> headerPositions = new List<int>();
-        List<Organization> organizations = new List<Organization>();
-        List<Tuple<string, Tuple<int, int>>> organsBoundsList = new List<Tuple<string, Tuple<int, int>>>();
-        List<Person> organPersons = new List<Person>();
-
-        List<string> relationTypes = new List<string>();
-
-        Dictionary<string, int> ownershipTypes = new Dictionary<string, int>();
-        Dictionary<string, int> objectTypes = new Dictionary<string, int>();
-
         Decimal totalIncome = 0;
-
     }
 }

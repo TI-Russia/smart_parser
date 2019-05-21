@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
 
@@ -18,6 +19,74 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
+        static public bool IsSection(Row r, out string text)
+        {
+            text = null;
+            if (r.Cells.Count == 0)
+            {
+                return false;
+            }
+            int merged_row_count = r.Cells[0].MergedRowsCount;
+            int cell_count = r.Cells.Count();
+
+            if (merged_row_count > 1)
+            {
+                return false;
+            }
+
+            int merged_col = r.Cells[0].MergedColsCount;
+            if (merged_col < 5)
+            {
+                return false;
+            }
+
+            text = r.Cells[0].GetText(true);
+
+            return true;
+        }
+
+        static public bool IsTitle(Row r, out string title, out int? year, out string ministry)
+        {
+            title = null;
+            year = null;
+            ministry = null;
+            int cell_count = r.Cells.Count();
+            if (cell_count == 0)
+                return false;
+            int merged_row_count = r.Cells[0].MergedRowsCount;
+
+            if (merged_row_count < 2)
+                return false;
+
+            int merged_col_count = r.Cells[0].MergedColsCount;
+
+            if (merged_col_count < 5)
+                return false;
+
+            string text = r.Cells[0].GetText(true);
+            int text_len = text.Length;
+
+            if (text_len < 20)
+                return false;
+
+
+            var matches = Regex.Matches(text, @"\b20\d\d\b");
+
+            if (matches.Count >= 2 )
+            {
+                year = int.Parse(matches[0].Value);
+            }
+            var minMatch = Regex.Match(text, @"Министерства(.+)Российской Федерации", RegexOptions.IgnoreCase);
+            if (minMatch.Success)
+            {
+                ministry = minMatch.Groups[1].Value;
+            }
+
+            title = text;
+
+            return true;
+        }
+
         static private bool IsHeader(Row r)
         {
             var cells = r.Cells;
@@ -59,10 +128,28 @@ namespace Smart.Parser.Lib
         static public ColumnOrdering ExamineHeader(IAdapter t)
         {
             int headerRowNum = 0;
-            int auxRowCount = 0;            
+            int auxRowCount = 0;
+            ColumnOrdering res = new ColumnOrdering();
 
-            while (!IsHeader(t.Rows[headerRowNum]))
+            while (true)
             {
+                string title;
+                string ministry;
+                int? year;
+                string section_text;
+                if (IsTitle(t.Rows[headerRowNum], out title, out year, out ministry))
+                {
+                    res.Title = title;
+                    res.Year = year;
+                    res.MinistryName = ministry;
+                }
+                else if (IsSection(t.Rows[headerRowNum], out section_text))
+                {
+                    res.Section = section_text;
+                }
+                if (IsHeader(t.Rows[headerRowNum]))
+                    break;
+
                 headerRowNum++;
 
                 if (headerRowNum >= t.GetRowsCount())
@@ -73,7 +160,6 @@ namespace Smart.Parser.Lib
 
             var header = t.Rows[headerRowNum];
 
-            ColumnOrdering res = new ColumnOrdering();
             int colCount = 0;
             int index = 0;
             int headerRows = 1;
@@ -164,6 +250,8 @@ namespace Smart.Parser.Lib
             }
 
             int firstDataRow = headerRowNum + headerRows;// + auxRowCount;
+
+            // пропускаем колонку с номерами
             string cellText1 = t.GetCell(firstDataRow, 0).GetText();
             string cellText2 = t.GetCell(firstDataRow, 1).GetText();
             if (cellText1 == "1" && cellText2 == "2")

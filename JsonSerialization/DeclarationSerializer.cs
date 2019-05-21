@@ -104,6 +104,16 @@ namespace TI.Declarator.JsonSerialization
             return jsonString;
         }
 
+        public static JProperty SerializeDocument(Declaration declaration)
+        {
+            var jDocument = new JObject();
+            jDocument.Add(new JProperty("sheet_title", declaration.Properties.Title));
+            jDocument.Add(new JProperty("year", declaration.Properties.Year));
+            AddNotNullProp(jDocument, "sheet_number", declaration.Properties.SheetName);
+
+            return new JProperty("document", jDocument);
+        }
+
         public static string Serialize(Declaration declaration, ref string comment)
         {
             var jServants = new JArray();
@@ -112,10 +122,21 @@ namespace TI.Declarator.JsonSerialization
                 jServants.Add(Serialize(serv, declaration.Properties));
             }
 
-            string comments;
-            Validate(jServants, out comments);
+            //string comments;
+            //Validate(jServants, out comments);
 
-            string json = JsonConvert.SerializeObject(jServants, Formatting.Indented, new DecimalJsonConverter());
+            var jPersonsProp = new JProperty("persons", jServants);
+            var jDocument  = new JObject();
+            var jDocumentProp = SerializeDocument(declaration);
+            
+            var JDeclaration = new JObject(jPersonsProp, jDocumentProp);
+            
+            string comments;
+            Validate(JDeclaration, out comments);
+
+
+            string json = JsonConvert.SerializeObject(JDeclaration, Formatting.Indented, new DecimalJsonConverter());
+            //string json = JsonConvert.SerializeObject(jServants, Formatting.Indented, new DecimalJsonConverter());
 
             return json;
             //return jServants.ToString();
@@ -136,13 +157,13 @@ namespace TI.Declarator.JsonSerialization
 
         private static JProperty GetPersonalData(PublicServant servant)
         {
-            return new JProperty("person", new JObject(
-                                              new JProperty("name", servant.Name),
-                                              new JProperty("name_raw", servant.NameRaw),
-                                              //new JProperty("family_name", servant.FamilyName),
-                                              //new JProperty("first_name", servant.GivenName),
-                                              //new JProperty("patronymic_name", servant.Patronymic),
-                                              new JProperty("role", new JArray(servant.Occupation))));
+            JObject personProp = new JObject();
+            personProp.Add(new JProperty("name", servant.Name));
+            personProp.Add(new JProperty("name_raw", servant.NameRaw));
+            personProp.Add(new JProperty("role", servant.Occupation));
+            AddNotNullProp(personProp, "department", servant.Department);
+
+            return new JProperty("person", personProp);
         }
 
         private static JProperty GetInstitutiondata(PublicServant servant)
@@ -314,7 +335,8 @@ namespace TI.Declarator.JsonSerialization
             return res;
         }
 
-        private static bool Validate(JArray jServants, out string message)
+        
+        private static bool Validate<T>(T jServants, out string message)
         {
             IList<string> comments = new List<string>();
 

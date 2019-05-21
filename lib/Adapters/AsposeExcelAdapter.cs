@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parser.Lib;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +137,7 @@ namespace Smart.Parser.Adapters
         private AsposeExcelAdapter(string fileName)
         {
             DocumentFile = fileName;
-            Aspose.Cells.Workbook workbook = new Aspose.Cells.Workbook(fileName);
+            workbook = new Aspose.Cells.Workbook(fileName);
             // if there are multiple worksheets it is a problem
             // generate exception if more then one non-hidden worksheet
             //worksheet = workbook.Worksheets[0];
@@ -157,12 +158,39 @@ namespace Smart.Parser.Adapters
             {
                 throw new Exception(String.Format("Excel sheet {0} has no visible worksheets", fileName));
             }
+            workSheetName = worksheet.Name;
 
+            worksheetCount = wsCount;
             totalRows = worksheet.Cells.Rows.Count;
             totalColumns = worksheet.Cells.MaxColumn + 1;
 
             FindTitle();
         }
+
+        public override void SetCurrentWorksheet(int sheetIndex)
+        {
+            int count = 0;
+            worksheet = null;
+            foreach (var ws in workbook.Worksheets)
+            {
+                if (ws.IsVisible)
+                {
+                    if (count == sheetIndex)
+                    {
+                        worksheet = ws;
+                        break;
+                    }
+                    count++;
+                }
+            }
+            if (worksheet == null)
+            {
+                throw new SmartParserException("wrong  sheet index");
+            }
+            workSheetName = worksheet.Name;
+        }
+
+
 
         private void FindTitle()
         {
@@ -182,10 +210,22 @@ namespace Smart.Parser.Adapters
 
             title = text;
         }
+        public override int GetWorkSheetCount()
+        {
+            return worksheetCount;
+        }
 
+        public override string GetWorksheetName()
+        {
+            return workSheetName;
+        }
+
+        private Aspose.Cells.Workbook workbook;
         private Aspose.Cells.Worksheet worksheet;
         private int totalRows;
         private int totalColumns;
         private string title;
+        private int worksheetCount;
+        private string workSheetName;
     }
 }

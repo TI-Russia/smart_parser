@@ -28,6 +28,7 @@ namespace TI.Declarator.ParserCommon
         }
 
         public string Occupation { get; set; }
+        public string Department { get; set; }
 
         public List<Relative> Relatives = new List<Relative>();
 
