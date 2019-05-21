@@ -44,7 +44,12 @@ namespace Smart.Parser.Adapters
 
         public string GetContents(DeclarationField field)
         {
-            return adapter.GetDeclarationField(row, field).GetText(true);
+            var c = adapter.GetDeclarationField(row, field);
+            if (c == null)
+            {
+                return "";
+            }
+            return c.GetText(true);
         }
         public ColumnOrdering ColumnOrdering
         {
