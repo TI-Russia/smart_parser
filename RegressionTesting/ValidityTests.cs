@@ -160,6 +160,37 @@ namespace RegressionTesting
             Assert.AreEqual(0, nFailedComparisons, $"xls/xlsx parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {ExcelLogFilePath}");
         }
 
+        private const string PdfFilesDirectory = @"Pdf";
+        private const string PdfLogFile = "pdf_files.log";
+        private string PdfLogFilePath
+        {
+            get { return Path.GetFullPath(PdfLogFile); }
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("PropertyDictionary.txt")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestPdfParser()
+        {
+            int nFailedComparisons = 0;
+            int nComparisons = 0;
+            foreach (var filename in Directory.GetFiles(PdfFilesDirectory, "*.pdf"))
+            {
+                Declaration res = Tindalos.Tindalos.Process(filename);
+                string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
+                File.WriteAllText(outputFileName, DeclarationSerializer.Serialize(res));
+
+                string expectedFile = Path.Combine(PdfFilesDirectory, outputFileName);
+                bool isValid = TestValidity(expectedFile, outputFileName, PdfLogFilePath);
+
+                if (!isValid) { nFailedComparisons++; }
+                nComparisons++;
+            }
+
+            Assert.AreEqual(0, nFailedComparisons, $"pdf parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {PdfLogFilePath}");
+        }
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));

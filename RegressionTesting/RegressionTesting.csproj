@@ -82,6 +82,18 @@
     <None Include="regression_samples\Excel\C - min_east_2015_Rukovoditeli_i_sotrudniki_ministerstva.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\Pdf\one_line_2017.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\Pdf\one_line_2017.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\Pdf\two_tables_2017.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\Pdf\two_tables_2017.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\Word\2016_Sotrudniki_ministerstva.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
