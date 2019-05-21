@@ -10,172 +10,94 @@ using System.IO;
 using Parser.Lib;
 using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
+using CMDLine;
+
 
 namespace Smart.Parser
 {
     public class Program
     {
-        static void ShowHelp()
+        static string OutFile = "";
+        static string AdapterFamily = "aspose";
+        static bool ColumnsOnly = false;
+        static bool CheckJson = false;
+
+        static string ParseArgs(string[] args)
         {
-            Console.WriteLine("Usage: {0}.exe [options] [declaration file]", typeof(Program).Assembly.GetName().Name);
-            Console.WriteLine("Options:");
-            Console.WriteLine("    -d column             - dump column content.");
-            Console.WriteLine("    -h                    - show this help.");
-            Console.WriteLine("    -o file               - use file for output");
-        }
-
-        static bool columnsOnly = false;
-        static bool checkJson = false;
-        /**
-         * Command line parameters
-         * 
-         * 
-         */
-        public static int Main(string[] args)
-        {
-            string declarationFile = string.Empty;
-            int dumpColumn = -1;
-            string outFile = "";
-            string exportFile = "";
-            string logFile = "";
-            ColumnOrdering columnOrdering = null;
-            string verbose = "";
-            Logger.LogLevel verboseLevel = Logger.LogLevel.Info;
-
-            Logger.Setup();
-            Logger.Info("Command line: " + String.Join(" ", args));
-
-            for (int i = 0; i < args.Length; ++i)
+            CMDLineParser parser = new CMDLineParser();
+            CMDLineParser.Option outputOpt = parser.AddStringParameter("-o", "use file for output", false);
+            CMDLineParser.Option licenseOpt = parser.AddStringParameter("-license", "", false);
+            CMDLineParser.Option mainLogOpt = parser.AddStringParameter("-log", "", false);
+            CMDLineParser.Option verboseOpt = parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
+            CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
+            CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
+            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi or microsoft, by default is aspose", false);
+            try
             {
-                if (args[i].StartsWith("-"))
+                //parse the command line
+                parser.Parse(args);
+            }
+            catch (Exception ex)
+            {
+                //show available options      
+                Console.Write(parser.HelpMessage());
+                Console.WriteLine();
+                Console.WriteLine("Error: " + ex.Message);
+                throw;
+            }
+            if (licenseOpt.isMatched)
+            {
+                AsposeLicense.SetLicense(licenseOpt.Value.ToString());
+            }
+            string logFileName = "";
+            if (mainLogOpt.isMatched)
+            {
+                logFileName = Path.GetFullPath(mainLogOpt.Value.ToString());
+            }
+            Logger.Setup(logFileName);
+            if (outputOpt.isMatched)
+            {
+                OutFile = outputOpt.Value.ToString();
+            }
+            Logger.LogLevel verboseLevel = Logger.LogLevel.Info;
+            if (verboseOpt.isMatched)
+            {
+                switch (verboseOpt.Value.ToString())
                 {
-                    switch (args[i])
-                    {
-                        case "-h":
-                        case "/h":
-                        case "--help":
-                        case "/?":
-                            ShowHelp();
-                            return 1;
-
-                        case "-d":
-                            if (i + 1 < args.Length)
-                                dumpColumn = Convert.ToInt32(args[++i]);
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-                        case "-ordering":
-                            if (i + 1 < args.Length)
-                                columnOrdering = JsonWriter.ReadJson<ColumnOrdering>(args[++i]);
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-                        case "-license":
-                            if (i + 1 < args.Length)
-                                AsposeLicense.SetLicense(args[++i]);
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-                        case "-export":
-                            if (i + 1 < args.Length)
-                                exportFile = args[++i];
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-                        case "-log":
-                            if (i + 1 < args.Length)
-                                logFile = args[++i];
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-
-
-                        case "-o":
-                            if (i + 1 < args.Length)
-                                outFile = args[++i];
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-                        case "-v":
-                            if (i + 1 < args.Length)
-                            {
-                                verbose = args[++i];
-                                switch (verbose)
-                                {
-                                    case "info": verboseLevel = Logger.LogLevel.Info; break;
-                                    case "error": verboseLevel = Logger.LogLevel.Error; break;
-                                    case "debug": verboseLevel = Logger.LogLevel.Debug; break;
-                                    default:
-                                        {
-                                            ShowHelp();
-                                            return 1;
-                                        }
-                                }
-                            }
-                            else
-                            {
-                                ShowHelp();
-                                return 1;
-                            }
-                            break;
-
-
-                        case "-q":
-                            break;
-
-                        case "-columnsonly":
-                            columnsOnly = true;
-                            break;
-
-                        case "-checkjson":
-                            checkJson = true;
-                            break;
-
-                        default:
-                            {
-                                Console.WriteLine("Invalid option " + args[i]);
-                                return 1;
-                            }
-                    }
-                    continue;
-                }
-                if (declarationFile == string.Empty)
-                    declarationFile = args[i];
-                else
-                {
-                    ShowHelp();
-                    return 1;
+                    case "info": verboseLevel = Logger.LogLevel.Info; break;
+                    case "error": verboseLevel = Logger.LogLevel.Error; break;
+                    case "debug": verboseLevel = Logger.LogLevel.Debug; break;
+                    default:
+                        {
+                            throw new Exception("unknown verbose level "  + verboseOpt.Value.ToString());
+                        }
                 }
 
             }
+            Logger.SetLoggingLevel(verboseLevel);
 
+            if (adapterOpt.isMatched)
+            {
+                AdapterFamily = adapterOpt.Value.ToString();
+                if (AdapterFamily != "aspose" && AdapterFamily != "npoi" && AdapterFamily != "microsoft")
+                {
+                    throw new Exception("unknown verbose adapter family " + AdapterFamily);
+                }
+            }
+
+            ColumnsOnly = columnsOnlyOpt.isMatched;
+            CheckJson = checkJsonOpt.isMatched;
+            return  String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
+        }
+
+
+        public static int Main(string[] args)
+        {
+            string declarationFile = ParseArgs(args);
+            Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))
             {
-                ShowHelp();
+                Console.WriteLine("no input file or directory");
                 return 1;
             }
 
@@ -183,8 +105,6 @@ namespace Smart.Parser
             {
                 return ParseMultipleFiles(declarationFile);
             }
-
-            Logger.SetLoggingLevel(verboseLevel);
 
             try
             {
@@ -330,14 +250,14 @@ namespace Smart.Parser
             string extension = Path.GetExtension(declarationFile);
             string outFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
 
-            if (checkJson && File.Exists(outFile))
+            if (CheckJson && File.Exists(outFile))
             {
                 Logger.Info("JSON file {0} already exist", outFile);
                 return 0;
 
             }
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
-            Logger.SetSecondLogFileName(logFile);
+            Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
 
 
             switch (extension)
@@ -352,24 +272,35 @@ namespace Smart.Parser
                     break;
                 case ".xls":
                 case ".xlsx":
-                    if (!AsposeLicense.Licensed && extension == ".xls")
+                    if (AdapterFamily == "aspose")
                     {
-                        throw new Exception("xls file format is not supported");
+                        if (!AsposeLicense.Licensed && extension == ".xls")
+                        {
+                            throw new Exception("xls file format is not supported");
+                        }
+                        if (AsposeLicense.Licensed)
+                        {
+                            adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                        }
                     }
-                    if (AsposeLicense.Licensed)
+                    else if (AdapterFamily == "npoi")
                     {
-                        adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                        adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
                     }
                     else
                     {
-                        adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
+                        adapter = TI.Declarator.MicrosoftExcel.ExcelParser.GetAdapter(declarationFile);
                     }
                     break;
                 default:
                     Logger.Error("Unknown file extension " + extension);
                     return 1;
             }
-
+            if (adapter == null)
+            {
+                Logger.Error("Cannot find adapter for " + declarationFile);
+                return 1;
+            }
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
 
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
@@ -384,7 +315,7 @@ namespace Smart.Parser
             }
             Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
             Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
-            if (columnsOnly)
+            if (ColumnsOnly)
                 return 0;
 
             Declaration declaration = parser.Parse();

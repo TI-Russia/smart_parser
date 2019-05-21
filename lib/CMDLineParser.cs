@@ -65,7 +65,7 @@ namespace CMDLine
     ///     parser.Debug();    
     ///    
     ///</example>
-    class CMDLineParser
+    public class CMDLineParser
     {
         private string[] _cmdlineArgs = null;
         private System.Collections.ArrayList SwitchesStore = null;

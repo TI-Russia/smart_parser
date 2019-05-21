@@ -1,0 +1,130 @@
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using Excel = Microsoft.Office.Interop.Excel;
+
+using TI.Declarator.ParserCommon;
+using Smart.Parser.Adapters;
+namespace TI.Declarator.MicrosoftExcel
+{
+    class MSExcelCell : Cell
+    {
+
+        public MSExcelCell(Excel.Range range)
+        {
+            if (range == null || range.Count == 0)
+                return;
+            { }
+            IsEmpty = range.Text.Length > 0;
+            IsHeader = false;
+            BackgroundColor = null;
+            ForegroundColor = null;
+            Text = range.Text;
+            IsMerged = range.MergeCells;
+            if (IsMerged)
+            {
+                FirstMergedRow = range.MergeArea.Row;
+                MergedRowsCount = range.MergeArea.Rows.Count;
+                MergedColsCount = range.MergeArea.Columns.Count;
+            }
+            Row = range.Row - 1;
+            Col = range.Column - 1;
+        }
+
+    }
+
+    public class MicrosoftExcelAdapter : IAdapter
+    {
+        private Excel.Application xlApp;
+        private Excel.Workbook WorkBook;
+        private Excel.Worksheet WorkSheet;
+        private int TotalRows;
+        private int TotalColumns;
+        private string Title;
+
+        public MicrosoftExcelAdapter(string filename)
+        {
+            Microsoft.Office.Interop.Excel.Application xlApp = new Excel.Application();
+            WorkBook = xlApp.Workbooks.Open(Path.GetFullPath(filename), ReadOnly:true);
+            if (WorkBook.Worksheets.Count == 0)
+            {
+                throw new Exception(String.Format("Excel sheet {0} has no visible worksheets", filename));
+            }
+            WorkSheet = WorkBook.ActiveSheet;
+            TotalRows = WorkSheet.UsedRange.Rows.Count;
+            var lastUsedColumn = WorkSheet.Cells.Find("*", System.Reflection.Missing.Value,
+                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                               Excel.XlSearchOrder.xlByColumns, Excel.XlSearchDirection.xlPrevious,
+                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
+            TotalColumns = lastUsedColumn + 1;
+            FindTitle();
+        }
+
+
+        public override Cell GetCell(int row, int column)
+        {
+            Excel.Range cell = WorkSheet.Cells[row + 1, column + 1];
+            return new MSExcelCell(cell);
+        }
+
+        public override int GetRowsCount()
+        {
+            return TotalRows;
+        }
+
+        public override int GetColsCount()
+        {
+            return TotalColumns;
+        }
+
+        public override int GetColsCount(int row)
+        {
+            return GetCells(row).Count();
+        }
+        public override string GetTitle()
+        {
+            return Title;
+        }
+
+        private void FindTitle()
+        {
+            int row = 0;
+            string text = "";
+            while (row < GetRowsCount())
+            {
+                Cell cell = GetCell(row, 0);
+                if (cell.IsMerged && cell.MergedColsCount > 3)
+                {
+                    text += cell.Text;
+                    row += cell.MergedRowsCount;
+                }
+                else
+                    break;
+            }
+
+            Title = text;
+        }
+
+        public override List<Cell> GetCells(int rowIndex)
+        {
+            List<Cell> result = new List<Cell>();
+            for (int i = 1; i < TotalColumns; i++)
+            {
+                Cell cell = new MSExcelCell( WorkSheet.Cells.Cells[rowIndex + 1, i]);
+                result.Add(cell);
+                if (cell.IsMerged && cell.MergedColsCount > 1)
+                {
+                    i += cell.MergedColsCount - 1;
+                }
+
+                //result.Add(new MSExcelCell(c));
+            }
+            if (result.Count == 0)
+            {
+                return null;
+            }
+            return result;
+        }
+    }
+}

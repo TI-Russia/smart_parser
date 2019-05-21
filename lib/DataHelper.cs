@@ -38,7 +38,13 @@ namespace Smart.Parser.Lib
             // Ибрагимов С.-Э.С.-А.
 
             var parts = nameOrRelativeType.Split(new char[] { ' ', '.', ',' }, StringSplitOptions.RemoveEmptyEntries);
-                
+            if (parts.Count() == 3 &&
+                parts[0].Length > 1 &&
+                parts[1].Length == 1 && 
+                parts[2].Length == 1)
+            {
+                return true;
+            };
             int parts_count = parts.Where(s => s.Length > 2 ).Count();
             bool threePart = parts_count == 3;
             if (threePart)
