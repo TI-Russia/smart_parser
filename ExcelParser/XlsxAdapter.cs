@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ namespace TI.Declarator.ExcelParser
         private XSSFWorkbook WorkBook;
         public XlsxAdapter(string filename)
         {
-            WorkBook = new XSSFWorkbook(filename);
+            WorkBook = new XSSFWorkbook(Path.GetFullPath(filename));
         }
 
         public Cell GetCell(string cellIndex)
@@ -50,14 +51,47 @@ namespace TI.Declarator.ExcelParser
 
             return result;
         }
-
+        public class CellAddress
+        {
+            public int row { get; set; }
+            public int column { get; set; }
+            public override int GetHashCode()
+            {
+                return row*100 + column; //maximal 100 columns in excel 
+            }
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as CellAddress);
+            }
+            public bool Equals(CellAddress obj)
+            {
+                return obj != null && obj.row == this.row && obj.column == this.column;
+            }
+        }
+        Dictionary<CellAddress, Cell> Cache = new Dictionary<CellAddress, Cell>();
         public override Cell GetCell(int row, int column)
         {
+            var address = new CellAddress{row=row, column=column};
+            if (Cache.ContainsKey(address))
+            {
+                return Cache[address];
+            }
+            var c = GetCellWithoutCache(row, column);
+            Cache[address] = c;
+            return c;
+        }
+        Cell GetCellWithoutCache(int row, int column)
+        {
             ISheet defaultSheet = WorkBook.GetSheetAt(0);
-            ICell cell = defaultSheet.GetRow(row).GetCell(column);
-
+            var currentRow = defaultSheet.GetRow(row);
+            if (currentRow == null)
+            {
+                //null if row contains only empty cells
+                return null;
+            }
+            ICell cell = currentRow.GetCell(column);
             if (cell == null) return null;
-
+            
             string cellContents;
             bool isMergedCell = cell.IsMergedCell;
             int firstMergedRow;
@@ -128,18 +162,7 @@ namespace TI.Declarator.ExcelParser
 
         public override int GetRowsCount()
         {
-            ISheet defaultSheet = WorkBook.GetSheetAt(0);
-            int numRows = defaultSheet.LastRowNum;
-            // since LastRowNum returns zero-based row index
-            // we need an extra check to determine if the sheet has 0 or 1 rows
-            if (numRows == 0 && defaultSheet.PhysicalNumberOfRows == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                return numRows + 1;
-            }
+            return  WorkBook.GetSheetAt(0).PhysicalNumberOfRows;
         }
 
         public override int GetColsCount()

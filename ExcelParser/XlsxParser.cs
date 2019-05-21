@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 using TI.Declarator.ParserCommon;
@@ -13,7 +14,7 @@ namespace TI.Declarator.ExcelParser
 
         public static IAdapter GetAdapter(string filename)
         {
-            return new XlsxAdapter(filename);
+            return new XlsxAdapter(Path.GetFullPath(filename));
         }
 
         public XlsxParser(Dictionary<string, RealEstateType> propertyTypes)
