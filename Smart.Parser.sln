@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Parser", "src\Smart.Parser.csproj", "{42F10691-63BD-469C-8898-45B80CAB91A3}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -20,6 +20,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSerialization", "JsonSerialization\JsonSerialization.csproj", "{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tindalos", "Tindalos\Tindalos.csproj", "{C6D0AE36-515D-4C5B-8665-49DE6E635A04}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DCB47788-553F-495F-BDAB-1B144E0DF5B1} = {DCB47788-553F-495F-BDAB-1B144E0DF5B1}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D243CD7-136D-423E-A2FB-873E2AC08121}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,10 +39,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeclaratorApiClient", "Decl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{AFB7E7EE-969C-47DC-9FEF-780909E20975}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSExcelParser", "MicrosoftExcelParser\MSExcelParser.csproj", "{977FA48C-ECAD-4588-996E-E777BAC0B806}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -89,11 +91,18 @@ Global
 		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977FA48C-ECAD-4588-996E-E777BAC0B806}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD2A9583-38EC-41A7-9E73-34858556C2B6}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

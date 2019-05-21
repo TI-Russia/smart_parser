@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -59,7 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CMDLineParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -123,6 +122,10 @@
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
       <Project>{16e41c56-7cd2-4e16-a469-4af4f7facb71}</Project>
       <Name>JsonSerialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj">
+      <Project>{dcb47788-553f-495f-bdab-1b144e0df5b1}</Project>
+      <Name>Smart.Parser.Lib</Name>
     </ProjectReference>
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
       <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>

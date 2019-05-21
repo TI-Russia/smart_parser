@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using CMDLine;
 
 using Microsoft.Office.Interop.Word;
 
@@ -10,7 +11,6 @@ using TI.Declarator.JsonSerialization;
 using TI.Declarator.ParserCommon;
 using TI.Declarator.WordParser;
 
-using CMDLine;
 
 namespace Tindalos
 {
