@@ -92,12 +92,20 @@ namespace TI.Declarator.WordParser
                         colCount++;
                     }
                 }
-                // current cell spans several columns, so the header PROBABLY occupies two rows instead of just one
+                // current cell spans several columns, so the header PROBABLY occupies two or more rows instead of just one
                 // with the second row reserved for subheaders
                 else
                 {
                     int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
-                    Row auxRow = t.Rows[headerRowNum + 1];
+                    int offset = 1;
+                    Row auxRow = t.Rows[headerRowNum + offset];
+                    while (auxRow.Stringify().Replace("|", "").IsNullOrWhiteSpace())
+                    {
+                        StringifiedHeaderRows.Add(auxRow.Stringify());
+                        offset++;
+                        auxRow = t.Rows[headerRowNum + offset];
+                    }
+
                     StringifiedHeaderRows.Add(auxRow.Stringify());
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
                     auxCellsIter.MoveNext();
@@ -691,7 +699,7 @@ namespace TI.Declarator.WordParser
         private static IEnumerable<decimal?> ParseAreas(string strAreas)
         {
             var res = new List<decimal?>();
-            if (strAreas.StartsWith("не "))
+            if (strAreas.ToLower().StartsWith("не "))
             {
                 res.Add(null);
                 return res;

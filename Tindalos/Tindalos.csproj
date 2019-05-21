@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -104,12 +104,24 @@
     <None Include="to_process\min_ind\2015_Rukovoditeli_podvedomstvennyih_uchrezhdenij_%28utochnyonnyie%29.docx" />
     <None Include="to_process\min_ind\2015_Sotrudniki_ministerstva,_rukovoditeli_territorial%27nyih_upravlenij.docx" />
     <None Include="to_process\min_ind\2015_Sotrudniki_ministerstva,_rukovoditeli_territorial%27nyih_upravlenij_%28utochnyonnyie%29.docx" />
-    <None Include="to_process\min_ind\2016_Rukovoditeli_ministerstva.docx" />
-    <None Include="to_process\min_ind\2016_Rukovoditeli_podvedomstvennyih_uchrezhdenij.docx" />
-    <None Include="to_process\min_ind\2016_Sotrudniki_ministerstva.docx" />
-    <None Include="to_process\min_ind\2016_Sotrudniki_ministerstva_%28utochnyonnyie%29.docx" />
-    <None Include="to_process\min_ind\2017_Rukovoditeli_ministerstva_%28utochnionnye%29.docx" />
-    <None Include="to_process\min_ind\2017_Rukovoditeli_podvedomstvennykh_uchrezhdenii_%28utochnionnye%29.docx" />
+    <None Include="to_process\min_ind\2016_Rukovoditeli_ministerstva.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="to_process\min_ind\2016_Rukovoditeli_podvedomstvennyih_uchrezhdenij.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="to_process\min_ind\2016_Sotrudniki_ministerstva.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="to_process\min_ind\2016_Sotrudniki_ministerstva_%28utochnyonnyie%29.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="to_process\min_ind\2017_Rukovoditeli_ministerstva_%28utochnionnye%29.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="to_process\min_ind\2017_Rukovoditeli_podvedomstvennykh_uchrezhdenii_%28utochnionnye%29.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="to_process\min_ind\2017_Sotrudniki_ministerstva_%28utochnionnye%29.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
