@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
@@ -78,7 +79,9 @@ namespace TI.Declarator.JsonSerialization
             {
                 Validators = new List<JsonValidator> { new RealEstateValidator() }
             };
-            Schema = JSchema.Parse(File.ReadAllText(SchemaSource), SchemaSettings);
+            string executableLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string fullPath = Path.Combine(executableLocation, SchemaSource);
+            Schema = JSchema.Parse(File.ReadAllText(fullPath), SchemaSettings);
         }
 
         public static string Serialize(Declaration declaration)
