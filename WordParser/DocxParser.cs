@@ -153,17 +153,35 @@ namespace TI.Declarator.WordParser
             }
             Console.WriteLine(outBuilder);
         }
+        List<Row> CollectRows(DocX doc, int firstTableRowOffset)
+        {
+            var tableNo = 0;
+            var rows = new List<Row>();
+            foreach (var table in doc.Tables)
+            {
+                if (tableNo > 0)
+                {
+                    firstTableRowOffset = 0;
+                }
+                ++tableNo;
+                foreach (Row r in table.Rows.Skip(firstTableRowOffset))
+                {
+                    rows.Add(r);
+                }
+            }
+            return rows;
+        }
+
 
         private Declaration Parse(DocX doc, int rowOffset = 1, bool verbose = false)
         {
-            var leadTable = doc.Tables.First();
             var servants = new List<PublicServant>();
             PublicServant currentServant = null;
             Person currentPerson = null;
             bool containsEntryNumbers = DeclarationProperties.ColumnOrdering.ContainsField(DeclarationField.Number);
             int? expectedCount = containsEntryNumbers ? 0 : (int?) null;
 
-            foreach (Row r in leadTable.Rows.Skip(rowOffset))
+            foreach (var r in CollectRows(doc, rowOffset))
             {
                 if (verbose)
                 {
