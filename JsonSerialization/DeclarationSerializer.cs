@@ -109,7 +109,7 @@ namespace TI.Declarator.JsonSerialization
             var jDocument = new JObject();
             jDocument.Add(new JProperty("sheet_title", declaration.Properties.Title));
             jDocument.Add(new JProperty("year", declaration.Properties.Year));
-            AddNotNullProp(jDocument, "sheet_number", declaration.Properties.SheetName);
+            //AddNotNullProp(jDocument, "sheet_number", declaration.Properties.SheetName);
 
             return new JProperty("document", jDocument);
         }

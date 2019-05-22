@@ -45,30 +45,37 @@ namespace Smart.Parser.Lib
             return true;
         }
 
-        static public bool IsTitle(Row r, out string title, out int? year, out string ministry)
+        static public bool IsTitle(Row r, ref string title, ref int? year, ref string ministry)
         {
-            title = null;
-            year = null;
-            ministry = null;
+            //title = null;
+            //year = null;
+            //ministry = null;
             int cell_count = r.Cells.Count();
             if (cell_count == 0)
                 return false;
             int merged_row_count = r.Cells[0].MergedRowsCount;
-
-            if (merged_row_count < 2)
-                return false;
+            string text = r.Cells[0].GetText(true);
 
             int merged_col_count = r.Cells[0].MergedColsCount;
 
             if (merged_col_count < 5)
                 return false;
 
-            string text = r.Cells[0].GetText(true);
             int text_len = text.Length;
 
             if (text_len < 20)
                 return false;
 
+            if (title == null)
+                title = text;
+            else
+                title += " " + text;
+
+            string[] title_words = { "сведения", "обязательствах", "доходах", "период" };
+            bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
+
+            if (!has_title_words)
+                return false;
 
             var matches = Regex.Matches(text, @"\b20\d\d\b");
 
@@ -81,8 +88,6 @@ namespace Smart.Parser.Lib
             {
                 ministry = minMatch.Groups[1].Value;
             }
-
-            title = text;
 
             return true;
         }
@@ -131,17 +136,17 @@ namespace Smart.Parser.Lib
             int auxRowCount = 0;
             ColumnOrdering res = new ColumnOrdering();
 
+            string title = null;
+            string ministry = null;
+            int? year = null;
+
+            bool findTitle = false;
             while (true)
             {
-                string title;
-                string ministry;
-                int? year;
                 string section_text;
-                if (IsTitle(t.Rows[headerRowNum], out title, out year, out ministry))
+                if (IsTitle(t.Rows[headerRowNum], ref title, ref year, ref ministry))
                 {
-                    res.Title = title;
-                    res.Year = year;
-                    res.MinistryName = ministry;
+                    findTitle = true;
                 }
                 else if (IsSection(t.Rows[headerRowNum], out section_text))
                 {
@@ -156,6 +161,13 @@ namespace Smart.Parser.Lib
                 {
                     throw new ColumnDetectorException(String.Format("Headers not found"));
                 }
+            }
+
+            if (findTitle)
+            {
+                res.Title = title;
+                res.Year = year;
+                res.MinistryName = ministry;
             }
 
             var header = t.Rows[headerRowNum];
