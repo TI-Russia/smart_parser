@@ -101,7 +101,6 @@ namespace Smart.Parser.Lib
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
             PublicServant currentServant = null;
             TI.Declarator.ParserCommon.Person currentPerson = null;
-            int merged_row_count = 0;
 
             int row = rowOffset;
             DeclarationSection currentSection = null;
@@ -113,6 +112,10 @@ namespace Smart.Parser.Lib
             }
             for (row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
+                if (Adapter.GetCell(row, 0) == null)
+                {
+                    continue;
+                }
                 // строка - разделитель
                 string name;
                 if (ColumnDetector.IsSection(Adapter.GetRow(row), out name))
@@ -123,11 +126,18 @@ namespace Smart.Parser.Lib
                     //{
                     currentSection = new DeclarationSection() { Row = row, Name = name };
                     declaration.Sections.Add(currentSection);
+                    Logger.Debug(String.Format("find section at line {0}", row));
+                    currentServant = null;
+                    if (currentPerson != null)
+                    {
+                        currentPerson.RangeHigh = row - 1;
+                    }
+                    currentPerson = null;
                     continue;
                     //}
                 }
 
-                merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
+                int merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
                 string occupationStr = "";
@@ -135,8 +145,6 @@ namespace Smart.Parser.Lib
                 {
                     occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
                 }
-
-
 
                 if (String.IsNullOrWhiteSpace(nameOrRelativeType))
                 {
@@ -267,7 +275,11 @@ namespace Smart.Parser.Lib
                     for (int row = person.RangeLow; row <= person.RangeHigh; row++)
                     {
                         CurrentRow = row;
-                        Row r = Adapter.GetRow(row);
+                        Row currRow = Adapter.GetRow(row);
+                        if (currRow == null || currRow.Cells.Count == 0)
+                        {
+                            continue;
+                        }
 
                         if (firstRow)
                         {
@@ -289,14 +301,14 @@ namespace Smart.Parser.Lib
 
 
                         // Парсим недвижимость в собственности
-                        string estateTypeStr = r.GetContents(DeclarationField.OwnedRealEstateType);
+                        string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
                         string ownTypeStr = null;
-                        if (r.ColumnOrdering.OwnershipTypeInSeparateField)
+                        if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
                         {
-                            ownTypeStr = r.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
+                            ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
                         }
-                        string areaStr = r.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
-                        string countryStr = r.GetContents(DeclarationField.OwnedRealEstateCountry);
+                        string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+                        string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
 
                         RealEstateProperty ownedProperty = null;
 
@@ -316,9 +328,9 @@ namespace Smart.Parser.Lib
                         }
 
                         // Парсим недвижимость в пользовании
-                        string statePropTypeStr = r.GetContents(DeclarationField.StatePropertyType);
-                        string statePropAreaStr = r.GetContents(DeclarationField.StatePropertyArea);
-                        string statePropCountryStr = r.GetContents(DeclarationField.StatePropertyCountry);
+                        string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
+                        string statePropAreaStr = currRow.GetContents(DeclarationField.StatePropertyArea);
+                        string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
 
                         RealEstateProperty stateProperty = null;
                         try
@@ -337,7 +349,7 @@ namespace Smart.Parser.Lib
                         }
 
                         // Парсим транспортные средства
-                        string vehicleStr = GetVehicleString(Adapter.GetRow(row)); // r.GetContents(DeclarationField.Vehicle);
+                        string vehicleStr = GetVehicleString(currRow); // r.GetContents(DeclarationField.Vehicle);
                         List<Vehicle> vehicles = new List<Vehicle>();
                         DataHelper.ParseVehicle(vehicleStr, vehicles);
                         person.Vehicles.AddRange(vehicles);
