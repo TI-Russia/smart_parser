@@ -17,8 +17,8 @@ namespace Smart.Parser
 {
     public class Program
     {
-        static string OutFile = "";
-        static string AdapterFamily = "aspose";
+        public static string OutFile = "";
+        public static string AdapterFamily = "aspose";
         static bool ColumnsOnly = false;
         static bool CheckJson = false;
 
@@ -90,6 +90,10 @@ namespace Smart.Parser
             return  String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
         }
 
+        public static string BuildOutFileNameByInput(string declarationFile)
+        {
+            return Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
+        }
 
         public static int Main(string[] args)
         {
@@ -109,7 +113,11 @@ namespace Smart.Parser
             try
             {
                 Logger.SetOutSecond();
-                ParseOneFile(declarationFile);
+                if (OutFile == "")
+                {
+                    OutFile = BuildOutFileNameByInput(declarationFile);
+                }
+                ParseOneFile(declarationFile, OutFile);
             }
             catch (SmartParserException e)
             {
@@ -174,7 +182,7 @@ namespace Smart.Parser
                 try
                 {
                     Logger.SetOutSecond();
-                    ParseOneFile(file);
+                    ParseOneFile(file, BuildOutFileNameByInput(file));
                 }
                 catch (SmartParserException e)
                 {
@@ -244,11 +252,9 @@ namespace Smart.Parser
 
 
 
-        public static int ParseOneFile(string declarationFile)
+        public static int ParseOneFile(string declarationFile, string outFile)
         {
             IAdapter adapter = null;
-            string extension = Path.GetExtension(declarationFile);
-            string outFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
 
             if (CheckJson && File.Exists(outFile))
             {
@@ -260,7 +266,7 @@ namespace Smart.Parser
             Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
 
             Logger.Info(String.Format("Parsing {0}", declarationFile));
-
+            string extension = Path.GetExtension(declarationFile);
             switch (extension)
             {
                 case ".doc":
