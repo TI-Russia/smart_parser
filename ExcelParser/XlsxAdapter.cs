@@ -94,7 +94,6 @@ namespace TI.Declarator.ExcelParser
             ICell cell = currentRow.GetCell(column);
             if (cell == null) return EmptyCell;
             
-            string cellContents;
             bool isMergedCell = cell.IsMergedCell;
             int firstMergedRow;
             int mergedRowsCount;
@@ -102,23 +101,16 @@ namespace TI.Declarator.ExcelParser
             if (isMergedCell)
             {
                 CellRangeAddress mergedRegion = GetMergedRegion(defaultSheet, cell);
-
                 firstMergedRow = mergedRegion.FirstRow;
                 mergedRowsCount = mergedRegion.LastRow - mergedRegion.FirstRow + 1;
-                cellContents = defaultSheet.GetRow(mergedRegion.FirstRow)
-                                           .GetCell(mergedRegion.FirstColumn)
-                                           .ToString();
-
                 mergedColsCount = mergedRegion.LastColumn - mergedRegion.FirstColumn + 1;
-                
             }
             else
             {
                 firstMergedRow = cell.RowIndex;
                 mergedRowsCount = 1;
-
                 mergedColsCount = 1;
-                cellContents = cell.ToString();
+                
             }
 
             string backgroundColor;
@@ -143,7 +135,7 @@ namespace TI.Declarator.ExcelParser
                                                                              .Aggregate("", (str1, str2) => str1 + str2);
             }
 
-
+            var cellContents = cell.ToString();
             return new Cell
             {
                 IsMerged = isMergedCell,
