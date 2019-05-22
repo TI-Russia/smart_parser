@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TI.Declarator.ParserCommon;
@@ -131,33 +132,38 @@ namespace RegressionTesting
             get { return Path.GetFullPath(ExcelLogFile); }
         }
 
+
+        public void TestExcelParser(string filename)
+        {
+            SetupLog4Net();
+            var workingCopy = Path.GetFileName(filename);
+            File.Copy(filename, workingCopy);
+            Log(ExcelLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
+            Smart.Parser.Program.AdapterFamily = "npoi";
+            string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
+            Smart.Parser.Program.ParseOneFile(workingCopy, outFileName);
+            string expectedFile = Path.Combine(ExcelFilesDirectory, outFileName);
+            Assert.IsTrue(TestValidity(expectedFile, outFileName, ExcelLogFile));
+        }
+
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]
         [DeploymentItem("log4net.config")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
-        public void TestExcelParser()
+        public void TestExcelParserBasic()
         {
-            SetupLog4Net();
+            TestExcelParser("Excel\\basic.xlsx");
+        }
 
-            int nFailedComparisons = 0;
-            int nComparisons = 0;
-            foreach (var filename in Directory.GetFiles(ExcelFilesDirectory, "*.xls?"))
-            {
-                var workingCopy = Path.GetFileName(filename);
-                File.Copy(filename, workingCopy);
-                Smart.Parser.Program.ParseOneFile(workingCopy);
-                string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
-
-                string expectedFile = Path.Combine(ExcelFilesDirectory, outputFileName);
-
-                bool isValid = TestValidity(expectedFile, outputFileName, ExcelLogFile);
-
-                if (!isValid) { nFailedComparisons++; }
-                nComparisons++;
-            }
-
-            Assert.AreEqual(0, nFailedComparisons, $"xls/xlsx parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {ExcelLogFilePath}");
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestExcelMinfin2016()
+        {
+            TestExcelParser("Excel\\minfin2016.xlsx");
         }
 
         private const string PdfFilesDirectory = @"Pdf";

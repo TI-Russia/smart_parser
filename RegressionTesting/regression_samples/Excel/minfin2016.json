@@ -1,0 +1,241 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "ГОРНИН Л.В.",
+        "name_raw": "ГОРНИН Л.В.",
+        "role": "Заместитель Министра"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": "18519135,06",
+          "relative": null
+        },
+        {
+          "size": "8472,33",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "78,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,3333333333333333333333333333",
+          "relative": null,
+          "square_raw": "78.8",
+          "share_amount_raw": "общая долевая (1/3)",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая (1/3)"
+        },
+        {
+          "text": "коттедж",
+          "type": "Жилой дом",
+          "square": "76,1",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "76.1",
+          "country_raw": "Россия",
+          "type_raw": "коттедж"
+        },
+        {
+          "text": "машино-место",
+          "type": "Гараж",
+          "square": "32,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,0138888888888888888888888889",
+          "relative": null,
+          "square_raw": "32.2",
+          "share_amount_raw": "общая долевая (1/72)",
+          "country_raw": "Россия",
+          "type_raw": "машино-место",
+          "own_type_raw": "общая долевая (1/72)"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "71,5",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "71.5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "175,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "175.8",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "78,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,3333333333333333333333333333",
+          "relative": "Супруг(а)",
+          "square_raw": "78.8",
+          "share_amount_raw": "общая долевая (1/3)",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая (1/3)"
+        },
+        {
+          "text": "коттедж",
+          "type": "Жилой дом",
+          "square": "76,1",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "76.1",
+          "country_raw": "Россия",
+          "type_raw": "коттедж"
+        },
+        {
+          "text": "машино-место",
+          "type": "Гараж",
+          "square": "16,4",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "16.4",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "машино-место",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "71,5",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "71.5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "машино-место",
+          "type": "Гараж",
+          "square": "16,4",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "16.4",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "машино-место",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "175,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "175.8",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "78,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,3333333333333333333333333333",
+          "relative": "Ребенок",
+          "square_raw": "78.8",
+          "share_amount_raw": "общая долевая (1/3)",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая (1/3)"
+        },
+        {
+          "text": "коттедж",
+          "type": "Жилой дом",
+          "square": "76,1",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "76.1",
+          "country_raw": "Россия",
+          "type_raw": "коттедж"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "71,5",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "71.5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "175,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "175.8",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "мотоцикл BMW R1200RT",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера гражданских служащих Министерства финансов Российской Федерации, а также сведения о доходах, расходах, об имуществе и обязательствах имущественного характера их супругов и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
+    "year": 2016
+  }
+}

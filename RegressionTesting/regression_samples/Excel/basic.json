@@ -1,0 +1,204 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Осипов А. М.",
+        "name_raw": "Осипов А. М.",
+        "role": "Первый заместитель Министра"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "4243167,11",
+          "relative": null
+        },
+        {
+          "size": "216358,67",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "type": "Земельный участок",
+          "square": "1005",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "1005",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "35,6",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "35,6",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "84,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "84,8",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "газопровод",
+          "type": "Иное",
+          "square": null,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "286,4 п.м",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия ",
+          "type_raw": "газопровод",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "type": "Земельный участок",
+          "square": "557",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "557",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "84,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "84,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "type": "Земельный участок",
+          "square": "1000",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "1000",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "67,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "67,8",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "часть жилого дома",
+          "type": "Жилой дом",
+          "square": "182,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "182,8",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "часть жилого дома",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "318,9",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "318,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "84,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "84,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Тойота Ланд Крузер Прадо",
+          "relative": null,
+          "type": "а/м легковой"
+        },
+        {
+          "text": "ИЖ2715",
+          "relative": null,
+          "type": "а/м легковой"
+        },
+        {
+          "text": "Тойота Ланд Крузер",
+          "relative": "Супруг(а)",
+          "type": "а/м легковой"
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, \nпредставленных федеральными государственными гражданскими служащими Министерства Российской Федерации по развитию Дальнего Востока, \nза период с 1 января 2015 г. по 31 декабря 2015 г.",
+    "year": 2015
+  }
+}
