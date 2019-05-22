@@ -18,7 +18,8 @@ namespace TI.Declarator.ParserCommon
                 "автомобили грузовые:",
                 "легковой автомобиль",
                 "а/м легковой",
-                "а/м"
+                "а/м",
+                "водный транспорт"
         };
 
         private static Regex VehicleTypeRegex = new Regex("(" + string.Join("|", VehicleTypeDict) + ")", RegexOptions.IgnoreCase);
@@ -40,98 +41,55 @@ namespace TI.Declarator.ParserCommon
             }
 
             var entries = str.Split(VehicleSeparators, StringSplitOptions.RemoveEmptyEntries);
-            string multientryType = "";
+            string multientryType = null;
             foreach (var entry in entries)
             {
+                string type = ExtractVehicleType(entry);
+
+                string entrySansType = entry;
+                if (!type.IsNullOrWhiteSpace())
+                {
+                    entrySansType = entry.Replace(type, "");
+                    type = multientryType = type.Replace(MultientryInfix, "");
+                }                                
+
                 var ve = new VehicleEntry()
                 {
                     Count = 1,
-                    Type =  multientryType.IsNullOrWhiteSpace() ? "" : multientryType,
+                    Type = type.IsNullOrWhiteSpace() ? multientryType : type,
                     Model = ""
                 };
 
-                var tokens = entry.Split(WhitespaceSeparator, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var token in tokens)
-                { 
-                    if (token.All(Char.IsDigit))
-                    {
-                        ve.Count = Int32.Parse(token);
-                    }
-                    else if (IsVehicleType(token))
-                    {
-                        if (token.EndsWith(MultientryInfix))
-                        {
-                            ve.Type = multientryType = token.Replace(MultientryInfix, "");
-                        }
-                        else
-                        {
-                            ve.Type = token;                                
-                        }
-                    }
-                    else
-                    {
-                        ve.Model += token + " ";
-                    }
-                }
+                var tokens = entrySansType.Split(WhitespaceSeparator, StringSplitOptions.RemoveEmptyEntries);
 
-                if (ve.Type.IsNullOrWhiteSpace()) { ve.Type = multientryType; }
-                ve.Model = ve.Model.Trim();
+                string headToken = tokens[0];
+                if (headToken.All(Char.IsDigit))
+                {
+                    // ve.Count = Int32.Parse(headToken);
+                    ve.Model = entrySansType.Replace(headToken, "").Trim();
+                }
+                else
+                {
+                    ve.Model = entrySansType.Trim();
+                }
 
                 res.AddRange(ve.GetVehicles());
             }
 
-            //var matchType = VehicleTypeRegex.Match(str);
-            //if (matchType.Success)
-            //{
-            //    int last_end = -1;
-            //    string last_type = null;
-            //    string vechicleItemStr = null;
-            //    string[] items = null;
-            //    foreach (Match itemMatch in VehicleTypeRegex.Matches(str))
-            //    {
-            //        int begin = itemMatch.Index;
-            //        int end = itemMatch.Index + itemMatch.Length;
-            //        if (last_end > 0)
-            //        {
-            //            vechicleItemStr = str.Substring(last_end, begin - last_end);
-            //            items = vechicleItemStr.Split(',');
-            //            foreach (var item in items)
-            //            {
-            //                res.Add(new Vehicle(item.Trim(), last_type));
-            //            }
-            //        }
-            //        last_end = end;
-            //        last_type = itemMatch.Value.TrimEnd(':', '\n', ' ');
-            //    }
-            //    vechicleItemStr = str.Substring(last_end);
-            //    items = vechicleItemStr.Split(',');
-            //    foreach (var item in items)
-            //    {
-            //        res.Add(new Vehicle(item.Trim(), last_type));
-            //    }
-
-            //    return res;
-            //}
-
-            //var match = Regex.Match(str, @".+:(.+,.+)");
-            //if (match.Success)
-            //{
-            //    if (res != null)
-            //    {
-            //        res.AddRange(match.Groups[1].ToString().Split(',').Select(x => new Vehicle(x.Trim())));
-            //    }
-            //}
-            //else
-            //{
-            //    res.Add(new Vehicle(str));
-            //}
-
             return res;
         }
 
-        private static bool IsVehicleType(string str)
+        private static string ExtractVehicleType(string str)
         {
-            return VehicleTypeRegex.IsMatch(str);
+            if (VehicleTypeRegex.IsMatch(str))
+            {
+                return VehicleTypeRegex.Match(str).Value;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
     }
 }
