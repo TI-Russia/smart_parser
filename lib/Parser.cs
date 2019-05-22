@@ -123,6 +123,12 @@ namespace Smart.Parser.Lib
                     //{
                     currentSection = new DeclarationSection() { Row = row, Name = name };
                     declaration.Sections.Add(currentSection);
+                    currentServant = null;
+                    if (currentPerson != null)
+                    {
+                        currentPerson.RangeHigh = row - 1;
+                    }
+                    currentPerson = null;
                     continue;
                     //}
                 }
