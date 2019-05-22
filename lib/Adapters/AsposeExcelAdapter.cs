@@ -145,7 +145,7 @@ namespace Smart.Parser.Adapters
             worksheet = null;
             foreach (var ws in workbook.Worksheets)
             {
-                if (ws.IsVisible)
+                if (ws.IsVisible && ws.Cells.Rows.Count > 0)
                 {
                     wsCount++;
                     if (worksheet == null)
@@ -173,7 +173,7 @@ namespace Smart.Parser.Adapters
             worksheet = null;
             foreach (var ws in workbook.Worksheets)
             {
-                if (ws.IsVisible)
+                if (ws.IsVisible && ws.Cells.Rows.Count > 0)
                 {
                     if (count == sheetIndex)
                     {
