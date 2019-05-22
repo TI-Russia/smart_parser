@@ -15,9 +15,11 @@ namespace TI.Declarator.ExcelParser
     public class XlsxAdapter : IAdapter
     {
         private XSSFWorkbook WorkBook;
+        private Cell EmptyCell;
         public XlsxAdapter(string filename)
         {
             WorkBook = new XSSFWorkbook(Path.GetFullPath(filename));
+            EmptyCell = new Cell();
         }
 
         public Cell GetCell(string cellIndex)
@@ -35,7 +37,7 @@ namespace TI.Declarator.ExcelParser
             {
                 var cell = GetCell(row, index);
 
-                if (cell == null) break;
+                if (cell == EmptyCell) break;
                 result.Add(cell);
 
                 if (cell.IsMerged)
@@ -87,10 +89,10 @@ namespace TI.Declarator.ExcelParser
             if (currentRow == null)
             {
                 //null if row contains only empty cells
-                return null;
+                return EmptyCell;
             }
             ICell cell = currentRow.GetCell(column);
-            if (cell == null) return null;
+            if (cell == null) return EmptyCell;
             
             string cellContents;
             bool isMergedCell = cell.IsMergedCell;
