@@ -5,12 +5,10 @@ using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 
 using TI.Declarator.ParserCommon;
-using Smart.Parser.Adapters;
-namespace TI.Declarator.MicrosoftExcel
+namespace Smart.Parser.Adapters
 {
     class MSExcelCell : Cell
     {
-
         public MSExcelCell(Excel.Range range)
         {
             if (range == null || range.Count == 0)
@@ -42,6 +40,11 @@ namespace TI.Declarator.MicrosoftExcel
         private int TotalRows;
         private int TotalColumns;
         private string Title;
+
+        public static IAdapter CreateAdapter(string fileName)
+        {
+            return new MicrosoftExcelAdapter(fileName);
+        }
 
         public MicrosoftExcelAdapter(string filename)
         {

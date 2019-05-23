@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Smart.Parser.Adapters;
 using TI.Declarator.ParserCommon;
-using TI.Declarator.ExcelParser;
 using System.IO;
 using Smart.Parser.Lib;
 
@@ -37,7 +36,7 @@ namespace test
         public void ColumnDetectorTest1TIAdapter()
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract.xlsx");
-            IAdapter adapter = XlsxParser.GetAdapter(xlsxFile);
+            IAdapter adapter = NpoiExcelAdapter.CreateAdapter(xlsxFile);
 
             ColumnOrdering ordering = ColumnDetector.ExamineHeader(adapter);
             Assert.IsTrue(ordering.ColumnOrder.Count == 12);

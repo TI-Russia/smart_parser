@@ -7,21 +7,26 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 
-using Smart.Parser.Adapters;
 using TI.Declarator.ParserCommon;
 
-namespace TI.Declarator.ExcelParser
+namespace Smart.Parser.Adapters
 {
-    public class XlsxAdapter : IAdapter
+
+    public class NpoiExcelAdapter : IAdapter
     {
         private XSSFWorkbook WorkBook;
         private Cell EmptyCell;
-        public XlsxAdapter(string filename)
+        public NpoiExcelAdapter(string filename)
         {
             WorkBook = new XSSFWorkbook(Path.GetFullPath(filename));
             EmptyCell = new Cell();
         }
-
+        
+        public static IAdapter CreateAdapter(string fileName)
+        {
+            return new NpoiExcelAdapter(fileName);
+        }
+        
         public Cell GetCell(string cellIndex)
         {
             CellReference cellRef = new CellReference(cellIndex);

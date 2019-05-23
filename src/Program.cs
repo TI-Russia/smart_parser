@@ -250,33 +250,22 @@ namespace Smart.Parser
             return 0;
         }
 
-
-
-        public static int ParseOneFile(string declarationFile, string outFile)
+        static IAdapter GetAdapter(string declarationFile)
         {
-            IAdapter adapter = null;
-
-            if (CheckJson && File.Exists(outFile))
-            {
-                Logger.Info("JSON file {0} already exist", outFile);
-                return 0;
-
-            }
-            string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
-            Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
-
-            Logger.Info(String.Format("Parsing {0}", declarationFile));
             string extension = Path.GetExtension(declarationFile);
             switch (extension)
             {
                 case ".doc":
                 case ".docx":
+                    if (AdapterFamily != "aspose")
+                    {
+                    }
+                    else
                     if (!AsposeLicense.Licensed)
                     {
                         throw new Exception("doc and docx file format is not supported");
                     }
-                    adapter = AsposeDocAdapter.CreateAdapter(declarationFile);
-                    break;
+                    return AsposeDocAdapter.CreateAdapter(declarationFile);
                 case ".xls":
                 case ".xlsx":
                     if (AdapterFamily == "aspose")
@@ -287,27 +276,39 @@ namespace Smart.Parser
                         }
                         if (AsposeLicense.Licensed)
                         {
-                            adapter = AsposeExcelAdapter.CreateAdapter(declarationFile);
+                            return AsposeExcelAdapter.CreateAdapter(declarationFile);
                         }
                     }
                     else if (AdapterFamily == "npoi")
                     {
-                        adapter = TI.Declarator.ExcelParser.XlsxParser.GetAdapter(declarationFile);
+                        return NpoiExcelAdapter.CreateAdapter(declarationFile);
                     }
                     else
                     {
-                        adapter = TI.Declarator.MicrosoftExcel.ExcelParser.GetAdapter(declarationFile);
+                        return MicrosoftExcelAdapter.CreateAdapter(declarationFile);
                     }
                     break;
                 default:
                     Logger.Error("Unknown file extension " + extension);
-                    return 1;
+                    return null;
             }
-            if (adapter == null)
+            Logger.Error("Cannot find adapter for " + declarationFile);
+            return null;
+        }
+
+        public static int ParseOneFile(string declarationFile, string outFile)
+        {
+            if (CheckJson && File.Exists(outFile))
             {
-                Logger.Error("Cannot find adapter for " + declarationFile);
-                return 1;
+                Logger.Info("JSON file {0} already exist", outFile);
+                return 0;
+
             }
+            string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
+            Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
+
+            Logger.Info(String.Format("Parsing {0}", declarationFile));
+            IAdapter adapter = GetAdapter(declarationFile);
             if (adapter.GetWorkSheetCount() > 1)
             {
                 Logger.Info(String.Format("File has multiple ({0}) worksheets", adapter.GetWorkSheetCount()));

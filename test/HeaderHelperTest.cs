@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Smart.Parser.Adapters;
 using TI.Declarator.ParserCommon;
-using TI.Declarator.ExcelParser;
 using System.IO;
 using Smart.Parser.Lib;
 

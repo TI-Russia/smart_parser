@@ -34,6 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,12 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExcelParser\ExcelParser.csproj">
-      <Project>{977fa48c-ecad-4588-996e-e777bac0b807}</Project>
-      <Name>ExcelParser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj">
       <Project>{16e41c56-7cd2-4e16-a469-4af4f7facb71}</Project>
       <Name>JsonSerialization</Name>
@@ -62,10 +63,6 @@
     <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj">
       <Project>{dcb47788-553f-495f-bdab-1b144e0df5b1}</Project>
       <Name>Smart.Parser.Lib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MicrosoftExcelParser\MSExcelParser.csproj">
-      <Project>{977fa48c-ecad-4588-996e-e777bac0b806}</Project>
-      <Name>MSExcelParser</Name>
     </ProjectReference>
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">
       <Project>{a96e427b-2eef-4bf8-933a-3ac1424b0978}</Project>

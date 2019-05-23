@@ -3,7 +3,6 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Smart.Parser.Adapters;
-using TI.Declarator.ExcelParser;
 
 namespace ExcelParser.Tests
 {
@@ -17,7 +16,7 @@ namespace ExcelParser.Tests
         [DeploymentItem("Test.xlsx")]
         public void GetNonMergedCell()
         {
-            var adapter = XlsxParser.GetAdapter("Test.xlsx");
+            var adapter = NpoiExcelAdapter.CreateAdapter("Test.xlsx");
             Cell cell = adapter.GetCell(0, 13);
 
             Assert.IsNotNull(cell);
@@ -38,7 +37,7 @@ namespace ExcelParser.Tests
         [DeploymentItem("Test.xlsx")]
         public void GetCellByIndex()
         {
-            var adapter = XlsxParser.GetAdapter("Test.xlsx");
+            var adapter = NpoiExcelAdapter.CreateAdapter("Test.xlsx");
             Cell cell1 = adapter.GetCell(0, 13);
 
             // Check that it is indeed the same cell
@@ -61,7 +60,7 @@ namespace ExcelParser.Tests
         public void GetEmptyCell()
         {
             /// A merged empty cell that contains nothing
-            var adapter = XlsxParser.GetAdapter("Test.xlsx");
+            var adapter = NpoiExcelAdapter.CreateAdapter("Test.xlsx");
             Cell cell1 = adapter.GetCell(75, 2);
             Assert.IsNotNull(cell1);
             Assert.AreEqual(true, cell1.IsEmpty);
@@ -81,7 +80,7 @@ namespace ExcelParser.Tests
         [DeploymentItem("Test.xlsx")]
         public void GetMergedCell()
         {
-            var adapter = XlsxParser.GetAdapter("Test.xlsx");
+            var adapter = NpoiExcelAdapter.CreateAdapter("Test.xlsx");
             Cell cell = adapter.GetCell(7, 1);
             Assert.IsNotNull(cell);
 
@@ -97,7 +96,7 @@ namespace ExcelParser.Tests
         [DeploymentItem("Test.xlsx")]
         public void GetRowsCount()
         {
-            var adapter = XlsxParser.GetAdapter("Test.xlsx");
+            var adapter = NpoiExcelAdapter.CreateAdapter("Test.xlsx");
             Assert.AreEqual(80, adapter.GetRowsCount());
         }
     }
