@@ -35,7 +35,6 @@ namespace Smart.Parser.Adapters
 
     public class MicrosoftExcelAdapter : IAdapter
     {
-        private Excel.Application xlApp;
         private Excel.Workbook WorkBook = null;
         private Excel.Worksheet WorkSheet = null;
         private int TotalRows;

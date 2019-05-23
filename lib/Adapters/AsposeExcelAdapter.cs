@@ -81,7 +81,6 @@ namespace Smart.Parser.Adapters
 
         public override List<Cell> GetCells(int rowIndex)
         {
-            int index = 0;
             List<Cell> result = new List<Cell>();
             Aspose.Cells.Row row = worksheet.Cells.Rows[rowIndex];
             Aspose.Cells.Cell firstCell = row.FirstCell;

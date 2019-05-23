@@ -116,7 +116,7 @@ namespace Smart.Parser.Adapters
             string text = "";
             while (node.NextSibling != table)
             {
-                text += node.ToTxt();
+                text += node.ToString();
                 node = node.NextSibling;
             }
 
