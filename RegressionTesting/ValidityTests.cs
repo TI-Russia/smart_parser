@@ -99,29 +99,44 @@ namespace RegressionTesting
             Assert.AreEqual(0, nFailedChecks, $"Sample files validation test: {nFailedChecks} out of {nChecks} sample files are not valid. Validation log can be found in {SampleWordLogFilePath}");
         }
 
+        private void TestWordParser(string filename)
+        {
+            Declaration res = Tindalos.Tindalos.Process(filename);
+            string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
+            File.WriteAllText(outputFileName, DeclarationSerializer.Serialize(res));
+
+            string expectedFile = Path.Combine(WordFilesDirectory, outputFileName);
+            Assert.IsTrue(TestValidity(expectedFile, outputFileName, WordLogFilePath));
+        }
+
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]
         [DeploymentItem("PropertyDictionary.txt")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordParser()
+        public void TestWordMinSport()
         {
-            int nFailedComparisons = 0;
-            int nComparisons = 0;
-            foreach (var filename in Directory.GetFiles(WordFilesDirectory, "*.doc?"))
-            {
-                Declaration res = Tindalos.Tindalos.Process(filename);
-                string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
-                File.WriteAllText(outputFileName, DeclarationSerializer.Serialize(res));
+            TestWordParser("Word\\2016_Sotrudniki_ministerstva.docx");
+        }
 
-                string expectedFile = Path.Combine(WordFilesDirectory, outputFileName);
-                bool isValid = TestValidity(expectedFile, outputFileName, WordLogFilePath);
-               
-                if (!isValid) { nFailedComparisons++; }
-                nComparisons++;
-            }
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("PropertyDictionary.txt")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestWordMinRes()
+        {
+            TestWordParser("Word\\A - min_res_2011_Sotrudniki_ministerstva.doc");
+        }
 
-            Assert.AreEqual(0, nFailedComparisons, $"doc/docx parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {WordLogFilePath}");
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("PropertyDictionary.txt")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestWordMinHealth()
+        {
+            TestWordParser("Word\\C - min_health_2015_Sotrudniki_ministerstva.docx");
         }
 
         private const string ExcelFilesDirectory = @"Excel";
