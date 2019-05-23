@@ -57,6 +57,7 @@
     <Compile Include="DataHelperTest.cs" />
     <Compile Include="DocAdapterTest.cs" />
     <Compile Include="HeaderHelperTest.cs" />
+    <Compile Include="NpoiExcelAdapterBasicTests.cs" />
     <Compile Include="TestApiPatterns.cs" />
     <Compile Include="TestJsonWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
