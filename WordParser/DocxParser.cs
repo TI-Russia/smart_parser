@@ -364,15 +364,15 @@ namespace TI.Declarator.WordParser
             if (!String.IsNullOrEmpty(vehicleStr) && vehicleStr.Trim() != "-")
             {
                 var vehicleList = new List<Vehicle>();
-                bool parseVehiclesResult = DataHelper.ParseVehicle(vehicleStr, vehicleList);
-                if (parseVehiclesResult)
-                {
-                    p.Vehicles.AddRange(vehicleList);
-                }
-                else
-                {
-                    throw new Exception($"Could not extract vehicle list from '{vehicleStr}'");
-                }
+                p.Vehicles.AddRange(ParserHelpers.ExtractVehicles(vehicleStr));
+                //if (parseVehiclesResult)
+                //{
+                //    p.Vehicles.AddRange(vehicleList);
+                //}
+                //else
+                //{
+                //    throw new Exception($"Could not extract vehicle list from '{vehicleStr}'");
+                //}
                 
             }
 

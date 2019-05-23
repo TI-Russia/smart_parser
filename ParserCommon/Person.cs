@@ -18,41 +18,5 @@ namespace TI.Declarator.ParserCommon
 
         public int RangeLow { set; get; }
         public int RangeHigh { set; get; }
-
-        private XElement IncomeToXml()
-        {
-            var res = new XElement("income");
-            if (DeclaredYearlyIncome == null)
-            {
-                res.Add(XmlHelpers.Nil());
-            }
-            else
-            {
-                res.Value = DeclaredYearlyIncome.Value.ToString(DefaultCulture);
-            }
-
-            return res;
-        }
-
-        private XElement IncomeCommentsToXml()
-        {
-            return new XElement("incomeComment", XmlHelpers.Nil());
-        }
-
-        private XElement IncomeSourcesToXml()
-        {
-            var res = new XElement("incomeSource");
-            if (String.IsNullOrWhiteSpace(DataSources))
-            {
-                res.Add(XmlHelpers.Nil());
-            }
-            else
-            {
-                res.Value = DataSources;
-            }
-
-            return res;
-        }
-
     }
 }
