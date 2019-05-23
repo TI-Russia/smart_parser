@@ -133,7 +133,6 @@ namespace Smart.Parser.Lib
         static public ColumnOrdering ExamineHeader(IAdapter t)
         {
             int headerRowNum = 0;
-            int auxRowCount = 0;
             ColumnOrdering res = new ColumnOrdering();
 
             string title = null;
@@ -208,7 +207,6 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
-                    auxRowCount = 1;
                     int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
                     int rowSpan = cell.MergedRowsCount;
                     Row auxRow = t.Rows[headerRowNum + rowSpan];
@@ -261,7 +259,7 @@ namespace Smart.Parser.Lib
 
             }
 
-            int firstDataRow = headerRowNum + headerRows;// + auxRowCount;
+            int firstDataRow = headerRowNum + headerRows;
 
             // пропускаем колонку с номерами
             string cellText1 = t.GetCell(firstDataRow, 0).GetText();
