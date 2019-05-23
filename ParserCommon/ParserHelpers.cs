@@ -23,7 +23,7 @@ namespace TI.Declarator.ParserCommon
         };
 
         private static Regex VehicleTypeRegex = new Regex("(" + string.Join("|", VehicleTypeDict) + ")", RegexOptions.IgnoreCase);
-        private static char[] VehicleSeparators = new char[] { ',', ';' };
+        private static string[] VehicleSeparators = new string[] { "\n\n", ",\n", ", ", ";" };
         private static char[] WhitespaceSeparator = new char[] { ' ' };
         private static string MultientryInfix = ":";
         public static IEnumerable<Vehicle> ExtractVehicles(string str)
@@ -42,7 +42,7 @@ namespace TI.Declarator.ParserCommon
 
             var entries = str.Split(VehicleSeparators, StringSplitOptions.RemoveEmptyEntries);
             string multientryType = null;
-            foreach (var entry in entries)
+            foreach (var entry in entries.Select(e => e.CleanWhitespace()))
             {
                 string type = ExtractVehicleType(entry);
 
@@ -65,8 +65,7 @@ namespace TI.Declarator.ParserCommon
                 string headToken = tokens[0];
                 if (headToken.All(Char.IsDigit))
                 {
-                    // ve.Count = Int32.Parse(headToken);
-                    ve.Model = entrySansType.Replace(headToken, "").Trim();
+                    ve.Model = entrySansType.ReplaceFirst(headToken, "").Trim();
                 }
                 else
                 {

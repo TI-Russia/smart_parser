@@ -73,5 +73,11 @@ namespace TI.Declarator.ParserCommon
         {
             return Regex.Replace(str, @"[ ]+", " ");
         }
+
+        public static string ReplaceFirst(this string str, string substr, string replStr)
+        {
+            var replRegex = new Regex(Regex.Escape(substr));
+            return replRegex.Replace(str, replStr, 1);
+        }
     }
 }

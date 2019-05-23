@@ -357,23 +357,13 @@ namespace TI.Declarator.WordParser
             var stateProperty = ParseStateProperty(r);
             if (stateProperty != null) { p.RealEstateProperties.AddRange(stateProperty); }
 
-            string vehicleStr = GetContents(r, DeclarationField.Vehicle).CleanWhitespace()
-                                                                        .CoalesceWhitespace()
+            string vehicleStr = GetContents(r, DeclarationField.Vehicle).CoalesceWhitespace()
                                                                         .Trim()
                                                                         .Trim('-');
             if (!String.IsNullOrEmpty(vehicleStr) && vehicleStr.Trim() != "-")
             {
                 var vehicleList = new List<Vehicle>();
-                p.Vehicles.AddRange(ParserHelpers.ExtractVehicles(vehicleStr));
-                //if (parseVehiclesResult)
-                //{
-                //    p.Vehicles.AddRange(vehicleList);
-                //}
-                //else
-                //{
-                //    throw new Exception($"Could not extract vehicle list from '{vehicleStr}'");
-                //}
-                
+                p.Vehicles.AddRange(ParserHelpers.ExtractVehicles(vehicleStr));               
             }
 
             if (!p.DeclaredYearlyIncome.HasValue)

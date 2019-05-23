@@ -665,12 +665,7 @@
           "type": "а/м"
         },
         {
-          "text": "Mitsubishi Pajero 3",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "8 LWB",
+          "text": "Mitsubishi Pajero 3,8 LWB",
           "relative": null,
           "type": "а/м"
         },
@@ -8522,7 +8517,12 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Pajero; автоприцеп",
+          "text": "Mitsubishi Pajero",
+          "relative": null,
+          "type": "а/м"
+        },
+        {
+          "text": "автоприцеп",
           "relative": null,
           "type": "а/м"
         },
