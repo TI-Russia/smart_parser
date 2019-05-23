@@ -31,8 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordParser", "WordParser\WordParser.csproj", "{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelParser.Tests", "ExcelParser.Tests\ExcelParser.Tests.csproj", "{291B2B08-4B24-4B2C-9BC3-DFE81B12A2FA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeclaratorApiClient", "DeclaratorApiClient\DeclaratorApiClient.csproj", "{1AC51D57-9CAD-435D-ACE5-ABA84D287253}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{AFB7E7EE-969C-47DC-9FEF-780909E20975}"
@@ -71,10 +69,6 @@ Global
 		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E59F3C2-6FD1-4DDA-93C3-296E8A3307FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{291B2B08-4B24-4B2C-9BC3-DFE81B12A2FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{291B2B08-4B24-4B2C-9BC3-DFE81B12A2FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{291B2B08-4B24-4B2C-9BC3-DFE81B12A2FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{291B2B08-4B24-4B2C-9BC3-DFE81B12A2FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1AC51D57-9CAD-435D-ACE5-ABA84D287253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1AC51D57-9CAD-435D-ACE5-ABA84D287253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AC51D57-9CAD-435D-ACE5-ABA84D287253}.Release|Any CPU.ActiveCfg = Release|Any CPU
