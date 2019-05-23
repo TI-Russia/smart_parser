@@ -23,6 +23,6 @@ Each additional output file will be named after respective subdirectory (for exa
 Column recognizer may encounter difficulties (e.g., a column structure currently beyond its comprehension).
 In that case it will dump information about the error into the errors.log file and notify the user via console.
 
-Hope y'all will find it useful.
+Hope y'all will find it useful
 
 
