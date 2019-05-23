@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
 
 using TI.Declarator.ParserCommon;
@@ -35,12 +36,12 @@ namespace Smart.Parser.Adapters
     public class MicrosoftExcelAdapter : IAdapter
     {
         private Excel.Application xlApp;
-        private Excel.Workbook WorkBook;
-        private Excel.Worksheet WorkSheet;
+        private Excel.Workbook WorkBook = null;
+        private Excel.Worksheet WorkSheet = null;
         private int TotalRows;
         private int TotalColumns;
         private string Title;
-
+        private Microsoft.Office.Interop.Excel.Application ExcelApplication;
         public static IAdapter CreateAdapter(string fileName)
         {
             return new MicrosoftExcelAdapter(fileName);
@@ -48,8 +49,8 @@ namespace Smart.Parser.Adapters
 
         public MicrosoftExcelAdapter(string filename)
         {
-            Microsoft.Office.Interop.Excel.Application xlApp = new Excel.Application();
-            WorkBook = xlApp.Workbooks.Open(Path.GetFullPath(filename), ReadOnly:true);
+            ExcelApplication = new Excel.Application();
+            WorkBook = ExcelApplication.Workbooks.Open(Path.GetFullPath(filename), ReadOnly:true);
             if (WorkBook.Worksheets.Count == 0)
             {
                 throw new Exception(String.Format("Excel sheet {0} has no visible worksheets", filename));
@@ -62,6 +63,26 @@ namespace Smart.Parser.Adapters
                                false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
             TotalColumns = lastUsedColumn + 1;
             FindTitle();
+        }
+        ~MicrosoftExcelAdapter()  
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            if (WorkSheet != null)
+            {
+                Marshal.ReleaseComObject(WorkSheet);
+            }
+            if (WorkBook != null)
+            {
+                WorkBook.Close();
+                Marshal.ReleaseComObject(WorkBook);
+            }
+            if (ExcelApplication != null)
+            {
+                ExcelApplication.Quit();
+                Marshal.FinalReleaseComObject(ExcelApplication);
+            }
         }
 
 
