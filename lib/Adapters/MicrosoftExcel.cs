@@ -35,19 +35,21 @@ namespace Smart.Parser.Adapters
 
     public class MicrosoftExcelAdapter : IAdapter
     {
+        private int MaxRowsToProcess;
         private Excel.Workbook WorkBook = null;
         private Excel.Worksheet WorkSheet = null;
         private int TotalRows;
         private int TotalColumns;
         private string Title;
         private Microsoft.Office.Interop.Excel.Application ExcelApplication;
-        public static IAdapter CreateAdapter(string fileName)
+        public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess=-1)
         {
-            return new MicrosoftExcelAdapter(fileName);
+            return new MicrosoftExcelAdapter(fileName, maxRowsToProcess);
         }
 
-        public MicrosoftExcelAdapter(string filename)
+        public MicrosoftExcelAdapter(string filename, int maxRowsToProcess=-1)
         {
+            MaxRowsToProcess = maxRowsToProcess;
             ExcelApplication = new Excel.Application();
             WorkBook = ExcelApplication.Workbooks.Open(Path.GetFullPath(filename), ReadOnly:true);
             if (WorkBook.Worksheets.Count == 0)
@@ -93,6 +95,11 @@ namespace Smart.Parser.Adapters
 
         public override int GetRowsCount()
         {
+            if (MaxRowsToProcess != -1)
+            {
+                return Math.Min(MaxRowsToProcess, TotalRows);
+            }
+
             return TotalRows;
         }
 

@@ -87,6 +87,9 @@ namespace Smart.Parser.Adapters
 
     public abstract class IAdapter
     {
+        // some excel files contain 32000 columns, most of them are empty
+        // we try to found real column number in the header, by default is 32
+        public int MaxNotEmptyColumnsFoundInHeader = 32;
         //        Cell GetCell(string cellNum);
         abstract public Cell GetCell(int row, int column);
         public virtual List<Cell> GetCells(int row)

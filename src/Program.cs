@@ -21,6 +21,7 @@ namespace Smart.Parser
         public static string AdapterFamily = "aspose";
         static bool ColumnsOnly = false;
         static bool CheckJson = false;
+        public static int MaxRowsToProcess = -1;
 
         static string ParseArgs(string[] args)
         {
@@ -32,6 +33,7 @@ namespace Smart.Parser
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
             CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft or xceed, by default is aspose", false);
+            CMDLineParser.Option maxRowsToProcessOpt = parser.AddStringParameter("-max-rows", "max rows to process from the input file", false);
             try
             {
                 //parse the command line
@@ -48,6 +50,10 @@ namespace Smart.Parser
             if (licenseOpt.isMatched)
             {
                 AsposeLicense.SetLicense(licenseOpt.Value.ToString());
+            }
+            if (maxRowsToProcessOpt.isMatched)
+            {
+                MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
             }
             string logFileName = "";
             if (mainLogOpt.isMatched)
@@ -264,7 +270,7 @@ namespace Smart.Parser
                     {
                         if (AdapterFamily == "xceed")
                         {
-                            return XceedWordAdapter.CreateAdapter(declarationFile);
+                            return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                         }
                     }
                     else
@@ -288,11 +294,11 @@ namespace Smart.Parser
                     }
                     else if (AdapterFamily == "npoi")
                     {
-                        return NpoiExcelAdapter.CreateAdapter(declarationFile);
+                        return NpoiExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                     }
                     else
                     {
-                        return MicrosoftExcelAdapter.CreateAdapter(declarationFile);
+                        return MicrosoftExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                     }
                     break;
                 default:

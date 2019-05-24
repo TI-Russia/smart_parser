@@ -70,16 +70,16 @@ namespace Smart.Parser.Adapters
         private string Title;
         private int UnmergedColumnsCount;
         private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-        public XceedWordAdapter(string filename)
+        public XceedWordAdapter(string filename, int maxRowsToProcess)
         {
             DocX doc = DocX.Load(filename);
             Title =  FindTitle(doc);
-            CollectRows(doc);
+            CollectRows(doc, maxRowsToProcess);
         }
 
-        public static IAdapter CreateAdapter(string fileName)
+        public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess)
         {
-            return new XceedWordAdapter(fileName);
+            return new XceedWordAdapter(fileName, maxRowsToProcess);
         }
 
         private string FindTitle(DocX doc)
@@ -120,7 +120,7 @@ namespace Smart.Parser.Adapters
         }
 
 
-        void CollectRows(DocX doc)
+        void CollectRows(DocX doc, int maxRowsToProcess)
         {
             TableRows = new List<List<XCeedWordCell>>();
             UnmergedColumnsCount = -1; 
@@ -140,6 +140,9 @@ namespace Smart.Parser.Adapters
                         sumspan += c.GridSpan == 0 ? 1 : c.GridSpan;
                     }
                     TableRows.Add(newRow);
+                    if ((maxRowsToProcess !=- -1) && (TableRows.Count >= maxRowsToProcess)) {
+                        break;
+                    }
                 }
             }
             foreach (var r in TableRows)

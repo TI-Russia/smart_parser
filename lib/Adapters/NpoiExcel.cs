@@ -16,15 +16,19 @@ namespace Smart.Parser.Adapters
     {
         private XSSFWorkbook WorkBook;
         private Cell EmptyCell;
-        public NpoiExcelAdapter(string filename)
+        private int MaxRowsToProcess;
+        int MaxColumnsToProcess = 32;
+
+        public NpoiExcelAdapter(string filename, int maxRowsToProcess = -1)
         {
             WorkBook = new XSSFWorkbook(Path.GetFullPath(filename));
             EmptyCell = new Cell();
+            MaxRowsToProcess = maxRowsToProcess;
         }
         
-        public static IAdapter CreateAdapter(string fileName)
+        public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess = -1)
         {
-            return new NpoiExcelAdapter(fileName);
+            return new NpoiExcelAdapter(fileName, maxRowsToProcess);
         }
         
         public Cell GetCell(string cellIndex)
@@ -53,6 +57,10 @@ namespace Smart.Parser.Adapters
                 else
                 {
                     index++;
+                }
+                if (index > MaxNotEmptyColumnsFoundInHeader)
+                {
+                    break;
                 }
             }
 
@@ -161,12 +169,17 @@ namespace Smart.Parser.Adapters
 
         public override int GetRowsCount()
         {
-            return  WorkBook.GetSheetAt(0).PhysicalNumberOfRows;
+            int rowCount = WorkBook.GetSheetAt(0).PhysicalNumberOfRows;
+            if (MaxRowsToProcess != -1)
+            {
+                return Math.Min(MaxRowsToProcess, rowCount);
+            }
+            return rowCount;
         }
 
         public override int GetColsCount()
         {
-            return WorkBook.GetSheetAt(0).GetRow(0).Cells.Count;
+            return Math.Min(MaxNotEmptyColumnsFoundInHeader, WorkBook.GetSheetAt(0).GetRow(0).Cells.Count);
         }
 
         public override int GetColsCount(int row)

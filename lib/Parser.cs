@@ -80,6 +80,25 @@ namespace Smart.Parser.Lib
             }
             csv.Flush();
         }
+        public void SetMaxColumnsCountByHeader(int headerRowCount)
+        {
+            int maxfound = 0;
+            for (int row = 0; row < headerRowCount; ++row)
+            {
+                for (int col = 0; col < 32; ++col)
+                {
+                    var c = Adapter.GetCell(row, col);
+                    if (c != null && c.GetText() != "")
+                    {
+                        maxfound = Math.Max(col, maxfound);
+                    }
+                }
+            }
+            Adapter.MaxNotEmptyColumnsFoundInHeader = maxfound;
+            Logger.Debug($"Set MaxNotEmptyColumnsFoundInHeader to {maxfound}");
+        }
+
+
 
         public Declaration Parse()
         {
@@ -99,6 +118,7 @@ namespace Smart.Parser.Lib
             totalIncome = 0;
 
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
+            SetMaxColumnsCountByHeader(rowOffset);
             PublicServant currentServant = null;
             TI.Declarator.ParserCommon.Person currentPerson = null;
 
