@@ -31,7 +31,7 @@ namespace Smart.Parser
             CMDLineParser.Option verboseOpt = parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
-            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi or microsoft, by default is aspose", false);
+            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft or xceed, by default is aspose", false);
             try
             {
                 //parse the command line
@@ -79,9 +79,12 @@ namespace Smart.Parser
             if (adapterOpt.isMatched)
             {
                 AdapterFamily = adapterOpt.Value.ToString();
-                if (AdapterFamily != "aspose" && AdapterFamily != "npoi" && AdapterFamily != "microsoft")
+                if (AdapterFamily != "aspose" && 
+                    AdapterFamily != "npoi" && 
+                    AdapterFamily != "microsoft" &&
+                    AdapterFamily != "xceed")
                 {
-                    throw new Exception("unknown verbose adapter family " + AdapterFamily);
+                    throw new Exception("unknown adapter family " + AdapterFamily);
                 }
             }
 
@@ -259,6 +262,10 @@ namespace Smart.Parser
                 case ".docx":
                     if (AdapterFamily != "aspose")
                     {
+                        if (AdapterFamily == "xceed")
+                        {
+                            return XceedWordAdapter.CreateAdapter(declarationFile);
+                        }
                     }
                     else
                     if (!AsposeLicense.Licensed)
