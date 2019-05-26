@@ -7,12 +7,11 @@ using System.Xml.Linq;
 using System.Text;
 using TI.Declarator.ParserCommon;
 
-//using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Word;
 using Xceed.Words.NET;
 
 namespace Smart.Parser.Adapters
 {
-    
     class XceedWordCell : Cell
     {
         public bool HasTopBorder;
@@ -62,12 +61,39 @@ namespace Smart.Parser.Adapters
         private int UnmergedColumnsCount;
         private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
-      
+        string ConvertFile2TempDocX(string filename)
+        {
+            Application word = new Application();
+            var doc = word.Documents.Open(Path.GetFullPath(filename));
+            string docXPath = Path.GetTempFileName();
+            doc.SaveAs2(docXPath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
+            word.ActiveDocument.Close();
+            word.Quit();
+            return docXPath;
+        }
+
         public XceedWordAdapter(string fileName, int maxRowsToProcess)
         {
-            DocX doc = DocX.Load(fileName);
-            FindTitle(doc);
-            CollectRows(doc, maxRowsToProcess);
+            string extension = Path.GetExtension(fileName);
+            bool removeTempFile = false;
+            if (    extension == ".html"
+                ||  extension == ".pdf"
+                || extension == ".doc"
+                )
+            {
+                fileName = ConvertFile2TempDocX(fileName);
+                removeTempFile = true;
+            }
+
+            using (DocX doc = DocX.Load(fileName))
+            {
+                FindTitle(doc);
+                CollectRows(doc, maxRowsToProcess);
+            };
+            if (removeTempFile)
+            {
+                File.Delete(fileName);
+            }
         }
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess)
         {

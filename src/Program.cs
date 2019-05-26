@@ -264,6 +264,8 @@ namespace Smart.Parser
             string extension = Path.GetExtension(declarationFile);
             switch (extension)
             {
+                case ".pdf":
+                case ".html":
                 case ".doc":
                 case ".docx":
                     if (AdapterFamily != "aspose")
@@ -338,6 +340,7 @@ namespace Smart.Parser
             {
                 ParseOneFile(adapter, outFile);
             }
+
 #if false
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
