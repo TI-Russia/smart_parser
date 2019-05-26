@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeclaratorApiClient", "Decl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{AFB7E7EE-969C-47DC-9FEF-780909E20975}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidateJson", "tools\ValidateJson\ValidateJson.csproj", "{6444B351-EEAB-4259-A190-15838149C77A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFB7E7EE-969C-47DC-9FEF-780909E20975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6444B351-EEAB-4259-A190-15838149C77A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6444B351-EEAB-4259-A190-15838149C77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6444B351-EEAB-4259-A190-15838149C77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6444B351-EEAB-4259-A190-15838149C77A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
