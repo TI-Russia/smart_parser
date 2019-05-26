@@ -76,16 +76,22 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="regression_samples\Excel\basic.json">
+    <None Include="regression_samples\SmartParser\basic.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Excel\basic.xlsx">
+    <None Include="regression_samples\SmartParser\basic.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Excel\minfin2016.json">
+    <None Include="regression_samples\SmartParser\doctest.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Excel\minfin2016.xlsx">
+    <None Include="regression_samples\SmartParser\doctest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\minfin2016.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\minfin2016.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\Pdf\one_line_2017.json">

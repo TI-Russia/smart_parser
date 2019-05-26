@@ -139,26 +139,26 @@ namespace RegressionTesting
             TestWordParser("Word\\C - min_health_2015_Sotrudniki_ministerstva.docx");
         }
 
-        private const string ExcelFilesDirectory = @"Excel";
-        private const string ExcelLogFile = "excel_files.log";
+        private const string SmartParserFilesDirectory = @"SmartParser";
+        private const string SmartParserLogFile = "smart_parser_files.log";
 
-        private string ExcelLogFilePath
+        private string SmartParserLogFilePath
         {
-            get { return Path.GetFullPath(ExcelLogFile); }
+            get { return Path.GetFullPath(SmartParserLogFile); }
         }
 
 
-        public void TestExcelParser(string filename)
+        public void TestSmartParser(string filename, string adapterName)
         {
             SetupLog4Net();
             var workingCopy = Path.GetFileName(filename);
             File.Copy(filename, workingCopy);
-            Log(ExcelLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
-            Smart.Parser.Program.AdapterFamily = "npoi";
+            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
+            Smart.Parser.Program.AdapterFamily = adapterName;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
             Smart.Parser.Program.ParseOneFile(workingCopy, outFileName);
-            string expectedFile = Path.Combine(ExcelFilesDirectory, outFileName);
-            Assert.IsTrue(TestValidity(expectedFile, outFileName, ExcelLogFile));
+            string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
+            Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }
 
         [TestMethod]
@@ -166,9 +166,9 @@ namespace RegressionTesting
         [DeploymentItem("log4net.config")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
-        public void TestExcelParserBasic()
+        public void TestSmartParserBasic()
         {
-            TestExcelParser("Excel\\basic.xlsx");
+            TestSmartParser("SmartParser\\basic.xlsx", "npoi");
         }
 
         [TestMethod]
@@ -178,8 +178,19 @@ namespace RegressionTesting
         [DeploymentItem("import-schema-dicts.json")]
         public void TestExcelMinfin2016()
         {
-            TestExcelParser("Excel\\minfin2016.xlsx");
+            TestSmartParser("SmartParser\\minfin2016.xlsx", "npoi");
         }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TestMinZdrav2015()
+        {
+            TestSmartParser("SmartParser\\doctest.docx", "xceed");
+        }
+
 
         private const string PdfFilesDirectory = @"Pdf";
         private const string PdfLogFile = "pdf_files.log";
@@ -212,6 +223,7 @@ namespace RegressionTesting
 
             Assert.AreEqual(0, nFailedComparisons, $"pdf parser test: {nFailedComparisons} out of {nComparisons} output files are not valid. Comparison log can be found in {PdfLogFilePath}");
         }
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));

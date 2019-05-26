@@ -1,0 +1,138 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Каграманян И.Н.",
+        "name_raw": "Каграманян И.Н.",
+        "role": "Первый\nзаместитель\nМинистра\n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "12060614,80",
+          "relative": null
+        },
+        {
+          "size": "331512,45",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "153,4",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "153,4",
+          "share_amount_raw": "Индивидуальная\n",
+          "country_raw": "Россия\n",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная\n"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "114,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "114,0\n",
+          "country_raw": "Россия\n",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Комната",
+          "type": "Квартира",
+          "square": "70,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "70,2\n",
+          "country_raw": "Россия\n",
+          "type_raw": "Комната"
+        },
+        {
+          "text": "Земельный участок",
+          "type": "Земельный участок",
+          "square": "1",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "1 680,0",
+          "share_amount_raw": "индивидуальная\n",
+          "country_raw": "Россия\n",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "индивидуальная\n"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "114,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,6666666666666666666666666667",
+          "relative": "Супруг(а)",
+          "square_raw": "114,0",
+          "share_amount_raw": "Долевая, 2/3\n",
+          "country_raw": "Россия\n",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 2/3\n"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "109,3",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "109,3",
+          "share_amount_raw": "индивидуальная\n",
+          "country_raw": "Россия\n",
+          "type_raw": "Квартира",
+          "own_type_raw": "индивидуальная\n"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "114,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "114,0\n",
+          "country_raw": "Россия\n",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Мотовездеход GAMAX AX 600",
+          "relative": null
+        },
+        {
+          "text": "Toyota Камри",
+          "relative": "Супруг(а)",
+          "type": "а/м легковой"
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "\nСведения\nо доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими\nМинистерства здравоохранения Российской Федерации\nза отчетный период с 1 января 2015 года по 31 декабря 2015 года\n\n",
+    "year": 2015
+  }
+}
