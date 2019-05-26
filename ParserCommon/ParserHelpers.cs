@@ -11,7 +11,9 @@ namespace TI.Declarator.ParserCommon
         {
                 @"автомобил. легков..[:|\n ]",
                 "мототранспортные средства:",
+                "мотоцикл.[:|\n ]",
                 "водный транспорт:",
+                "лодка",
                 "иные транспортные средства:",
                 "воздушный транспорт:",
                 "сельскохозяйственная техника:",
@@ -19,7 +21,10 @@ namespace TI.Declarator.ParserCommon
                 "легковой автомобиль",
                 "а/м легковой",
                 "а/м",
-                "водный транспорт"
+                "водный транспорт",
+                "автоприцеп",
+                "мототран-спортное средство",
+                "мотовездеход"
         };
 
         private static Regex VehicleTypeRegex = new Regex("(" + string.Join("|", VehicleTypeDict) + ")", RegexOptions.IgnoreCase);
@@ -62,15 +67,26 @@ namespace TI.Declarator.ParserCommon
 
                 var tokens = entrySansType.Split(WhitespaceSeparator, StringSplitOptions.RemoveEmptyEntries);
 
-                string headToken = tokens[0];
-                if (headToken.All(Char.IsDigit))
+                if (tokens.Count() > 0)
                 {
-                    ve.Model = entrySansType.ReplaceFirst(headToken, "").Trim();
+                    string headToken = tokens[0];
+                    if (headToken.All(Char.IsDigit))
+                    {
+                        ve.Model = entrySansType.ReplaceFirst(headToken, "");
+                    }
+                    else
+                    {
+                        ve.Model = entrySansType;
+                    }
+
+                    ve.Model = ve.Model.Replace(MultientryInfix, " ").CoalesceWhitespace().Trim();
                 }
+                // No model info given; store vehicle type instead
                 else
                 {
-                    ve.Model = entrySansType.Trim();
+                    ve.Model = ve.Type;
                 }
+
 
                 res.AddRange(ve.GetVehicles());
             }
@@ -87,8 +103,7 @@ namespace TI.Declarator.ParserCommon
             else
             {
                 return null;
-            }
-            
+            }            
         }
     }
 }

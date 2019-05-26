@@ -91,8 +91,9 @@
       ],
       "vehicles": [
         {
-          "text": "Мотовездеход GAMAX AX 600",
-          "relative": null
+          "text": "GAMAX AX 600",
+          "relative": null,
+          "type": "Мотовездеход"
         },
         {
           "text": "Toyota Камри",
@@ -292,7 +293,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 212 140;",
+          "text": "ВАЗ 212 140",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -443,12 +444,7 @@
       ],
       "vehicles": [
         {
-          "text": "Москвич 2 141",
-          "relative": null,
-          "type": "а/м легковой"
-        },
-        {
-          "text": "Мазда СХ5",
+          "text": "Москвич 2 141 Мазда СХ5",
           "relative": null,
           "type": "а/м легковой"
         }
@@ -774,12 +770,7 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen",
-          "relative": null,
-          "type": "а/м легковой"
-        },
-        {
-          "text": "Touareg;",
+          "text": "Volkswagen Touareg",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -1213,12 +1204,12 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Auris; Toyota",
+          "text": "Toyota Auris",
           "relative": null,
           "type": "а/м легковой"
         },
         {
-          "text": "Land Cruizer;",
+          "text": "Toyota Land Cruizer",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -1356,7 +1347,7 @@
       ],
       "vehicles": [
         {
-          "text": "Volvo XC 90;",
+          "text": "Volvo XC 90",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -1414,7 +1405,7 @@
       ],
       "vehicles": [
         {
-          "text": "ГАЗ 31 029;",
+          "text": "ГАЗ 31 029",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -1736,7 +1727,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21 053;",
+          "text": "ВАЗ 21 053",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -1989,7 +1980,7 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Corolla;",
+          "text": "Toyota Corolla",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
@@ -2317,7 +2308,7 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Land Cruiser;",
+          "text": "Toyota Land Cruiser",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -2633,7 +2624,7 @@
       ],
       "vehicles": [
         {
-          "text": "Москвич 2 140;",
+          "text": "Москвич 2 140",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -2802,7 +2793,7 @@
       ],
       "vehicles": [
         {
-          "text": "Mercedes-Benz GLK 220;",
+          "text": "Mercedes-Benz GLK 220",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -4329,7 +4320,7 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Almera Classik;",
+          "text": "Nissan Almera Classik",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
@@ -4431,7 +4422,7 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda-3;",
+          "text": "Mazda-3",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -5105,7 +5096,7 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Accent;",
+          "text": "Hyundai Accent",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -5588,7 +5579,7 @@
       ],
       "vehicles": [
         {
-          "text": "Suzuki SX4;",
+          "text": "Suzuki SX4",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -5626,7 +5617,7 @@
       ],
       "vehicles": [
         {
-          "text": "Ford Explorer;",
+          "text": "Ford Explorer",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -5857,7 +5848,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21 120;",
+          "text": "ВАЗ 21 120",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -6785,12 +6776,12 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Land Cruiser;",
+          "text": "Toyota Land Cruiser",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
         {
-          "text": "Nissan Pathfinder;",
+          "text": "Nissan Pathfinder",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
@@ -6929,7 +6920,7 @@
       ],
       "vehicles": [
         {
-          "text": "ГАЗ 22 177;",
+          "text": "ГАЗ 22 177",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -7133,7 +7124,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21 703;",
+          "text": "ВАЗ 21 703",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -7272,7 +7263,7 @@
       ],
       "vehicles": [
         {
-          "text": "Fiat Albea;",
+          "text": "Fiat Albea",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -7787,19 +7778,14 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda 6;",
+          "text": "Mazda 6",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
         {
-          "text": "Honda CR-V",
+          "text": "Honda CR-V а/м грузовой Volkswagen 2kn caddy maxi",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
-        },
-        {
-          "text": "грузовой Volkswagen 2kn caddy maxi",
-          "relative": "Супруг(а)",
-          "type": "а/м"
         }
       ]
     },
@@ -7840,7 +7826,7 @@
       ],
       "vehicles": [
         {
-          "text": "Мото-транспортное средство: Kawasaki VN900 Custom",
+          "text": "Мото-транспортное средство Kawasaki VN900 Custom",
           "relative": null
         }
       ]
@@ -8823,7 +8809,7 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda 323;",
+          "text": "Mazda 323",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
@@ -8948,7 +8934,7 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Astra;",
+          "text": "Opel Astra",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -10069,7 +10055,12 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2 109; Мото-транспортное средство: ИЖ П5",
+          "text": "ВАЗ 2 109",
+          "relative": null,
+          "type": "а/м легковой"
+        },
+        {
+          "text": "Мото-транспортное средство ИЖ П5",
           "relative": null,
           "type": "а/м легковой"
         }
@@ -10231,7 +10222,7 @@
       ],
       "vehicles": [
         {
-          "text": "Митсубиши Лансер;",
+          "text": "Митсубиши Лансер",
           "relative": null,
           "type": "а/м легковой"
         },
@@ -11486,7 +11477,7 @@
           "type": "а/м легковой"
         },
         {
-          "text": "УАЗ Патриот;",
+          "text": "УАЗ Патриот",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },
@@ -11632,7 +11623,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2 105;",
+          "text": "ВАЗ 2 105",
           "relative": "Супруг(а)",
           "type": "а/м легковой"
         },

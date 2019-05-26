@@ -193,14 +193,19 @@
           "type": "а/м"
         },
         {
-          "text": "Porsche Cayenne GTS 2 мотоцикла: Yamaha YZF-R1",
+          "text": "Porsche Cayenne GTS",
           "relative": "Супруг(а)",
           "type": "а/м"
         },
         {
+          "text": "Yamaha YZF-R1",
+          "relative": "Супруг(а)",
+          "type": "мотоцикла"
+        },
+        {
           "text": "Ducati GT1000",
           "relative": "Супруг(а)",
-          "type": "а/м"
+          "type": "мотоцикла"
         }
       ]
     },
@@ -579,8 +584,9 @@
       ],
       "vehicles": [
         {
-          "text": "лодка ТП-7200",
-          "relative": null
+          "text": "ТП-7200",
+          "relative": null,
+          "type": "лодка"
         },
         {
           "text": "Audi Q5",
@@ -742,7 +748,7 @@
           "type": "а/м"
         },
         {
-          "text": ": Тойота RAV4",
+          "text": "Тойота RAV4",
           "relative": "Супруг(а)",
           "type": "а/м"
         }
@@ -1181,7 +1187,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Toyota Avensis",
+          "text": "Toyota Avensis",
           "relative": null,
           "type": "а/м"
         }
@@ -2965,7 +2971,7 @@
       ],
       "vehicles": [
         {
-          "text": ": ВАЗ 21013",
+          "text": "ВАЗ 21013",
           "relative": "Супруг(а)",
           "type": "а/м"
         },
@@ -2977,7 +2983,7 @@
         {
           "text": "автоприцеп",
           "relative": "Супруг(а)",
-          "type": "а/м"
+          "type": "автоприцеп"
         }
       ]
     },
@@ -3186,7 +3192,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Москвич 2141",
+          "text": "Москвич 2141",
           "relative": "Супруг(а)",
           "type": "а/м"
         },
@@ -3735,7 +3741,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Dodge Nitro",
+          "text": "Dodge Nitro",
           "relative": "Супруг(а)",
           "type": "а/м"
         },
@@ -4250,7 +4256,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Audi Q5",
+          "text": "Audi Q5",
           "relative": "Супруг(а)",
           "type": "а/м"
         },
@@ -4379,7 +4385,7 @@
       ],
       "vehicles": [
         {
-          "text": ": ВАЗ 21213 «Нива»",
+          "text": "ВАЗ 21213 «Нива»",
           "relative": null,
           "type": "а/м"
         },
@@ -5123,7 +5129,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Газель",
+          "text": "Газель",
           "relative": null,
           "type": "а/м"
         }
@@ -6277,9 +6283,9 @@
           "type": "а/м"
         },
         {
-          "text": "автоприцеп КМЗ 8119",
+          "text": "КМЗ 8119",
           "relative": null,
-          "type": "а/м"
+          "type": "автоприцеп"
         }
       ]
     },
@@ -6337,8 +6343,9 @@
       ],
       "vehicles": [
         {
-          "text": "мототран-спортное средство Honda CB400 Super Four",
-          "relative": null
+          "text": "Honda CB400 Super Four",
+          "relative": null,
+          "type": "мототран-спортное средство"
         }
       ]
     },
@@ -7402,7 +7409,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Toyota Avensis",
+          "text": "Toyota Avensis",
           "relative": null,
           "type": "а/м"
         },
@@ -7746,7 +7753,7 @@
       ],
       "vehicles": [
         {
-          "text": ": Toyota Corolla",
+          "text": "Toyota Corolla",
           "relative": "Супруг(а)",
           "type": "а/м"
         },
@@ -8524,7 +8531,7 @@
         {
           "text": "автоприцеп",
           "relative": null,
-          "type": "а/м"
+          "type": "автоприцеп"
         },
         {
           "text": "УАЗ",
@@ -8851,9 +8858,14 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2114 Автоприцеп КМЗ 8284",
+          "text": "ВАЗ 2114",
           "relative": null,
           "type": "а/м"
+        },
+        {
+          "text": "КМЗ 8284",
+          "relative": null,
+          "type": "Автоприцеп"
         }
       ]
     },
@@ -8928,7 +8940,7 @@
       ],
       "vehicles": [
         {
-          "text": ": ВАЗ 21053",
+          "text": "ВАЗ 21053",
           "relative": null,
           "type": "а/м"
         },

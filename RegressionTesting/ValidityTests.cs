@@ -124,7 +124,7 @@ namespace RegressionTesting
         [DeploymentItem("PropertyDictionary.txt")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordMinRes()
+        public void TestWordTypeA()
         {
             TestWordParser("Word\\A - min_res_2011_Sotrudniki_ministerstva.doc");
         }
@@ -134,7 +134,7 @@ namespace RegressionTesting
         [DeploymentItem("PropertyDictionary.txt")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordMinHealth()
+        public void TestWordTypeC()
         {
             TestWordParser("Word\\C - min_health_2015_Sotrudniki_ministerstva.docx");
         }
