@@ -45,11 +45,8 @@ namespace Smart.Parser.Lib
             return true;
         }
 
-        static public bool IsTitle(Row r, ref string title, ref int? year, ref string ministry)
+        static public bool IsTitleRow(Row r)
         {
-            //title = null;
-            //year = null;
-            //ministry = null;
             int cell_count = r.Cells.Count();
             if (cell_count == 0)
                 return false;
@@ -65,7 +62,12 @@ namespace Smart.Parser.Lib
 
             if (text_len < 20)
                 return false;
+            return true;
+        }
 
+        static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
+        {
+            int text_len = text.Length;
             if (title == null)
                 title = text;
             else
@@ -130,11 +132,9 @@ namespace Smart.Parser.Lib
             return (text.Trim() == "");
         }
 
-        static public ColumnOrdering ExamineHeader(IAdapter t)
+        static int ProcessTitle(IAdapter adapter, ColumnOrdering res)
         {
             int headerRowNum = 0;
-            ColumnOrdering res = new ColumnOrdering();
-
             string title = null;
             string ministry = null;
             int? year = null;
@@ -143,22 +143,31 @@ namespace Smart.Parser.Lib
             while (true)
             {
                 string section_text;
-                if (IsTitle(t.Rows[headerRowNum], ref title, ref year, ref ministry))
+                if (IsTitleRow(adapter.Rows[headerRowNum]))
                 {
-                    findTitle = true;
+                    if (GetValuesFromTitle(adapter.Rows[headerRowNum].Cells[0].GetText(true), ref title, ref year, ref ministry))
+                    {
+                        findTitle = true;
+                    }
                 }
-                else if (IsSection(t.Rows[headerRowNum], out section_text))
+                else if (IsSection(adapter.Rows[headerRowNum], out section_text))
                 {
                     res.Section = section_text;
                 }
-                if (IsHeader(t.Rows[headerRowNum]))
+                if (IsHeader(adapter.Rows[headerRowNum]))
                     break;
 
                 headerRowNum++;
 
-                if (headerRowNum >= t.GetRowsCount())
+                if (headerRowNum >= adapter.GetRowsCount())
                 {
                     throw new ColumnDetectorException(String.Format("Headers not found"));
+                }
+            }
+            if (!findTitle) {
+                if (GetValuesFromTitle(adapter.GetTitle(), ref title, ref year, ref ministry))
+                {
+                    findTitle = true;
                 }
             }
 
@@ -168,7 +177,14 @@ namespace Smart.Parser.Lib
                 res.Year = year;
                 res.MinistryName = ministry;
             }
+            return headerRowNum;
+        }
 
+
+        static public ColumnOrdering ExamineHeader(IAdapter t)
+        {
+            ColumnOrdering res = new ColumnOrdering();
+            int headerRowNum = ProcessTitle(t, res);
             var header = t.Rows[headerRowNum];
 
             int colCount = 0;
