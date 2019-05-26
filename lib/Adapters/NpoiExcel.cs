@@ -58,7 +58,7 @@ namespace Smart.Parser.Adapters
                 {
                     index++;
                 }
-                if (index > MaxNotEmptyColumnsFoundInHeader)
+                if (index >= MaxNotEmptyColumnsFoundInHeader)
                 {
                     break;
                 }

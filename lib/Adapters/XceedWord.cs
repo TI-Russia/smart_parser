@@ -5,44 +5,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
-
 using TI.Declarator.ParserCommon;
 
+//using Microsoft.Office.Interop.Word;
 using Xceed.Words.NET;
-using Microsoft.Office.Interop.Word;
-
 
 namespace Smart.Parser.Adapters
 {
-    class XCeedWordCell : Cell
+    
+    class XceedWordCell : Cell
     {
         public bool HasTopBorder;
-        public bool HasBottomBorder;
-        private bool HasBorder(Xceed.Words.NET.Cell xceedCell, TableCellBorderType border)
-        {
-            try
-            {
-                var dummy = xceedCell.GetBorder(border);
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
 
-        public XCeedWordCell(Xceed.Words.NET.Cell xceedCell, int row, int column)
-        {
-            var cellContents = GetXceedText(xceedCell);
-            //var dummy = xceedCell.Xml.ToString();
-            HasTopBorder = HasBorder(xceedCell, TableCellBorderType.Top);
-            HasBottomBorder = HasBorder(xceedCell, TableCellBorderType.Bottom);
+        public XceedWordCell(Xceed.Words.NET.Cell inputCell, int row, int column)
+        {   
+            var cellContents = GetXceedText(inputCell);
+            var vmerge = inputCell.Xml.Descendants().FirstOrDefault(d => d.Name.LocalName.ToLower() == "vmerge");
+            if (vmerge != null)
+            {
+                HasTopBorder = (vmerge?.Attributes().FirstOrDefault(a => a.Name.LocalName == "val")?.Value ?? string.Empty) == "restart"; ; 
+            }
+            else
+            {
+                HasTopBorder = true;
+            }
 
-            IsMerged = xceedCell.GridSpan > 0;
+            IsMerged = inputCell.GridSpan > 1;
             FirstMergedRow = -1; // init afterwards
             MergedRowsCount = -1; // init afterwards
 
-            MergedColsCount = xceedCell.GridSpan == 0 ? 1 : xceedCell.GridSpan;
+            MergedColsCount = inputCell.GridSpan;
             IsHeader = false;
             IsEmpty = cellContents.IsNullOrWhiteSpace();
             BackgroundColor = null;
@@ -52,45 +44,54 @@ namespace Smart.Parser.Adapters
             Col = column;
         }
 
-        static string GetXceedText(Xceed.Words.NET.Cell xceedCell)
+        static string GetXceedText(Xceed.Words.NET.Cell inputCell)
         {
-            var res = new StringBuilder();
-            foreach (var p in xceedCell.Paragraphs)
+            string s = "";
+            foreach (var p in inputCell.Paragraphs)
             {
-                res.Append(p.Text);
-                res.Append("\n");
+                s += p.Text + "\n";
             }
-            return res.ToString();
+            return s;
         }
     }
 
     public class XceedWordAdapter : IAdapter
     {
-        private List<List<XCeedWordCell>> TableRows;
+        private List<List<XceedWordCell>> TableRows;
         private string Title;
         private int UnmergedColumnsCount;
         private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-        public XceedWordAdapter(string filename, int maxRowsToProcess)
+
+      
+        public XceedWordAdapter(string fileName, int maxRowsToProcess)
         {
-            DocX doc = DocX.Load(filename);
-            Title =  FindTitle(doc);
+            DocX doc = DocX.Load(fileName);
+            FindTitle(doc);
             CollectRows(doc, maxRowsToProcess);
         }
-
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess)
         {
             return new XceedWordAdapter(fileName, maxRowsToProcess);
         }
 
-        private string FindTitle(DocX doc)
+        private void FindTitle(DocX wordDocument)
         {
-            var docBody = doc.Xml.Elements(WordXNamespace + "body");
-            var titleParagraphs = doc.Xml.Elements().TakeWhile(el => el.Name.ToString() != $"{{{WordXNamespace}}}tbl");
-
-            return titleParagraphs.Select(p => p.Value)
-                                  .Aggregate("", (str1, str2) => str1 + '\n' + str2);
+            Title = "";
+            foreach (var p in wordDocument.Paragraphs)
+            {
+                if (p.ParentContainer != Xceed.Words.NET.ContainerType.Body)
+                {
+                    break;
+                }
+                Title += p.Text + "\n";
+            }
         }
 
+
+        public override string GetTitle()
+        {
+            return Title;
+        }
 
         int FindMergedCellByColumnNo(int row, int column)
         {
@@ -106,41 +107,63 @@ namespace Smart.Parser.Adapters
             return -1;
         }
 
-        int FindFirstCellWithTopBorder(int row, int column)
+        int FindFirstBorderGoingUp(int startRow, int column)
         {
-            for (int i = row; i > 0; --i)
+            for (int i = startRow; i > 0; --i)
             {
-                int cellNo = FindMergedCellByColumnNo(row, column);
-                if (TableRows[row][cellNo].HasTopBorder)
+                int cellNo = FindMergedCellByColumnNo(i, column);
+                if (TableRows[i][cellNo].HasTopBorder)
                 {
-                    return row;
+                    return i;
+                }
+                if (i == 0)
+                {
+                    return i;
                 }
             }
             return 0;
         }
 
-
-        void CollectRows(DocX doc, int maxRowsToProcess)
+        int FindFirstBorderGoingDown(int startRow, int column)
         {
-            TableRows = new List<List<XCeedWordCell>>();
-            UnmergedColumnsCount = -1; 
-            foreach (var table in doc.Tables)
+            for (int i = startRow; i < TableRows.Count; ++i)
             {
-                foreach (var r in table.Rows)
+                int cellNo = FindMergedCellByColumnNo(i, column);
+                if (i > startRow && TableRows[i][cellNo].HasTopBorder)
                 {
-                    if (UnmergedColumnsCount == -1)
-                    {
-                        UnmergedColumnsCount = r.ColumnCount;
-                    }
-                    List<XCeedWordCell> newRow = new List<XCeedWordCell>();
+                    return i - 1;
+                }
+                if (i+1 == TableRows.Count)
+                {
+                    return i;
+                }
+            }
+            return TableRows.Count - 1;
+        }
+
+
+        void CollectRows(DocX wordDocument, int maxRowsToProcess)
+        {
+            TableRows = new List<List<XceedWordCell>>();
+            UnmergedColumnsCount = -1;
+            foreach (var table in wordDocument.Tables)
+            {
+                foreach (var row in table.Rows)
+                {
+                    List<XceedWordCell> newRow = new List<XceedWordCell>();
                     int sumspan = 0;
-                    foreach (var c in r.Cells)
+                    foreach (var rowCell in row.Cells)
                     {
-                        newRow.Add(new XCeedWordCell(c, TableRows.Count, sumspan));
+                        var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
+                        newRow.Add(c);
                         sumspan += c.GridSpan == 0 ? 1 : c.GridSpan;
                     }
                     TableRows.Add(newRow);
-                    if ((maxRowsToProcess !=- -1) && (TableRows.Count >= maxRowsToProcess)) {
+                    if (UnmergedColumnsCount == -1)
+                    {
+                        UnmergedColumnsCount = sumspan;
+                    }
+                    if ((maxRowsToProcess != -1) && (TableRows.Count >= maxRowsToProcess)) {
                         break;
                     }
                 }
@@ -148,8 +171,8 @@ namespace Smart.Parser.Adapters
             foreach (var r in TableRows)
             {
                 foreach (var c in r) {
-                    c.FirstMergedRow = FindFirstCellWithTopBorder(c.Row, c.Col);
-                    c.MergedRowsCount = FindFirstCellWithBottomBorder(c.Row, c.Col) - c.FirstMergedRow + 1; 
+                    c.FirstMergedRow = FindFirstBorderGoingUp(c.Row, c.Col);
+                    c.MergedRowsCount = FindFirstBorderGoingDown(c.Row, c.Col) - c.Row + 1; 
                 }
             }
         }
@@ -165,23 +188,10 @@ namespace Smart.Parser.Adapters
             return result;
         }
 
-        int FindFirstCellWithBottomBorder(int row, int column)
-        {
-            for (int i = row; i < TableRows.Count; ++i)
-            {
-                int cellNo = FindMergedCellByColumnNo(row, column);
-                if (TableRows[row][cellNo].HasBottomBorder)
-                {
-                    return row;
-                }
-            }
-            return 0;
-        }
-
         public override Cell GetCell(int row, int column)
         {
             int cellNo = FindMergedCellByColumnNo(row, column);
-
+            if (cellNo == -1) return null;
             return  TableRows[row][cellNo];
         }
 
@@ -202,3 +212,5 @@ namespace Smart.Parser.Adapters
         }
     }
 }
+
+
