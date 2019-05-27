@@ -3377,22 +3377,6 @@
       "value": "Квартира"
     },
     {
-      "id": 18,
-      "data": "Квартира",
-      "is_regex": false,
-      "is_case": false,
-      "type": "owntype",
-      "value": "В собственности"
-    },
-    {
-      "id": 93,
-      "data": "Квартира",
-      "is_regex": false,
-      "is_case": false,
-      "type": "owntype",
-      "value": "Индивидуальная"
-    },
-    {
       "id": 623,
       "data": "Квартира",
       "is_regex": false,

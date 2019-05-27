@@ -82,28 +82,28 @@
     <None Include="regression_samples\SmartParser\basic.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\doctest.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\doctest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="regression_samples\SmartParser\minfin2016.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\minfin2016.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Pdf\one_line_2017.json">
+    <None Include="regression_samples\SmartParser\minzdrav2015.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Pdf\one_line_2017.pdf">
+    <None Include="regression_samples\SmartParser\minzdrav2015.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Pdf\two_tables_2017.json">
+    <None Include="regression_samples\SmartParser\one_line_2017.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\Pdf\two_tables_2017.pdf">
+    <None Include="regression_samples\SmartParser\one_line_2017.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\two_tables_2017.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\two_tables_2017.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\Word\2016_Sotrudniki_ministerstva.docx">
