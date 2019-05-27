@@ -398,14 +398,24 @@ namespace Smart.Parser.Lib
             return Regex.Replace(vehicle, @"\s{2,}", " ");
         }
 
+        static bool CheckEmptyValues(string propTypeStr)
+        {
+            propTypeStr = propTypeStr.Trim();
+            if (string.IsNullOrWhiteSpace(propTypeStr) ||
+                propTypeStr == "-" ||
+                propTypeStr == "_" ||
+                propTypeStr == "-\n-" ||
+                propTypeStr == "не имеет")
+            {
+                return true;
+            }
+            return false;
+        }
+
         static public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
         {
             statePropTypeStr = statePropTypeStr.Trim();
-            if (string.IsNullOrWhiteSpace(statePropTypeStr) || 
-                statePropTypeStr == "-" ||
-                statePropTypeStr == "_" ||
-                statePropTypeStr == "-\n-" || 
-                statePropTypeStr == "не имеет")
+            if (CheckEmptyValues(statePropTypeStr))
             {
                 return null;
             }
@@ -429,8 +439,6 @@ namespace Smart.Parser.Lib
             stateProperty.country_raw = statePropCountryStr;
             stateProperty.OwnershipType = combinedData.Item2;
             stateProperty.OwnedShare = combinedData.Item3;
-
-
             return stateProperty;
         }
 
@@ -438,10 +446,7 @@ namespace Smart.Parser.Lib
         static public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
         {
             estateTypeStr = estateTypeStr.Trim();
-            if (String.IsNullOrWhiteSpace(estateTypeStr) || 
-                estateTypeStr.Trim() == "-" ||
-                estateTypeStr.Trim() == "_" ||
-                estateTypeStr == "не имеет")
+            if (CheckEmptyValues(estateTypeStr))
             {
                 return null;
             }
