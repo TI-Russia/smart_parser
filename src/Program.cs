@@ -22,6 +22,7 @@ namespace Smart.Parser
         static bool ColumnsOnly = false;
         static bool CheckJson = false;
         public static int MaxRowsToProcess = -1;
+        public static DeclarationField ColumnToDump = DeclarationField.None;
 
         static string ParseArgs(string[] args)
         {
@@ -33,7 +34,9 @@ namespace Smart.Parser
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
             CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft or xceed, by default is aspose", false);
-            CMDLineParser.Option maxRowsToProcessOpt = parser.AddStringParameter("-max-rows", "max rows to process from the input file", false);
+            CMDLineParser.Option maxRowsToProcessOpt = parser.AddIntParameter("-max-rows", "max rows to process from the input file", false);
+            CMDLineParser.Option dumpColumnOpt  = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
+            parser.AddHelpOption();
             try
             {
                 //parse the command line
@@ -93,6 +96,11 @@ namespace Smart.Parser
                     throw new Exception("unknown adapter family " + AdapterFamily);
                 }
             }
+            if (dumpColumnOpt.isMatched)
+            {
+                ColumnToDump = (DeclarationField)Enum.Parse(typeof(DeclarationField), dumpColumnOpt.Value.ToString());
+            }
+
 
             ColumnsOnly = columnsOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
@@ -378,6 +386,17 @@ namespace Smart.Parser
             return 0;
         }
 
+        static void DumpColumn(IAdapter adapter, DeclarationField columnToDump)
+        {
+            int rowOffset = adapter.ColumnOrdering.FirstDataRow;
+            for (var row = rowOffset; row < adapter.GetRowsCount(); row++)
+            {
+                var cell = adapter.GetDeclarationField (row, columnToDump);
+                var s = (cell == null) ? "null" : cell.GetText();
+                Console.WriteLine(s);
+            }
+        }
+
         public static int ParseOneFile(IAdapter adapter, string outFile)
         {
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
@@ -394,6 +413,11 @@ namespace Smart.Parser
 //            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
             if (ColumnsOnly)
                 return 0;
+            if (ColumnToDump != DeclarationField.None)
+            {
+                DumpColumn(adapter, ColumnToDump);
+                return 0;
+            }
 
             if (columnOrdering.Title != null)
             {
