@@ -9,7 +9,7 @@ namespace TI.Declarator.ParserCommon
     {
         private static string[] VehicleTypeDict =
         {
-                @"автомобил. легков..[:|\n ]",
+                @"автомобил. легков..[:|\n ]",                
                 "мототранспортные средства:",
                 "мотоцикл.[:|\n ]",
                 "водный транспорт:",
@@ -47,7 +47,7 @@ namespace TI.Declarator.ParserCommon
 
             var entries = str.Split(VehicleSeparators, StringSplitOptions.RemoveEmptyEntries);
             string multientryType = null;
-            foreach (var entry in entries.Select(e => e.CleanWhitespace()))
+            foreach (var entry in entries.Select(e => e.CleanWhitespace().CoalesceWhitespace()))
             {
                 string type = ExtractVehicleType(entry);
 
