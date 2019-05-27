@@ -25,7 +25,14 @@ namespace Smart.Parser.Adapters
 
         public virtual string GetText(bool trim = true)
         {
-            return Text;
+            var text = Text;
+            if (trim)
+            {
+                char[] spaces = { ' ', '\n', '\r', '\t' };
+                text = text.CoalesceWhitespace().Trim(spaces);
+            }
+
+            return text;
         }
 
         public int Row { get; set; } = -1;
@@ -119,7 +126,7 @@ namespace Smart.Parser.Adapters
         {
             return GetCell(row, Field2Col(field));
         }
-
+        
         public string GetContents(int row, DeclarationField field)
         {
             return GetDeclarationField(row, field).GetText(true);

@@ -28,10 +28,10 @@
           "share_amount": null,
           "relative": null,
           "square_raw": "153,4",
-          "share_amount_raw": "Индивидуальная\n",
-          "country_raw": "Россия\n",
+          "share_amount_raw": "Индивидуальная",
+          "country_raw": "Россия",
           "type_raw": "квартира",
-          "own_type_raw": "Индивидуальная\n"
+          "own_type_raw": "Индивидуальная"
         },
         {
           "text": "Квартира",
@@ -42,8 +42,8 @@
           "own_type": "В пользовании",
           "share_amount": null,
           "relative": null,
-          "square_raw": "114,0\n",
-          "country_raw": "Россия\n",
+          "square_raw": "114,0",
+          "country_raw": "Россия",
           "type_raw": "Квартира"
         },
         {
@@ -55,8 +55,8 @@
           "own_type": "В пользовании",
           "share_amount": null,
           "relative": null,
-          "square_raw": "70,2\n",
-          "country_raw": "Россия\n",
+          "square_raw": "70,2",
+          "country_raw": "Россия",
           "type_raw": "Комната"
         },
         {
@@ -69,10 +69,10 @@
           "share_amount": null,
           "relative": "Супруг(а)",
           "square_raw": "1 680,0",
-          "share_amount_raw": "индивидуальная\n",
-          "country_raw": "Россия\n",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
           "type_raw": "Земельный участок",
-          "own_type_raw": "индивидуальная\n"
+          "own_type_raw": "индивидуальная"
         },
         {
           "text": "Квартира",
@@ -84,10 +84,10 @@
           "share_amount": "0,6666666666666666666666666667",
           "relative": "Супруг(а)",
           "square_raw": "114,0",
-          "share_amount_raw": "Долевая, 2/3\n",
-          "country_raw": "Россия\n",
+          "share_amount_raw": "Долевая, 2/3",
+          "country_raw": "Россия",
           "type_raw": "Квартира",
-          "own_type_raw": "Долевая, 2/3\n"
+          "own_type_raw": "Долевая, 2/3"
         },
         {
           "text": "Квартира",
@@ -99,10 +99,10 @@
           "share_amount": null,
           "relative": "Супруг(а)",
           "square_raw": "109,3",
-          "share_amount_raw": "индивидуальная\n",
-          "country_raw": "Россия\n",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
           "type_raw": "Квартира",
-          "own_type_raw": "индивидуальная\n"
+          "own_type_raw": "индивидуальная"
         },
         {
           "text": "Квартира",
@@ -113,8 +113,8 @@
           "own_type": "В пользовании",
           "share_amount": null,
           "relative": "Ребенок",
-          "square_raw": "114,0\n",
-          "country_raw": "Россия\n",
+          "square_raw": "114,0",
+          "country_raw": "Россия",
           "type_raw": "Квартира"
         }
       ],
