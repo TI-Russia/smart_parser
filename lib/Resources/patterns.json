@@ -3121,28 +3121,12 @@
       "value": "Индивидуальная"
     },
     {
-      "id": 15,
-      "data": "Инвидуальная",
-      "is_regex": false,
-      "is_case": false,
-      "type": "owntype",
-      "value": "В собственности"
-    },
-    {
       "id": 88,
       "data": "Инвидуальная",
       "is_regex": false,
       "is_case": false,
       "type": "owntype",
       "value": "Индивидуальная"
-    },
-    {
-      "id": 14,
-      "data": "Индив\\w+ная",
-      "is_regex": true,
-      "is_case": false,
-      "type": "owntype",
-      "value": "В собственности"
     },
     {
       "id": 87,
@@ -3177,14 +3161,6 @@
       "value": "Иное"
     },
     {
-      "id": 17,
-      "data": "Индивидуальный",
-      "is_regex": false,
-      "is_case": false,
-      "type": "owntype",
-      "value": "В собственности"
-    },
-    {
       "id": 90,
       "data": "Индивидуальный",
       "is_regex": false,
@@ -3199,14 +3175,6 @@
       "is_case": false,
       "type": "realestatetype",
       "value": "Жилой дом"
-    },
-    {
-      "id": 16,
-      "data": "Индидуальная",
-      "is_regex": false,
-      "is_case": false,
-      "type": "owntype",
-      "value": "В собственности"
     },
     {
       "id": 89,
@@ -5056,16 +5024,6 @@
       "type": "owntype",
       "value": "Совместная собственность"
     },
-    /*
-    {
-      "id": 30,
-      "data": "Совместная",
-      "is_regex": false,
-      "is_case": false,
-      "type": "owntype",
-      "value": "В собственности"
-    },
-*/
     {
       "id": 141,
       "data": "Совместная",
