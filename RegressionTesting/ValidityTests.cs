@@ -202,6 +202,16 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\two_tables_2017.pdf", "xceed");
         }
 
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void IncomeNotFirstLine()
+        {
+            TestSmartParser("SmartParser\\IncomeNotFirstLine.docx", "xceed");
+        }
+
 
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]

@@ -268,6 +268,18 @@ namespace Smart.Parser.Lib
         }
 
 
+        public decimal? ParseIncomeNoExcept(string declaredYearlyIncomeStr)
+        {
+            try
+            {
+                return DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
+            }
+            catch (Exception e)
+            {
+                Logger.Error("***ERROR row({0}) wrong income: {1}", declaredYearlyIncomeStr, e.Message);
+                return null; 
+            }
+        }
 
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
@@ -290,7 +302,7 @@ namespace Smart.Parser.Lib
 
                 foreach (Person person in servantAndRel)
                 {
-                    bool firstRow = true;
+                    bool foundIncomeInfo = false;
                     for (int row = person.RangeLow; row <= person.RangeHigh; row++)
                     {
                         CurrentRow = row;
@@ -300,22 +312,15 @@ namespace Smart.Parser.Lib
                             continue;
                         }
 
-                        if (firstRow)
+                        if (!foundIncomeInfo)
                         {
-                            // парсим доход
-                            string declaredYearlyIncomeStr = Adapter.GetDeclarationField(row, DeclarationField.DeclaredYearlyIncome).Text;
-                            decimal? declaredYearlyIncome = null;
-                            try
+                            string s = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
+                            if (s != "")
                             {
-                                declaredYearlyIncome = DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
+                                person.DeclaredYearlyIncome = ParseIncomeNoExcept(s);
+                                totalIncome += person.DeclaredYearlyIncome == null ? 0 : person.DeclaredYearlyIncome.Value;
+                                foundIncomeInfo = true;
                             }
-                            catch (Exception e)
-                            {
-                                Logger.Error("***ERROR row({0}) wrong income: {1}", row, e.Message);
-                            }
-                            person.DeclaredYearlyIncome = declaredYearlyIncome;
-                            totalIncome += declaredYearlyIncome == null ? 0 : declaredYearlyIncome.Value;
-                            firstRow = false;
                         }
 
 

@@ -1,0 +1,72 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Дроздов Алексей Сергеевич",
+        "name_raw": "Дроздов Алексей Сергеевич",
+        "role": "Заместитель директора Департамента спорта высших достижений \n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": "1693539,44",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "38,00",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "38.00",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Гараж",
+          "type": "Гараж",
+          "square": "14,50",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "14.50",
+          "share_amount_raw": "Индивидуальная",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "36,00",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "36.00",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "МИЦУБИСИ outlender",
+          "relative": null,
+          "type": "легковой автомобиль"
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения\nо доходах, расходах, об имуществе и обязательствах имущественного характера \nфедеральных государственных гражданских служащих Министерства спорта Российской Федерации\nза период 1 января 2016 г. по 31 декабря 2016 г.\n\n",
+    "year": 2016
+  }
+}
