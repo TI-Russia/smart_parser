@@ -110,15 +110,6 @@ namespace RegressionTesting
             Assert.IsTrue(TestValidity(expectedFile, outputFileName, WordLogFilePath));
         }
 
-        [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("PropertyDictionary.txt")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordMinSport()
-        {
-            TestWordParser("Word\\2016_Sotrudniki_ministerstva.docx");
-        }
 
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]
@@ -240,6 +231,16 @@ namespace RegressionTesting
         public void TestMinZdrav2015()
         {
             TestSmartParser("SmartParser\\minzdrav2015.docx", "xceed");
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinSport2016()
+        {
+            TestSmartParser("SmartParser\\MinSport2016.docx", "xceed");
         }
 
 
