@@ -17,8 +17,7 @@ namespace Smart.Parser.Adapters
         private XSSFWorkbook WorkBook;
         private Cell EmptyCell;
         private int MaxRowsToProcess;
-        int MaxColumnsToProcess = 32;
-
+        
         public NpoiExcelAdapter(string filename, int maxRowsToProcess = -1)
         {
             WorkBook = new XSSFWorkbook(Path.GetFullPath(filename));

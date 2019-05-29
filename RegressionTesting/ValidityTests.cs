@@ -212,6 +212,15 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\IncomeNotFirstLine.docx", "xceed");
         }
 
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void ManyManyColumns()
+        {
+            TestSmartParser("SmartParser\\256_Columns.xlsx", "npoi");
+        }
 
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]

@@ -130,14 +130,15 @@ namespace Smart.Parser.Lib
             {
                 try
                 {
-                    int leftParenPos = strIncome.IndexOf("(");
-                    if (leftParenPos == -1)
+                    Regex regex = new Regex("([ ,]+[а-яА-Я])|(\\()", RegexOptions.Compiled);
+                    var matches = regex.Matches(strIncome);
+                    if (matches.Count > 0)
                     {
-                        result = strIncome.ParseDecimalValue();
+                        result = strIncome.Substring(0, matches[0].Index).ParseDecimalValue();
                     }
                     else
                     {
-                        result = strIncome.Substring(0, leftParenPos).ParseDecimalValue();
+                        result = strIncome.ParseDecimalValue();
                     }
                 }
                 catch (Exception)

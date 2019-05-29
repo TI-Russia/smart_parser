@@ -85,10 +85,14 @@ namespace Smart.Parser.Lib
             int maxfound = 0;
             for (int row = 0; row < headerRowCount; ++row)
             {
-                for (int col = 0; col < 32; ++col)
+                for (int col = 0; col < 256; ++col)
                 {
                     var c = Adapter.GetCell(row, col);
-                    if (c != null && c.GetText() != "")
+                    if (c == null)
+                    {
+                        break;
+                    }
+                    if (c.GetText() != "")
                     {
                         maxfound = Math.Max(col, maxfound);
                     }
@@ -267,20 +271,6 @@ namespace Smart.Parser.Lib
             }
         }
 
-
-        public decimal? ParseIncomeNoExcept(string declaredYearlyIncomeStr)
-        {
-            try
-            {
-                return DataHelper.ParseDeclaredIncome(declaredYearlyIncomeStr);
-            }
-            catch (Exception e)
-            {
-                Logger.Error("***ERROR row({0}) wrong income: {1}", declaredYearlyIncomeStr, e.Message);
-                return null; 
-            }
-        }
-
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
             SecondPassStartTime = DateTime.Now;
@@ -317,7 +307,7 @@ namespace Smart.Parser.Lib
                             string s = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
                             if (s != "")
                             {
-                                person.DeclaredYearlyIncome = ParseIncomeNoExcept(s);
+                                person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s);
                                 totalIncome += person.DeclaredYearlyIncome == null ? 0 : person.DeclaredYearlyIncome.Value;
                                 foundIncomeInfo = true;
                             }
