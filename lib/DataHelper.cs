@@ -294,31 +294,15 @@ namespace Smart.Parser.Lib
 
         public static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
         {
-            string res = strOwn;
-            //if (ownType == OwnershipType.Shared)
+            var match = Regex.Match(strOwn, "\\d+/\\d+");
+            if (match.Success)
             {
-                /*
-                String[] strToRemove = new String[] { "Общедолевая", "Общая долевая", "Общая, долевая", "Делевая", "Долевая", "Долеявая",
-                                                      "Общая, долевая", "Доля", "Доли", "Долей", "Размер", " ", "(", ")" };
-                foreach (string str in strToRemove)
-                {
-                    res = res.Replace(str, "");
-                    res = res.Replace(str.ToLower(), "");
-                }
-
-                res = res.Trim(',');
-                */
-                var parts = Regex.Split(strOwn.ToLower().Trim(), "[ ,]+");
-                //if (parts.Length > 1)
-                //    return parts[1];
-
-                var match = Regex.Match(strOwn, "\\d+/?\\d+");
-                if (match.Success)
-                {
-                    return match.Value;
-                }
-
-                return "";
+                return match.Value; // "1/3", "2/5"
+            }
+            match = Regex.Match(strOwn, "0[\\.,]\\d+");
+            if (match.Success)
+            {
+                return match.Value; // "0.5", "0,7"
             }
             return "";
         }
