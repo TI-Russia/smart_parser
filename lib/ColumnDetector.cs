@@ -120,17 +120,6 @@ namespace Smart.Parser.Lib
             return (nonEmptyCellCount > 4) &&
                    (cells.First().GetText(true) != "1");
         }
-        static private bool IsEmptyRow(Row r)
-        {
-            var cells = r.Cells;
-            string text = "";
-            foreach (var cell in cells)
-            {
-                text += cell.GetText();
-            }
-
-            return (text.Trim() == "");
-        }
 
         static int ProcessTitle(IAdapter adapter, ColumnOrdering res)
         {

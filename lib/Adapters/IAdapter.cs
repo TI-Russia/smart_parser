@@ -177,6 +177,20 @@ namespace Smart.Parser.Adapters
         {
             return null;
         }
+        static public bool IsEmptyRow(Row r)
+        {
+            foreach (var cell in r.Cells)
+            {
+                var t = cell.GetText().Trim().Trim('\n', '\t', '\r');
+                if (t != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
 
     }
 }

@@ -136,18 +136,15 @@ namespace Smart.Parser.Lib
             }
             for (row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
-                if (Adapter.GetCell(row, 0) == null)
+                Row currRow = Adapter.GetRow(row);
+                if (IAdapter.IsEmptyRow(currRow))
                 {
                     continue;
                 }
                 // строка - разделитель
                 string name;
-                if (ColumnDetector.IsSection(Adapter.GetRow(row), out name))
-                //if (Adapter.GetCell(row, 0).MergedColsCount > 1)
+                if (ColumnDetector.IsSection(currRow, out name))
                 {
-                    //string name = Adapter.GetCell(row, 0).Text;
-                    //if (name.Length > 5)
-                    //{
                     currentSection = new DeclarationSection() { Row = row, Name = name };
                     declaration.Sections.Add(currentSection);
                     currentServant = null;
@@ -157,7 +154,6 @@ namespace Smart.Parser.Lib
                     }
                     currentPerson = null;
                     continue;
-                    //}
                 }
 
                 int merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
