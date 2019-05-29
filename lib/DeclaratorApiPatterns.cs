@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
 
+
 namespace Smart.Parser.Lib
 {
 
@@ -38,7 +39,8 @@ namespace Smart.Parser.Lib
         static Dictionary<string, RealEstateType> realestatetypeDict = new Dictionary<string, RealEstateType>();
         //static Regex realestatetypeRegex;
         //static string realestatetypeRegexString;
-        static Dictionary<RealEstateType, Regex> realestatetypeRegexes = new Dictionary<RealEstateType, Regex>();
+        static Dictionary<RealEstateType, Regex> RealEstateTypeRegexes = new Dictionary<RealEstateType, Regex>();
+        static SymSpell RealEstateTypeSpellDict = new SymSpell(10000, 2);
 
         static Dictionary<string, string> countryDict = new Dictionary<string, string>();
         /*
@@ -102,10 +104,17 @@ namespace Smart.Parser.Lib
             }
 
             // build realestate regex
+            List<String> allTypes;
             foreach (var pair in realestatetypeRegexList)
             {
                 string realestatetypeRegexString = "(" + String.Join("|", pair.Value) + ")";
-                realestatetypeRegexes[pair.Key] = new Regex(realestatetypeRegexString, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+                RealEstateTypeRegexes[pair.Key] = new Regex(realestatetypeRegexString, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+                foreach (var s in pair.Value)
+                { 
+                    var simplified = s.Replace("\\b", "").Replace("\\s", " ").ToLower();
+                    RealEstateTypeSpellDict.CreateDictionaryEntry(simplified, (int)pair.Key);
+
+                }
             }
 
             BuildCustomDicts();
@@ -266,10 +275,17 @@ namespace Smart.Parser.Lib
         {
             string normalized = NormalizeText(text);
 
-            foreach (var pair in realestatetypeRegexes)
+            foreach (var pair in RealEstateTypeRegexes)
             {
                 if (pair.Value.IsMatch(normalized))
                     return pair.Key;
+            }
+            if (text.Count() > 3)
+            {    
+                foreach (var suggestion in RealEstateTypeSpellDict.Lookup(text.ToLower(), SymSpell.Verbosity.Closest, 1))
+                {
+                    return (RealEstateType)suggestion.count;
+                }
             }
 
             RealEstateType result = RealEstateType.None;
@@ -278,14 +294,6 @@ namespace Smart.Parser.Lib
 
             return result;
 
-            string value = GetValue(normalized, "realestatetype");
-
-            if (value.IsNullOrWhiteSpace())
-            {
-                return RealEstateType.None;
-            }
-
-            return RealEstateTypeMap[value];
         }
 
         public static RealEstateType ParseRealEstateType(string text)

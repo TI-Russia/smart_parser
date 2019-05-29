@@ -1,0 +1,71 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Каграманян И.Н.",
+        "name_raw": "Каграманян И.Н.",
+        "role": "Первый\nзаместитель\nМинистра\n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "12060614,80",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "153,4",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Совместная собственность",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "153,4",
+          "share_amount_raw": "Общая совместная (начиная с 23.08.1986)",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая совместная (начиная с 23.08.1986)"
+        },
+        {
+          "text": "Гаражи",
+          "type": "Гараж",
+          "square": "114,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "114,0",
+          "country_raw": "Россия",
+          "type_raw": "Гаражи"
+        },
+        {
+          "text": "Гораж",
+          "type": "Гараж",
+          "square": "70,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "70,2",
+          "country_raw": "Россия",
+          "type_raw": "Гораж"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Мотовездеход GAMAX AX 600",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "\nСведения\nо доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими\nМинистерства здравоохранения Российской Федерации\nза отчетный период с 1 января 2015 года по 31 декабря 2015 года\n\n",
+    "year": 2015
+  }
+}

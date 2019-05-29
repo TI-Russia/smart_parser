@@ -100,6 +100,12 @@
     <None Include="regression_samples\SmartParser\one_line_2017.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\SpellCheckRealtyType.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\SpellCheckRealtyType.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\two_tables_2017.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -187,6 +187,16 @@ namespace RegressionTesting
         [DeploymentItem("log4net.config")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
+        public void SpellCheckRealtyType()
+        {
+            TestSmartParser("SmartParser\\SpellCheckRealtyType.docx", "xceed");
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
         public void TestPdfTwoTables()
         {
             TestSmartParser("SmartParser\\two_tables_2017.pdf", "xceed");
