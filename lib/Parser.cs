@@ -4,6 +4,7 @@ using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -246,7 +247,7 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        public void CheckProperty(RealEstateProperty prop)
+        public static void CheckProperty(RealEstateProperty prop)
         {
             if (prop == null)
             {
@@ -317,24 +318,23 @@ namespace Smart.Parser.Lib
                         {
                             ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
                         }
-                        string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+                        string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea);
                         string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
-
-                        RealEstateProperty ownedProperty = null;
 
                         try
                         {
-                            ownedProperty = ParseOwnedProperty(estateTypeStr, ownTypeStr, areaStr, countryStr);
+                            if (GetLinesStaringWithNumbers(areaStr).Count > 1)
+                            {
+                                ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
+                            }
+                            else
+                            {
+                                ParseOwnedProperty(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
+                            }
                         }
                         catch (Exception e)
                         {
                             Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                        }
-
-                        if (ownedProperty != null)
-                        {
-                            CheckProperty(ownedProperty);
-                            person.RealEstateProperties.Add(ownedProperty);
                         }
 
                         // Парсим недвижимость в пользовании
@@ -342,20 +342,20 @@ namespace Smart.Parser.Lib
                         string statePropAreaStr = currRow.GetContents(DeclarationField.StatePropertyArea);
                         string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
 
-                        RealEstateProperty stateProperty = null;
                         try
                         {
-                            stateProperty = ParseStateProperty(statePropTypeStr, statePropAreaStr, statePropCountryStr);
+                            if (GetLinesStaringWithNumbers(statePropAreaStr).Count > 1)
+                            {
+                                ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
+                            }
+                            else
+                            {
+                                ParseStateProperty(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
+                            }
                         }
                         catch (Exception e)
                         {
                             Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                        }
-                        CheckProperty(stateProperty);
-
-                        if (stateProperty != null)
-                        {
-                            person.RealEstateProperties.Add(stateProperty);
                         }
 
                         // Парсим транспортные средства
@@ -403,12 +403,12 @@ namespace Smart.Parser.Lib
             return false;
         }
 
-        static public RealEstateProperty ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr)
+        static public void  ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr, Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
             if (CheckEmptyValues(statePropTypeStr))
             {
-                return null;
+                return;
             }
             RealEstateProperty stateProperty = new RealEstateProperty();
 
@@ -430,16 +430,18 @@ namespace Smart.Parser.Lib
             stateProperty.country_raw = statePropCountryStr;
             stateProperty.OwnershipType = combinedData.Item2;
             stateProperty.OwnedShare = combinedData.Item3;
-            return stateProperty;
+            CheckProperty(stateProperty);
+            person.RealEstateProperties.Add(stateProperty);
         }
 
         // 
-        static public RealEstateProperty ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
+        static public void ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
         {
             estateTypeStr = estateTypeStr.Trim();
+            areaStr = areaStr.CleanWhitespace();
             if (CheckEmptyValues(estateTypeStr))
             {
-                return null;
+                return;
             }
 
             RealEstateProperty realEstateProperty = new RealEstateProperty();
@@ -447,7 +449,6 @@ namespace Smart.Parser.Lib
             realEstateProperty.Area = DataHelper.ParseArea(areaStr);
             realEstateProperty.square_raw = areaStr;
 
-            //realEstateProperty.Country = DataHelper.TryParseCountry(countryStr);
             realEstateProperty.CountryStr = DeclaratorApiPatterns.TryParseCountry(countryStr);//. DataHelper.TryParseCountry(countryStr);
             realEstateProperty.country_raw = countryStr;
 
@@ -473,8 +474,7 @@ namespace Smart.Parser.Lib
             else // колонка содержит тип недвижимости и тип собственности
             {
                 var combinedData = DataHelper.ParseCombinedRealEstateColumn(estateTypeStr.CleanWhitespace());
-                //static public Tuple<RealEstateType, OwnershipType, string> ParseStatePropertyTypeColumn(string strPropInfo)
-
+            
                 realEstateType = combinedData.Item1;
                 ownershipType = combinedData.Item2;
                 share = combinedData.Item3;
@@ -484,14 +484,111 @@ namespace Smart.Parser.Lib
                 realEstateProperty.OwnedShare = share;
 
                 realEstateProperty.type_raw = estateTypeStr;
-                //realEstateProperty.own_type_raw = estateTypeStr;
-                //realEstateProperty.share_amount_raw = estateTypeStr;
 
             }
 
             realEstateProperty.Text = estateTypeStr;
-            return realEstateProperty;
+            CheckProperty(realEstateProperty);
+            person.RealEstateProperties.Add(realEstateProperty);
         }
+        static List<int> GetLinesStaringWithNumbers(string areaStr)
+        {
+            List<int> linesWithNumbers = new List<int>();
+            string[] lines = areaStr.Split('\n');
+            for (int i = 0; i < lines.Count(); ++i)
+            {
+                if (Regex.Matches(lines[i], "^\\s*[0-9]").Count > 0)
+                {
+                    linesWithNumbers.Add(i);
+                }
+            }
+            return linesWithNumbers;
+
+        }
+
+        static string SliceArrayAndTrim(string[] lines, int start, int end)
+        {
+            return  String.Join("\n", lines.Skip(start).Take(end - start)).CleanWhitespace();
+        }
+
+        static List<string> DivideByBordersOrEmptyLines(string value, List<int> borders)
+        {
+            var result = new List<string>();
+            if (value == null)
+            {
+                return result;
+            }
+            string[] lines = value.Split('\n');
+            Debug.Assert(borders.Count > 1);
+            int startLine = borders[0];
+            int borderIndex = 1;
+            string item = "";
+            for (int i = startLine + 1; i < lines.Count(); ++i)
+            {
+                item = SliceArrayAndTrim(lines, startLine, i);
+                if (item.Count() > 0) // not empty item
+                {
+                    if ((borderIndex < borders.Count && i == borders[borderIndex]) || lines[i].Trim().Count() == 0)
+                    {
+                        result.Add(item);
+                        startLine = i;
+                        borderIndex++;
+                    }
+                }
+
+            }
+            item = SliceArrayAndTrim(lines, startLine, lines.Count());
+            if (item.Count() > 0) result.Add(item);
+            return result;
+        }
+
+        static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
+        {
+            if (index >= body.Count)
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return body[index];
+            }
+        }
+
+        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
+        {
+            List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
+            List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
+            List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
+            List<string> ownTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
+            List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
+            for (int i=0; i < areas.Count; ++i )
+            {
+                ParseOwnedProperty(
+                    GetListValueOrDefault(estateTypes,i, ""), 
+                    GetListValueOrDefault(ownTypes, i, null),
+                    GetListValueOrDefault(areas, i, ""),
+                    GetListValueOrDefault(countries, i, ""),
+                    person
+                );
+            }
+        }
+        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr, string areaStr, string countryStr, Person person)
+        {
+            List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
+            List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
+            List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
+            List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
+            for (int i = 0; i < areas.Count; ++i)
+            {
+                ParseStateProperty(
+                    GetListValueOrDefault(estateTypes, i, ""),
+                    GetListValueOrDefault(areas, i, ""),
+                    GetListValueOrDefault(countries, i, ""),
+                    person
+                );
+            }
+        }
+
 
         IAdapter Adapter { get; set; }
         static int CurrentRow { get; set;  } = -1;

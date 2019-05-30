@@ -85,30 +85,25 @@ namespace Smart.Parser.Lib
 
         public static RelationType ParseRelationType(string strRel, bool throwException = true)
         {
-            switch (strRel.ToLower().Replace("  ", " ").Trim().RemoveStupidTranslit())
+            switch (strRel.ToLower().Replace(" ", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit())
             {
                 case "супруг": return RelationType.MaleSpouse;
                 case "суруга": return RelationType.FemaleSpouse;
                 case "супруга": return RelationType.FemaleSpouse;
-                case "несовершен-нолетняя дочь": return RelationType.Child;
-                case "несовершенно-летняя дочь": return RelationType.Child;
-                case "несовершеннолет-няя дочь": return RelationType.Child;
-                case "несовершеннолетняя дочь": return RelationType.Child;
-                case "несовершенно-летний сын": return RelationType.Child;
-                case "несовершеннолет-ний сын": return RelationType.Child;
-                case "несовершеннолетний сын": return RelationType.Child;
-                case "несовершеннолетний ребенок": return RelationType.Child;
-                case "несовершенолетний ребенок": return RelationType.Child;
+                case "несовершеннолетняядочь": return RelationType.Child;
+                case "несовершеннолетнийсын": return RelationType.Child;
+                case "несовершеннолетнийребенок": return RelationType.Child;
+                case "несовершенолетнийребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
-                case "дочь супроги": return RelationType.Child;
-                case "дочь супруги": return RelationType.Child;
-                case "сын супруги": return RelationType.Child;
+                case "дочьсупроги": return RelationType.Child;
+                case "дочьсупруги": return RelationType.Child;
+                case "сынсупруги": return RelationType.Child;
                 case "сын": return RelationType.Child;
                 case "падчерица": return RelationType.Child;
-                case "сын жены": return RelationType.Child;
-                case "дочь жены": return RelationType.Child;
-                case "несовершеннолетний ребёнок": return RelationType.Child;
-                case "племяница супруги": return RelationType.MaleSpouse;
+                case "сынжены": return RelationType.Child;
+                case "дочьжены": return RelationType.Child;
+                case "несовершеннолетнийребёнок": return RelationType.Child;
+                case "племяницасупруги": return RelationType.MaleSpouse;
                 case "подопечный": return RelationType.MaleSpouse;
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
@@ -295,7 +290,13 @@ namespace Smart.Parser.Lib
 
         public static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
         {
-            var match = Regex.Match(strOwn, "\\d+/\\d+");
+            var match = Regex.Match(strOwn, "[½⅓⅔¼¾⅕⅖⅗⅘⅙⅚⅐⅛⅜⅝⅞⅑⅒]");
+            if (match.Success)
+            {
+                return match.Value; // vulgar fractions
+            }
+
+            match = Regex.Match(strOwn, "\\d+/\\d+");
             if (match.Success)
             {
                 return match.Value; // "1/3", "2/5"
