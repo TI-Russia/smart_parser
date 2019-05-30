@@ -111,16 +111,7 @@ namespace RegressionTesting
         }
 
 
-        [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("PropertyDictionary.txt")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordTypeA()
-        {
-            TestWordParser("Word\\A - min_res_2011_Sotrudniki_ministerstva.doc");
-        }
-
+ 
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]
         [DeploymentItem("PropertyDictionary.txt")]
@@ -242,6 +233,17 @@ namespace RegressionTesting
         {
             TestSmartParser("SmartParser\\MinSport2016.docx", "xceed");
         }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinRes2011()
+        {
+            TestSmartParser("SmartParser\\MinRes2011.doc", "xceed");
+        }
+
 
 
         private static void SetupLog4Net()

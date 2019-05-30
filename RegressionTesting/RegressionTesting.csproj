@@ -100,6 +100,12 @@
     <None Include="regression_samples\SmartParser\minfin2016.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinRes2011.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinRes2011.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinSport2016.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -133,12 +139,6 @@
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="regression_samples\Word\A - min_res_2011_Sotrudniki_ministerstva.doc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\Word\A - min_res_2011_Sotrudniki_ministerstva.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\Word\C - min_health_2015_Sotrudniki_ministerstva.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
