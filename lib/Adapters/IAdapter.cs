@@ -16,11 +16,7 @@ namespace Smart.Parser.Adapters
         public virtual int FirstMergedRow { set; get; } = -1;
         public virtual int MergedRowsCount { set; get; } = -1;
         public virtual int MergedColsCount { set; get; } = 1;
-        public virtual bool IsHeader { set; get; } = false;
         public virtual bool IsEmpty { set; get; } = true;
-        public virtual string BackgroundColor { set; get; }
-        public virtual string ForegroundColor { set; get; }
-
         public virtual string Text { set; get; } = "";
 
         public virtual string GetText(bool trim = true)

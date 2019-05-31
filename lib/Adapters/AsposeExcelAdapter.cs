@@ -10,15 +10,6 @@ using TI.Declarator.ParserCommon;
 namespace Smart.Parser.Adapters
 {
 
-    /*
-        public virtual bool IsHeader { set; get; }
-        public virtual bool IsEmpty { set; get; }
-        public virtual string BackgroundColor { set; get; }
-        public virtual string ForegroundColor { set; get; }
-
-        public virtual string Text { set; get; }
-     */
-
     class AsposeExcelCell : Cell
     {
         public AsposeExcelCell(Aspose.Cells.Cell cell)
@@ -28,9 +19,6 @@ namespace Smart.Parser.Adapters
             { }
 
             IsEmpty = cell.Type == Aspose.Cells.CellValueType.IsNull;
-            IsHeader = cell.IsMerged;
-            BackgroundColor = cell.GetStyle().BackgroundColor.ToString();
-            ForegroundColor = cell.GetStyle().ForegroundColor.ToString();
             Text = cell.GetStringValue(Aspose.Cells.CellValueFormatStrategy.None);
 
             IsMerged = cell.IsMerged;
@@ -39,6 +27,10 @@ namespace Smart.Parser.Adapters
                 FirstMergedRow = cell.GetMergedRange().FirstRow;
                 MergedRowsCount = cell.GetMergedRange().RowCount;
                 MergedColsCount = cell.GetMergedRange().ColumnCount;
+            }
+            else
+            {
+                MergedColsCount = 1;
             }
             Row = cell.Row;
             Col = cell.Column;

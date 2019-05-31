@@ -48,15 +48,7 @@ namespace Smart.Parser.Adapters
                 if (cell == EmptyCell) break;
                 result.Add(cell);
 
-                if (cell.IsMerged)
-                {
-                    int count = cell.MergedColsCount;
-                    index += count;
-                }
-                else
-                {
-                    index++;
-                }
+                index += cell.MergedColsCount;
                 if (index >= MaxNotEmptyColumnsFoundInHeader)
                 {
                     break;
@@ -125,28 +117,6 @@ namespace Smart.Parser.Adapters
                 
             }
 
-            string backgroundColor;
-            if (cell.CellStyle.FillBackgroundColorColor?.RGB == null)
-            {
-                backgroundColor = null;
-            }
-            else
-            {
-                backgroundColor = cell.CellStyle.FillBackgroundColorColor.RGB.Select(v => v.ToString("X2"))
-                                                                             .Aggregate("", (str1, str2) => str1 + str2);
-            }
-
-            string foregroundColor;
-            if (cell.CellStyle.FillForegroundColorColor?.RGB == null)
-            {
-                foregroundColor = null;
-            }
-            else
-            {
-                foregroundColor = cell.CellStyle.FillForegroundColorColor.RGB.Select(v => v.ToString("X2"))
-                                                                             .Aggregate("", (str1, str2) => str1 + str2);
-            }
-
             var cellContents = cell.ToString();
             return new Cell
             {
@@ -155,10 +125,7 @@ namespace Smart.Parser.Adapters
                 MergedRowsCount = mergedRowsCount,
                 MergedColsCount = mergedColsCount,
                 // FIXME to init this property we need a formal definition of "header cell"
-                IsHeader = false,
                 IsEmpty = cellContents.IsNullOrWhiteSpace(),
-                BackgroundColor = backgroundColor,
-                ForegroundColor = foregroundColor,
                 Text = cellContents,
                 Row = row,
                 Col = column,

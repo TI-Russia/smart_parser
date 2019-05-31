@@ -96,7 +96,7 @@ namespace TI.Declarator.WordParser
                 // with the second row reserved for subheaders
                 else
                 {
-                    int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
+                    int span = cell.GridSpan;
                     int offset = 1;
                     Row auxRow = t.Rows[headerRowNum + offset];
                     while (auxRow.Stringify().Replace("|", "").IsNullOrWhiteSpace())
@@ -123,8 +123,7 @@ namespace TI.Declarator.WordParser
                         }
 
                         auxCellsIter.MoveNext();
-                        int auxSpan = auxCell.GridSpan == 0 ? 1 : auxCell.GridSpan;
-                        auxColCount += auxSpan;
+                        auxColCount += auxCell.GridSpan;
                     }
 
                     colCount += cell.GridSpan;

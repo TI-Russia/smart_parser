@@ -23,20 +23,7 @@ namespace Smart.Parser.Adapters
 
             IsEmpty = String.IsNullOrEmpty(Text);
 
-            /*
-            IsEmpty = cell.Type == Aspose.Cells.CellValueType.IsNull;
-            IsHeader = cell.IsMerged;
-            BackgroundColor = cell.GetStyle().BackgroundColor.ToString();
-            ForegroundColor = cell.GetStyle().ForegroundColor.ToString();
-            Text = cell.ToString();
-
-            IsMerged = cell.IsMerged;
-            if (IsMerged)
-            {
-                FirstMergedRow = cell.GetMergedRange().FirstRow;
-                MergedRowsCount = cell.GetMergedRange().RowCount;
-            }
-            */
+            
         }
     }
 

@@ -16,9 +16,6 @@ namespace Smart.Parser.Adapters
                 return;
             { }
             IsEmpty = range.Text.Length > 0;
-            IsHeader = false;
-            BackgroundColor = null;
-            ForegroundColor = null;
             Text = range.Text;
             IsMerged = range.MergeCells;
             if (IsMerged)

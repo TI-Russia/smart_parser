@@ -14,30 +14,39 @@ namespace Smart.Parser.Adapters
 {
     class XceedWordCell : Cell
     {
-        public bool HasTopBorder;
-
+        public bool IsVerticallyMerged;
+        static bool HasBorder(Xceed.Words.NET.Cell inputCell, TableCellBorderType borderType)
+        {
+            try
+            {
+                var b = inputCell.GetBorder(borderType);
+                if (b == null) return false;
+                return b.Size > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public XceedWordCell(Xceed.Words.NET.Cell inputCell, int row, int column)
         {   
             var cellContents = GetXceedText(inputCell);
             var vmerge = inputCell.Xml.Descendants().FirstOrDefault(d => d.Name.LocalName.ToLower() == "vmerge");
             if (vmerge != null)
             {
-                HasTopBorder = (vmerge?.Attributes().FirstOrDefault(a => a.Name.LocalName == "val")?.Value ?? string.Empty) == "restart"; ; 
+                IsVerticallyMerged = (vmerge?.Attributes().FirstOrDefault(a => a.Name.LocalName == "val")?.Value ?? string.Empty) != "restart";
             }
             else
             {
-                HasTopBorder = true;
+                IsVerticallyMerged = false;
             }
 
             IsMerged = inputCell.GridSpan > 1;
             FirstMergedRow = -1; // init afterwards
             MergedRowsCount = -1; // init afterwards
 
-            MergedColsCount = inputCell.GridSpan;
-            IsHeader = false;
+            MergedColsCount = inputCell.GridSpan == 0 ? 1 : inputCell.GridSpan;
             IsEmpty = cellContents.IsNullOrWhiteSpace();
-            BackgroundColor = null;
-            ForegroundColor = null;
             Text = cellContents;
             Row = row;
             Col = column;
@@ -52,6 +61,7 @@ namespace Smart.Parser.Adapters
             }
             return s;
         }
+        
     }
 
     public class XceedWordAdapter : IAdapter
@@ -125,7 +135,7 @@ namespace Smart.Parser.Adapters
             int sumspan = 0;
             for (var i = 0; i < r.Count; ++i)
             {
-                int span = r[i].GridSpan == 0 ? 1 : r[i].GridSpan;
+                int span = r[i].MergedColsCount;
                 if ((column >= sumspan) && (column < sumspan + span))
                     return i;
                 sumspan += span;
@@ -138,7 +148,7 @@ namespace Smart.Parser.Adapters
             for (int i = startRow; i > 0; --i)
             {
                 int cellNo = FindMergedCellByColumnNo(i, column);
-                if (TableRows[i][cellNo].HasTopBorder)
+                if (!TableRows[i][cellNo].IsVerticallyMerged)
                 {
                     return i;
                 }
@@ -155,7 +165,7 @@ namespace Smart.Parser.Adapters
             for (int i = startRow; i < TableRows.Count; ++i)
             {
                 int cellNo = FindMergedCellByColumnNo(i, column);
-                if (i > startRow && TableRows[i][cellNo].HasTopBorder)
+                if (i > startRow && !TableRows[i][cellNo].IsVerticallyMerged)
                 {
                     return i - 1;
                 }
@@ -182,7 +192,7 @@ namespace Smart.Parser.Adapters
                     {
                         var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
                         newRow.Add(c);
-                        sumspan += c.GridSpan == 0 ? 1 : c.GridSpan;
+                        sumspan += c.MergedColsCount;
                     }
                     TableRows.Add(newRow);
                     if (UnmergedColumnsCount == -1)

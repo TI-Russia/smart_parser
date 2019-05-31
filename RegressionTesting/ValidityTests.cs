@@ -62,9 +62,9 @@ namespace RegressionTesting
         // public void MyTestCleanup() { }
         //
         #endregion
-
+            
         private const string SamplesDirectory = "regression_samples";
-
+        /*
         private const string WordFilesDirectory = @"Word";
         private const string WordLogFile = "word_files.log";
         private const string SampleWordLogFile = "sample_word_files.log";
@@ -78,7 +78,7 @@ namespace RegressionTesting
         {
             get { return Path.GetFullPath(SampleWordLogFile); }
         }
-        /*
+        
          все время сломан - пока отключаем
         [TestMethod]
         [DeploymentItem(SamplesDirectory)]
@@ -100,28 +100,6 @@ namespace RegressionTesting
             Assert.AreEqual(0, nFailedChecks, $"Sample files validation test: {nFailedChecks} out of {nChecks} sample files are not valid. Validation log can be found in {SampleWordLogFilePath}");
         }
         */
-        private void TestWordParser(string filename)
-        {
-            Declaration res = Tindalos.Tindalos.Process(filename);
-            string outputFileName = Path.GetFileNameWithoutExtension(filename) + ".json";
-            File.WriteAllText(outputFileName, DeclarationSerializer.Serialize(res));
-
-            string expectedFile = Path.Combine(WordFilesDirectory, outputFileName);
-            Assert.IsTrue(TestValidity(expectedFile, outputFileName, WordLogFilePath));
-        }
-
-
- 
-        [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("PropertyDictionary.txt")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordTypeC()
-        {
-            TestWordParser("Word\\C - min_health_2015_Sotrudniki_ministerstva.docx");
-        }
-
         private const string SmartParserFilesDirectory = @"SmartParser";
         private const string SmartParserLogFile = "smart_parser_files.log";
 
@@ -244,6 +222,15 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinRes2011.doc", "xceed");
         }
 
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinZdorov2015Full()
+        {
+            TestSmartParser("SmartParser\\MinZdorov2015Full.docx", "xceed");
+        }
 
 
         private static void SetupLog4Net()

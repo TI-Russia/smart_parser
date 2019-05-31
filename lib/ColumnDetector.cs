@@ -50,7 +50,6 @@ namespace Smart.Parser.Lib
             int cell_count = r.Cells.Count();
             if (cell_count == 0)
                 return false;
-            int merged_row_count = r.Cells[0].MergedRowsCount;
             string text = r.Cells[0].GetText(true);
 
             int merged_col_count = r.Cells[0].MergedColsCount;
@@ -212,25 +211,21 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
-                    int span = cell.GridSpan == 0 ? 1 : cell.GridSpan;
                     int rowSpan = cell.MergedRowsCount;
                     Row auxRow = t.Rows[headerRowNum + rowSpan];
                     var auxCellsIter = auxRow.Cells.GetEnumerator();
-                    //auxCellsIter.MoveNext();
-                    //int auxColCount = 0;
 
                     field = DeclarationField.None;
-                    while (auxCellsIter.MoveNext()/* auxColCount < colCount + span*/)
+                    while (auxCellsIter.MoveNext())
                     {
                         var auxCell = auxCellsIter.Current;
                         if (auxCell.Col < cell.Col)
                             continue;
-                        if (auxCell.Col >= cell.Col + cell.GridSpan)
+                        if (auxCell.Col >= cell.Col + cell.MergedColsCount)
                             break;
 
 
 
-                        //if (auxColCount >= colCount)
                         {
                             string cellText = auxCell.GetText(true);
                             string fullText = text + " " + cellText;
@@ -254,12 +249,9 @@ namespace Smart.Parser.Lib
                             index++;
                         }
 
-                        //auxCellsIter.MoveNext();
-                        //int auxSpan = auxCell.GridSpan == 0 ? 1 : auxCell.GridSpan;
-                        //auxColCount += auxSpan;
                     }
 
-                    colCount += cell.GridSpan;
+                    colCount += cell.MergedColsCount;
                 }
 
             }

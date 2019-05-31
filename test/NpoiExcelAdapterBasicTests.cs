@@ -29,8 +29,6 @@ namespace test
             Assert.AreEqual(0, cell.FirstMergedRow);
             Assert.AreEqual(1, cell.MergedRowsCount);
             Assert.AreEqual(false, cell.IsEmpty);
-            Assert.AreEqual(null, cell.BackgroundColor);
-            Assert.AreEqual("5B9BD5", cell.ForegroundColor);
             Assert.AreEqual("TestCell", cell.Text);
         }
 
@@ -49,8 +47,6 @@ namespace test
             Assert.AreEqual(false, cell1.IsMerged);
             Assert.AreEqual(1, cell1.MergedRowsCount);
             Assert.AreEqual(false, cell1.IsEmpty);
-            Assert.AreEqual(null, cell1.BackgroundColor);
-            Assert.AreEqual("5B9BD5", cell1.ForegroundColor);
             Assert.AreEqual("TestCell", cell1.Text);
         }
 
@@ -88,8 +84,6 @@ namespace test
             Assert.AreEqual(true, cell.IsMerged);
             Assert.AreEqual(8, cell.MergedRowsCount);
             Assert.AreEqual(false, cell.IsEmpty);
-            Assert.AreEqual(null, cell.BackgroundColor);
-            Assert.AreEqual(null, cell.ForegroundColor);
             Assert.AreEqual("Осипов А. М.", cell.Text);
         }
 
