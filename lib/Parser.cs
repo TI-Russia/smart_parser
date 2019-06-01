@@ -368,6 +368,26 @@ namespace Smart.Parser.Lib
             }
 
         }
+        bool ParseIncome(Row currRow, Person person)
+        {
+            if (Adapter.HasDeclarationField(DeclarationField.DeclaredYearlyIncomeThousands))
+            {
+
+                string s1 = currRow.GetContents(DeclarationField.DeclaredYearlyIncomeThousands);
+                if (s1 != "")
+                {
+                    person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s1) * 1000;
+                    return true;
+                }
+            }
+            string s2 = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
+            if (s2 != "")
+            {
+                person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s2);
+                return true;
+            }
+            return false;
+        }
 
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
@@ -406,10 +426,8 @@ namespace Smart.Parser.Lib
 
                         if (!foundIncomeInfo)
                         {
-                            string s = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
-                            if (s != "")
+                            if (ParseIncome(currRow, person))
                             {
-                                person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s);
                                 totalIncome += person.DeclaredYearlyIncome == null ? 0 : person.DeclaredYearlyIncome.Value;
                                 foundIncomeInfo = true;
                             }

@@ -1,0 +1,146 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Ступников Олег Владимирович",
+        "name_raw": "Ступников   Олег   Владимирович",
+        "role": "Начальник отдела \n\nдепартамента \nМинтранса \nРоссии \n"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": "717080,00",
+          "relative": null
+        },
+        {
+          "size": "776450,00",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира  (собственность)",
+          "type": "Квартира",
+          "square": "42,70",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "42,70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира  (собственность)"
+        },
+        {
+          "text": "Квартира (долевая собственность  1/2)",
+          "type": "Квартира",
+          "square": "40,70",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": "0,5",
+          "relative": null,
+          "square_raw": "40,70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира (долевая собственность  1/2)"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "63,10",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "63,10",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Гараж \n(собственность)",
+          "type": "Гараж",
+          "square": "18,30",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "18,30",
+          "country_raw": "Россия",
+          "type_raw": "Гараж \n(собственность)"
+        },
+        {
+          "text": "Нежилое помещение (долевая собственность \n1/3)",
+          "type": "Иное",
+          "square": "130,50",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": "0,3333333333333333333333333333",
+          "relative": null,
+          "square_raw": "130,50",
+          "country_raw": "Россия",
+          "type_raw": "Нежилое помещение (долевая собственность \n1/3)"
+        },
+        {
+          "text": "Квартира \n(собственность)",
+          "type": "Квартира",
+          "square": "63,10",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "63,10",
+          "country_raw": "Россия",
+          "type_raw": "Квартира \n(собственность)"
+        },
+        {
+          "text": "Квартира (долевая собственность \n1/2)",
+          "type": "Квартира",
+          "square": "40,70",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": "0,5",
+          "relative": "Супруг(а)",
+          "square_raw": "40,70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира (долевая собственность \n1/2)"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "82,20",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "82,20",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "82,20",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "82,20",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "sheet_title": "                Сведения \nоб имущественном положении и доходах государственных гражданских служащих \nМинистерства транспорта Российской Федерации и членов их семей  за период с 1 января 2012 года по 31 декабря 2012 года \n \n",
+    "year": 2012
+  }
+}

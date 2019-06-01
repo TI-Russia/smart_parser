@@ -3,12 +3,14 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using System.Text;
 using TI.Declarator.ParserCommon;
 
 using Microsoft.Office.Interop.Word;
 using Xceed.Words.NET;
+using Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
@@ -64,12 +66,14 @@ namespace Smart.Parser.Adapters
         
     }
 
+
     public class XceedWordAdapter : IAdapter
     {
         private List<List<XceedWordCell>> TableRows;
         private string Title;
         private int UnmergedColumnsCount;
         private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+        private static Dictionary<string, double> Bigrams = ReadBigrams();
 
         string ConvertFile2TempDocX(string filename)
         {
@@ -80,6 +84,28 @@ namespace Smart.Parser.Adapters
             word.ActiveDocument.Close();
             word.Quit();
             return docXPath;
+        }
+        static Dictionary<string, double> ReadBigrams()
+        {
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            var result = new Dictionary<string, double>();
+            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.bigrams.txt"))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    while (reader.Peek() >= 0)
+                    {
+                        var line = reader.ReadLine();
+                        var parts = line.Split('\t');
+                        double mutual_information = Convert.ToDouble(parts[1]);
+                        if (mutual_information > 0)
+                        {
+                            result[parts[0]] = mutual_information;
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         public XceedWordAdapter(string fileName, int maxRowsToProcess)
@@ -215,6 +241,52 @@ namespace Smart.Parser.Adapters
             }
             return true;
         }
+        static List<string> tokenize(string text)
+        {
+            List<string> result = new List<string>();
+            foreach (var token in text.Split())
+            {
+                token.Trim(
+                    '﻿', ' ', // two different spaces
+                    '\n', '\r', 
+                    ',', '!', '.', '{', '}',
+                    '[', ']', '(', ')',
+                    '"', '«', '»', '\'');
+                if (token.Count() > 0) result.Add(token);
+            }
+            return result;
+        }
+
+        static bool CheckMergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)
+        {
+            if (row1.Count != row2.Count)
+            {
+                return false;
+            }
+            for (int i = 0; i < row1.Count; ++i)
+            {
+                var tokens1 = tokenize(row1[i].Text);
+                var tokens2 = tokenize(row2[i].Text);
+                if (tokens1.Count > 0 && tokens2.Count > 0)
+                {
+                    string key = tokens1.Last() + " " + tokens2.First();
+                    if (Bigrams.ContainsKey(key))
+                    {
+                        Logger.Debug(string.Format("Join rows using mutual information on cells \"{0}\" and \"{1}\"", row1[i].GetTextOneLine(), row2[i].GetTextOneLine()));
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        static void MergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)
+        {
+            for (int i = 0; i < row1.Count; ++i)
+            {
+                row1[i].Text += "\n" + row2[i].Text;
+            }
+        }
+
 
         void CollectRows(DocX wordDocument, int maxRowsToProcess)
         {
@@ -236,10 +308,18 @@ namespace Smart.Parser.Adapters
                     }
                     if (t > 0 && r < 2 && CheckEqualByText(newRow, TableRows[r]))
                     {
-                        // skip header that is on each page
+                        // skip header if it is on each table
                         continue;
                     }
-                    TableRows.Add(newRow);
+                    if (r == 0 && t >  0 && CheckMergeRow(TableRows.Last(), newRow))
+                    {
+                        MergeRow(TableRows.Last(), newRow);
+                    } 
+                    else
+                    {
+                        TableRows.Add(newRow);
+                    }
+        
                     if (UnmergedColumnsCount == -1)
                     {
                         UnmergedColumnsCount = sumspan;

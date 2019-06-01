@@ -30,6 +30,10 @@ namespace Smart.Parser.Adapters
 
             return text;
         }
+        public virtual string GetTextOneLine()
+        {
+            return Text.Replace("\n", " ").Trim();
+        }
 
         public int Row { get; set; } = -1;
         public int Col { get; set; } = -1;

@@ -44,6 +44,7 @@ namespace TI.Declarator.ParserCommon
             if (str.IsVehicleType()) { return DeclarationField.VehicleType; }
             if (str.IsVehicleModel()) { return DeclarationField.VehicleModel; }
             if (str.IsVehicle()) { return DeclarationField.Vehicle; }
+            if (str.IsDeclaredYearlyIncomeThousands()) { return DeclarationField.DeclaredYearlyIncomeThousands; }
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
@@ -221,6 +222,10 @@ namespace TI.Declarator.ParserCommon
                     || strLower.Contains("декларированногодохода")
                    ); ;
         }
+
+        private static bool IsDeclaredYearlyIncomeThousands(this string str)
+        {
+            return str.IsDeclaredYearlyIncome() && str.Contains("тыс.");        }
 
         private static bool IsDataSources(this string str)
         {

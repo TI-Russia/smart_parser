@@ -22,53 +22,6 @@ namespace Smart.Parser.Lib
                 return false;
             }
             return true;
-            // Исправляем инициал, слипшийся с фамилией БуровЮ.В.
-            Regex regex = new Regex("([а-я])([А-Я]\\.)", RegexOptions.Compiled);
-
-            nameOrRelativeType = regex.Replace(nameOrRelativeType, delegate(Match m) {
-                return m.Groups[1].Value + " "+ m.Groups[2].Value;
-            });
-
-            // Исправляем слипшийся инициалы с фамилией Буров ЮВ
-            Regex regex2 = new Regex("( [А-Я])([А-Я])$", RegexOptions.Compiled);
-
-            nameOrRelativeType = regex2.Replace(nameOrRelativeType, delegate (Match m) {
-                return m.Groups[1].Value + " " + m.Groups[2].Value;
-            });
-
-            // Ибрагимов С.-Э.С.-А.
-
-            var parts = nameOrRelativeType.Split(new char[] { ' ', '.', ',' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Count() == 3 &&
-                parts[0].Length > 1 &&
-                parts[1].Length == 1 && 
-                parts[2].Length == 1)
-            {
-                return true;
-            };
-            int parts_count = parts.Where(s => s.Length > 2 ).Count();
-            bool threePart = parts_count == 3;
-            if (threePart)
-            {
-                return true;
-            }
-            if (parts_count == 4)
-            {
-                return true;
-            }
-            if (parts_count == 2)
-            {
-                return true;
-            }
-
-
-            bool onlySecondName = (parts_count == 1) && (ParseRelationType(nameOrRelativeType, false) == RelationType.Error);
-            if (onlySecondName)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         static public bool IsRelativeInfo(string relationshipStr, string occupationStr)
@@ -117,11 +70,23 @@ namespace Smart.Parser.Lib
                     return RelationType.Error;
             }
         }
+        
+        public static bool IsEmptyValue(string s)
+        {
+            if (s == null) return true;
+            s = s.Trim();
+            return String.IsNullOrWhiteSpace(s)
+                || s == "-"
+                || s == "–"
+                || s == "_"
+                || s == "нет"
+                || s == "не имеет";
+        }
 
         public static decimal? ParseDeclaredIncome(string strIncome)
         {
             Decimal result;
-            if (String.IsNullOrWhiteSpace(strIncome) || strIncome.Trim() == "-" || strIncome.Trim() == "–")
+            if (IsEmptyValue(strIncome))
                 return null;
             else
             {
@@ -150,7 +115,7 @@ namespace Smart.Parser.Lib
         }
         public static string ParseDataSources(string src)
         {
-            if (src.Trim() == "-") return null;
+            if (IsEmptyValue(src)) return null;
             else return src;
         }
 
@@ -167,19 +132,12 @@ namespace Smart.Parser.Lib
 
             RealEstateType type = DeclaratorApiPatterns.TryParseRealEstateType(key);
             return type;
-/*
-            if (PropertyDictionary.ParseParseRealEstateType(key, out type))
-            {
-                return type;
-            }
-            throw new UnknownRealEstateTypeException(key);
-            */
         }
 
         public static OwnershipType TryParseOwnershipType(string strOwn, OwnershipType defaultType = OwnershipType.None)
         {
             string str = strOwn.ToLower().Trim();
-            if (String.IsNullOrWhiteSpace(str) || str == "-")
+            if (IsEmptyValue(str))
                 return defaultType; // OwnershipType.InUse;
 
             OwnershipType resultWholeString = DeclaratorApiPatterns.TryParseOwnershipType(str);
@@ -204,49 +162,7 @@ namespace Smart.Parser.Lib
             {
                 return result;
             }
-            /*
-            var parts2 = Regex.Split(str, "[ 0-9,\\(\\)]+");
-            foreach (var s in parts2.Reverse())
-            {
-                OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
-                if (res != OwnershipType.None)
-                {
-                    result = res;
-                }
-            }
-            */
-
-            //if (res == OwnershipType.None)
-            //    throw new UnknownOwnershipTypeException(strOwn);
-
-
             return defaultType;
-            /*
-
-            if (PropertyDictionary.ParseParseRealEstateType(key, out type))
-            {
-                return type;
-            }
-
-            if (str.Contains("индивид")) res = OwnershipType.Individual;
-            else if (str.Contains("собственность")) res = OwnershipType.Individual;
-            else if (str.Contains("общая совместная")) res = OwnershipType.Coop;
-            else if (str.Contains("совместная")) res = OwnershipType.Coop;
-
-            else if (str.Contains("делевая")) res = OwnershipType.Shared;
-            else if (str.Contains("долевая")) res = OwnershipType.Shared;
-            else if (str.Contains("долеявая")) res = OwnershipType.Shared;
-            else if (str.Contains("общая долевая")) res = OwnershipType.Shared;
-            else if (str.Contains("общая, долевая")) res = OwnershipType.Shared;
-            else if (str.Contains("общедолевая")) res = OwnershipType.Shared;
-
-            else if (str.Contains("общая")) res = OwnershipType.Coop;
-
-            else if (String.IsNullOrWhiteSpace(str) || str == "-") res = OwnershipType.NotAnOwner;
-            else throw new ArgumentOutOfRangeException("strOwn", $"Неизвестный тип собственности: {strOwn}");
-
-            return res;
-            */
         }
 
         /*
@@ -353,7 +269,7 @@ namespace Smart.Parser.Lib
                 {
                     area = null;
                 }
-                else if (String.IsNullOrWhiteSpace(str) || str == "-")
+                else if (IsEmptyValue(str))
                 {
                     area = null;
                 }
@@ -379,7 +295,7 @@ namespace Smart.Parser.Lib
 
         public static Country TryParseCountry(string strCountry)
         {
-            if (strCountry.Trim() == "" || strCountry.Trim() == "-")
+            if (IsEmptyValue(strCountry))
             {
                 return Country.None;
             }
@@ -442,11 +358,7 @@ namespace Smart.Parser.Lib
             vechicleString = vechicleString.Trim();
             var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")", RegexOptions.IgnoreCase);
             string normalVehicleStr = vechicleString.ToLower().Trim();
-            if (String.IsNullOrEmpty(normalVehicleStr) || 
-                normalVehicleStr == "не имеет" ||
-                normalVehicleStr == "нет" ||
-                normalVehicleStr == "-" ||
-                normalVehicleStr == "_")
+            if (IsEmptyValue(normalVehicleStr))
             {
                 return false;
             }
