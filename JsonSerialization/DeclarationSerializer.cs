@@ -228,7 +228,7 @@ namespace TI.Declarator.JsonSerialization
             jRealEstate.Add(new JProperty("text", prop.Text));
             // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
             jRealEstate.Add(new JProperty("type", GetPropertyType(prop.PropertyType)));
-            jRealEstate.Add(new JProperty("square", prop.Area));
+            jRealEstate.Add(new JProperty("square", prop.Square));
             // "country_raw"
             jRealEstate.Add(new JProperty("country", prop.CountryStr != null ? prop.CountryStr : GetCountry(prop)));
             jRealEstate.Add(new JProperty("region", null));
@@ -375,9 +375,9 @@ namespace TI.Declarator.JsonSerialization
                 default: throw new ArgumentOutOfRangeException("rt", $"Unsupported relationship type: {rt.ToString()}");
             }
         }
-        private static string GetAreaString(RealEstateProperty prop)
+        private static string GetSquareString(RealEstateProperty prop)
         {
-            return prop.Area == null ? "null" : prop.Area.Value.ToString("#.##");
+            return prop.Square == null ? "null" : prop.Square.Value.ToString("#.##");
         }
 
         private static string GetPropertyType(RealEstateType propertyType)

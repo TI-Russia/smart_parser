@@ -22,10 +22,10 @@ namespace test
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation] == 1);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType] == 2);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateOwnershipType] == 3);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateArea] == 4);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateSquare] == 4);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateCountry] == 5);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyType] == 6);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyArea] == 7);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertySquare] == 7);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyCountry] == 8);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Vehicle] == 9);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome] == 10);
@@ -44,10 +44,10 @@ namespace test
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation] == 1);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType] == 2);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateOwnershipType] == 3);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateArea] == 4);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateSquare] == 4);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateCountry] == 5);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyType] == 6);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyArea] == 7);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertySquare] == 7);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyCountry] == 8);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Vehicle] == 9);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome] == 10);

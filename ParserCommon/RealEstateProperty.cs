@@ -14,7 +14,7 @@ namespace TI.Declarator.ParserCommon
 
         public Country Country { set; get; }
         public string CountryStr { set; get; }
-        public decimal? Area { set; get; }
+        public decimal? Square { set; get; }
         public string OwnedShare { set; get; }
 
         public string square_raw { set; get; }
@@ -34,7 +34,7 @@ namespace TI.Declarator.ParserCommon
             this.OwnershipType = ownType;
             this.PropertyType = propType;
             this.Country = country;
-            this.Area = area;
+            this.Square = area;
             this.Name = name;
             this.OwnedShare = share;
             this.Text = name;

@@ -11,17 +11,17 @@ namespace TI.Declarator.ParserCommon
 
         // Для случая, когда один и тот же набор колонок содержит сведения и о частной, и о государственной собственности
         MixedRealEstateType,
-        MixedRealEstateArea,
+        MixedRealEstateSquare,
         MixedRealEstateCountry,
         MixedRealEstateOwnershipType,
 
         OwnedRealEstateType,
         OwnedRealEstateOwnershipType,
-        OwnedRealEstateArea,
+        OwnedRealEstateSquare,
         OwnedRealEstateCountry,
 
         StatePropertyType,
-        StatePropertyArea,
+        StatePropertySquare,
         StatePropertyCountry,
 
         Vehicle,

@@ -457,7 +457,7 @@ namespace TI.Declarator.WordParser
                 originalNames = combinedData.Select(info => info.OriginalName);
             }
 
-            string areaStr = GetContents(r, DeclarationField.OwnedRealEstateArea).CleanWhitespace();
+            string areaStr = GetContents(r, DeclarationField.OwnedRealEstateSquare).CleanWhitespace();
             IEnumerable<decimal?> areas = ParseAreas(areaStr);
             
             IEnumerable<Country> countries = ParseCountries(GetContents(r, DeclarationField.OwnedRealEstateCountry));
@@ -489,7 +489,7 @@ namespace TI.Declarator.WordParser
 
             OwnershipType ownershipType = OwnershipType.InUse; // OwnershipType.NotAnOwner;
             string share = "";
-            string areaStr = GetContents(r, DeclarationField.StatePropertyArea).Trim();
+            string areaStr = GetContents(r, DeclarationField.StatePropertySquare).Trim();
             IEnumerable<decimal?> areas = ParseAreas(areaStr);
 
 

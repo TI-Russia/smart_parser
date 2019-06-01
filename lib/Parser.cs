@@ -168,6 +168,7 @@ namespace Smart.Parser.Lib
                 int merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                Logger.Debug(nameOrRelativeType);
                 string occupationStr = "";
                 if (Adapter.HasDeclarationField(DeclarationField.Occupation))
                 {
@@ -278,7 +279,7 @@ namespace Smart.Parser.Lib
 
         public void ParseOwnedProperty(Row currRow, Person person)
         {
-            if (!Adapter.HasDeclarationField(DeclarationField.OwnedRealEstateArea))
+            if (!Adapter.HasDeclarationField(DeclarationField.OwnedRealEstateSquare))
             {
                 // no square, no entry
                 return;
@@ -289,18 +290,18 @@ namespace Smart.Parser.Lib
             {
                 ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
             }
-            string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea);
+            string squareStr = currRow.GetContents(DeclarationField.OwnedRealEstateSquare);
             string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
 
             try
             {
-                if (GetLinesStaringWithNumbers(areaStr).Count > 1)
+                if (GetLinesStaringWithNumbers(squareStr).Count > 1)
                 {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, squareStr, countryStr, person);
                 }
                 else
                 {
-                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
+                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, squareStr, countryStr, person);
                 }
             }
             catch (Exception e)
@@ -312,24 +313,24 @@ namespace Smart.Parser.Lib
 
         public void ParseMixedProperty(Row currRow, Person person)
         {
-            if (!Adapter.HasDeclarationField(DeclarationField.MixedRealEstateArea))
+            if (!Adapter.HasDeclarationField(DeclarationField.MixedRealEstateSquare))
             {
                 // no square, no entry
                 return;
             }
             string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
-            string areaStr = currRow.GetContents(DeclarationField.MixedRealEstateArea);
+            string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare);
             string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry);
 
             try
             {
-                if (GetLinesStaringWithNumbers(areaStr).Count > 1)
+                if (GetLinesStaringWithNumbers(squareStr).Count > 1)
                 {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, null, areaStr, countryStr, person);
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, null, squareStr, countryStr, person);
                 }
                 else
                 {
-                    ParseOwnedPropertySingleRow(estateTypeStr, null, areaStr, countryStr, person);
+                    ParseOwnedPropertySingleRow(estateTypeStr, null, squareStr, countryStr, person);
                 }
             }
             catch (Exception e)
@@ -341,24 +342,24 @@ namespace Smart.Parser.Lib
 
         public void ParseStateProperty(Row currRow, Person person)
         {
-            if (!Adapter.HasDeclarationField(DeclarationField.StatePropertyArea))
+            if (!Adapter.HasDeclarationField(DeclarationField.StatePropertySquare))
             {
                 // no square, no entry
                 return;
             }
             string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
-            string statePropAreaStr = currRow.GetContents(DeclarationField.StatePropertyArea);
+            string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
 
             try
             {
-                if (GetLinesStaringWithNumbers(statePropAreaStr).Count > 1)
+                if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
                 {
-                    ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
+                    ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropSquareStr, statePropCountryStr, person);
                 }
                 else
                 {
-                    ParseStatePropertySingleRow(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
+                    ParseStatePropertySingleRow(statePropTypeStr, statePropSquareStr, statePropCountryStr, person);
                 }
             }
             catch (Exception e)
@@ -389,6 +390,10 @@ namespace Smart.Parser.Lib
 
                 foreach (Person person in servantAndRel)
                 {
+                    if (person is PublicServant)
+                    {
+                        Logger.Debug(((PublicServant)person).Name);
+                    }
                     bool foundIncomeInfo = false;
                     for (int row = person.RangeLow; row <= person.RangeHigh; row++)
                     {
@@ -459,7 +464,7 @@ namespace Smart.Parser.Lib
             return false;
         }
 
-        static public void  ParseStatePropertySingleRow(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr, Person person)
+        static public void  ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
             if (CheckEmptyValues(statePropTypeStr))
@@ -470,7 +475,7 @@ namespace Smart.Parser.Lib
 
 
             var propertyType = DeclaratorApiPatterns.TryParseRealEstateType(statePropTypeStr);
-            decimal? area = DataHelper.ParseArea(statePropAreaStr);
+            decimal? area = DataHelper.ParseSquare(statePropSquareStr);
             Country country = DataHelper.TryParseCountry(statePropCountryStr);
             string countryStr = DeclaratorApiPatterns.TryParseCountry(statePropCountryStr);
 
@@ -479,8 +484,8 @@ namespace Smart.Parser.Lib
             stateProperty.Text = statePropTypeStr;
             stateProperty.PropertyType = propertyType;
             stateProperty.type_raw = statePropTypeStr;
-            stateProperty.Area = area;
-            stateProperty.square_raw = statePropAreaStr;
+            stateProperty.Square = area;
+            stateProperty.square_raw = statePropSquareStr;
             stateProperty.Country = country;
             stateProperty.CountryStr = countryStr;
             stateProperty.country_raw = statePropCountryStr;
@@ -502,7 +507,7 @@ namespace Smart.Parser.Lib
 
             RealEstateProperty realEstateProperty = new RealEstateProperty();
 
-            realEstateProperty.Area = DataHelper.ParseArea(areaStr);
+            realEstateProperty.Square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = areaStr;
 
             realEstateProperty.CountryStr = DeclaratorApiPatterns.TryParseCountry(countryStr);//. DataHelper.TryParseCountry(countryStr);

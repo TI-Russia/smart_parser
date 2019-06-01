@@ -13,10 +13,10 @@ namespace test
     {
 
         [TestMethod]
-        public void TestParseArea()
+        public void TestParseSquare()
         {
-            string area = "доля 1/1876 от 802898980";
-            Decimal? result = DataHelper.ParseArea(area);
+            string square = "доля 1/1876 от 802898980";
+            Decimal? result = DataHelper.ParseSquare(square);
 
             Assert.IsNull(result);
         }
@@ -56,8 +56,8 @@ namespace test
             //Assert.AreEqual(share, "1/4");
 
 
-            var area = DataHelper.ParseAreas("1/500")[0];
-            Assert.AreEqual(area.Value.ToString(), "0,002");
+            var square = DataHelper.ParseSquares("1/500")[0];
+            Assert.AreEqual(square.Value.ToString(), "0,002");
 
             string test1 = "квартира           (безвозмездное, бессрочное пользование)";
             string test2 = "Квартира долевая , 2/3";

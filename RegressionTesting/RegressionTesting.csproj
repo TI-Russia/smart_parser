@@ -174,14 +174,6 @@
       <Project>{42f10691-63bd-469c-8898-45b80cab91a3}</Project>
       <Name>Smart.Parser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tindalos\Tindalos.csproj">
-      <Project>{c6d0ae36-515d-4c5b-8665-49de6e635a04}</Project>
-      <Name>Tindalos</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordParser\WordParser.csproj">
-      <Project>{3e59f3c2-6fd1-4dda-93c3-296e8a3307ff}</Project>
-      <Name>WordParser</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />

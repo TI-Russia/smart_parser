@@ -231,7 +231,7 @@ namespace Smart.Parser.Lib
                             string fullText = text + " " + cellText;
 
                             //  пустая колонка страны (предыдущая колонка - площадь
-                            if (cellText == "" && field == DeclarationField.StatePropertyArea)
+                            if (cellText == "" && field == DeclarationField.StatePropertySquare)
                             {
                                 field = DeclarationField.StatePropertyCountry;
                             }

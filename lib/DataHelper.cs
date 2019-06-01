@@ -309,16 +309,16 @@ namespace Smart.Parser.Lib
             return "";
         }
 
-        private static readonly string[] AreaSeparators = new string[] { "\n", " " };
+        private static readonly string[] SquareSeparators = new string[] { "\n", " " };
 
-        public static decimal? ParseArea(string strAreas)
+        public static decimal? ParseSquare(string strSquares)
         {
-            if (Regex.Match(strAreas, "[а-я]+", RegexOptions.IgnoreCase).Success)
+            if (Regex.Match(strSquares, "[а-я]+", RegexOptions.IgnoreCase).Success)
                 return null;
 
             decimal? area = null;
             // Non-breaking space can be between digits like "1 680,0"
-            var match = Regex.Match(strAreas, "[\\d\u00A0]+[,.]?(\\d+)?"); 
+            var match = Regex.Match(strSquares, "[\\d\u00A0]+[,.]?(\\d+)?"); 
             if (match.Success)
             {
 
@@ -329,10 +329,10 @@ namespace Smart.Parser.Lib
         }
         
 
-        public static List<decimal?> ParseAreas(string strAreas)
+        public static List<decimal?> ParseSquares(string strSquares)
         {
             var res = new List<decimal?>();
-            foreach (var str in strAreas.Split(AreaSeparators, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var str in strSquares.Split(SquareSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
                 if (str.Contains("м")) // м. п.м, и т.д.
                 {
