@@ -72,15 +72,15 @@ namespace Smart.Parser.Lib
             else
                 title += " " + text;
 
-            string[] title_words = { "сведения", "обязательствах", "доходах", "период" };
+            string[] title_words = { "сведения", "обязательствах", "доход", "период"};
             bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
-
             if (!has_title_words)
                 return false;
 
+            text = Regex.Replace(text, "8\\s+июля\\s+2013", "");
             var matches = Regex.Matches(text, @"\b20\d\d\b");
 
-            if (matches.Count >= 2 )
+            if (matches.Count > 0 )
             {
                 year = int.Parse(matches[0].Value);
             }
@@ -243,7 +243,7 @@ namespace Smart.Parser.Lib
 
                             if (field == DeclarationField.None)
                             {
-                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", auxCell.Row, auxCell.Col, cellText));
+                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", auxCell.Row, auxCell.Col, fullText));
                             }
                             res.Add(field, auxCell.Col);
                             index++;

@@ -433,7 +433,9 @@ namespace Smart.Parser.Lib
                 "автомобили грузовые:",
                 "легковой автомобиль",
                 "а/м легковой",
-                "а/м"
+                "а/м",
+                "легковой прицеп",
+                "легковой"
             };
             vechicleString = vechicleString.Trim();
             var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")", RegexOptions.IgnoreCase);
@@ -473,6 +475,7 @@ namespace Smart.Parser.Lib
                 items = vechicleItemStr.Split(',');
                 foreach (var item in items)
                 {
+                    if (last_type == "легковой") last_type = "Автомобиль легковой";
                     vehicles.Add(new Vehicle(item.Trim(), last_type));
                 }
 

@@ -52,7 +52,7 @@ namespace Smart.Parser.Adapters
             Col = column;
         }
 
-        static string GetXceedText(Xceed.Words.NET.Cell inputCell)
+        public static string GetXceedText(Xceed.Words.NET.Cell inputCell)
         {
             string s = "";
             foreach (var p in inputCell.Paragraphs)
@@ -99,6 +99,7 @@ namespace Smart.Parser.Adapters
             {
                 FindTitle(doc);
                 CollectRows(doc, maxRowsToProcess);
+                InitializeVerticallyMerge();
             };
             if (removeTempFile)
             {
@@ -148,6 +149,10 @@ namespace Smart.Parser.Adapters
             for (int i = startRow; i > 0; --i)
             {
                 int cellNo = FindMergedCellByColumnNo(i, column);
+                if (cellNo == -1)
+                {
+                    return i + 1;
+                }
                 if (!TableRows[i][cellNo].IsVerticallyMerged)
                 {
                     return i;
@@ -165,6 +170,10 @@ namespace Smart.Parser.Adapters
             for (int i = startRow; i < TableRows.Count; ++i)
             {
                 int cellNo = FindMergedCellByColumnNo(i, column);
+                if (cellNo == -1)
+                {
+                    return i - 1;
+                }
                 if (i > startRow && !TableRows[i][cellNo].IsVerticallyMerged)
                 {
                     return i - 1;
@@ -177,22 +186,58 @@ namespace Smart.Parser.Adapters
             return TableRows.Count - 1;
         }
 
+        void InitializeVerticallyMerge()
+        {
+            foreach (var r in TableRows)
+            {
+                foreach (var c in r)
+                {
+                    try
+                    {
+                        c.FirstMergedRow = FindFirstBorderGoingUp(c.Row, c.Col);
+                        c.MergedRowsCount = FindFirstBorderGoingDown(c.Row, c.Col) - c.Row + 1;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(string.Format("Parsing Exception row{0} col={1}: {2}", c.Row, c.Col, e.ToString()));
+                        throw;
+                    }
+
+                }
+            }
+        }
+        static bool CheckEqualByText(List<XceedWordCell> row1, List<XceedWordCell> row2)
+        {
+            if (row1.Count != row2.Count) return false;
+            for (int i = 0; i < row1.Count; ++i)
+            {
+                if (row1[i].Text != row2[i].Text) return false;
+            }
+            return true;
+        }
 
         void CollectRows(DocX wordDocument, int maxRowsToProcess)
         {
             TableRows = new List<List<XceedWordCell>>();
             UnmergedColumnsCount = -1;
-            foreach (var table in wordDocument.Tables)
+            for (int t = 0;  t < wordDocument.Tables.Count; ++t)
             {
-                foreach (var row in table.Rows)
+                for (int r = 0; r < wordDocument.Tables[t].Rows.Count; ++r)
                 {
                     List<XceedWordCell> newRow = new List<XceedWordCell>();
                     int sumspan = 0;
-                    foreach (var rowCell in row.Cells)
+                    var cells = wordDocument.Tables[t].Rows[r].Cells;
+
+                    foreach (var rowCell in cells)
                     {
                         var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
                         newRow.Add(c);
                         sumspan += c.MergedColsCount;
+                    }
+                    if (t > 0 && r < 2 && CheckEqualByText(newRow, TableRows[r]))
+                    {
+                        // skip header that is on each page
+                        continue;
                     }
                     TableRows.Add(newRow);
                     if (UnmergedColumnsCount == -1)
@@ -202,13 +247,6 @@ namespace Smart.Parser.Adapters
                     if ((maxRowsToProcess != -1) && (TableRows.Count >= maxRowsToProcess)) {
                         break;
                     }
-                }
-            }
-            foreach (var r in TableRows)
-            {
-                foreach (var c in r) {
-                    c.FirstMergedRow = FindFirstBorderGoingUp(c.Row, c.Col);
-                    c.MergedRowsCount = FindFirstBorderGoingDown(c.Row, c.Col) - c.Row + 1; 
                 }
             }
         }

@@ -115,6 +115,14 @@ namespace Smart.Parser.Lib
                 Year = Adapter.ColumnOrdering.Year,
                 SheetName = Adapter.GetWorksheetName()
             };
+            if (properties.Year == null)
+            {
+                var incomeHeader = Adapter.Rows[0].GetContents(DeclarationField.DeclaredYearlyIncome);
+                string dummy = "";
+                int? year = null;
+                ColumnDetector.GetValuesFromTitle(incomeHeader, ref dummy, ref year, ref dummy);
+                properties.Year = year;
+            }
 
             Declaration declaration = new Declaration()
             {
@@ -268,6 +276,98 @@ namespace Smart.Parser.Lib
             }
         }
 
+        public void ParseOwnedProperty(Row currRow, Person person)
+        {
+            if (!Adapter.HasDeclarationField(DeclarationField.OwnedRealEstateArea))
+            {
+                // no square, no entry
+                return;
+            }
+            string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
+            string ownTypeStr = null;
+            if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
+            {
+                ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
+            }
+            string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea);
+            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
+
+            try
+            {
+                if (GetLinesStaringWithNumbers(areaStr).Count > 1)
+                {
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
+                }
+                else
+                {
+                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
+            }
+
+        }
+
+        public void ParseMixedProperty(Row currRow, Person person)
+        {
+            if (!Adapter.HasDeclarationField(DeclarationField.MixedRealEstateArea))
+            {
+                // no square, no entry
+                return;
+            }
+            string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
+            string areaStr = currRow.GetContents(DeclarationField.MixedRealEstateArea);
+            string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry);
+
+            try
+            {
+                if (GetLinesStaringWithNumbers(areaStr).Count > 1)
+                {
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, null, areaStr, countryStr, person);
+                }
+                else
+                {
+                    ParseOwnedPropertySingleRow(estateTypeStr, null, areaStr, countryStr, person);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
+            }
+
+        }
+
+        public void ParseStateProperty(Row currRow, Person person)
+        {
+            if (!Adapter.HasDeclarationField(DeclarationField.StatePropertyArea))
+            {
+                // no square, no entry
+                return;
+            }
+            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
+            string statePropAreaStr = currRow.GetContents(DeclarationField.StatePropertyArea);
+            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
+
+            try
+            {
+                if (GetLinesStaringWithNumbers(statePropAreaStr).Count > 1)
+                {
+                    ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
+                }
+                else
+                {
+                    ParseStatePropertySingleRow(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
+            }
+
+        }
+
         public Declaration ParsePersonalProperties(Declaration declaration)
         {
             SecondPassStartTime = DateTime.Now;
@@ -310,53 +410,9 @@ namespace Smart.Parser.Lib
                             }
                         }
 
-
-                        // Парсим недвижимость в собственности
-                        string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
-                        string ownTypeStr = null;
-                        if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
-                        {
-                            ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
-                        }
-                        string areaStr = currRow.GetContents(DeclarationField.OwnedRealEstateArea);
-                        string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
-
-                        try
-                        {
-                            if (GetLinesStaringWithNumbers(areaStr).Count > 1)
-                            {
-                                ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
-                            }
-                            else
-                            {
-                                ParseOwnedProperty(estateTypeStr, ownTypeStr, areaStr, countryStr, person);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                        }
-
-                        // Парсим недвижимость в пользовании
-                        string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
-                        string statePropAreaStr = currRow.GetContents(DeclarationField.StatePropertyArea);
-                        string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
-
-                        try
-                        {
-                            if (GetLinesStaringWithNumbers(statePropAreaStr).Count > 1)
-                            {
-                                ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
-                            }
-                            else
-                            {
-                                ParseStateProperty(statePropTypeStr, statePropAreaStr, statePropCountryStr, person);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.Error("***ERROR row({0}) {1}", row, e.Message);
-                        }
+                        ParseOwnedProperty(currRow, person);
+                        ParseStateProperty(currRow, person);
+                        ParseMixedProperty(currRow, person);
 
                         // Парсим транспортные средства
                         string vehicleStr = GetVehicleString(currRow); // r.GetContents(DeclarationField.Vehicle);
@@ -403,7 +459,7 @@ namespace Smart.Parser.Lib
             return false;
         }
 
-        static public void  ParseStateProperty(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr, Person person)
+        static public void  ParseStatePropertySingleRow(string statePropTypeStr, string statePropAreaStr, string statePropCountryStr, Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
             if (CheckEmptyValues(statePropTypeStr))
@@ -435,7 +491,7 @@ namespace Smart.Parser.Lib
         }
 
         // 
-        static public void ParseOwnedProperty(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
+        static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
         {
             estateTypeStr = estateTypeStr.Trim();
             areaStr = areaStr.CleanWhitespace();
@@ -563,7 +619,7 @@ namespace Smart.Parser.Lib
             List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
             for (int i=0; i < areas.Count; ++i )
             {
-                ParseOwnedProperty(
+                ParseOwnedPropertySingleRow(
                     GetListValueOrDefault(estateTypes,i, ""), 
                     GetListValueOrDefault(ownTypes, i, null),
                     GetListValueOrDefault(areas, i, ""),
@@ -580,7 +636,7 @@ namespace Smart.Parser.Lib
             List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
             for (int i = 0; i < areas.Count; ++i)
             {
-                ParseStateProperty(
+                ParseStatePropertySingleRow(
                     GetListValueOrDefault(estateTypes, i, ""),
                     GetListValueOrDefault(areas, i, ""),
                     GetListValueOrDefault(countries, i, ""),

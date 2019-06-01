@@ -90,8 +90,13 @@ namespace Parser.Lib
         static public void SetLoggingLevel(LogLevel level)
         {
             log4net.Core.Level[] levels = { log4net.Core.Level.Debug, log4net.Core.Level.Info, log4net.Core.Level.Error };
-            ((log4net.Repository.Hierarchy.Hierarchy) LogManager.GetRepository()).Root.Level = levels[(int)level];
-            ((log4net.Repository.Hierarchy.Hierarchy) LogManager.GetRepository()).RaiseConfigurationChanged(EventArgs.Empty);
+            log4net.Repository.Hierarchy.Hierarchy hier = (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository();
+            hier.Root.Level = levels[(int)level];
+            hier.RaiseConfigurationChanged(EventArgs.Empty);
+            foreach (log4net.Core.ILogger logger in hier.GetCurrentLoggers())
+            {
+                ((log4net.Repository.Hierarchy.Logger)logger).Level = levels[(int)level];
+            }
         }
         public static ILog Log { get { return log; } }
         public static ILog SecondLog { get { return secondLog; } }
