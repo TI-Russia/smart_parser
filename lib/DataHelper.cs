@@ -87,9 +87,11 @@ namespace Smart.Parser.Lib
         {
             switch (strRel.ToLower().Replace(" ", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit())
             {
-                case "супруг": return RelationType.MaleSpouse;
-                case "суруга": return RelationType.FemaleSpouse;
-                case "супруга": return RelationType.FemaleSpouse;
+                case "супруг": return RelationType.Spouse;
+                case "супруг(супруга)": return RelationType.Spouse;
+                case "супруга(супруг)": return RelationType.Spouse;
+                case "суруга": return RelationType.Spouse;
+                case "супруга": return RelationType.Spouse;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
                 case "несовершеннолетнийребенок": return RelationType.Child;
@@ -103,8 +105,8 @@ namespace Smart.Parser.Lib
                 case "сынжены": return RelationType.Child;
                 case "дочьжены": return RelationType.Child;
                 case "несовершеннолетнийребёнок": return RelationType.Child;
-                case "племяницасупруги": return RelationType.MaleSpouse;
-                case "подопечный": return RelationType.MaleSpouse;
+                case "племяницасупруги": return RelationType.Spouse;
+                case "подопечный": return RelationType.Spouse;
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
                 default:
@@ -442,6 +444,7 @@ namespace Smart.Parser.Lib
             string normalVehicleStr = vechicleString.ToLower().Trim();
             if (String.IsNullOrEmpty(normalVehicleStr) || 
                 normalVehicleStr == "не имеет" ||
+                normalVehicleStr == "нет" ||
                 normalVehicleStr == "-" ||
                 normalVehicleStr == "_")
             {

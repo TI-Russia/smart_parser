@@ -242,6 +242,16 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinStroy2013.docx", "xceed");
         }
 
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinObr2012()
+        {
+            // в этом тесте есть ошибка, последний обеъек не парсится
+            TestSmartParser("SmartParser\\MinObr2012.docx", "xceed");
+        }
 
         private static void SetupLog4Net()
         {

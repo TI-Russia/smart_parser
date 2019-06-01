@@ -369,8 +369,7 @@ namespace TI.Declarator.JsonSerialization
         {
             switch (rt)
             {
-                case RelationType.FemaleSpouse:
-                case RelationType.MaleSpouse: return "Супруг(а)";
+                case RelationType.Spouse: return "Супруг(а)";
                 case RelationType.Child: return "Ребенок";
                 default: throw new ArgumentOutOfRangeException("rt", $"Unsupported relationship type: {rt.ToString()}");
             }

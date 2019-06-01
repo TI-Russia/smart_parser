@@ -100,6 +100,12 @@
     <None Include="regression_samples\SmartParser\minfin2016.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinObr2012.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinObr2012.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinRes2011.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
