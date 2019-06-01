@@ -232,6 +232,16 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinZdorov2015Full.docx", "xceed");
         }
 
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinStroy2013()
+        {
+            TestSmartParser("SmartParser\\MinStroy2013.docx", "xceed");
+        }
+
 
         private static void SetupLog4Net()
         {
