@@ -306,9 +306,13 @@ namespace Smart.Parser.Adapters
                         newRow.Add(c);
                         sumspan += c.MergedColsCount;
                     }
-                    if (t > 0 && r < 2 && CheckEqualByText(newRow, TableRows[r]))
+                    if (t > 0 &&
+                            (    CheckEqualByText(newRow, TableRows[0])
+                              || CheckEqualByText(newRow, TableRows[1])
+                            )
+                       )
                     {
-                        // skip header if it is on each table
+                        Logger.Debug(string.Format("skip row {0} at table {1} because it looks like a repeated header", r, t));
                         continue;
                     }
                     if (r == 0 && t >  0 && CheckMergeRow(TableRows.Last(), newRow))

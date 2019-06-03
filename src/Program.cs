@@ -393,6 +393,7 @@ namespace Smart.Parser
             {
                 var cell = adapter.GetDeclarationField (row, columnToDump);
                 var s = (cell == null) ? "null" : cell.GetText();
+                s = s.Replace("\n", "\\n");
                 Console.WriteLine(s);
             }
         }

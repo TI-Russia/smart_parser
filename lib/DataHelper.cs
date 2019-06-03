@@ -235,8 +235,8 @@ namespace Smart.Parser.Lib
                 return null;
 
             decimal? area = null;
-            // Non-breaking space can be between digits like "1 680,0"
-            var match = Regex.Match(strSquares, "[\\d\u00A0]+[,.]?(\\d+)?"); 
+            // Non-breaking space or breaking space can be between digits like "1 680,0"
+            var match = Regex.Match(strSquares, "\\d[\\d\u00A0 ]*([,.]\\d+)?"); 
             if (match.Success)
             {
 

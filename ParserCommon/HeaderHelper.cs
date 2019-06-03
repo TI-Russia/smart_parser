@@ -25,6 +25,7 @@ namespace TI.Declarator.ParserCommon
 
         public static DeclarationField TryGetField(string str)
         {
+            str = NormalizeString(str);
             if (str.IsNumber()) { return DeclarationField.Number; }
             if (str.IsNameOrRelativeType()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
@@ -62,55 +63,52 @@ namespace TI.Declarator.ParserCommon
             return str.Contains("№") || str.Contains("N п/п");
         }
 
-        private static bool IsNameOrRelativeType(this string str)
+        private static bool IsNameOrRelativeType(this string s)
         {
-            string strLower = str.ToLower();
-            return (strLower.Contains("фамилия") ||
-                    strLower.Contains("фио") ||
-                    strLower.Contains("ф.и.о"));
+            return (s.Contains("фамилия") ||
+                    s.Contains("фио") ||
+                    s.Contains("ф.и.о"));
         }
 
-        private static bool IsOccupation(this string str)
+        private static bool IsOccupation(this string s)
         {
-            string strLower = str.ToLower();
-            return (strLower.Contains("должность") || 
-                    strLower.Contains("должностей"));
+            return (s.Contains("должность") || 
+                    s.Contains("должностей"));
         }
 
 
-        private static bool IsMixedRealEstateOwnershipType(this string str)
+        private static bool IsMixedRealEstateOwnershipType(this string s)
         {
-            string strLower = str.ToLower();
-            return (strLower.Contains("праве собственности") &&
-                    strLower.Contains("пользовании") &&
-                    strLower.Contains("вид собственности"));
+            return (s.Contains("праве собственности") &&
+                    s.Contains("пользовании") &&
+                    s.Contains("вид собственности"));
         }
 
-        private static bool HasRealEstateTypeStr(this string strLower)
+        private static bool HasRealEstateTypeStr(this string s)
         {
-            return (strLower.Contains("вид объекта") ||
-             strLower.Contains("вид объектов") ||
-             strLower.Contains("виды объектов") ||
-             strLower.Contains("виды недвижимости") ||
-             strLower.Contains("вид и наименование имущества") ||
-             strLower.Contains("вид недвижимости"));
+            return (s.Contains("вид объекта") ||
+             s.Contains("вид объектов") ||
+             s.Contains("виды объектов") ||
+             s.Contains("виды недвижимости") ||
+             s.Contains("вид и наименование имущества") ||
+             s.Contains("вид недвижимости"));
         }
-        private static bool HasStateString(this string strLower)
+        private static bool HasStateString(this string s)
         {
-            return strLower.Contains("пользовании");
+            return s.Contains("пользовании");
         }
-        private static bool HasOwnedString(this string strLower)
+        private static bool HasOwnedString(this string s)
         {
-            return strLower.Contains("собственности");
+            return s.Contains("собственности");
         }
-        private static bool HasSquareString(this string strLower)
+        private static bool HasSquareString(this string s)
         {
-            return strLower.Contains("площадь");
+            return s.Contains("площадь");
         }
 
-        private static bool HasCountryString(this string strLower)
+        private static bool HasCountryString(this string s)
         {
-            return strLower.Contains("страна");
+            return s.Contains("страна");
         }
         
         private static bool IsStateColumn(this string s)
@@ -131,106 +129,93 @@ namespace TI.Declarator.ParserCommon
                     && HasStateString(s);
         }
 
-        private static bool IsOwnedRealEstateType(this string str)
+        private static bool IsOwnedRealEstateType(this string s)
         {
-            string s = NormalizeString(str);
             return IsOwnedColumn(s) && HasRealEstateTypeStr(s);
         }
 
-        private static bool IsOwnedRealEstateOwnershipType(this string str)
+        private static bool IsOwnedRealEstateOwnershipType(this string s)
         {
-            string s = str.Replace("  ", " ").ToLower();
             return IsOwnedColumn(s) && s.Contains("вид собственности");
         }
 
-        private static bool IsOwnedRealEstateSquare(this string str)
+        private static bool IsOwnedRealEstateSquare(this string s)
         {
-            string s = str.ToLower();
             return IsOwnedColumn(s) &&  HasSquareString(s);
         }
 
-        private static bool IsOwnedRealEstateCountry(this string str)
+        private static bool IsOwnedRealEstateCountry(this string s)
         {
-            string s = str.ToLower();
             return IsOwnedColumn(s) && HasCountryString(s);
         }
 
-        private static bool IsStatePropertyType(this string str)
+        private static bool IsStatePropertyType(this string s)
         {
-            string s = NormalizeString(str);
             return IsStateColumn(s) && HasRealEstateTypeStr(s);
         }
 
-        private static bool IsStatePropertySquare(this string str)
+        private static bool IsStatePropertySquare(this string s)
         {
-            string s = str.ToLower();
             return IsStateColumn(s) && HasSquareString(s);
         }
 
-        private static bool IsStatePropertyCountry(this string str)
+        private static bool IsStatePropertyCountry(this string s)
         {
-            string s = str.ToLower();
             return IsStateColumn(s) && HasCountryString(s);
         }
 
-        private static bool IsMixedRealEstateType(this string str)
+        private static bool IsMixedRealEstateType(this string s)
         {
-            string s = NormalizeString(str);
             return IsMixedColumn(s) && HasRealEstateTypeStr(s);
         }
 
-        private static bool IsMixedRealEstateSquare(this string str)
+        private static bool IsMixedRealEstateSquare(this string s)
         {
-            string s = str.ToLower();
             return IsMixedColumn(s) && HasSquareString(s);
         }
 
-        private static bool IsMixedRealEstateCountry(this string str)
+        private static bool IsMixedRealEstateCountry(this string s)
         {
-            string s = str.ToLower();
             return IsMixedColumn(s) && HasCountryString(s);
         }
 
-        private static bool IsVehicle(this string str)
+        private static bool IsVehicle(this string s)
         {
-            string strLower = str.ToLower();
-            return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
-                    (!str.Contains("источник")));
+            return ((s.Contains("транспорт") || s.Contains("движимое имущество")) &&
+                    (!s.Contains("источник")));
         }
 
-        private static bool IsVehicleType(this string str)
+        private static bool IsVehicleType(this string s)
         {
-            string strLower = str.ToLower();
-            return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
-                    ((str.Contains("вид") && !str.Contains("марк"))));
+            return ((s.Contains("транспорт") || s.Contains("движимое имущество")) &&
+                    ((s.Contains("вид") && !s.Contains("марк"))));
         }
 
-        private static bool IsVehicleModel(this string str)
+        private static bool IsVehicleModel(this string s)
         {
-            string strLower = str.ToLower();
-            return ((strLower.Contains("транспорт") || strLower.Contains("движимое имущество")) &&
-                    ((str.Contains("марка") && !str.Contains("вид"))));
+            return ((s.Contains("транспорт") || s.Contains("движимое имущество")) &&
+                    ((s.Contains("марка") && !s.Contains("вид"))));
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)
         {
-            string strLower = NormalizeString(str).Replace(" ", "").Replace("-", "");
+            string strLower = str.Replace(" ", "").Replace("-", "");
             return (strLower.Contains("годовойдоход") 
                     || strLower.Contains("годовогодохода")
                     || strLower.Contains("суммадохода") 
                     || strLower.Contains("декларированныйдоход")
                     || strLower.Contains("декларированногодохода")
-                   ); ;
+                   );
         }
 
-        private static bool IsDeclaredYearlyIncomeThousands(this string str)
+        private static bool IsDeclaredYearlyIncomeThousands(this string s)
         {
-            return str.IsDeclaredYearlyIncome() && str.Contains("тыс.");        }
+            return s.IsDeclaredYearlyIncome() && s.Contains("тыс.");
+        }
 
-        private static bool IsDataSources(this string str)
+        private static bool IsDataSources(this string s)
         {
-            string strLower = str.ToLower();
-            return strLower.Contains("сведен");
+            return s.Contains("сведен");
         }
     }
 }

@@ -1,0 +1,636 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Биткова Р.Х.",
+        "name_raw": "Биткова Р.Х.",
+        "role": "советник Министра \n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "2024135,64",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "дачный \nземельный участок",
+          "type": "Земельный участок",
+          "square": "2285,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "2 285,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "дачный \nземельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "14,75",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "14,75",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "дачный \nземельный участок",
+          "type": "Земельный участок",
+          "square": "2332,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "2 332,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "дачный \nземельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "14,75",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "14,75",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "14,75",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "14,75",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "14,75",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "14,75",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "14,75",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "14,75",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "УАЗ «Патриот»",
+          "relative": "Супруг(а)",
+          "type": "а/м легковой"
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Газимагомедов Р.К.",
+        "name_raw": "Газимагомедов Р.К.",
+        "role": "советник Министра \n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "3692405,36",
+          "relative": null
+        },
+        {
+          "size": "8004496,0",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "дачный \nземельный участок",
+          "type": "Земельный участок",
+          "square": "600,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "600,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "дачный \nземельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "115,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "115,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный \nучасток",
+          "type": "Земельный участок",
+          "square": "1822,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "1822,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный \nучасток",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "дом",
+          "type": "Жилой дом",
+          "square": "90,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "90,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "дом",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "773,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "773,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "230,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "230,2",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "машиноместо",
+          "type": "Гараж",
+          "square": "26,7",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "26,7",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "машиноместо",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный \nучасток под \nиндивидуальное жилищное строительство",
+          "type": "Квартира",
+          "square": "2050,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "2050,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный \nучасток под \nиндивидуальное жилищное строительство",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "773,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "773,0",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "151,8",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "151,8",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "115,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "115,2",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "машиноместо",
+          "type": "Гараж",
+          "square": "14,3",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "14,3",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "машиноместо",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилые \nпомещения",
+          "type": "Иное",
+          "square": "503,4",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "503,4",
+          "share_amount_raw": "долевая",
+          "country_raw": "Россия",
+          "type_raw": "нежилые \nпомещения",
+          "own_type_raw": "долевая"
+        },
+        {
+          "text": "нежилые помещения",
+          "type": "Иное",
+          "square": "226,9",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "226,9",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "нежилые помещения",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилые \nпомещения",
+          "type": "Иное",
+          "square": "226,9",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "226,9",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "нежилые \nпомещения",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилые помещения",
+          "type": "Иное",
+          "square": "226,9",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "226,9",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "нежилые помещения",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилые \nпомещения",
+          "type": "Иное",
+          "square": "226,9",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "226,9",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "нежилые \nпомещения",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилые помещения",
+          "type": "Иное",
+          "square": "335,4",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "335,4",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "нежилые помещения",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилые \nпомещения",
+          "type": "Иное",
+          "square": "6307,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,5",
+          "relative": "Супруг(а)",
+          "square_raw": "6 307,0",
+          "share_amount_raw": "общая долевая, 1/2",
+          "country_raw": "Россия",
+          "type_raw": "нежилые \nпомещения",
+          "own_type_raw": "общая долевая, 1/2"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "773,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "773,0",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Audi А8",
+          "relative": null,
+          "type": "а/м легковой"
+        },
+        {
+          "text": "Toyota Camry",
+          "relative": null,
+          "type": "а/м легковой"
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Кузнецов В.А.",
+        "name_raw": "Кузнецов В.А.",
+        "role": "помощник Министра \n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "2570657,59",
+          "relative": null
+        },
+        {
+          "size": "818608,73",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "дачный \nземельный участок",
+          "type": "Земельный участок",
+          "square": "1500,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "1500,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "дачный \nземельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "75,6",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,3333333333333333333333333333",
+          "relative": null,
+          "square_raw": "75,6",
+          "share_amount_raw": "общая долевая, 1/3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая, 1/3"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "102,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "102,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "машиноместо",
+          "type": "Гараж",
+          "square": "12,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "12,0",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "машиноместо",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "98,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Долевая собственность",
+          "share_amount": "0,3333333333333333333333333333",
+          "relative": "Супруг(а)",
+          "square_raw": "98,0",
+          "share_amount_raw": "общая долевая, 1/3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая, 1/3"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name": "Степанова О.В.",
+        "name_raw": "Степанова О.В.",
+        "role": "начальник отдела \n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "1723320,56",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "35,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "35,0",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": "166,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "166,0",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name": "Чигарев М.В.",
+        "name_raw": "Чигарев М.В.",
+        "role": "начальник отдела \n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": "1422114,21",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "44,2",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "44,2",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": "76,0",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "76,0",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения \nо доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства Российской Федерации по делам Северного Кавказа \nза отчетный период с 1 января 2015 года по 31 декабря 2015 года \n\n",
+    "year": 2015
+  }
+}

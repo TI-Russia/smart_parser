@@ -182,9 +182,12 @@ namespace Smart.Parser.Lib
                         throw new SmartParserException(
                             string.Format("No Person  at row {0}", row));
                     }
-                    continue;
+                    else
+                    {
+                        currentPerson.RangeHigh = row + merged_row_count - 1; //see MinSevKavkaz2015_s.docx  in regression tests
+                    }
                 }
-                if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
+                else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
                     //Logger.Debug("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
                     if (currentPerson != null)
