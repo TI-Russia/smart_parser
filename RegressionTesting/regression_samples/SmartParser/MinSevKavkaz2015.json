@@ -112,9 +112,8 @@
       ],
       "vehicles": [
         {
-          "text": "УАЗ «Патриот»",
-          "relative": "Супруг(а)",
-          "type": "а/м легковой"
+          "text": "а/м легковой \nУАЗ «Патриот»",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -433,14 +432,12 @@
       ],
       "vehicles": [
         {
-          "text": "Audi А8",
-          "relative": null,
-          "type": "а/м легковой"
+          "text": "а/м легковой Audi А8",
+          "relative": null
         },
         {
-          "text": "Toyota Camry",
-          "relative": null,
-          "type": "а/м легковой"
+          "text": "а/м легковой Toyota Camry",
+          "relative": null
         }
       ]
     },

@@ -139,41 +139,5 @@ namespace test
             Assert.IsFalse(result);
         }
 
-        [TestMethod]
-        public void TestParseVehicle()
-        {
-            string vechicleString = "-";
-            List<Vehicle> vechicles = new List<Vehicle>();
-
-            bool result = DataHelper.ParseVehicle(vechicleString, vechicles);
-            Assert.IsFalse(result);
-
-            vechicleString = "автомобили легковые: ЛЭНД РОВЕР Discovery Sport мототранспортные средства: мотовездеход KOMANDER LTD, снегоход Bombardier SKI-DOO expedition TUV V-1000, снегоход SKI-DOO SKANDIC SWT 900 ACE водный транспорт: катер SKY-BOAT-500R иные транспортные средства: прицеп МЗСА 817717";
-            result = DataHelper.ParseVehicle(vechicleString, vechicles);
-            Assert.IsTrue(result);
-            Assert.AreEqual(vechicles.Count, 6);
-        }
-        [TestMethod]
-        public void TestParseVehicle2()
-        {
-            string vechicleString = "Автомобиль легковой\nHyundai Tucson";
-            List<Vehicle> vechicles = new List<Vehicle>();
-
-            bool result = DataHelper.ParseVehicle(vechicleString, vechicles);
-            Assert.IsTrue(result);
-            Assert.AreEqual(vechicles.Count, 1);
-            Assert.AreEqual(vechicles[0].Text, "Hyundai Tucson");
-            Assert.AreEqual(vechicles[0].Type, "Автомобиль легковой");
-
-            vechicleString = "Автомобиль легковой Jeep Compass";
-            result = DataHelper.ParseVehicle(vechicleString, vechicles);
-            Assert.IsTrue(result);
-            Assert.AreEqual(vechicles.Count, 1);
-            Assert.AreEqual("Jeep Compass", vechicles[0].Text);
-            Assert.AreEqual("Автомобиль легковой", vechicles[0].Type);
-
-
-        }
-
     }
 }

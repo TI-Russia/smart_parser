@@ -70,7 +70,7 @@ namespace Smart.Parser.Lib
                     return RelationType.Error;
             }
         }
-        
+
         public static bool IsEmptyValue(string s)
         {
             if (s == null) return true;
@@ -105,7 +105,7 @@ namespace Smart.Parser.Lib
                 }
                 catch (Exception)
                 {
-                    return null; 
+                    return null;
                 }
 
             }
@@ -196,7 +196,7 @@ namespace Smart.Parser.Lib
                 OwnershipType t = TryParseOwnershipType(rest);
                 if (t != OwnershipType.None)
                 {
-                    ownershipType = t; 
+                    ownershipType = t;
                 }
             }
             if (ownershipType == OwnershipType.None)
@@ -236,7 +236,7 @@ namespace Smart.Parser.Lib
 
             decimal? area = null;
             // Non-breaking space or breaking space can be between digits like "1 680,0"
-            var match = Regex.Match(strSquares, "\\d[\\d\u00A0 ]*([,.]\\d+)?"); 
+            var match = Regex.Match(strSquares, "\\d[\\d\u00A0 ]*([,.]\\d+)?");
             if (match.Success)
             {
 
@@ -245,7 +245,7 @@ namespace Smart.Parser.Lib
             }
             return area;
         }
-        
+
 
         public static List<decimal?> ParseSquares(string strSquares)
         {
@@ -258,7 +258,7 @@ namespace Smart.Parser.Lib
                 }
 
                 decimal? area;
-                var match =  Regex.Match(str, "(\\d+)/(\\d+)");
+                var match = Regex.Match(str, "(\\d+)/(\\d+)");
                 if (match.Success)
                 {
                     string d1 = match.Groups[1].Value;
@@ -276,10 +276,10 @@ namespace Smart.Parser.Lib
                 else
                 {
                     try
-                    { 
+                    {
                         area = str.ParseDecimalValue();
                     }
-                    catch 
+                    catch
                     {
                         area = null;
                     }
@@ -333,83 +333,9 @@ namespace Smart.Parser.Lib
                 case "мексика": return Country.Mexico;
                 case "абхазия": return Country.Abkhazia;
                 case "южная осетия": return Country.SouthOssetia;
-                //default:
+                    //default:
             }
             return Country.Error;//throw new SmartParserException("Wrong country name: " + strCountry);
-        }
-
-        static public bool ParseVehicle(string vechicleString, List<Vehicle> vehicles)
-        {
-            vehicles.Clear();
-            string[] vehicleTypeDict = {
-                @"автомобил. легков..[:|\n ]",
-                "мототранспортные средства:",
-                "водный транспорт:",
-                "иные транспортные средства:",
-                "воздушный транспорт:",
-                "сельскохозяйственная техника:",
-                "автомобили грузовые:",
-                "легковой автомобиль",
-                "а/м легковой",
-                "а/м",
-                "легковой прицеп",
-                "легковой"
-            };
-            vechicleString = vechicleString.Trim();
-            var vehicleTypeRegex = new Regex("(" + string.Join("|", vehicleTypeDict) + ")", RegexOptions.IgnoreCase);
-            string normalVehicleStr = vechicleString.ToLower().Trim();
-            if (IsEmptyValue(normalVehicleStr))
-            {
-                return false;
-            }
-
-            var matchType = vehicleTypeRegex.Match(vechicleString);
-            if (matchType.Success)
-            {
-                int last_end = -1;
-                string last_type = null;
-                string vechicleItemStr = null;
-                string[] items = null;
-                foreach (Match itemMatch in vehicleTypeRegex.Matches(vechicleString))
-                {
-                    int begin = itemMatch.Index;
-                    int end = itemMatch.Index + itemMatch.Length;
-                    if (last_end > 0)
-                    {
-                        vechicleItemStr = vechicleString.Substring(last_end, begin - last_end);
-                        items = vechicleItemStr.Split(',');
-                        foreach (var item in items)
-                        {
-                            vehicles.Add(new Vehicle(item.Trim(), last_type));
-                        }
-                    }
-                    last_end = end;
-                    last_type = itemMatch.Value.TrimEnd(':', '\n', ' ');
-                }
-                vechicleItemStr = vechicleString.Substring(last_end);
-                items = vechicleItemStr.Split(',');
-                foreach (var item in items)
-                {
-                    if (last_type == "легковой") last_type = "Автомобиль легковой";
-                    vehicles.Add(new Vehicle(item.Trim(), last_type));
-                }
-
-                return true;
-            }
-
-            var match = Regex.Match(vechicleString, @".+:(.+,.+)");
-            if (match.Success)
-            {
-                if (vehicles != null)
-                {
-                    vehicles.AddRange(match.Groups[1].ToString().Split(',').Select(x => new Vehicle(x.Trim())));
-                }
-            }
-            else
-            {
-                vehicles.Add(new Vehicle(vechicleString));
-            }
-            return true;
         }
     }
 }

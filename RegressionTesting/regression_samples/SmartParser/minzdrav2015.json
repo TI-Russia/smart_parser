@@ -124,9 +124,8 @@
           "relative": null
         },
         {
-          "text": "Toyota Камри",
-          "relative": "Супруг(а)",
-          "type": "а/м легковой"
+          "text": "а/м легковой Toyota Камри",
+          "relative": "Супруг(а)"
         }
       ]
     }

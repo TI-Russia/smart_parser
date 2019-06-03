@@ -99,9 +99,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volvo ХС 70",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nVolvo ХС 70",
+          "relative": null
         }
       ]
     },
@@ -230,19 +229,12 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Primera\nChevrolet GMT900 (Tahoe)",
-          "relative": null,
-          "type": "а/м"
+          "text": "2 а/м \nNissan Primera\nChevrolet GMT900 (Tahoe)",
+          "relative": null
         },
         {
-          "text": "Porsche Cayenne GTS 2 мотоцикла:\nYamaha YZF-R1",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Ducati GT1000",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nPorsche Cayenne GTS\n\n2 мотоцикла:\nYamaha YZF-R1,\nDucati GT1000",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -505,9 +497,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen\nTiguan",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nVolkswagen\nTiguan",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -714,13 +705,12 @@
       ],
       "vehicles": [
         {
-          "text": "лодка ТП-7200",
+          "text": "лодка \nТП-7200",
           "relative": null
         },
         {
-          "text": "Audi Q5",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nAudi Q5",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -810,24 +800,8 @@
       ],
       "vehicles": [
         {
-          "text": "Land Rover Defender",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "Mitsubishi Pajero 3",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "8 LWB",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "УАЗ 390995",
-          "relative": null,
-          "type": "а/м"
+          "text": "3 а/м \nLand Rover Defender,\nMitsubishi Pajero 3,8 LWB,\nУАЗ 390995",
+          "relative": null
         }
       ]
     },
@@ -904,14 +878,12 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Land Cruiser 200",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nToyota Land Cruiser 200",
+          "relative": null
         },
         {
-          "text": ":\nТойота RAV4",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м:\nТойота RAV4",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -962,9 +934,8 @@
       ],
       "vehicles": [
         {
-          "text": "Range Rover Sport",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nRange Rover Sport",
+          "relative": null
         }
       ]
     },
@@ -1054,9 +1025,8 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Land Cruiser 200",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nToyota Land Cruiser 200",
+          "relative": null
         }
       ]
     },
@@ -1193,9 +1163,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda 6",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nMazda 6",
+          "relative": null
         }
       ]
     },
@@ -1255,9 +1224,8 @@
       ],
       "vehicles": [
         {
-          "text": "Audi А-4",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nAudi А-4",
+          "relative": null
         }
       ]
     },
@@ -1321,9 +1289,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Qashqai",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nNissan Qashqai",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -1426,9 +1393,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nToyota Avensis",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м:\nToyota Avensis",
+          "relative": null
         }
       ]
     },
@@ -1462,9 +1428,8 @@
       ],
       "vehicles": [
         {
-          "text": "Ford Focus",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nFord Focus",
+          "relative": null
         }
       ]
     },
@@ -1811,9 +1776,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Tiida",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nNissan Tiida",
+          "relative": null
         }
       ]
     },
@@ -1847,9 +1811,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Golf",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nVolkswagen Golf",
+          "relative": null
         }
       ]
     },
@@ -1913,9 +1876,8 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Prius Hybrid",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nToyota Prius Hybrid",
+          "relative": null
         }
       ]
     },
@@ -1979,9 +1941,8 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Tucson",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nHyundai Tucson",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -2045,9 +2006,8 @@
       ],
       "vehicles": [
         {
-          "text": "Ssang Yong Kyron",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nSsang Yong Kyron",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -2124,14 +2084,12 @@
       ],
       "vehicles": [
         {
-          "text": "Skoda Octavia Tour",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nSkoda Octavia Tour",
+          "relative": null
         },
         {
-          "text": "Daewoo Nexia",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nDaewoo Nexia",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -2195,9 +2153,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi ASX 1.8",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nMitsubishi ASX 1.8",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -2244,9 +2201,8 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Rav4",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nToyota Rav4",
+          "relative": null
         }
       ]
     },
@@ -2379,9 +2335,8 @@
       ],
       "vehicles": [
         {
-          "text": "Kia Shuma II",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nKia Shuma II",
+          "relative": null
         }
       ]
     },
@@ -2562,19 +2517,12 @@
       ],
       "vehicles": [
         {
-          "text": "Ford Focus",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nFord Focus",
+          "relative": null
         },
         {
-          "text": "Nissan Teana",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Infiniti FX 37",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м \nNissan Teana,\nInfiniti FX 37",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -2690,9 +2638,8 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Corsa",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nOpel Corsa",
+          "relative": null
         }
       ]
     },
@@ -2791,9 +2738,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mersedes-benz C-200",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nMersedes-benz C-200",
+          "relative": null
         }
       ]
     },
@@ -2926,9 +2872,8 @@
       ],
       "vehicles": [
         {
-          "text": "Honda CR-V",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nHonda CR-V",
+          "relative": null
         }
       ]
     },
@@ -2979,9 +2924,8 @@
       ],
       "vehicles": [
         {
-          "text": "Peugeot-308",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nPeugeot-308",
+          "relative": null
         }
       ]
     },
@@ -3144,9 +3088,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Murano",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nNissan Murano",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -3197,14 +3140,12 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Corolla",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nToyota Corolla",
+          "relative": null
         },
         {
-          "text": "Toyota Sprinter",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nToyota Sprinter",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -3251,9 +3192,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volvo XC90",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nVolvo XC90",
+          "relative": null
         }
       ]
     },
@@ -3395,9 +3335,8 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Tucson",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nHyundai Tucson",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -3461,14 +3400,12 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Elantra",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nHyundai Elantra",
+          "relative": null
         },
         {
-          "text": "Volkswagen Touareg",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nVolkswagen Touareg",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -3558,19 +3495,8 @@
       ],
       "vehicles": [
         {
-          "text": ": ВАЗ 21013",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Ssang Yong Rexton RX",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "автоприцеп",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м: \nВАЗ 21013, \nSsang Yong Rexton RX, \n\nавтоприцеп",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -3746,9 +3672,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21053",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nВАЗ 21053",
+          "relative": null
         }
       ]
     },
@@ -3821,14 +3746,8 @@
       ],
       "vehicles": [
         {
-          "text": ": Москвич 2141",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Daewoo Nexia",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м: Москвич 2141,\nDaewoo Nexia",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -3862,9 +3781,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Lancer",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nMitsubishi Lancer",
+          "relative": null
         }
       ]
     },
@@ -3954,9 +3872,8 @@
       ],
       "vehicles": [
         {
-          "text": "Honda CR-V",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nHonda CR-V",
+          "relative": null
         }
       ]
     },
@@ -4227,14 +4144,8 @@
       ],
       "vehicles": [
         {
-          "text": "Honda CR-V",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Volvo S60",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м\nHonda CR-V,\nVolvo S60",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -4484,19 +4395,8 @@
       ],
       "vehicles": [
         {
-          "text": ": Dodge Nitro",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Jeep Grand Cherokee",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "BMW 740",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "3 а/м: \nDodge Nitro,\nJeep Grand Cherokee,\nBMW 740",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -4569,14 +4469,12 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan X-Trail Toyota Camry",
-          "relative": null,
-          "type": "а/м"
+          "text": "2 а/м\nNissan X-Trail Toyota Camry",
+          "relative": null
         },
         {
-          "text": "Chevrolet",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nChevrolet",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -4761,14 +4659,12 @@
       ],
       "vehicles": [
         {
-          "text": "Peugeot",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nPeugeot",
+          "relative": null
         },
         {
-          "text": "KIA",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nKIA",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -4901,9 +4797,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Polo",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м Volkswagen Polo",
+          "relative": null
         }
       ]
     },
@@ -5101,14 +4996,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nAudi Q5",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Audi Q7",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м:\nAudi Q5,\nAudi Q7",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -5172,9 +5061,8 @@
       ],
       "vehicles": [
         {
-          "text": "Subary Forester",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nSubary Forester",
+          "relative": null
         }
       ]
     },
@@ -5251,14 +5139,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nВАЗ 21213 «Нива»",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "Nissan",
-          "relative": null,
-          "type": "а/м"
+          "text": "2 а/м:\nВАЗ 21213 «Нива»,\nNissan",
+          "relative": null
         }
       ]
     },
@@ -5335,9 +5217,8 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Tucson",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nHyundai Tucson",
+          "relative": null
         }
       ]
     },
@@ -5500,9 +5381,8 @@
       ],
       "vehicles": [
         {
-          "text": "Renault Logan",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nRenault Logan",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -5566,9 +5446,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2104",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nВАЗ 2104",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -5843,9 +5722,8 @@
       ],
       "vehicles": [
         {
-          "text": "Citroen C4",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nCitroen C4",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -5909,9 +5787,8 @@
       ],
       "vehicles": [
         {
-          "text": "Kio Picanto",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nKio Picanto",
+          "relative": null
         }
       ]
     },
@@ -5975,9 +5852,8 @@
       ],
       "vehicles": [
         {
-          "text": "Chevrolet Lacetti",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nChevrolet Lacetti",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -6153,9 +6029,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nГазель",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м:\nГазель",
+          "relative": null
         }
       ]
     },
@@ -6295,9 +6170,8 @@
       "real_estates": [],
       "vehicles": [
         {
-          "text": "Toyota Highlander",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nToyota Highlander",
+          "relative": null
         }
       ]
     },
@@ -6387,9 +6261,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Passat",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м Volkswagen Passat",
+          "relative": null
         }
       ]
     },
@@ -6479,14 +6352,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Lancer",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "ВАЗ-21043",
-          "relative": null,
-          "type": "а/м"
+          "text": "2 а/м \nMitsubishi Lancer,\nВАЗ-21043",
+          "relative": null
         }
       ]
     },
@@ -6576,9 +6443,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ-21150",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м ВАЗ-21150",
+          "relative": null
         }
       ]
     },
@@ -6668,14 +6534,12 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen 2H Amarok",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м Volkswagen 2H Amarok",
+          "relative": null
         },
         {
-          "text": "BMW 3251",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nBMW 3251",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -6765,9 +6629,8 @@
       ],
       "vehicles": [
         {
-          "text": "Audi-A3",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nAudi-A3",
+          "relative": null
         }
       ]
     },
@@ -6857,9 +6720,8 @@
       ],
       "vehicles": [
         {
-          "text": "Daewoo Nexia",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м Daewoo Nexia",
+          "relative": null
         }
       ]
     },
@@ -7056,9 +6918,8 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Corolla",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nToyota Corolla",
+          "relative": null
         }
       ]
     },
@@ -7122,9 +6983,8 @@
       ],
       "vehicles": [
         {
-          "text": "Honda Stream",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м Honda Stream",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -7360,14 +7220,12 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2123 Шевроле-Нива",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nВАЗ 2123 Шевроле-Нива",
+          "relative": null
         },
         {
-          "text": "Suzuki SX4",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nSuzuki SX4",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -7526,14 +7384,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21214",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "автоприцеп КМЗ 8119",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nВАЗ 21214,\n\nавтоприцеп КМЗ 8119",
+          "relative": null
         }
       ]
     },
@@ -7718,9 +7570,8 @@
       ],
       "vehicles": [
         {
-          "text": "Peugeot 107",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nPeugeot 107",
+          "relative": null
         }
       ]
     },
@@ -7870,9 +7721,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda 3",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nMazda 3",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -7932,9 +7782,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Almera Classic",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nNissan Almera Classic",
+          "relative": null
         }
       ]
     },
@@ -7998,9 +7847,8 @@
       ],
       "vehicles": [
         {
-          "text": "Chevrolet Lacetti",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м Chevrolet Lacetti",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -8103,9 +7951,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan X-trail",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nNissan X-trail",
+          "relative": null
         }
       ]
     },
@@ -8178,9 +8025,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan X-trail",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nNissan X-trail",
+          "relative": null
         }
       ]
     },
@@ -8428,14 +8274,12 @@
       ],
       "vehicles": [
         {
-          "text": "Land Rover Freelander 2",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nLand Rover Freelander 2",
+          "relative": null
         },
         {
-          "text": "Volvo XC 90",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nVolvo XC 90",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -8572,9 +8416,8 @@
       ],
       "vehicles": [
         {
-          "text": "Land Rover Freelander 2",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nLand Rover Freelander 2",
+          "relative": null
         }
       ]
     },
@@ -8651,9 +8494,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Tiida",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м Nissan Tiida",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -8743,9 +8585,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Outlander",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nMitsubishi Outlander",
+          "relative": null
         }
       ]
     },
@@ -8839,14 +8680,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nToyota Avensis",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "Volkswagen Passat",
-          "relative": null,
-          "type": "а/м"
+          "text": "2 а/м:\nToyota Avensis, \nVolkswagen Passat",
+          "relative": null
         }
       ]
     },
@@ -9013,9 +8848,8 @@
       ],
       "vehicles": [
         {
-          "text": "Ford Galaxy",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nFord Galaxy",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -9079,9 +8913,8 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Astra",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nOpel Astra",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -9158,9 +8991,8 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen-golf",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "1 а/м Volkswagen-golf",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -9237,14 +9069,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nToyota Corolla",
-          "relative": "Супруг(а)",
-          "type": "а/м"
-        },
-        {
-          "text": "Nissan Note",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м:\nToyota Corolla,\nNissan Note",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -9347,9 +9173,8 @@
       ],
       "vehicles": [
         {
-          "text": "Peugeot 406",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nPeugeot 406",
+          "relative": null
         }
       ]
     },
@@ -9413,9 +9238,8 @@
       ],
       "vehicles": [
         {
-          "text": "KIA Picanto",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nKIA Picanto",
+          "relative": null
         }
       ]
     },
@@ -9522,9 +9346,8 @@
       ],
       "vehicles": [
         {
-          "text": "Ford Focus",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nFord Focus",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -9721,9 +9544,8 @@
       ],
       "vehicles": [
         {
-          "text": "Renault Laguna",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nRenault Laguna",
+          "relative": null
         }
       ]
     },
@@ -9770,9 +9592,8 @@
       ],
       "vehicles": [
         {
-          "text": "BMW X3",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nBMW X3",
+          "relative": null
         }
       ]
     },
@@ -9969,9 +9790,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda 6",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nMazda 6",
+          "relative": null
         }
       ]
     },
@@ -10022,9 +9842,8 @@
       ],
       "vehicles": [
         {
-          "text": "Ford Focus",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nFord Focus",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -10131,14 +9950,12 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Pajero;\nавтоприцеп",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м Mitsubishi Pajero;\nавтоприцеп",
+          "relative": null
         },
         {
-          "text": "УАЗ",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м УАЗ",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -10241,9 +10058,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda 3",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nMazda 3",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -10307,9 +10123,8 @@
       ],
       "vehicles": [
         {
-          "text": "Lexus RX 350",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nLexus RX 350",
+          "relative": null
         }
       ]
     },
@@ -10343,9 +10158,8 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Teana",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nNissan Teana",
+          "relative": null
         }
       ]
     },
@@ -10409,9 +10223,8 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Lancer 1.8",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nMitsubishi Lancer 1.8",
+          "relative": null
         }
       ]
     },
@@ -10514,9 +10327,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2114 Автоприцеп КМЗ 8284",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м\nВАЗ 2114\n\nАвтоприцеп КМЗ 8284",
+          "relative": null
         }
       ]
     },
@@ -10606,14 +10418,8 @@
       ],
       "vehicles": [
         {
-          "text": ":\nВАЗ 21053",
-          "relative": null,
-          "type": "а/м"
-        },
-        {
-          "text": "Suzuki SX4",
-          "relative": null,
-          "type": "а/м"
+          "text": "2 а/м:\nВАЗ 21053,\nSuzuki SX4",
+          "relative": null
         }
       ]
     },
@@ -10845,9 +10651,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 2110",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м\nВАЗ 2110",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -10976,9 +10781,8 @@
       ],
       "vehicles": [
         {
-          "text": "Peugeot 206",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "а/м \nPeugeot 206",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -11107,9 +10911,8 @@
       ],
       "vehicles": [
         {
-          "text": "Renault Logan\nУАЗ 39629",
-          "relative": "Супруг(а)",
-          "type": "а/м"
+          "text": "2 а/м \nRenault Logan\nУАЗ 39629",
+          "relative": "Супруг(а)"
         }
       ]
     },
@@ -11186,9 +10989,8 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ-2105",
-          "relative": null,
-          "type": "а/м"
+          "text": "а/м \nВАЗ-2105",
+          "relative": null
         }
       ]
     }

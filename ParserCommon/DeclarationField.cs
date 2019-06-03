@@ -6,6 +6,7 @@ namespace TI.Declarator.ParserCommon
     {
         None = 0,
         Number,
+        RelativeTypeStrict,
         NameOrRelativeType,
         Occupation,
 

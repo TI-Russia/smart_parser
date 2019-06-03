@@ -171,9 +171,8 @@
       ],
       "vehicles": [
         {
-          "text": ": Ford S-Max",
-          "relative": null,
-          "type": "Легковой автомобиль"
+          "text": "Легковой \nавтомобиль: \nFord S-Max",
+          "relative": null
         }
       ]
     }

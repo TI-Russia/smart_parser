@@ -168,7 +168,11 @@ namespace Smart.Parser.Lib
                 int merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
-                Logger.Debug(nameOrRelativeType);
+                if  (nameOrRelativeType == "" &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
+                {
+                    nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
+                }
+                
                 string occupationStr = "";
                 if (Adapter.HasDeclarationField(DeclarationField.Occupation))
                 {
@@ -189,7 +193,7 @@ namespace Smart.Parser.Lib
                 }
                 else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    //Logger.Debug("{0} Servant {1} Occupation {2}", row, nameOrRelativeType, occupationStr);
+                    Logger.Debug("Declarant {0} at row {1}", nameOrRelativeType, row);
                     if (currentPerson != null)
                     {
                         currentPerson.RangeHigh = row - 1;
@@ -212,6 +216,7 @@ namespace Smart.Parser.Lib
                 }
                 else if (DataHelper.IsRelativeInfo(nameOrRelativeType, occupationStr))
                 {
+                    Logger.Debug("Relative {0} at row {1}", nameOrRelativeType, row);
                     if (currentServant == null)
                     {
                         // ошибка
@@ -440,11 +445,7 @@ namespace Smart.Parser.Lib
                         ParseStateProperty(currRow, person);
                         ParseMixedProperty(currRow, person);
 
-                        // Парсим транспортные средства
-                        string vehicleStr = GetVehicleString(currRow); // r.GetContents(DeclarationField.Vehicle);
-                        List<Vehicle> vehicles = new List<Vehicle>();
-                        DataHelper.ParseVehicle(vehicleStr, vehicles);
-                        person.Vehicles.AddRange(vehicles);
+                        AddVehicle(currRow, person); 
                     }
                 }
             }
@@ -457,18 +458,21 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        private string GetVehicleString(Row r)
+        private void AddVehicle(Row r, Person person)
         {
-            string vehicle = "";
             if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.Vehicle))
             {
-                vehicle = r.GetContents(DeclarationField.Vehicle);
+                var s = r.GetContents(DeclarationField.Vehicle);
+                if (!DataHelper.IsEmptyValue(s))
+                    person.Vehicles.Add(new Vehicle(s));
             }
             else
             {
-                vehicle = (r.GetContents(DeclarationField.VehicleType) + " " + r.GetContents(DeclarationField.VehicleModel)).Trim();
+                var m = r.GetContents(DeclarationField.VehicleModel);
+                var t = r.GetContents(DeclarationField.VehicleType);
+                if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
+                    person.Vehicles.Add(new Vehicle(m, t));
             }
-            return Regex.Replace(vehicle, @"\s{2,}", " ");
         }
 
         static bool CheckEmptyValues(string propTypeStr)

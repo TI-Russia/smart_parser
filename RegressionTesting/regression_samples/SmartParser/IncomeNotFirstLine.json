@@ -58,9 +58,8 @@
       ],
       "vehicles": [
         {
-          "text": "МИЦУБИСИ outlender",
-          "relative": null,
-          "type": "легковой автомобиль"
+          "text": "легковой автомобиль МИЦУБИСИ outlender",
+          "relative": null
         }
       ]
     }
