@@ -1,2 +1,0 @@
-camelot_py
-opencv_python
