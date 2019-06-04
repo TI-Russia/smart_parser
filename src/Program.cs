@@ -91,7 +91,8 @@ namespace Smart.Parser
                 if (AdapterFamily != "aspose" && 
                     AdapterFamily != "npoi" && 
                     AdapterFamily != "microsoft" &&
-                    AdapterFamily != "xceed")
+                    AdapterFamily != "xceed" &&
+                    AdapterFamily != "prod")
                 {
                     throw new Exception("unknown adapter family " + AdapterFamily);
                 }
@@ -278,7 +279,7 @@ namespace Smart.Parser
                 case ".docx":
                     if (AdapterFamily != "aspose")
                     {
-                        if (AdapterFamily == "xceed")
+                        if (AdapterFamily == "xceed" || AdapterFamily == "prod")
                         {
                             return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                         }
@@ -302,7 +303,7 @@ namespace Smart.Parser
                             return AsposeExcelAdapter.CreateAdapter(declarationFile);
                         }
                     }
-                    else if (AdapterFamily == "npoi")
+                    else if (AdapterFamily == "npoi" || AdapterFamily == "prod")
                     {
                         return NpoiExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                     }
