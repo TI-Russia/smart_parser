@@ -19,6 +19,80 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
+        static public bool IsSection(Row r, out string text)
+        {
+            text = null;
+            if (r.Cells.Count == 0)
+            {
+                return false;
+            }
+            if (r.Cells.Count > 1)
+            {
+                return false;
+            }
+
+            int merged_row_count = r.Cells[0].MergedRowsCount;
+            int cell_count = r.Cells.Count();
+
+            if (merged_row_count > 1)
+            {
+                return false;
+            }
+
+            int merged_col = r.Cells[0].MergedColsCount;
+            if (merged_col < 5)
+            {
+                return false;
+            }
+
+            text = r.Cells[0].GetText(true);
+
+            return true;
+        }
+
+        static public bool IsTitleRow(Row r)
+        {
+            int cell_count = r.Cells.Count();
+            if (cell_count == 0)
+                return false;
+            string text = "";
+            if (cell_count == 1)
+            {
+                text = r.Cells[0].GetText(true);
+            }
+            else
+            {
+                text = "";
+                foreach (var cell in r.Cells)
+                {
+                    text += cell.GetText();
+                }
+            }
+
+            string[] title_words = { "сведения", "обязательствах", "доходах", "период" };
+            bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
+
+            string[] header_words = { "фамилия", "недвижимости", "транспортные"};
+            bool has_header_words = Array.Exists(header_words, s => text.Contains(s));
+
+            if (has_header_words)
+                return false;
+
+            if (cell_count > 1 && !r.Cells[0].Text.IsNullOrWhiteSpace() && !has_title_words)
+                return false;
+
+            int merged_col_count = r.Cells[0].MergedColsCount;
+
+            if (merged_col_count < 5 && cell_count == 1)
+                return false;
+
+            int text_len = text.Length;
+
+            if (text_len < 20)
+                return false;
+            return true;
+        }
+
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
@@ -32,8 +106,7 @@ namespace Smart.Parser.Lib
             if (!has_title_words)
                 return false;
 
-            text = Regex.Replace(text, "8\\s+июля\\s+2013", "");
-            var matches = Regex.Matches(text, @"\b20\d\d\b");
+            var matches = Regex.Matches(text, @"\b20\d\d(?=[^\d])");
 
             if (matches.Count > 0 )
             {
@@ -51,6 +124,13 @@ namespace Smart.Parser.Lib
         static private bool IsHeader(Row r)
         {
             var cells = r.Cells;
+
+            if (cells.Count() < 5)
+                return false;
+
+            if (cells[0].Text.IsNullOrWhiteSpace())
+                return false;
+
             string text = "";
             int nonEmptyCellCount = 0;
             foreach (var cell in cells)

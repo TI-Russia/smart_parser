@@ -1,6 +1,7 @@
 ﻿using Parser.Lib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -342,6 +343,48 @@ namespace Smart.Parser.Lib
                     //default:
             }
             return Country.Error;//throw new SmartParserException("Wrong country name: " + strCountry);
+        }
+
+        static public bool ParseDocumentFileName(string filename, out int? id, out string archive_file)
+        {
+            id = null;
+            archive_file = null;
+
+            char[] separators = new char[] {
+                Path.DirectorySeparatorChar,
+                Path.AltDirectorySeparatorChar
+            };
+
+            string[] folders = filename.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+            List<string> rest = new List<string>();
+            bool procRest = false;
+            foreach (var f in folders)
+            {
+                if (procRest)
+                {
+                    rest.Add(f);
+                }
+                var match = Regex.Match(f, @"(^\d+)(\.|$)");
+                if (match.Success)
+                {
+                    rest.Clear();
+                    string number = match.Groups[1].Value;
+                    id = int.Parse(number);
+                    procRest = true;
+                }
+            }
+            if (!procRest)
+            {
+                return false;
+            }
+
+            if (rest.Count > 0)
+            {
+                archive_file = string.Join(Path.DirectorySeparatorChar.ToString(), rest);
+            }
+
+            return true;
         }
     }
 }
