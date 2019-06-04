@@ -56,7 +56,6 @@ namespace Smart.Parser.Adapters
 
         ~NpoiExcelAdapter()
         {
-            WorkBook.Close();
             WorkBook = null;
             if (TempFileName != null) File.Delete(TempFileName);
         }
