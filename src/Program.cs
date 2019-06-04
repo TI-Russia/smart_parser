@@ -142,7 +142,7 @@ namespace Smart.Parser
             }
             catch (Exception e)
             {
-                Logger.Error("Unknown Parsing Exception " + e.ToString());
+                    Logger.Error("Unknown Parsing Exception " + e.ToString());
                 //Logger.Info("Stack: " + e.StackTrace);
             }
             finally
@@ -348,6 +348,7 @@ namespace Smart.Parser
             {
                 ParseOneFile(adapter, outFile);
             }
+            adapter = null;
 
 #if false
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);

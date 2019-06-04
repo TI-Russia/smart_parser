@@ -6,6 +6,7 @@ using System.Linq;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
+using Microsoft.Office.Interop.Excel;
 
 using TI.Declarator.ParserCommon;
 
@@ -17,19 +18,49 @@ namespace Smart.Parser.Adapters
         private XSSFWorkbook WorkBook;
         private Cell EmptyCell;
         private int MaxRowsToProcess;
-        
-        public NpoiExcelAdapter(string filename, int maxRowsToProcess = -1)
+        private string TempFileName;
+        string ConvertFile2TempXlsX(string filename)
         {
-            WorkBook = new XSSFWorkbook(Path.GetFullPath(filename));
+            Application excel = new Application();
+            var doc = excel.Workbooks.Open(Path.GetFullPath(filename));
+            TempFileName = Path.GetTempFileName();
+            excel.DisplayAlerts = false;
+            doc.SaveAs(
+                Filename:TempFileName,
+                FileFormat: XlFileFormat.xlOpenXMLWorkbook,
+                ConflictResolution: XlSaveConflictResolution.xlLocalSessionChanges,
+                WriteResPassword: "");
+            doc.Close();
+            excel.Quit();
+            return TempFileName;
+        }
+
+        public NpoiExcelAdapter(string fileName, int maxRowsToProcess = -1)
+        {
+            TempFileName = null;
+            string extension = Path.GetExtension(fileName);
+            if (extension == ".xls")
+            {
+                fileName = ConvertFile2TempXlsX(fileName);
+            }
+
+            WorkBook = new XSSFWorkbook(Path.GetFullPath(fileName));
             EmptyCell = new Cell();
             MaxRowsToProcess = maxRowsToProcess;
         }
-        
+
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess = -1)
         {
             return new NpoiExcelAdapter(fileName, maxRowsToProcess);
         }
-        
+
+        ~NpoiExcelAdapter()
+        {
+            WorkBook.Close();
+            WorkBook = null;
+            if (TempFileName != null) File.Delete(TempFileName);
+        }
+
         public Cell GetCell(string cellIndex)
         {
             CellReference cellRef = new CellReference(cellIndex);
