@@ -237,6 +237,16 @@ namespace RegressionTesting
         [DeploymentItem("log4net.config")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
+        public void MinEkon2013()
+        {
+            TestSmartParser("SmartParser\\MinEkon2013.docx", "xceed");
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
         public void MinStroy2013()
         {
             TestSmartParser("SmartParser\\MinStroy2013.docx", "xceed");

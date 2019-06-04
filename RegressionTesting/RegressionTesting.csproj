@@ -76,6 +76,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="regression_samples\SmartParser\MinEkon2013.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinEkon2013.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinSevKavkaz2015.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

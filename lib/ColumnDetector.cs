@@ -173,6 +173,7 @@ namespace Smart.Parser.Lib
             string text = parentCell.GetText(true);
             int rowSpan = parentCell.MergedRowsCount;
             Row auxRow = adapter.Rows[parentRow + rowSpan];
+            string dummy;
 
             foreach (var auxCell in auxRow.Cells)
             {
@@ -227,8 +228,8 @@ namespace Smart.Parser.Lib
                 {
                     headerRows = Math.Max(headerRows, cell.MergedRowsCount);
                 }
-
-                if (cell.MergedColsCount <= 1)
+                string dummy = "";
+                if (cell.MergedColsCount <= 1 || IsSection(t.Rows[headerRowNum + cell.MergedRowsCount], out dummy))
                 {
                     if (!text.IsNullOrWhiteSpace())
                     {

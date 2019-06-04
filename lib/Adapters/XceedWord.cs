@@ -232,6 +232,7 @@ namespace Smart.Parser.Adapters
                 }
             }
         }
+
         static bool CheckEqualByText(List<XceedWordCell> row1, List<XceedWordCell> row2)
         {
             if (row1.Count != row2.Count) return false;
@@ -257,7 +258,19 @@ namespace Smart.Parser.Adapters
             return result;
         }
 
-        static bool CheckMergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)
+        static string GetTextByRow(List<XceedWordCell> row)
+        {
+            string text = "";
+            foreach (var c  in row)
+            {
+                text += c.Text;
+
+            }
+            return text;
+
+        }
+
+            static bool CheckMergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)
         {
             if (row1.Count != row2.Count)
             {
@@ -292,6 +305,8 @@ namespace Smart.Parser.Adapters
         {
             TableRows = new List<List<XceedWordCell>>();
             UnmergedColumnsCount = -1;
+            bool titleFoundInText = (Title != "");
+            int firstTableWithData = 0;
             for (int t = 0;  t < wordDocument.Tables.Count; ++t)
             {
                 for (int r = 0; r < wordDocument.Tables[t].Rows.Count; ++r)
@@ -306,7 +321,7 @@ namespace Smart.Parser.Adapters
                         newRow.Add(c);
                         sumspan += c.MergedColsCount;
                     }
-                    if (t > 0 &&
+                    if (t > firstTableWithData &&
                             (    CheckEqualByText(newRow, TableRows[0])
                               || CheckEqualByText(newRow, TableRows[1])
                             )
@@ -315,7 +330,13 @@ namespace Smart.Parser.Adapters
                         Logger.Debug(string.Format("skip row {0} at table {1} because it looks like a repeated header", r, t));
                         continue;
                     }
-                    if (r == 0 && t >  0 && CheckMergeRow(TableRows.Last(), newRow))
+                    if (!titleFoundInText && t == 0 && wordDocument.Tables[t].Rows.Count < 5 && wordDocument.Tables[t].Rows[0].Cells.Count < 3)
+                    {
+                        Title += GetTextByRow(newRow) + "\n";
+                        firstTableWithData = 1;
+                        continue;
+                    }
+                    else if (r == 0 && t > firstTableWithData && CheckMergeRow(TableRows.Last(), newRow))
                     {
                         MergeRow(TableRows.Last(), newRow);
                     } 
