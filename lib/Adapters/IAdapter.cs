@@ -59,6 +59,11 @@ namespace Smart.Parser.Adapters
             }
         }
 
+        public bool IsEmpty()
+        {
+            return Cells.All(cell => cell.Text.IsNullOrWhiteSpace());
+        }
+
         public List<Cell> Cells { get; set; }
         IAdapter adapter;
         int row; 
@@ -166,6 +171,11 @@ namespace Smart.Parser.Adapters
         public virtual string GetWorksheetName()
         {
             return null;
+        }
+
+        public virtual int GetWorksheetIndex()
+        {
+            throw new NotImplementedException();
         }
 
     }

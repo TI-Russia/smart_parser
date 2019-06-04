@@ -26,6 +26,11 @@ namespace Smart.Parser.Lib
             {
                 return false;
             }
+            if (r.Cells.Count > 1)
+            {
+                return false;
+            }
+
             int merged_row_count = r.Cells[0].MergedRowsCount;
             int cell_count = r.Cells.Count();
 
@@ -54,11 +59,35 @@ namespace Smart.Parser.Lib
             if (cell_count == 0)
                 return false;
             int merged_row_count = r.Cells[0].MergedRowsCount;
-            string text = r.Cells[0].GetText(true);
+            string text = "";
+            if (cell_count == 1)
+            {
+                text = r.Cells[0].GetText(true);
+            }
+            else
+            {
+                text = "";
+                foreach (var cell in r.Cells)
+                {
+                    text += cell.GetText();
+                }
+            }
+
+            string[] title_words = { "сведения", "обязательствах", "доходах", "период" };
+            bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
+
+            string[] header_words = { "фамилия", "недвижимости", "транспортные"};
+            bool has_header_words = Array.Exists(header_words, s => text.Contains(s));
+
+            if (has_header_words)
+                return false;
+
+            if (cell_count > 1 && !r.Cells[0].Text.IsNullOrWhiteSpace() && !has_title_words)
+                return false;
 
             int merged_col_count = r.Cells[0].MergedColsCount;
 
-            if (merged_col_count < 5)
+            if (merged_col_count < 5 && cell_count == 1)
                 return false;
 
             int text_len = text.Length;
@@ -71,13 +100,11 @@ namespace Smart.Parser.Lib
             else
                 title += " " + text;
 
-            string[] title_words = { "сведения", "обязательствах", "доходах", "период" };
-            bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
 
             if (!has_title_words)
                 return false;
 
-            var matches = Regex.Matches(text, @"\b20\d\d\b");
+            var matches = Regex.Matches(text, @"\b20\d\d(?=[^\d])");
 
             if (matches.Count >= 2 )
             {
@@ -95,6 +122,13 @@ namespace Smart.Parser.Lib
         static private bool IsHeader(Row r)
         {
             var cells = r.Cells;
+
+            if (cells.Count() < 5)
+                return false;
+
+            if (cells[0].Text.IsNullOrWhiteSpace())
+                return false;
+
             string text = "";
             int nonEmptyCellCount = 0;
             foreach (var cell in cells)

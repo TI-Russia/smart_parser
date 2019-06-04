@@ -374,7 +374,7 @@ namespace Smart.Parser
 
             if (columnOrdering.Title != null)
             {
-                Logger.Info("Declaration Title: {0} ", columnOrdering.Title.Substring(0, 80));
+                Logger.Info("Declaration Title: {0} ", columnOrdering.Title);
             }
             if (columnOrdering.Year != null)
             {

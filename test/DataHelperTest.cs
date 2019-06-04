@@ -176,5 +176,26 @@ namespace test
 
         }
 
+        [TestMethod]
+        public void TestParseDocumentFileName()
+        {
+            string file1 = @"C:\Users\user\Dropbox\RawDeclarations\Ministries\min_agr_new\2013\9037\dep_gos_slyzhbi_2013.xls";
+            string file2 = @"C:\Users\user\Dropbox\RawDeclarations\Ministries\min_agr_new\2014\30202.xls";
+
+            int? id;
+            string archive_file;
+
+            bool result = DataHelper.ParseDocumentFileName(file1, out id, out archive_file);
+            Assert.IsTrue(result);
+            Assert.AreEqual(9037, id.Value);
+            Assert.AreEqual("dep_gos_slyzhbi_2013.xls", archive_file);
+
+            result = DataHelper.ParseDocumentFileName(file2, out id, out archive_file);
+            Assert.IsTrue(result);
+            Assert.AreEqual(30202, id.Value);
+            Assert.AreEqual(null, archive_file);
+
+        }
+
     }
 }

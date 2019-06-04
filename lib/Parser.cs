@@ -84,12 +84,21 @@ namespace Smart.Parser.Lib
         public Declaration Parse()
         {
             FirstPassStartTime = DateTime.Now;
+
+            // parse filename
+            int? id;
+            string archive;
+            bool result = DataHelper.ParseDocumentFileName(Adapter.DocumentFile, out id, out archive);
+
             DeclarationProperties properties = new DeclarationProperties()
             {
                 Title = Adapter.ColumnOrdering.Title,
                 MinistryName = Adapter.ColumnOrdering.MinistryName,
                 Year = Adapter.ColumnOrdering.Year,
-                SheetName = Adapter.GetWorksheetName()
+                SheetName = Adapter.GetWorksheetName(),
+                documentfile_id = id,
+                archive_file = archive,
+                sheet_number = Adapter.GetWorksheetIndex()
             };
 
             Declaration declaration = new Declaration()
@@ -112,13 +121,15 @@ namespace Smart.Parser.Lib
             }
             for (row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
-                if (Adapter.GetCell(row, 0) == null)
+                Row currRow = Adapter.GetRow(row);
+                if (currRow == null || currRow.IsEmpty())
                 {
                     continue;
                 }
+
                 // строка - разделитель
                 string name;
-                if (ColumnDetector.IsSection(Adapter.GetRow(row), out name))
+                if (ColumnDetector.IsSection(currRow, out name))
                 //if (Adapter.GetCell(row, 0).MergedColsCount > 1)
                 {
                     //string name = Adapter.GetCell(row, 0).Text;
@@ -126,7 +137,7 @@ namespace Smart.Parser.Lib
                     //{
                     currentSection = new DeclarationSection() { Row = row, Name = name };
                     declaration.Sections.Add(currentSection);
-                    Logger.Debug(String.Format("find section at line {0}", row));
+                    Logger.Debug(String.Format("find section at line {0}:'{1}'", row, name));
                     currentServant = null;
                     if (currentPerson != null)
                     {
