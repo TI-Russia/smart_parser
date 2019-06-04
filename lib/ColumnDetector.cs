@@ -168,6 +168,42 @@ namespace Smart.Parser.Lib
             return headerRowNum;
         }
 
+        static void SecondLevelHeader(IAdapter adapter, int parentRow, Cell parentCell, ColumnOrdering result)
+        {
+            string text = parentCell.GetText(true);
+            int rowSpan = parentCell.MergedRowsCount;
+            Row auxRow = adapter.Rows[parentRow + rowSpan];
+
+            foreach (var auxCell in auxRow.Cells)
+            {
+                if (auxCell.Col < parentCell.Col)
+                    continue;
+                if (auxCell.Col >= parentCell.Col + parentCell.MergedColsCount)
+                    break;
+
+                string cellText = auxCell.GetText(true);
+                string fullText = text + " " + cellText;
+
+                DeclarationField field = DeclarationField.None;
+                //  пустая колонка страны (предыдущая колонка - площадь
+                if (cellText == "" && field == DeclarationField.StatePropertySquare)
+                {
+                    field = DeclarationField.StatePropertyCountry;
+                }
+                else
+                {
+                    field = HeaderHelpers.TryGetField(fullText);
+                }
+
+
+                if (field == DeclarationField.None)
+                {
+                    throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", auxCell.Row, auxCell.Col, fullText));
+                }
+                result.Add(field, auxCell.Col);
+            }
+
+        }
 
         static public ColumnOrdering ExamineHeader(IAdapter t)
         {
@@ -176,11 +212,11 @@ namespace Smart.Parser.Lib
             var header = t.Rows[headerRowNum];
 
             int colCount = 0;
-            int index = 0;
             int headerRows = 1;
             foreach (var cell in header.Cells)
             {
                 string text = cell.GetText(true);
+                Logger.Debug("column title: " + text);
 
                 if (text == "")
                 {
@@ -192,18 +228,16 @@ namespace Smart.Parser.Lib
                     headerRows = Math.Max(headerRows, cell.MergedRowsCount);
                 }
 
-                DeclarationField field;
                 if (cell.MergedColsCount <= 1)
                 {
                     if (!text.IsNullOrWhiteSpace())
                     {
-                        field = HeaderHelpers.GetField(text.Replace('\n', ' '));
+                        DeclarationField field = HeaderHelpers.GetField(text.Replace('\n', ' '));
                         if (field == DeclarationField.None)
                         {
                             throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerRowNum, colCount));
                         }
                         res.Add(field, cell.Col);
-                        index++;
                         colCount++;
                     }
                 }
@@ -211,46 +245,7 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
-                    int rowSpan = cell.MergedRowsCount;
-                    Row auxRow = t.Rows[headerRowNum + rowSpan];
-                    var auxCellsIter = auxRow.Cells.GetEnumerator();
-
-                    field = DeclarationField.None;
-                    while (auxCellsIter.MoveNext())
-                    {
-                        var auxCell = auxCellsIter.Current;
-                        if (auxCell.Col < cell.Col)
-                            continue;
-                        if (auxCell.Col >= cell.Col + cell.MergedColsCount)
-                            break;
-
-
-
-                        {
-                            string cellText = auxCell.GetText(true);
-                            string fullText = text + " " + cellText;
-
-                            //  пустая колонка страны (предыдущая колонка - площадь
-                            if (cellText == "" && field == DeclarationField.StatePropertySquare)
-                            {
-                                field = DeclarationField.StatePropertyCountry;
-                            }
-                            else
-                            {
-                                field = HeaderHelpers.TryGetField(fullText);
-                            }
-
-
-                            if (field == DeclarationField.None)
-                            {
-                                throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", auxCell.Row, auxCell.Col, fullText));
-                            }
-                            res.Add(field, auxCell.Col);
-                            index++;
-                        }
-
-                    }
-
+                    SecondLevelHeader(t, headerRowNum, cell, res);
                     colCount += cell.MergedColsCount;
                 }
 

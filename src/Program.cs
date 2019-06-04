@@ -33,7 +33,7 @@ namespace Smart.Parser
             CMDLineParser.Option verboseOpt = parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
-            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft or xceed, by default is aspose", false);
+            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft, xceed or prod, by default is aspose", false);
             CMDLineParser.Option maxRowsToProcessOpt = parser.AddIntParameter("-max-rows", "max rows to process from the input file", false);
             CMDLineParser.Option dumpColumnOpt  = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
             parser.AddHelpOption();
