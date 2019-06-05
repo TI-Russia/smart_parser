@@ -123,9 +123,16 @@ namespace Smart.Parser
                 return 1;
             }
 
+            bool isDirectory = (File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
+
+            if (isDirectory)
+            {
+                return ParseDirectory(declarationFile);
+            }
+
             if (declarationFile.Contains("*") || declarationFile.Contains("?") || declarationFile.StartsWith("@"))
             {
-                return ParseMultipleFiles(declarationFile);
+                return ParseByFileMask(declarationFile);
             }
 
             try
@@ -164,7 +171,14 @@ namespace Smart.Parser
             return 0;
         }
 
-        public static int ParseMultipleFiles(string fileMask)
+        private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx";
+        public static int ParseDirectory(string dirName)
+        {
+            string[] files = Directory.GetFiles(dirName, SupportedFileTypesPattern);
+            return ParseMultipleFiles(Directory.GetFiles(dirName), dirName);
+        }
+
+        public static int ParseByFileMask(string fileMask)
         {
             string[] files = null;
             if (fileMask.StartsWith("@"))
@@ -176,7 +190,7 @@ namespace Smart.Parser
 
             }
             else
-            { 
+            {
                 Logger.Info("Parsing files by mask " + fileMask);
 
                 files = Directory.GetFiles(Path.GetDirectoryName(fileMask), Path.GetFileName(fileMask),
@@ -185,6 +199,11 @@ namespace Smart.Parser
 
             Logger.Info("Found {0} files", files.Count());
 
+            return ParseMultipleFiles(files, Path.GetDirectoryName(fileMask));
+        }
+
+        public static int ParseMultipleFiles(IEnumerable<string> files, string outputDir)
+        {
             var parse_results = new Dictionary<string, List<string>>
             {
                 { "ok", new List<string>() },
@@ -260,7 +279,7 @@ namespace Smart.Parser
             {
                 Logger.Info("UnknownRealEstate.Count: {0}", Logger.UnknownRealEstate.Count());
                 string content = string.Join("\n", Logger.UnknownRealEstate);
-                string dictfile = Path.Combine(Path.GetDirectoryName(fileMask), "UnknownRealEstate.txt");
+                string dictfile = Path.Combine(outputDir, "UnknownRealEstate.txt");
                 File.WriteAllText(dictfile, content);
                 Logger.Info("Output UnknownRealEstate to file {0}", dictfile);
             }

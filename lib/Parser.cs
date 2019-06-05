@@ -279,7 +279,7 @@ namespace Smart.Parser.Lib
             {
                 Logger.Error(CurrentRow, "wrong ownership type: {0}", prop.own_type_raw);
             }
-            if (prop.PropertyType == 0)
+            if (prop.PropertyType == RealEstateType.None)
             {
                 Logger.Error(CurrentRow, "wrong property type: {0}", prop.type_raw);
             }
