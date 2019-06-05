@@ -19,26 +19,6 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
-        /*static public bool IsTitleRow(Row r)
-        {
-            int cell_count = r.Cells.Count();
-            if (cell_count == 0)
-                return false;
-            string text = r.Cells[0].GetText(true);
-
-            int merged_col_count = r.Cells[0].MergedColsCount;
-
-            if (merged_col_count < 5)
-                return false;
-
-            int text_len = text.Length;
-
-            if (text_len < 20)
-                return false;
-
-            return true;
-        }
-        */
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
