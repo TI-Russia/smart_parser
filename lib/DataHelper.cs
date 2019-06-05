@@ -127,11 +127,16 @@ namespace Smart.Parser.Lib
                                           .Replace('\n', ' ')
                                           .Replace(';', ' ')
                                           .Replace("не имеет", "")
-                                          .Replace("   ", " ")
-                                          .Replace("  ", " ")
+                                          .CoalesceWhitespace()
                                           .Trim();
-
+            
             RealEstateType type = DeclaratorApiPatterns.TryParseRealEstateType(key);
+            if (type == RealEstateType.None)
+            {
+                // if unable to parse unmodified entry, attempt to account for word splitting
+                string tweakedKey = key.Replace("-", "");
+                type = DeclaratorApiPatterns.TryParseRealEstateType(key);
+            }
             return type;
         }
 
