@@ -19,33 +19,7 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
-        static public bool IsSection(Row r, out string text)
-        {
-            text = null;
-            if (r.Cells.Count == 0)
-            {
-                return false;
-            }
-            int merged_row_count = r.Cells[0].MergedRowsCount;
-            int cell_count = r.Cells.Count();
-
-            if (merged_row_count > 1)
-            {
-                return false;
-            }
-
-            int merged_col = r.Cells[0].MergedColsCount;
-            if (merged_col < 5)
-            {
-                return false;
-            }
-
-            text = r.Cells[0].GetText(true);
-
-            return true;
-        }
-
-        static public bool IsTitleRow(Row r)
+        /*static public bool IsTitleRow(Row r)
         {
             int cell_count = r.Cells.Count();
             if (cell_count == 0)
@@ -61,9 +35,10 @@ namespace Smart.Parser.Lib
 
             if (text_len < 20)
                 return false;
+
             return true;
         }
-
+        */
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
@@ -122,7 +97,7 @@ namespace Smart.Parser.Lib
 
         static int ProcessTitle(IAdapter adapter, ColumnOrdering res)
         {
-            int headerRowNum = 0;
+            int row = 0;
             string title = null;
             string ministry = null;
             int? year = null;
@@ -130,24 +105,29 @@ namespace Smart.Parser.Lib
             bool findTitle = false;
             while (true)
             {
+                Row currRow = adapter.Rows[row];
                 string section_text;
-                if (IsTitleRow(adapter.Rows[headerRowNum]))
+                bool isSection = adapter.IsSectionRow(currRow, out section_text);
+                if (isSection)
                 {
-                    if (GetValuesFromTitle(adapter.Rows[headerRowNum].Cells[0].GetText(true), ref title, ref year, ref ministry))
+                    if (section_text.Length > 20)
                     {
-                        findTitle = true;
+                        if (GetValuesFromTitle(section_text, ref title, ref year, ref ministry))
+                        {
+                            findTitle = true;
+                        }
+                    }
+                    else
+                    {
+                        res.Section = section_text;
                     }
                 }
-                else if (IsSection(adapter.Rows[headerRowNum], out section_text))
-                {
-                    res.Section = section_text;
-                }
-                if (IsHeader(adapter.Rows[headerRowNum]))
+                else if (IsHeader(currRow))
                     break;
 
-                headerRowNum++;
+                row +=  1;
 
-                if (headerRowNum >= adapter.GetRowsCount())
+                if (row >= adapter.GetRowsCount())
                 {
                     throw new ColumnDetectorException(String.Format("Headers not found"));
                 }
@@ -165,7 +145,7 @@ namespace Smart.Parser.Lib
                 res.Year = year;
                 res.MinistryName = ministry;
             }
-            return headerRowNum;
+            return row;
         }
 
         static void SecondLevelHeader(IAdapter adapter, int parentRow, Cell parentCell, ColumnOrdering result)
@@ -206,11 +186,11 @@ namespace Smart.Parser.Lib
 
         }
 
-        static public ColumnOrdering ExamineHeader(IAdapter t)
+        static public ColumnOrdering ExamineHeader(IAdapter adapter)
         {
             ColumnOrdering res = new ColumnOrdering();
-            int headerRowNum = ProcessTitle(t, res);
-            var header = t.Rows[headerRowNum];
+            int headerRowNum = ProcessTitle(adapter, res);
+            var header = adapter.Rows[headerRowNum];
 
             int colCount = 0;
             int headerRows = 1;
@@ -229,7 +209,7 @@ namespace Smart.Parser.Lib
                     headerRows = Math.Max(headerRows, cell.MergedRowsCount);
                 }
                 string dummy = "";
-                if (cell.MergedColsCount <= 1 || IsSection(t.Rows[headerRowNum + cell.MergedRowsCount], out dummy))
+                if (cell.MergedColsCount <= 1 || adapter.IsSectionRow(adapter.Rows[headerRowNum + cell.MergedRowsCount], out dummy))
                 {
                     if (!text.IsNullOrWhiteSpace())
                     {
@@ -246,7 +226,7 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
-                    SecondLevelHeader(t, headerRowNum, cell, res);
+                    SecondLevelHeader(adapter, headerRowNum, cell, res);
                     colCount += cell.MergedColsCount;
                 }
 
@@ -255,8 +235,8 @@ namespace Smart.Parser.Lib
             int firstDataRow = headerRowNum + headerRows;
 
             // пропускаем колонку с номерами
-            string cellText1 = t.GetCell(firstDataRow, 0).GetText();
-            string cellText2 = t.GetCell(firstDataRow, 1).GetText();
+            string cellText1 = adapter.GetCell(firstDataRow, 0).GetText();
+            string cellText2 = adapter.GetCell(firstDataRow, 1).GetText();
             if (cellText1 == "1" && cellText2 == "2")
             {
                 firstDataRow++;

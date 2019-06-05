@@ -11,7 +11,7 @@ namespace Smart.Parser.Adapters
     public class Cell
     {
         //Gets the grid span of this cell (how many cells are merged).
-        public virtual int GridSpan { get { return MergedColsCount;  } } 
+        public virtual int GridSpan { get { return MergedColsCount; } }
         public virtual bool IsMerged { set; get; } = false;
         public virtual int FirstMergedRow { set; get; } = -1;
         public virtual int MergedRowsCount { set; get; } = -1;
@@ -46,7 +46,7 @@ namespace Smart.Parser.Adapters
         {
             this.row = row;
             this.adapter = adapter;
-            Cells = adapter.GetCells(row); 
+            Cells = adapter.GetCells(row);
         }
 
         public string GetContents(DeclarationField field)
@@ -68,7 +68,7 @@ namespace Smart.Parser.Adapters
 
         public List<Cell> Cells { get; set; }
         IAdapter adapter;
-        int row; 
+        int row;
     }
 
     public class Rows
@@ -126,7 +126,7 @@ namespace Smart.Parser.Adapters
         {
             return GetCell(row, Field2Col(field));
         }
-        
+
         public string GetContents(int row, DeclarationField field)
         {
             return GetDeclarationField(row, field).GetText(true);
@@ -190,7 +190,40 @@ namespace Smart.Parser.Adapters
 
             return true;
         }
-
-
+        public bool IsSectionRow(Row r, out string text)
+        {
+            text = null;
+            if (r.Cells.Count == 0)
+            {
+                return false;
+            }
+            int maxMergedCols = 0;
+            string rowText = "";
+            int cellsWithTextCount = 0;
+            foreach (var c in r.Cells)
+            {
+                maxMergedCols = Math.Max(c.MergedColsCount, maxMergedCols);
+                if (c.Text.Trim(' ', '\n').Length > 0)
+                {
+                    rowText += c.Text;
+                    cellsWithTextCount++;
+                }
+            }
+            rowText = rowText.Trim(' ', '\n');
+            if (cellsWithTextCount == 1) {
+                // possible title, exact number of not empty columns is not yet defined
+                if (maxMergedCols > 5 && rowText.Contains("Сведения о"))
+                {
+                    text = rowText;
+                    return true;
+                };
+                if (rowText.Length > 10 && maxMergedCols > GetColsCount() * 0.7)
+                {
+                    text = rowText;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

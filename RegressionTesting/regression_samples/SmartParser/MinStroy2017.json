@@ -1,0 +1,242 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Аляшетдинов М.Т.",
+        "name_raw": "Аляшетдинов М.Т.",
+        "role": "Помощник Министра"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": "2492968,85",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "65",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "65",
+          "share_amount_raw": "Индивидуальная",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "66,6",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "66,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "мотоцикл kawasaki EX650K",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Антипина Н.Н.",
+        "name_raw": "Антипина Н.Н.",
+        "role": "Статс-секретарь - заместитель Министра"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": "2596641,27",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "50,9",
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "50,9",
+          "share_amount_raw": "Индивидуальная",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "type": "Квартира",
+          "square": "35,7",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "35,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой АУДИ A3",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Антонов В.В.",
+        "name_raw": "Антонов В.В.",
+        "role": "Заместитель директора департамента"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": "1424966,69",
+          "relative": null
+        },
+        {
+          "size": "1200000",
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Жилой дом",
+          "type": "Жилой дом",
+          "square": "134",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "134",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом"
+        },
+        {
+          "text": "Земельный участок",
+          "type": "Земельный участок",
+          "square": "1200",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "1200",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок"
+        },
+        {
+          "text": "Жилой дом",
+          "type": "Жилой дом",
+          "square": "134",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "134",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом"
+        },
+        {
+          "text": "Земельный участок",
+          "type": "Земельный участок",
+          "square": "1200",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "1200",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок"
+        },
+        {
+          "text": "Жилой дом",
+          "type": "Жилой дом",
+          "square": "134",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "134",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом"
+        },
+        {
+          "text": "Земельный участок",
+          "type": "Земельный участок",
+          "square": "1200",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "1200",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок"
+        },
+        {
+          "text": "Жилой дом",
+          "type": "Жилой дом",
+          "square": "134",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "134",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом"
+        },
+        {
+          "text": "Земельный участок",
+          "type": "Земельный участок",
+          "square": "1200",
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "1200",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Прицеп МЗСА 81771Д",
+          "relative": null
+        },
+        {
+          "text": "Маломерное судно Сарепта Сарепта",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства строительства и жилищно-коммунального хозяйства Российской Федерации, за период с 1 января 2017 г. по 31 декабря 2017 г.",
+    "year": 2017
+  }
+}

@@ -127,9 +127,9 @@ namespace RegressionTesting
         [DeploymentItem("log4net.config")]
         [DeploymentItem("import-schema.json")]
         [DeploymentItem("import-schema-dicts.json")]
-        public void TestSmartParserBasic()
+        public void MinDalVostok2015()
         {
-            TestSmartParser("SmartParser\\basic.xlsx", "npoi");
+            TestSmartParser("SmartParser\\MinDalVostok2015.xlsx", "prod");
         }
 
         [TestMethod]
@@ -239,7 +239,7 @@ namespace RegressionTesting
         [DeploymentItem("import-schema-dicts.json")]
         public void MinEkon2013()
         {
-            TestSmartParser("SmartParser\\MinEkon2013.docx", "xceed");
+            TestSmartParser("SmartParser\\MinEkon2013.docx", "prod");
         }
 
         [TestMethod]
@@ -285,7 +285,36 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinSevKavkaz2015.docx", "xceed");
         }
 
-        
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinObr2016()
+        {
+            TestSmartParser("SmartParser\\MinObr2016.xlsx", "prod");
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void Fsin2013()
+        {
+            TestSmartParser("SmartParser\\fsin2013.docx", "prod") ;
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinStroy2017()
+        {
+            TestSmartParser("SmartParser\\MinStroy2017.xlsx", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {

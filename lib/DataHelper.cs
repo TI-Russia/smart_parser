@@ -45,6 +45,7 @@ namespace Smart.Parser.Lib
                 case "супруга(супруг)": return RelationType.Spouse;
                 case "суруга": return RelationType.Spouse;
                 case "супруга": return RelationType.Spouse;
+                case "супруг(а)": return RelationType.Spouse;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
                 case "несовершеннолетнийребенок": return RelationType.Child;

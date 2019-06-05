@@ -152,7 +152,7 @@ namespace Smart.Parser.Lib
                 }
                 // строка - разделитель
                 string name;
-                if (ColumnDetector.IsSection(currRow, out name))
+                if (Adapter.IsSectionRow(currRow, out name))
                 {
                     currentSection = new DeclarationSection() { Row = row, Name = name };
                     declaration.Sections.Add(currentSection);
@@ -168,7 +168,8 @@ namespace Smart.Parser.Lib
                 int merged_row_count = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
-                if  (nameOrRelativeType == "" &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
+                bool isNameOrRelativeTypeEmpty = DataHelper.IsEmptyValue(nameOrRelativeType);
+                if  (isNameOrRelativeTypeEmpty &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
                 {
                     nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
                 }
@@ -179,7 +180,7 @@ namespace Smart.Parser.Lib
                     occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
                 }
 
-                if (String.IsNullOrWhiteSpace(nameOrRelativeType))
+                if (isNameOrRelativeTypeEmpty)
                 {
                     if (currentPerson == null)
                     {
