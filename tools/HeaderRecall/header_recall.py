@@ -1,9 +1,10 @@
 import shutil
+import sys
 import os
+import time
 import argparse
 from multiprocessing import Pool
 import signal
-import re
 import json
 
 
@@ -16,7 +17,8 @@ def parse_args():
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes", default=4, type=int)
-    parser.add_argument("-e", dest='extensions',  action='append',  default=['doc', 'docx', 'pdf', 'xls', 'xlsx'], help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
+    parser.add_argument("-e", dest='extensions',  default=[], action='append',  help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
+    
     return parser.parse_args()
 
 
@@ -69,42 +71,41 @@ def kill_process_windows(pid):
     os.system("taskkill /F /T /PID " + str(pid))
 
 
-def kill_process_children():
-    import psutil
-    parent = psutil.Process(os.getpid())
-    pids = list (child.pid for child in parent.children())  # or parent.children() for recursive=False\
-    for pid in pids:
-        print ("kill {}".format(pid))
-        kill_process_windows(pid)
-
 def fix_encoding(line):
     return line.encode('utf8', 'ignore').decode('utf8')
 
 class ProcessOneFile(object):
-    def __init__(self, args):
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
+    def __init__(self, args, parent_pid):
         self.args = args
+        self.parent_pid = parent_pid
 
     def __call__(self, filename):
         smart_parser = os.path.abspath(self.args.smart_parser)
         log = filename + ".stdout"
-        cmd = "{} -max-rows 100  -adapter prod \"{}\" > \"{}\" ".format(smart_parser, filename, log)
+        cmd = "{} -v debug -max-rows 100  -adapter prod \"{}\" > \"{}\" ".format(smart_parser, filename, log)
         print(fix_encoding(cmd))
         try:
             os.system(cmd)
         except KeyboardInterrupt:
-            kill_process_children()
+            kill_process_windows(self.parent_pid)
+
 
 
 def process(args):
     if args.smart_parser is None:
         raise Exception("specify --smart-parser argument")
+
     filenames = read_file_list(args)
+    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     pool = Pool(args.parallel_pool_size)
+    signal.signal(signal.SIGINT, original_sigint_handler)
     try:
-        pool.map(ProcessOneFile(args), filenames)
+        res = pool.map(ProcessOneFile(args, os.getpid()), filenames)
     except KeyboardInterrupt:
+        print ("stop processing...")
         pool.terminate()
+    else:
+        pool.close()
 
 #======================= report ========================
 class TCorpusFile:
@@ -145,6 +146,9 @@ def report(args):
 
 if __name__ == '__main__':
     args = parse_args()
+    if args.extensions == []:
+        args.extensions=['doc', 'docx', 'pdf', 'xls', 'xlsx']
+
     if args.action == 'full' or args.action == 'copy_data':
         copy_data(args)
 
