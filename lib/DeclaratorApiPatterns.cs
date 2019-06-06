@@ -185,6 +185,7 @@ namespace Smart.Parser.Lib
             countryDict["россия"] = "россия";
             countryDict["российская федерация"] = "россия";
             countryDict[""] = "россия";
+            countryDict["рф"] = "россия";
             countryDict["республика болгария"] = "болгария";
         }
 

@@ -388,6 +388,10 @@ namespace Smart.Parser.Lib
                     person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s1) * 1000;
                     return true;
                 }
+                else
+                {
+                    return false;
+                }
             }
             string s2 = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
             if (s2 != "")

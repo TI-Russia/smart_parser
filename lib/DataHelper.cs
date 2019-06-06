@@ -301,11 +301,16 @@ namespace Smart.Parser.Lib
 
         public static Country TryParseCountry(string strCountry)
         {
-            if (IsEmptyValue(strCountry))
+            string strCountryCleaned = strCountry.Replace("\n", " ")
+                                                 .CoalesceWhitespace()
+                                                 .Trim('-')
+                                                 .Trim()
+                                                 .ToLower();
+            if (IsEmptyValue(strCountryCleaned))
             {
                 return Country.None;
             }
-            switch (strCountry.Trim().ToLower())
+            switch (strCountryCleaned)
             {
                 case "беларусь": return Country.Belarus;
                 case "республика беларусь": return Country.Belarus;
@@ -317,6 +322,7 @@ namespace Smart.Parser.Lib
                 case "россии": return Country.Russia;
                 case "россия": return Country.Russia;
                 case "россия-": return Country.Russia;
+                case "рф": return Country.Russia;
                 case "сша": return Country.Usa;
                 case "таиланд": return Country.Thailand;
                 case "украина": return Country.Ukraine;

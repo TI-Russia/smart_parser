@@ -51,12 +51,12 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
             return DeclarationField.None;
-            //throw new Exception($"Could not determine column type for header {str}.");
         }
 
         private static string NormalizeString(string str)
         {
-            return string.Join(" ", str.ToLower().Split(new char[] {' ', '\n', '\t'}, StringSplitOptions.RemoveEmptyEntries));
+            return string.Join(" ", str.ToLower().Split(new char[] {' ', '\n', '\t'}, StringSplitOptions.RemoveEmptyEntries))
+                         .RemoveStupidTranslit();
         }
 
         private static bool IsNumber(this string str)
@@ -73,7 +73,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsRelativeType(this string s)
         {
-            return s.Contains("члены семьи") && !s.IsName();
+            return (s.Contains("члены семьи") || s.Contains("степень родства")) && !s.IsName();
         }
 
         private static bool IsOccupation(this string s)
@@ -211,6 +211,7 @@ namespace TI.Declarator.ParserCommon
                     || strLower.Contains("суммадохода") 
                     || strLower.Contains("декларированныйдоход")
                     || strLower.Contains("декларированногодохода")
+                    || strLower.Contains("общая сумма дохода")
                    );
         }
 
