@@ -211,12 +211,6 @@ namespace Smart.Parser.Adapters
             return workSheetName;
         }
 
-        public override int GetWorksheetIndex()
-        {
-            return worksheet.Index;
-        }
-
-
         private Aspose.Cells.Workbook workbook;
         private Aspose.Cells.Worksheet worksheet;
         private int totalRows;
