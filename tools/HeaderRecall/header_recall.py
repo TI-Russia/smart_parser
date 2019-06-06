@@ -16,7 +16,7 @@ def parse_args():
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes", default=4, type=int)
-    parser.add_argument("-e", dest='extensions',  action='append',  help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
+    parser.add_argument("-e", dest='extensions',  action='append',  default=['doc', 'docx', 'pdf', 'xls', 'xlsx'], help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
     return parser.parse_args()
 
 
@@ -63,8 +63,11 @@ def read_file_list(args):
         for x in  file_list_stream:
             yield x.strip()
 
+
+
 def kill_process_windows(pid):
     os.system("taskkill /F /T /PID " + str(pid))
+
 
 def kill_process_children():
     import psutil
@@ -74,6 +77,8 @@ def kill_process_children():
         print ("kill {}".format(pid))
         kill_process_windows(pid)
 
+def fix_encoding(line):
+    return line.encode('utf8', 'ignore').decode('utf8')
 
 class ProcessOneFile(object):
     def __init__(self, args):
@@ -81,13 +86,15 @@ class ProcessOneFile(object):
         self.args = args
 
     def __call__(self, filename):
-        cmd = "{} -max-rows 100  -adapter prod \"{}\"  ".format(self.args.smart_parser, filename);
-        print(cmd)
+        smart_parser = os.path.abspath(self.args.smart_parser)
+        log = filename + ".stdout"
+        cmd = "{} -max-rows 100  -adapter prod \"{}\" > \"{}\" ".format(smart_parser, filename, log)
+        print(fix_encoding(cmd))
         try:
-            #subprocess.Popen(cmd, shell=True, stdout=None, stderr=None)
-            os.popen(cmd).read()
+            os.system(cmd)
         except KeyboardInterrupt:
             kill_process_children()
+
 
 def process(args):
     if args.smart_parser is None:
@@ -103,7 +110,7 @@ def process(args):
 class TCorpusFile:
     def __init__(self, sourcefile):
         self.SourceFile = sourcefile
-        s  = sourcefile[:sourcefile.rfind('.')]  + ".json"
+        s  = sourcefile[:sourcefile.rfind('.')] + ".json"
         self.JsonFile = s if os.path.exists(s) else None
         self.SourceFileSize = os.path.getsize(self.SourceFile)
 
