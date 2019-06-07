@@ -62,9 +62,10 @@ def copy_data(args):
 #======================= run smart_parser ========================
 def read_file_list(args):
     with open(args.file_list, "r") as file_list_stream:
-        for x in  file_list_stream:
-            yield x.strip()
-
+        for filename in  file_list_stream:
+            filename = filename.strip()
+            if check_extension(filename, args.extensions):
+                yield filename
 
 
 def kill_process_windows(pid):

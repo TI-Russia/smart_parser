@@ -9,6 +9,7 @@ using NPOI.XSSF.UserModel;
 using Microsoft.Office.Interop.Excel;
 
 using TI.Declarator.ParserCommon;
+using Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
@@ -24,6 +25,7 @@ namespace Smart.Parser.Adapters
             Application excel = new Application();
             var doc = excel.Workbooks.Open(Path.GetFullPath(filename));
             TempFileName = Path.GetTempFileName();
+            Logger.Debug(string.Format("use {0} to store temp xlsx file", TempFileName));
             excel.DisplayAlerts = false;
             doc.SaveAs(
                 Filename:TempFileName,
@@ -32,6 +34,7 @@ namespace Smart.Parser.Adapters
                 WriteResPassword: "");
             doc.Close();
             excel.Quit();
+            excel = null;
             return TempFileName;
         }
 
@@ -43,8 +46,9 @@ namespace Smart.Parser.Adapters
             {
                 fileName = ConvertFile2TempXlsX(fileName);
             }
-
-            WorkBook = new XSSFWorkbook(Path.GetFullPath(fileName));
+            StreamReader file = new StreamReader(Path.GetFullPath(fileName));
+            WorkBook = new XSSFWorkbook(file.BaseStream);
+            //WorkBook = new XSSFWorkbook(Path.GetFullPath(fileName));
             EmptyCell = new Cell();
             MaxRowsToProcess = maxRowsToProcess;
         }
