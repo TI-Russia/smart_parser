@@ -37,6 +37,7 @@ namespace Smart.Parser.Adapters
 
         public NpoiExcelAdapter(string fileName, int maxRowsToProcess = -1)
         {
+            DocumentFile = fileName;
             TempFileName = null;
             string extension = Path.GetExtension(fileName);
             if (extension == ".xls")

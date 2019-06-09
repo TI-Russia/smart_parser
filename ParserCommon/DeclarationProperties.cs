@@ -10,5 +10,9 @@ namespace TI.Declarator.ParserCommon
         public int? Year { get; set; }
         public string MinistryName { get; set; }
         public string SheetName { get; set; }
+        public int? documentfile_id { get; set; }
+        public string archive_file { get; set; }
+        public int? sheet_number { get; set; }
+        public string sheet_title { get; set; }
     }
 }

@@ -110,6 +110,7 @@ namespace Smart.Parser.Adapters
 
         public XceedWordAdapter(string fileName, int maxRowsToProcess)
         {
+            DocumentFile = fileName;
             string extension = Path.GetExtension(fileName);
             bool removeTempFile = false;
             if (    extension == ".html"
@@ -120,6 +121,7 @@ namespace Smart.Parser.Adapters
                 fileName = ConvertFile2TempDocX(fileName);
                 removeTempFile = true;
             }
+
 
             using (DocX doc = DocX.Load(fileName))
             {
