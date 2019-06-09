@@ -352,6 +352,7 @@ namespace Smart.Parser
 
             Logger.Info(String.Format("Parsing {0}", declarationFile));
             IAdapter adapter = GetAdapter(declarationFile);
+            string declarationFileName = Path.GetFileName(declarationFile);
             if (adapter.GetWorkSheetCount() > 1)
             {
                 Logger.Info(String.Format("File has multiple ({0}) worksheets", adapter.GetWorkSheetCount()));
@@ -360,13 +361,12 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseOneFile(adapter, curOutFile);
-
+                    ParseOneFile(adapter, curOutFile, declarationFileName);
                 }
             }
             else
             {
-                ParseOneFile(adapter, outFile);
+                ParseOneFile(adapter, outFile, declarationFileName);
             }
             adapter = null;
 
@@ -419,10 +419,15 @@ namespace Smart.Parser
             }
         }
 
-        public static int ParseOneFile(IAdapter adapter, string outFile)
+        public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFileName)
         {
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
+            // Try to extract declaration year from file name if we weren't able to get it from document title
+            if (!columnOrdering.Year.HasValue)
+            {
+                columnOrdering.Year = declarationFileName.ExtractYear();
+            }
             adapter.ColumnOrdering = columnOrdering;
 
 

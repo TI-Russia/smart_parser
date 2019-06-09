@@ -31,7 +31,7 @@ namespace TI.Declarator.ParserCommon
         }
 
         /// <summary>
-        /// Extract a four-digit representation of year from given string
+        /// Extracts a four-digit representation of year from given string
         /// and converts it to an integer
         /// </summary>
         /// <param name="str"></param>
