@@ -1,528 +1,697 @@
 {
   "$id": "http://declarator.org/static/api/import-schema.json",
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "person": {
-        "$id": "/properties/person",
+  "type": "object",
+  "properties": {
+    "persons": {
+      "$id": "/properties/persons",
+      "type": "array",
+      "items": {
         "type": "object",
         "properties": {
-          "name": {
-            "$id": "/properties/person/properties/name",
-            "type": "string",
-            "title": "Фамилия Имя Отчество (или с формате \"Фамилия И.О.\")",
-            "default": "",
-            "examples": [
-              "Бродский Михаил Наумович", 
-              "Бродский М. Н.", 
-              "Бродский М.Н."
+          "person": {
+            "$id": "/properties/persons/properties/person",
+            "type": "object",
+            "properties": {
+              "name": {
+                "$id": "/properties/persons/properties/person/properties/name",
+                "type": "string",
+                "title": "Фамилия Имя Отчество (или с формате \"Фамилия И.О.\")",
+                "default": "",
+                "examples": [
+                  "Бродский Михаил Наумович",
+                  "Бродский М. Н.",
+                  "Бродский М.Н."
+                ]
+              },
+              "name_raw": {
+                "$id": "/properties/persons/properties/person/properties/name_raw",
+                "type": "string",
+                "title": "Фамилия Имя Отчество (сырые данные из документа, указывать точно как было)",
+                "default": "",
+                "examples": [
+                  "Бродский МихаиллНаумович",
+                  "Бродский М...Н.",
+                  "БродскийМ.Н."
+                ]
+              },
+              "family_name": {
+                "$id": "/properties/persons/properties/person/properties/family_name",
+                "type": "string",
+                "title": "Фамилия",
+                "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе",
+                "default": "",
+                "examples": [
+                  "Бродский"
+                ]
+              },
+              "given_name": {
+                "$id": "/properties/persons/properties/person/properties/given_name",
+                "type": "string",
+                "title": "Имя",
+                "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе",
+                "default": "",
+                "examples": [
+                  "Михаил"
+                ]
+              },
+              "patronymic_name": {
+                "$id": "/properties/persons/properties/person/properties/patronymic_name",
+                "type": "string",
+                "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе",
+                "title": "Отчество",
+                "default": "",
+                "examples": [
+                  "Наумович"
+                ]
+              },
+              "initials": {
+                "$id": "/properties/persons/properties/person/properties/initials",
+                "type": "string",
+                "description": "Заполняется, только если были в отдельной ячейке/столбце в исходном документе (формат: А.А.)",
+                "title": "Инициалы",
+                "default": "",
+                "examples": [
+                  "М.Н."
+                ]
+              },
+              "role": {
+                "$id": "/properties/persons/properties/person/properties/role",
+                "title": "Должность",
+                "type": [
+                  "string",
+                  "array"
+                ],
+                "items": {
+                  "type": "string",
+                  "examples": [
+                    "Представитель Губернатора Санкт-Петербурга в Законодательном Собрании Санкт-Петербурга"
+                  ]
+                }
+              },
+              "department": {
+                "$id": "/properties/persons/properties/person/properties/department",
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "title": "Департамент в органе власти",
+                "default": "",
+                "examples": [
+                  "Отдел по борьбе с коррупцией"
+                ]
+              }
+            },
+            "required": [
+              "name_raw"
             ]
           },
-          "name_raw": {
-            "$id": "/properties/person/properties/name_raw",
-            "type": "string",
-            "title": "Фамилия Имя Отчество (сырые данные из документа, указывать точно как было)",
-            "default": "",
-            "examples": [
-              "Бродский МихаиллНаумович",
-              "Бродский М...Н.", 
-              "БродскийМ.Н."
-            ]
-          },
-          "family_name": {
-            "$id": "/properties/person/properties/family_name",
-            "type": "string",
-            "title": "Фамилия",
-            "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе",
-            "default": "",
-            "examples": [
-              "Бродский"
-            ]
-          },
-          "given_name": {
-            "$id": "/properties/person/properties/given_name",
-            "type": "string",
-            "title": "Имя",
-            "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе",
-            "default": "",
-            "examples": [
-              "Михаил"
-            ]
-          },
-          "patronymic_name": {
-            "$id": "/properties/person/properties/patronymic_name",
-            "type": "string",
-            "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе",
-            "title": "Отчество",
-            "default": "",
-            "examples": [
-              "Наумович"
-            ]
-          },
-          "initials": {
-            "$id": "/properties/person/properties/initials",
-            "type": "string",
-            "description": "Заполняется, только если были в отдельной ячейке/столбце в исходном документе (формат: А.А.)",
-            "title": "Инициалы",
-            "default": "",
-            "examples": [
-              "М.Н."
-            ]
-          },
-          "role": {
-            "$id": "/properties/person/properties/role",
-            "title": "Должность",
+          "party": {
+            "$id": "/properties/persons/properties/party",
             "type": [
               "string",
-              "array"
+              "null"
             ],
+            "title": "Партия, к которой пренадлежит персона (словарное значение)",
+            "default": "",
+            "examples": [
+              "Единая Россия"
+            ]
+          },
+          "party_raw": {
+            "$id": "/properties/persons/properties/party_raw",
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Партия, к которой пренадлежит персона (сырой текст из декларации)",
+            "default": "",
+            "examples": [
+              "Единая Россия"
+            ]
+          },
+          "incomes": {
+            "$id": "/properties/persons/properties/incomes",
+            "type": "array",
             "items": {
-              "type": "string",
-              "examples": [
-                "Представитель Губернатора Санкт-Петербурга в Законодательном Собрании Санкт-Петербурга"
+              "$id": "/properties/persons/properties/incomes/items",
+              "type": "object",
+              "properties": {
+                "size": {
+                  "$id": "/properties/persons/properties/incomes/items/properties/size",
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "title": "Объём дохода в рублях",
+                  "default": 0,
+                  "examples": [
+                    1474895
+                  ]
+                },
+                "comment": {
+                  "$id": "/properties/persons/properties/incomes/items/properties/comment",
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "title": "Комментарий к доходу (часто указывается в скобках около размера дохода)",
+                  "default": null,
+                  "examples": [
+                    "Доход от продажи квартиры",
+                    "продажа акций на сумму 123556 руб."
+                  ]
+                },
+                "relative": {
+                  "$id": "/properties/persons/properties/incomes/items/properties/relative",
+                  "title": "Родственник",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null,
+                  "enum": [
+                    null,
+                    "Супруг(а)",
+                    "Супруга",
+                    "Супруг",
+                    "Сын",
+                    "Дочь",
+                    "Иное",
+                    "Ребенок"
+                  ],
+                  "examples": [
+                    null
+                  ]
+                },
+                "relative_index": {
+                  "$id": "/properties/persons/properties/incomes/items/properties/relative_index",
+                  "title": "Порядковый номер родственника в списке",
+                  "description": "Используется для того, чтобы различать имущество и доходы детей.",
+                  "type": "number",
+                  "examples": [
+                    1, 2
+                  ]}
+              },
+              "required": [
+                "size"
               ]
             }
+          },
+          "real_estates": {
+            "$id": "/properties/persons/properties/real_estates",
+            "type": "array",
+            "items": {
+              "$id": "/properties/persons/properties/real_estates/items",
+              "type": "object",
+              "properties": {
+                "text": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/text",
+                  "type": "string",
+                  "title": "Полная строка наименования недвижимости, которая была в оригинальном документе (сырое значение)",
+                  "default": "",
+                  "examples": [
+                    "земельный участок для ведения ЛПХ",
+                    "нежилое помещение (машиноместо) (общая долевая собственность, 130/3500)"
+                  ]
+                },
+                "type_raw": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/type_raw",
+                  "title": "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "examples": [
+                    "null",
+                    "Земельный участок"
+                  ]
+                },
+                "type": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/type",
+                  "title": "Тип недвижимости (словарное значение)",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "examples": [
+                    "null",
+                    "Земельный участок"
+                  ]
+                },
+                "square": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/square",
+                  "type": [
+                    "null",
+                    "number"
+                  ],
+                  "title": "Площадь, в квадратных метрах",
+                  "default": 0,
+                  "examples": [
+                    72,
+                    155.5,
+                    150.33
+                  ]
+                },
+                "square_raw": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/square_raw",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Площадь, в квадратных метрах (сырое значение)",
+                  "default": 0,
+                  "examples": [
+                    "100",
+                    "200.333",
+                    "20,5"
+                  ]
+                },
+                "country": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/country",
+                  "title": "Страна расположения недвижимости (словарное значение)",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": "",
+                  "examples": [
+                    "Россия",
+                    null
+                  ]
+                },
+                "country_raw": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/country_raw",
+                  "title": "Страна расположения недвижимости (текст из декларации)",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": "",
+                  "examples": [
+                    "Россия.",
+                    "РФ",
+                    null
+                  ]
+                },
+                "region": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/region",
+                  "title": "Регион расположения недвижимости",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": "",
+                  "examples": [
+                    "Санкт-Петербург",
+                    null
+                  ]
+                },
+                "own_type": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/own_type",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип владения собственности",
+                  "default": "",
+                  "examples": [
+                    "В собственности"
+                  ]
+                },
+                "own_type_raw": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/own_type_raw",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип владения собственности (сырой текст из декларации)",
+                  "default": "",
+                  "examples": [
+                    "В собственности"
+                  ]
+                },
+                "share_amount": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/share_amount",
+                  "title": "Доля в совместной собственности",
+                  "type": [
+                    "null",
+                    "number"
+                  ],
+                  "default": 0,
+                  "examples": [
+                    0.5
+                  ]
+                },
+                "share_amount_raw": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/share_amount_raw",
+                  "title": "Доля в совместной собственности (строковое значение)",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": 0,
+                  "examples": [
+                    "1/3",
+                    "100/3000000"
+                  ]
+                },
+                "relative": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/relative",
+                  "title": "Родственник",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null,
+                  "enum": [
+                    null,
+                    "Супруга",
+                    "Супруг",
+                    "Супруг(а)",
+                    "Сын",
+                    "Дочь",
+                    "Иное",
+                    "Ребенок"
+                  ],
+                  "examples": [
+                    null
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "square",
+                "country",
+                "own_type"
+              ]
+            }
+          },
+          "vehicles": {
+            "$id": "/properties/persons/properties/vehicles",
+            "type": "array",
+            "items": {
+              "$id": "/properties/persons/properties/vehicles/items",
+              "type": "object",
+              "properties": {
+                "text": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/text",
+                  "type": "string",
+                  "title": "Полная строка наимнования транспортного средства (сырой текст из декларации)",
+                  "default": "",
+                  "examples": [
+                    "а/м легковой Лексус RX350"
+                  ]
+                },
+                "type": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/type",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип транспортного средства (слованое значение)",
+                  "default": "",
+                  "examples": [
+                    "Автомобиль легковой"
+                  ]
+                },
+                "type_raw": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/type_raw",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип транспортного средства (сырой текст из соответствующей ячейки документа)",
+                  "default": "",
+                  "examples": [
+                    "Автомобиль легковой"
+                  ]
+                },
+                "brand": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/brand",
+                  "title": "Бренд (производитель)",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": "",
+                  "examples": [
+                    null,
+                    "Lexus"
+                  ]
+                },
+                "model": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/model",
+                  "title": "Название модели",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": "",
+                  "examples": [
+                    null,
+                    "RX350"
+                  ]
+                },
+                "own_type": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/own_type",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип владения ТС (словарное значение)",
+                  "default": "",
+                  "examples": [
+                    "В собственности"
+                  ]
+                },
+                "own_type_raw": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/own_type_raw",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип владения ТС (сырой текст из соответствующей ячейки документа)",
+                  "default": "",
+                  "examples": [
+                    "В собственности"
+                  ]
+                },
+                "manufacture_year": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/manufacture_year",
+                  "type": [
+                    "null",
+                    "number"
+                  ],
+                  "title": "Год производства",
+                  "default": null,
+                  "examples": [
+                    null
+                  ]
+                },
+                "relative": {
+                  "$id": "/properties/persons/properties/vehicles/items/properties/relative",
+                  "title": "Родственник",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null,
+                  "enum": [
+                    null,
+                    "Супруг(а)",
+                    "Супруга",
+                    "Супруг",
+                    "Сын",
+                    "Дочь",
+                    "Иное",
+                    "Ребенок"
+                  ],
+                  "examples": [
+                    null
+                  ]
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          },
+          "spendings": {
+            "$id": "/properties/persons/properties/spendings",
+            "type": "array",
+            "items": {
+              "$id": "/properties/persons/properties/spendings/items",
+              "type": "object",
+              "properties": {
+                "text": {
+                  "$id": "/properties/persons/properties/spendings/items/properties/text",
+                  "type": "string",
+                  "title": "Текст накоплений из документа декларации",
+                  "default": "",
+                  "examples": [
+                    "Квартира (накопления за предыдущие годы)"
+                  ]
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          },
+          "document_position": {
+            "$id": "/properties/persons/properties/document_position",
+            "type": "string",
+            "title": "Адрес ячейки XLSX, номер страницы DOCX или другая информация для поиска записи в оригинальном документе"
+          },
+          "person_index": {
+            "$id": "/properties/persons/properties/person_index",
+            "type": "number",
+            "title": "Порядковый номер в данном документе (если был указан в отдельном столбце)"
           }
         },
         "required": [
-          "name_raw"
+          "person"
         ]
-      },
-      "office": {
-        "$id": "/properties/office",
-        "type": "object",
-        "properties": {
-          "name": {
-            "$id": "/properties/office/properties/name",
-            "type": "string",
-            "title": "Название организации, составившей документ",
-            "default": "",
-            "examples": [
-              "Правительство Санкт-Петербурга"
-            ]
-          },
-          "url": {
-            "$id": "/properties/office/properties/url",
-            "type": "string",
-            "title": "URL сайта организации",
-            "default": "",
-            "examples": [
-              "http://gov.spb.ru/"
-            ]
-          },
-          "type": {
-            "$id": "/properties/office/properties/type",
-            "type": "string",
-            "title": "Тип организации",
-            "default": "",
-            "examples": [
-              "Региональный со структурой"
-            ]
-          },
-          "region": {
-            "$id": "/properties/office/properties/region",
-            "title": "Регион",
-            "default": "",
-            "examples": [
-              "Санкт-Петербург"
-            ]
-          }
-        }
-      },
-      "party": {
-        "$id": "/properties/party",
-        "type": ["string", "null"],
-        "title": "Партия, к которой пренадлежит персона (словарное значение)",
-        "default": "",
-        "examples": [
-          "Единая Россия"
-        ]
-      },
-      "party_raw": {
-        "$id": "/properties/party",
-        "type": ["string", "null"],
-        "title": "Партия, к которой пренадлежит персона (сырой текст из декларации)",
-        "default": "",
-        "examples": [
-          "Единая Россия"
-        ]
-      },
-      "year": {
-        "$id": "/properties/year",
-        "type": "integer",
-        "title": "Год декларируемых доходов",
-        "default": 0,
-        "examples": [
-          2016
-        ]
-      },
-      "document": {
-        "$id": "/properties/document",
-        "type": "object",
-        "properties": {
-          "type": {
-            "$id": "/properties/document/properties/type",
-            "type": "string",
-            "title": "Тип декларации",
-            "default": "",
-            "examples": [
-              "Антикоррупционная декларация"
-            ]
-          },
-          "name": {
-            "$id": "/properties/document/properties/name",
-            "type": "string",
-            "title": "Название документа",
-            "default": "",
-            "examples": [
-              "Сведения о доходах, об имуществе и обязательствах имущественного характера Губернатора Санкт-Петербурга, а также его супруги за период с 1 января 2016 года по 31 декабря 2016 года"
-            ]
-          },
-          "url": {
-            "$id": "/properties/document/properties/url",
-            "type": "string",
-            "title": "URL для скачивания самого файла декларации (или адрес HTML страницы, где опубликованы данные).",
-            "default": "",
-            "examples": [
-              "http://gov.spb.ru/static/writable/mediact/materials/2017/05/22/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_-_%D0%93%D1%83%D0%B1%D0%B5%D1%80%D0%BD%D0%B0%D1%82%D0%BE%D1%80_%D0%A1%D0%9F%D0%B1_-_2016.doc"
-            ]
-          },
-          "page_url": {
-            "$id": "/properties/document/properties/page_url",
-            "type": "string",
-            "title": "URL страница, где опубликован файл для скачивания.",
-            "default": "",
-            "examples": [
-              "http://gov.spb.ru/gov/admin/incomes/"
-            ]
-          }
-        }
-      },
-      "incomes": {
-        "$id": "/properties/incomes",
-        "type": "array",
-        "items": {
-          "$id": "/properties/incomes/items",
+      }
+    },
+    "document": {
+      "$id": "/properties/document",
+      "type": "object",
+      "properties": {
+        "documentfile_id": {
+          "$id": "/properties/document/properties/documentfile_id",
+          "type": ["number", "null"],
+          "title": "ID файла в базе Декларатора",
+          "default": null,
+          "examples": [
+            35304
+          ]
+        },
+        "archive_file": {
+          "$id": "/properties/document/properties/archive_file",
+          "type": "string",
+          "title": "Полный путь к данном файлу внутри архива",
+          "description": "Только для DocumentFile типа zip, где было несколько файлов внутри",
+          "examples": [
+            "Сотрудники министерства.xlsx",
+            "руководители/2013/уточненный.docx"
+          ]
+        },
+        "sheet_number": {
+          "$id": "/properties/document/properties/sheet_number",
+          "type": "number",
+          "title": "Индекс листа (только для Excel)",
+          "examples": [
+            0, 1, 3
+          ]
+        },
+        "sheet_title": {
+          "$id": "/properties/document/properties/sheet_title",
+          "type": "string",
+          "title": "Заголовок листа (только для Excel)",
+          "description": "Используется в случае, если где-то в шапке есть наименование лиц перечисленных на данном листе",
+          "default": null,
+          "examples": [
+            "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленных федеральными государственными гражданскими служащими Министерства Российской Федерации по развитию Дальнего Востока, за период с 1 января 2015 г. по 31 декабря 2015 г."
+          ]
+        },
+        "type": {
+          "$id": "/properties/document/properties/type",
+          "type": "string",
+          "title": "Тип декларации",
+          "default": "",
+          "examples": [
+            "Антикоррупционная декларация"
+          ]
+        },
+        "name": {
+          "$id": "/properties/document/properties/name",
+          "type": "string",
+          "title": "Название документа",
+          "default": "",
+          "examples": [
+            "Сведения о доходах, об имуществе и обязательствах имущественного характера Губернатора Санкт-Петербурга, а также его супруги за период с 1 января 2016 года по 31 декабря 2016 года"
+          ]
+        },
+        "url": {
+          "$id": "/properties/document/properties/url",
+          "type": "string",
+          "title": "URL для скачивания самого файла декларации (или адрес HTML страницы, где опубликованы данные).",
+          "default": "",
+          "examples": [
+            "http://gov.spb.ru/static/writable/mediact/materials/2017/05/22/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_-_%D0%93%D1%83%D0%B1%D0%B5%D1%80%D0%BD%D0%B0%D1%82%D0%BE%D1%80_%D0%A1%D0%9F%D0%B1_-_2016.doc"
+          ]
+        },
+        "page_url": {
+          "$id": "/properties/document/properties/page_url",
+          "type": "string",
+          "title": "URL страница, где опубликован файл для скачивания.",
+          "default": "",
+          "examples": [
+            "http://gov.spb.ru/gov/admin/incomes/"
+          ]
+        },
+        "year": {
+          "$id": "/properties/document/properties/year",
+          "type": "integer",
+          "title": "Год декларируемых доходов",
+          "default": 0,
+          "examples": [
+            2016
+          ]
+        },
+        "office": {
+          "$id": "/properties/document/properties/office",
           "type": "object",
           "properties": {
-            "size": {
-              "$id": "/properties/incomes/items/properties/size",
+            "office_id": {
+              "$id": "/properties/document/properties/office/properties/office_id",
               "type": ["number", "null"],
-              "title": "Объём дохода в рублях",
-              "default": 0,
-              "examples": [
-                1474895
-              ]
-            },
-            "relative": {
-              "$id": "/properties/incomes/items/properties/relative",
-              "title": "Родственник",
-              "type": ["null", "string"],
+              "title": "ID органа в базе Декларатора",
               "default": null,
-              "enum": [
-                  null, 
-                  "Супруг(а)", 
-                  "Супруга",
-                  "Супруг",
-                  "Сын",
-                  "Дочь",
-                  "Иное",
-                  "Ребенок"
-              ],
               "examples": [
+                123,
                 null
               ]
-            }
-          },
-          "required": [
-            "size"
-          ]
-        }
-      },
-      "real_estates": {
-        "$id": "/properties/real_estates",
-        "type": "array",
-        "items": {
-          "$id": "/properties/real_estates/items",
-          "type": "object",
-          "properties": {
-            "text": {
-              "$id": "/properties/real_estates/items/properties/text",
+            },
+            "name": {
+              "$id": "/properties/document/properties/office/properties/name",
               "type": "string",
-              "title": "Полная строка наименования недвижимости, которая была в оригинальном документе (сырое значение)",
+              "title": "Название организации, составившей документ",
               "default": "",
               "examples": [
-                "земельный участок для ведения ЛПХ",
-                "нежилое помещение (машиноместо) (общая долевая собственность, 130/3500)"
+                "Правительство Санкт-Петербурга"
               ]
             },
-            "type_raw": {
-              "$id": "/properties/real_estates/items/properties/type_raw",
-              "title": "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
-              "type": ["null", "string"],
+            "url": {
+              "$id": "/properties/document/properties/office/properties/url",
+              "type": "string",
+              "title": "URL сайта организации",
+              "default": "",
               "examples": [
-                "null",
-                "Земельный участок"
+                "http://gov.spb.ru/"
               ]
             },
             "type": {
-              "$id": "/properties/real_estates/items/properties/type",
-              "title": "Тип недвижимости (словарное значение)",
-              "type": ["null", "string"],
-              "examples": [
-                "null",
-                "Земельный участок"
-              ]
-            },
-            "square": {
-              "$id": "/properties/real_estates/items/properties/square",
-              "type": ["null", "number"],
-              "title": "Площадь, в квадратных метрах",
-              "default": 0,
-              "examples": [
-                72,
-                155.5,
-                150.33
-              ]
-            },
-            "country": {
-              "$id": "/properties/real_estates/items/properties/country",
-              "title": "Страна расположения недвижимости (словарное значение)",
-              "type": ["null", "string"],
+              "$id": "/properties/document/properties/office/properties/type",
+              "type": "string",
+              "title": "Тип организации",
               "default": "",
               "examples": [
-                "Россия",
-                null
-              ]
-            },
-            "country_raw": {
-              "$id": "/properties/real_estates/items/properties/country_raw",
-              "title": "Страна расположения недвижимости (текст из декларации)",
-              "type": ["null", "string"],
-              "default": "",
-              "examples": [
-                "Россия.",
-                "РФ",
-                null
+                "Региональный со структурой"
               ]
             },
             "region": {
-              "$id": "/properties/real_estates/items/properties/region",
-              "title": "Регион расположения недвижимости",
-              "type": ["null", "string"],
+              "$id": "/properties/document/properties/office/properties/region",
+              "title": "Регион",
               "default": "",
               "examples": [
-                "Санкт-Петербург",
-                null
-              ]
-            },
-            "own_type": {
-              "$id": "/properties/real_estates/items/properties/own_type",
-              "type": ["null", "string"],
-              "title": "Тип владения собственности",
-              "default": "",
-              "examples": [
-                "В собственности"
-              ]
-            },
-            "own_type_raw": {
-              "$id": "/properties/real_estates/items/properties/own_type_raw",
-              "type": ["null", "string"],
-              "title": "Тип владения собственности (сырой текст из декларации)",
-              "default": "",
-              "examples": [
-                "В собственности"
-              ]
-            },
-            "share_type": {
-              "$id": "/properties/real_estates/items/properties/share_type",
-              "type": ["null", "string"],
-              "title": "Тип владения совместной собственности",
-              "default": "",
-              "examples": [
-                "Долевая собственность"
-              ]
-            },
-            "share_type_raw": {
-              "$id": "/properties/real_estates/items/properties/share_type_raw",
-              "type": ["null", "string"],
-              "title": "Тип владения совместной собственности (сырой текст из декларации)",
-              "default": "",
-              "examples": [
-                "Долевая собственность"
-              ]
-            },
-            "share_amount": {
-              "$id": "/properties/real_estates/items/properties/share_amount",
-              "title": "The Share_amount Schema ",
-              "type": ["null", "number"],
-              "default": 0,
-              "examples": [
-                0.5
-              ]
-            },
-            "relative": {
-              "$id": "/properties/real_estates/items/properties/relative",
-              "title": "Родственник",
-              "type": ["null", "string"],
-              "default": null,
-              "enum": [
-                  null, 
-                  "Супруга",
-                  "Супруг",
-                  "Супруг(а)", 
-                  "Сын",
-                  "Дочь",
-                  "Иное",
-                  "Ребенок"
-              ],
-              "examples": [
-                null
+                "Санкт-Петербург"
               ]
             }
-          },
-          "required": [
-            "type",
-            "square",
-            "country",
-            "own_type",
-            "share_type"
-          ]
-        }
-      },
-      "vehicles": {
-        "$id": "/properties/vehicles",
-        "type": "array",
-        "items": {
-          "$id": "/properties/vehicles/items",
-          "type": "object",
-          "properties": {
-            "text": {
-              "$id": "/properties/vehicles/items/properties/text",
-              "type": "string",
-              "title": "Полная строка наимнования транспортного средства (сырой текст из декларации)",
-              "default": "",
-              "examples": [
-                "а/м легковой Лексус RX350"
-              ]
-            },
-            "type": {
-              "$id": "/properties/vehicles/items/properties/type",
-              "type": ["null", "string"],
-              "title": "Тип транспортного средства (слованое значение)",
-              "default": "",
-              "examples": [
-                "Автомобиль легковой"
-              ]
-            },
-            "type_raw": {
-              "$id": "/properties/vehicles/items/properties/type_raw",
-              "type": ["null", "string"],
-              "title": "Тип транспортного средства (сырой текст из соответствующей ячейки документа)",
-              "default": "",
-              "examples": [
-                "Автомобиль легковой"
-              ]
-            },
-            "brand": {
-              "$id": "/properties/vehicles/items/properties/brand",
-              "title": "Бренд (производитель)",
-              "type": ["null", "string"],
-              "default": "",
-              "examples": [
-                null,
-                "Lexus"
-              ]
-            },
-            "model": {
-              "$id": "/properties/vehicles/items/properties/model",
-              "title": "Название модели",
-              "type": ["null", "string"],
-              "default": "",
-              "examples": [
-                null,
-                "RX350"
-              ]
-            },            
-            "own_type": {
-              "$id": "/properties/vehicles/items/properties/own_type",
-              "type": ["null", "string"],
-              "title": "Тип владения ТС (словарное значение)",
-              "default": "",
-              "examples": [
-                "В собственности"
-              ]
-            },
-            "own_type_raw": {
-              "$id": "/properties/vehicles/items/properties/own_type_raw",
-              "type": ["null", "string"],
-              "title": "Тип владения ТС (сырой текст из соответствующей ячейки документа)",
-              "default": "",
-              "examples": [
-                "В собственности"
-              ]
-            },
-            "manufacture_year": {
-              "$id": "/properties/vehicles/items/properties/manufacture_year",
-              "type": ["null", "number"],
-              "title": "Год производства",
-              "default": null,
-              "examples": [
-                null
-              ]
-            },
-            "relative": {
-              "$id": "/properties/vehicles/items/properties/relative",
-              "title": "Родственник",
-              "type": ["null", "string"],
-              "default": null,
-              "enum": [
-                  null, 
-                  "Супруг(а)",
-                  "Супруга",
-                  "Супруг",
-                  "Сын",
-                  "Дочь",
-                  "Иное",
-                  "Ребенок"
-              ],
-
-              "examples": [
-                null
-              ]
-            }
-          },
-          "required": [
-            "text"
-          ]
-        }
-      },
-      "spendings": {
-        "$id": "/properties/spendings",
-        "type": "array",
-        "items": {
-          "$id": "/properties/spendings/items",
-          "type": "object",
-          "properties": {
-            "text": {
-              "$id": "/properties/spendings/items/properties/text",
-              "type": "string",
-              "title": "Текст накоплений из документа декларации",
-              "default": "",
-              "examples": [
-                "Квартира (накопления за предыдущие годы)"
-              ]
-            }
-          },
-          "required": [
-            "text"
-          ]
+          }
         }
       }
-    },
-    "required": [
-      "person"
-    ]
+    }
   }
 }
