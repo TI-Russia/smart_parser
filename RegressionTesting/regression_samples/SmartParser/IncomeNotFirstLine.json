@@ -9,7 +9,7 @@
       "year": 2016,
       "incomes": [
         {
-          "size": "1693539,44",
+          "size": 1693539.44,
           "relative": null
         }
       ],
@@ -17,7 +17,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "38,00",
+          "square": 38.00,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -30,7 +30,7 @@
         {
           "text": "Гараж",
           "type": "Гараж",
-          "square": "14,50",
+          "square": 14.50,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -45,7 +45,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "36,00",
+          "square": 36.00,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",

@@ -9,7 +9,7 @@
       "year": 2017,
       "incomes": [
         {
-          "size": "1462642,81",
+          "size": 1462642.81,
           "relative": null
         }
       ],
@@ -17,7 +17,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "71,10",
+          "square": 71.10,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",

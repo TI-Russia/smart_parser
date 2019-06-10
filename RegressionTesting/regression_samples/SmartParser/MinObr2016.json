@@ -9,11 +9,11 @@
       "year": 2016,
       "incomes": [
         {
-          "size": "10000,00",
+          "size": 10000.00,
           "relative": null
         },
         {
-          "size": "2651966,22",
+          "size": 2651966.22,
           "relative": "Супруг(а)"
         }
       ],
@@ -21,7 +21,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "44,40",
+          "square": 44.40,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -36,7 +36,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "116,70",
+          "square": 116.70,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -51,7 +51,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "44,40",
+          "square": 44.40,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -64,7 +64,7 @@
         {
           "text": "Иное",
           "type": null,
-          "square": "13,90",
+          "square": 13.90,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -79,7 +79,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "116,70",
+          "square": 116.70,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -106,15 +106,15 @@
       "year": 2016,
       "incomes": [
         {
-          "size": "1142756,53",
+          "size": 1142756.53,
           "relative": null
         },
         {
-          "size": "1206288,30",
+          "size": 1206288.30,
           "relative": "Супруг(а)"
         },
         {
-          "size": "871397,09",
+          "size": 871397.09,
           "relative": "Супруг(а)"
         }
       ],
@@ -122,7 +122,7 @@
         {
           "text": "Земельный участок",
           "type": "Земельный участок",
-          "square": "800,00",
+          "square": 800.00,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -137,7 +137,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "64,20",
+          "square": 64.20,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -150,7 +150,7 @@
         {
           "text": "Жилой дом или дача",
           "type": "Жилой дом",
-          "square": "122,90",
+          "square": 122.90,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -165,7 +165,7 @@
         {
           "text": "Иное",
           "type": null,
-          "square": "34,90",
+          "square": 34.90,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -180,7 +180,7 @@
         {
           "text": "Земельный участок",
           "type": "Земельный участок",
-          "square": "800,00",
+          "square": 800.00,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -195,7 +195,7 @@
         {
           "text": "Земельный участок",
           "type": "Земельный участок",
-          "square": "800,00",
+          "square": 800.00,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -210,7 +210,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "64,20",
+          "square": 64.20,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -225,11 +225,11 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "50,60",
+          "square": 50.60,
           "country": "Россия",
           "region": null,
           "own_type": "Долевая собственность",
-          "share_amount": "0,5",
+          "share_amount": 0.5,
           "relative": "Супруг(а)",
           "square_raw": "50.60",
           "share_amount_raw": "Общая долевая (1/2)",
@@ -240,7 +240,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "35,80",
+          "square": 35.80,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -255,7 +255,7 @@
         {
           "text": "Гараж",
           "type": "Гараж",
-          "square": "61,90",
+          "square": 61.90,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -270,7 +270,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "81,20",
+          "square": 81.20,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -283,7 +283,7 @@
         {
           "text": "Квартира",
           "type": "Квартира",
-          "square": "76,00",
+          "square": 76.00,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",

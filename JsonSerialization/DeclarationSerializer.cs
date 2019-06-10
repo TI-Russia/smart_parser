@@ -27,8 +27,8 @@ namespace TI.Declarator.JsonSerialization
             {
                 Decimal d = (Decimal)t;
                 //int count = BitConverter.GetBytes(decimal.GetBits(d)[3])[2];
-                string s = d.ToString();
-                writer.WriteValue(s);
+                //string s = d.ToString();
+                writer.WriteValue(d);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace TI.Declarator.JsonSerialization
         public static JProperty SerializeDocument(Declaration declaration)
         {
             var jDocument = new JObject();
-            jDocument.Add(new JProperty("sheet_title", declaration.Properties.Title));
+            AddNotNullProp(jDocument, "sheet_title", declaration.Properties.Title);
             jDocument.Add(new JProperty("year", declaration.Properties.Year));
             AddNotNullProp(jDocument, "sheet_number", declaration.Properties.sheet_number);
             AddNotNullProp(jDocument, "documentfile_id", declaration.Properties.documentfile_id);
