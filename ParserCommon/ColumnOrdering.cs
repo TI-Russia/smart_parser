@@ -48,5 +48,7 @@ namespace TI.Declarator.ParserCommon
         public string MinistryName { get; set; }
         public string Section { get; set; }
         public int? Year { get; set; }
+        public int? HeaderBegin { get; set; }
+        public int? HeaderEnd { get; set; }
     }
 }

@@ -212,6 +212,9 @@ namespace Smart.Parser.Lib
 
             }
 
+            res.HeaderBegin = headerRowNum;
+            res.HeaderEnd = headerRowNum + headerRows;
+
             int firstDataRow = headerRowNum + headerRows;
 
             // пропускаем колонку с номерами

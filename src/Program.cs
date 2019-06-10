@@ -11,7 +11,7 @@ using Parser.Lib;
 using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
 using CMDLine;
-
+using System.Security.Cryptography;
 
 namespace Smart.Parser
 {
@@ -23,6 +23,7 @@ namespace Smart.Parser
         static bool CheckJson = false;
         public static int MaxRowsToProcess = -1;
         public static DeclarationField ColumnToDump = DeclarationField.None;
+        public static string TolokaFileName = "";
 
         static string ParseArgs(string[] args)
         {
@@ -35,7 +36,8 @@ namespace Smart.Parser
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
             CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft, xceed or prod, by default is aspose", false);
             CMDLineParser.Option maxRowsToProcessOpt = parser.AddIntParameter("-max-rows", "max rows to process from the input file", false);
-            CMDLineParser.Option dumpColumnOpt  = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
+            CMDLineParser.Option dumpColumnOpt = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
+            CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
             parser.AddHelpOption();
             try
             {
@@ -78,7 +80,7 @@ namespace Smart.Parser
                     case "debug": verboseLevel = Logger.LogLevel.Debug; break;
                     default:
                         {
-                            throw new Exception("unknown verbose level "  + verboseOpt.Value.ToString());
+                            throw new Exception("unknown verbose level " + verboseOpt.Value.ToString());
                         }
                 }
 
@@ -88,8 +90,8 @@ namespace Smart.Parser
             if (adapterOpt.isMatched)
             {
                 AdapterFamily = adapterOpt.Value.ToString();
-                if (AdapterFamily != "aspose" && 
-                    AdapterFamily != "npoi" && 
+                if (AdapterFamily != "aspose" &&
+                    AdapterFamily != "npoi" &&
                     AdapterFamily != "microsoft" &&
                     AdapterFamily != "xceed" &&
                     AdapterFamily != "prod")
@@ -101,11 +103,15 @@ namespace Smart.Parser
             {
                 ColumnToDump = (DeclarationField)Enum.Parse(typeof(DeclarationField), dumpColumnOpt.Value.ToString());
             }
+            if (tolokaFileNameOpt.isMatched)
+            {
+                TolokaFileName = tolokaFileNameOpt.Value.ToString();
+            }
 
 
             ColumnsOnly = columnsOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
-            return  String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
+            return String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
         }
 
         public static string BuildOutFileNameByInput(string declarationFile)
@@ -150,7 +156,7 @@ namespace Smart.Parser
             }
             catch (Exception e)
             {
-                    Logger.Error("Unknown Parsing Exception " + e.ToString());
+                Logger.Error("Unknown Parsing Exception " + e.ToString());
                 //Logger.Info("Stack: " + e.StackTrace);
             }
             finally
@@ -412,13 +418,57 @@ namespace Smart.Parser
             int rowOffset = adapter.ColumnOrdering.FirstDataRow;
             for (var row = rowOffset; row < adapter.GetRowsCount(); row++)
             {
-                var cell = adapter.GetDeclarationField (row, columnToDump);
+                var cell = adapter.GetDeclarationField(row, columnToDump);
                 var s = (cell == null) ? "null" : cell.GetText();
                 s = s.Replace("\n", "\\n");
                 Console.WriteLine(s);
             }
         }
 
+        public static string CalculateMD5(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
+        static string BuildInputFileId(IAdapter adapter, string filename)
+        {
+            return CalculateMD5(filename) + "_" + adapter.GetWorksheetName();
+        }
+
+        public static void SaveToToloka(IAdapter adapter, Declaration declaration, string declarationFileName)
+        {
+            if (TolokaFileName == "") return;
+            string fileID = BuildInputFileId(adapter, declarationFileName); 
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(TolokaFileName))
+            {
+                file.WriteLine("INPUT:input_id\tINPUT:filename\tINPUT:input_html\tGOLDEN:declaration_json\tHINT:text");
+                foreach (var p in declaration.PublicServants)
+                {
+                    int maxRow = p.RangeHigh;
+                    foreach (var s in p.Relatives)
+                    {
+                        maxRow = Math.Max(s.RangeHigh, maxRow);
+                    }
+                    string line = adapter.TablePortionToHtml(
+                        declaration.Properties.Title,
+                        adapter.ColumnOrdering.HeaderBegin.Value,
+                        adapter.ColumnOrdering.HeaderEnd.Value,
+                        p.RangeLow,
+                        maxRow + 1);
+                    string id = fileID + "_" + p.RangeHigh.ToString();
+                    line = line.Replace("\n", " ").Replace("\t", " ");
+                    file.WriteLine(id + "\t"+ 
+                                   declarationFileName + "\t" + 
+                                   line + "\t\t");
+                }
+            }
+        }
         public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFileName)
         {
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
@@ -435,7 +485,7 @@ namespace Smart.Parser
             foreach (var ordering in columnOrdering.ColumnOrder)
             {
                 Logger.Info(ordering.ToString());
-            }
+            } 
             Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
 //            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
             if (ColumnsOnly)
@@ -461,7 +511,7 @@ namespace Smart.Parser
 
 
             Declaration declaration = parser.Parse();
-
+            SaveToToloka(adapter, declaration, declarationFileName);
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
 

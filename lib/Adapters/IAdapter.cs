@@ -225,5 +225,34 @@ namespace Smart.Parser.Adapters
             }
             return false;
         }
+        string GetHtmlByRow(int rowIndex, string html_tag)
+        {
+            string result = "<tr>";
+            Row row = GetRow(rowIndex);
+            foreach (var c in row.Cells)
+            {
+                result += string.Format("<{0} colspan={1}>", html_tag, c.MergedColsCount);
+                result += c.Text;
+                result += string.Format("</{0}>", html_tag);
+            }
+            result += "</tr>";
+            return result;
+        }
+
+        public string TablePortionToHtml(string Title, int header_start, int header_end, int body_start, int body_end)
+        {
+            string result = "<span class=\"input_title\">" + Title + "</span> <br/>";
+            result += "<table class=\"input_table\">";
+            for (int i=header_start;  i < header_end; i++)
+            {
+                result += GetHtmlByRow(i, "th");
+            }
+            for (int i = body_start; i < body_end; i++)
+            {
+                result += GetHtmlByRow(i, "td");
+            }
+            result += "</table>";
+            return result;
+        }
     }
 }
