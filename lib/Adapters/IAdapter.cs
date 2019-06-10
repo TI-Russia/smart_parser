@@ -66,6 +66,11 @@ namespace Smart.Parser.Adapters
             }
         }
 
+        public bool IsEmpty()
+        {
+            return Cells.All(cell => cell.Text.IsNullOrWhiteSpace());
+        }
+
         public List<Cell> Cells { get; set; }
         IAdapter adapter;
         int row;
@@ -225,6 +230,7 @@ namespace Smart.Parser.Adapters
             }
             return false;
         }
+
         string GetHtmlByRow(int rowIndex, string html_tag)
         {
             string result = "<tr>";
@@ -254,5 +260,11 @@ namespace Smart.Parser.Adapters
             result += "</table>";
             return result;
         }
+
+        public virtual int? GetWorksheetIndex()
+        {
+            return null;
+        }
+
     }
 }

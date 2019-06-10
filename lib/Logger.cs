@@ -139,10 +139,10 @@ namespace Parser.Lib
             string message = String.Format(info, par);
             log.Error(string.Format("row {0}: {1}", row,  message));
             Errors.Add(message);
-            if (Errors.Count() > MaxErrorCount)
-            {
-                throw new SmartParserException("Error count exceed " + MaxErrorCount.ToString());
-            }
+            //if (Errors.Count() > MaxErrorCount)
+            //{
+            //    throw new SmartParserException("Error count exceed " + MaxErrorCount.ToString());
+            //}
         }
 
         static public void Error(string info, params object[] par)
@@ -151,10 +151,10 @@ namespace Parser.Lib
             string message = String.Format(info, par);
             log.Error(message);
             Errors.Add(message);
-            if (Errors.Count() > MaxErrorCount)
-            {
-                throw new SmartParserException("Error count exceed " + MaxErrorCount.ToString());
-            }
+            //if (Errors.Count() > MaxErrorCount)
+            //{
+            //    throw new SmartParserException("Error count exceed " + MaxErrorCount.ToString());
+            //}
         }
 
         static public void Info2(string info, params object[] par)

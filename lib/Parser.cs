@@ -108,12 +108,21 @@ namespace Smart.Parser.Lib
         public Declaration Parse()
         {
             FirstPassStartTime = DateTime.Now;
+
+            // parse filename
+            int? id;
+            string archive;
+            bool result = DataHelper.ParseDocumentFileName(Adapter.DocumentFile, out id, out archive);
+
             DeclarationProperties properties = new DeclarationProperties()
             {
                 Title = Adapter.ColumnOrdering.Title,
                 MinistryName = Adapter.ColumnOrdering.MinistryName,
                 Year = Adapter.ColumnOrdering.Year,
-                SheetName = Adapter.GetWorksheetName()
+                SheetName = Adapter.GetWorksheetName(),
+                documentfile_id = id,
+                archive_file = archive,
+                sheet_number = Adapter.GetWorksheetIndex()
             };
             if (properties.Year == null)
             {
@@ -146,16 +155,18 @@ namespace Smart.Parser.Lib
             for (row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
                 Row currRow = Adapter.GetRow(row);
-                if (IAdapter.IsEmptyRow(currRow))
+                if (currRow == null || currRow.IsEmpty())
                 {
                     continue;
                 }
+
                 // строка - разделитель
                 string name;
                 if (Adapter.IsSectionRow(currRow, out name))
                 {
                     currentSection = new DeclarationSection() { Row = row, Name = name };
                     declaration.Sections.Add(currentSection);
+                    Logger.Debug(String.Format("find section at line {0}:'{1}'", row, name));
                     currentServant = null;
                     if (currentPerson != null)
                     {

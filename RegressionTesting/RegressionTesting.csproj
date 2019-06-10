@@ -154,10 +154,10 @@
     <None Include="regression_samples\SmartParser\MinSport2016.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinStroy2013.docx">
+    <None Include="regression_samples\SmartParser\MinStroy2014.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinStroy2013.json">
+    <None Include="regression_samples\SmartParser\MinStroy2014.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinZdorov2015Full.docx">
