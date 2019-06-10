@@ -505,7 +505,7 @@ namespace Smart.Parser.Lib
             return false;
         }
 
-        static public void  ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
+        static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
             if (CheckEmptyValues(statePropTypeStr))
@@ -536,7 +536,6 @@ namespace Smart.Parser.Lib
             person.RealEstateProperties.Add(stateProperty);
         }
 
-        // 
         static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
         {
             estateTypeStr = estateTypeStr.Trim();
@@ -552,6 +551,7 @@ namespace Smart.Parser.Lib
             realEstateProperty.square_raw = areaStr;
 
             realEstateProperty.CountryStr = DeclaratorApiPatterns.TryParseCountry(countryStr);//. DataHelper.TryParseCountry(countryStr);
+            realEstateProperty.Country = DataHelper.TryParseCountry(countryStr);
             realEstateProperty.country_raw = countryStr;
 
             RealEstateType realEstateType = RealEstateType.Other;

@@ -225,7 +225,7 @@
           "text": "Квартира",
           "type": "Квартира",
           "square": null,
-          "country": "",
+          "country": null,
           "region": null,
           "own_type": "В собственности",
           "share_amount": null,

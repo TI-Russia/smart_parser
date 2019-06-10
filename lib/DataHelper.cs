@@ -348,7 +348,7 @@ namespace Smart.Parser.Lib
                 case "южная осетия": return Country.SouthOssetia;
                     //default:
             }
-            return Country.Error;//throw new SmartParserException("Wrong country name: " + strCountry);
+            return Country.Error;
         }
 
         static public bool ParseDocumentFileName(string filename, out int? id, out string archive_file)

@@ -116,7 +116,7 @@ namespace TI.Declarator.JsonSerialization
             return new JProperty("document", jDocument);
         }
 
-        public static string Serialize(Declaration declaration, ref string comment)
+        public static string Serialize(Declaration declaration, ref string comment, bool validate = true)
         {
             var jServants = new JArray();
             foreach (PublicServant serv in declaration.PublicServants)
@@ -124,24 +124,21 @@ namespace TI.Declarator.JsonSerialization
                 jServants.Add(Serialize(serv, declaration.Properties));
             }
 
-            //string comments;
-            //Validate(jServants, out comments);
-
             var jPersonsProp = new JProperty("persons", jServants);
             var jDocument  = new JObject();
             var jDocumentProp = SerializeDocument(declaration);
             
             var JDeclaration = new JObject(jPersonsProp, jDocumentProp);
             
-            string comments;
-            Validate(JDeclaration, out comments);
+            Validate(JDeclaration, out comment);
 
+            if (validate && !comment.IsNullOrWhiteSpace())
+            {
+                throw new Exception("JSON output is not valid: " + comment);
+            }
 
             string json = JsonConvert.SerializeObject(JDeclaration, Formatting.Indented, new DecimalJsonConverter());
-            //string json = JsonConvert.SerializeObject(jServants, Formatting.Indented, new DecimalJsonConverter());
-
             return json;
-            //return jServants.ToString();
         }
 
         private static JObject Serialize(PublicServant servant, DeclarationProperties declarationProperties)
@@ -231,8 +228,15 @@ namespace TI.Declarator.JsonSerialization
             // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
             jRealEstate.Add(new JProperty("type", GetPropertyType(prop.PropertyType)));
             jRealEstate.Add(new JProperty("square", prop.Square));
-            // "country_raw"
-            jRealEstate.Add(new JProperty("country", prop.CountryStr != null ? prop.CountryStr : GetCountry(prop)));
+            bool isCountryRecognized = prop.Country != Country.None && prop.Country != Country.Error;
+            if (isCountryRecognized)
+            {
+                jRealEstate.Add(new JProperty("country", prop.CountryStr ?? GetCountry(prop)));
+            }
+            else
+            {
+                jRealEstate.Add(new JProperty("country", GetCountry(prop)));
+            }
             jRealEstate.Add(new JProperty("region", null));
             // "own_type_raw"
             jRealEstate.Add(new JProperty("own_type", GetOwnershipType(prop)));
@@ -258,27 +262,6 @@ namespace TI.Declarator.JsonSerialization
             foreach (var prop in servant.RealEstateProperties)
             {
                 jRealEstate.Add(GetRealEstate(prop));
-
-
-
-                /*
-                jRealEstate.Add(new JObject(
-                    // "text" - "Полная строка наимеования недвижимости, которая была в оригинальном документе (сырое значение)",
-                    new JProperty("name", prop.Name),
-                    // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
-                    new JProperty("type", GetPropertyType(prop.PropertyType)),
-                    // TODO should property area really be an integer
-                    new JProperty("square", prop.Area),
-                    // "country_raw"
-                    new JProperty("country", GetCountry(prop)),
-                    new JProperty("region", null),
-                    // "own_type_raw"
-                    new JProperty("own_type", GetOwnershipType(prop)),
-                    // "share_type_raw"
-                    //new JProperty("share_type", GetShareType(prop)),
-                    new JProperty("share_amount", GetOwnershipShare(prop)),
-                    new JProperty("relative", null)));
-                    */
             }
 
             foreach (var rel in servant.Relatives)
@@ -286,20 +269,6 @@ namespace TI.Declarator.JsonSerialization
                 foreach (var prop in rel.RealEstateProperties)
                 {
                     jRealEstate.Add(GetRealEstate(prop, GetRelationshipName(rel.RelationType)));
-                    #if false
-                    jRealEstate.Add(new JObject(
-                        new JProperty("name", prop.Name),
-                        new JProperty("type", GetPropertyType(prop.PropertyType)),
-                        // TODO should property area really be an integer
-                        new JProperty("square", /*(int)*/prop.Area),
-                        new JProperty("country", GetCountry(prop)),
-                        new JProperty("region", null),
-                        new JProperty("own_type", GetOwnershipType(prop)),
-                        //new JProperty("share_type", GetShareType(prop)),
-                        new JProperty("share_amount", GetOwnershipShare(prop)),
-                        new JProperty("relative", GetRelationshipName(rel.RelationType))));
-                    */
-                    #endif
                 }
             }
 
