@@ -9,11 +9,11 @@
       "year": 2016,
       "incomes": [
         {
-          "size": "18519135,06",
+          "size": 18519135.06,
           "relative": null
         },
         {
-          "size": "8472,33",
+          "size": 8472.33,
           "relative": "Супруг(а)"
         }
       ],
@@ -21,11 +21,11 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "78,8",
+          "square": 78.8,
           "country": "Россия",
           "region": null,
           "own_type": "Долевая собственность",
-          "share_amount": "0,3333333333333333333333333333",
+          "share_amount": 0.3333333333333333333333333333,
           "relative": null,
           "square_raw": "78.8",
           "share_amount_raw": "общая долевая (1/3)",
@@ -36,7 +36,7 @@
         {
           "text": "коттедж",
           "type": "Жилой дом",
-          "square": "76,1",
+          "square": 76.1,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -49,11 +49,11 @@
         {
           "text": "машино-место",
           "type": "Гараж",
-          "square": "32,2",
+          "square": 32.2,
           "country": "Россия",
           "region": null,
           "own_type": "Долевая собственность",
-          "share_amount": "0,0138888888888888888888888889",
+          "share_amount": 0.0138888888888888888888888889,
           "relative": null,
           "square_raw": "32.2",
           "share_amount_raw": "общая долевая (1/72)",
@@ -64,7 +64,7 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "71,5",
+          "square": 71.5,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -77,7 +77,7 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "175,8",
+          "square": 175.8,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -90,11 +90,11 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "78,8",
+          "square": 78.8,
           "country": "Россия",
           "region": null,
           "own_type": "Долевая собственность",
-          "share_amount": "0,3333333333333333333333333333",
+          "share_amount": 0.3333333333333333333333333333,
           "relative": "Супруг(а)",
           "square_raw": "78.8",
           "share_amount_raw": "общая долевая (1/3)",
@@ -105,7 +105,7 @@
         {
           "text": "коттедж",
           "type": "Жилой дом",
-          "square": "76,1",
+          "square": 76.1,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -118,7 +118,7 @@
         {
           "text": "машино-место",
           "type": "Гараж",
-          "square": "16,4",
+          "square": 16.4,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -133,7 +133,7 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "71,5",
+          "square": 71.5,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -146,7 +146,7 @@
         {
           "text": "машино-место",
           "type": "Гараж",
-          "square": "16,4",
+          "square": 16.4,
           "country": "Россия",
           "region": null,
           "own_type": "Индивидуальная",
@@ -161,7 +161,7 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "175,8",
+          "square": 175.8,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -174,11 +174,11 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "78,8",
+          "square": 78.8,
           "country": "Россия",
           "region": null,
           "own_type": "Долевая собственность",
-          "share_amount": "0,3333333333333333333333333333",
+          "share_amount": 0.3333333333333333333333333333,
           "relative": "Ребенок",
           "square_raw": "78.8",
           "share_amount_raw": "общая долевая (1/3)",
@@ -189,7 +189,7 @@
         {
           "text": "коттедж",
           "type": "Жилой дом",
-          "square": "76,1",
+          "square": 76.1,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -202,7 +202,7 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "71,5",
+          "square": 71.5,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
@@ -215,7 +215,7 @@
         {
           "text": "квартира",
           "type": "Квартира",
-          "square": "175,8",
+          "square": 175.8,
           "country": "Россия",
           "region": null,
           "own_type": "В пользовании",
