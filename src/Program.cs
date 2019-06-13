@@ -367,12 +367,12 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseOneFile(adapter, curOutFile, declarationFileName);
+                    ParseOneFile(adapter, curOutFile, declarationFile);
                 }
             }
             else
             {
-                ParseOneFile(adapter, outFile, declarationFileName);
+                ParseOneFile(adapter, outFile, declarationFile);
             }
             adapter = null;
 
@@ -441,36 +441,31 @@ namespace Smart.Parser
             return CalculateMD5(filename) + "_" + adapter.GetWorksheetName();
         }
 
-        public static void SaveToToloka(IAdapter adapter, Declaration declaration, string declarationFileName)
+        public static void SaveRandomPortionToToloka(IAdapter adapter, Declaration declaration, string declarationFileName)
         {
             if (TolokaFileName == "") return;
             string fileID = BuildInputFileId(adapter, declarationFileName); 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(TolokaFileName))
             {
                 file.WriteLine("INPUT:input_id\tINPUT:filename\tINPUT:input_html\tGOLDEN:declaration_json\tHINT:text");
-                foreach (var p in declaration.PublicServants)
-                {
-                    int maxRow = p.RangeHigh;
-                    foreach (var s in p.Relatives)
-                    {
-                        maxRow = Math.Max(s.RangeHigh, maxRow);
-                    }
-                    string line = adapter.TablePortionToHtml(
+                Random random = new Random();
+                int dataRowsCount = Math.Min(20, adapter.GetRowsCount() - adapter.GetPossibleHeaderEnd());
+                int dataStart = random.Next(adapter.GetPossibleHeaderEnd(), adapter.GetRowsCount() - dataRowsCount);
+                int dataEnd = dataStart + dataRowsCount;
+                string line = adapter.TablePortionToHtml(
                         declaration.Properties.Title,
-                        adapter.ColumnOrdering.HeaderBegin.Value,
-                        adapter.ColumnOrdering.HeaderEnd.Value,
-                        p.RangeLow,
-                        maxRow + 1);
-                    string id = fileID + "_" + p.RangeHigh.ToString();
-                    line = line.Replace("\n", " ").Replace("\t", " ");
+                        dataStart,
+                        dataEnd);
+                    string id = fileID + "_" + dataStart + "_" + dataEnd;
+                    line = line.Replace("\n", " ").Replace("\t", " ").Replace("\"", "\"\"");
                     file.WriteLine(id + "\t"+ 
                                    declarationFileName + "\t" + 
-                                   line + "\t\t");
-                }
+                                   "\""+ line + "\"\t\t");
             }
         }
-        public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFileName)
+        public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFile)
         {
+            string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
             // Try to extract declaration year from file name if we weren't able to get it from document title
@@ -511,7 +506,7 @@ namespace Smart.Parser
 
 
             Declaration declaration = parser.Parse();
-            SaveToToloka(adapter, declaration, declarationFileName);
+            SaveRandomPortionToToloka(adapter, declaration, declarationFile);
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
 

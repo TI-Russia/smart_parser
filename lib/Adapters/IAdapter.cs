@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -244,12 +244,20 @@ namespace Smart.Parser.Adapters
             result += "</tr>";
             return result;
         }
+        public int GetPossibleHeaderBegin()
+        {
+            return ColumnOrdering.HeaderBegin ?? 0;
+        }
+        public int GetPossibleHeaderEnd()
+        {
+            return ColumnOrdering.HeaderEnd ?? GetPossibleHeaderBegin() + 2;
+        }
 
-        public string TablePortionToHtml(string Title, int header_start, int header_end, int body_start, int body_end)
+        public string TablePortionToHtml(string Title, int body_start, int body_end)
         {
             string result = "<span class=\"input_title\">" + Title + "</span> <br/>";
             result += "<table class=\"input_table\">";
-            for (int i=header_start;  i < header_end; i++)
+            for (int i= GetPossibleHeaderBegin();  i < GetPossibleHeaderEnd(); i++)
             {
                 result += GetHtmlByRow(i, "th");
             }
