@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83bbe9cb-5905-49fc-8d0f-850dd5b0c38a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/body.html" beforeDir="false" afterPath="$PROJECT_DIR$/body.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/body.css" beforeDir="false" afterPath="$PROJECT_DIR$/body.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myscript.js" beforeDir="false" afterPath="$PROJECT_DIR$/myscript.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -24,8 +22,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="47" column="17" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="17" />
+            <state relative-caret-position="360">
+              <caret line="53" column="4" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -42,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/myscript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="482" column="35" lean-forward="true" selection-start-line="482" selection-start-column="4" selection-end-line="482" selection-end-column="35" />
+            <state>
+              <caret lean-forward="true" selection-end-line="515" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
               </folding>
@@ -113,7 +111,6 @@
       <find>save_version</find>
       <find>save_vv</find>
       <find>??</find>
-      <find>get_selected_row</find>
       <find>get_selection_text</find>
       <find>bloc</find>
       <find>clearfix</find>
@@ -140,6 +137,7 @@
       <find>year</find>
       <find>owntype</find>
       <find>get_ra</find>
+      <find>get_selected_row</find>
     </findStrings>
     <replaceStrings>
       <replace>show_message</replace>
@@ -152,13 +150,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/body.css" />
         <option value="$PROJECT_DIR$/body.html" />
         <option value="$PROJECT_DIR$/myscript.js" />
+        <option value="$PROJECT_DIR$/body.css" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-5" />
     <option name="y" value="-5" />
     <option name="width" value="1400" />
@@ -238,12 +236,12 @@
       <workItem from="1560317528898" duration="15493000" />
       <workItem from="1560399841906" duration="5871000" />
       <workItem from="1560421081202" duration="668000" />
-      <workItem from="1560566632512" duration="30356000" />
+      <workItem from="1560566632512" duration="33752000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101627000" />
+    <option name="totallyTimeSpent" value="105023000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="-5" width="1930" height="1090" extended-state="6" />
@@ -285,11 +283,17 @@
     <watches-manager>
       <configuration name="JavascriptDebugType">
         <watch expression="closeFunction" language="JavaScript" />
+        <watch expression="table.tHead" language="JavaScript" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>table.tHead</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>closeFunction</expression-string>
         <language-id>JavaScript</language-id>
@@ -332,11 +336,6 @@
       </expression>
       <expression>
         <expression-string>document.json_versions</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>cell.tagName</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -387,13 +386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/body.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="47" column="17" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/handlebars.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
@@ -408,10 +400,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/body.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="53" column="4" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/myscript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="482" column="35" lean-forward="true" selection-start-line="482" selection-start-column="4" selection-end-line="482" selection-end-column="35" />
+        <state>
+          <caret lean-forward="true" selection-end-line="515" />
           <folding>
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>

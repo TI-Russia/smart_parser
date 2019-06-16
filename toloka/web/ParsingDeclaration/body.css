@@ -47,8 +47,9 @@ table.input_table td
     font-size: 10pt;
     padding: 5px;
 }
-table.input_table th {
+table.input_table thead {
     border: 1px solid black;
     border-collapse: collapse;
     font-size: 8pt;
+    font-weight: bold;
 }
