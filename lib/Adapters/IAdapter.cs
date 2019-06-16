@@ -1,10 +1,11 @@
-﻿    using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
+using Newtonsoft.Json;
 
 namespace Smart.Parser.Adapters
 {
@@ -136,7 +137,7 @@ namespace Smart.Parser.Adapters
         {
             return GetDeclarationField(row, field).GetText(true);
         }
-
+    
 
         abstract public int GetRowsCount();
         abstract public int GetColsCount();
@@ -230,19 +231,32 @@ namespace Smart.Parser.Adapters
             }
             return false;
         }
-
-        string GetHtmlByRow(int rowIndex, string html_tag)
+        public class TJsonCell
         {
-            string result = "<tr>";
+            public int MergedColsCount;
+            public string Text;
+        }
+        public class TJsonTablePortion
+        {
+            public string Title;
+            public string InputFileName;
+            public int DataStart;
+            public int DataEnd;
+            public List<List<TJsonCell>> Header = new List<List<TJsonCell>>();
+            public List<List<TJsonCell>> Data = new List<List<TJsonCell>>();
+        }
+        List<TJsonCell> GetJsonByRow(int rowIndex)
+        {
+            var outputList = new List<TJsonCell>();
             Row row = GetRow(rowIndex);
             foreach (var c in row.Cells)
             {
-                result += string.Format("<{0} colspan={1}>", html_tag, c.MergedColsCount);
-                result += c.Text;
-                result += string.Format("</{0}>", html_tag);
+                var jc = new TJsonCell();
+                jc.MergedColsCount = c.MergedColsCount;
+                jc.Text = c.Text;
+                outputList.Add(jc);
             }
-            result += "</tr>";
-            return result;
+            return outputList;
         }
         public int GetPossibleHeaderBegin()
         {
@@ -253,20 +267,21 @@ namespace Smart.Parser.Adapters
             return ColumnOrdering.HeaderEnd ?? GetPossibleHeaderBegin() + 2;
         }
 
-        public string TablePortionToHtml(string Title, int body_start, int body_end)
+        public TJsonTablePortion TablePortionToJson(int body_start, int body_end)
         {
-            string result = "<span class=\"input_title\">" + Title + "</span> <br/>";
-            result += "<table class=\"input_table\">";
+            var table = new TJsonTablePortion();
+            table.DataStart = body_start;
+            table.DataEnd = body_end;
             for (int i= GetPossibleHeaderBegin();  i < GetPossibleHeaderEnd(); i++)
             {
-                result += GetHtmlByRow(i, "th");
+                var row = GetJsonByRow(i);
+                table.Header.Add(row);
             }
             for (int i = body_start; i < body_end; i++)
             {
-                result += GetHtmlByRow(i, "td");
+                table.Data.Add(GetJsonByRow(i)); 
             }
-            result += "</table>";
-            return result;
+            return table;
         }
 
         public virtual int? GetWorksheetIndex()

@@ -1,36 +1,76 @@
-//==== exact copy of myscript.js
+// ===== start of toloka part =======
 
-function print_to_log(str, error) {
-    document.getElementById("debug_console").value = str;
-    alert(str);
+function print_to_log(str) {
+    document.getElementById("debug_console").value = document.getElementById("debug_console").value + "\n" + str;
 }
 
 function throw_and_log(error) {
     print_to_log("Ошибка! " + error);
+    alert(error);
     throw error;
 }
 
+function find_object_by_all_members(objList, obj) {
+    for (let i = 0; i < objList.length; i++) {
+        if (JSON.stringify(obj) == JSON.stringify(objList[i])) return true;
+    }
+    return false;
+}
 
-document.last_selection_from_table = null;
+document.last_range_from_table = null;
 function get_selection_from_table() {
     let text = "";
     if (typeof window.getSelection != "undefined") {
-        document.last_selection_from_table = window.getSelection();
+        document.last_range_from_table = window.getSelection().getRangeAt(0);
+        document.last_anchor_node_from_table = window.getSelection().anchorNode;
         text = window.getSelection().toString();
     }
     return text.trim();
 }
 
+function add_html_table_row(inputList, table) {
+    let row = table.insertRow();
+    for (let k = 0; k < inputList.length; ++k) {
+        let cell = row.insertCell();
+        cell.innerHTML = inputList[k].Text;
+        cell.colSpan = inputList[k].MergedColsCount;
+    }
+}
+
+function input_json_to_html_table(jsonStr){
+    jsonStr = jsonStr.replace(/\n/g, '<br/>')
+    let data = JSON.parse(jsonStr);
+    let res = '<span class="input_title">' + data.Title + "</span>";
+    let tbl = document.createElement("table");
+    tbl.className = "input_table";
+    //tbl.style = 'border: 1px solid black; border-collapse: collapse; padding: 5px;'
+    let thead = document.createElement("thead");
+    for (let i = 0; i < data.Header.length; ++i) {
+        add_html_table_row(data.Header[i], thead);
+    }
+    tbl.appendChild(thead);
+    let tbody = document.createElement("tbody");
+    for (let i = 0; i < data.Header.length; ++i) {
+        add_html_table_row(data.Data[i], tbody);
+    }
+    tbl.appendChild(tbody);
+    res += tbl.outerHTML;
+    return res;
+}
+
+Handlebars.registerHelper('convert_json_to_html_helper', function(jsonStr) {
+    return input_json_to_html_table(jsonStr);
+});
+
 function strike_selection() {
-    let selection = document.last_selection_from_table;
-    if (selection !=  null && selection.rangeCount) {
-        let range = selection.getRangeAt(0);
+    let range = document.last_range_from_table;
+    if (range !=  null) {
         let strikeDiv = document.createElement('span');
         strikeDiv.style.textDecoration = "line-through";
         try {
             range.surroundContents(strikeDiv);
         }catch (err) {
-            let anchorNode =  selection.anchorNode;
+            let anchorNode = document.last_anchor_node_from_table;
             if (anchorNode.nodeType == Node.TEXT_NODE) {
                 let p = anchorNode.parentNode;
                 p.innerHTML = "<span style='text-decoration: line-through'>" + p.innerHTML + "</span>";
@@ -47,8 +87,7 @@ function moveCursorToEnd(el) {
     el.scrollTop = el.scrollHeight;
 }
 
-function read_main_json()
-{
+function read_main_json() {
     try {
         let json_elem = get_declaration_json_elem();
         let json_str =  json_elem.value;
@@ -78,17 +117,19 @@ function save_undo_version(){
         return;
     }
     document.json_versions.push(json_text);
-    document.table_versions.push(get_main_input_table().innerHTML);
+    let mainInputTable = get_main_input_table();
+    document.table_versions.push(mainInputTable.innerHTML);
 }
 
 
-function write_main_json(djs) {
+function write_main_json(djs, strikeSelection=true) {
     let json_elem = get_declaration_json_elem();
     save_undo_version();
     json_elem.value = JSON.stringify(djs, "", 4);
     moveCursorToEnd(json_elem);
-    strike_selection();
-    //json_elem.focus();
+    if (strikeSelection) {
+        strike_selection();
+    }
 }
 
 function undo() {
@@ -124,6 +165,17 @@ function get_radio_button_value (name) {
     return null;
 }
 
+function get_radio_button_values(name) {
+    let rad = document.getElementsByName(name);
+    let values = []
+    for (let i=0; i < rad.length; i++) {
+        if (rad[i].value) {
+            values.push( rad[i].value == "" ? null : rad[i].value );
+        }
+    }
+    return values;
+}
+
 function delete_table_rows_before(table, rowIndex) {
     let headerSize = 0;
     for (let r=0; r < rowIndex; r++) {
@@ -152,6 +204,39 @@ function get_selected_row(selected_node, error_message) {
         }
     }
     return cell.parentNode;
+}
+
+
+function show_modal_dialog(elementId) {
+    let modalDlg = document.getElementById(elementId);
+    let okButton = modalDlg.getElementsByClassName("ok_button")[0];
+    let cancelButton = modalDlg.getElementsByClassName("cancel_button")[0];
+    let mainInputField = modalDlg.getElementsByClassName("main_input_text_field")[0];
+    let text = get_selection_from_table();
+    if (text !=  "") {
+        mainInputField.value = text;
+    }
+    get_declaration_json_elem().style.display = 'none';
+    modalDlg.style.display = 'block';
+    okButton.focus();
+    document.onkeydown = function(e) {
+        if (e.key === "Escape") {cancelButton.onclick(null);}
+        if (e.key === "Enter") {okButton.onclick(null);};
+    };
+}
+
+function close_modal_dialog(elementId) {
+    get_declaration_json_elem().style.display = 'inline';
+    let elem = document.getElementById(elementId);
+    if (elem.style.display == "none") {
+        // уже закрыто
+        return false;
+    }
+    else {
+        elem.style.display = 'none';
+        document.onkeydown = null;
+        return true;
+    }
 }
 
 
@@ -222,28 +307,12 @@ function add_year() {
 }
 window.add_year = add_year;
 
-function show_modal_dialog(elementId, mainInputFieldId, closeFunction) {
-    let text = get_selection_from_table();
-    if (text !=  "") {
-        document.getElementById(mainInputFieldId).value = text;
-    }
-    get_declaration_json_elem().style.display = 'none';
-    document.getElementById(elementId).style.display = 'block';
-    document.onkeydown = function(e) {
-        if (e.key === "Escape") {closeFunction(false);}
-        if (e.key === "Enter") {closeFunction(true);}
-    };
-}
 
-function close_modal_dialog(elementId) {
-    get_declaration_json_elem().style.display = 'inline';
-    let elem = document.getElementById(elementId);
-    elem.style.display = 'none';
-    document.onkeydown = null;
-}
 
 function close_realty_modal_box(save_results=true){
-    close_modal_dialog('RealtyTypeDialog');
+    if (!close_modal_dialog('RealtyTypeDialog')) {
+        return;
+    }
     if (save_results) {
         let djson = read_main_json();
         let person = get_last_person(djson);
@@ -254,7 +323,7 @@ function close_realty_modal_box(save_results=true){
             'text': document.getElementById('realty_type').value,
             "own_type":   get_radio_button_value ('owntype'),
             "relative":   get_radio_button_value ('whose_realty'),
-            "country_raw"': "Россия"
+            "country_raw": 'Россия'
         };
         person.real_estates.push(real_estate)
         write_main_json(djson);
@@ -264,7 +333,7 @@ window.close_realty_modal_box = close_realty_modal_box;
 
 
 function add_realty() {
-    show_modal_dialog('RealtyTypeDialog', 'realty_type', close_realty_modal_box);
+    show_modal_dialog('RealtyTypeDialog');
 }
 window.add_realty = add_realty;
 
@@ -310,6 +379,9 @@ function close_income_modal_box(save_results=true){
             'size': document.getElementById('income_value').value,
             "relative":   get_radio_button_value ('whose_income')
         };
+        if  (find_object_by_all_members(person.incomes, income)) {
+            return;
+        }
         person.incomes.push(income)
         write_main_json(djson);
     }
@@ -317,7 +389,7 @@ function close_income_modal_box(save_results=true){
 window.close_income_modal_box = close_income_modal_box;
 
 function add_income() {
-    show_modal_dialog('IncomeDialog', 'income_value', close_income_modal_box);
+    show_modal_dialog('IncomeDialog');
 }
 window.add_income = add_income;
 
@@ -340,13 +412,12 @@ function cut_by_selection() {
         let person = get_last_person(djson)
         person['table_row_range'] = table_row_range;
     }
-    write_main_json(djson);
+    write_main_json(djson, false);
     // modify table after save_undo_version
     delete_table_rows_after(table, last_row.rowIndex + 1);
     delete_table_rows_before(table, start_row.rowIndex);
 
 }
-
 window.cut_by_selection = cut_by_selection;
 
 
@@ -362,6 +433,9 @@ function close_vehicle_modal_box(save_results=true){
             'text': document.getElementById('vehicle_value').value,
             "relative":   get_radio_button_value ('whose_vehicle')
         };
+        if  (find_object_by_all_members(person.vehicles, vehicle)) {
+            return;
+        }
         person.vehicles.push(vehicle)
         write_main_json(djson);
     }
@@ -369,16 +443,91 @@ function close_vehicle_modal_box(save_results=true){
 window.close_vehicle_modal_box = close_vehicle_modal_box;
 
 function add_vehicle() {
-    show_modal_dialog('VehicleDialog', 'vehicle_value', close_vehicle_modal_box);
+    show_modal_dialog('VehicleDialog');
 }
 window.add_vehicle = add_vehicle;
 
-function check_mandatory_fields()
-{
-    let djson = read_main_json();
-    let p = get_last_person(djson);
-    if (!('incomes' in p) || p.incomes.length == 0) {
-        throw_and_log("Не найдено поле дохода (поле incomes)")
+function check_relative(field) {
+    if (typeof field == "undefined") return;
+    let values = get_radio_button_values('whose_realty')
+    for (let i = 0; i < field.length; i++) {
+        if  ( (field[i].relative != null)  && (values.indexOf(field[i].relative) == -1)){
+            throw_and_log("bad relative in " + JSON.stringify(field[i], ""));
+        };
     }
 }
+
+function check_real_estate_own_type(person) {
+    if (typeof person.real_estates == "undefined") return;
+    let values = get_radio_button_values('owntype')
+    for (let i = 0; i < person.real_estates.length; i++) {
+        let o = person.real_estates.own_type;
+        if  ( values.indexOf(person.real_estates[i].own_type) == -1) {
+            throw_and_log("bad own type in " + JSON.stringify(person.real_estates[i], ""));
+        };
+    }
+}
+
+function check_mandatory_fields(successMessage=true)
+{
+    let djson = read_main_json();
+    let person = get_last_person(djson);
+    if (!('incomes' in person) || person.incomes.length == 0) {
+        throw_and_log("Не найдено поле дохода (поле incomes)")
+    }
+    if (!('year' in person) ) {
+        throw_and_log("Не найдено поле года (year)")
+    }
+    check_relative(person.real_estates);
+    check_relative(person.vehicles);
+    check_relative(person.incomes);
+    check_real_estate_own_type(person);
+    if (successMessage)  alert("Успех!")
+}
 window.check_mandatory_fields = check_mandatory_fields;
+
+document.onkeypress = function(e) {
+    if (document.activeElement.name == "declaration_json") return;
+    if (document.activeElement.tagName == "input") return;
+    if ((e.key == "Н") || (e.key == "н") || (e.key == "y") || (e.key == "Y"))  {
+        window.add_realty();
+    }
+    if ((e.key == "Ф") || (e.key == "ф") || (e.key == "A") || (e.key == "a"))  {
+        window.add_declarant();
+    }
+    if ((e.key == "Р") || (e.key == "р") || (e.key == "H") || (e.key == "h"))  {
+        window.add_declarant_role();
+    }
+    if ((e.key == "Д") || (e.key == "д") || (e.key == "l") || (e.key == "L"))  {
+        window.add_income();
+    }
+    if ((e.key == "Г") || (e.key == "г") || (e.key == "U") || (e.key == "u"))  {
+        window.add_year();
+    }
+    if ((e.key == "Т") || (e.key == "т") || (e.key == "N") || (e.key == "n"))  {
+        window.add_vehicle();
+    }
+    if ((e.key == "П") || (e.key == "п") || (e.key == "G") || (e.key == "g"))  {
+        window.add_square();
+    }
+
+
+};
+
+// ===== end of toloka part =======
+
+Handlebars.registerHelper('field', function() {
+    let elem = document.createElement('textarea');
+    elem.style.width = '100%';
+    elem.rows = 20;
+    elem.name = 'declaration_json'
+    return elem.outerHTML;
+});
+
+let taskSource = document.getElementsByClassName("main_task_table")[0];
+let handleBarsTemplate = Handlebars.compile(taskSource.innerHTML);
+let inputJson =  "{\"Title\":\"1 \nСВЕДЕНИЯ \nо доходах, об имуществе и обязательствах имущественного характера лиц, замещающих должности в Федеральной службе исполнения наказаний, \nи членов их семей за отчетный период с 1 января 2012 г. по 31 декабря 2012 г. \n \n\",\"DataStart\":2,\"DataEnd\":16,\"Header\":[[{\"MergedColsCount\":1,\"Text\":\"Фамилия, имя, отчество \n\"},{\"MergedColsCount\":1,\"Text\":\"Должность \n\"},{\"MergedColsCount\":1,\"Text\":\"Общая сумма декларированног о годового дохода за 2012 год (руб.) \n\"},{\"MergedColsCount\":3,\"Text\":\"Перечень объектов недвижимого имущества, принадлежащих на праве собственности или находящихся в пользовании \n\"},{\"MergedColsCount\":1,\"Text\":\"Перечень транспортных средств, \nпринадлежащих на праве \nсобственности \n(вид, марка) \n\"}],[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"Вид объектов недвижимости \n\"},{\"MergedColsCount\":1,\"Text\":\"Площадь \n(кв.м.) \n\"},{\"MergedColsCount\":1,\"Text\":\"Страна располож ения \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}]],\"Data\":[[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":5,\"Text\":\"Руководство территориальных органов и образовательных учреждений ФСИН России \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}],[{\"MergedColsCount\":1,\"Text\":\"Заев Ю.Ю. \n\"},{\"MergedColsCount\":1,\"Text\":\"Начальник \nУФСИН России по Республике \nАдыгея (Адыгея) \n\"},{\"MergedColsCount\":1,\"Text\":\"795 449,40 \n\"},{\"MergedColsCount\":1,\"Text\":\"земельный участок \n(собственность, общая долевая) \n\"},{\"MergedColsCount\":1,\"Text\":\"490,0 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"автомобиль легковой Киа Спортаж \n\"}],[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(пользование) \n\"},{\"MergedColsCount\":1,\"Text\":\"48,0 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}],[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"гаражный бокс \n(собственность) \n\"},{\"MergedColsCount\":1,\"Text\":\"22,4 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}],[{\"MergedColsCount\":1,\"Text\":\"Супруга \n\"},{\"MergedColsCount\":1,\"Text\":\" \n\"},{\"MergedColsCount\":1,\"Text\":\"84 000,00 \n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(собственность) \n\"},{\"MergedColsCount\":1,\"Text\":\"63,3 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"}],[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(пользование) \n\"},{\"MergedColsCount\":1,\"Text\":\"48,0 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}],[{\"MergedColsCount\":1,\"Text\":\"Черанев А.Г. \n\"},{\"MergedColsCount\":1,\"Text\":\"Заместитель начальника \nУФСИН России по Республике \nАдыгея (Адыгея) \n\"},{\"MergedColsCount\":1,\"Text\":\"708 732,00 \n\"},{\"MergedColsCount\":1,\"Text\":\"земельный участок (собственность) \n\"},{\"MergedColsCount\":1,\"Text\":\"741,0 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"автомобиль легковой Тойота Королла \n\"}],[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(собственность) \n\"},{\"MergedColsCount\":1,\"Text\":\"61,1 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}],[{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(пользование) \n\"},{\"MergedColsCount\":1,\"Text\":\"53,4 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"\n\"}],[{\"MergedColsCount\":1,\"Text\":\"супруга \n\"},{\"MergedColsCount\":1,\"Text\":\" \n\"},{\"MergedColsCount\":1,\"Text\":\"248 300,00 \n\"},{\"MergedColsCount\":1,\"Text\":\"жилой дом \n(собственность) \n\"},{\"MergedColsCount\":1,\"Text\":\"44,4 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"}],[{\"MergedColsCount\":1,\"Text\":\"Чиназиров А.В. \n\"},{\"MergedColsCount\":1,\"Text\":\"Заместитель начальника \nУФСИН России по Республике \nАдыгея (Адыгея) \n\"},{\"MergedColsCount\":1,\"Text\":\"510 551,22 \n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(собственность, 1/4 доли) \n\"},{\"MergedColsCount\":1,\"Text\":\"61,2 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"автомобиль легковой Опель Вектра \n\"}],[{\"MergedColsCount\":1,\"Text\":\"Супруга \n\"},{\"MergedColsCount\":1,\"Text\":\" \n\"},{\"MergedColsCount\":1,\"Text\":\"380 521,68 \n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(собственность, 1/4 доли) \n\"},{\"MergedColsCount\":1,\"Text\":\"61,2 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"}],[{\"MergedColsCount\":1,\"Text\":\"Дочь \n\"},{\"MergedColsCount\":1,\"Text\":\" \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(собственность, 1/4 доли) \n\"},{\"MergedColsCount\":1,\"Text\":\"61,2 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"}],[{\"MergedColsCount\":1,\"Text\":\"Сын \n\"},{\"MergedColsCount\":1,\"Text\":\" \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"},{\"MergedColsCount\":1,\"Text\":\"квартира \n(собственность, 1/4 доли) \n\"},{\"MergedColsCount\":1,\"Text\":\"61,2 \n\"},{\"MergedColsCount\":1,\"Text\":\"Россия \n\"},{\"MergedColsCount\":1,\"Text\":\"- \n\"}]]}";
+let context = {input_id: "1", input_json: inputJson, declaration_json:"hkfhggkfjhgfk"};
+let html  = handleBarsTemplate(context);
+taskSource.innerHTML = html;
+

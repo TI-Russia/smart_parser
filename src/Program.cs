@@ -12,6 +12,7 @@ using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
 using CMDLine;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 namespace Smart.Parser
 {
@@ -447,20 +448,18 @@ namespace Smart.Parser
             string fileID = BuildInputFileId(adapter, declarationFileName); 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(TolokaFileName))
             {
-                file.WriteLine("INPUT:input_id\tINPUT:filename\tINPUT:input_html\tGOLDEN:declaration_json\tHINT:text");
+                file.WriteLine("INPUT:input_id\tINPUT:input_json\tGOLDEN:declaration_json\tHINT:text");
                 Random random = new Random();
                 int dataRowsCount = Math.Min(20, adapter.GetRowsCount() - adapter.GetPossibleHeaderEnd());
                 int dataStart = random.Next(adapter.GetPossibleHeaderEnd(), adapter.GetRowsCount() - dataRowsCount);
                 int dataEnd = dataStart + dataRowsCount;
-                string line = adapter.TablePortionToHtml(
-                        declaration.Properties.Title,
-                        dataStart,
-                        dataEnd);
-                    string id = fileID + "_" + dataStart + "_" + dataEnd;
-                    line = line.Replace("\n", " ").Replace("\t", " ").Replace("\"", "\"\"");
-                    file.WriteLine(id + "\t"+ 
-                                   declarationFileName + "\t" + 
-                                   "\""+ line + "\"\t\t");
+                var json = adapter.TablePortionToJson(dataStart, dataEnd);
+                json.InputFileName = declarationFileName;
+                json.Title = declaration.Properties.Title;
+                string jsonStr = JsonConvert.SerializeObject(json);
+                jsonStr = jsonStr.Replace("\t", " ").Replace("\"", "\"\"");
+                string id = fileID + "_" + dataStart + "_" + dataEnd;
+                file.WriteLine(id + "\t"+ "\"" + jsonStr + "\"\t\t");
             }
         }
         public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFile)
