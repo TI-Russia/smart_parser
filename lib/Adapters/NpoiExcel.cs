@@ -52,6 +52,7 @@ namespace Smart.Parser.Adapters
             //WorkBook = new XSSFWorkbook(Path.GetFullPath(fileName));
             EmptyCell = new Cell();
             MaxRowsToProcess = maxRowsToProcess;
+            TrimEmptyLines();
         }
 
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess = -1)
@@ -167,6 +168,14 @@ namespace Smart.Parser.Adapters
             };
         }
 
+        void TrimEmptyLines()
+        {
+            int row = GetRowsCount() - 1; 
+            while (row >= 0 && IsEmptyRow(Rows[row])) {
+                MaxRowsToProcess = row;
+                row--;
+            }
+        }
 
         public override int GetRowsCount()
         {
