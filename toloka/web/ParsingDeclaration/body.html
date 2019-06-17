@@ -17,7 +17,7 @@
         <td>
             <table width="100%">
                 <tr> <td>
-                    <button onclick=window.cut_by_selection() title="выделите декларанта и все его родственников и нажмите эту кнопку">Обрезать</button>
+                    <button onclick=window.cut_by_selection() title="выделите декларанта и все его родственников и нажмите эту кнопку"><u>О</u>брезать</button>
                     <button onclick=window.undo() title="undo">Откатить</button>
                     <button onclick=window.check_json() title="проверка скобок и запятых в json">Проверка</button>
                     <button onclick=window.check_mandatory_fields() title="проверка заполнения json">Полнота</button>
@@ -41,27 +41,44 @@
             {{{field type="textarea" name="declaration_json" width="100%" rows="20"}}}
             <br>
             <textarea id="debug_console"  rows="2" cols="50"> </textarea>
+
             <div id='RealtyTypeDialog' class="modal" >
                 <div class="modal-content">
                     <table  width="400">
                         <tr> <td colspan="2"> Тип владения: <input  id="realty_type" cols="30" class="main_input_text_field"/> </td><tr>
+                        <tr><td></td></tr>
                         <tr>
-                            <td>
-                                <input name='owntype' type='radio' value='Собственность' checked="checked" > Собственность<br/><br/>
-                                <input name='owntype' type='radio' value='Долевая собственность'>Долевая собственность<br/><br/>
-                                <input name='owntype' type='radio' value='Совместная собственность'>Совместная собственность<br/><br/>
-                                <input name='owntype' type='radio' value='В пользовании'>В пользовании
+                            <td style="vertical-align:top; padding-right: 30px; white-space: nowrap;">
+                                {{{owner_types "realty_owner_type" "realty_owner_image_div"}}}
                             </td>
-                            <td>
-                                <input name='whose_realty' type='radio' value='' checked >Собственная <br/><br/>
-                                <input name='whose_realty' type='radio' value='Супруг(а)'>Супруг(а) <br/><br/>
-                                <input name='whose_realty' type='radio' value='Ребенок'>Ребенок
-                            </td>
+                        <td style="vertical-align:top; padding-right: 30px; white-space: nowrap;">
+                            <label><input  name='realty_own_type' type='radio' value='Собственность' checked="checked"
+                                          onclick="window.show_icon('http://aot.ru/images/own_property.png', 'own_type_image_div')">
+                                Индивидуальная<br/><br/>
+                            </label>
+                            <label><input  name='realty_own_type' type='radio' value='Долевая собственность'
+                                          onclick="window.show_icon('http://aot.ru/images/own_dolya.png', 'own_type_image_div')">
+                                Долевая<br/><br/>
+                            </label>
+                            <label><input name='realty_own_type' type='radio' value='Совместная собственность'
+                                          onclick="window.show_icon('http://aot.ru/images/own_sovmestno.png', 'own_type_image_div')">
+                                Совместная<br/><br/>
+                            </label>
+                            <label><input name='realty_own_type' type='radio' value='В пользовании'
+                                          onclick="window.show_icon('http://aot.ru/images/own_inuse.png', 'own_type_image_div')">
+                                В пользовании
+                            </label>
+                        </td>
+                        <td> <div name="realty_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
+                        <td> <div name="own_type_image_div"> <img src="http://aot.ru/images/own_property.png"/> </div></td>
                         </tr>
+                        <tr><td></td></tr>
                         <tr>
                             <td colspan="2">
                                 <button onclick=window.close_realty_modal_box(true) class="ok_button">ОК</button>
-                                <button onclick=window.close_realty_modal_box(false) class="cancel_button">Cancel</button>
+                            </td>
+                            <td colspan="2">
+                            <button onclick=window.close_realty_modal_box(false) class="cancel_button">Cancel</button>
                             </td>
                         <tr>
                     </table>
@@ -71,12 +88,17 @@
             <div id='IncomeDialog' class="modal">
                 <div class="modal-content">
                     Доход: <br />
-                    <input  id="income_value" class="main_input_text_field" /> <br/><br/><br/>
-                    <input name='whose_income' type='radio' value='' checked >Собственный<br/><br/>
-                    <input name='whose_income' type='radio' value='Супруг(а)'>Супруг(а)<br/><br/>
-                    <input name='whose_income' type='radio' value='Ребенок'>Ребенок<br/><br/>
-                    <button onclick=window.close_income_modal_box(true) class="ok_button" >ОК</button>
-                    <button onclick=window.close_income_modal_box(false) class="cancel_button">Cancel</button>
+                    <input  id="income_value" class="main_input_text_field"> <br/><br/><br/>
+                    <table>
+                        <tr>
+                            <td>{{{owner_types "income_owner_type" "income_owner_image_div" }}}</td>
+                            <td> <div name="income_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
+                        </tr>
+                        <tr>
+                            <td> <button onclick=window.close_income_modal_box(true) class="ok_button" >ОК</button> </td>
+                            <td> <button onclick=window.close_income_modal_box(false) class="cancel_button">Cancel</button> </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
@@ -84,12 +106,20 @@
                 <div class="modal-content">
                     Транспортное средство: <br />
                     <input  id="vehicle_value" size="50" class="main_input_text_field" /> <br/><br/>
-                    <input name='whose_vehicle' type='radio' value='' checked >Собственный<br/><br/>
-                    <input name='whose_vehicle' type='radio' value='Супруг(а)'>Супруг(а)<br/><br/>
-                    <button onclick=window.close_vehicle_modal_box(true) class="ok_button">ОК</button>
-                    <button onclick=window.close_vehicle_modal_box(false) class="cancel_button">Cancel</button>
+                    <table>
+                        <tr>
+                            <td>{{{owner_types "vehicle_owner_type" "vehicle_owner_image_div" }}}</td>
+                            <td> <div name="vehicle_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
+                        </tr>
+                        <tr>
+                            <td> <button onclick=window.close_vehicle_modal_box(true) class="ok_button" >ОК</button> </td>
+                            <td> <button onclick=window.close_vehicle_modal_box(false) class="cancel_button">Cancel</button> </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+
+
         </td>
     </tr>
 </table>

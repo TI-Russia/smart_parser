@@ -62,6 +62,27 @@ Handlebars.registerHelper('convert_json_to_html_helper', function(jsonStr) {
     return input_json_to_html_table(jsonStr);
 });
 
+
+Handlebars.registerHelper('owner_types', function(radio_button_name, image_div_name ) {
+    let ownerTypeTemplate =  "<label> <input type=\"radio\" name={{name}}  value=\"{{value}}\" " +
+        "                           onclick=\"window.show_icon('{{image}}', '{{image_div_name}}')\"\n" +
+        "                           {{#if checked}} checked {{/if}}\" /> {{title}}</label> <br/><br/>";
+    let ownerTypes = [
+        {'value': "", title:"Собственная", image:"http://aot.ru/images/declarant.png", "checked":"checked"},
+        {'value': "Супруг(а)", title:"Супруг(а)", image:"http://aot.ru/images/spouse.png"},
+        {'value': "Ребенок", title:"Ребенок", image:"http://aot.ru/images/child.png"}
+    ];
+    let template = Handlebars.compile(ownerTypeTemplate);
+    let html = "";
+    for (let i=0; i < ownerTypes.length; i++) {
+        let context = ownerTypes[i];
+        context['name'] = radio_button_name;
+        context['image_div_name'] = image_div_name;
+        html += template(context);
+    }
+    return html;
+});
+
 function strike_selection() {
     let range = document.last_range_from_table;
     if (range !=  null) {
@@ -157,7 +178,7 @@ function get_new_value(message){
 
 function get_radio_button_value (name) {
     let rad = document.getElementsByName(name);
-    for (var i=0; i < rad.length; i++) {
+    for (let i=0; i < rad.length; i++) {
         if (rad[i].checked) {
             return rad[i].value == "" ? null : rad[i].value;
         }
@@ -176,6 +197,19 @@ function get_radio_button_values(name) {
     return values;
 }
 
+function set_radio_button(name, value) {
+    let rad = document.getElementsByName(name);
+    let values = []
+    for (let i=0; i < rad.length; i++) {
+        if (rad[i].value == value) {
+            rad[i].focus();
+            rad[i].checked = true;
+            rad[i].onclick(null);
+        }
+    }
+    return values;
+
+}
 function delete_table_rows_before(tbody, rowIndex) {
     for (let r=0; r < rowIndex; r++) {
         tbody.deleteRow(0);
@@ -251,6 +285,9 @@ function add_declarant() {
     if (text.length > 50) {
         throw_and_log("ФИО слишком длинное (>50 символов)");
     }
+    if (text.indexOf(" ") == -1 && text.indexOf(".") == -1) {
+        throw_and_log("Однословных ФИО не бывает");
+    }
     if (text != "") {
         if (djson.persons.length > 0) {
             djson.persons[0].name_raw = text;
@@ -315,8 +352,8 @@ function close_realty_modal_box(save_results=true){
         }
         let real_estate = {
             'text': document.getElementById('realty_type').value,
-            "own_type":   get_radio_button_value ('owntype'),
-            "relative":   get_radio_button_value ('whose_realty'),
+            "own_type":   get_radio_button_value ('realty_own_type'),
+            "relative":   get_radio_button_value ( 'realty_owner_type'),
             "country_raw": 'Россия'
         };
         person.real_estates.push(real_estate)
@@ -371,7 +408,7 @@ function close_income_modal_box(save_results=true){
         }
         let income  = {
             'size': document.getElementById('income_value').value,
-            "relative":   get_radio_button_value ('whose_income')
+            "relative":   get_radio_button_value ('income_owner_type')
         };
         if  (find_object_by_all_members(person.incomes, income)) {
             return;
@@ -429,7 +466,7 @@ function close_vehicle_modal_box(save_results=true){
         }
         let vehicle  = {
             'text': document.getElementById('vehicle_value').value,
-            "relative":   get_radio_button_value ('whose_vehicle')
+            "relative":   get_radio_button_value ('vehicle_owner_type')
         };
         if  (find_object_by_all_members(person.vehicles, vehicle)) {
             return;
@@ -447,7 +484,7 @@ window.add_vehicle = add_vehicle;
 
 function check_relative(field) {
     if (typeof field == "undefined") return;
-    let values = get_radio_button_values('whose_realty')
+    let values = get_radio_button_values('vehicle_owner_type')
     for (let i = 0; i < field.length; i++) {
         if  ( (field[i].relative != null)  && (values.indexOf(field[i].relative) == -1)){
             throw_and_log("bad relative in " + JSON.stringify(field[i], ""));
@@ -457,7 +494,7 @@ function check_relative(field) {
 
 function check_real_estate_own_type(person) {
     if (typeof person.real_estates == "undefined") return;
-    let values = get_radio_button_values('owntype')
+    let values = get_radio_button_values('realty_own_type')
     for (let i = 0; i < person.real_estates.length; i++) {
         let o = person.real_estates.own_type;
         if  ( values.indexOf(person.real_estates[i].own_type) == -1) {
@@ -505,12 +542,22 @@ document.onkeypress = function(e) {
     if ((e.key == "Т") || (e.key == "т") || (e.key == "N") || (e.key == "n"))  {
         window.add_vehicle();
     }
-    if ((e.key == "П") || (e.key == "п") || (e.key == "G") || (e.key == "g"))  {
+    if ((e.key == "П") || (e.key == "п") || (e.key == "G") || (e.key == "g")) {
         window.add_square();
     }
-
-
+    if ((e.key == "О") || (e.key == "о") || (e.key == "J") || (e.key == "j")) {
+        window.cut_by_selection();
+    }
 };
+
+function show_icon(url, placeId) {
+    let elem = document.getElementsByName(placeId)[0];
+    elem.innerHTML = ''
+    let img = document.createElement('img');
+    img.src = url;
+    elem.appendChild(img);
+}
+window.show_icon = show_icon;
 
 // ===== end of toloka part =======
 

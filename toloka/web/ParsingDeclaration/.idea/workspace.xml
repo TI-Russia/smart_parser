@@ -2,10 +2,12 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/myscript.js" />
+    <bookmark url="file://$PROJECT_DIR$/myscript.js" line="352" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83bbe9cb-5905-49fc-8d0f-850dd5b0c38a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/body.css" beforeDir="false" afterPath="$PROJECT_DIR$/body.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/body.html" beforeDir="false" afterPath="$PROJECT_DIR$/body.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myscript.js" beforeDir="false" afterPath="$PROJECT_DIR$/myscript.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,8 +24,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="53" column="4" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="22" />
+            <state>
+              <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -31,8 +33,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="96" selection-start-line="8" selection-end-line="96" />
+            <state relative-caret-position="24">
+              <caret line="49" column="13" lean-forward="true" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+              <folding>
+                <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,8 +46,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/myscript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" selection-end-line="515" />
+            <state relative-caret-position="264">
+              <caret line="562" selection-end-line="562" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
               </folding>
@@ -50,7 +56,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="mock://vm:990">
+        <entry file="mock://vm:15">
+          <provider selected="true" editor-type-id="vmFileEditor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="mock://vm:3009">
           <provider selected="true" editor-type-id="vmFileEditor" />
         </entry>
       </file>
@@ -58,19 +69,9 @@
         <entry file="file://$PROJECT_DIR$/handlebars.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="218">
-              <caret line="787" column="7" selection-start-line="787" selection-start-column="7" selection-end-line="787" selection-end-column="7" />
+              <caret line="1892" column="13" selection-start-line="1892" selection-start-column="13" selection-end-line="1892" selection-end-column="13" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="mock://vm:657">
-          <provider selected="true" editor-type-id="vmFileEditor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="mock://vm:44">
-          <provider selected="true" editor-type-id="vmFileEditor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -85,7 +86,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
+            <state relative-caret-position="132000">
               <caret line="5513" column="4" selection-start-line="5513" selection-start-column="4" selection-end-line="5513" selection-end-column="4" />
             </state>
           </provider>
@@ -108,23 +109,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>save_version</find>
-      <find>save_vv</find>
-      <find>??</find>
-      <find>get_selection_text</find>
-      <find>bloc</find>
-      <find>clearfix</find>
-      <find>s.persons.c</find>
-      <find>Роль</find>
-      <find>span</find>
-      <find>last_selection_from_table</find>
-      <find>last_s</find>
-      <find>print_to_log</find>
-      <find>show_me</find>
-      <find>add_</find>
-      <find>show_modal_dialog</find>
-      <find>strike</find>
-      <find>last_range_from_table</find>
       <find>cut</find>
       <find>inser</find>
       <find>&quot;&quot;</find>
@@ -136,8 +120,25 @@
       <find>class</find>
       <find>year</find>
       <find>owntype</find>
-      <find>get_ra</find>
       <find>get_selected_row</find>
+      <find>getElement</find>
+      <find>cl</find>
+      <find>re</find>
+      <find>regis</find>
+      <find>ge</find>
+      <find>get_ra</find>
+      <find>reg</find>
+      <find>com</find>
+      <find>show</find>
+      <find>show_i</find>
+      <find>show_o</find>
+      <find>Инд</find>
+      <find>set_radio_button</find>
+      <find>realty_owner_image_div</find>
+      <find>Esc</find>
+      <find>show_icon</find>
+      <find>real</find>
+      <find>get_radio_button_value</find>
     </findStrings>
     <replaceStrings>
       <replace>show_message</replace>
@@ -150,13 +151,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/body.css" />
         <option value="$PROJECT_DIR$/body.html" />
         <option value="$PROJECT_DIR$/myscript.js" />
-        <option value="$PROJECT_DIR$/body.css" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-5" />
     <option name="y" value="-5" />
     <option name="width" value="1400" />
@@ -168,6 +169,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -179,7 +181,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -237,11 +238,12 @@
       <workItem from="1560399841906" duration="5871000" />
       <workItem from="1560421081202" duration="668000" />
       <workItem from="1560566632512" duration="33752000" />
+      <workItem from="1560737158155" duration="21705000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105023000" />
+    <option name="totallyTimeSpent" value="126728000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="-5" width="1930" height="1090" extended-state="6" />
@@ -275,8 +277,19 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/handlebars.js</url>
           <line>790</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/handlebars.js</url>
+          <line>1892</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/myscript.js</url>
+          <line>496</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -284,11 +297,23 @@
       <configuration name="JavascriptDebugType">
         <watch expression="closeFunction" language="JavaScript" />
         <watch expression="table.tHead" language="JavaScript" />
+        <watch expression="parentTable.tagName" language="JavaScript" />
+        <watch expression="s" language="JavaScript" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>s</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>parentTable.tagName</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>table.tHead</expression-string>
         <language-id>JavaScript</language-id>
@@ -320,49 +345,54 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>s</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
         <expression-string>selection</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>selection.parentNode</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>document.json_versions</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>jsonStr</expression-string>
+        <expression-string>elem.innerHTML</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>range.endContainer</expression-string>
+        <expression-string>parentTable.getElementsByClassName</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>range.startContainer</expression-string>
+        <expression-string>parentTable.getElementsByName</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>range.__proto__.startContainer`</expression-string>
+        <expression-string>parentTable.getElementById</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>range.__proto__.startContainer</expression-string>
+        <expression-string>parentTable.tagName</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>parentTable.getAll</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>parentTable.getAll()</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>parentTable</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>parentTable.parent()</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -376,41 +406,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="http://localhost:63342/TestButton/myscript.js">
-      <provider selected="true" editor-type-id="httpFileEditor" />
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
+        <state relative-caret-position="132000">
           <caret line="5513" column="4" selection-start-line="5513" selection-start-column="4" selection-end-line="5513" selection-end-column="4" />
         </state>
       </provider>
     </entry>
+    <entry file="http://localhost:63342/TestButton/myscript.js">
+      <provider selected="true" editor-type-id="httpFileEditor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/handlebars.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
-          <caret line="787" column="7" selection-start-line="787" selection-start-column="7" selection-end-line="787" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/body.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="96" selection-start-line="8" selection-end-line="96" />
+          <caret line="1892" column="13" selection-start-line="1892" selection-start-column="13" selection-end-line="1892" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/body.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="53" column="4" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="22" />
+        <state>
+          <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/body.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="49" column="13" lean-forward="true" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+          <folding>
+            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/myscript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" selection-end-line="515" />
+        <state relative-caret-position="264">
+          <caret line="562" selection-end-line="562" />
           <folding>
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
