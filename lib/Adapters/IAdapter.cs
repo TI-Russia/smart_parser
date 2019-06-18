@@ -261,13 +261,17 @@ namespace Smart.Parser.Adapters
         string GetHtmlByRow(int rowIndex)
         {
             Row row = GetRow(rowIndex);
-            string res = "<tr>\n";
+            string res = string.Format("<tr rowindex={0}>\n", rowIndex);
             foreach (var c in row.Cells)
             {
                 res += "\t<td";
                 if (c.MergedColsCount > 1)
                 {
-                    res += string.Format("colspan={0}", c.MergedColsCount);
+                    res += string.Format(" colspan={0}", c.MergedColsCount);
+                }
+                if (c.MergedRowsCount > 1)
+                {
+                    res += string.Format(" rowspan={0}", c.MergedRowsCount);
                 }
                 string text = c.Text.Replace("\n", "<br/>");
                 res += ">" + text + "</td>\n";

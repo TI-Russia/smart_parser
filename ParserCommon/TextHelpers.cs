@@ -12,7 +12,7 @@ namespace TI.Declarator.ParserCommon
         public static decimal ParseDecimalValue(this string val)
         {
             decimal res;
-            string processedVal = val.Replace(" ", "");
+            string processedVal = val.Replace(" ", "").Replace("\n", "");
             if (!Decimal.TryParse(processedVal, NumberStyles.Any, RussianCulture, out res))
             {
                 if (!Decimal.TryParse(processedVal, NumberStyles.Any, CultureInfo.InvariantCulture, out res))

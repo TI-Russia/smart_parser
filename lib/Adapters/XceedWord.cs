@@ -244,7 +244,7 @@ namespace Smart.Parser.Adapters
             }
             return true;
         }
-        static List<string> tokenize(string text)
+        static List<string> TokenizeCellText(string text)
         {
             List<string> result = new List<string>();
             foreach (var token in text.Split())
@@ -272,7 +272,7 @@ namespace Smart.Parser.Adapters
 
         }
 
-            static bool CheckMergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)
+        static bool CheckMergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)
         {
             if (row1.Count != row2.Count)
             {
@@ -280,8 +280,8 @@ namespace Smart.Parser.Adapters
             }
             for (int i = 0; i < row1.Count; ++i)
             {
-                var tokens1 = tokenize(row1[i].Text);
-                var tokens2 = tokenize(row2[i].Text);
+                var tokens1 = TokenizeCellText(row1[i].Text);
+                var tokens2 = TokenizeCellText(row2[i].Text);
                 if (tokens1.Count > 0 && tokens2.Count > 0)
                 {
                     string key = tokens1.Last() + " " + tokens2.First();

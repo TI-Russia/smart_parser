@@ -91,7 +91,7 @@ namespace test
         public void GetRowsCount()
         {
             var adapter = GetAdapter();
-            Assert.AreEqual(80, adapter.GetRowsCount());
+            Assert.AreEqual(79, adapter.GetRowsCount());
         }
     }
 }
