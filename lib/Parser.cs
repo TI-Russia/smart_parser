@@ -202,6 +202,22 @@ namespace Smart.Parser.Lib
             return currentSection;
         }
 
+        int FindNextPersonIndex(int row, int mergedRowCount)
+        {
+            if (Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
+            {
+                for (int i = row + 1; i < row + mergedRowCount; i++)
+                {
+                    string text = Adapter.GetDeclarationField(i, DeclarationField.RelativeTypeStrict).Text;
+                    if (text.CleanWhitespace() != "")
+                    {
+                        return i;
+                    }
+                }
+            }
+            return row + mergedRowCount;
+        }
+
         public Declaration Parse()
         {
             FirstPassStartTime = DateTime.Now;
@@ -228,10 +244,10 @@ namespace Smart.Parser.Lib
                     continue;
                 }
 
-                string name;
-                if (Adapter.IsSectionRow(currRow, out name))
+                string sectionName;
+                if (Adapter.IsSectionRow(currRow, out sectionName))
                 {
-                    currentSection = CreateNewSection(rowOffset, name, ref currentServant, ref currentPerson);
+                    currentSection = CreateNewSection(rowOffset, sectionName, ref currentServant, ref currentPerson);
                     declaration.Sections.Add(currentSection);
                     continue;
                 }
@@ -239,8 +255,7 @@ namespace Smart.Parser.Lib
                 int mergedRowCount = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
-                bool isNameOrRelativeTypeEmpty = DataHelper.IsEmptyValue(nameOrRelativeType);
-                if  (isNameOrRelativeTypeEmpty &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
+                if  (DataHelper.IsEmptyValue(nameOrRelativeType) &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
                 {
                     nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
                 }
@@ -251,7 +266,7 @@ namespace Smart.Parser.Lib
                     occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
                 }
 
-                if (isNameOrRelativeTypeEmpty)
+                if (DataHelper.IsEmptyValue(nameOrRelativeType))
                 {
                     if (currentPerson == null)
                     {
@@ -280,7 +295,7 @@ namespace Smart.Parser.Lib
                 }
                 if (mergedRowCount > 1)
                 {
-                    row += mergedRowCount - 1;
+                    row = FindNextPersonIndex(row, mergedRowCount) - 1; // we are in for cycle
                 }
             }
             if (currentPerson != null)

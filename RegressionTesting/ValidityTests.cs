@@ -239,7 +239,6 @@ namespace RegressionTesting
         [DeploymentItem("import-schema-dicts.json")]
         public void MinEkon2013()
         {
-            Assert.Inconclusive("Fix the json sample.");
             TestSmartParser("SmartParser\\MinEkon2013.docx", "prod");
         }
 
@@ -314,6 +313,16 @@ namespace RegressionTesting
         public void MinStroy2017()
         {
             TestSmartParser("SmartParser\\MinStroy2017.xlsx", "prod");
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void MinEkonon2017()
+        {
+            TestSmartParser("SmartParser\\MinEkonon2017.docx", "prod");
         }
 
 
