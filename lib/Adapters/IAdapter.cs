@@ -258,6 +258,23 @@ namespace Smart.Parser.Adapters
             }
             return outputList;
         }
+        string GetHtmlByRow(int rowIndex)
+        {
+            Row row = GetRow(rowIndex);
+            string res = "<tr>\n";
+            foreach (var c in row.Cells)
+            {
+                res += "\t<td";
+                if (c.MergedColsCount > 1)
+                {
+                    res += string.Format("colspan={0}", c.MergedColsCount);
+                }
+                string text = c.Text.Replace("\n", "<br/>");
+                res += ">" + text + "</td>\n";
+            }
+            res += "</tr>\n";
+            return res;
+        }
         public int GetPossibleHeaderBegin()
         {
             return ColumnOrdering.HeaderBegin ?? 0;
@@ -283,6 +300,20 @@ namespace Smart.Parser.Adapters
             }
             return table;
         }
+        public void WriteHtmlFile(string htmlFileName)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(htmlFileName))
+            {
+                file.WriteLine("<html><table>");
+                for (int i = 0; i < GetRowsCount(); i++)
+                {
+                    file.WriteLine(GetHtmlByRow(i));
+                }
+                file.WriteLine("</table></html>");
+            }
+        }
+
+
 
         public virtual int? GetWorksheetIndex()
         {

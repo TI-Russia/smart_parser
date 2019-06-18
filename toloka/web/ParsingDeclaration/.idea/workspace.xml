@@ -5,11 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/myscript.js" line="352" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="83bbe9cb-5905-49fc-8d0f-850dd5b0c38a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/body.html" beforeDir="false" afterPath="$PROJECT_DIR$/body.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myscript.js" beforeDir="false" afterPath="$PROJECT_DIR$/myscript.js" afterDir="false" />
-    </list>
+    <list default="true" id="83bbe9cb-5905-49fc-8d0f-850dd5b0c38a" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -46,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/myscript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="562" selection-end-line="562" />
+            <state relative-caret-position="73">
+              <caret line="554" column="23" lean-forward="true" selection-start-line="554" selection-start-column="23" selection-end-line="554" selection-end-column="23" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
               </folding>
@@ -238,16 +234,15 @@
       <workItem from="1560399841906" duration="5871000" />
       <workItem from="1560421081202" duration="668000" />
       <workItem from="1560566632512" duration="33752000" />
-      <workItem from="1560737158155" duration="21705000" />
+      <workItem from="1560737158155" duration="22542000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126728000" />
+    <option name="totallyTimeSpent" value="127565000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="-5" width="1930" height="1090" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17955509" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -255,7 +250,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.360221" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.360221" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -443,8 +438,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/myscript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="562" selection-end-line="562" />
+        <state relative-caret-position="73">
+          <caret line="554" column="23" lean-forward="true" selection-start-line="554" selection-start-column="23" selection-end-line="554" selection-end-column="23" />
           <folding>
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>

@@ -25,6 +25,7 @@ namespace Smart.Parser
         public static int MaxRowsToProcess = -1;
         public static DeclarationField ColumnToDump = DeclarationField.None;
         public static string TolokaFileName = "";
+        public static string HtmlFileName = "";
 
         static string ParseArgs(string[] args)
         {
@@ -38,6 +39,7 @@ namespace Smart.Parser
             CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft, xceed or prod, by default is aspose", false);
             CMDLineParser.Option maxRowsToProcessOpt = parser.AddIntParameter("-max-rows", "max rows to process from the input file", false);
             CMDLineParser.Option dumpColumnOpt = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
+            CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
             parser.AddHelpOption();
             try
@@ -104,6 +106,11 @@ namespace Smart.Parser
             {
                 ColumnToDump = (DeclarationField)Enum.Parse(typeof(DeclarationField), dumpColumnOpt.Value.ToString());
             }
+            if (dumpHtmlOpt.isMatched)
+            {
+                HtmlFileName = dumpHtmlOpt.Value.ToString();
+            }
+            
             if (tolokaFileNameOpt.isMatched)
             {
                 TolokaFileName = tolokaFileNameOpt.Value.ToString();
@@ -359,6 +366,7 @@ namespace Smart.Parser
 
             Logger.Info(String.Format("Parsing {0}", declarationFile));
             IAdapter adapter = GetAdapter(declarationFile);
+            if (HtmlFileName != "") adapter.WriteHtmlFile(HtmlFileName);
             string declarationFileName = Path.GetFileName(declarationFile);
             if (adapter.GetWorkSheetCount() > 1)
             {
