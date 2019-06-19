@@ -183,17 +183,14 @@ namespace Smart.Parser.Adapters
         {
             return null;
         }
-        static public bool IsEmptyRow(Row r)
+        public bool IsEmptyRow(int rowIndex)
         {
+            Row r = Rows[rowIndex];
+            if (r == null) return true;
             foreach (var cell in r.Cells)
             {
-                var t = cell.GetText().Trim().Trim('\n', '\t', '\r');
-                if (t != "")
-                {
-                    return false;
-                }
+                if (!cell.IsEmpty) return false;
             }
-
             return true;
         }
         public bool IsSectionRow(Row r, out string text)
@@ -292,15 +289,22 @@ namespace Smart.Parser.Adapters
         {
             var table = new TJsonTablePortion();
             table.DataStart = body_start;
-            table.DataEnd = body_end;
             for (int i= GetPossibleHeaderBegin();  i < GetPossibleHeaderEnd(); i++)
             {
                 var row = GetJsonByRow(i);
                 table.Header.Add(row);
             }
-            for (int i = body_start; i < body_end; i++)
+            int maxRowsCount = body_end - body_start;
+            table.DataEnd = body_start;
+            int addedRows = 0;
+            while (table.DataEnd < GetRowsCount() && addedRows < maxRowsCount)
             {
-                table.Data.Add(GetJsonByRow(i)); 
+                if (!IsEmptyRow(table.DataEnd))
+                {
+                    table.Data.Add(GetJsonByRow(table.DataEnd));
+                    addedRows++;
+                }
+                table.DataEnd++;
             }
             return table;
         }

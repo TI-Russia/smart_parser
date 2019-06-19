@@ -15,7 +15,7 @@ namespace Smart.Parser.Adapters
             if (range == null || range.Count == 0)
                 return;
             { }
-            IsEmpty = range.Text.Length > 0;
+            IsEmpty = range.Text.IsNullOrWhiteSpace();
             Text = range.Text;
             IsMerged = range.MergeCells;
             if (IsMerged)

@@ -171,7 +171,7 @@ namespace Smart.Parser.Adapters
         void TrimEmptyLines()
         {
             int row = GetRowsCount() - 1; 
-            while (row >= 0 && IsEmptyRow(Rows[row])) {
+            while (row >= 0 && IsEmptyRow(row)) {
                 MaxRowsToProcess = row;
                 row--;
             }

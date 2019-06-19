@@ -465,7 +465,7 @@ namespace Smart.Parser
                 json.InputFileName = declarationFileName;
                 json.Title = declaration.Properties.Title;
                 string jsonStr = JsonConvert.SerializeObject(json);
-                jsonStr = jsonStr.Replace("\t", " ").Replace("\"", "\"\"");
+                jsonStr = jsonStr.Replace("\t", " ").Replace("\\t", " ").Replace("\"", "\"\"");
                 string id = fileID + "_" + dataStart + "_" + dataEnd;
                 file.WriteLine(id + "\t"+ "\"" + jsonStr + "\"\t\t");
             }
