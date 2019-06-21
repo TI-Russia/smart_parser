@@ -10,13 +10,23 @@ import json
 import csv
 import shutil
 
+DATA_FOLDER = "data"
 #======================= copy data from drop box ========================
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--toloka",  dest='toloka', help ="toloka assignments file")
     parser.add_argument("--smart-parser", dest='smart_parser')
+    parser.add_argument("--dump-conflicts", dest='dump_conflicts')
     return parser.parse_args()
 
+
+def input_html_file_name(input_id):
+    global DATA_FOLDER
+    return os.path.join(DATA_FOLDER, input_id + ".html")
+
+def smart_parser_result_json_file(input_id):
+    htmlfile = input_html_file_name(input_id);
+    return  htmlfile[:htmlfile.rfind('.')] + ".json"
 
 def avg(items):
     count = 0
@@ -39,9 +49,9 @@ def  add_html_table_row(cells):
     return res + "</tr>\n"
 
 
-def convert_to_html(jsonStr):
+def convert_to_html(jsonStr, maintag="html"):
     data = json.loads(jsonStr)
-    res = "<html>"
+    res = "<"+ maintag +">"
     res += "<h1>" +  data['Title'] + "</h1>\n"
     res += "<table border=1>\n"
     res += "<thead>\n"
@@ -52,7 +62,8 @@ def convert_to_html(jsonStr):
     for r in  data["Data"]:
         res += add_html_table_row(r)
     res += "</tbody>\n"
-    res += "</table></html>"
+    res += "</table>"
+    res += "</" + maintag + ">"
     return res;
 
 class TMatchInfo:
@@ -63,14 +74,24 @@ class TMatchInfo:
         self.false_negative = []
         self.f_score= 1.0
 
-    def dump_type_error(self, input_id, worker_id, input, title, errors):
+    def dump_comparings(self, input_id, worker_id, input, title, errors):
         for x in input:
             errors.append("\t".join((input_id, worker_id, title, x)))
 
     def dump(self, input_id, worker_id, errors):
-        self.dump_type_error(input_id, worker_id, self.true_positive, "TP", errors)
-        self.dump_type_error(input_id, worker_id, self.false_positive, "FP", errors)
-        self.dump_type_error(input_id, worker_id, self.false_negative, "FN", errors)
+        self.dump_comparings(input_id, worker_id, self.true_positive, "TP", errors)
+        self.dump_comparings(input_id, worker_id, self.false_positive, "FP", errors)
+        self.dump_comparings(input_id, worker_id, self.false_negative, "FN", errors)
+
+    def dump_type_errors(self, input, title, errors):
+        for x in input:
+            errors.append("\t".join((title, x)))
+
+    def dump_errors(self):
+        errors = []
+        self.dump_type_errors(self.false_positive, "FP", errors)
+        self.dump_type_errors(self.false_negative, "FN", errors)
+        return errors
 
 
 def read_field(dct, field_name):
@@ -193,68 +214,121 @@ def calc_decl_match_one_pair(json1, json2):
     match_info.f_score = 2 * prec * recall / (prec + recall)
     return match_info
 
+def dump_conflict (task, match_info, conflict_file):
+    global DATA_FOLDER
+    input_id = task['INPUT:input_id']
+    res = "<div>\n"
+    res += "<table border=1> <tr>\n"
+
+    res += "<tr>"
+    res += "<td colspan=3><h1>"
+    res += "f-score={}".format(match_info.f_score)
+    res += " worker_id={}".format(task['ASSIGNMENT:worker_id'])
+    res += " input_id={}".format(task['INPUT:input_id'])
+    res += " line_no={}".format(task['input_line_no'])
+    res += "</h1>"
+    res += "</td></tr>"
+
+    res += "<td width=30%>\n"
+
+    input_json = task["INPUT:input_json"]
+    res += convert_to_html(input_json, "div")
+    res += "</td>\n"
+
+    res += "<td width=30%>"
+    res += "<textarea cols=80 rows=90>"
+    res += json.dumps(json.loads(task["OUTPUT:declaration_json"]), indent=4, ensure_ascii=False)
+    res += "</textarea>"
+    res += "</td>\n"
+
+    res += "<td>"
+    res += "<textarea cols=80 rows=90>"
+    with open (smart_parser_result_json_file(input_id), "r", encoding="utf8") as f:
+        res += f.read()
+    res += "</textarea>"
+    res += "</td>\n"
+    res += "</tr><tr>\n"
+    res  += "<td colspan=3>"
+    res += "<h1>"
+    res += "f-score={}".format(match_info.f_score) + "<br/"
+    res += "<br/>".join(match_info.dump_errors())
+    res += "</h1>"
+    res += "\n</tr></table>"
+    res  += "</td>"
+    conflict_file.write(res)
+
+
 class TTolokaStats:
     def __init__(self, verbose):
         self.tasks = defaultdict(list) # tasks wo golden
         self.verbose = verbose
         self.golden_task_assignments = 0
-        self.automatic_jsons = {}
         self.decl_match = {}
         self.errors = []
 
     def collect_stats(self, filename):
+        line_no = 2
         with open (filename, "r", encoding="utf8") as tsv:
             for task in csv.DictReader(tsv, delimiter="\t", quotechar='"'):
                 task_id = task['INPUT:input_id']
+                task['input_line_no'] = line_no
                 if task["GOLDEN:declaration_json"] == "":
                     self.tasks[task_id].append (task)
                 else:
                     self.golden_task_assignments += 1
+                line_no += 1
 
-    def calc_decl_match(self, input_id):
-        if input_id not in self.automatic_jsons:
-            self.decl_match[input_id] = 0
+    def calc_decl_match(self, input_id, conflict_file):
+        json_file = smart_parser_result_json_file(input_id)
+        if not os.path.exists(json_file):
+            self.decl_match[input_id] = 0  #smart parser failed
             return
+        automatic_json = json.load(open(json_file, encoding="utf8"))
         decl_matches = []
 
         for x in self.tasks[input_id]:
             toloker_json = json.loads(x['OUTPUT:declaration_json'])
-            match_info = calc_decl_match_one_pair(toloker_json, self.automatic_jsons[input_id])
+            match_info = calc_decl_match_one_pair(toloker_json, automatic_json)
             decl_matches.append(match_info.f_score)
             match_info.dump(input_id, x['ASSIGNMENT:worker_id'], self.errors)
+            if conflict_file:
+                dump_conflict(x, match_info, conflict_file)
         self.decl_match[input_id] = avg(decl_matches)
 
     def process(self, args):
         if args.smart_parser is None:
             raise Exception("specify --smart-parser argument")
         self.automatic_jsons = {}
-        folder = "data"
-        if os.path.exists(folder):
-            shutil.rmtree(folder)
-        os.mkdir(folder)
+        global DATA_FOLDER
+        if os.path.exists(DATA_FOLDER):
+            shutil.rmtree(DATA_FOLDER)
+        os.mkdir(DATA_FOLDER)
         for input_id, input_tasks in self.tasks.items():
             input_json = input_tasks[0]["INPUT:input_json"]
-            filename = os.path.join(folder, input_id + ".html")
+            filename = input_html_file_name(input_id)
             with open(filename, "w", encoding="utf8") as output_html:
                 html = convert_to_html(input_json)
                 output_html.write(html)
 
         smart_parser = os.path.abspath(args.smart_parser)
-        cmd = "{} -skip-relative-orphan -v debug  -adapter prod {} > log ".format(smart_parser, folder);
+        cmd = "{} -skip-relative-orphan -v debug  -adapter prod {} > log ".format(smart_parser, DATA_FOLDER);
         print (cmd)
         os.system(cmd)
 
+        if args.dump_conflicts:
+            conflict_file = open(args.dump_conflicts, "w", encoding="utf8")
+        else:
+            conflict_file = None
+
         for input_id, input_tasks in self.tasks.items():
-            filename = os.path.join(folder, input_id + ".html")
-            json_file = filename[:filename.rfind('.')] + ".json"
-            if os.path.exists(json_file):
-                automatic_json = json.load(open(json_file, encoding="utf8"))
-                self.automatic_jsons[input_id] = automatic_json
             try:
-                self.calc_decl_match(input_id)
+                self.calc_decl_match(input_id, conflict_file)
             except:
-                print ("cannot process {}".format(json_file))
+                print ("cannot process {}".format(input_id))
                 raise
+
+        if args.dump_conflicts:
+            conflict_file.close()
 
 
     def report(self):
