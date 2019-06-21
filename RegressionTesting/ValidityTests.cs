@@ -109,13 +109,14 @@ namespace RegressionTesting
         }
 
 
-        public void TestSmartParser(string filename, string adapterName)
+        public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
             SetupLog4Net();
             var workingCopy = Path.GetFileName(filename);
             File.Copy(filename, workingCopy);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
+            Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
             Smart.Parser.Program.ParseOneFile(workingCopy, outFileName);
             string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
@@ -325,6 +326,25 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinEkonon2017.docx", "prod");
         }
 
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void TolokaGenerated()
+        {
+            TestSmartParser("SmartParser\\toloka_generated.html", "prod", true);
+        }
+
+        [TestMethod]
+        [DeploymentItem(SamplesDirectory)]
+        [DeploymentItem("log4net.config")]
+        [DeploymentItem("import-schema.json")]
+        [DeploymentItem("import-schema-dicts.json")]
+        public void Unk2014()
+        {
+            TestSmartParser("SmartParser\\Unk2014.xlsx", "prod");
+        }
 
         private static void SetupLog4Net()
         {

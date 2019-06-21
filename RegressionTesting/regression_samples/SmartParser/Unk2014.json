@@ -1,0 +1,128 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Герасимов В.В.",
+        "name_raw": "Герасимов В.В.",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2722645.56,
+          "relative": null
+        },
+        {
+          "size": 162260.30,
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок под ИЖС",
+          "type": "Земельный участок",
+          "square": 1500.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "1500, 00",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 131.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "131, 50",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "type": "Земельный участок",
+          "square": 625.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "625, 00",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "служебная дача",
+          "type": "Дача",
+          "square": 891.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Служебное жилье",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "891, 10",
+          "country_raw": "Россия",
+          "type_raw": "служебная дача"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": 554.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "554, 00",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 131.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "131, 50",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "служебная дача",
+          "type": "Дача",
+          "square": 891.0,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Служебное жилье",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "891, 10",
+          "country_raw": "Россия",
+          "type_raw": "служебная дача"
+        }
+      ],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "sheet_title": "о доходах, расходах, об имуществе и обязательствах имущественного характера за отчетный период с 1 января 2014 г.  по 31 декабря 2014 г.",
+    "year": 2014
+  }
+}

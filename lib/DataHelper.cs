@@ -18,6 +18,8 @@ namespace Smart.Parser.Lib
         }
         static public bool IsPublicServantInfo(string nameOrRelativeType)
         {
+            if (IsEmptyValue(nameOrRelativeType)) return false;
+
             if (ParseRelationType(nameOrRelativeType, false) != RelationType.Error)
             {
                 return false;

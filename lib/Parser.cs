@@ -261,9 +261,10 @@ namespace Smart.Parser.Lib
                 int mergedRowCount = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                string relativeType = "";
                 if  (DataHelper.IsEmptyValue(nameOrRelativeType) &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
                 {
-                    nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
+                    relativeType = Adapter.GetDeclarationField(row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
                 }
                 
                 string occupationStr = "";
@@ -272,7 +273,7 @@ namespace Smart.Parser.Lib
                     occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
                 }
 
-                if (DataHelper.IsEmptyValue(nameOrRelativeType))
+                if (DataHelper.IsEmptyValue(nameOrRelativeType) && DataHelper.IsEmptyValue(relativeType))
                 {
                     if (currentPerson == null)
                     {
@@ -292,15 +293,20 @@ namespace Smart.Parser.Lib
                     currentServant = CreateNewServant(row, nameOrRelativeType, occupationStr, currentSection, currentServant, ref currentPerson);
                     declaration.PublicServants.Add(currentServant);
                 }
-                else if (DataHelper.IsRelativeInfo(nameOrRelativeType, occupationStr))
-                {
-                    currentPerson = CreateNewRelative(row, nameOrRelativeType, currentServant, currentPerson);
-                }
                 else
                 {
-                    // error
-                    throw new SmartParserException(
-                        string.Format("Wrong nameOrRelativeType {0} (occupation {2}) at row {1}", nameOrRelativeType, row, occupationStr));
+                    if (DataHelper.IsEmptyValue(relativeType))
+                        relativeType = nameOrRelativeType;
+                    if (DataHelper.IsRelativeInfo(relativeType, occupationStr))
+                    {
+                        currentPerson = CreateNewRelative(row, relativeType, currentServant, currentPerson);
+                    }
+                    else
+                    {
+                        // error
+                        throw new SmartParserException(
+                            string.Format("Wrong nameOrRelativeType {0} (occupation {2}) at row {1}", nameOrRelativeType, row, occupationStr));
+                    }
                 }
                 if (mergedRowCount > 1)
                 {

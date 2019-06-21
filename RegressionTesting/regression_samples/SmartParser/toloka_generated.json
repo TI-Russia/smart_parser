@@ -1,0 +1,362 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name": "Кадырова Гульназ Маннуровна",
+        "name_raw": "Кадырова Гульназ Маннуровна",
+        "role": "Заместитель Министра\n\n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 7343945.98,
+          "relative": null
+        },
+        {
+          "size": 1335000.00,
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 155.5,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "155,5",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 155.50,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "155,50",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 155.50,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "155,50",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой автомобиль БМВ Х5",
+          "relative": "Супруг(а)"
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Каламанов Георгий Владимирович",
+        "name_raw": "Каламанов Георгий Владимирович",
+        "role": "Заместитель Министра\n\n\n\n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 6797319.29,
+          "relative": null
+        },
+        {
+          "size": 819705.71,
+          "relative": "Супруг(а)"
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 154.1,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "154,1",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "машино-место",
+          "type": "Гараж",
+          "square": 12.4,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "12,4",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "РФ",
+          "type_raw": "машино-место",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 154.10,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Супруг(а)",
+          "square_raw": "154,10",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 154.10,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "154,10",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 154.10,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "154,10",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name": "Корицкий Юрий Анатольевич",
+        "name_raw": "Корицкий Юрий Анатольевич",
+        "role": "Помощник Министра\n\n\n\n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 4613430.03,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 186.50,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "186,50",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "машино-место",
+          "type": "Гараж",
+          "square": 23.60,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "23,60",
+          "country_raw": "РФ",
+          "type_raw": "машино-место"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 186.5,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": 0.25,
+          "relative": "Супруг(а)",
+          "square_raw": "186,5",
+          "share_amount_raw": "1/4 доли",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 186.5,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": 0.5,
+          "relative": "Ребенок",
+          "square_raw": "186,5",
+          "share_amount_raw": "1/2 доли",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 186.5,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": 0.25,
+          "relative": "Ребенок",
+          "square_raw": "186,5",
+          "share_amount_raw": "1/4 доли",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой автомобиль Вольво ХС-70",
+          "relative": null
+        },
+        {
+          "text": "легковой автомобиль Форд Фокус",
+          "relative": "Супруг(а)"
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Москалев Александр Витальевич",
+        "name_raw": "Москалев Александр Витальевич",
+        "role": "Советник Министра\n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 3358332.74,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 60.9,
+          "country": "Россия",
+          "region": null,
+          "own_type": "Индивидуальная",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "60,9",
+          "share_amount_raw": "индивидуальная",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 60.90,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": "Ребенок",
+          "square_raw": "60,90",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой автомобиль BMW X5",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name": "Никитин Глеб Сергеевич",
+        "name_raw": "Никитин Глеб Сергеевич",
+        "role": "Первый заместитель Министра\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 7250349.02,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "type": "Квартира",
+          "square": 45.6,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В собственности",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "45,6",
+          "share_amount_raw": "общая",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "общая"
+        },
+        {
+          "text": "жилой дом",
+          "type": "Жилой дом",
+          "square": 148.10,
+          "country": "Россия",
+          "region": null,
+          "own_type": "В пользовании",
+          "share_amount": null,
+          "relative": null,
+          "square_raw": "148,10",
+          "country_raw": "РФ",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой автомобиль Лада 212140\nлегковой автомобиль УАЗ Патриот",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.\n",
+    "year": 2014
+  }
+}

@@ -249,7 +249,7 @@ namespace Smart.Parser
                 {
                     caught = true;
                     Logger.Error("Parsing Exception " + e.ToString());
-                    //Logger.Info("Stack: " + e.StackTrace);
+                    Logger.Debug("Stack: " + e.StackTrace);
                     parse_results["exception"].Add(file);
                 }
                 finally

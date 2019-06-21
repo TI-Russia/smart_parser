@@ -127,22 +127,27 @@ namespace Smart.Parser.Lib
             }
             return row;
         }
-
-        static void SecondLevelHeader(IAdapter adapter, int parentRow, Cell parentCell, ColumnOrdering result)
+        static List<Cell> FindSubcellsUnder(IAdapter adapter, Cell cell)
+        {
+            Row underRow = adapter.Rows[cell.Row + cell.MergedRowsCount];
+            var subCells = new List<Cell>();
+            foreach (var underCell in underRow.Cells)
+            {
+                if (underCell.Col < cell.Col)
+                    continue;
+                if (underCell.Col >= cell.Col + cell.MergedColsCount)
+                    break;
+                if (!underCell.IsEmpty)
+                    subCells.Add(underCell);
+            }
+            return subCells;
+        }
+        static void SecondLevelHeader(IAdapter adapter, Cell parentCell, List<Cell> subCells, ColumnOrdering result)
         {
             string text = parentCell.GetText(true);
-            int rowSpan = parentCell.MergedRowsCount;
-            Row auxRow = adapter.Rows[parentRow + rowSpan];
-            string dummy;
-
-            foreach (var auxCell in auxRow.Cells)
+            foreach (var cell in subCells)
             {
-                if (auxCell.Col < parentCell.Col)
-                    continue;
-                if (auxCell.Col >= parentCell.Col + parentCell.MergedColsCount)
-                    break;
-
-                string cellText = auxCell.GetText(true);
+                string cellText = cell.GetText(true);
                 string fullText = text + " " + cellText;
 
                 DeclarationField field = DeclarationField.None;
@@ -159,22 +164,23 @@ namespace Smart.Parser.Lib
 
                 if (field == DeclarationField.None)
                 {
-                    throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", auxCell.Row, auxCell.Col, fullText));
+                    throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", cell.Row,cell.Col, fullText));
                 }
-                result.Add(field, auxCell.Col);
+                result.Add(field, cell.Col);
             }
-
         }
 
+        
         static public ColumnOrdering ExamineHeader(IAdapter adapter)
         {
             ColumnOrdering res = new ColumnOrdering();
-            int headerRowNum = ProcessTitle(adapter, res);
-            var header = adapter.Rows[headerRowNum];
+            int headerStartRow = ProcessTitle(adapter, res);
+            int headerEndRow = headerStartRow + 1;
+            var firstRow = adapter.Rows[headerStartRow];
 
             int colCount = 0;
-            int headerRows = 1;
-            foreach (var cell in header.Cells)
+
+            foreach (var cell in firstRow.Cells)
             {
                 string text = cell.GetText(true);
                 Logger.Debug("column title: " + text);
@@ -183,20 +189,17 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
+                var subCells = FindSubcellsUnder(adapter, cell);
 
-                if (cell.MergedRowsCount > 1)
+                if (subCells.Count() <= 1)
                 {
-                    headerRows = Math.Max(headerRows, cell.MergedRowsCount);
-                }
-                string dummy = "";
-                if (cell.MergedColsCount <= 1 || adapter.IsSectionRow(adapter.Rows[headerRowNum + cell.MergedRowsCount], out dummy))
-                {
+                    headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
                     if (!text.IsNullOrWhiteSpace())
                     {
                         DeclarationField field = HeaderHelpers.GetField(text.Replace('\n', ' '));
                         if (field == DeclarationField.None)
                         {
-                            throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerRowNum, colCount));
+                            throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerStartRow, colCount));
                         }
                         res.Add(field, cell.Col);
                         colCount++;
@@ -206,16 +209,16 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
-                    SecondLevelHeader(adapter, headerRowNum, cell, res);
+                    SecondLevelHeader(adapter, cell, subCells, res);
+                    headerEndRow = Math.Max(headerEndRow, subCells[0].Row + subCells[0].MergedRowsCount);
                     colCount += cell.MergedColsCount;
                 }
-
             }
 
-            res.HeaderBegin = headerRowNum;
-            res.HeaderEnd = headerRowNum + headerRows;
+            res.HeaderBegin = headerStartRow;
+            res.HeaderEnd = headerEndRow;
 
-            int firstDataRow = headerRowNum + headerRows;
+            int firstDataRow = res.HeaderEnd.Value;
 
             // пропускаем колонку с номерами
             string cellText1 = adapter.GetCell(firstDataRow, 0).GetText();
