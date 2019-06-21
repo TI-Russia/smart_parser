@@ -23,7 +23,7 @@ namespace Smart.Parser.Adapters
         string ConvertFile2TempXlsX(string filename)
         {
             Application excel = new Application();
-            var doc = excel.Workbooks.Open(Path.GetFullPath(filename));
+            var doc = excel.Workbooks.Open(Path.GetFullPath(filename),ReadOnly:true);
             TempFileName = Path.GetTempFileName();
             Logger.Debug(string.Format("use {0} to store temp xlsx file", TempFileName));
             excel.DisplayAlerts = false;

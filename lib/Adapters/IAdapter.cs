@@ -231,6 +231,7 @@ namespace Smart.Parser.Adapters
         public class TJsonCell
         {
             public int MergedColsCount;
+            public int MergedRowsCount;
             public string Text;
         }
         public class TJsonTablePortion
@@ -251,6 +252,7 @@ namespace Smart.Parser.Adapters
             {
                 var jc = new TJsonCell();
                 jc.MergedColsCount = c.MergedColsCount;
+                jc.MergedRowsCount = c.MergedRowsCount;
                 jc.Text = c.Text;
                 outputList.Add(jc);
             }
