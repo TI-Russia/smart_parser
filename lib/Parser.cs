@@ -39,12 +39,14 @@ namespace Smart.Parser.Lib
     {
         DateTime FirstPassStartTime;
         DateTime SecondPassStartTime;
+        bool FailOnRelativeOrphan;
 
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
-        public Parser(IAdapter adapter)
+        public Parser(IAdapter adapter, bool failOnRelativeOrphan=true)
         {
             Adapter = adapter;
+            FailOnRelativeOrphan = failOnRelativeOrphan;
         }
 
         public void DumpColumn(int column)
@@ -142,9 +144,13 @@ namespace Smart.Parser.Lib
             Logger.Debug("Relative {0} at row {1}", relativeStr, row);
             if (currentServant == null)
             {
-                // ошибка
-                throw new SmartParserException(
-                    string.Format("Relative {0} at row {1} without main Person", relativeStr, row));
+                if (FailOnRelativeOrphan) {
+                    throw new SmartParserException(
+                        string.Format("Relative {0} at row {1} without main Person", relativeStr, row));
+                }
+                else {
+                    return null;
+                }
             }
             currentPerson.RangeHigh = row - 1;
             Relative relative = new Relative();
@@ -270,8 +276,11 @@ namespace Smart.Parser.Lib
                 {
                     if (currentPerson == null)
                     {
-                        throw new SmartParserException(
-                            string.Format("No Person  at row {0}", row));
+                        if (FailOnRelativeOrphan)
+                        {
+                            throw new SmartParserException(
+                                string.Format("No Person  at row {0}", row));
+                        }
                     }
                     else
                     {

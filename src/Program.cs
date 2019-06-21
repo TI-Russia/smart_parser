@@ -26,6 +26,7 @@ namespace Smart.Parser
         public static DeclarationField ColumnToDump = DeclarationField.None;
         public static string TolokaFileName = "";
         public static string HtmlFileName = "";
+        public static bool SkipRelativeOrphan = false;
 
         static string ParseArgs(string[] args)
         {
@@ -41,6 +42,7 @@ namespace Smart.Parser
             CMDLineParser.Option dumpColumnOpt = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
             CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
+            CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
             parser.AddHelpOption();
             try
             {
@@ -89,6 +91,8 @@ namespace Smart.Parser
 
             }
             Logger.SetLoggingLevel(verboseLevel);
+
+            SkipRelativeOrphan = skipRelativeOrphanOpt.isMatched;
 
             if (adapterOpt.isMatched)
             {
@@ -473,7 +477,7 @@ namespace Smart.Parser
         public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFile)
         {
             string declarationFileName = Path.GetFileName(declarationFile);
-            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
+            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
             // Try to extract declaration year from file name if we weren't able to get it from document title
             if (!columnOrdering.Year.HasValue)

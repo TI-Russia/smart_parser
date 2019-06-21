@@ -240,6 +240,7 @@ namespace Smart.Parser.Adapters
             public int DataStart;
             public int DataEnd;
             public List<List<TJsonCell>> Header = new List<List<TJsonCell>>();
+            public List<List<TJsonCell>> Section = new List<List<TJsonCell>>();
             public List<List<TJsonCell>> Data = new List<List<TJsonCell>>();
         }
         List<TJsonCell> GetJsonByRow(int rowIndex)
@@ -289,11 +290,24 @@ namespace Smart.Parser.Adapters
         {
             var table = new TJsonTablePortion();
             table.DataStart = body_start;
+            int headerEnd = GetPossibleHeaderEnd();
             for (int i= GetPossibleHeaderBegin();  i < GetPossibleHeaderEnd(); i++)
             {
                 var row = GetJsonByRow(i);
                 table.Header.Add(row);
             }
+
+            // find section before data
+            for (int i = body_start; i >= headerEnd; i--)
+            {
+                string dummy;
+                if (IsSectionRow(GetRow(i), out dummy))
+                {
+                    table.Section.Add(GetJsonByRow(i));
+                    break;
+                }
+            }
+            
             int maxRowsCount = body_end - body_start;
             table.DataEnd = body_start;
             int addedRows = 0;
