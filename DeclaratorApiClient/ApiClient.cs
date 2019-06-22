@@ -15,7 +15,8 @@ namespace TI.Declarator.DeclaratorApiClient
     {
         private static readonly string ReportUnknownEntryUrl = "https://declarator.org/api/unknown_entry/";
         private static readonly string ValidateOutputUrl = "https://declarator.org/api/jsonfile/validate/";
-
+        private static readonly string PatternsUrl = "https://declarator.org/api/patterns";
+        
         private static HttpClient HttpClient { get; set; }
 
         private static readonly string Username = "david_parsers";
@@ -45,6 +46,18 @@ namespace TI.Declarator.DeclaratorApiClient
         {
             var contents = new StringContent(jsonOutput, Encoding.UTF8, "application/json");
             var httpResponse = HttpClient.PostAsync(ValidateOutputUrl, contents).Result;
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new DeclaratorApiException(httpResponse, "Could not validate parser output");
+            }
+
+            return httpResponse.Content.ReadAsStringAsync().Result;
+        }
+        public static string DownloadPatterns()
+        {
+            var contents = new StringContent("");
+            var httpResponse = HttpClient.PostAsync(PatternsUrl, contents).Result;
 
             if (!httpResponse.IsSuccessStatusCode)
             {
