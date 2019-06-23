@@ -6647,6 +6647,27 @@
             "is_regex": true,
             "type": "realestatetype",
             "value": "Иное"
+        },
+        {
+            "data": "совместная собственность",
+            "is_regex": true,
+            "is_case": false,
+            "type": "owntype",
+            "value": "Совместная собственность"
+        },
+        {
+            "data": "\\bбезвозмездное пользование на срок полномочий депутата\\b",
+            "is_regex": true,
+            "is_case": false,
+            "type": "owntype",
+            "value": "Служебное жилье"
+        },
+        {
+            "data": "\\bнаём на срок полномочий депутата\\b",
+            "is_regex": true,
+            "is_case": false,
+            "type": "owntype",
+            "value": "Наём (аренда)"
         }
     ]
 }

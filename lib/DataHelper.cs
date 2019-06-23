@@ -202,6 +202,7 @@ namespace Smart.Parser.Lib
             share = ParseOwnershipShare(rest, ownershipType);
             if (rest != "")
             {
+                rest = rest.Trim(')', ']', ' ');
                 OwnershipType t = TryParseOwnershipType(rest);
                 if (t != OwnershipType.None)
                 {

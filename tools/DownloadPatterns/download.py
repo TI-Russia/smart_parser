@@ -18,6 +18,10 @@ while patternUrl != "" and patternUrl is not None:
     allPatterns += page['results']
     patternUrl = page.get('next', "")
 
+add_patterns = json.load(open('add_patterns.json', "r", encoding="utf8"))
+allPatterns += add_patterns['results']
+
+
 
 with open("patterns.json", "w", encoding="utf8") as outf:
     json.dump({"results":allPatterns}, outf, indent=4, ensure_ascii=False)
