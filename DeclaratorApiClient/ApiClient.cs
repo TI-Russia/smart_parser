@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
-
 using TI.Declarator.JsonSerialization;
 using TI.Declarator.ParserCommon;
 
@@ -56,15 +55,31 @@ namespace TI.Declarator.DeclaratorApiClient
         }
         public static string DownloadPatterns()
         {
-            var contents = new StringContent("");
-            var httpResponse = HttpClient.PostAsync(PatternsUrl, contents).Result;
+            // sokirko: does not work because of Authorization problems, use download.py
+            dynamic result = null;
+            var url = PatternsUrl;
+            while (true) {
+                var contents = new StringContent("");
+                var httpResponse = HttpClient.PostAsync(url, contents).Result;
 
-            if (!httpResponse.IsSuccessStatusCode)
-            {
-                throw new DeclaratorApiException(httpResponse, "Could not validate parser output");
+                if (!httpResponse.IsSuccessStatusCode)
+                {
+                    throw new DeclaratorApiException(httpResponse, "Could not validate parser output");
+                }
+                var s = httpResponse.Content.ReadAsStringAsync().Result;
+                dynamic patterns = Newtonsoft.Json.JsonConvert.DeserializeObject(s);
+                if (result == null)
+                {
+                    result = patterns;
+                }
+                else
+                {
+                    result.results += patterns.results;
+                }
+                if (patterns.next == "") break;
+                url = patterns.next;
             }
-
-            return httpResponse.Content.ReadAsStringAsync().Result;
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(result);
         }
     }
 }

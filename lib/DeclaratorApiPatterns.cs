@@ -12,6 +12,14 @@ using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Lib
 {
+    public class PatternsFileName
+    {
+        public static string PatternsResourceFile = "Parser.Lib.Resources.patterns.json";
+        public static void UseTestPatterns()
+        {
+            PatternsResourceFile = "Parser.Lib.Resources.patterns_test.json";
+        }
+    }
 
     public class Rootobject
     {
@@ -37,8 +45,6 @@ namespace Smart.Parser.Lib
          realestatetype - гараж, квартира и т.д.
          */
         static Dictionary<string, RealEstateType> realestatetypeDict = new Dictionary<string, RealEstateType>();
-        //static Regex realestatetypeRegex;
-        //static string realestatetypeRegexString;
         static Dictionary<RealEstateType, Regex> RealEstateTypeRegexes = new Dictionary<RealEstateType, Regex>();
         static SymSpell RealEstateTypeSpellDict = new SymSpell(10000, 2);
 
@@ -90,8 +96,8 @@ namespace Smart.Parser.Lib
                             owntypeDict[pattern.data.ToLower()] = pattern.value;
                         break;
                     case "country":
-                        if (pattern.is_regex)
-                            throw new Exception("Regex not supproted");
+                        //if (pattern.is_regex)
+                        //    throw new Exception("Regex not supproted");
                         countryDict[pattern.data.ToLower()] = pattern.value;
                         break;
                     case "carbrand":
@@ -188,12 +194,12 @@ namespace Smart.Parser.Lib
             countryDict["рф"] = "россия";
             countryDict["республика болгария"] = "болгария";
         }
-
+        
         static string GetResourceText()
         {
             string result = null;
             var currentAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.patterns.json"))
+            using (var stream = currentAssembly.GetManifestResourceStream(PatternsFileName.PatternsResourceFile))
             using (var reader = new StreamReader(stream))
             {
                 result = reader.ReadToEnd();

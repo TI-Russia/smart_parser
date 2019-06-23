@@ -1,0 +1,90 @@
+{
+  "results": [
+    {
+      "id": 626,
+      "data": "\"россия\"",
+      "is_regex": false,
+      "is_case": false,
+      "type": "country",
+      "value": "Россия"
+    },
+    {
+      "id": 277,
+      "data": "\\bжило(?:й|го)?\\b",
+      "is_regex": true,
+      "is_case": false,
+      "type": "realestatetype",
+      "value": "Жилой дом"
+    },
+    {
+      "data": "совместная собственность",
+      "is_regex": true,
+      "is_case": false,
+      "type": "owntype",
+      "value": "Совместная собственность"
+    },
+    {
+      "data": "совместная",
+      "is_regex": true,
+      "is_case": false,
+      "type": "owntype",
+      "value": "Совместная собственность"
+    },
+    {
+      "data": "\\bбезвозмездное пользование на срок полномочий депутата\\b",
+      "is_regex": true,
+      "is_case": false,
+      "type": "owntype",
+      "value": "Служебное жилье"
+
+    },
+        {
+            "data": "\\bОбщая долевая\\b",
+            "id": 127,
+            "is_case": false,
+            "is_regex": true,
+            "type": "owntype",
+            "value": "Долевая собственность"
+        },
+    {
+      "id": 117,
+      "data": "Долевая",
+      "is_regex": false,
+      "is_case": false,
+      "type": "owntype",
+      "value": "Долевая собственность"
+    },
+    {
+      "id": 699,
+      "data": "Rвартира",
+      "is_regex": true,
+      "is_case": false,
+      "type": "realestatetype",
+      "value": "Квартира"
+    },
+    {
+      "id": 272,
+      "data": "квартира",
+      "is_regex": false,
+      "is_case": false,
+      "type": "realestatetype",
+      "value": "Квартира"
+    },
+     {
+      "id": 240,
+      "data": "\\bземельный\\b",
+      "is_regex": true,
+      "is_case": false,
+      "type": "realestatetype",
+      "value": "Земельный участок"
+    },
+   {
+      "data": "\\bнаём на срок полномочий депутата\\b",
+      "is_regex": true,
+      "is_case": false,
+      "type": "owntype",
+      "value": "Наём (аренда)"
+    }
+  ]
+
+}

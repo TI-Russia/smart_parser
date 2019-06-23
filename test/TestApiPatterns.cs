@@ -12,6 +12,11 @@ namespace test
     [TestClass]
     public class TestApiPatterns
     {
+        public TestApiPatterns()
+        {
+            PatternsFileName.UseTestPatterns();
+
+        }
         [TestMethod]
         public void TestPatterns()
         {
@@ -27,26 +32,12 @@ namespace test
                 Assert.IsTrue(ex is UnknownCountryException);
             }
 
-            Assert.AreEqual(DeclaratorApiPatterns.GetValue("жилой дом(незавершенное строительство)", "realestatetype"), "Жилой дом");
-
-            Assert.AreEqual(DeclaratorApiPatterns.GetValue("а/м супер пурер машина", "vehicletype"), "Автомобиль легковой");
         }
         [TestMethod]
         public void TestParseRealEstateType()
         {
             RealEstateType value = DeclaratorApiPatterns.ParseRealEstateType("Rвартира");
             Assert.AreEqual(value, RealEstateType.Apartment);
-
-            value = DeclaratorApiPatterns.ParseRealEstateType("беседка");
-            Assert.AreEqual(value, RealEstateType.Other);
-            value = DeclaratorApiPatterns.ParseRealEstateType("бокс");
-            Assert.AreEqual(value, RealEstateType.Garage);
-
-            value = DeclaratorApiPatterns.ParseRealEstateType("гостевой дом");
-            Assert.AreEqual(value, RealEstateType.ResidentialHouse);
-
-            value = DeclaratorApiPatterns.ParseRealEstateType("1/2 дома");
-            Assert.AreEqual(value, RealEstateType.ResidentialHouse);
 
         }
 

@@ -11,7 +11,8 @@ namespace DownloadPatterns
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(ApiClient.DownloadPatterns());
+            // does not work, problems with tokens, use download.py
+            //Console.WriteLine(ApiClient.DownloadPatterns());
 
         }
     }

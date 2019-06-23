@@ -254,7 +254,7 @@
         },
         {
           "text": "Сторожка",
-          "type": null,
+          "type": "Иное",
           "square": 19.3,
           "country": "Россия",
           "region": null,
@@ -1316,7 +1316,7 @@
         },
         {
           "text": "Апартаменты",
-          "type": null,
+          "type": "Квартира",
           "square": 78.0,
           "country": "Болгария",
           "region": null,
@@ -1346,7 +1346,7 @@
         },
         {
           "text": "Апартаменты",
-          "type": null,
+          "type": "Квартира",
           "square": 78.0,
           "country": "Болгария",
           "region": null,
@@ -4541,7 +4541,7 @@
         },
         {
           "text": "Дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 130.0,
           "country": "Россия",
           "region": null,
@@ -4982,7 +4982,7 @@
         },
         {
           "text": "Дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 30.00,
           "country": "Россия",
           "region": null,
@@ -5532,7 +5532,7 @@
         },
         {
           "text": "Дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 117.00,
           "country": "Россия",
           "region": null,
@@ -5967,7 +5967,7 @@
         },
         {
           "text": "Дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 170.0,
           "country": "Россия",
           "region": null,
@@ -9878,7 +9878,7 @@
         },
         {
           "text": "Дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 63.0,
           "country": "Россия",
           "region": null,
@@ -10985,7 +10985,7 @@
         },
         {
           "text": "Дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 52.5,
           "country": "Россия",
           "region": null,
@@ -14597,7 +14597,7 @@
         },
         {
           "text": "дом дачный",
-          "type": null,
+          "type": "Дача",
           "square": 71.90,
           "country": "Россия",
           "region": null,
