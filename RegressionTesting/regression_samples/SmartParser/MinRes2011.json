@@ -102,7 +102,8 @@
           "text": "а/м \nVolvo ХС 70",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -236,7 +237,8 @@
           "text": "а/м\nPorsche Cayenne GTS\n\n2 мотоцикла:\nYamaha YZF-R1,\nDucati GT1000",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 2
     },
     {
       "person": {
@@ -413,7 +415,8 @@
           "type_raw": "нежилое  помещение (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 3
     },
     {
       "person": {
@@ -500,7 +503,8 @@
           "text": "а/м \nVolkswagen\nTiguan",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 4
     },
     {
       "person": {
@@ -712,7 +716,8 @@
           "text": "а/м\nAudi Q5",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 5
     },
     {
       "person": {
@@ -803,7 +808,8 @@
           "text": "3 а/м \nLand Rover Defender,\nMitsubishi Pajero 3,8 LWB,\nУАЗ 390995",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 6
     },
     {
       "person": {
@@ -885,7 +891,8 @@
           "text": "а/м:\nТойота RAV4",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 7
     },
     {
       "person": {
@@ -937,7 +944,8 @@
           "text": "а/м \nRange Rover Sport",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 8
     },
     {
       "person": {
@@ -1028,7 +1036,8 @@
           "text": "а/м \nToyota Land Cruiser 200",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 9
     },
     {
       "person": {
@@ -1101,7 +1110,8 @@
           "type_raw": "жилое помещение (безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 10
     },
     {
       "person": {
@@ -1166,7 +1176,8 @@
           "text": "а/м \nMazda 6",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 11
     },
     {
       "person": {
@@ -1227,7 +1238,8 @@
           "text": "а/м\nAudi А-4",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 12
     },
     {
       "person": {
@@ -1292,7 +1304,8 @@
           "text": "а/м\nNissan Qashqai",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 13
     },
     {
       "person": {
@@ -1396,7 +1409,8 @@
           "text": "а/м:\nToyota Avensis",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 14
     },
     {
       "person": {
@@ -1431,7 +1445,8 @@
           "text": "а/м \nFord Focus",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 15
     },
     {
       "person": {
@@ -1474,7 +1489,8 @@
           "type_raw": "Овощехранилище (индивидуальное)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 16
     },
     {
       "person": {
@@ -1504,7 +1520,8 @@
           "type_raw": "квартира (аренда)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 17
     },
     {
       "person": {
@@ -1590,7 +1607,8 @@
           "type_raw": "квартира (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 18
     },
     {
       "person": {
@@ -1637,7 +1655,8 @@
           "type_raw": "Квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 19
     },
     {
       "person": {
@@ -1667,7 +1686,8 @@
           "type_raw": "квартира\n(индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 20
     },
     {
       "person": {
@@ -1727,7 +1747,8 @@
           "type_raw": "квартира (безвозмездное предоставление)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 21
     },
     {
       "person": {
@@ -1779,7 +1800,8 @@
           "text": "а/м \nNissan Tiida",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 22
     },
     {
       "person": {
@@ -1814,7 +1836,8 @@
           "text": "а/м \nVolkswagen Golf",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 23
     },
     {
       "person": {
@@ -1879,7 +1902,8 @@
           "text": "а/м \nToyota Prius Hybrid",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 24
     },
     {
       "person": {
@@ -1944,7 +1968,8 @@
           "text": "а/м \nHyundai Tucson",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 25
     },
     {
       "person": {
@@ -2009,7 +2034,8 @@
           "text": "а/м\nSsang Yong Kyron",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 26
     },
     {
       "person": {
@@ -2091,7 +2117,8 @@
           "text": "а/м \nDaewoo Nexia",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 27
     },
     {
       "person": {
@@ -2156,7 +2183,8 @@
           "text": "а/м \nMitsubishi ASX 1.8",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 28
     },
     {
       "person": {
@@ -2204,7 +2232,8 @@
           "text": "а/м \nToyota Rav4",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 29
     },
     {
       "person": {
@@ -2338,7 +2367,8 @@
           "text": "а/м \nKia Shuma II",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 30
     },
     {
       "person": {
@@ -2524,7 +2554,8 @@
           "text": "2 а/м \nNissan Teana,\nInfiniti FX 37",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 31
     },
     {
       "person": {
@@ -2593,7 +2624,8 @@
           "type_raw": "квартира  (долевая 59/200)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 32
     },
     {
       "person": {
@@ -2641,7 +2673,8 @@
           "text": "а/м\nOpel Corsa",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 33
     },
     {
       "person": {
@@ -2741,7 +2774,8 @@
           "text": "а/м \nMersedes-benz C-200",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 34
     },
     {
       "person": {
@@ -2771,7 +2805,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 35
     },
     {
       "person": {
@@ -2875,7 +2910,8 @@
           "text": "а/м \nHonda CR-V",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 36
     },
     {
       "person": {
@@ -2927,7 +2963,8 @@
           "text": "а/м\nPeugeot-308",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 37
     },
     {
       "person": {
@@ -2957,7 +2994,8 @@
           "type_raw": "комната в коммунальной \nквартире (долевая ½)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 38
     },
     {
       "person": {
@@ -3000,7 +3038,8 @@
           "type_raw": "квартира (долевая, 1/2)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 39
     },
     {
       "person": {
@@ -3091,7 +3130,8 @@
           "text": "а/м \nNissan Murano",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 40
     },
     {
       "person": {
@@ -3147,7 +3187,8 @@
           "text": "а/м \nToyota Sprinter",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 41
     },
     {
       "person": {
@@ -3195,7 +3236,8 @@
           "text": "а/м \nVolvo XC90",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 42
     },
     {
       "person": {
@@ -3338,7 +3380,8 @@
           "text": "а/м \nHyundai Tucson",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 43
     },
     {
       "person": {
@@ -3407,7 +3450,8 @@
           "text": "а/м \nVolkswagen Touareg",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 44
     },
     {
       "person": {
@@ -3498,7 +3542,8 @@
           "text": "2 а/м: \nВАЗ 21013, \nSsang Yong Rexton RX, \n\nавтоприцеп",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 45
     },
     {
       "person": {
@@ -3597,7 +3642,8 @@
           "type_raw": "садовый дом (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 46
     },
     {
       "person": {
@@ -3675,7 +3721,8 @@
           "text": "а/м\nВАЗ 21053",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 47
     },
     {
       "person": {
@@ -3749,7 +3796,8 @@
           "text": "2 а/м: Москвич 2141,\nDaewoo Nexia",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 48
     },
     {
       "person": {
@@ -3784,7 +3832,8 @@
           "text": "а/м\nMitsubishi Lancer",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 49
     },
     {
       "person": {
@@ -3875,7 +3924,8 @@
           "text": "а/м \nHonda CR-V",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 50
     },
     {
       "person": {
@@ -4000,7 +4050,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 51
     },
     {
       "person": {
@@ -4030,7 +4081,8 @@
           "type_raw": "квартира\n(социальный найм)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 52
     },
     {
       "person": {
@@ -4147,7 +4199,8 @@
           "text": "2 а/м\nHonda CR-V,\nVolvo S60",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 53
     },
     {
       "person": {
@@ -4190,7 +4243,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 54
     },
     {
       "person": {
@@ -4398,7 +4452,8 @@
           "text": "3 а/м: \nDodge Nitro,\nJeep Grand Cherokee,\nBMW 740",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 55
     },
     {
       "person": {
@@ -4476,7 +4531,8 @@
           "text": "а/м \nChevrolet",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 56
     },
     {
       "person": {
@@ -4545,7 +4601,8 @@
           "type_raw": "квартира\n(долевая 2/5)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 57
     },
     {
       "person": {
@@ -4666,7 +4723,8 @@
           "text": "а/м \nKIA",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 58
     },
     {
       "person": {
@@ -4752,7 +4810,8 @@
           "type_raw": "квартира\n(социальный найм)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 59
     },
     {
       "person": {
@@ -4800,7 +4859,8 @@
           "text": "а/м Volkswagen Polo",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 60
     },
     {
       "person": {
@@ -4882,7 +4942,8 @@
           "type_raw": "квартира  (общая)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 61
     },
     {
       "person": {
@@ -4999,7 +5060,8 @@
           "text": "2 а/м:\nAudi Q5,\nAudi Q7",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 62
     },
     {
       "person": {
@@ -5064,7 +5126,8 @@
           "text": "а/м \nSubary Forester",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 63
     },
     {
       "person": {
@@ -5142,7 +5205,8 @@
           "text": "2 а/м:\nВАЗ 21213 «Нива»,\nNissan",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 64
     },
     {
       "person": {
@@ -5220,7 +5284,8 @@
           "text": "а/м \nHyundai Tucson",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 65
     },
     {
       "person": {
@@ -5293,7 +5358,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 66
     },
     {
       "person": {
@@ -5384,7 +5450,8 @@
           "text": "а/м \nRenault Logan",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 67
     },
     {
       "person": {
@@ -5449,7 +5516,8 @@
           "text": "а/м \nВАЗ 2104",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 68
     },
     {
       "person": {
@@ -5509,7 +5577,8 @@
           "type_raw": "квартира\n(общая)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 69
     },
     {
       "person": {
@@ -5578,7 +5647,8 @@
           "type_raw": "хоз.строение на садовом участке"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 70
     },
     {
       "person": {
@@ -5634,7 +5704,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 71
     },
     {
       "person": {
@@ -5725,7 +5796,8 @@
           "text": "а/м \nCitroen C4",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 72
     },
     {
       "person": {
@@ -5755,7 +5827,8 @@
           "type_raw": "квартира\n(социальный найм)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 73
     },
     {
       "person": {
@@ -5790,7 +5863,8 @@
           "text": "а/м\nKio Picanto",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 74
     },
     {
       "person": {
@@ -5855,7 +5929,8 @@
           "text": "а/м\nChevrolet Lacetti",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 75
     },
     {
       "person": {
@@ -5928,7 +6003,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 76
     },
     {
       "person": {
@@ -6032,7 +6108,8 @@
           "text": "а/м:\nГазель",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 77
     },
     {
       "person": {
@@ -6062,7 +6139,8 @@
           "type_raw": "квартира\n(долевая, 1/3)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 78
     },
     {
       "person": {
@@ -6148,7 +6226,8 @@
           "type_raw": "квартира (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 79
     },
     {
       "person": {
@@ -6173,7 +6252,8 @@
           "text": "а/м\nToyota Highlander",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 80
     },
     {
       "person": {
@@ -6264,7 +6344,8 @@
           "text": "а/м Volkswagen Passat",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 81
     },
     {
       "person": {
@@ -6294,7 +6375,8 @@
           "type_raw": "квартира\n(индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 82
     },
     {
       "person": {
@@ -6355,7 +6437,8 @@
           "text": "2 а/м \nMitsubishi Lancer,\nВАЗ-21043",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 83
     },
     {
       "person": {
@@ -6446,7 +6529,8 @@
           "text": "а/м ВАЗ-21150",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 84
     },
     {
       "person": {
@@ -6541,7 +6625,8 @@
           "text": "а/м\nBMW 3251",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 85
     },
     {
       "person": {
@@ -6571,7 +6656,8 @@
           "type_raw": "квартира (безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 86
     },
     {
       "person": {
@@ -6632,7 +6718,8 @@
           "text": "а/м \nAudi-A3",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 87
     },
     {
       "person": {
@@ -6723,7 +6810,8 @@
           "text": "а/м Daewoo Nexia",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 88
     },
     {
       "person": {
@@ -6796,7 +6884,8 @@
           "type_raw": "комната\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 89
     },
     {
       "person": {
@@ -6826,7 +6915,8 @@
           "type_raw": "квартира (долевая 1/3)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 90
     },
     {
       "person": {
@@ -6921,7 +7011,8 @@
           "text": "а/м\nToyota Corolla",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 91
     },
     {
       "person": {
@@ -6986,7 +7077,8 @@
           "text": "а/м Honda Stream",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 92
     },
     {
       "person": {
@@ -7016,7 +7108,8 @@
           "type_raw": "квартира (долевая, 1/2)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 93
     },
     {
       "person": {
@@ -7072,7 +7165,8 @@
           "type_raw": "квартира (безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 94
     },
     {
       "person": {
@@ -7145,7 +7239,8 @@
           "type_raw": "квартира (общая)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 95
     },
     {
       "person": {
@@ -7227,7 +7322,8 @@
           "text": "а/м\nSuzuki SX4",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 96
     },
     {
       "person": {
@@ -7296,7 +7392,8 @@
           "type_raw": "квартира (долевая, 1/3)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 97
     },
     {
       "person": {
@@ -7387,7 +7484,8 @@
           "text": "а/м\nВАЗ 21214,\n\nавтоприцеп КМЗ 8119",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 98
     },
     {
       "person": {
@@ -7417,7 +7515,8 @@
           "type_raw": "квартира\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 99
     },
     {
       "person": {
@@ -7452,7 +7551,8 @@
           "text": "мототран-спортное средство\nHonda CB400 Super Four",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 100
     },
     {
       "person": {
@@ -7538,7 +7638,8 @@
           "type_raw": "хозблок (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 101
     },
     {
       "person": {
@@ -7573,7 +7674,8 @@
           "text": "а/м\nPeugeot 107",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 102
     },
     {
       "person": {
@@ -7659,7 +7761,8 @@
           "type_raw": "квартира\n (долевая, ½)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 103
     },
     {
       "person": {
@@ -7724,7 +7827,8 @@
           "text": "а/м \nMazda 3",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 104
     },
     {
       "person": {
@@ -7785,7 +7889,8 @@
           "text": "а/м\nNissan Almera Classic",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 105
     },
     {
       "person": {
@@ -7850,7 +7955,8 @@
           "text": "а/м Chevrolet Lacetti",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 106
     },
     {
       "person": {
@@ -7954,7 +8060,8 @@
           "text": "а/м\nNissan X-trail",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 107
     },
     {
       "person": {
@@ -8028,7 +8135,8 @@
           "text": "а/м\nNissan X-trail",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 108
     },
     {
       "person": {
@@ -8058,7 +8166,8 @@
           "type_raw": "квартира (долевая, 1/2)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 109
     },
     {
       "person": {
@@ -8144,7 +8253,8 @@
           "type_raw": "гараж (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 110
     },
     {
       "person": {
@@ -8174,7 +8284,8 @@
           "type_raw": "квартира (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 111
     },
     {
       "person": {
@@ -8281,7 +8392,8 @@
           "text": "а/м\nVolvo XC 90",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 112
     },
     {
       "person": {
@@ -8311,7 +8423,8 @@
           "type_raw": "комната\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 113
     },
     {
       "person": {
@@ -8341,7 +8454,8 @@
           "type_raw": "квартира (безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 114
     },
     {
       "person": {
@@ -8371,7 +8485,8 @@
           "type_raw": "комната\n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 115
     },
     {
       "person": {
@@ -8419,7 +8534,8 @@
           "text": "а/м \nLand Rover Freelander 2",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 116
     },
     {
       "person": {
@@ -8497,7 +8613,8 @@
           "text": "а/м Nissan Tiida",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 117
     },
     {
       "person": {
@@ -8527,7 +8644,8 @@
           "type_raw": "квартира (безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 118
     },
     {
       "person": {
@@ -8588,7 +8706,8 @@
           "text": "а/м\nMitsubishi Outlander",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 119
     },
     {
       "person": {
@@ -8618,7 +8737,8 @@
           "type_raw": "Квартира\n(долевая ¼)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 120
     },
     {
       "person": {
@@ -8683,7 +8803,8 @@
           "text": "2 а/м:\nToyota Avensis, \nVolkswagen Passat",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 121
     },
     {
       "person": {
@@ -8713,7 +8834,8 @@
           "type_raw": "квартира (долевая, 1/3)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 122
     },
     {
       "person": {
@@ -8743,7 +8865,8 @@
           "type_raw": "комната\n(аренда)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 123
     },
     {
       "person": {
@@ -8773,7 +8896,8 @@
           "type_raw": "комната \n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 124
     },
     {
       "person": {
@@ -8851,7 +8975,8 @@
           "text": "а/м \nFord Galaxy",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 125
     },
     {
       "person": {
@@ -8916,7 +9041,8 @@
           "text": "а/м \nOpel Astra",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 126
     },
     {
       "person": {
@@ -8994,7 +9120,8 @@
           "text": "1 а/м Volkswagen-golf",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 127
     },
     {
       "person": {
@@ -9072,7 +9199,8 @@
           "text": "2 а/м:\nToyota Corolla,\nNissan Note",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 128
     },
     {
       "person": {
@@ -9176,7 +9304,8 @@
           "text": "а/м\nPeugeot 406",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 129
     },
     {
       "person": {
@@ -9241,7 +9370,8 @@
           "text": "а/м \nKIA Picanto",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 130
     },
     {
       "person": {
@@ -9271,7 +9401,8 @@
           "type_raw": "комната\n(общежитие)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 131
     },
     {
       "person": {
@@ -9349,7 +9480,8 @@
           "text": "а/м\nFord Focus",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 132
     },
     {
       "person": {
@@ -9396,7 +9528,8 @@
           "type_raw": "квартира\n(социальный найм)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 133
     },
     {
       "person": {
@@ -9456,7 +9589,8 @@
           "type_raw": "квартира (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 134
     },
     {
       "person": {
@@ -9547,7 +9681,8 @@
           "text": "а/м\nRenault Laguna",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 135
     },
     {
       "person": {
@@ -9595,7 +9730,8 @@
           "text": "а/м \nBMW X3",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 136
     },
     {
       "person": {
@@ -9625,7 +9761,8 @@
           "type_raw": "квартира (индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 137
     },
     {
       "person": {
@@ -9655,7 +9792,8 @@
           "type_raw": "квартира \n(безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 138
     },
     {
       "person": {
@@ -9685,7 +9823,8 @@
           "type_raw": "квартира\n(общая)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 139
     },
     {
       "person": {
@@ -9728,7 +9867,8 @@
           "type_raw": "квартира (долевая, 1/4)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 140
     },
     {
       "person": {
@@ -9793,7 +9933,8 @@
           "text": "а/м\nMazda 6",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 141
     },
     {
       "person": {
@@ -9845,7 +9986,8 @@
           "text": "а/м \nFord Focus",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 142
     },
     {
       "person": {
@@ -9875,7 +10017,8 @@
           "type_raw": "квартира \n(индивидуальная)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 143
     },
     {
       "person": {
@@ -9957,7 +10100,8 @@
           "text": "а/м УАЗ",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 144
     },
     {
       "person": {
@@ -10061,7 +10205,8 @@
           "text": "а/м \nMazda 3",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 145
     },
     {
       "person": {
@@ -10126,7 +10271,8 @@
           "text": "а/м\nLexus RX 350",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 146
     },
     {
       "person": {
@@ -10161,7 +10307,8 @@
           "text": "а/м\nNissan Teana",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 147
     },
     {
       "person": {
@@ -10226,7 +10373,8 @@
           "text": "а/м\nMitsubishi Lancer 1.8",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 148
     },
     {
       "person": {
@@ -10256,7 +10404,8 @@
           "type_raw": "квартира (безвозмездное пользование)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 149
     },
     {
       "person": {
@@ -10330,7 +10479,8 @@
           "text": "а/м\nВАЗ 2114\n\nАвтоприцеп КМЗ 8284",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 150
     },
     {
       "person": {
@@ -10421,7 +10571,8 @@
           "text": "2 а/м:\nВАЗ 21053,\nSuzuki SX4",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 151
     },
     {
       "person": {
@@ -10589,7 +10740,8 @@
           "type_raw": "квартира (социальный найм)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 152
     },
     {
       "person": {
@@ -10654,7 +10806,8 @@
           "text": "а/м\nВАЗ 2110",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 153
     },
     {
       "person": {
@@ -10784,7 +10937,8 @@
           "text": "а/м \nPeugeot 206",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 154
     },
     {
       "person": {
@@ -10914,7 +11068,8 @@
           "text": "2 а/м \nRenault Logan\nУАЗ 39629",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 155
     },
     {
       "person": {
@@ -10992,7 +11147,8 @@
           "text": "а/м \nВАЗ-2105",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 156
     }
   ],
   "document": {

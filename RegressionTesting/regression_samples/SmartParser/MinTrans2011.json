@@ -136,7 +136,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 1
     }
   ],
   "document": {

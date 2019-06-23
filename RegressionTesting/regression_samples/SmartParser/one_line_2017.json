@@ -30,7 +30,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 1
     }
   ],
   "document": {

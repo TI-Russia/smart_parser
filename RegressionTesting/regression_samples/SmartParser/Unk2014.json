@@ -118,7 +118,8 @@
           "type_raw": "служебная дача"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 1
     }
   ],
   "document": {
