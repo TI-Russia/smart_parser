@@ -312,10 +312,24 @@
                     "null",
                     "string"
                   ],
-                  "title": "Тип владения собственности",
+                  "title": "Тип владения",
                   "default": "",
                   "examples": [
                     "В собственности"
+                  ]
+                },
+                "own_type_by_column": {
+                  "$id": "/properties/persons/properties/real_estates/items/properties/own_type_by_column",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "title": "Тип владения (по столбцу)",
+                  "default": "",
+                  "enum": [
+                    null,
+                    "В собственности",
+                    "В пользовании"
                   ]
                 },
                 "own_type_raw": {
@@ -324,10 +338,13 @@
                     "null",
                     "string"
                   ],
-                  "title": "Тип владения собственности (сырой текст из декларации)",
+                  "title": "Тип владения (сырой текст из декларации)",
                   "default": "",
                   "examples": [
-                    "В собственности"
+                    "В собственности",
+                    "долевая собственность 1/2",
+                    "общая собственность",
+                    "индивидуальная"
                   ]
                 },
                 "share_amount": {
