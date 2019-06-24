@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using Newtonsoft.Json;
@@ -119,9 +120,9 @@ namespace TI.Declarator.JsonSerialization
         public static string Serialize(Declaration declaration, ref string comment, bool validate = true)
         {
             var jServants = new JArray();
-            foreach (PublicServant serv in declaration.PublicServants)
+            foreach (var servWithInd in declaration.PublicServants.Select((serv, ind) => new { serv, ind }))
             {
-                jServants.Add(Serialize(serv, declaration.Properties));
+                jServants.Add(Serialize(servWithInd.serv, servWithInd.ind, declaration.Properties));
             }
 
             var jPersonsProp = new JProperty("persons", jServants);
@@ -141,7 +142,7 @@ namespace TI.Declarator.JsonSerialization
             return json;
         }
 
-        private static JObject Serialize(PublicServant servant, DeclarationProperties declarationProperties)
+        private static JObject Serialize(PublicServant servant, int ind, DeclarationProperties declarationProperties)
         {
             var jServ = new JObject(
                 GetPersonalData(servant),
@@ -149,8 +150,8 @@ namespace TI.Declarator.JsonSerialization
                 GetYear(declarationProperties),
                 GetIncomes(servant),
                 GetRealEstateProperties(servant),
-                GetVehicles(servant));
-
+                GetVehicles(servant),
+                GetPersonIndexProp(ind + 1));
             return jServ;
         }
 
@@ -208,6 +209,11 @@ namespace TI.Declarator.JsonSerialization
 
             var res = new JProperty("incomes", jIncomes);
             return res;            
+        }
+
+        private static JProperty GetPersonIndexProp(int index)
+        {
+            return new JProperty("person_index", index);
         }
 
         private static void AddNotNullProp(JObject jobj, string prop, object val)
@@ -305,6 +311,8 @@ namespace TI.Declarator.JsonSerialization
             var res = new JProperty("vehicles", jVehicles);
             return res;
         }
+
+
 
         
         private static bool Validate<T>(T jServants, out string message)

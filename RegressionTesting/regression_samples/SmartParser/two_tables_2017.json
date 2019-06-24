@@ -30,7 +30,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 1
     },
     {
       "person": {
@@ -174,7 +175,8 @@
           "text": "Легковой \nавтомобиль: \nFord S-Max",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 2
     }
   ],
   "document": {

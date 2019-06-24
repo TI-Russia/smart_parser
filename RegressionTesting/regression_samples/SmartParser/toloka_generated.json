@@ -65,7 +65,8 @@
           "text": "легковой автомобиль БМВ Х5",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -155,7 +156,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 2
     },
     {
       "person": {
@@ -252,7 +254,8 @@
           "text": "легковой автомобиль Форд Фокус",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 3
     },
     {
       "person": {
@@ -302,7 +305,8 @@
           "text": "легковой автомобиль BMW X5",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 4
     },
     {
       "person": {
@@ -352,7 +356,8 @@
           "text": "легковой автомобиль Лада 212140\nлегковой автомобиль УАЗ Патриот",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 5
     }
   ],
   "document": {

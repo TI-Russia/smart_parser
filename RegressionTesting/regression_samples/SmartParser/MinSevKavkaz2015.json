@@ -115,7 +115,8 @@
           "text": "а/м легковой \nУАЗ «Патриот»",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -439,7 +440,8 @@
           "text": "а/м легковой Toyota Camry",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 2
     },
     {
       "person": {
@@ -535,7 +537,8 @@
           "own_type_raw": "общая долевая, 1/3"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 3
     },
     {
       "person": {
@@ -578,7 +581,8 @@
           "type_raw": "жилой дом"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 4
     },
     {
       "person": {
@@ -623,7 +627,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 5
     }
   ],
   "document": {

@@ -127,7 +127,8 @@
           "text": "а/м легковой Toyota Камри",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -410,7 +411,8 @@
           "text": "а/м легковой\nBMW 320i",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 2
     },
     {
       "person": {
@@ -462,7 +464,8 @@
           "text": "а/м легковой\nAudi A7",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 3
     },
     {
       "person": {
@@ -511,7 +514,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 4
     },
     {
       "person": {
@@ -582,7 +586,8 @@
           "text": "а/м легковой\nМосквич 2 141\nа/м легковой\nМазда СХ5",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 5
     },
     {
       "person": {
@@ -750,7 +755,8 @@
           "text": "а/м легковой Москвич 2 141S",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 6
     },
     {
       "person": {
@@ -842,7 +848,8 @@
           "own_type_raw": "Долевая, 1/3"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 7
     },
     {
       "person": {
@@ -1014,7 +1021,8 @@
           "text": "а/м легковой Volkswagen а/м легковой Touareg; а/м легковой Citroen C5",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 8
     },
     {
       "person": {
@@ -1072,7 +1080,8 @@
           "text": "а/м легковой BMW X5",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 9
     },
     {
       "person": {
@@ -1134,7 +1143,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 10
     },
     {
       "person": {
@@ -1218,7 +1228,8 @@
           "text": "а/м легковой Mercedes C250",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 11
     },
     {
       "person": {
@@ -1253,7 +1264,8 @@
           "text": "а/м легковой Mercedes Benz e",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 12
     },
     {
       "person": {
@@ -1365,7 +1377,8 @@
           "text": "а/м легковой Volvo XC90",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 13
     },
     {
       "person": {
@@ -1571,7 +1584,8 @@
           "text": "а/м легковой Toyota Auris;\nToyota а/м легковой Land Cruizer; а/м легковой Tesla C",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 14
     },
     {
       "person": {
@@ -1618,7 +1632,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 15
     },
     {
       "person": {
@@ -1692,7 +1707,8 @@
           "text": "а/м легковой Toyota Land Cruizer",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 16
     },
     {
       "person": {
@@ -1727,7 +1743,8 @@
           "text": "а/м легковой Volvo XC 90;\nа/м легковой Jaguar XJ Daimler",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 17
     },
     {
       "person": {
@@ -1794,7 +1811,8 @@
           "text": "а/м легковой ГАЗ 31 029; а/м легковой Mercedes Benz ML 350",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 18
     },
     {
       "person": {
@@ -1981,7 +1999,8 @@
           "text": "а/м легковой Volkswagen Tiguan",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 19
     },
     {
       "person": {
@@ -2063,7 +2082,8 @@
           "text": "а/м легковой Mercedes-Benz ML",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 20
     },
     {
       "person": {
@@ -2224,7 +2244,8 @@
           "text": "а/м легковой ВАЗ 21 053; а/м легковой\nOpel Astra",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 21
     },
     {
       "person": {
@@ -2317,7 +2338,8 @@
           "text": "а/м легковой AUDI Q-7",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 22
     },
     {
       "person": {
@@ -2349,7 +2371,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 23
     },
     {
       "person": {
@@ -2418,7 +2441,8 @@
           "text": "а/м легковой Hyundai Accent",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 24
     },
     {
       "person": {
@@ -2532,7 +2556,8 @@
           "text": "а/м легковой Toyota Corolla; а/м легковой\nToyota Corolla",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 25
     },
     {
       "person": {
@@ -2619,7 +2644,8 @@
           "text": "а/м легковой Opel Zafira",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 26
     },
     {
       "person": {
@@ -2666,7 +2692,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 27
     },
     {
       "person": {
@@ -2763,7 +2790,8 @@
           "text": "а/м легковой Lexus RX 270",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 28
     },
     {
       "person": {
@@ -2843,7 +2871,8 @@
           "text": "а/м легковой Toyota Land Cruiser",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 29
     },
     {
       "person": {
@@ -2938,7 +2967,8 @@
           "text": "а/м легковой Toyota Land Cruiser; а/м легковой Mazda CX-7",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 30
     },
     {
       "person": {
@@ -3024,7 +3054,8 @@
           "text": "а/м легковой Toyota Camry",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 31
     },
     {
       "person": {
@@ -3054,7 +3085,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 32
     },
     {
       "person": {
@@ -3112,7 +3144,8 @@
           "text": "а/м легковой Nissan Almera Classic",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 33
     },
     {
       "person": {
@@ -3157,7 +3190,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 34
     },
     {
       "person": {
@@ -3187,7 +3221,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 35
     },
     {
       "person": {
@@ -3235,7 +3270,8 @@
           "text": "а/м легковой Nissan Murano",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 36
     },
     {
       "person": {
@@ -3302,7 +3338,8 @@
           "text": "а/м легковой Москвич 2 140; а/м легковой\nGreat Wall Hover H3",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 37
     },
     {
       "person": {
@@ -3425,7 +3462,8 @@
           "text": "а/м легковой Volkswagen CC",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 38
     },
     {
       "person": {
@@ -3509,7 +3547,8 @@
           "text": "а/м легковой Mercedes-Benz GLK 220;\nа/м легковой Mercedes-Benz A 180",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 39
     },
     {
       "person": {
@@ -3541,7 +3580,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 40
     },
     {
       "person": {
@@ -3678,7 +3718,8 @@
           "own_type_raw": "совместная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 41
     },
     {
       "person": {
@@ -3809,7 +3850,8 @@
           "text": "а/м легковой Toyota Avensis",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 42
     },
     {
       "person": {
@@ -3923,7 +3965,8 @@
           "text": "а/м легковой Hyundai Santa Fe",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 43
     },
     {
       "person": {
@@ -4002,7 +4045,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 44
     },
     {
       "person": {
@@ -4034,7 +4078,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 45
     },
     {
       "person": {
@@ -4096,7 +4141,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 46
     },
     {
       "person": {
@@ -4128,7 +4174,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 47
     },
     {
       "person": {
@@ -4253,7 +4300,8 @@
           "text": "а/м легковой Subaru Forester",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 48
     },
     {
       "person": {
@@ -4356,7 +4404,8 @@
           "text": "а/м легковой Volkswagen Passat CC",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 49
     },
     {
       "person": {
@@ -4399,7 +4448,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 50
     },
     {
       "person": {
@@ -4487,7 +4537,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 51
     },
     {
       "person": {
@@ -4618,7 +4669,8 @@
           "text": "а/м легковой BMW X3",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 52
     },
     {
       "person": {
@@ -4648,7 +4700,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 53
     },
     {
       "person": {
@@ -4678,7 +4731,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 54
     },
     {
       "person": {
@@ -4710,7 +4764,8 @@
           "own_type_raw": "долевая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 55
     },
     {
       "person": {
@@ -4792,7 +4847,8 @@
           "text": "а/м легковой Mercedes 150A",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 56
     },
     {
       "person": {
@@ -4856,7 +4912,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 57
     },
     {
       "person": {
@@ -4904,7 +4961,8 @@
           "text": "а/м легковой Ford Focus",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 58
     },
     {
       "person": {
@@ -4949,7 +5007,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 59
     },
     {
       "person": {
@@ -5026,7 +5085,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 60
     },
     {
       "person": {
@@ -5093,7 +5153,8 @@
           "text": "а/м легковой Kia Ceed",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 61
     },
     {
       "person": {
@@ -5125,7 +5186,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 62
     },
     {
       "person": {
@@ -5271,7 +5333,8 @@
           "text": "а/м легковой Mercedes-Benz GL350",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 63
     },
     {
       "person": {
@@ -5303,7 +5366,8 @@
           "own_type_raw": "долевая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 64
     },
     {
       "person": {
@@ -5385,7 +5449,8 @@
           "text": "а/м легковой Mitsubishi Outlander XL",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 65
     },
     {
       "person": {
@@ -5467,7 +5532,8 @@
           "text": "а/м легковой Nissan Almera Classik; а/м легковой\nRenault Logan",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 66
     },
     {
       "person": {
@@ -5592,7 +5658,8 @@
           "text": "а/м легковой Mazda-3; а/м легковой\nNissan X-Trail",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 67
     },
     {
       "person": {
@@ -5624,7 +5691,8 @@
           "own_type_raw": "долевая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 68
     },
     {
       "person": {
@@ -5700,7 +5768,8 @@
           "text": "а/м легковой Ford Mondeo",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 69
     },
     {
       "person": {
@@ -5773,7 +5842,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 70
     },
     {
       "person": {
@@ -5805,7 +5875,8 @@
           "own_type_raw": "долевая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 71
     },
     {
       "person": {
@@ -5857,7 +5928,8 @@
           "text": "а/м легковой Renault Logan",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 72
     },
     {
       "person": {
@@ -5919,7 +5991,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 73
     },
     {
       "person": {
@@ -6041,7 +6114,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 74
     },
     {
       "person": {
@@ -6118,7 +6192,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 75
     },
     {
       "person": {
@@ -6150,7 +6225,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 76
     },
     {
       "person": {
@@ -6351,7 +6427,8 @@
           "text": "а/м легковой Volvo S80",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 77
     },
     {
       "person": {
@@ -6442,7 +6519,8 @@
           "text": "а/м легковой\nHyundai Accent;\nа/м легковой Lada Largus",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 78
     },
     {
       "person": {
@@ -6522,7 +6600,8 @@
           "text": "а/м легковой Volkswagen passat B6",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 79
     },
     {
       "person": {
@@ -6570,7 +6649,8 @@
           "text": "а/м легковой Nissan Qashqai",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 80
     },
     {
       "person": {
@@ -6636,7 +6716,8 @@
           "own_type_raw": "Совместная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 81
     },
     {
       "person": {
@@ -6772,7 +6853,8 @@
           "text": "а/м легковой Nissan Almera classic",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 82
     },
     {
       "person": {
@@ -6826,7 +6908,8 @@
           "text": "а/м легковой Hyundai Солярис",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 83
     },
     {
       "person": {
@@ -6876,7 +6959,8 @@
           "text": "а/м легковой Nissan x-trail",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 84
     },
     {
       "person": {
@@ -6945,7 +7029,8 @@
           "text": "а/м легковой Seat Alhambra",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 85
     },
     {
       "person": {
@@ -7031,7 +7116,8 @@
           "text": "а/м легковой Suzuki SX4; а/м легковой Ford Fusion",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 86
     },
     {
       "person": {
@@ -7066,7 +7152,8 @@
           "text": "а/м легковой Ford Explorer; а/м легковой\nJeep Compass",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 87
     },
     {
       "person": {
@@ -7098,7 +7185,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 88
     },
     {
       "person": {
@@ -7145,7 +7233,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 89
     },
     {
       "person": {
@@ -7214,7 +7303,8 @@
           "text": "а/м легковой Hyundai Santa Fe",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 90
     },
     {
       "person": {
@@ -7339,7 +7429,8 @@
           "text": "а/м легковой ВАЗ 21 120;\nа/м легковой Hyundai i30",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 91
     },
     {
       "person": {
@@ -7479,7 +7570,8 @@
           "text": "а/м легковой Hyundai Santa Fe",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 92
     },
     {
       "person": {
@@ -7544,7 +7636,8 @@
           "text": "а/м легковой Hyundai x35",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 93
     },
     {
       "person": {
@@ -7576,7 +7669,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 94
     },
     {
       "person": {
@@ -7606,7 +7700,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 95
     },
     {
       "person": {
@@ -7757,7 +7852,8 @@
           "text": "а/м легковой Volkswagen Amarok",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 96
     },
     {
       "person": {
@@ -7813,7 +7909,8 @@
           "text": "а/м легковой Land Rover Freelander",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 97
     },
     {
       "person": {
@@ -7931,7 +8028,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 98
     },
     {
       "person": {
@@ -8022,7 +8120,8 @@
           "text": "а/м легковой Hyndai Solaris",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 99
     },
     {
       "person": {
@@ -8069,7 +8168,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 100
     },
     {
       "person": {
@@ -8198,7 +8298,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 101
     },
     {
       "person": {
@@ -8269,7 +8370,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 102
     },
     {
       "person": {
@@ -8368,7 +8470,8 @@
           "text": "а/м легковой Kia Optima",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 103
     },
     {
       "person": {
@@ -8527,7 +8630,8 @@
           "text": "а/м легковой Toyota Land Cruiser; а/м легковой\nNissan Pathfinder; а/м легковой Hyundai i30",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 104
     },
     {
       "person": {
@@ -8605,7 +8709,8 @@
           "text": "а/м легковой Toyota Highlander",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 105
     },
     {
       "person": {
@@ -8693,7 +8798,8 @@
           "text": "а/м легковой Dodge Caravan",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 106
     },
     {
       "person": {
@@ -8764,7 +8870,8 @@
           "text": "а/м легковой Renault Megane",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 107
     },
     {
       "person": {
@@ -8794,7 +8901,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 108
     },
     {
       "person": {
@@ -8859,7 +8967,8 @@
           "text": "а/м легковой Mitsubishi Outlander",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 109
     },
     {
       "person": {
@@ -8920,7 +9029,8 @@
           "text": "а/м легковой ВАЗ 21 703; а/м легковой ВАЗ 2 114",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 110
     },
     {
       "person": {
@@ -8950,7 +9060,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 111
     },
     {
       "person": {
@@ -9094,7 +9205,8 @@
           "text": "а/м легковой Fiat Albea;\nа/м легковой Mazda 6",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 112
     },
     {
       "person": {
@@ -9178,7 +9290,8 @@
           "text": "а/м легковой Mazda 6",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 113
     },
     {
       "person": {
@@ -9223,7 +9336,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 114
     },
     {
       "person": {
@@ -9318,7 +9432,8 @@
           "text": "а/м легковой Mitsubishi ASX",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 115
     },
     {
       "person": {
@@ -9348,7 +9463,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 116
     },
     {
       "person": {
@@ -9456,7 +9572,8 @@
           "text": "а/м легковой\nЛада 219 010 Granta",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 117
     },
     {
       "person": {
@@ -9503,7 +9620,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 118
     },
     {
       "person": {
@@ -9546,7 +9664,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 119
     },
     {
       "person": {
@@ -9606,7 +9725,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 120
     },
     {
       "person": {
@@ -9731,7 +9851,8 @@
           "text": "а/м легковой Mazda 6;\nа/м легковой Honda CR-V\nа/м грузовой Volkswagen 2kn caddy maxi",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 121
     },
     {
       "person": {
@@ -9781,7 +9902,8 @@
           "text": "Мото-транспортное средство: Kawasaki VN900 Custom",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 122
     },
     {
       "person": {
@@ -9813,7 +9935,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 123
     },
     {
       "person": {
@@ -9957,7 +10080,8 @@
           "text": "а/м легковой Volkswagen Polo sedan",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 124
     },
     {
       "person": {
@@ -10071,7 +10195,8 @@
           "text": "а/м легковой Nissan Патфайндер",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 125
     },
     {
       "person": {
@@ -10138,7 +10263,8 @@
           "text": "а/м легковой Nissan Tiida",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 126
     },
     {
       "person": {
@@ -10332,7 +10458,8 @@
           "text": "а/м легковой Infiniti QX56",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 127
     },
     {
       "person": {
@@ -10364,7 +10491,8 @@
           "own_type_raw": "Индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 128
     },
     {
       "person": {
@@ -10424,7 +10552,8 @@
           "text": "а/м легковой Mercedes GLK 220",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 129
     },
     {
       "person": {
@@ -10469,7 +10598,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 130
     },
     {
       "person": {
@@ -10549,7 +10679,8 @@
           "text": "а/м легковой Ford Фокус",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 131
     },
     {
       "person": {
@@ -10609,7 +10740,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 132
     },
     {
       "person": {
@@ -10675,7 +10807,8 @@
           "own_type_raw": "Долевая, 1/3"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 133
     },
     {
       "person": {
@@ -10759,7 +10892,8 @@
           "text": "а/м легковой Lada ВАЗ-21 053",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 134
     },
     {
       "person": {
@@ -10869,7 +11003,8 @@
           "text": "а/м легковой Kia Venga",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 135
     },
     {
       "person": {
@@ -10935,7 +11070,8 @@
           "own_type_raw": "Совместная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 136
     },
     {
       "person": {
@@ -11019,7 +11155,8 @@
           "text": "а/м легковой Mazda 323;\nа/м легковой Ford Crown Victoria",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 137
     },
     {
       "person": {
@@ -11086,7 +11223,8 @@
           "text": "а/м легковой Opel Astra",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 138
     },
     {
       "person": {
@@ -11160,7 +11298,8 @@
           "text": "а/м легковой Opel Astra;\nа/м легковой Ford Focus",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 139
     },
     {
       "person": {
@@ -11287,7 +11426,8 @@
           "text": "а/м легковой Mercedes-Benz ML-300",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 140
     },
     {
       "person": {
@@ -11363,7 +11503,8 @@
           "text": "а/м легковой Mitsubishi ASX",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 141
     },
     {
       "person": {
@@ -11415,7 +11556,8 @@
           "text": "а/м легковой Suzuki Swift",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 142
     },
     {
       "person": {
@@ -11452,7 +11594,8 @@
           "text": "а/м легковой Volkswagen Vento",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 143
     },
     {
       "person": {
@@ -11521,7 +11664,8 @@
           "text": "а/м легковой Toyota Camry",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 144
     },
     {
       "person": {
@@ -11588,7 +11732,8 @@
           "text": "а/м легковой Toyota Highlander",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 145
     },
     {
       "person": {
@@ -11631,7 +11776,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 146
     },
     {
       "person": {
@@ -11700,7 +11846,8 @@
           "text": "а/м легковой Kia Sportage",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 147
     },
     {
       "person": {
@@ -11737,7 +11884,8 @@
           "text": "а/м легковой Chevrolet Lacetti",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 148
     },
     {
       "person": {
@@ -11767,7 +11915,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 149
     },
     {
       "person": {
@@ -11823,7 +11972,8 @@
           "text": "а/м легковой Ford Focus",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 150
     },
     {
       "person": {
@@ -11855,7 +12005,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 151
     },
     {
       "person": {
@@ -11915,7 +12066,8 @@
           "type_raw": "комната"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 152
     },
     {
       "person": {
@@ -11971,7 +12123,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 153
     },
     {
       "person": {
@@ -12003,7 +12156,8 @@
           "own_type_raw": "долевая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 154
     },
     {
       "person": {
@@ -12158,7 +12312,8 @@
           "text": "а/м легковой Ssang Yong Kyron",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 155
     },
     {
       "person": {
@@ -12222,7 +12377,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 156
     },
     {
       "person": {
@@ -12254,7 +12410,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 157
     },
     {
       "person": {
@@ -12411,7 +12568,8 @@
           "text": "а/м легковой Форд Фьюжн",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 158
     },
     {
       "person": {
@@ -12557,7 +12715,8 @@
           "text": "а/м легковой ВАЗ 2 109;\nМото-транспортное средство: ИЖ П5",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 159
     },
     {
       "person": {
@@ -12622,7 +12781,8 @@
           "text": "а/м легковой Ford Fiesta",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 160
     },
     {
       "person": {
@@ -12680,7 +12840,8 @@
           "text": "а/м легковой Citroen C1",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 161
     },
     {
       "person": {
@@ -12743,7 +12904,8 @@
           "text": "а/м легковой Митсубиши Лансер;\nа/м легковой Рено Меган II",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 162
     },
     {
       "person": {
@@ -12778,7 +12940,8 @@
           "text": "а/м легковой Opel Astra",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 163
     },
     {
       "person": {
@@ -12808,7 +12971,8 @@
           "type_raw": "Квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 164
     },
     {
       "person": {
@@ -12886,7 +13050,8 @@
           "text": "а/м легковой Renault Megan",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 165
     },
     {
       "person": {
@@ -12923,7 +13088,8 @@
           "text": "а/м легковой Chevrolet Cruze",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 166
     },
     {
       "person": {
@@ -12973,7 +13139,8 @@
           "text": "а/м легковой Honda Accord",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 167
     },
     {
       "person": {
@@ -13092,7 +13259,8 @@
           "text": "а/м легковой Volkswagen Passat",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 168
     },
     {
       "person": {
@@ -13202,7 +13370,8 @@
           "text": "а/м легковой Audi Q5",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 169
     },
     {
       "person": {
@@ -13258,7 +13427,8 @@
           "text": "а/м легковой Kia Rio",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 170
     },
     {
       "person": {
@@ -13377,7 +13547,8 @@
           "text": "а/м легковой Volkswagen Passat",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 171
     },
     {
       "person": {
@@ -13453,7 +13624,8 @@
           "text": "а/м легковой Ford Mondeo",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 172
     },
     {
       "person": {
@@ -13565,7 +13737,8 @@
           "text": "а/м легковой Infiniti FX-37",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 173
     },
     {
       "person": {
@@ -13696,7 +13869,8 @@
           "text": "Прицеп Laker Heavy Duty",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 174
     },
     {
       "person": {
@@ -13726,7 +13900,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 175
     },
     {
       "person": {
@@ -13825,7 +14000,8 @@
           "text": "а/м легковой Skoda Superb",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 176
     },
     {
       "person": {
@@ -13855,7 +14031,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 177
     },
     {
       "person": {
@@ -13922,7 +14099,8 @@
           "text": "а/м легковой Toyota Cami",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 178
     },
     {
       "person": {
@@ -13957,7 +14135,8 @@
           "text": "а/м легковой Nissan Qashqai",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 179
     },
     {
       "person": {
@@ -13987,7 +14166,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 180
     },
     {
       "person": {
@@ -14053,7 +14233,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 181
     },
     {
       "person": {
@@ -14113,7 +14294,8 @@
           "own_type_raw": "долевая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 182
     },
     {
       "person": {
@@ -14171,7 +14353,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 183
     },
     {
       "person": {
@@ -14274,7 +14457,8 @@
           "text": "а/м легковой УАЗ Патриот; а/м легковой ГАЗ 33 023",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 184
     },
     {
       "person": {
@@ -14317,7 +14501,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 185
     },
     {
       "person": {
@@ -14386,7 +14571,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 186
     },
     {
       "person": {
@@ -14440,7 +14626,8 @@
           "text": "а/м легковой ВАЗ 2 105; а/м легковой ВАЗ Lada 2 019 060",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 187
     },
     {
       "person": {
@@ -14532,7 +14719,8 @@
           "text": "а/м легковой Skoda Yeti",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 188
     },
     {
       "person": {
@@ -14564,7 +14752,8 @@
           "own_type_raw": "индивидуальная"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 189
     },
     {
       "person": {
@@ -14654,7 +14843,8 @@
           "type_raw": "квартира"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 190
     },
     {
       "person": {
@@ -14781,7 +14971,8 @@
           "text": "а/м легковой Citroen C-Crosser",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 191
     },
     {
       "person": {
@@ -14876,7 +15067,8 @@
           "text": "а/м легковой Renault Megane",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 192
     }
   ],
   "document": {

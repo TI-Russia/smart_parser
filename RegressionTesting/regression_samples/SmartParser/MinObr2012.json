@@ -76,7 +76,8 @@
           "text": "Volkswagen(Индивидуальная)",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -124,7 +125,8 @@
           "text": "Audi Q5 (индивидуальная)",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 2
     }
   ],
   "document": {

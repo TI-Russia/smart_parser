@@ -33,7 +33,8 @@
           "text": "Автомобиль легковой \n Мазда 6, 2007 \nг.в.",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -111,7 +112,8 @@
           "text": "легковой \nТойота Ланд Крузер",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 2
     },
     {
       "person": {
@@ -141,7 +143,8 @@
           "type_raw": "Квартира \n(безвозмездное пользование, бессрочное)"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 3
     },
     {
       "person": {
@@ -162,7 +165,8 @@
           "text": "Автомобиль легковой \nKia Ceed",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 4
     },
     {
       "person": {
@@ -253,7 +257,8 @@
           "text": "Автомобиль легковой \nMazda 3",
           "relative": null
         }
-      ]
+      ],
+      "person_index": 5
     },
     {
       "person": {
@@ -283,7 +288,8 @@
           "type_raw": "Дачный земельный участок (Общая"
         }
       ],
-      "vehicles": []
+      "vehicles": [],
+      "person_index": 6
     }
   ],
   "document": {

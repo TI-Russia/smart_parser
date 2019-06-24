@@ -95,7 +95,8 @@
           "text": "Легковой автомобиль:\nBMW X3 xDrive Х668ЕК",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 1
     },
     {
       "person": {
@@ -315,7 +316,8 @@
           "text": "Иные трансп. средства: прицеп для перевозки техники Laker Heavy Duty 400",
           "relative": "Супруг(а)"
         }
-      ]
+      ],
+      "person_index": 2
     }
   ],
   "document": {
