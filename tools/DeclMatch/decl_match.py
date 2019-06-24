@@ -1,7 +1,7 @@
 import shutil
 import sys
 import os
-from decl_match_metric import calc_decl_match_one_pair
+from decl_match_metric import calc_decl_match_one_pair, trunctate_json
 import argparse
 from multiprocessing import Pool
 from collections import defaultdict
@@ -136,6 +136,7 @@ class TTolokaStats:
                 else:
                     self.golden_task_assignments += 1
 
+
     def calc_decl_match_for_tasks(self, input_id, conflict_file):
         json_file = smart_parser_result_json_file(input_id)
         if not os.path.exists(json_file):
@@ -152,7 +153,12 @@ class TTolokaStats:
 
             toloka_json_file = json_file[:-5] + "." + x['ASSIGNMENT:worker_id'] + ".json"
             with open(toloka_json_file,"w", encoding="utf8") as outf:
-                json.dump(toloker_json, outf, indent=4, ensure_ascii=False)
+                trunc_json = trunctate_json(toloker_json)
+                json.dump(trunc_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
+            with open(json_file+".trunc", "w", encoding="utf8") as outf:
+                trunc_json = trunctate_json(automatic_json)
+                json.dump(trunc_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
+
             if conflict_file:
                 dump_conflict(x, match_info, conflict_file)
         self.decl_match[input_id] = avg(decl_matches)

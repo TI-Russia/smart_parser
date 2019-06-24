@@ -167,6 +167,37 @@ def calc_decl_match_one_pair(json1, json2):
     return match_info
 
 
+def trunctate_json(j):
+    p =  j.get('persons', [{}])[0]
+    res = {
+        'person': {
+            'name_raw': p.get('name_raw', ''),
+            'role': p.get('role', ''),
+            'deparment': p.get('deparment', '')
+        },
+        'year': p.get('year', ''),
+        'vehicles': [ ],
+        'incomes': [],
+        'real_estates': []
+    }
+    for v in p.get('vehicles', []):
+        res['vehicles'].append ({'text': v.get('text', ''), 'relative': v.get('relative', '')})
+    for v in p.get('incomes', []):
+        res['incomes'].append ({'size': v.get('size', ''), 'relative': v.get('relative', '')})
+    for v in p.get('real_estates', []):
+        res['real_estates'].append ({
+            'own_type': v.get('own_type', ''),
+            'text': v.get('text', ''),
+            'square': v.get('square', ''),
+            'share_amount': v.get('share_amount', ''),
+            'country_raw': v.get('country_raw', ''),
+            'relative': v.get('country_raw', ''),
+        })
+    res['vehicles'] = sorted( res['vehicles'], key=lambda x: json.dumps(x) )
+    res['incomes'] = sorted( res['incomes'], key=lambda x: json.dumps(x))
+    res['real_estates'] = sorted( res['real_estates'], key=lambda x: json.dumps(x))
+    return res
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('json', nargs='+')
