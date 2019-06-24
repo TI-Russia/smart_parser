@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="import-schema-dicts.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="import-schema.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

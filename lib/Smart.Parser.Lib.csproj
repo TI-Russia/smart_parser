@@ -148,7 +148,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="frequency_dictionary_en_82_765.txt" />
     <EmbeddedResource Include="Resources\bigrams.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
