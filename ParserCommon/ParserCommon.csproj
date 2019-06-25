@@ -51,12 +51,10 @@
     <Compile Include="DeclarationProperties.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="IDeclarationParser.cs" />
-    <Compile Include="OwnershipType.cs" />
     <Compile Include="ParserHelpers.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicServant.cs" />
-    <Compile Include="RealEstateType.cs" />
     <Compile Include="RealEstateProperty.cs" />
     <Compile Include="RelationType.cs" />
     <Compile Include="Relative.cs" />

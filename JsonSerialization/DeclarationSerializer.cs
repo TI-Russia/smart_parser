@@ -226,31 +226,11 @@ namespace TI.Declarator.JsonSerialization
             JObject jRealEstate = new JObject();
 
             // "text" - "Полная строка наименования недвижимости, которая была в оригинальном документе (сырое значение)",
-            //jRealEstate.Add(new JProperty("name", prop.Name));
             jRealEstate.Add(new JProperty("text", prop.Text));
-            // "type_raw" - "Тип недвижимости (сырой текст из соответствующей ячейки документа)",
-            jRealEstate.Add(new JProperty("type", GetPropertyType(prop.PropertyType)));
             jRealEstate.Add(new JProperty("square", prop.Square));
-            bool isCountryRecognized = prop.Country != Country.None && prop.Country != Country.Error;
-            if (isCountryRecognized)
-            {
-                jRealEstate.Add(new JProperty("country", prop.CountryStr ?? GetCountry(prop)));
-            }
-            else
-            {
-                jRealEstate.Add(new JProperty("country", GetCountry(prop)));
-            }
-            jRealEstate.Add(new JProperty("region", null));
-            // "own_type_raw"
-            jRealEstate.Add(new JProperty("own_type", GetOwnershipType(prop)));
-            // "share_type_raw"
-            //new JProperty("share_type", GetShareType(prop)),
-            jRealEstate.Add(new JProperty("share_amount", GetOwnershipShare(prop)));
-
             jRealEstate.Add(new JProperty("relative", relationshipName));
-
+           jRealEstate.Add(new JProperty("own_type_by_column", prop.own_type_by_column));
             AddNotNullProp(jRealEstate, "square_raw", prop.square_raw);
-            AddNotNullProp(jRealEstate, "share_amount_raw", prop.share_amount_raw);
             AddNotNullProp(jRealEstate, "country_raw", prop.country_raw);
             AddNotNullProp(jRealEstate, "type_raw", prop.type_raw);
             AddNotNullProp(jRealEstate, "own_type_raw", prop.own_type_raw);
@@ -335,7 +315,6 @@ namespace TI.Declarator.JsonSerialization
             serializer.Serialize(validatingWriter, jServants);
 
 
-            //bool res = jServants.IsValid(Schema, out comments);
             bool res = messages.Count == 0;
             message = string.Join(" ", messages);
             return res;
@@ -355,136 +334,6 @@ namespace TI.Declarator.JsonSerialization
             return prop.Square == null ? "null" : prop.Square.Value.ToString("#.##");
         }
 
-        private static string GetPropertyType(RealEstateType propertyType)
-        {
-            if (propertyType == RealEstateType.None)
-            {
-                return null;
-            }
-            return DeclaratorApiPatterns.RealEstateTypeToString(propertyType);
-            /*
-            switch (propertyType)
-            {                
-                case RealEstateType.Apartment:
-                case RealEstateType.Rooms: return "Квартира";
-                case RealEstateType.Room: return "Квартира";
-                case RealEstateType.Garage: return "Гараж";
-                case RealEstateType.Dacha:
-                case RealEstateType.DachaHouse: return "Дача";
-                case RealEstateType.House: return "Жилой дом";
-                case RealEstateType.HabitableHouse: return "Жилой дом";
-                //case RealEstateType.GardenPlot:
-                case RealEstateType.PlotOfLand: return "Земельный участок";
-                case RealEstateType.Building:
-                case RealEstateType.HabitableSpace:
-                case RealEstateType.ParkingSpace:
-                case RealEstateType.Other: return "Иное";
-                default: throw new ArgumentOutOfRangeException("prop.PropertyType", $"Unsupported real estate type: {prop.PropertyType.ToString()}");
-            }
-            */
-        }
 
-        private static string GetCountry(RealEstateProperty prop)
-        {
-            switch (prop.Country)
-            {
-                case Country.Error: return null;
-                case Country.None: return null;
-                case Country.France: return "Франция";
-                case Country.Russia: return "Россия";
-                case Country.Ukraine: return "Украина";
-                case Country.Kazakhstan: return "Казахстан";
-                case Country.Bulgaria: return "Болгария";
-                case Country.Belarus: return "Беларусь";
-                case Country.Georgia: return "Грузия";
-                case Country.Lithuania: return "Литва";
-                case Country.Portugal: return "Португалия";
-                case Country.Usa: return "США";
-                case Country.Thailand: return "Тайланд";
-                case Country.Hungary: return "Венгрия";
-                case Country.Latvia: return "Латвия";
-                case Country.Uzbekistan: return "Узбекистан";
-                case Country.Armenia: return "Армения";
-                case Country.Turkey: return "Турция";
-                case Country.Spain: return "Испания";
-                case Country.Estonia: return "Эстония";
-                case Country.Mongolia: return "Монголия";
-                case Country.Tajikistan: return "Таджикистан";
-                case Country.CzechRepublic: return "Чехия";
-                case Country.Kyrgyzstan: return "Киргизия";
-                case Country.Finland: return "Финляндия";
-                case Country.Turkmenistan: return "Туркмения";
-                case Country.Montenegro: return "Черногория";
-                case Country.Mexico: return "Мексика";
-                case Country.Abkhazia: return "Абхазия";
-                case Country.SouthOssetia: return "Южная Осетия";
-                case Country.UnitedKingdom: return "Великобритания";
-
-                default:
-                    Console.Write($"Invalid country name: {prop.Country.ToString()}");
-                    return prop.Country.ToString();
-                    //throw new ArgumentOutOfRangeException("prop.Country", $"Invalid country name: {prop.Country.ToString()}");
-            }
-        }
-
-        private static string GetOwnershipType(RealEstateProperty prop)
-        {
-            return prop.OwnershipType.ToJsonString();
-        }
-
-        private static string GetShareType(RealEstateProperty prop)
-        {
-            return prop.OwnershipType.ToJsonString();
-        }
-
-        private static decimal? GetOwnershipShare(RealEstateProperty prop)
-        {
-            string ownedShare = prop.OwnedShare;
-            //if (prop.OwnershipType == OwnershipType.Shared)
-            {
-                if (ownedShare.IsNullOrWhiteSpace())
-                {
-                    return null;
-                }
-                else if (ownedShare == "½")
-                {
-                    return 0.5M;
-                }
-                else if (ownedShare == "¼")
-                {
-                    return 0.25M;
-                }
-                else if (ownedShare.Contains("/"))
-                {
-                    var parts = ownedShare.Split(new char[] { '/', ' ' });
-                    var num = Decimal.Parse(parts[0]);
-                    var den = Decimal.Parse(parts[1]);
-                    // Убираем ненужные нули в хвосте и, при необходимости, десятичный разделитель
-
-                    if (den == 0)
-                        return null;
-                    return (num / den);
-                }
-                else
-                {
-                    decimal factor = 1.0M;
-                    if (ownedShare.EndsWith("%")) { factor = 0.01M; }
-                    string shareStr = ownedShare.TrimEnd('%');
-                    Decimal value;
-                    if (!Decimal.TryParse(shareStr, NumberStyles.Any, RussianCulture, out value))
-                    {
-                        // TBD: Log error
-                        Console.Write($"can't parse ownedShare: {ownedShare}");
-                        return 0;
-                    }
-
-                    return value * factor;
-                }
-            }
-            //else
-            //{
-            //    return null;
-            //}
-        }
     }
 }

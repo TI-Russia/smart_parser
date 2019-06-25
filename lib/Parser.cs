@@ -332,17 +332,9 @@ namespace Smart.Parser.Lib
                 return;
             }
 
-            if (String.IsNullOrEmpty(prop.CountryStr))
+            if (String.IsNullOrEmpty(prop.country_raw))
             {
                 Logger.Error(CurrentRow, "wrong country: {0}", prop.country_raw);
-            }
-            if (prop.OwnershipType == 0)
-            {
-                Logger.Error(CurrentRow, "wrong ownership type: {0}", prop.own_type_raw);
-            }
-            if (prop.PropertyType == RealEstateType.None)
-            {
-                Logger.Error(CurrentRow, "wrong property type: {0}", prop.type_raw);
             }
         }
 
@@ -551,23 +543,15 @@ namespace Smart.Parser.Lib
             RealEstateProperty stateProperty = new RealEstateProperty();
 
 
-            var propertyType = DeclaratorApiPatterns.TryParseRealEstateType(statePropTypeStr);
             decimal? area = DataHelper.ParseSquare(statePropSquareStr);
-            Country country = DataHelper.TryParseCountry(statePropCountryStr);
-            string countryStr = DeclaratorApiPatterns.TryParseCountry(statePropCountryStr);
-
-            var combinedData = DataHelper.ParseCombinedRealEstateColumn(statePropTypeStr.CleanWhitespace(), OwnershipType.InUse);
+            string countryStr = statePropCountryStr;
 
             stateProperty.Text = statePropTypeStr;
-            stateProperty.PropertyType = propertyType;
             stateProperty.type_raw = statePropTypeStr;
             stateProperty.Square = area;
             stateProperty.square_raw = statePropSquareStr;
-            stateProperty.Country = country;
-            stateProperty.CountryStr = countryStr;
             stateProperty.country_raw = statePropCountryStr;
-            stateProperty.OwnershipType = combinedData.Item2;
-            stateProperty.OwnedShare = combinedData.Item3;
+            stateProperty.own_type_by_column = "В пользовании";
             CheckProperty(stateProperty);
             person.RealEstateProperties.Add(stateProperty);
         }
@@ -585,44 +569,19 @@ namespace Smart.Parser.Lib
 
             realEstateProperty.Square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = areaStr;
-
-            realEstateProperty.CountryStr = DeclaratorApiPatterns.TryParseCountry(countryStr);//. DataHelper.TryParseCountry(countryStr);
-            realEstateProperty.Country = DataHelper.TryParseCountry(countryStr);
             realEstateProperty.country_raw = countryStr;
-
-            RealEstateType realEstateType = RealEstateType.Other;
-            OwnershipType ownershipType = OwnershipType.Ownership;
-            string share = "";
 
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)
             {
-                realEstateType = DataHelper.TryParseRealEstateType(estateTypeStr);
-                ownershipType = DataHelper.TryParseOwnershipType(ownTypeStr, OwnershipType.Ownership);
-                share = DataHelper.ParseOwnershipShare(ownTypeStr, ownershipType);
-
-                realEstateProperty.PropertyType = realEstateType;
-                realEstateProperty.OwnershipType = ownershipType;
-                realEstateProperty.OwnedShare = share;
-
                 realEstateProperty.type_raw = estateTypeStr;
                 realEstateProperty.own_type_raw = ownTypeStr;
-                realEstateProperty.share_amount_raw = ownTypeStr;
+                realEstateProperty.own_type_by_column = "В собственности";
+                realEstateProperty.Text = estateTypeStr;
             }
             else // колонка содержит тип недвижимости и тип собственности
             {
-                var combinedData = DataHelper.ParseCombinedRealEstateColumn(estateTypeStr.CleanWhitespace());
-            
-                realEstateType = combinedData.Item1;
-                ownershipType = combinedData.Item2;
-                share = combinedData.Item3;
-
-                realEstateProperty.PropertyType = realEstateType;
-                realEstateProperty.OwnershipType = ownershipType;
-                realEstateProperty.OwnedShare = share;
-
-                realEstateProperty.type_raw = estateTypeStr;
-
+                realEstateProperty.Text  = estateTypeStr;
             }
 
             realEstateProperty.Text = estateTypeStr;

@@ -123,7 +123,7 @@ namespace Smart.Parser.Lib
             else return src;
         }
 
-        public static RealEstateType TryParseRealEstateType(string strType)
+        public static string TryParseRealEstateType(string strType)
         {
             string key = strType.ToLower().RemoveStupidTranslit()
                                           .Trim('\"')
@@ -132,109 +132,8 @@ namespace Smart.Parser.Lib
                                           .Replace("не имеет", "")
                                           .CoalesceWhitespace()
                                           .Trim();
-            
-            RealEstateType type = DeclaratorApiPatterns.TryParseRealEstateType(key);
-            if (type == RealEstateType.None)
-            {
-                // if unable to parse unmodified entry, attempt to account for word splitting
-                string tweakedKey = key.Replace("-", "");
-                type = DeclaratorApiPatterns.TryParseRealEstateType(key);
-            }
-            return type;
-        }
 
-        public static OwnershipType TryParseOwnershipType(string strOwn, OwnershipType defaultType = OwnershipType.None)
-        {
-            string str = strOwn.ToLower().Trim();
-            if (IsEmptyValue(str))
-                return defaultType; // OwnershipType.InUse;
-
-            OwnershipType resultWholeString = DeclaratorApiPatterns.TryParseOwnershipType(str);
-            if (resultWholeString != OwnershipType.None)
-            {
-                return resultWholeString;
-            }
-
-            //var parts = Regex.Split(str, "[ ,]+");
-            var parts = Regex.Split(str, "[ /0-9,\\(\\)]+");
-
-            OwnershipType result = defaultType; // OwnershipType.None;
-            foreach (var s in parts)
-            {
-                OwnershipType res = DeclaratorApiPatterns.TryParseOwnershipType(s);
-                if (res != OwnershipType.None)
-                {
-                    result = res;
-                }
-            }
-            if (result != OwnershipType.None)
-            {
-                return result;
-            }
-            return defaultType;
-        }
-
-        /*
-         *  "квартира           (безвозмездное, бессрочное пользование)"
-         *  
-         *  "Квартира долевая , 2/3"
-         *  
-            квартира
-            (совместная)  
-         */
-        static public Tuple<RealEstateType, OwnershipType, string> ParseCombinedRealEstateColumn(string strPropInfo, OwnershipType defaultOwnershipType = OwnershipType.Ownership)
-        {
-            string share = "1";
-            // слово до запятой или до скобки
-            var match = Regex.Match(strPropInfo, "[,(]+");
-            string realEstateStr = strPropInfo;
-            string rest = "";
-            string sep = "";
-            if (match.Success)
-            {
-                realEstateStr = strPropInfo.Substring(0, match.Index);
-                rest = strPropInfo.Substring(match.Index + 1);
-                sep = strPropInfo.Substring(match.Index, 1);
-            }
-
-            RealEstateType realEstateType = TryParseRealEstateType(realEstateStr);
-            OwnershipType ownershipType = TryParseOwnershipType(realEstateStr);
-            share = ParseOwnershipShare(rest, ownershipType);
-            if (rest != "")
-            {
-                rest = rest.Trim(')', ']', ' ');
-                OwnershipType t = TryParseOwnershipType(rest);
-                if (t != OwnershipType.None)
-                {
-                    ownershipType = t;
-                }
-            }
-            if (ownershipType == OwnershipType.None)
-            {
-                ownershipType = defaultOwnershipType;
-            }
-            return Tuple.Create(realEstateType, ownershipType, share);
-        }
-
-        public static string ParseOwnershipShare(string strOwn, OwnershipType ownType)
-        {
-            var match = Regex.Match(strOwn, "[½⅓⅔¼¾⅕⅖⅗⅘⅙⅚⅐⅛⅜⅝⅞⅑⅒]");
-            if (match.Success)
-            {
-                return match.Value; // vulgar fractions
-            }
-
-            match = Regex.Match(strOwn, "\\d+/\\d+");
-            if (match.Success)
-            {
-                return match.Value; // "1/3", "2/5"
-            }
-            match = Regex.Match(strOwn, "0[\\.,]\\d+");
-            if (match.Success)
-            {
-                return match.Value; // "0.5", "0,7"
-            }
-            return "";
+            return key;
         }
 
         private static readonly string[] SquareSeparators = new string[] { "\n", " " };
@@ -301,58 +200,6 @@ namespace Smart.Parser.Lib
             return res;
         }
 
-        private static readonly string[] CountrySeparators = new string[] { "\n" };
-
-        public static Country TryParseCountry(string strCountry)
-        {
-            string strCountryCleaned = strCountry.Replace("\n", " ")
-                                                 .CoalesceWhitespace()
-                                                 .Trim('-')
-                                                 .Trim()
-                                                 .ToLower();
-            if (IsEmptyValue(strCountryCleaned))
-            {
-                return Country.None;
-            }
-            switch (strCountryCleaned)
-            {
-                case "беларусь": return Country.Belarus;
-                case "республика беларусь": return Country.Belarus;
-                case "белоруссия": return Country.Belarus;
-                case "венгрия": return Country.Hungary;
-                case "грузия": return Country.Georgia;
-                case "казахстан": return Country.Kazakhstan;
-                case "российская федерация": return Country.Russia;
-                case "россии": return Country.Russia;
-                case "россия": return Country.Russia;
-                case "россия-": return Country.Russia;
-                case "рф": return Country.Russia;
-                case "сша": return Country.Usa;
-                case "таиланд": return Country.Thailand;
-                case "украина": return Country.Ukraine;
-                case "болгария": return Country.Bulgaria;
-                case "латвия": return Country.Latvia;
-                case "узбекистан": return Country.Uzbekistan;
-                case "армения": return Country.Armenia;
-                case "турция": return Country.Turkey;
-                case "испания": return Country.Spain;
-                case "эстония": return Country.Estonia;
-                case "монголия": return Country.Mongolia;
-                case "таджикистан": return Country.Tajikistan;
-                case "чехия": return Country.CzechRepublic;
-                case "киргизия": return Country.Kyrgyzstan;
-                case "финляндия": return Country.Finland;
-                case "франция": return Country.France;
-                case "туркмения": return Country.Turkmenistan;
-                case "черногория": return Country.Montenegro;
-                case "ukraine": return Country.Ukraine;
-                case "мексика": return Country.Mexico;
-                case "абхазия": return Country.Abkhazia;
-                case "южная осетия": return Country.SouthOssetia;
-                    //default:
-            }
-            return Country.Error;
-        }
 
         static public bool ParseDocumentFileName(string filename, out int? id, out string archive_file)
         {

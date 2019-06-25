@@ -13,7 +13,6 @@ namespace test
     {
         public DataHelperTest()
         {
-            PatternsFileName.UseTestPatterns();
         }
         [TestMethod]
         public void TestParseSquare()
@@ -23,57 +22,6 @@ namespace test
 
             Assert.IsNull(result);
         }
-        [TestMethod]
-        public void TestParsePropertyAndOwnershipTypes()
-        {
-            string test6 = "квартира\n(совместная)";
-            var tuple6 = DataHelper.ParseCombinedRealEstateColumn(test6);
-            Assert.AreEqual(tuple6.Item1, RealEstateType.Apartment);
-            Assert.AreEqual(tuple6.Item2, OwnershipType.Joint);
-            Assert.AreEqual(tuple6.Item3, "");
-
-
-
-
-            var square = DataHelper.ParseSquares("1/500")[0];
-            Assert.AreEqual(square.Value.ToString(), "0,002");
-
-                      
-            string test4 = "долевая 1/249";
-            OwnershipType ownershipType = DataHelper.TryParseOwnershipType(test4);
-            Assert.AreEqual(ownershipType, OwnershipType.Shared);
-            
-        }
-
-        [TestMethod]
-        public void TestParsePropertyAndOwnershipTypes2()
-        {
-            string s = "(общая долевая собственность, 1/2)";
-            OwnershipType ownershipType = DataHelper.TryParseOwnershipType(s);
-            string share = DataHelper.ParseOwnershipShare(s, ownershipType);
-
-            Assert.AreEqual(ownershipType, OwnershipType.Shared);
-            Assert.AreEqual(share, "1/2");
-
-            s = "(общая совместная собственность)";
-            ownershipType = DataHelper.TryParseOwnershipType(s);
-            Assert.AreEqual(ownershipType, OwnershipType.Joint);
-        }
-
-        [TestMethod]
-        public void TestParsePropertyAndOwnershipTypes3()
-        {
-            string s = "квартира (наём на срок полномочий депутата ГД)";
-            var result = DataHelper.ParseCombinedRealEstateColumn(s);
-            Assert.IsTrue(result.Item1 == RealEstateType.Apartment);
-            Assert.IsTrue(result.Item2 == OwnershipType.Lease);
-                
-            s = "квартира(безвозмездное пользование на срок полномочий депутата ГД)";
-            result = DataHelper.ParseCombinedRealEstateColumn(s);
-            Assert.IsTrue(result.Item1 == RealEstateType.Apartment);
-            Assert.IsTrue(result.Item2 == OwnershipType.ServiceHousing);
-        }
-
         [TestMethod]
         public void TestParseNames()
         {

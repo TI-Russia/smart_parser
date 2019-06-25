@@ -108,7 +108,6 @@
     <Compile Include="CMDLineParser.cs" />
     <Compile Include="ColumnDetector.cs" />
     <Compile Include="DataHelper.cs" />
-    <Compile Include="DeclaratorApiPatterns.cs" />
     <Compile Include="JsonWriter.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Parser.cs" />

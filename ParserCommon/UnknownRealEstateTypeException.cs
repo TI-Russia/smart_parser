@@ -6,16 +6,6 @@ using System.Threading.Tasks;
 
 namespace TI.Declarator.ParserCommon
 {
-    public class UnknownRealEstateTypeException : Exception
-    {
-        public UnknownRealEstateTypeException(string strType) 
-            : base("Неизвестный тип недвижимости:" + strType)
-        {
-            StrType = strType;
-        }
-
-        public string StrType;
-    }
 
     public class UnknownOwnershipTypeException : Exception
     {

@@ -15,16 +15,11 @@
       "real_estates": [
         {
           "text": "Квартира \n(Безвозмездное пользование бессрочное)",
-          "type": "Квартира",
           "square": 54.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Безвозмездное пользование",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "54,0",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Квартира \n(Безвозмездное пользование бессрочное)"
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [
@@ -50,55 +45,35 @@
       "real_estates": [
         {
           "text": "Земельный участок \n(индивидуальная собственность)",
-          "type": "Земельный участок",
           "square": 1960.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Индивидуальная",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "1960",
-          "country_raw": "Российская \nФедерация",
-          "type_raw": "Земельный участок \n(индивидуальная собственность)"
+          "country_raw": "Российская \nФедерация"
         },
         {
           "text": "Квартира \n(индивидуальная собственность)",
-          "type": "Квартира",
           "square": 75.3,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Индивидуальная",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "75,3",
-          "country_raw": "Российская \nФедерация",
-          "type_raw": "Квартира \n(индивидуальная собственность)"
+          "country_raw": "Российская \nФедерация"
         },
         {
           "text": "Земельный участок \n(индивидуальная собственность)",
-          "type": "Земельный участок",
           "square": 3917.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Индивидуальная",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "3917",
-          "country_raw": "Российская \nФедерация",
-          "type_raw": "Земельный участок \n(индивидуальная собственность)"
+          "country_raw": "Российская \nФедерация"
         },
         {
           "text": "Жилой дом \n(индивидуальная собственность)",
-          "type": "Жилой дом",
           "square": 64.7,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Индивидуальная",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "64,7",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Жилой дом \n(индивидуальная собственность)"
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [
@@ -128,16 +103,11 @@
       "real_estates": [
         {
           "text": "Квартира \n(безвозмездное пользование, бессрочное)",
-          "type": "Квартира",
           "square": 53.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Безвозмездное пользование",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "53",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Квартира \n(безвозмездное пользование, бессрочное)"
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [],
@@ -183,68 +153,43 @@
       "real_estates": [
         {
           "text": "Квартира (аренда)",
-          "type": "Квартира",
           "square": 60.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Наём (аренда)",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "60",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Квартира (аренда)"
+          "country_raw": "Российская Федерация"
         },
         {
           "text": "Жилой дом (садовый дом) \n(безвозмездное пользование, бессрочное)",
-          "type": "Жилой дом",
           "square": 30.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Безвозмездное пользование",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "30",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Жилой дом (садовый дом) \n(безвозмездное пользование, бессрочное)"
+          "country_raw": "Российская Федерация"
         },
         {
           "text": "Квартира (аренда)",
-          "type": "Квартира",
           "square": 60.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Наём (аренда)",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "60",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Квартира (аренда)"
+          "country_raw": "Российская Федерация"
         },
         {
           "text": "Квартира",
-          "type": "Квартира",
           "square": null,
-          "country": null,
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "",
-          "country_raw": "",
-          "type_raw": "Квартира"
+          "country_raw": ""
         },
         {
           "text": "(безвозмездное пользование, бессрочное)",
-          "type": null,
           "square": 70.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Безвозмездное пользование",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "70",
-          "country_raw": "Российская Федерация",
-          "type_raw": "(безвозмездное пользование, бессрочное)"
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [
@@ -270,16 +215,11 @@
       "real_estates": [
         {
           "text": "Дачный земельный участок (Общая",
-          "type": "Земельный участок",
           "square": 500.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Совместная собственность",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "500",
-          "country_raw": "Российская Федерация",
-          "type_raw": "Дачный земельный участок (Общая"
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [],

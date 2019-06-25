@@ -20,68 +20,43 @@
       "real_estates": [
         {
           "text": "земельный участок \n(собственность, общая долевая)",
-          "type": "Земельный участок",
           "square": 490.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Долевая собственность",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "490,0",
-          "country_raw": "Россия",
-          "type_raw": "земельный участок \n(собственность, общая долевая)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(пользование)",
-          "type": "Квартира",
           "square": 48.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "48,0",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(пользование)"
+          "country_raw": "Россия"
         },
         {
           "text": "гаражный бокс \n(собственность)",
-          "type": "Гараж",
           "square": 22.4,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "22,4",
-          "country_raw": "Россия",
-          "type_raw": "гаражный бокс \n(собственность)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(собственность)",
-          "type": "Квартира",
           "square": 63.3,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "63,3",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(собственность)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(пользование)",
-          "type": "Квартира",
           "square": 48.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "48,0",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(пользование)"
+          "country_raw": "Россия"
         }
       ],
       "vehicles": [
@@ -112,55 +87,35 @@
       "real_estates": [
         {
           "text": "земельный участок (собственность)",
-          "type": "Земельный участок",
           "square": 741.0,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "741,0",
-          "country_raw": "Россия",
-          "type_raw": "земельный участок (собственность)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(собственность)",
-          "type": "Квартира",
           "square": 61.1,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "61,1",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(собственность)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(пользование)",
-          "type": "Квартира",
           "square": 53.4,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "53,4",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(пользование)"
+          "country_raw": "Россия"
         },
         {
           "text": "жилой дом \n(собственность)",
-          "type": "Жилой дом",
           "square": 44.4,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": null,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "44,4",
-          "country_raw": "Россия",
-          "type_raw": "жилой дом \n(собственность)"
+          "country_raw": "Россия"
         }
       ],
       "vehicles": [
@@ -191,55 +146,35 @@
       "real_estates": [
         {
           "text": "квартира \n(собственность, 1/4 доли)",
-          "type": "Квартира",
           "square": 61.2,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": 0.25,
           "relative": null,
+          "own_type_by_column": null,
           "square_raw": "61,2",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(собственность, 1/4 доли)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(собственность, 1/4 доли)",
-          "type": "Квартира",
           "square": 61.2,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": 0.25,
           "relative": "Супруг(а)",
+          "own_type_by_column": null,
           "square_raw": "61,2",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(собственность, 1/4 доли)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(собственность, 1/4 доли)",
-          "type": "Квартира",
           "square": 61.2,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": 0.25,
           "relative": "Ребенок",
+          "own_type_by_column": null,
           "square_raw": "61,2",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(собственность, 1/4 доли)"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира \n(собственность, 1/4 доли)",
-          "type": "Квартира",
           "square": 61.2,
-          "country": "Россия",
-          "region": null,
-          "own_type": "В собственности",
-          "share_amount": 0.25,
           "relative": "Ребенок",
+          "own_type_by_column": null,
           "square_raw": "61,2",
-          "country_raw": "Россия",
-          "type_raw": "квартира \n(собственность, 1/4 доли)"
+          "country_raw": "Россия"
         }
       ],
       "vehicles": [

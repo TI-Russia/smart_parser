@@ -15,15 +15,10 @@
       "real_estates": [
         {
           "text": "Квартира",
-          "type": "Квартира",
           "square": 71.10,
-          "country": "Россия",
-          "region": null,
-          "own_type": "Индивидуальная",
-          "share_amount": null,
           "relative": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "71.10",
-          "share_amount_raw": "Индивидуальная",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
