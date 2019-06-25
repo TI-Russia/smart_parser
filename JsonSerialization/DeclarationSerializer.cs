@@ -27,8 +27,6 @@ namespace TI.Declarator.JsonSerialization
             if (t.Type != JTokenType.Object)
             {
                 Decimal d = (Decimal)t;
-                //int count = BitConverter.GetBytes(decimal.GetBits(d)[3])[2];
-                //string s = d.ToString();
                 writer.WriteValue(d);
             }
             else
