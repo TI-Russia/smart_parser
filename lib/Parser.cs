@@ -542,24 +542,10 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static bool CheckEmptyValues(string propTypeStr)
-        {
-            propTypeStr = propTypeStr.Trim();
-            if (string.IsNullOrWhiteSpace(propTypeStr) ||
-                propTypeStr == "-" ||
-                propTypeStr == "_" ||
-                propTypeStr == "-\n-" ||
-                propTypeStr == "не имеет")
-            {
-                return true;
-            }
-            return false;
-        }
-
         static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
-            if (CheckEmptyValues(statePropTypeStr))
+            if (DataHelper.IsEmptyValue(statePropTypeStr))
             {
                 return;
             }
@@ -591,7 +577,7 @@ namespace Smart.Parser.Lib
         {
             estateTypeStr = estateTypeStr.Trim();
             areaStr = areaStr.CleanWhitespace();
-            if (CheckEmptyValues(estateTypeStr))
+            if (DataHelper.IsEmptyValue(estateTypeStr))
             {
                 return;
             }
