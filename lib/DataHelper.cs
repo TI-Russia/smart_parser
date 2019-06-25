@@ -12,10 +12,6 @@ namespace Smart.Parser.Lib
 {
     public class DataHelper
     {
-        static public string NormalizeName(string name)
-        {
-            return String.Join(" ", name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-        }
         static public bool IsPublicServantInfo(string nameOrRelativeType)
         {
             if (IsEmptyValue(nameOrRelativeType)) return false;

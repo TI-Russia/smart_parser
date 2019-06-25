@@ -156,7 +156,6 @@ namespace TI.Declarator.JsonSerialization
         private static JProperty GetPersonalData(PublicServant servant)
         {
             JObject personProp = new JObject();
-            personProp.Add(new JProperty("name", servant.Name));
             personProp.Add(new JProperty("name_raw", servant.NameRaw));
             personProp.Add(new JProperty("role", servant.Occupation));
             AddNotNullProp(personProp, "department", servant.Department);

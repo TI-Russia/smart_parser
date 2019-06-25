@@ -181,7 +181,6 @@ namespace Smart.Parser.Lib
             currentServant = new PublicServant()
             {
                 NameRaw = fioStr,
-                Name = DataHelper.NormalizeName(fioStr),
                 Occupation = occupationStr
             };
             if (currentSection != null)
@@ -487,7 +486,7 @@ namespace Smart.Parser.Lib
                 {
                     if (person is PublicServant)
                     {
-                        Logger.Debug(((PublicServant)person).Name);
+                        Logger.Debug(((PublicServant)person).NameRaw.CleanWhitespace());
                     }
                     bool foundIncomeInfo = false;
                     for (int row = person.RangeLow; row <= person.RangeHigh; row++)

@@ -110,7 +110,6 @@ namespace Smart.Parser.Lib
             }
 
             // build realestate regex
-            List<String> allTypes;
             foreach (var pair in realestatetypeRegexList)
             {
                 string realestatetypeRegexString = "(" + String.Join("|", pair.Value) + ")";
