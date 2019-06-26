@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument("--file-list", dest='file_list', default="_files.txt", help="a file to store declaration input file names")
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
+    parser.add_argument("--smart-parser-options", dest='smart_parser_options', default="-v debug -max-rows 100 -adapter prod")
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes", default=4, type=int)
     parser.add_argument("-e", dest='extensions',  default=[], action='append',  help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
     
@@ -83,7 +84,7 @@ class ProcessOneFile(object):
     def __call__(self, filename):
         smart_parser = os.path.abspath(self.args.smart_parser)
         log = filename + ".stdout"
-        cmd = "{} -v debug -max-rows 100  -adapter prod \"{}\" > \"{}\" ".format(smart_parser, filename, log)
+        cmd = "{} {} \"{}\" > \"{}\" ".format(smart_parser, self.args.smart_parser_options, filename, log)
         print(fix_encoding(cmd))
         try:
             os.system(cmd)
@@ -142,7 +143,7 @@ def report(args):
         "All found jsons": jsons_count,
         "Source file size" :  all_size,
         "Source file with jsons size": good_size,
-        "Recall by header parsing" : round(good_size/all_size, 2)
+        "Success parsing(smart_parser did not failed)" : round(good_size/all_size, 2)
     }
 
 if __name__ == '__main__':
