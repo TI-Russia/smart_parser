@@ -221,19 +221,6 @@
                                     ], 
                                     "title": "Полная строка наимнования транспортного средства (сырой текст из декларации)"
                                 }, 
-                                "brand": {
-                                    "$id": "/properties/persons/properties/vehicles/items/properties/brand", 
-                                    "default": "", 
-                                    "type": [
-                                        "null", 
-                                        "string"
-                                    ], 
-                                    "examples": [
-                                        null, 
-                                        "Lexus"
-                                    ], 
-                                    "title": "Бренд (производитель)"
-                                }, 
                                 "manufacture_year": {
                                     "$id": "/properties/persons/properties/vehicles/items/properties/manufacture_year", 
                                     "default": null, 
@@ -245,29 +232,6 @@
                                         null
                                     ], 
                                     "title": "Год производства"
-                                }, 
-                                "own_type": {
-                                    "title": "Тип владения ТС (словарное значение)", 
-                                    "$id": "/properties/persons/properties/vehicles/items/properties/own_type", 
-                                    "enum": [
-                                        "В собственности", 
-                                        "Индивидуальная", 
-                                        "Долевая собственность", 
-                                        "Совместная собственность", 
-                                        "В пользовании", 
-                                        "Безвозмездное пользование", 
-                                        "Наём (аренда)", 
-                                        "Служебное жилье", 
-                                        "Фактическое предоставление"
-                                    ], 
-                                    "default": "", 
-                                    "examples": [
-                                        "В собственности"
-                                    ], 
-                                    "type": [
-                                        "null", 
-                                        "string"
-                                    ]
                                 }, 
                                 "relative": {
                                     "title": "Родственник", 
@@ -314,42 +278,7 @@
                                         "В собственности"
                                     ], 
                                     "title": "Тип владения ТС (сырой текст из соответствующей ячейки документа)"
-                                }, 
-                                "model": {
-                                    "$id": "/properties/persons/properties/vehicles/items/properties/model", 
-                                    "default": "", 
-                                    "type": [
-                                        "null", 
-                                        "string"
-                                    ], 
-                                    "examples": [
-                                        null, 
-                                        "RX350"
-                                    ], 
-                                    "title": "Название модели"
-                                }, 
-                                "type": {
-                                    "title": "Тип транспортного средства (слованое значение)", 
-                                    "$id": "/properties/persons/properties/vehicles/items/properties/type", 
-                                    "enum": [
-                                        "Автомобиль легковой", 
-                                        "Автомобиль грузовой", 
-                                        "Автоприцеп", 
-                                        "Мототранспортное средство", 
-                                        "Сельхоз техника", 
-                                        "Водный транспорт", 
-                                        "Воздушный транспорт", 
-                                        "Иное"
-                                    ], 
-                                    "default": "", 
-                                    "examples": [
-                                        "Автомобиль легковой"
-                                    ], 
-                                    "type": [
-                                        "null", 
-                                        "string"
-                                    ]
-                                }
+                                } 
                             }
                         }, 
                         "type": "array"
@@ -366,27 +295,6 @@
                         ], 
                         "type": "object", 
                         "properties": {
-                            "family_name": {
-                                "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе", 
-                                "title": "Фамилия", 
-                                "$id": "/properties/persons/properties/person/properties/family_name", 
-                                "default": "", 
-                                "examples": [
-                                    "Бродский"
-                                ], 
-                                "type": "string"
-                            }, 
-                            "name": {
-                                "$id": "/properties/persons/properties/person/properties/name", 
-                                "default": "", 
-                                "type": "string", 
-                                "examples": [
-                                    "Бродский Михаил Наумович", 
-                                    "Бродский М. Н.", 
-                                    "Бродский М.Н."
-                                ], 
-                                "title": "Фамилия Имя Отчество (или с формате \"Фамилия И.О.\")"
-                            }, 
                             "name_raw": {
                                 "$id": "/properties/persons/properties/person/properties/name_raw", 
                                 "default": "", 
@@ -397,16 +305,6 @@
                                     "БродскийМ.Н."
                                 ], 
                                 "title": "Фамилия Имя Отчество (сырые данные из документа, указывать точно как было)"
-                            }, 
-                            "patronymic_name": {
-                                "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе", 
-                                "title": "Отчество", 
-                                "$id": "/properties/persons/properties/person/properties/patronymic_name", 
-                                "default": "", 
-                                "examples": [
-                                    "Наумович"
-                                ], 
-                                "type": "string"
                             }, 
                             "role": {
                                 "$id": "/properties/persons/properties/person/properties/role", 
@@ -422,16 +320,6 @@
                                 ], 
                                 "title": "Должность"
                             }, 
-                            "given_name": {
-                                "description": "Заполняется, только если было в отдельной ячейке/столбце в исходном документе", 
-                                "title": "Имя", 
-                                "$id": "/properties/persons/properties/person/properties/given_name", 
-                                "default": "", 
-                                "examples": [
-                                    "Михаил"
-                                ], 
-                                "type": "string"
-                            }, 
                             "department": {
                                 "$id": "/properties/persons/properties/person/properties/department", 
                                 "default": "", 
@@ -442,18 +330,8 @@
                                 "examples": [
                                     "Отдел по борьбе с коррупцией"
                                 ], 
-                                "title": "Департамент в органе власти"
-                            }, 
-                            "initials": {
-                                "description": "Заполняется, только если были в отдельной ячейке/столбце в исходном документе (формат: А.А.)", 
-                                "title": "Инициалы", 
-                                "$id": "/properties/persons/properties/person/properties/initials", 
-                                "default": "", 
-                                "examples": [
-                                    "М.Н."
-                                ], 
-                                "type": "string"
-                            }
+                                "title": "Департамент в органе власти или подведомственная организация"
+                            } 
                         }
                     }, 
                     "party_raw": {

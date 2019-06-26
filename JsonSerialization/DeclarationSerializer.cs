@@ -144,7 +144,6 @@ namespace TI.Declarator.JsonSerialization
         {
             var jServ = new JObject(
                 GetPersonalData(servant),
-                //GetInstitutiondata(servant),
                 GetYear(declarationProperties),
                 GetIncomes(servant),
                 GetRealEstateProperties(servant),
@@ -227,7 +226,7 @@ namespace TI.Declarator.JsonSerialization
 
             // "text" - "Полная строка наименования недвижимости, которая была в оригинальном документе (сырое значение)",
             jRealEstate.Add(new JProperty("text", prop.Text));
-            jRealEstate.Add(new JProperty("square", prop.Square));
+            jRealEstate.Add(new JProperty("square", prop.square));
             jRealEstate.Add(new JProperty("relative", relationshipName));
            jRealEstate.Add(new JProperty("own_type_by_column", prop.own_type_by_column));
             AddNotNullProp(jRealEstate, "square_raw", prop.square_raw);
@@ -269,7 +268,7 @@ namespace TI.Declarator.JsonSerialization
                 JObject jVehicle = new JObject();
                 jVehicle.Add(new JProperty("text", vehicleInfo.Text));
                 jVehicle.Add(new JProperty("relative", null));
-                AddNotNullProp(jVehicle, "type", vehicleInfo.Type);
+                AddNotNullProp(jVehicle, "type_raw", vehicleInfo.Type);
                 jVehicles.Add(jVehicle);
             }
 
@@ -280,7 +279,7 @@ namespace TI.Declarator.JsonSerialization
                     JObject jVehicle = new JObject();
                     jVehicle.Add(new JProperty("text", vehicleInfo.Text));
                     jVehicle.Add(new JProperty("relative", GetRelationshipName(rel.RelationType)));
-                    AddNotNullProp(jVehicle, "type", vehicleInfo.Type);
+                    AddNotNullProp(jVehicle, "type_raw", vehicleInfo.Type);
                     jVehicles.Add(jVehicle);
                 }
             }
@@ -289,9 +288,7 @@ namespace TI.Declarator.JsonSerialization
             return res;
         }
 
-
-
-        
+                      
         private static bool Validate<T>(T jServants, out string message)
         {
             IList<string> comments = new List<string>();
@@ -329,11 +326,6 @@ namespace TI.Declarator.JsonSerialization
                 default: throw new ArgumentOutOfRangeException("rt", $"Unsupported relationship type: {rt.ToString()}");
             }
         }
-        private static string GetSquareString(RealEstateProperty prop)
-        {
-            return prop.Square == null ? "null" : prop.Square.Value.ToString("#.##");
-        }
-
-
+   
     }
 }

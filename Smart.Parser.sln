@@ -19,11 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserCommon", "ParserCommo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSerialization", "JsonSerialization\JsonSerialization.csproj", "{16E41C56-7CD2-4E16-A469-4AF4F7FACB71}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D243CD7-136D-423E-A2FB-873E2AC08121}"
-	ProjectSection(SolutionItems) = preProject
-		Tindalos_readme.txt = Tindalos_readme.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeclaratorApiClient", "DeclaratorApiClient\DeclaratorApiClient.csproj", "{1AC51D57-9CAD-435D-ACE5-ABA84D287253}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{AFB7E7EE-969C-47DC-9FEF-780909E20975}"

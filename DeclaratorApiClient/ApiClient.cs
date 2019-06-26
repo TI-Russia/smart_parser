@@ -14,7 +14,6 @@ namespace TI.Declarator.DeclaratorApiClient
     {
         private static readonly string ReportUnknownEntryUrl = "https://declarator.org/api/unknown_entry/";
         private static readonly string ValidateOutputUrl = "https://declarator.org/api/jsonfile/validate/";
-        private static readonly string PatternsUrl = "https://declarator.org/api/patterns";
         
         private static HttpClient HttpClient { get; set; }
 
@@ -53,33 +52,6 @@ namespace TI.Declarator.DeclaratorApiClient
 
             return httpResponse.Content.ReadAsStringAsync().Result;
         }
-        public static string DownloadPatterns()
-        {
-            // sokirko: does not work because of Authorization problems, use download.py
-            dynamic result = null;
-            var url = PatternsUrl;
-            while (true) {
-                var contents = new StringContent("");
-                var httpResponse = HttpClient.PostAsync(url, contents).Result;
-
-                if (!httpResponse.IsSuccessStatusCode)
-                {
-                    throw new DeclaratorApiException(httpResponse, "Could not validate parser output");
-                }
-                var s = httpResponse.Content.ReadAsStringAsync().Result;
-                dynamic patterns = Newtonsoft.Json.JsonConvert.DeserializeObject(s);
-                if (result == null)
-                {
-                    result = patterns;
-                }
-                else
-                {
-                    result.results += patterns.results;
-                }
-                if (patterns.next == "") break;
-                url = patterns.next;
-            }
-            return Newtonsoft.Json.JsonConvert.DeserializeObject(result);
-        }
+        
     }
 }

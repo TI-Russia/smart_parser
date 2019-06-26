@@ -45,13 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnOrdering.cs" />
-    <Compile Include="Country.cs" />
     <Compile Include="Declaration.cs" />
     <Compile Include="DeclarationField.cs" />
     <Compile Include="DeclarationProperties.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="IDeclarationParser.cs" />
-    <Compile Include="ParserHelpers.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicServant.cs" />
@@ -60,9 +58,7 @@
     <Compile Include="Relative.cs" />
     <Compile Include="TextHelpers.cs" />
     <Compile Include="UnknownEntry.cs" />
-    <Compile Include="UnknownRealEstateTypeException.cs" />
     <Compile Include="Vehicle.cs" />
-    <Compile Include="VehicleEntry.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

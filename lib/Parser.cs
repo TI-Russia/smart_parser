@@ -543,12 +543,9 @@ namespace Smart.Parser.Lib
             RealEstateProperty stateProperty = new RealEstateProperty();
 
 
-            decimal? area = DataHelper.ParseSquare(statePropSquareStr);
-            string countryStr = statePropCountryStr;
-
             stateProperty.Text = statePropTypeStr;
             stateProperty.type_raw = statePropTypeStr;
-            stateProperty.Square = area;
+            stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
             stateProperty.square_raw = statePropSquareStr;
             stateProperty.country_raw = statePropCountryStr;
             stateProperty.own_type_by_column = "В пользовании";
@@ -567,7 +564,7 @@ namespace Smart.Parser.Lib
 
             RealEstateProperty realEstateProperty = new RealEstateProperty();
 
-            realEstateProperty.Square = DataHelper.ParseSquare(areaStr);
+            realEstateProperty.square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = areaStr;
             realEstateProperty.country_raw = countryStr;
 

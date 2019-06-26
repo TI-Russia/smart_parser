@@ -118,8 +118,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\log4net.config" />
-    <EmbeddedResource Include="Resources\patterns.json" />
-    <EmbeddedResource Include="Resources\patterns_test.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj">

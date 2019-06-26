@@ -6,9 +6,7 @@ namespace TI.Declarator.ParserCommon
 {
     public class RealEstateProperty
     {
-        private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
-        private static CultureInfo RussianCulture = CultureInfo.CreateSpecificCulture("ru-ru");
-        public decimal? Square { set; get; }
+        public decimal? square { set; get; }
 
         public string square_raw { set; get; }
         public string country_raw { set; get; }
@@ -20,12 +18,6 @@ namespace TI.Declarator.ParserCommon
 
         public RealEstateProperty()
         {}
-
-        public RealEstateProperty(decimal? area, string name)
-        {
-            this.Square = area;
-            this.Text = name;
-        }
 
     }
 }
