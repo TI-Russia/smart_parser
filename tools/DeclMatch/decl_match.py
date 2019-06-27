@@ -17,7 +17,7 @@ def parse_args():
     parser.add_argument("--toloka",  dest='toloka', help ="toloka assignments file")
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--dump-conflicts", dest='dump_conflicts')
-    parser.add_argument("-l", dest='toloka_tsv_line_no', type=int, default="None")
+    parser.add_argument("-l", dest='toloka_tsv_line_no', type=int, default=0)
     return parser.parse_args()
 
 
@@ -127,7 +127,7 @@ class TTolokaStats:
         with open (filename, "r", encoding="utf8") as tsv:
             for task in csv.DictReader(tsv, delimiter="\t", quotechar='"'):
                 line_no += 1
-                if args.toloka_tsv_line_no is not None and args.toloka_tsv_line_no != line_no:
+                if args.toloka_tsv_line_no > 0 and args.toloka_tsv_line_no != line_no:
                     continue
                 task_id = task['INPUT:input_id']
                 task['input_line_no'] = line_no

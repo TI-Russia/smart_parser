@@ -38,20 +38,9 @@ def read_field(dct, field_name):
     value = value.replace(" ", "")
     value = value.replace(u" ", "")
     value = value.replace("\n", "")
+    value = value.replace("\\r", "")
+    value = value.replace("\r", "")
     value = value.lower()
-    if value.endswith(u"(собственность)"):
-        value = value[0:-len(u"(собственность)")]
-    if value.endswith(u"(общаясобственность)"):
-        value = value[0:-len(u"(общаясобственность)")]
-
-
-    if field_name == "own_type":
-        if value == u"индивидуальная":
-            value = u"всобственности"
-    if value.startswith(u"долевая1/"):
-        value = value[len(u"долевая"):]
-    if value.startswith('1/') and value[2:].isdigit():
-        value = str(1/int(value[2:]))
 
     return value
 
@@ -107,17 +96,17 @@ def are_equal_realty(p1, p2):
     return ( check_equal_value(p1, p2, "text")[0] and
              check_equal_value(p1, p2, "square")[0] and
              check_equal_value(p1, p2, "relative")[0] and
-            # to do check county
-             check_equal_value(p1, p2, "share_amount")[0] and
-             check_equal_value(p1, p2, "own_type")[0]);
+            # to do check country
+             check_equal_value(p1, p2, "own_type_by_column_type")[0] and
+             check_equal_value(p1, p2, "own_type_raw")[0]);
 
 def describe_realty(p):
     return u"real estate {0}, {1}, {2}, {3}, {4} ".format(
         p.get("text").replace("\n", "\\n"), 
         p.get("square"), 
-        p.get("own_type"), 
-        p.get("relative"),
-        p.get("share_amount"))
+        p.get("own_type_raw"), 
+        p.get("own_type_by_column"), 
+        p.get("relative"))
 
 def check_realties(realties1, realties2, match_info):
     used = set()
@@ -168,12 +157,17 @@ def calc_decl_match_one_pair(json1, json2):
 
 
 def trunctate_json(j):
-    p =  j.get('persons', [{}])[0]
+    persons =  j.get('persons', [{}])
+    if len(persons) == 0:
+        p = {}
+    else:
+        p = persons[0]
+    person_info = p.get('person', {})
     res = {
         'person': {
-            'name_raw': p.get('name_raw', ''),
-            'role': p.get('role', ''),
-            'deparment': p.get('deparment', '')
+            'name_raw': person_info.get('name_raw', ''),
+            'role': person_info.get('role', ''),
+            'deparment': person_info.get('deparment', '')
         },
         'year': p.get('year', ''),
         'vehicles': [ ],
@@ -186,12 +180,12 @@ def trunctate_json(j):
         res['incomes'].append ({'size': v.get('size', ''), 'relative': v.get('relative', '')})
     for v in p.get('real_estates', []):
         res['real_estates'].append ({
-            'own_type': v.get('own_type', ''),
+            'own_type_raw': v.get('own_type_raw', ''),
             'text': v.get('text', ''),
             'square': v.get('square', ''),
-            'share_amount': v.get('share_amount', ''),
+            'own_type_by_column': v.get('own_type_by_column', ''),
             'country_raw': v.get('country_raw', ''),
-            'relative': v.get('country_raw', ''),
+            'relative': v.get('relative', ''),
         })
     res['vehicles'] = sorted( res['vehicles'], key=lambda x: json.dumps(x) )
     res['incomes'] = sorted( res['incomes'], key=lambda x: json.dumps(x))
