@@ -31,9 +31,10 @@
                     <button onclick=window.add_department() title="отдел или подведомственная организация">Отд<u>е</u>л</button>
                 </td></tr>
                 <tr><td>
+                    <button class="realty_buttons" onclick=window.add_realties_number() title="число  объектов недвижимости" ><u>К</u>ол-во</button>
                     <button class="realty_buttons" onclick=window.add_realty() title="добавление объекта недвижимости" ><u>Н</u>едвижимость</button>
+                    <button class="realty_buttons" onclick=window.add_own_type() title="указание типа владения" ><u>В</u>ладение</button>
                     <button class="realty_buttons" onclick=window.add_square() title="добавление площади последнего объекта недвижимости"><u>П</u>лощадь</button>
-                    <button class="realty_buttons" onclick=window.add_share() title="указание доли совместной собственности последнего объекта недвижимости"> Дол<u>я</u></button>
                     <button class="realty_buttons" onclick=window.add_country() title="указание страны последнего объекта недвижимости">Страна</button>
 
                 </td></tr>
@@ -53,25 +54,17 @@
                                 {{{owner_types "realty_owner_type" "realty_owner_image_div"}}}
                             </td>
                         <td style="vertical-align:top; padding-right: 30px; white-space: nowrap;">
-                            <label><input  name='realty_own_type' type='radio' value='В собственности' checked="checked"
+                            <label><input  name='realty_own_type_by_column' type='radio' value='В собственности' checked="checked"
                                           onclick="window.show_icon('http://aot.ru/images/own_property.png', 'own_type_image_div')">
-                                Индивидуальная<br/><br/>
+                                В собственности<br/><br/>
                             </label>
-                            <label><input  name='realty_own_type' type='radio' value='Долевая собственность'
-                                          onclick="window.show_icon('http://aot.ru/images/own_dolya.png', 'own_type_image_div')">
-                                Долевая<br/><br/>
-                            </label>
-                            <label><input name='realty_own_type' type='radio' value='Совместная собственность'
-                                          onclick="window.show_icon('http://aot.ru/images/own_sovmestno.png', 'own_type_image_div')">
-                                Совместная<br/><br/>
-                            </label>
-                            <label><input name='realty_own_type' type='radio' value='В пользовании'
+                            <label><input name='realty_own_type_by_column' type='radio' value='В пользовании'
                                           onclick="window.show_icon('http://aot.ru/images/own_inuse.png', 'own_type_image_div')">
                                 В пользовании
                             </label>
                         </td>
                         <td> <div name="realty_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
-                        <td> <div name="own_type_image_div"> <img src="http://aot.ru/images/own_property.png"/> </div></td>
+                        <td> <div name="own_type_by_column_image_div"> <img src="http://aot.ru/images/own_property.png"/> </div></td>
                         </tr>
                         <tr><td></td></tr>
                         <tr>

@@ -73,7 +73,7 @@ Handlebars.registerHelper('owner_types', function(radio_button_name, image_div_n
         "                           onclick=\"window.show_icon('{{image}}', '{{image_div_name}}')\"\n" +
         "                           {{#if checked}} checked {{/if}}\" /> {{title}}</label> <br/><br/>";
     let ownerTypes = [
-        {'value': "", title:"Собственная", image:"http://aot.ru/images/declarant.png", "checked":"checked"},
+        {'value': "", title:"Декларант", image:"http://aot.ru/images/declarant.png", "checked":"checked"},
         {'value': "Супруг(а)", title:"Супруг(а)", image:"http://aot.ru/images/spouse.png"},
         {'value': "Ребенок", title:"Ребенок", image:"http://aot.ru/images/child.png"}
     ];
@@ -289,6 +289,9 @@ function get_last_person(djson) {
 
 function add_declarant() {
     let djson = read_main_json();
+    if (!('persons' in djson) || (djson.persons.length == 0)) {
+        throw_and_log("Сначала надо обрезать таблицу (кнопка 'Обрезать')");
+    }
     let text = get_new_value("Введите ФИО");
     if (text.length > 50) {
         throw_and_log("ФИО слишком длинное (>50 символов)");
@@ -298,6 +301,9 @@ function add_declarant() {
     }
     if (text != "") {
         if (djson.persons.length > 0) {
+            if (!('person'  in djson.persons[0])) {
+                djson.persons[0].person = {};
+            }
             djson.persons[0].person.name_raw = text;
         }
         else {
@@ -327,8 +333,27 @@ function add_declarant_role() {
 }
 window.add_declarant_role = add_declarant_role;
 
+function add_realties_number() {
+    let djson = read_main_json();
+    let person = get_last_person(djson);
+    let text =  window.prompt("Введите количество объектов недвижимости:");
+    if (text != "") {
+        let n = Math.floor(Number(text));
+        if (n == null || n == Infinity || Number.isNaN(n)) {
+            throw_and_log("не могу прочитать число!")
+        }
+        person.real_estates_count = n;
+        write_main_json(djson);
+    }
+}
+window.add_realties_number = add_realties_number;
+
+
 function isNormalYear(str) {
     let n = Math.floor(Number(str));
+    if (n==-1) {
+        return true;
+    }
     return n !== Infinity && String(n) === str && n >= 2000 && n < 2030;
 }
 
@@ -338,7 +363,7 @@ function add_year() {
     let text = get_new_value("Введите год");
     if (text != "") {
         if (!isNormalYear(text)) {
-            throw_and_log ("Год - это число между 2000 и 2030")
+            throw_and_log ("Год - это число между 2000 и 2030 или -1 (не найден)")
         }
         person.year = text;
         write_main_json(djson);
@@ -359,8 +384,8 @@ function close_realty_modal_box(save_results=true){
             person.real_estates = [];
         }
         let real_estate = {
-            'text': document.getElementById('realty_type').value,
-            "own_type":   get_radio_button_value ('realty_own_type'),
+            'type_raw': document.getElementById('realty_type').value,
+            "own_type_by_column":   get_radio_button_value ('realty_own_type_by_column'),
             "relative":   get_radio_button_value ( 'realty_owner_type'),
             "country_raw": 'Россия'
         };
@@ -372,6 +397,11 @@ window.close_realty_modal_box = close_realty_modal_box;
 
 
 function add_realty() {
+    let djson = read_main_json();
+    let person = get_last_person(djson);
+    if (!('real_estates_count' in person)) {
+        throw_and_log("Сначала посчитайте кол-во объектов недвижимости и нажмите кнопку 'Кол-во', чтобы ничего не забыть")
+    }
     show_modal_dialog('RealtyTypeDialog');
 }
 window.add_realty = add_realty;
@@ -394,10 +424,10 @@ function add_square() {
 }
 window.add_square = add_square;
 
-function add_share() {
-    add_realty_property ('share_amount', "Введите долю:");
+function add_own_type() {
+    add_realty_property ('own_type_raw', "Введите вид владения:");
 }
-window.add_share = add_share;
+window.add_own_type = add_own_type;
 
 
 function add_country() {
@@ -500,20 +530,59 @@ function check_relative(field) {
     }
 }
 
-function check_real_estate_own_type(person) {
+function check_real_estate_own_type_by_column(person) {
     if (typeof person.real_estates == "undefined") return;
-    let values = get_radio_button_values('realty_own_type')
+    let values = get_radio_button_values('realty_own_type_by_column')
     for (let i = 0; i < person.real_estates.length; i++) {
-        let o = person.real_estates.own_type;
-        if  ( values.indexOf(person.real_estates[i].own_type) == -1) {
-            throw_and_log("bad own type in " + JSON.stringify(person.real_estates[i], ""));
+        let r = person.real_estates[i];
+        if  ( values.indexOf(r.own_type_by_column) == -1) {
+            throw_and_log("Неправильный own_type_by_column: " + r.own_type_by_column  + "\n\n" JSON.stringify(r, ""));
         };
+        if (!('square'  in r)) {
+            let s = "нет площади у недвижимости:\n";
+            s += JSON.stringify(r, "");
+            s += "\n\nПоставьте \"square\": -1, если ее реально нет во входной таблице";
+            throw_and_log(s);
+        }
+    }
+}
+
+function move_real_estate_type_to_text(person) {
+    if (typeof person.real_estates == "undefined") return;
+    for (let i = 0; i < person.real_estates.length; i++) {
+        let r = person.real_estates[i];
+        if (r.own_type_by_column == "В собственности" && !('own_type_raw' in r)) {
+            if ('text' in r) continue; // already converted
+            if (!('type_raw' in r)) {
+                throw_and_log("cannot find 'type_raw' in " + JSON.stringify(r, ""));
+            }
+            r.text = r.type_raw;
+            delete r.type_raw;
+        }
+    }
+}
+function check_real_estates_count(person) {
+    if (!('real_estates_count' in person)) {
+        throw_and_log("Не найдено поле real_estates_count (нажмите кнопку 'Кол-во')");
+    }
+    if (person.real_estates_count == 0 && !('real_estates' in person)) {
+        return;
+    }
+    if (person.real_estates_count != person.real_estates.length) {
+        throw_and_log("Поле real_estates_count (кнопка 'Кол-во') не равно числу добавленных объектов недвижимости")
     }
 }
 
 function check_mandatory_fields(successMessage=true)
 {
     let djson = read_main_json();
+    if ('persons_empty' in djson) {
+        djson.persons = [];
+        djson.document = {};
+        write_main_json(djson, false);
+        return;
+    }
+
     let person = get_last_person(djson);
     if (!('incomes' in person) || person.incomes.length == 0) {
         throw_and_log("Не найдено поле дохода (поле incomes)")
@@ -524,7 +593,10 @@ function check_mandatory_fields(successMessage=true)
     check_relative(person.real_estates);
     check_relative(person.vehicles);
     check_relative(person.incomes);
-    check_real_estate_own_type(person);
+    move_real_estate_type_to_text(person);
+    check_real_estate_own_type_by_column(person);
+    write_main_json(djson, false);
+    check_real_estates_count(person);
     if (successMessage)  alert("Успех!")
 }
 window.check_mandatory_fields = check_mandatory_fields;
@@ -559,9 +631,13 @@ document.onkeypress = function(e) {
     if ((e.key == "Е") || (e.key == "е") || (e.key == "T") || (e.key == "t")) {
         window.add_department();
     }
-    if ((e.key == "Я") || (e.key == "я") || (e.key == "Z") || (e.key == "z")) {
-        window.add_share();
+    if ((e.key == "В") || (e.key == "в") || (e.key == "D") || (e.key == "d")) {
+        window.add_own_type();
     }
+    if ((e.key == "К") || (e.key == "к") || (e.key == "R") || (e.key == "r")) {
+        window.add_realties_number();
+    }
+
 };
 
 function show_icon(url, placeId) {
