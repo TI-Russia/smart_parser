@@ -97,7 +97,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\AdapterBase.cs" />
     <Compile Include="Adapters\AsposeDocAdapter.cs" />
     <Compile Include="Adapters\AsposeExcelAdapter.cs" />
     <Compile Include="Adapters\AsposeLicense.cs" />

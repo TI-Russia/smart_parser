@@ -1,9 +1,7 @@
-﻿using CsvHelper;
-using Parser.Lib;
+﻿using Parser.Lib;
 using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -13,28 +11,6 @@ using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Lib
 {
-
-    public class Organization
-    {
-
-        public Organization(string name, string folder, int person_first, int person_last, bool topLevel)
-        {
-            this.name = name;
-            this.folder = folder;
-            this.person_first = person_first;
-            this.person_last = person_last;
-            this.topLevel = topLevel;
-        }
-
-        public string name;
-        public string folder;
-        public int person_first = -1;
-        public int person_last = -1;
-        public bool topLevel = false;
-    };
-
-
-
     public class Parser
     {
         DateTime FirstPassStartTime;
@@ -47,62 +23,6 @@ namespace Smart.Parser.Lib
         {
             Adapter = adapter;
             FailOnRelativeOrphan = failOnRelativeOrphan;
-        }
-
-        public void DumpColumn(int column)
-        {
-            int personsTableEnd = Adapter.GetRowsCount() - 1;
-            //StreamWriter standardOutput = new StreamWriter(Console.OpenStandardOutput());
-            for (int i = 0; i <= personsTableEnd; i++)
-            {
-                //qDebug() << "person discovery - processing: " << cellAddress;
-                Cell currentCell = Adapter.GetCell(i, NameOrRelativeTypeColumn);
-
-                Console.WriteLine(JsonWriter.SerializeCell(currentCell));
-            }
-        }
-
-        public void ExportCSV(string csvFile)
-        {
-            int rowCount = Adapter.GetRowsCount();
-            int colCount = Adapter.GetColsCount();
-
-            var stream = new FileStream(csvFile, FileMode.Create);
-            var writer = new StreamWriter(stream) { AutoFlush = true };
-
-            var csv = new CsvWriter(writer);
-
-            for (int r = 0; r < rowCount; r++)
-            {
-                for (int c = 0; c < colCount; c++)
-                {
-                    string value = Adapter.GetCell(r, c).Text;
-                    csv.WriteField(value);
-                }
-                csv.NextRecord();
-            }
-            csv.Flush();
-        }
-        public void SetMaxColumnsCountByHeader(int headerRowCount)
-        {
-            int maxfound = 0;
-            for (int row = 0; row < headerRowCount; ++row)
-            {
-                for (int col = 0; col < 256; ++col)
-                {
-                    var c = Adapter.GetCell(row, col);
-                    if (c == null)
-                    {
-                        break;
-                    }
-                    if (c.GetText() != "")
-                    {
-                        maxfound = Math.Max(col, maxfound);
-                    }
-                }
-            }
-            Adapter.MaxNotEmptyColumnsFoundInHeader = maxfound;
-            Logger.Debug($"Set MaxNotEmptyColumnsFoundInHeader to {maxfound}");
         }
 
         Declaration InitializeDeclaration()
@@ -230,7 +150,7 @@ namespace Smart.Parser.Lib
             Declaration declaration =  InitializeDeclaration();
 
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
-            SetMaxColumnsCountByHeader(rowOffset);
+            Adapter.SetMaxColumnsCountByHeader(rowOffset);
 
             DeclarationSection currentSection = null;
             PublicServant currentServant = null;

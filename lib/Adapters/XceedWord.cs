@@ -12,6 +12,7 @@ using Microsoft.Office.Interop.Word;
 using Xceed.Words.NET;
 using Parser.Lib;
 
+
 namespace Smart.Parser.Adapters
 {
     class XceedWordCell : Cell

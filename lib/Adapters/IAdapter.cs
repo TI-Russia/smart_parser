@@ -2,17 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
+using Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
     public class Cell
     {
-        //Gets the grid span of this cell (how many cells are merged).
-        public virtual int GridSpan { get { return MergedColsCount; } }
         public virtual bool IsMerged { set; get; } = false;
         public virtual int FirstMergedRow { set; get; } = -1;
         public virtual int MergedRowsCount { set; get; } = -1;
@@ -130,7 +131,13 @@ namespace Smart.Parser.Adapters
 
         public Cell GetDeclarationField(int row, DeclarationField field)
         {
-            return GetCell(row, Field2Col(field));
+            int columnIndex = -1;
+            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out columnIndex))
+            {
+                //return -1;
+                throw new SystemException("Field " + field.ToString() + " not found");
+            }
+            return GetCell(row, columnIndex);
         }
 
         public string GetContents(int row, DeclarationField field)
@@ -141,19 +148,8 @@ namespace Smart.Parser.Adapters
 
         abstract public int GetRowsCount();
         abstract public int GetColsCount();
-        //abstract public int GetColsCount(int Row);
+        
 
-
-        protected int Field2Col(DeclarationField field)
-        {
-            int index = -1;
-            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out index))
-            {
-                //return -1;
-                throw new SystemException("Field " + field.ToString() + " not found");
-            }
-            return index;
-        }
         public virtual int GetColsCount(int Row)
         {
             throw new NotImplementedException();
@@ -335,6 +331,51 @@ namespace Smart.Parser.Adapters
                 }
                 file.WriteLine("</table></html>");
             }
+        }
+
+
+        public void ExportCSV(string csvFile)
+        {
+            int rowCount = GetRowsCount();
+            int colCount = GetColsCount();
+
+            var stream = new FileStream(csvFile, FileMode.Create);
+            var writer = new StreamWriter(stream) { AutoFlush = true };
+
+            var csv = new CsvWriter(writer);
+
+            for (int r = 0; r < rowCount; r++)
+            {
+                for (int c = 0; c < colCount; c++)
+                {
+                    string value = GetCell(r, c).Text;
+                    csv.WriteField(value);
+                }
+                csv.NextRecord();
+            }
+            csv.Flush();
+        }
+
+        public void SetMaxColumnsCountByHeader(int headerRowCount)
+        {
+            int maxfound = 0;
+            for (int row = 0; row < headerRowCount; ++row)
+            {
+                for (int col = 0; col < 256; ++col)
+                {
+                    var c = GetCell(row, col);
+                    if (c == null)
+                    {
+                        break;
+                    }
+                    if (c.GetText() != "")
+                    {
+                        maxfound = Math.Max(col, maxfound);
+                    }
+                }
+            }
+            MaxNotEmptyColumnsFoundInHeader = maxfound;
+            Logger.Debug($"Set MaxNotEmptyColumnsFoundInHeader to {maxfound}");
         }
 
 

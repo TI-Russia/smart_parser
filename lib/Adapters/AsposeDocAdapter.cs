@@ -23,7 +23,7 @@ namespace Smart.Parser.Adapters
 
             IsEmpty = String.IsNullOrEmpty(Text);
 
-            
+
         }
     }
 
