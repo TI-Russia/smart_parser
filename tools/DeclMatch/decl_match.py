@@ -47,10 +47,10 @@ def  add_html_table_row(cells):
     res = "<tr>"
     for c in cells:
         res  += "  <td"
-        if c["MergedColsCount"] > 1:
-            res += " colspan=" + str(c["MergedColsCount"])
+        if c["mc"] > 1:
+            res += " colspan=" + str(c["mc"])
         res += ">"
-        res += c["Text"].replace("\n", '<br/>')
+        res += c["t"].replace("\n", '<br/>')
         res += "</td>\n"
     return res + "</tr>\n"
 

@@ -333,7 +333,7 @@ namespace RegressionTesting
         [DeploymentItem("import-schema-dicts.json")]
         public void TolokaGenerated()
         {
-            TestSmartParser("SmartParser\\toloka_generated.html", "prod", true);
+            TestSmartParser("SmartParser\\toloka.toloka_json", "prod", true);
         }
 
         [TestMethod]

@@ -226,9 +226,11 @@ namespace Smart.Parser.Adapters
         }
         public class TJsonCell
         {
-            public int MergedColsCount;
-            public int MergedRowsCount;
-            public string Text;
+            public int mc;
+            public int mr;
+            public int r;
+            public int c;
+            public string t;
         }
         public class TJsonTablePortion
         {
@@ -247,9 +249,11 @@ namespace Smart.Parser.Adapters
             foreach (var c in row.Cells)
             {
                 var jc = new TJsonCell();
-                jc.MergedColsCount = c.MergedColsCount;
-                jc.MergedRowsCount = c.MergedRowsCount;
-                jc.Text = c.Text;
+                jc.mc = c.MergedColsCount;
+                jc.mr = c.MergedRowsCount;
+                jc.r = c.Row;
+                jc.c = c.Col;
+                jc.t = c.Text;
                 outputList.Add(jc);
             }
             return outputList;
@@ -320,6 +324,7 @@ namespace Smart.Parser.Adapters
             }
             return table;
         }
+
         public void WriteHtmlFile(string htmlFileName)
         {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(htmlFileName))

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using System.Text;
 using TI.Declarator.ParserCommon;
+using Newtonsoft.Json;
 
 using Microsoft.Office.Interop.Word;
 using Xceed.Words.NET;
@@ -41,6 +41,16 @@ namespace Smart.Parser.Adapters
             Text = cellContents;
             Row = row;
             Col = column;
+        }
+        public XceedWordCell(IAdapter.TJsonCell cell)
+        {
+            Text = cell.t;
+            MergedColsCount = cell.mc;
+            MergedRowsCount = cell.mr;
+            IsVerticallyMerged = MergedRowsCount > 1;
+            IsEmpty = Text.IsNullOrWhiteSpace();
+            Row = cell.r;
+            Col = cell.c;
         }
 
         public static string GetXceedText(Xceed.Words.NET.Cell inputCell)
@@ -113,6 +123,14 @@ namespace Smart.Parser.Adapters
 
         public XceedWordAdapter(string fileName, int maxRowsToProcess)
         {
+            TableRows = new List<List<XceedWordCell>>();
+
+            if (fileName.EndsWith(".toloka_json"))
+            {
+                InitFromJson(fileName);
+                InitUnmergedColumnsCount();
+                return;
+            }
             DocumentFile = fileName;
             string extension = Path.GetExtension(fileName);
             bool removeTempFile = false;
@@ -130,6 +148,7 @@ namespace Smart.Parser.Adapters
             {
                 FindTitle(doc);
                 CollectRows(doc, maxRowsToProcess);
+                InitUnmergedColumnsCount();
                 InitializeVerticallyMerge();
             };
             if (removeTempFile)
@@ -137,6 +156,7 @@ namespace Smart.Parser.Adapters
                 File.Delete(fileName);
             }
         }
+
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess)
         {
             return new XceedWordAdapter(fileName, maxRowsToProcess);
@@ -155,6 +175,39 @@ namespace Smart.Parser.Adapters
             }
         }
 
+        void CopyPortion(List<List<TJsonCell>> portion)
+        {
+            for (int i = 0;  i < portion.Count; i++)
+            {
+                var r = portion[i];
+                List<XceedWordCell> newRow = new List<XceedWordCell>();
+
+                foreach (var c in r)
+                {
+                    var cell = new XceedWordCell(c);
+                    cell.Row = TableRows.Count;
+                    cell.MergedRowsCount = 1;
+                    //if (i + 1 == portion.Count) cell.MergedRowsCount = 1;
+                    newRow.Add(cell);
+                }
+                TableRows.Add(newRow);
+            }
+
+        }
+        private void InitFromJson(string fileName)
+        {
+            string jsonStr;
+            using (StreamReader r = new StreamReader(fileName))
+            {
+                jsonStr = r.ReadToEnd();
+            }
+            TJsonTablePortion portion = JsonConvert.DeserializeObject<TJsonTablePortion>(jsonStr);
+            Title = portion.Title;
+            DocumentFile = portion.InputFileName;
+            CopyPortion(portion.Header);
+            CopyPortion(portion.Section);
+            CopyPortion(portion.Data);
+        }
 
         public override string GetTitle()
         {
@@ -305,11 +358,20 @@ namespace Smart.Parser.Adapters
             }
         }
 
+        void InitUnmergedColumnsCount()
+        {
+            UnmergedColumnsCount = -1;
+            if (TableRows.Count > 0)
+            {
+                UnmergedColumnsCount = 0;
+                foreach (var c in TableRows[0]) {
+                    UnmergedColumnsCount += c.MergedColsCount;
+                }
+            }
+        }
 
         void CollectRows(DocX wordDocument, int maxRowsToProcess)
         {
-            TableRows = new List<List<XceedWordCell>>();
-            UnmergedColumnsCount = -1;
             bool titleFoundInText = (Title != "");
             int firstTableWithData = 0;
             for (int t = 0;  t < wordDocument.Tables.Count; ++t)
@@ -350,10 +412,6 @@ namespace Smart.Parser.Adapters
                         TableRows.Add(newRow);
                     }
         
-                    if (UnmergedColumnsCount == -1)
-                    {
-                        UnmergedColumnsCount = sumspan;
-                    }
                     if ((maxRowsToProcess != -1) && (TableRows.Count >= maxRowsToProcess)) {
                         break;
                     }

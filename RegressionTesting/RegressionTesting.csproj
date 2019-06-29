@@ -190,7 +190,10 @@
     <None Include="regression_samples\SmartParser\SpellCheckRealtyType.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\toloka_generated.json">
+    <None Include="regression_samples\SmartParser\toloka.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\toloka.toloka_json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\two_tables_2017.json">
@@ -234,9 +237,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />
-    <Content Include="regression_samples\SmartParser\toloka_generated.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -13,6 +13,7 @@ using TI.Declarator.JsonSerialization;
 using CMDLine;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
+using CsvHelper;
 
 namespace Smart.Parser
 {
@@ -130,6 +131,7 @@ namespace Smart.Parser
         {
             return Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
         }
+
 
         public static int Main(string[] args)
         {
@@ -313,6 +315,7 @@ namespace Smart.Parser
                 case ".pdf":
                 case ".html":
                 case ".doc":
+                case ".toloka_json":
                 case ".docx":
                     if (AdapterFamily != "aspose")
                     {
