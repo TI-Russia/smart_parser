@@ -97,16 +97,12 @@ def is_null(v):
     return v is None or len(v) == 0
 
 
-def are_equal_realty_by_type(p1, p2):
-    if not is_null(p1.get("own_type_raw")) or not is_null (p1.get("own_type_raw")):
-        return ( check_equal_value(p1, p2, "type_raw")[0] and
-                check_equal_value(p1, p2, "own_type_raw")[0] )
-    else:
-        return check_equal_value(p1, p2, "text")[0];
-
 
 def are_equal_realty(p1, p2):
-    return ( are_equal_realty_by_type(p1, p2) and
+    return ( 
+             check_equal_value(p1, p2, "own_type_raw")[0] and
+             ( check_equal_value(p1, p2, "text")[0] or
+             check_equal_value(p1, p2, "type_raw")[0] ) and
              check_equal_value(p1, p2, "square_raw")[0] and
              check_equal_value(p1, p2, "relative")[0] and
             # to do check country

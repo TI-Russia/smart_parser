@@ -22,13 +22,13 @@ def parse_args():
     return parser.parse_args()
 
 
-def input_html_file_name(input_id):
+def input_json_file_name(input_id):
     global DATA_FOLDER
-    return os.path.join(DATA_FOLDER, input_id + ".html")
+    return os.path.join(DATA_FOLDER, input_id + ".toloka_json")
 
 def smart_parser_result_json_file(input_id):
-    htmlfile = input_html_file_name(input_id);
-    return  htmlfile[:htmlfile.rfind('.')] + ".json"
+    infile = input_json_file_name(input_id);
+    return  infile[:infile.rfind('.')] + ".json"
 
 def avg(items):
     count = 0
@@ -40,6 +40,7 @@ def avg(items):
         return -1
    
     return all_sum / count
+
 
 
 def  add_html_table_row(cells):
@@ -72,6 +73,7 @@ def convert_to_html(jsonStr, maintag="html"):
     res += "</table>"
     res += "</" + maintag + ">"
     return res;
+
 
 
 def dump_conflict (task, match_info, conflict_file):
@@ -185,10 +187,9 @@ class TTolokaStats:
         os.mkdir(DATA_FOLDER)
         for input_id, input_tasks in self.tasks.items():
             input_json = input_tasks[0]["INPUT:input_json"]
-            filename = input_html_file_name(input_id)
-            with open(filename, "w", encoding="utf8") as output_html:
-                html = convert_to_html(input_json)
-                output_html.write(html)
+            filename = input_json_file_name(input_id)
+            with open(filename, "w", encoding="utf8") as output_json:
+                output_json.write(input_json)
 
         smart_parser = os.path.abspath(args.smart_parser)
         cmd = "{} -skip-relative-orphan -v debug  -adapter prod {} > log ".format(smart_parser, DATA_FOLDER);
