@@ -60,6 +60,7 @@ def  check_equal_value(d1, d2, field_name):
         pass
     return (False, v1, v2)
 
+
 def check_field (person1, person2, parent_field, field_name, match_info):
     (result, value1, value2) = check_equal_value(person1, person2, field_name)
     if not result:
@@ -92,21 +93,35 @@ def check_incomes_or_auto(person1, person2, field_name, check_field_name, match_
     check_field (v1, v2, field_name + "/" + relative, check_field_name, match_info)
 
 
+def is_null(v):
+    return v is None or len(v) == 0
+
+
+def are_equal_realty_by_type(p1, p2):
+    if not is_null(p1.get("own_type_raw")) or not is_null (p1.get("own_type_raw")):
+        return ( check_equal_value(p1, p2, "type_raw")[0] and
+                check_equal_value(p1, p2, "own_type_raw")[0] )
+    else:
+        return check_equal_value(p1, p2, "text")[0];
+
+
 def are_equal_realty(p1, p2):
-    return ( check_equal_value(p1, p2, "text")[0] and
-             check_equal_value(p1, p2, "square")[0] and
+    return ( are_equal_realty_by_type(p1, p2) and
+             check_equal_value(p1, p2, "square_raw")[0] and
              check_equal_value(p1, p2, "relative")[0] and
             # to do check country
-             check_equal_value(p1, p2, "own_type_by_column_type")[0] and
-             check_equal_value(p1, p2, "own_type_raw")[0]);
+             check_equal_value(p1, p2, "own_type_by_column_type")[0]);
+
 
 def describe_realty(p):
-    return u"real estate {0}, {1}, {2}, {3}, {4} ".format(
-        p.get("text").replace("\n", "\\n"), 
-        p.get("square"), 
-        p.get("own_type_raw"), 
-        p.get("own_type_by_column"), 
+    return u"real estate {0}, {1}, {2}, {3}, {4} {5}".format(
+        p.get("text", "").replace("\n", "\\n"),
+        p.get("type_raw", "").replace("\n", "\\n"),
+        p.get("own_type_raw", ""),
+        p.get("own_type_by_column", ""),
+        p.get("square_raw"),
         p.get("relative"))
+
 
 def check_realties(realties1, realties2, match_info):
     used = set()
@@ -144,7 +159,7 @@ def calc_decl_match_one_pair(json1, json2):
     check_field(person_info_1, person_info_2, "person", "role", match_info)
     check_field(person_info_1, person_info_2, "person", "department", match_info)
     check_field(person1, person2, "", "year", match_info)
-    check_incomes_or_auto(person1, person2, "incomes", "size", match_info)
+    check_incomes_or_auto(person1, person2, "incomes", "size_raw", match_info)
     check_incomes_or_auto(person1, person2, "vehicles", "text", match_info)
     check_realties(person1.get('real_estates', []), person2.get('real_estates', []), match_info)
     tp = len(match_info.true_positive)
@@ -177,12 +192,13 @@ def trunctate_json(j):
     for v in p.get('vehicles', []):
         res['vehicles'].append ({'text': v.get('text', ''), 'relative': v.get('relative', '')})
     for v in p.get('incomes', []):
-        res['incomes'].append ({'size': v.get('size', ''), 'relative': v.get('relative', '')})
+        res['incomes'].append ({'size_raw': v.get('size_raw', v.get('size')), 'relative': v.get('relative', '')})
     for v in p.get('real_estates', []):
         res['real_estates'].append ({
             'own_type_raw': v.get('own_type_raw', ''),
             'text': v.get('text', ''),
-            'square': v.get('square', ''),
+            'type_raw': v.get('type_raw', ''),
+            'square_raw': v.get('square_raw', ''),
             'own_type_by_column': v.get('own_type_by_column', ''),
             'country_raw': v.get('country_raw', ''),
             'relative': v.get('relative', ''),
@@ -196,6 +212,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('json', nargs='+')
     return parser.parse_args()
+
 
 if __name__ == '__main__':
     args = parse_args()

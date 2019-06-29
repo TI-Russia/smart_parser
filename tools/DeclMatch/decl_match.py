@@ -16,6 +16,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--toloka",  dest='toloka', help ="toloka assignments file")
     parser.add_argument("--smart-parser", dest='smart_parser')
+    parser.add_argument("--process-golden", action='store_true', default=False, dest="process_golden")
     parser.add_argument("--dump-conflicts", dest='dump_conflicts')
     parser.add_argument("-l", dest='toloka_tsv_line_no', type=int, default=0)
     return parser.parse_args()
@@ -35,6 +36,9 @@ def avg(items):
     for i in items:
         count += 1
         all_sum += i
+    if count == 0:
+        return -1
+   
     return all_sum / count
 
 
@@ -114,6 +118,12 @@ def dump_conflict (task, match_info, conflict_file):
     conflict_file.write(res)
 
 
+def convert_automatic_json(data):
+    for p in  data.get('persons', []):
+        for i in p.get('incomes', []):
+            i['size_raw'] =  i.pop('size')
+    return data
+
 class TTolokaStats:
     def __init__(self, args):
         self.tasks = defaultdict(list) # tasks wo golden
@@ -131,7 +141,7 @@ class TTolokaStats:
                     continue
                 task_id = task['INPUT:input_id']
                 task['input_line_no'] = line_no
-                if task["GOLDEN:declaration_json"] == "":
+                if task["GOLDEN:declaration_json"] == "" or args.process_golden:
                     self.tasks[task_id].append (task)
                 else:
                     self.golden_task_assignments += 1
@@ -143,6 +153,7 @@ class TTolokaStats:
             self.decl_match[input_id] = 0  #smart parser failed
             return
         automatic_json = json.load(open(json_file, encoding="utf8"))
+        automatic_json = convert_automatic_json(automatic_json);
         decl_matches = []
 
         for x in self.tasks[input_id]:
