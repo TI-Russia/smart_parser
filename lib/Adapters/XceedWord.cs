@@ -18,19 +18,7 @@ namespace Smart.Parser.Adapters
     class XceedWordCell : Cell
     {
         public bool IsVerticallyMerged;
-        static bool HasBorder(Xceed.Words.NET.Cell inputCell, TableCellBorderType borderType)
-        {
-            try
-            {
-                var b = inputCell.GetBorder(borderType);
-                if (b == null) return false;
-                return b.Size > 0;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        
         public XceedWordCell(Xceed.Words.NET.Cell inputCell, int row, int column)
         {   
             var cellContents = GetXceedText(inputCell);
@@ -57,22 +45,11 @@ namespace Smart.Parser.Adapters
 
         public static string GetXceedText(Xceed.Words.NET.Cell inputCell)
         {
-            /*string s = "";
-            foreach (var p in inputCell.Paragraphs)
-            {
-                p.
-                s += p.Text + "\n";
-            }
-            return s;*/
-            //const string w = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
             string s = "";
             foreach (var p in inputCell.Paragraphs)
             {
                 XElement e = p.Xml;
                 XNamespace w = e.Name.Namespace;
-                //var allChildren = e.Descendants;
-
-                //foreach (var textOrBreak in e.Elements(w + "r").Elements())
                 foreach (var textOrBreak in e.Descendants())
                 {
                     if (textOrBreak.Name == w + "t")
