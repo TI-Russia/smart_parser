@@ -202,19 +202,6 @@ function get_radio_button_values(name) {
     return values;
 }
 
-function set_radio_button(name, value) {
-    let rad = document.getElementsByName(name);
-    let values = []
-    for (let i=0; i < rad.length; i++) {
-        if (rad[i].value == value) {
-            rad[i].focus();
-            rad[i].checked = true;
-            rad[i].onclick(null);
-        }
-    }
-    return values;
-
-}
 function delete_table_rows_before(tbody, rowIndex) {
     for (let r=0; r < rowIndex; r++) {
         tbody.deleteRow(0);
@@ -287,6 +274,10 @@ function get_last_person(djson) {
     return person;
 }
 
+function is_empty_or_number(s){
+    return ((s.length == 0) || ('0123456789'.indexOf(s[0]) !== -1 ));
+}
+
 function add_declarant() {
     let djson = read_main_json();
     if (!('persons' in djson) || (djson.persons.length == 0)) {
@@ -299,6 +290,10 @@ function add_declarant() {
     if (text.indexOf(" ") == -1 && text.indexOf(".") == -1) {
         throw_and_log("Однословных ФИО не бывает");
     }
+    if (is_empty_or_number(text)) {
+        throw_and_log("Недопустимый или пустой ФИО");
+    }
+
     if (text != "") {
         if (djson.persons.length > 0) {
             if (!('person'  in djson.persons[0])) {
@@ -327,6 +322,9 @@ function add_declarant_role() {
     let person = get_last_person(djson);
     let text = get_new_value("Введите роль (должность):");
     if (text != "") {
+        if (is_empty_or_number(text)) {
+            throw_and_log("плохой или пустой тип недвижимости: " + text);
+        }
         person.person.role = text;
         write_main_json(djson);
     }
@@ -383,8 +381,12 @@ function close_realty_modal_box(save_results=true){
         if (!("real_estates" in person)) {
             person.real_estates = [];
         }
+        let type_raw = document.getElementById('realty_type').value;
+        if (is_empty_or_number(type_raw)) {
+            throw_and_log("плохой или пустой тип недвижимости: " + type_raw);
+        }
         let real_estate = {
-            'type_raw': document.getElementById('realty_type').value,
+            'type_raw': type_raw,
             "own_type_by_column":   get_radio_button_value ('realty_own_type_by_column'),
             "relative":   get_radio_button_value ( 'realty_owner_type'),
             "country_raw": 'Россия'
@@ -420,7 +422,7 @@ function add_realty_property(property_name, message) {
 
 }
 function add_square() {
-    add_realty_property ('square', "Введите площадь:");
+    add_realty_property ('square_raw', "Введите площадь:");
 }
 window.add_square = add_square;
 
@@ -445,7 +447,7 @@ function close_income_modal_box(save_results=true){
             person.incomes = [];
         }
         let income  = {
-            'size': document.getElementById('income_value').value,
+            'size_raw': document.getElementById('income_value').value,
             "relative":   get_radio_button_value ('income_owner_type')
         };
         if  (find_object_by_all_members(person.incomes, income)) {
@@ -530,37 +532,51 @@ function check_relative(field) {
     }
 }
 
-function check_real_estate_own_type_by_column(person) {
+function check_real_estate_records(person) {
+    check_real_estates_count(person);
+
     if (typeof person.real_estates == "undefined") return;
+
     let values = get_radio_button_values('realty_own_type_by_column')
     for (let i = 0; i < person.real_estates.length; i++) {
         let r = person.real_estates[i];
-        if  ( values.indexOf(r.own_type_by_column) == -1) {
-            throw_and_log("Неправильный own_type_by_column: " + r.own_type_by_column  + "\n\n" JSON.stringify(r, ""));
+        if  ( r.own_type_by_column != null && values.indexOf(r.own_type_by_column) == -1) {
+            let s =  "Неправильный own_type_by_column: ";
+            s += r.own_type_by_column;
+            s +=  "\n\n" + JSON.stringify(r, "");
+            throw_and_log(s);
         };
-        if (!('square'  in r)) {
+        if (!('square_raw'  in r)) {
             let s = "нет площади у недвижимости:\n";
             s += JSON.stringify(r, "");
-            s += "\n\nПоставьте \"square\": -1, если ее реально нет во входной таблице";
+            s += "\n\nПоставьте \"square_raw\": -1, если ее реально нет во входной таблице";
             throw_and_log(s);
+        }
+
+        if (r.own_type_raw != null && is_empty_or_number(r.own_type_raw)) {
+            throw_and_log("плохой или пустой тип недвижимости: " + r.own_type_raw);
         }
     }
 }
 
-function move_real_estate_type_to_text(person) {
+function create_text_for_real_estate_type(person) {
     if (typeof person.real_estates == "undefined") return;
     for (let i = 0; i < person.real_estates.length; i++) {
         let r = person.real_estates[i];
-        if (r.own_type_by_column == "В собственности" && !('own_type_raw' in r)) {
-            if ('text' in r) continue; // already converted
+        if ('text' in r) continue; // already converted
+        if (!('own_type_raw' in r)) {
             if (!('type_raw' in r)) {
                 throw_and_log("cannot find 'type_raw' in " + JSON.stringify(r, ""));
             }
             r.text = r.type_raw;
             delete r.type_raw;
+        } else {
+            r.text = r.type_raw;
         }
     }
 }
+
+
 function check_real_estates_count(person) {
     if (!('real_estates_count' in person)) {
         throw_and_log("Не найдено поле real_estates_count (нажмите кнопку 'Кол-во')");
@@ -571,6 +587,54 @@ function check_real_estates_count(person) {
     if (person.real_estates_count != person.real_estates.length) {
         throw_and_log("Поле real_estates_count (кнопка 'Кол-во') не равно числу добавленных объектов недвижимости")
     }
+}
+
+function sort_json_by_keys(o) {
+    const isObject = (v) => ('[object Object]' === Object.prototype.toString.call(v));
+
+    if (Array.isArray(o)) {
+        return o.sort().map(v => isObject(v) ? sort_json_by_keys(v) : v);
+    } else if (isObject(o)) {
+        return Object
+            .keys(o)
+            .sort()
+            .reduce((a, k) => {
+                if (isObject(o[k])) {
+                    a[k] = sort_json_by_keys(o[k]);
+                } else if (Array.isArray(o[k])) {
+                    a[k] = o[k].map(v => isObject(v) ? sort_json_by_keys(v) : v);
+                } else {
+                    a[k] = o[k];
+                }
+
+                return a;
+            }, {});
+    }
+
+    return o;
+}
+
+function compare_string(a,b) {
+    if (a == null) a = "";
+    if (b == null) b = "";
+    return  a.localeCompare(b);
+}
+
+function sort_declaration_json(person) {
+    if ('incomes' in person) {
+        person.incomes.sort(function(a, b) {
+            return compare_string(a['size_raw'], b['size_raw']);
+        })
+    }
+    if ('real_estates' in person) {
+        person.real_estates.sort(function(a, b) {
+            if  (a['relative'] !=  b['relative']) return compare_string(a['relative'], b['relative']);
+            if  (a['own_type_by_column'] !=  b['own_type_by_column']) return compare_string(a['own_type_by_column'], b['own_type_by_column']);
+            if  (a['square_raw'] !=  b['square_raw']) return compare_string(a['square_raw'], b['square_raw']);
+            return compare_string(a['text'], b['text']);
+        })
+    }
+    return sort_json_by_keys(person);
 }
 
 function check_mandatory_fields(successMessage=true)
@@ -593,10 +657,10 @@ function check_mandatory_fields(successMessage=true)
     check_relative(person.real_estates);
     check_relative(person.vehicles);
     check_relative(person.incomes);
-    move_real_estate_type_to_text(person);
-    check_real_estate_own_type_by_column(person);
+    create_text_for_real_estate_type(person);
+    check_real_estate_records(person);
+    djson.persons[0] = sort_declaration_json(person);
     write_main_json(djson, false);
-    check_real_estates_count(person);
     if (successMessage)  alert("Успех!")
 }
 window.check_mandatory_fields = check_mandatory_fields;
