@@ -17,17 +17,17 @@
         <td>
             <table width="100%">
                 <tr> <td>
-                    <button onclick=window.cut_by_selection() title="выделите декларанта и все его родственников и нажмите эту кнопку"><u>О</u>брезать</button>
+                    <button onclick=window.add_department() title="отдел или подведомственная организация">Отде<u>л</u></button>
+                    <button onclick=window.add_declarant() title="ФИО декларанта (чиновника)"><u>Ф</u>ИО</button>
+                    <button onclick=window.set_declarant_end() title="Выделите строку, с которой начинается новый декларант после первого и нажмите на эту кнопку "><u>О</u>брезать</button>
                     <button onclick=window.undo() title="undo">Откатить</button>
                     <button onclick=window.check_mandatory_fields() title="проверка заполнения json">Проверка</button>
                 </td></tr>
                 <tr> <td>
-                    <button onclick=window.add_declarant() title="ФИО декларанта (чиновника)"><u>Ф</u>ИО</button>
                     <button onclick=window.add_declarant_role() title="должность декларанта"><u>Р</u>оль</button>
                     <button onclick=window.add_income()><u>Д</u>оход</button>
                     <button onclick=window.add_year() title="Год декларации"><u>Г</u>од</button>
                     <button onclick=window.add_vehicle() title="транспортное средство"><u>Т</u>ранспорт</button>
-                    <button onclick=window.add_department() title="отдел или подведомственная организация">Отд<u>е</u>л</button>
                 </td></tr>
                 <tr><td>
                     <button class="realty_buttons" onclick=window.add_realties_number() title="число  объектов недвижимости" ><u>К</u>ол-во</button>
@@ -54,20 +54,20 @@
                             </td>
                         <td style="vertical-align:top; padding-right: 30px; white-space: nowrap;">
                             <label><input  name='realty_own_type_by_column' type='radio' value='В собственности' checked="checked"
-                                          onclick="window.show_icon('http://aot.ru/images/own_property.png', 'own_type_by_column_image_div')">
+                                          onclick="window.show_icon('http://aot.ru/images/declarator/own_property.png', 'own_type_by_column_image_div')">
                                 Колонка "В собственности"<br/><br/>
                             </label>
                             <label><input name='realty_own_type_by_column' type='radio' value='В пользовании'
-                                          onclick="window.show_icon('http://aot.ru/images/own_inuse.png', 'own_type_by_column_image_div')">
+                                          onclick="window.show_icon('http://aot.ru/images/declarator/own_inuse.png', 'own_type_by_column_image_div')">
                                 Колонка "В пользовании"<br/><br/>
                             </label>
                             <label><input name='realty_own_type_by_column' type='radio' value=''
-                                          onclick="window.show_icon('http://aot.ru/images/own_dolya.png', 'own_type_by_column_image_div')">
+                                          onclick="window.show_icon('http://aot.ru/images/declarator/own_dolya.png', 'own_type_by_column_image_div')">
                                 Смешанная колонка
                             </label>
                         </td>
-                        <td> <div name="realty_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
-                        <td> <div name="own_type_by_column_image_div"> <img src="http://aot.ru/images/own_property.png"/> </div></td>
+                        <td> <div name="realty_owner_image_div"> <img src="http://aot.ru/images/declarator/declarant.png"/> </div></td>
+                        <td> <div name="own_type_by_column_image_div"> <img src="http://aot.ru/images/declarator/own_property.png"/> </div></td>
                         </tr>
                         <tr><td></td></tr>
                         <tr>
@@ -89,7 +89,7 @@
                     <table>
                         <tr>
                             <td>{{{owner_types "income_owner_type" "income_owner_image_div" }}}</td>
-                            <td> <div name="income_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
+                            <td> <div name="income_owner_image_div"> <img src="http://aot.ru/images/declarator/declarant.png"/> </div></td>
                         </tr>
                         <tr>
                             <td> <button onclick=window.close_income_modal_box(true) class="ok_button" >ОК</button> </td>
@@ -106,7 +106,7 @@
                     <table>
                         <tr>
                             <td>{{{owner_types "vehicle_owner_type" "vehicle_owner_image_div" }}}</td>
-                            <td> <div name="vehicle_owner_image_div"> <img src="http://aot.ru/images/declarant.png"/> </div></td>
+                            <td> <div name="vehicle_owner_image_div"> <img src="http://aot.ru/images/declarator/declarant.png"/> </div></td>
                         </tr>
                         <tr>
                             <td> <button onclick=window.close_vehicle_modal_box(true) class="ok_button" >ОК</button> </td>

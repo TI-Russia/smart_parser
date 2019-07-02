@@ -17,29 +17,56 @@ function find_object_by_all_members(objList, obj) {
     return false;
 }
 
-document.last_range_from_table = null;
-function get_selection_from_table() {
-    let text = "";
-    if (typeof window.getSelection != "undefined") {
-        document.last_range_from_table = window.getSelection().getRangeAt(0);
-        document.last_anchor_node_from_table = window.getSelection().anchorNode;
-        text = window.getSelection().toString();
+function find_object_by_relative(objList, relative) {
+    for (let i = 0; i < objList.length; i++) {
+        if (relative == objList[i].relative) return true;
     }
-    return text.trim();
+    return false;
+}
+
+document.last_range_from_table = null;
+document.last_anchor_node_from_table = null;
+document.last_focus_node_from_table = null;
+
+function normalize_string(s) {
+    s = s.replace(/\s+/g, ' ');
+    s = s.trim();
+    return s;
+}
+
+function get_selection_from_table() {
+    let selection = window.getSelection();
+    if (selection == null) return "";
+    if  (selection.rangeCount == 0) return "";
+    document.last_range_from_table = selection.getRangeAt(0);
+    document.last_anchor_node_from_table = selection.anchorNode;
+    document.last_focus_node_from_table = selection.focusNode;
+    return  normalize_string(selection.toString());
 }
 
 function add_html_table_row(inputList, table) {
     let row = table.insertRow();
     for (let k = 0; k < inputList.length; ++k) {
         let cell = row.insertCell();
-        cell.innerHTML = inputList[k].t.replace("\n", "<br/>");
+        let text = inputList[k].t;
+        text = text.replace(/\n/g, "<br/>");
+        cell.innerHTML = text;
         cell.colSpan = inputList[k].mc;
     }
 }
 
-function input_json_to_html_table(jsonStr){
-    jsonStr = jsonStr.replace(/\n/g, '<br/>')
-    let data = JSON.parse(jsonStr);
+function input_json_to_html_table(jsonStr) {
+    if (typeof window.getSelection == "undefined") {
+        alert ("К сожалению, ваш браузер не поддерживается!")
+        return;
+    }
+    let data;
+    try {
+        data = JSON.parse(jsonStr);
+    } catch (err) {
+        alert ("Не могу распарсить входной json. Программисты накосячили! Напишите нам об этом. " + err);
+        throw err;
+    }
     let res = '<span class="input_title">' + data.Title + "</span>";
     let tbl = document.createElement("table");
     tbl.className = "input_table";
@@ -54,9 +81,14 @@ function input_json_to_html_table(jsonStr){
     }
     tbl.appendChild(thead);
     let tbody = document.createElement("tbody");
+    tbody.setAttribute("id", "input_table_data")
     for (let i = 0; i < data.Data.length; ++i) {
         add_html_table_row(data.Data[i], tbody);
     }
+    let lastRow = tbody.insertRow();
+    let cell = lastRow.insertCell();
+    cell.innerHTML = "конец таблицы";
+
     tbl.appendChild(tbody);
     res += tbl.outerHTML;
     return res;
@@ -68,13 +100,13 @@ Handlebars.registerHelper('convert_json_to_html_helper', function(jsonStr) {
 
 
 Handlebars.registerHelper('owner_types', function(radio_button_name, image_div_name ) {
-    let ownerTypeTemplate =  "<label> <input type=\"radio\" name={{name}}  value=\"{{value}}\" " +
+    let ownerTypeTemplate =  "<label> <input type=\"radio\" name={{name}}  class=\"ownertype_class\" value=\"{{value}}\" " +
         "                           onclick=\"window.show_icon('{{image}}', '{{image_div_name}}')\"\n" +
-        "                           {{#if checked}} checked {{/if}}\" /> {{title}}</label> <br/><br/>";
+        "                           {{#if checked}} checked {{/if}}\" />{{{title}}}</label> <br/><br/>";
     let ownerTypes = [
-        {'value': "", title:"Декларант", image:"http://aot.ru/images/declarant.png", "checked":"checked"},
-        {'value': "Супруг(а)", title:"Супруг(а)", image:"http://aot.ru/images/spouse.png"},
-        {'value': "Ребенок", title:"Ребенок", image:"http://aot.ru/images/child.png"}
+        {'value': "", title:"Д<u>е</u>кларант", image:"http://aot.ru/images/declarator/declarant.png", "checked":"checked"},
+        {'value': "Супруг(а)", title:"<u>С</u>упруг(а)", image:"http://aot.ru/images/declarator/spouse.png"},
+        {'value': "Ребенок", title:"Ре<u>б</u>енок", image:"http://aot.ru/images/declarator/child.png"}
     ];
     let template = Handlebars.compile(ownerTypeTemplate);
     let html = "";
@@ -87,20 +119,149 @@ Handlebars.registerHelper('owner_types', function(radio_button_name, image_div_n
     return html;
 });
 
+function is_copied_span(elem) {
+    return elem.nodeType == Node.ELEMENT_NODE && elem.className == 'copied_text';
+}
+
+function html_to_text_plain(element) {
+    if (element.nodeType == Node.TEXT_NODE) {
+        return element.textContent;
+    }
+    if (element.nodeType == Node.ELEMENT_NODE && element.tagName == "BR") {
+        return "\n";
+    }
+    // assert false
+    return element.textContent;
+}
+
+function html_to_text_plain_or_span(element) {
+    if (!is_copied_span(element)) {
+        return html_to_text_plain(element);
+    }
+    let text = "";
+    for (let i = 0; i < element.childNodes.length; i++) {
+        text += html_to_text_plain(element.childNodes[i]);
+    }
+    return text;
+}
+
+
+function get_striked_situation(tdElement) {
+    let spans = [];
+    let text = "";
+    for (let i = 0; i < tdElement.childNodes.length; i++) {
+         let child = tdElement.childNodes[i];
+         let child_text = html_to_text_plain_or_span(child);
+         let copied = is_copied_span(child);
+         for (let k=0; k < child_text.length; k++)  {
+             spans.push(copied);
+         }
+         text += child_text;
+     }
+     return {"spans": spans, "text": text}
+}
+
+//  copies Range.toString  but convert <br> to \n
+function getSelectionCharacterOffsetWithin(tdElement, range) {
+    let text = "";
+    let begin = -1;
+    let end = -1;
+    for (let i = 0; i < tdElement.childNodes.length; i++) {
+        let child = tdElement.childNodes[i];
+        if (child  == range.startContainer) {
+            begin = text.length + range.startOffset;
+        }
+        if (child  == range.endContainer) {
+            end = text.length + range.endOffset;
+        }
+        if (tdElement  == range.startContainer && i == range.startOffset ) {
+            begin = text.length;
+        }
+        if (tdElement  == range.endContainer && i == range.endOffset) {
+            end = text.length;
+        }
+        text += html_to_text_plain_or_span(child);
+    }
+    if (begin == -1) {
+        begin = 0;
+    }
+    if (end == -1) {
+        end = text.length;
+    }
+    return { start: begin, end: end };
+}
+
+
+function strike_range_in_span_array(tdElement, range, strike_spans) {
+    let r = getSelectionCharacterOffsetWithin (tdElement, range);
+    for (let i = r.start; i  < r.end;i++ ) {
+        strike_spans[i] = true;
+    }
+}
+
+
+function strike_range_outside_table(range) {
+    let strikeDiv = document.createElement('span');
+    strikeDiv.style.textDecoration = "line-through";
+    strikeDiv.className = "copied_text";
+    try {
+        range.surroundContents(strikeDiv);
+    }catch (err) {
+    }
+}
+
+function copy_char(text, i, outputText) {
+    if (text[i] == "\n") {
+        outputText += "<br/>";
+    }
+    else {
+        outputText += text[i];
+    }
+    return outputText;
+}
+
+function strike_spans(tdElement, strike_situation) {
+    let i = 0;
+    let text = strike_situation.text;
+    let spans = strike_situation.spans;
+    let outputHtml = "";
+    while (i <  spans.length) {
+        if (spans[i] == false) {
+            outputHtml =  copy_char(text, i, outputHtml)
+            i++;
+        }
+        else {
+            outputHtml += "<span class='copied_text' style='text-decoration: line-through'>";
+            while (i <  spans.length && spans[i]) {
+                outputHtml =  copy_char(text, i, outputHtml)
+                i++;
+            }
+            outputHtml += "</span>";
+        }
+    }
+    tdElement.innerHTML = outputHtml;
+}
+
 function strike_selection() {
     let range = document.last_range_from_table;
-    if (range !=  null) {
-        let strikeDiv = document.createElement('span');
-        strikeDiv.style.textDecoration = "line-through";
-        try {
-            range.surroundContents(strikeDiv);
-        }catch (err) {
-            let anchorNode = document.last_anchor_node_from_table;
-            if (anchorNode.nodeType == Node.TEXT_NODE) {
-                let p = anchorNode.parentNode;
-                p.innerHTML = "<span style='text-decoration: line-through'>" + p.innerHTML + "</span>";
-            }
+    if (range ==  null) return;
+    let parent = document.last_anchor_node_from_table;
+    let tdElement  = null;
+    while (parent != null) {
+        if (parent.tagName == "TD") {
+            tdElement = parent;
         }
+        if (parent.id == "input_table_data") {
+            break;
+        }
+        parent = parent.parentNode;
+    }
+    if  (parent == null || tdElement == null) {
+        strike_range_outside_table(range);
+    } else {
+        let situation = get_striked_situation(tdElement);
+        strike_range_in_span_array(tdElement, range, situation.spans);
+        strike_spans(tdElement, situation);
     }
 }
 
@@ -116,11 +277,7 @@ function read_main_json() {
     try {
         let json_elem = get_declaration_json_elem();
         let json_str =  json_elem.value;
-        if (json_str == null || json_str.trim().length ==0) {
-            json_str = '{"persons": [],"document": {}}';
-        }
         let res = JSON.parse(json_str);
-        //document.getElementById("debug_console").value = "Json was successfully parsed";
         return res;
     } catch (err) {
         throw_and_log (err)
@@ -161,8 +318,8 @@ function undo() {
     if (document.json_versions.length == 0) {
         return;
     }
-    let text = document.json_versions.pop();
-    get_declaration_json_elem().value = text;
+    let json_text = document.json_versions.pop();
+    get_declaration_json_elem().value = json_text;
     get_main_input_table().innerHTML = document.table_versions.pop();
 
 }
@@ -177,7 +334,7 @@ function get_new_value(message){
     if (text == null) {
         text = "";
     }
-    return text.trim()
+    return normalize_string(text)
 }
 
 function get_radio_button_value (name) {
@@ -214,18 +371,24 @@ function delete_table_rows_after(tbody, rowIndex) {
     }
 }
 
-function get_selected_row(selected_node, error_message) {
+function get_selected_row(selected_node, error_message=null) {
     let cell = selected_node;
     if (cell.tagName != "TD") {
         cell = cell.parentNode;
         if (cell.tagName != "TD") {
-            throw_and_log(error_message);
+            if (error_message != null) throw_and_log(error_message);
+            return null;
         }
     }
     return cell.parentNode;
 }
+function get_selected_row_index() {
+    let row = get_selected_row(document.last_anchor_node_from_table);
+    if (row == null) return -1;
+    return row.rowIndex;
+}
 
-
+window.current_modal_dlg = null;
 function show_modal_dialog(elementId) {
     let modalDlg = document.getElementById(elementId);
     let okButton = modalDlg.getElementsByClassName("ok_button")[0];
@@ -242,10 +405,12 @@ function show_modal_dialog(elementId) {
         if (e.key === "Escape") {cancelButton.onclick(null);}
         if (e.key === "Enter") {okButton.onclick(null);};
     };
+    window.current_modal_dlg = modalDlg;
 }
 
 function close_modal_dialog(elementId) {
     get_declaration_json_elem().style.display = 'inline';
+    window.current_modal_dlg = null;
     let elem = document.getElementById(elementId);
     if (elem.style.display == "none") {
         // уже закрыто
@@ -276,12 +441,62 @@ function get_last_person(djson) {
 function is_empty_or_number(s){
     return ((s.length == 0) || ('0123456789'.indexOf(s[0]) !== -1 ));
 }
+//================================= BUTTONS ======================================
+
+
+function check_has_name() {
+    if (get_declaration_json_elem().value.trim() == "") {
+        throw_and_log("Сначала нужно найти начало декларации (кнопка 'ФИО' или 'Отдел')");
+    }
+}
+
+function check_cut_after() {
+    let djson = read_main_json();
+    let person = get_last_person(djson);
+
+    if (!('cut_after' in person)) {
+        throw_and_log("Cначала найдите начало следующего декларанта, выделите и нажмите кнопку 'Обрезать'. " +
+            "Если не видите  начала следующего, обрезайте по строке, в которой написано 'конец таблицы'");
+    }
+}
+
+function cut_by_selection(cutAfter) {
+    let selection = window.getSelection();
+    if (selection.rangeCount == 0) return;
+    let startNode = selection.getRangeAt(0).startContainer;
+    let start_row = get_selected_row (startNode, "Не выделена ячейка таблицы");
+    let tbody = start_row.parentNode;
+    let table = tbody.parentNode;
+    let headerSize = table.tHead.rows.length;
+    // modify table after save_undo_version
+    if (cutAfter) {
+        let djson = read_main_json();
+        djson.persons[0].cut_after = 1;
+        write_main_json(djson, false);
+        delete_table_rows_after(tbody, start_row.rowIndex  - headerSize);
+    } else {
+        delete_table_rows_before(tbody, start_row.rowIndex - headerSize);
+    }
+}
+
+function set_declarant_end  () {
+    check_has_name();
+    cut_by_selection(true);
+}
+window.set_declarant_end = set_declarant_end;
+
+function create_or_read_json () {
+    if (get_declaration_json_elem().value.trim().length > 0) {
+        return read_main_json();
+    } else {
+        return {
+            persons: [{}],
+            document: {},
+        }
+    }
+}
 
 function add_declarant() {
-    let djson = read_main_json();
-    if (!('persons' in djson) || (djson.persons.length == 0)) {
-        throw_and_log("Сначала надо обрезать таблицу (кнопка 'Обрезать')");
-    }
     let text = get_new_value("Введите ФИО");
     if (text.length > 50) {
         throw_and_log("ФИО слишком длинное (>50 символов)");
@@ -293,30 +508,22 @@ function add_declarant() {
         throw_and_log("Недопустимый или пустой ФИО");
     }
 
-    if (text != "") {
-        if (djson.persons.length > 0) {
-            if (!('person'  in djson.persons[0])) {
-                djson.persons[0].person = {};
-            }
-            djson.persons[0].person.name_raw = text;
-        }
-        else {
-            djson.persons.push({'person': {'name_raw': text}});
-        }
-        write_main_json(djson);
+    if (text == "") return;
+    let djson = create_or_read_json();
+    let  cutBefore = false;
+    if (!('person' in djson.persons[0])) {
+        cutBefore = true;
+        djson.persons[0].person  = {}
     }
+    djson.persons[0].person.name_raw = text;
+    write_main_json(djson);
+    if (cutBefore) cut_by_selection(false);
 }
 window.add_declarant = add_declarant;
 
-function check_json()
-{
-    let s = read_main_json();
-    write_main_json(s);
-}
-window.check_json = check_json;
-
 
 function add_declarant_role() {
+    check_cut_after();
     let djson = read_main_json();
     let person = get_last_person(djson);
     let text = get_new_value("Введите роль (должность):");
@@ -331,6 +538,7 @@ function add_declarant_role() {
 window.add_declarant_role = add_declarant_role;
 
 function add_realties_number() {
+    check_cut_after();
     let djson = read_main_json();
     let person = get_last_person(djson);
     let text =  window.prompt("Введите количество объектов недвижимости:");
@@ -355,6 +563,7 @@ function isNormalYear(str) {
 }
 
 function add_year() {
+    check_cut_after();
     let djson = read_main_json();
     let person = get_last_person(djson);
     let text = get_new_value("Введите год");
@@ -380,7 +589,7 @@ function close_realty_modal_box(save_results=true){
         if (!("real_estates" in person)) {
             person.real_estates = [];
         }
-        let type_raw = document.getElementById('realty_type').value;
+        let type_raw = normalize_string( document.getElementById('realty_type').value );
         if (is_empty_or_number(type_raw)) {
             throw_and_log("плохой или пустой тип недвижимости: " + type_raw);
         }
@@ -388,7 +597,8 @@ function close_realty_modal_box(save_results=true){
             'type_raw': type_raw,
             "own_type_by_column":   get_radio_button_value ('realty_own_type_by_column'),
             "relative":   get_radio_button_value ( 'realty_owner_type'),
-            "country_raw": 'Россия'
+            "country_raw": 'Россия',
+            "source_row": get_selected_row_index()
         };
         person.real_estates.push(real_estate)
         write_main_json(djson);
@@ -420,6 +630,7 @@ function add_realty_property(property_name, message) {
     }
 
 }
+
 function add_square() {
     add_realty_property ('square_raw', "Введите площадь:");
 }
@@ -432,7 +643,20 @@ window.add_own_type = add_own_type;
 
 
 function add_country() {
-    add_realty_property ('country_raw', "Введите страну:");
+    let djson = read_main_json();
+    let person = get_last_person(djson);
+    if (!('real_estates' in person)) {
+        throw_and_log ( new Error("У декларанта нет ни одной записи о недвижимости (поле 'real_estates')"));
+    }
+    let text = get_new_value("Введите страну:");
+    if (text != "") {
+        if  (text == "российская федерация" || text.toLowerCase() == "рф")  {
+            text = "Россия";
+            alert("страна и так по умолчанию - Россия, не нажимайте эту кнопку, если недвижимость в РФ");
+        }
+        person.real_estates[person.real_estates.length - 1]["country_raw"] = text;
+        write_main_json(djson);
+    }
 }
 window.add_country = add_country;
 
@@ -445,12 +669,25 @@ function close_income_modal_box(save_results=true){
         if (!("incomes" in person)) {
             person.incomes = [];
         }
+        let income_str = normalize_string(document.getElementById('income_value').value);
+        if (income_str == "") return;
+        let relative = get_radio_button_value ('income_owner_type')
+        if (relative != null && income_str[0] == '0') {
+            throw_and_log( "Почему вы не читали инструкцию? Нулевой доход у родственников заполнять не надо")
+        }
         let income  = {
-            'size_raw': document.getElementById('income_value').value,
+            'size_raw': income_str,
+            "source_row": get_selected_row_index(),
             "relative":   get_radio_button_value ('income_owner_type')
         };
         if  (find_object_by_all_members(person.incomes, income)) {
             return;
+        }
+        if  (find_object_by_all_members(person.incomes, income)) {
+            return;
+        }
+        if (find_object_by_relative(person.incomes, income.relative)) {
+            throw_and_log("Попытка повторно приписать доход одной и той же персоне")
         }
         person.incomes.push(income)
         write_main_json(djson);
@@ -463,37 +700,6 @@ function add_income() {
 }
 window.add_income = add_income;
 
-function save_person_offsets(start, last) {
-    let djson = read_main_json();
-    let table_row_range = {'begin_row': start, 'last_row': last };
-    if (!djson.persons.length) {
-        let person = {'table_row_range': table_row_range}
-        djson.persons.push(person);
-    } else {
-        let person = get_last_person(djson)
-        person['table_row_range'] = table_row_range;
-    }
-    write_main_json(djson, false);
-}
-
-function cut_by_selection() {
-    if (typeof window.getSelection == "undefined") {
-        return;
-    }
-    let obj = window.getSelection();
-    let start_row = get_selected_row (obj.anchorNode, "Не выделена ячейка таблицы");
-    let last_row = get_selected_row (obj.focusNode, "Выделение выхоодит за пределы таблицы");
-    let tbody = start_row.parentNode;
-    let table = tbody.parentNode;
-    let headerSize = table.tHead.rows.length;
-    save_person_offsets( start_row.rowIndex, last_row.rowIndex);
-    // modify table after save_undo_version
-    delete_table_rows_after(tbody, last_row.rowIndex + 1 - headerSize);
-    delete_table_rows_before(tbody, start_row.rowIndex - headerSize);
-
-}
-window.cut_by_selection = cut_by_selection;
-
 
 function close_vehicle_modal_box(save_results=true){
     close_modal_dialog('VehicleDialog');
@@ -503,8 +709,10 @@ function close_vehicle_modal_box(save_results=true){
         if (!("vehicles" in person)) {
             person.vehicles = [];
         }
+        let vehicle_str = normalize_string(document.getElementById('vehicle_value').value);
         let vehicle  = {
-            'text': document.getElementById('vehicle_value').value,
+            'text': vehicle_str,
+            "source_row": get_selected_row_index(),
             "relative":   get_radio_button_value ('vehicle_owner_type')
         };
         if  (find_object_by_all_members(person.vehicles, vehicle)) {
@@ -517,6 +725,7 @@ function close_vehicle_modal_box(save_results=true){
 window.close_vehicle_modal_box = close_vehicle_modal_box;
 
 function add_vehicle() {
+    check_cut_after();
     show_modal_dialog('VehicleDialog');
 }
 window.add_vehicle = add_vehicle;
@@ -531,12 +740,41 @@ function check_relative(field) {
     }
 }
 
+
+function check_source_row_to_relative_one_field(field, source_row_2_relative) {
+
+    if (field == null) return;
+
+    for (let i = 0; i < field.length; i++) {
+        let r = field[i];
+        if ('source_row' in r && r.source_row != -1) {
+            if (r.source_row in source_row_2_relative) {
+                if (r.relative != source_row_2_relative[r.source_row]) {
+                    throw_and_log("Из одной и той же строки (" + r.source_row +
+                        ") вы приписали информацию разным персонам (родственникам или декларантам, поле relative). Кажется, так не бывает." +
+                        " Если случилось, пришлите нам пример, а это задание пропустите. В одной строке входной таблицы у всех поле relative должен быть одинаковый");
+                }
+            }
+            source_row_2_relative[r.source_row] = r.relative;
+        }
+        if ('source_row' in r) delete r.source_row;
+    }
+}
+
+function check_source_row_to_relative(person) {
+    let source_row_2_relative = {};
+    check_source_row_to_relative_one_field(person.real_estates, source_row_2_relative);
+    check_source_row_to_relative_one_field(person.incomes, source_row_2_relative);
+    check_source_row_to_relative_one_field(person.vehicles, source_row_2_relative);
+}
+
 function check_real_estate_records(person) {
     check_real_estates_count(person);
 
     if (typeof person.real_estates == "undefined") return;
 
     let values = get_radio_button_values('realty_own_type_by_column')
+    let has_own_type_raw = false;
     for (let i = 0; i < person.real_estates.length; i++) {
         let r = person.real_estates[i];
         if  ( r.own_type_by_column != null && values.indexOf(r.own_type_by_column) == -1) {
@@ -552,8 +790,24 @@ function check_real_estate_records(person) {
             throw_and_log(s);
         }
 
-        if (r.own_type_raw != null && is_empty_or_number(r.own_type_raw)) {
-            throw_and_log("плохой или пустой тип недвижимости: " + r.own_type_raw);
+        if (r.own_type_raw != null) {
+            if (is_empty_or_number(r.own_type_raw)) {
+                throw_and_log("плохой или пустой тип недвижимости: " + r.own_type_raw);
+            }
+            if (r.own_type_by_column == "В собственности") {
+                has_own_type_raw = true;
+            }
+        }
+    }
+    for (let i = 0; i < person.real_estates.length; i++) {
+        let r = person.real_estates[i];
+        if (has_own_type_raw  && r.own_type_by_column == "В собственности" && r.own_type_raw == null) {
+            throw_and_log("В одном из объектов недвижимости, котораый в собственности, вы приписали подтип владения ("
+                + r.own_type_raw + "), а в другом не приписали. Либо есть эта колонка, либо нет.");
+        }
+        if (r.own_type_by_column == "В пользовании" && r.own_type_raw != null) {
+            throw_and_log("Мы сами не видели подтип владения у квартир,  которые в пользовании. Если вы нашли, пожалуйста, "
+                + "пришлите нам пример задания, а это задания пропустите.");
         }
     }
 }
@@ -636,15 +890,43 @@ function sort_declaration_json(person) {
     return sort_json_by_keys(person);
 }
 
-function check_mandatory_fields(successMessage=true)
-{
+function find_unstriked_text(elem) {
+    for (let i = 0; i < elem.childNodes.length; i++) {
+        let child = elem.childNodes[i];
+        if (is_copied_span(child)) continue;
+        let trim_text  = child.textContent.replace(/\s+/g, "");
+        if (trim_text != "") return trim_text;
+    }
+    return '';
+}
+
+function check_table_strike_text() {
+    let tbody = document.getElementById("input_table_data");
+    for (let r=0; r < tbody.rows.length; r++) {
+        for (let c=0; c < tbody.rows[r].cells.length; c++) {
+            let cell = tbody.rows[r].cells[c];
+            let html = cell.innerHTML;
+            if (html != null  &&  html.indexOf("copied_text") != -1) {
+                let left_text = find_unstriked_text(cell);
+                if (left_text != "") {
+                    throw_and_log("В ячейке есть зачеркнутый и незачеркнутый текст, наверно, вы забыли перенести: " +
+                        '"'+ left_text+ '". Содержимое ячейки: \n' +  cell.textContent);
+                }
+            }
+        }
+    }
+
+}
+
+function check_mandatory_fields(successMessage=true) {
+    check_has_name();
+
     let djson = read_main_json();
-    if ('persons_empty' in djson) {
-        djson.persons = [];
-        djson.document = {};
-        write_main_json(djson, false);
+    if (djson.persons_empty == 1) {
+        if (successMessage)  alert("Успех!")
         return;
     }
+    check_table_strike_text();
 
     let person = get_last_person(djson);
     if (!('incomes' in person) || person.incomes.length == 0) {
@@ -658,11 +940,24 @@ function check_mandatory_fields(successMessage=true)
     check_relative(person.incomes);
     create_text_for_real_estate_type(person);
     check_real_estate_records(person);
+    check_source_row_to_relative(person);
     djson.persons[0] = sort_declaration_json(person);
     write_main_json(djson, false);
     if (successMessage)  alert("Успех!")
 }
 window.check_mandatory_fields = check_mandatory_fields;
+
+function  switch_radio_in_modal(modalDlg, className, radioBtnValue) {
+    if (modalDlg == null) return;
+    let inputs = modalDlg.getElementsByClassName(className);
+    for (let i =0; i < inputs.length; i++) {
+            if (inputs[i].value == radioBtnValue)  {
+                inputs[i].checked = true;
+                inputs[i].onclick(null);
+            }
+
+    }
+}
 
 document.onkeypress = function(e) {
     if (document.activeElement.name == "declaration_json") return;
@@ -689,9 +984,9 @@ document.onkeypress = function(e) {
         window.add_square();
     }
     if ((e.key == "О") || (e.key == "о") || (e.key == "J") || (e.key == "j")) {
-        window.cut_by_selection();
+        window.set_declarant_end();
     }
-    if ((e.key == "Е") || (e.key == "е") || (e.key == "T") || (e.key == "t")) {
+    if ((e.key == "Л") || (e.key == "л") || (e.key == "K") || (e.key == "k")) {
         window.add_department();
     }
     if ((e.key == "В") || (e.key == "в") || (e.key == "D") || (e.key == "d")) {
@@ -700,8 +995,18 @@ document.onkeypress = function(e) {
     if ((e.key == "К") || (e.key == "к") || (e.key == "R") || (e.key == "r")) {
         window.add_realties_number();
     }
+    if ((e.key == "Е") || (e.key == "е") || (e.key == "T") || (e.key == "t")) {
+        switch_radio_in_modal(window.current_modal_dlg, "ownertype_class", "");
+    }
+    if ((e.key == "С") || (e.key == "с") || (e.key == "C") || (e.key == "c")) {
+        switch_radio_in_modal(window.current_modal_dlg,"ownertype_class", "Супруг(а)");
+    }
+    if ((e.key == "Б") || (e.key == "б") || (e.key == ",") || (e.key == "<")) {
+        switch_radio_in_modal(window.current_modal_dlg,"ownertype_class", "Ребенок");
+    }
 
 };
+
 
 function show_icon(url, placeId) {
     let elem = document.getElementsByName(placeId)[0];
@@ -712,16 +1017,29 @@ function show_icon(url, placeId) {
 }
 window.show_icon = show_icon;
 
+
 function add_department() {
-    let djson = read_main_json();
-    let person = get_last_person(djson);
     let text = get_new_value("Введите отдел (организацию)");
-    if (text != "") {
-        person.person.department = text;
-        write_main_json(djson);
-    }
+    if (is_empty_or_number(text)) return;
+    let djson = create_or_read_json();;
+    let person = djson.persons[0]
+    if (!('person' in person))  person.person = {};
+    person.person.department = text;
+    write_main_json(djson);
+    cut_by_selection(false);
 }
 window.add_department = add_department;
+
+String.prototype.hashCodeNoSpaces = function() {
+    let hash = 0;
+    let s = this.replace(/[\s():;,".-]/g, "")
+    for (let i = 0; i < s.length; i++) {
+        let chr   = s.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0;
+    }
+    return hash;
+};
 
 // ===== end of toloka part =======
 
@@ -734,10 +1052,17 @@ Handlebars.registerHelper('field', function() {
 });
 
 
+
 let taskSource = document.getElementsByClassName("main_task_table")[0];
 let handleBarsTemplate = Handlebars.compile(taskSource.innerHTML);
-let inputJson ='{"Title":"СВЕДЕНИЯ о доходах, расходах, об имуществе и обязательствах имущественного характера  лиц, замещающих отдельные должности на основании \nтрудового договора в организациях, находящихся в ведении Министерства финансов Российской Федерации, а также сведения о доходах, \nрасходах, об имуществе и обязательствах имущественного характера  их  супруг (супругов) и несовершеннолетних детей   за период с 1 января 2017 г. по 31 декабря 2017 г. \n \n \n","InputFileName":"documents/59397.pdf","DataStart":103,"DataEnd":123,"Header":[[{"mc":1,"t":"№ \nп/п \n"},{"mc":1,"t":"Фамилия и инициалы лица, чьи сведения размещаются \n"},{"mc":1,"t":"Должность \n"},{"mc":4,"t":"Объекты недвижимости, находящиеся в собственности \n"},{"mc":3,"t":"Объекты недвижимости, находящиеся в пользовании \n"},{"mc":1,"t":"Транспортные средства (вид, марка) \n"},{"mc":1,"t":"Декларированный годовой доход \n(руб.) \n"},{"mc":1,"t":"Сведения об источниках \nполучения средств, за счет которых \nсовершена сделка \n(вид приобретенного имущества, источники) \n"}],[{"mc":1,"t":"\n"},{"mc":1,"t":"\n"},{"mc":1,"t":"\n"},{"mc":1,"t":"вид объекта\n"},{"mc":1,"t":"  вид   собственности\n"},{"mc":1,"t":"площадь \n(кв. м) \n"},{"mc":1,"t":"страна \nрасположения \n"},{"mc":1,"t":"вид объекта \n"},{"mc":1,"t":"площадь \n(кв. м) \n"},{"mc":1,"t":"страна \nрасположен ия \n"},{"mc":1,"t":"\n"},{"mc":1,"t":"\n"},{"mc":1,"t":"\n"}]],"Section":[[{"mc":14,"t":"Федеральное государственное бюджетное учреждение «Научно-исследовательский финансовый институт» \n"}]],"Data":[[{"mc":1,"t":" \n"},{"mc":1,"t":"Супруг (супруга)          \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Земельный участок \n"},{"mc":1,"t":"Общая долевая \n(1/2) \n"},{"mc":1,"t":"901,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"Земельный участок \n"},{"mc":2,"t":"600,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"365301,13 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Жилой дом \n"},{"mc":1,"t":"Общая долевая \n(1/2) \n"},{"mc":1,"t":"47,2 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"    \n"},{"mc":1,"t":"                                    \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Квартира \n"},{"mc":1,"t":"общая \nсовместная  \n"},{"mc":1,"t":"110,20 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"    \n"},{"mc":1,"t":"                                    \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Квартира \n"},{"mc":1,"t":"Общая долевая \n(2/3) \n"},{"mc":1,"t":"69,80 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":14,"t":"Федеральное казенное учреждение «Государственное учреждение по эксплуатации административных зданий и дачного хозяйства Министерства финансов Российской Федерации» \n"}],[{"mc":1,"t":"1    \n"},{"mc":1,"t":"                                    \nЛесовой Н.А.              \n"},{"mc":1,"t":"Заместитель директора \n"},{"mc":1,"t":"Земельный участок \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"802,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"Гараж  \n"},{"mc":2,"t":"18,5 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"Автомобиль легковой:  \nТойота лексус RX \n"},{"mc":1,"t":"2485332,80 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"    \n"},{"mc":1,"t":"                                   \n"},{"mc":1,"t":"    \n"},{"mc":1,"t":"Земельный участок \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"1200,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"    \n"},{"mc":1,"t":"                                   \n"},{"mc":1,"t":"    \n"},{"mc":1,"t":"Жилой дом \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"135,80 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Квартира \n"},{"mc":1,"t":"общая долевая, \n1/4 \n"},{"mc":1,"t":"87,80 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Хозяйственное строение \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"24,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Нежилое помещение \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"285,20 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"    \n"},{"mc":1,"t":"                                  \n \nСупруг (супруга)          \n"},{"mc":1,"t":"  \n \n"},{"mc":1,"t":"Квартира \n"},{"mc":1,"t":"общая долевая, \n1/4 \n"},{"mc":1,"t":"43,30 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"Квартира \n"},{"mc":2,"t":"87,80 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"2299534,62 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"2 \n"},{"mc":1,"t":"Листиков М.В. \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Квартира \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"63,60 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"Автомобиль легковой:  \nФиат Добло \n"},{"mc":1,"t":"1037015,65 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Гараж  \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"18,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"Автомобиль легковой:  \nДэу Матиз \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"Автомобиль грузовой:  \nБАУ 1044 \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":"Супруг (супруга)          \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Земельный участок \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"600,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":" \n"},{"mc":2,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Автомобиль легковой:  \nДэу Матиз \n"},{"mc":1,"t":"238687,09 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":" \n"},{"mc":1,"t":"Садовый дом \n"},{"mc":1,"t":"индивидуальная \n"},{"mc":1,"t":"105,30 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":2,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":"3 \n"},{"mc":1,"t":"                                    \nОвсюк Л.А.                 \n"},{"mc":1,"t":"Главный   бухгалтер \n"},{"mc":1,"t":"Квартира \n"},{"mc":1,"t":"общая долевая, \n1/4 \n"},{"mc":1,"t":"59,00 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"Квартира \n"},{"mc":2,"t":"56,60 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"1798404,52 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":"                                  \nНесовершеннолетний \nребенок                  \n"},{"mc":1,"t":"  \n \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"Квартира \n"},{"mc":2,"t":"56,60 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"0,00 \n"},{"mc":1,"t":"- \n"}],[{"mc":1,"t":" \n"},{"mc":1,"t":"                                  \nНесовершеннолетний \nребенок                  \n"},{"mc":1,"t":"  \n \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"Квартира \n"},{"mc":2,"t":"56,60 \n"},{"mc":1,"t":"Россия \n"},{"mc":1,"t":"- \n"},{"mc":1,"t":"0,00 \n"},{"mc":1,"t":"- \n"}]]}';
-let context = {input_id: "1", input_json: inputJson, declaration_json:"hkfhggkfjhgfk"};
+//let tsvLine = '96b9b248c792469e480540f53b364371__43_63\t"{""Title"":""Сведения\\n о доходах, расходах, об имуществе и обязательствах имущественного характера, \\nпредставленные руководителями федеральных государственных учреждений, находящихся в ведении \\nМинистерства труда и социальной защиты Российской Федерации\\n(с учетом уточнений, представленных до 30 сентября 2013 года)\\nза отчетный период с 1 января 2012 года по 31 декабря 2012 года, \\nподлежащих размещению на официальном сайте Министерства труда и социальной защиты Российской Федерации \\nв соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613\\n\\n"",""InputFileName"":""documents/6353.docx"",""DataStart"":43,""DataEnd"":63,""Header"":[[{""mc"":1,""mr"":2,""r"":0,""c"":0,""t"":""Фамилия, имя, отчество\\n\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":1,""t"":""Должность\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":2,""t"":""Общая сумма декларированного годового дохода за 2012 г. (руб.)\\n""},{""mc"":3,""mr"":1,""r"":0,""c"":3,""t"":""Перечень объектов недвижимого имущества,\\nпринадлежащих на праве собственности или находящихся в пользовании\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":6,""t"":""Перечень транспортных средств, принадлежащих на праве собственности\\n(вид, марка)\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":7,""t"":""Сведения об источниках получения средств, за счет которых совершена сделка по приобретению объектов недвижимого имущества, транспортных средств, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций)*\\n""}],[{""mc"":1,""mr"":1,""r"":1,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":3,""t"":""Вид объектов недвижимости\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":4,""t"":""Площадь\\n(кв.м)\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":5,""t"":""Страна расположения\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":6,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":7,""t"":""\\n""}]],""Section"":[],""Data"":[[{""mc"":1,""mr"":1,""r"":43,""c"":0,""t"":""Супруг \\n""},{""mc"":1,""mr"":1,""r"":43,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":2,""t"":""1 328 817,5\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\nГараж (безвозмездное пользование)\\n\\nЖилой дом (безвозмездное пользование)\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":4,""t"":""93,8\\n\\n\\n35,0\\n\\n\\n104,0\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":6,""t"":""а/м Опель Антара\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":44,""c"":0,""t"":""Сын \\n""},{""mc"":1,""mr"":1,""r"":44,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":2,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":3,""t"":""Квартира (безвозмездное пользование)\\n\\nЖилой дом (безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":4,""t"":""93,8\\n\\n\\n\\n104,0\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":45,""c"":0,""t"":""Гаркуша Людмила Генриховна\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Иркутской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":45,""c"":2,""t"":""3 260 700,05\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":3,""t"":""Земельный участок дачный\\n(собственность)\\n\\nЗемельный участок для ведения ЛПХ\\n(собственность)\\n\\n\\nЗемельный участок под ИЖС\\n(собственность)\\n\\nКвартира\\n(собственность)\\n\\nДом дачный\\n(собственность)\\n\\nГараж-бокс\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":4,""t"":""\\n1339,0\\n\\n\\n\\n143000,0\\n\\n\\n\\n\\n1204,0\\n\\n\\n\\n59,2\\n\\n\\n25,0\\n\\n\\n19,4\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":5,""t"":""\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":6,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":46,""c"":0,""t"":""\\nГичкун \\nЛюдмила Петровна\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Волгоградской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":46,""c"":2,""t"":""2 082 008,53\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":3,""t"":""Земельный участок дачный\\n(собственность)\\n\\nКвартира (долевая собственность 3/4)\\n\\nГараж-бокс (собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":4,""t"":""569,0\\n\\n\\n\\n55,8\\n\\n\\n21,4\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":47,""c"":0,""t"":""Гнутов \\nВалерий Павлович\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Кировской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":47,""c"":2,""t"":""2 120 367,0\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":3,""t"":""Земельный участок дачный\\n(собственность)\\n\\nЗемельный участок (собственность)\\n\\nКвартира (долевая собственность 1/2)\\n\\nГараж (долевая собственность 1/2)\\n\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":4,""t"":""400,0\\n\\n\\n\\n1710,0\\n\\n\\n75,7\\n\\n\\n24,0\\n\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":48,""c"":0,""t"":""Супруга \\n""},{""mc"":1,""mr"":1,""r"":48,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":2,""t"":""2 009 446,0\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":3,""t"":""Земельный участок дачный\\n(долевая собственность 1/2)\\n\\n\\nКвартира (долевая собственность 1/2)\\n\\nКвартира (долевая собственность 1/3)\\n\\nГараж (долевая собственность 1/2)\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":4,""t"":""\\n400,0\\n\\n\\n\\n\\n\\n75,7\\n\\n\\n30,0\\n\\n\\n24,0\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":5,""t"":""\\nРоссия\\n\\n\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":6,""t"":""\\nа/м Нива-шевроле (собственность)\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":49,""c"":0,""t"":""\\nГоловнин \\nИгорь Владимирович\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Костромской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":49,""c"":2,""t"":""1 160 685,0\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":3,""t"":""Квартира\\n(собственность)\\n\\nКвартира (долевая собственность 1/2)\\n\\nКвартира (долевая собственность 1/3)\\n\\nГаражный бокс (собственность)\\n\\nНежилое помещение (долевая собственность 1/2)\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":4,""t"":""30,1\\n\\n\\n107,3\\n\\n\\n102,2\\n\\n\\n43,0\\n\\n\\n19,8\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":6,""t"":""а/м КИА-Каренс (собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":50,""c"":0,""t"":""Супруга \\n""},{""mc"":1,""mr"":1,""r"":50,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":2,""t"":""185 420,0\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\n\\nНежилое помещение (долевая собственность 1/2)\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":4,""t"":""107,3\\n\\n\\n\\n19,8\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":51,""c"":0,""t"":""Сын \\n""},{""mc"":1,""mr"":1,""r"":51,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":2,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":3,""t"":""Квартира (долевая собственность 1/3)\\n\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":4,""t"":""102,2\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":52,""c"":0,""t"":""\\nГончаренко Александр Георгиевич\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Алтайскому краю\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":52,""c"":2,""t"":""3 916 781,05 \\n(в том числе доход от продажи транспортного средства)\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":3,""t"":""Земельный участок (совместная собственность)\\n\\nЗемельный участок (совместная собственность)\\n\\nЗемельный участок\\nдачный (совместная собственность)\\n\\nКвартира (долевая собственность 1/5)\\n\\n\\nКвартира (совместная собственность)\\n\\nКвартира (совместная собственность)\\n\\nДом дачный (совместная собственность)\\n\\nГараж (совместная собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":4,""t"":""1000,0\\n\\n\\n\\n1456,0\\n\\n\\n\\n500,0\\n\\n\\n\\n88,0\\n\\n\\n\\n46,4\\n\\n\\n30,9\\n\\n\\n48,0\\n\\n\\n\\n18,0\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":6,""t"":""а/м Тойота Хайлендер\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":53,""c"":0,""t"":""Супруга \\n""},{""mc"":1,""mr"":1,""r"":53,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":2,""t"":""630 864,32\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":3,""t"":""Земельный участок (совместная собственность)\\n\\nЗемельный участок (совместная собственность)\\n\\nЗемельный участок\\nдачный (совместная собственность)\\n\\n\\nКвартира (долевая собственность 1/5)\\n\\nКвартира (совместная собственность)\\n\\nКвартира (совместная собственность)\\n\\nДом дачный (совместная собственность)\\n\\nГараж (совместная собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":4,""t"":""\\n1000,0\\n\\n\\n\\n1456,0\\n\\n\\n\\n500,0\\n\\n\\n\\n\\n88,0\\n\\n\\n46,4\\n\\n\\n30,9\\n\\n\\n48,0\\n\\n\\n\\n18,0\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":5,""t"":""\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":6,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":54,""c"":0,""t"":""\\nГородцова Надежда Павловна\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Ямало-Ненецкому автономному округу\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":54,""c"":2,""t"":""4 307 635,19\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":3,""t"":""Квартира\\n(собственность)\\n\\nКвартира\\n(собственность)\\n\\nКвартира\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":4,""t"":""58,8\\n\\n\\n72,2\\n\\n\\n90,3\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":55,""c"":0,""t"":""Григорьева Татьяна Михайловна\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Псковской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":55,""c"":2,""t"":""1 970 930,0\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":3,""t"":""Квартира\\n(безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":4,""t"":""60,5\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":56,""c"":0,""t"":""Супруг \\n""},{""mc"":1,""mr"":1,""r"":56,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":2,""t"":""674 320,0\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":3,""t"":""Квартира\\n(собственность)\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":4,""t"":""60,5\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":6,""t"":""а/м Хонда CRV (собственность)\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":57,""c"":0,""t"":""Громов Владимир Николаевич  \\n""},{""mc"":1,""mr"":1,""r"":57,""c"":1,""t"":""Директор\\nФКОУ СПО \\""Кинешемский технологический техникум-интернат\\"" Минтруда России\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":2,""t"":""1 345 953,24\\n(в том числе доход от продажи транспортного средства)\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\nКвартира (долевая собственность 1/2)\\n\\n\\nЗемельный участок (безвозмездное пользование)\\n\\nКвартира\\n(безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":4,""t"":""\\n77,9\\n\\n\\n82,0\\n\\n\\n\\n600,0\\n\\n\\n\\n64,4\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":5,""t"":""\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":6,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":58,""c"":0,""t"":""\\nСупруга \\n""},{""mc"":1,""mr"":1,""r"":58,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":2,""t"":""1 304 626, 54\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":4,""t"":""82,0\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":6,""t"":""а/м ХОНДА CR-V (собственность)\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":59,""c"":0,""t"":""Сын \\n""},{""mc"":1,""mr"":1,""r"":59,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":2,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":3,""t"":""Квартира (безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":4,""t"":""82,0\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":60,""c"":0,""t"":""Гулина \\nОльга Владимировна\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Республике Мордовия\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":60,""c"":2,""t"":""926446,66\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":3,""t"":""Земельный участок под ИЖС (собственность)\\n\\nЗемельный участок под многоквартирным домом (собственность общая долевая 34/1000)\\n\\nЖилой дом (собственность)\\n\\nПомещение нежилое (собственность)\\n\\nКвартира (безвозмездное пользование)\\n\\nКомната (безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":4,""t"":""953,0\\n\\n\\n\\n248,91\\n\\n\\n\\n\\n\\n226,3\\n\\n\\n137,4\\n\\n\\n111,9\\n\\n\\n\\n18,0\\n\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":61,""c"":0,""t"":""\\nСупруг \\n""},{""mc"":1,""mr"":1,""r"":61,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":2,""t"":""1722069,54\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":3,""t"":""Земельный участок под ИЖС (собственность)\\n\\nДом жилой (собственность)\\n\\nКвартира \\n(безвозмездное пользование)\\n\\nКомната (безвозмездное пользование)\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":4,""t"":""1000,0\\n\\n\\n\\n56,7\\n\\n\\n111,9\\n\\n\\n\\n18,0\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":6,""t"":""а/м Ситроен С5\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":62,""c"":0,""t"":""Данжинов \\nБаатр \\nПурвеевич\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Республике Калмыкия\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":62,""c"":2,""t"":""1 053 843,68\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":3,""t"":""Дом жилой (собственность)\\n\\nЗемельный участок (аренда)\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":4,""t"":""197,6\\n\\n\\n691,0\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":7,""t"":""-\\n""}]]}"\t"{""persons"":[{""incomes"":[{""relative"":null,""size_raw"":""3 260 700,05""}],""person"":{""name_raw"":""Гаркуша Людмила Генриховна"",""role"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе ФКУ \\""ГБ МСЭ по Иркутской области\\"" Минтруда России""},""real_estates"":[{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""1204,0"",""text"":""Земельный участок под ИЖС (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""1339,0"",""text"":""Земельный участок дачный(собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""143000,0"",""text"":""Земельный участок для ведения ЛПХ (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""19,4"",""text"":""Гараж-бокс (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""25,0"",""text"":""Дом дачный (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""59,2"",""text"":""Квартира (собственность)""}],""real_estates_count"":6,""year"":""2012""}],""document"":{}}"\tЭто довольно редкий тип файла, но он есть. У Гаркуши - шесть отдельных квартир в смешанной колонке, приходится копировать части текста из ячеек, а не полностью всю ячейку. Каждому объекту надо сопоставить площадь.  Очень осторожно выделяйте, включая  подтип владения и нажимайте кнопку \'Недвижимость\'.   Год - 2012, а не 2013';
+//let tsvLine = '96b9b248c792469e480540f53b364371__43_63\t"{""Title"":""adfdf"",""InputFileName"":""documents/6353.docx"",""DataStart"":43,""DataEnd"":63,""Header"":[[{""mc"":1,""mr"":2,""r"":0,""c"":0,""t"":""Фамилия\\n, имя, отчество\\n\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":1,""t"":""Должность\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":2,""t"":""Общая сумма декларированного годового дохода за 2012 г. (руб.)\\n""},{""mc"":3,""mr"":1,""r"":0,""c"":3,""t"":""Перечень объектов недвижимого имущества,\\nпринадлежащих на праве собственности или находящихся в пользовании\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":6,""t"":""Перечень транспортных средств, принадлежащих на праве собственности\\n(вид, марка)\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":7,""t"":""Сведения об источниках получения средств, за счет которых совершена сделка по приобретению объектов недвижимого имущества, транспортных средств, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций)*\\n""}],[{""mc"":1,""mr"":1,""r"":1,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":3,""t"":""Вид объектов недвижимости\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":4,""t"":""Площадь\\n(кв.м)\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":5,""t"":""Страна расположения\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":6,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":7,""t"":""\\n""}]],""Section"":[],""Data"":[[{""mc"":1,""mr"":1,""r"":43,""c"":0,""t"":""Супруг \\n""},{""mc"":1,""mr"":1,""r"":43,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":2,""t"":""1 328 817,5\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\nГараж (безвозмездное пользование)\\n\\nЖилой дом (безвозмездное пользование)\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":4,""t"":""93,8\\n\\n\\n35,0\\n\\n\\n104,0\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":6,""t"":""а/м Опель Антара\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":43,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":44,""c"":0,""t"":""Сын \\n""},{""mc"":1,""mr"":1,""r"":44,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":2,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":3,""t"":""Квартира (безвозмездное пользование)\\n\\nЖилой дом (безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":4,""t"":""93,8\\n\\n\\n\\n104,0\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":44,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":45,""c"":0,""t"":""Гаркуша Людмила Генриховна\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Иркутской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":45,""c"":2,""t"":""3 260 700,05\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":3,""t"":""Земельный участок дачный\\n(собственность)\\n\\nЗемельный участок для ведения ЛПХ\\n(собственность)\\n\\n\\nЗемельный участок под ИЖС\\n(собственность)\\n\\nКвартира\\n(собственность)\\n\\nДом дачный\\n(собственность)\\n\\nГараж-бокс\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":4,""t"":""\\n1339,0\\n\\n\\n\\n143000,0\\n\\n\\n\\n\\n1204,0\\n\\n\\n\\n59,2\\n\\n\\n25,0\\n\\n\\n19,4\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":5,""t"":""\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":6,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":45,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":46,""c"":0,""t"":""\\nГичкун \\nЛюдмила Петровна\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Волгоградской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":46,""c"":2,""t"":""2 082 008,53\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":3,""t"":""Земельный участок дачный\\n(собственность)\\n\\nКвартира (долевая собственность 3/4)\\n\\nГараж-бокс (собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":4,""t"":""569,0\\n\\n\\n\\n55,8\\n\\n\\n21,4\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":46,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":47,""c"":0,""t"":""Гнутов \\nВалерий Павлович\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Кировской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":47,""c"":2,""t"":""2 120 367,0\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":3,""t"":""Земельный участок дачный\\n(собственность)\\n\\nЗемельный участок (собственность)\\n\\nКвартира (долевая собственность 1/2)\\n\\nГараж (долевая собственность 1/2)\\n\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":4,""t"":""400,0\\n\\n\\n\\n1710,0\\n\\n\\n75,7\\n\\n\\n24,0\\n\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":47,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":48,""c"":0,""t"":""Супруга \\n""},{""mc"":1,""mr"":1,""r"":48,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":2,""t"":""2 009 446,0\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":3,""t"":""Земельный участок дачный\\n(долевая собственность 1/2)\\n\\n\\nКвартира (долевая собственность 1/2)\\n\\nКвартира (долевая собственность 1/3)\\n\\nГараж (долевая собственность 1/2)\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":4,""t"":""\\n400,0\\n\\n\\n\\n\\n\\n75,7\\n\\n\\n30,0\\n\\n\\n24,0\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":5,""t"":""\\nРоссия\\n\\n\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":6,""t"":""\\nа/м Нива-шевроле (собственность)\\n""},{""mc"":1,""mr"":1,""r"":48,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":49,""c"":0,""t"":""\\nГоловнин \\nИгорь Владимирович\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Костромской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":49,""c"":2,""t"":""1 160 685,0\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":3,""t"":""Квартира\\n(собственность)\\n\\nКвартира (долевая собственность 1/2)\\n\\nКвартира (долевая собственность 1/3)\\n\\nГаражный бокс (собственность)\\n\\nНежилое помещение (долевая собственность 1/2)\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":4,""t"":""30,1\\n\\n\\n107,3\\n\\n\\n102,2\\n\\n\\n43,0\\n\\n\\n19,8\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":6,""t"":""а/м КИА-Каренс (собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":49,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":50,""c"":0,""t"":""Супруга \\n""},{""mc"":1,""mr"":1,""r"":50,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":2,""t"":""185 420,0\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\n\\nНежилое помещение (долевая собственность 1/2)\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":4,""t"":""107,3\\n\\n\\n\\n19,8\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":50,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":51,""c"":0,""t"":""Сын \\n""},{""mc"":1,""mr"":1,""r"":51,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":2,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":3,""t"":""Квартира (долевая собственность 1/3)\\n\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":4,""t"":""102,2\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":51,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":52,""c"":0,""t"":""\\nГончаренко Александр Георгиевич\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Алтайскому краю\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":52,""c"":2,""t"":""3 916 781,05 \\n(в том числе доход от продажи транспортного средства)\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":3,""t"":""Земельный участок (совместная собственность)\\n\\nЗемельный участок (совместная собственность)\\n\\nЗемельный участок\\nдачный (совместная собственность)\\n\\nКвартира (долевая собственность 1/5)\\n\\n\\nКвартира (совместная собственность)\\n\\nКвартира (совместная собственность)\\n\\nДом дачный (совместная собственность)\\n\\nГараж (совместная собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":4,""t"":""1000,0\\n\\n\\n\\n1456,0\\n\\n\\n\\n500,0\\n\\n\\n\\n88,0\\n\\n\\n\\n46,4\\n\\n\\n30,9\\n\\n\\n48,0\\n\\n\\n\\n18,0\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":6,""t"":""а/м Тойота Хайлендер\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":52,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":53,""c"":0,""t"":""Супруга \\n""},{""mc"":1,""mr"":1,""r"":53,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":2,""t"":""630 864,32\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":3,""t"":""Земельный участок (совместная собственность)\\n\\nЗемельный участок (совместная собственность)\\n\\nЗемельный участок\\nдачный (совместная собственность)\\n\\n\\nКвартира (долевая собственность 1/5)\\n\\nКвартира (совместная собственность)\\n\\nКвартира (совместная собственность)\\n\\nДом дачный (совместная собственность)\\n\\nГараж (совместная собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":4,""t"":""\\n1000,0\\n\\n\\n\\n1456,0\\n\\n\\n\\n500,0\\n\\n\\n\\n\\n88,0\\n\\n\\n46,4\\n\\n\\n30,9\\n\\n\\n48,0\\n\\n\\n\\n18,0\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":5,""t"":""\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":6,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":53,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":54,""c"":0,""t"":""\\nГородцова Надежда Павловна\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Ямало-Ненецкому автономному округу\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":54,""c"":2,""t"":""4 307 635,19\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":3,""t"":""Квартира\\n(собственность)\\n\\nКвартира\\n(собственность)\\n\\nКвартира\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":4,""t"":""58,8\\n\\n\\n72,2\\n\\n\\n90,3\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":54,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":55,""c"":0,""t"":""Григорьева Татьяна Михайловна\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":1,""t"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Псковской области\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":55,""c"":2,""t"":""1 970 930,0\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":3,""t"":""Квартира\\n(безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":4,""t"":""60,5\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":55,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":56,""c"":0,""t"":""Супруг \\n""},{""mc"":1,""mr"":1,""r"":56,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":2,""t"":""674 320,0\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":3,""t"":""Квартира\\n(собственность)\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":4,""t"":""60,5\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":6,""t"":""а/м Хонда CRV (собственность)\\n""},{""mc"":1,""mr"":1,""r"":56,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":57,""c"":0,""t"":""Громов Владимир Николаевич  \\n""},{""mc"":1,""mr"":1,""r"":57,""c"":1,""t"":""Директор\\nФКОУ СПО \\""Кинешемский технологический техникум-интернат\\"" Минтруда России\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":2,""t"":""1 345 953,24\\n(в том числе доход от продажи транспортного средства)\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\nКвартира (долевая собственность 1/2)\\n\\n\\nЗемельный участок (безвозмездное пользование)\\n\\nКвартира\\n(безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":4,""t"":""\\n77,9\\n\\n\\n82,0\\n\\n\\n\\n600,0\\n\\n\\n\\n64,4\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":5,""t"":""\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":6,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":57,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":58,""c"":0,""t"":""\\nСупруга \\n""},{""mc"":1,""mr"":1,""r"":58,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":2,""t"":""1 304 626, 54\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":3,""t"":""Квартира (долевая собственность 1/2)\\n\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":4,""t"":""82,0\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":6,""t"":""а/м ХОНДА CR-V (собственность)\\n""},{""mc"":1,""mr"":1,""r"":58,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":59,""c"":0,""t"":""Сын \\n""},{""mc"":1,""mr"":1,""r"":59,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":2,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":3,""t"":""Квартира (безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":4,""t"":""82,0\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":5,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":59,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":60,""c"":0,""t"":""Гулина \\nОльга Владимировна\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Республике Мордовия\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":60,""c"":2,""t"":""926446,66\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":3,""t"":""Земельный участок под ИЖС (собственность)\\n\\nЗемельный участок под многоквартирным домом (собственность общая долевая 34/1000)\\n\\nЖилой дом (собственность)\\n\\nПомещение нежилое (собственность)\\n\\nКвартира (безвозмездное пользование)\\n\\nКомната (безвозмездное пользование)\\n\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":4,""t"":""953,0\\n\\n\\n\\n248,91\\n\\n\\n\\n\\n\\n226,3\\n\\n\\n137,4\\n\\n\\n111,9\\n\\n\\n\\n18,0\\n\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":60,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":61,""c"":0,""t"":""\\nСупруг \\n""},{""mc"":1,""mr"":1,""r"":61,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":2,""t"":""1722069,54\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":3,""t"":""Земельный участок под ИЖС (собственность)\\n\\nДом жилой (собственность)\\n\\nКвартира \\n(безвозмездное пользование)\\n\\nКомната (безвозмездное пользование)\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":4,""t"":""1000,0\\n\\n\\n\\n56,7\\n\\n\\n111,9\\n\\n\\n\\n18,0\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":5,""t"":""Россия\\n\\n\\n\\nРоссия\\n\\n\\nРоссия\\n\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":6,""t"":""а/м Ситроен С5\\n(собственность)\\n\\n""},{""mc"":1,""mr"":1,""r"":61,""c"":7,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":62,""c"":0,""t"":""Данжинов \\nБаатр \\nПурвеевич\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":1,""t"":""Руководитель - главный эксперт по медико-социальной экспертизе\\nФКУ \\""ГБ МСЭ по Республике Калмыкия\\"" Минтруда России \\n""},{""mc"":1,""mr"":1,""r"":62,""c"":2,""t"":""1 053 843,68\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":3,""t"":""Дом жилой (собственность)\\n\\nЗемельный участок (аренда)\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":4,""t"":""197,6\\n\\n\\n691,0\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":5,""t"":""Россия\\n\\n\\nРоссия\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":62,""c"":7,""t"":""-\\n""}]]}"\t"{""persons"":[{""incomes"":[{""relative"":null,""size_raw"":""3 260 700,05""}],""person"":{""name_raw"":""Гаркуша Людмила Генриховна"",""role"":""И.о. руководителя - главного эксперта по медико-социальной экспертизе ФКУ \\""ГБ МСЭ по Иркутской области\\"" Минтруда России""},""real_estates"":[{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""1204,0"",""text"":""Земельный участок под ИЖС (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""1339,0"",""text"":""Земельный участок дачный(собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""143000,0"",""text"":""Земельный участок для ведения ЛПХ (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""19,4"",""text"":""Гараж-бокс (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""25,0"",""text"":""Дом дачный (собственность)""},{""country_raw"":""Россия"",""own_type_by_column"":null,""relative"":null,""square_raw"":""59,2"",""text"":""Квартира (собственность)""}],""real_estates_count"":6,""year"":""2012""}],""document"":{}}"\tЭто довольно редкий тип файла, но он есть. У Гаркуши - шесть отдельных квартир в смешанной колонке, приходится копировать части текста из ячеек, а не полностью всю ячейку. Каждому объекту надо сопоставить площадь.  Очень осторожно выделяйте, включая  подтип владения и нажимайте кнопку \'Недвижимость\'.   Год - 2012, а не 2013';
+let tsvLine = '6dc4867982c786a1210ee62c02a380f5__138_158\t"{""Title"":"" Сведения\\nо доходах, расходах, об имуществе и обязательствах имущественного характера\\nлиц, замещающих отдельные должности в организациях, созданных для выполнения задач, \\nпоставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей\\nза период с 1 января 2016 г. по 31 декабря 2016 г.\\n"",""InputFileName"":""documents/56884.docx"",""DataStart"":138,""DataEnd"":158,""Header"":[[{""mc"":1,""mr"":2,""r"":0,""c"":0,""t"":""№\\nп/п\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":1,""t"":""Фамилия и инициалы лица, чьи сведения размещаются\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":2,""t"":""Должность\\n""},{""mc"":4,""mr"":1,""r"":0,""c"":3,""t"":""Объекты недвижимости, находящиеся в собственности\\n""},{""mc"":3,""mr"":1,""r"":0,""c"":7,""t"":""Объекты недвижимости, находящиеся в пользовании\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":10,""t"":""Транспортные средства\\n(вид, марка)\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":11,""t"":""Декларированный годовой доход (руб.)\\n""},{""mc"":1,""mr"":2,""r"":0,""c"":12,""t"":""Сведения об источниках получения средств, за счет которых совершена сделка (вид приобретенного имущества, источники)\\n""}],[{""mc"":1,""mr"":1,""r"":1,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":3,""t"":""Вид объекта     \\n""},{""mc"":1,""mr"":1,""r"":1,""c"":4,""t"":""Вид собственности           \\n""},{""mc"":1,""mr"":1,""r"":1,""c"":5,""t"":""Площадь\\n(кв.м)\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":6,""t"":""Страна расположения\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":7,""t"":""Вид объекта\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":8,""t"":""Площадь\\n(кв.м)\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":9,""t"":""Страна расположения\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":1,""c"":12,""t"":""\\n""}]],""Section"":[],""Data"":[[{""mc"":1,""mr"":1,""r"":138,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":3,""t"":""Жилой дом\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":4,""t"":""Общая долевая, 1/2\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":5,""t"":""118,1\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":7,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":138,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":139,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":3,""t"":""квартира\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":4,""t"":""Общая долевая, 1/2\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":5,""t"":""60,1\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":7,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":139,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":140,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":1,""t"":""супруг\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":3,""t"":""Дачный земельный участок\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":4,""t"":""Общая долевая, 1/2\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":5,""t"":""616,0\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":7,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":11,""t"":""383940,00\\n""},{""mc"":1,""mr"":1,""r"":140,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":141,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":3,""t"":""Жилой дом\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":4,""t"":""Общая долевая, 1/2\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":5,""t"":""118,1\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":7,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":141,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":142,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":3,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":4,""t"":""Общая долевая, 1/2\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":5,""t"":""60,1\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":7,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":142,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":143,""c"":0,""t"":""5\\n""},{""mc"":12,""mr"":1,""r"":143,""c"":1,""t"":""Федеральное государственное бюджетное учреждение культуры «Екатеринбургский государственный академический театр оперы и балета»\\n""}],[{""mc"":1,""mr"":1,""r"":144,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":1,""t"":""Шишкин А.Г.\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":2,""t"":""Директор\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":3,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":5,""t"":""83,1\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":6,""t"":""Россия\\n\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":7,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":10,""t"":""а/м легковой Мерседес Бенц GL 350 Bluetec 4matic\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":11,""t"":""13 597 263,73\\n""},{""mc"":1,""mr"":1,""r"":144,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":145,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":3,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":5,""t"":""73,0\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":145,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":146,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":3,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":5,""t"":""48,9\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":146,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":147,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":3,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":5,""t"":""42,9\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":147,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":148,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":3,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":5,""t"":""35,7\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":148,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":149,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":3,""t"":""Квартира\\n\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":5,""t"":""35,6\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":149,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":150,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":3,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":5,""t"":""41,6\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":150,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":151,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":1,""t"":""Супруга\\n\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":3,""t"":""Квартира\\n\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":5,""t"":""43,1\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":7,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":8,""t"":""83,1\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":9,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":10,""t"":""а/м легковой Киа Рио\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":11,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":151,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":152,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":1,""t"":""Несовершеннолетний ребенок\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":3,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":4,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":5,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":7,""t"":""Квартира\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":8,""t"":""32,0\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":9,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":11,""t"":""711 263,56\\n""},{""mc"":1,""mr"":1,""r"":152,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":153,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":1,""t"":""Лобанова Л.Г.\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":2,""t"":""Главный бухгалтер финансово-экономической службы \\n""},{""mc"":1,""mr"":1,""r"":153,""c"":3,""t"":""Земельный участок \\n""},{""mc"":1,""mr"":1,""r"":153,""c"":4,""t"":""Индивидуальная \\n""},{""mc"":1,""mr"":1,""r"":153,""c"":5,""t"":""1024\\n\\n\\n\\n\\n\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":6,""t"":""\\nРоссия\\n\\n\\n\\n\\n\\n\\n\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":7,""t"":""\\n-\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":8,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":9,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":10,""t"":""-\\n\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":11,""t"":""7 916 992\\n""},{""mc"":1,""mr"":1,""r"":153,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":154,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":3,""t"":""жилой дом \\n\\n\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":5,""t"":""147,8\\n\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":154,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":155,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":1,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":3,""t"":""баня\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":4,""t"":""Индивидуальная\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":5,""t"":""60\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":7,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":8,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":9,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":10,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":11,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":155,""c"":12,""t"":""\\n""}],[{""mc"":1,""mr"":1,""r"":156,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":1,""t"":""Супруг \\n""},{""mc"":1,""mr"":1,""r"":156,""c"":2,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":3,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":4,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":5,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":6,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":7,""t"":""жилой дом\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":8,""t"":""147,8\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":9,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":10,""t"":""Легковой автомобиль INFINITI QX 80 \\n""},{""mc"":1,""mr"":1,""r"":156,""c"":11,""t"":""765 516\\n""},{""mc"":1,""mr"":1,""r"":156,""c"":12,""t"":""-\\n""}],[{""mc"":1,""mr"":1,""r"":157,""c"":0,""t"":""\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":1,""t"":""Романова И.В.\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":2,""t"":""Заместитель директора по маркетингу \\n""},{""mc"":1,""mr"":1,""r"":157,""c"":3,""t"":""Квартиры\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":4,""t"":""Общая\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":5,""t"":""33,8\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":6,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":7,""t"":""квартира\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":8,""t"":""53,4\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":9,""t"":""Россия\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":10,""t"":""-\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":11,""t"":""2397316,62\\n""},{""mc"":1,""mr"":1,""r"":157,""c"":12,""t"":""-\\n""}]]}"\t"{""persons"":[{""incomes"":[{""relative"":null,""size_raw"":""13 597 263,73""},{""relative"":""Ребенок"",""size_raw"":""711 263,56""}],""person"":{""department"":""Федеральное государственное бюджетное учреждение культуры «Екатеринбургский государственный академический театр оперы и балета»"",""name_raw"":""Шишкин А.Г."",""role"":""Директор""},""real_estates"":[{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""35,6"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""35,7"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""41,6"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""42,9"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""48,9"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""73,0"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":null,""square_raw"":""83,1"",""text"":""Квартира"",""type_raw"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В пользовании"",""relative"":""Ребенок"",""square_raw"":""32,0"",""text"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В пользовании"",""relative"":""Супруг(а)"",""square_raw"":""83,1"",""text"":""Квартира""},{""country_raw"":""Россия"",""own_type_by_column"":""В собственности"",""own_type_raw"":""Индивидуальная"",""relative"":""Супруг(а)"",""square_raw"":""43,1"",""text"":""Квартира"",""type_raw"":""Квартира""}],""real_estates_count"":10,""vehicles"":[{""relative"":null,""text"":""а/м легковой Мерседес Бенц GL 350 Bluetec 4matic""},{""relative"":""Супруг(а)"",""text"":""а/м легковой Киа Рио""}],""year"":""2016""}],""document"":{}}"\tУ него 10 квартир, есть поле департамента (кнопка \'Отдел\'), осторожно! второй доход приписан ребенку (так и надо перенести, хотя, скорее всего, это доход супруги, мы не имеем право это менять).';
+let jsonStr = tsvLine.split("\t")[1];
+jsonStr = jsonStr.replace(/""/g, '"');
+jsonStr = jsonStr.replace(/^"/, '');
+jsonStr = jsonStr.replace(/"$/, '');
+let context = {input_id: "1", input_json: jsonStr, declaration_json:"hkfhggkfjhgfk"};
 let html  = handleBarsTemplate(context);
 taskSource.innerHTML = html;
 
