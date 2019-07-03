@@ -906,6 +906,12 @@ function sort_declaration_json(person) {
             return compare_string(a['text'], b['text']);
         })
     }
+    if ('vehicles' in person) {
+        person.vehicles.sort(function(a, b) {
+            if  (a['relative'] !=  b['relative']) return compare_string(a['relative'], b['relative']);
+            return compare_string(a['text'], b['text']);
+        })
+    }
     return sort_json_by_keys(person);
 }
 
@@ -1075,10 +1081,13 @@ function on_toloka_validate(solutions) {
         }
     }
     let jsonStr = JSON.stringify(djson);
-    solutions.output_values["declaration_json"] = jsonStr;
     let hashCode = jsonStr.hashCodeNoSpaces();
-    solutions.output_values["declaration_hashcode"] = hashCode;
+    if (solutions != null) {
+        solutions.output_values["declaration_json"] = jsonStr;
+        solutions.output_values["declaration_hashcode"] = hashCode;
+    }
 }
+
 
 // ===== end of toloka part =======
 
@@ -1106,3 +1115,8 @@ let context = {input_id: "1", input_json: jsonStr, declaration_json:"hkfhggkfjhg
 let html  = handleBarsTemplate(context);
 taskSource.innerHTML = html;
 
+let button = document.createElement("button");
+button.onclick = on_toloka_validate;
+button.innerHTML = "<h1>Next Task</h1>";
+let body = document. getElementsByTagName("body")[0];
+body.appendChild(button);
