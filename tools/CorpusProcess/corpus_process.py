@@ -143,7 +143,7 @@ def report(args):
         "All found jsons": jsons_count,
         "Source file size" :  all_size,
         "Source file with jsons size": good_size,
-        "Success parsing(smart_parser did not failed)" : round(good_size/all_size, 2)
+        "header_recall" : round(good_size/all_size, 2)
     }
 
 if __name__ == '__main__':
