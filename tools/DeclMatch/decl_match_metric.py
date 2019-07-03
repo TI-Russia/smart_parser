@@ -161,9 +161,9 @@ def calc_decl_match_one_pair(json1, json2):
     tp = len(match_info.true_positive)
     fp = len(match_info.false_positive)
     fn = len(match_info.false_negative)
-    prec = tp /  (tp + fp + 0.0000001)
-    recall = tp / (tp + fn + 0.0000001)
-    match_info.f_score = 2 * prec * recall / (prec + recall)
+    prec = tp /  (tp + fp + 1.E-25)
+    recall = tp / (tp + fn + 1.E-25)
+    match_info.f_score = round(2 * prec * recall / (prec + recall), 4)
     return match_info
 
 
@@ -203,6 +203,80 @@ def trunctate_json(j):
     res['incomes'] = sorted( res['incomes'], key=lambda x: json.dumps(x))
     res['real_estates'] = sorted( res['real_estates'], key=lambda x: json.dumps(x))
     return res
+
+
+def  add_html_table_row(cells):
+    res = "<tr>"
+    for c in cells:
+        res  += "  <td"
+        if c["mc"] > 1:
+            res += " colspan=" + str(c["mc"])
+        res += ">"
+        res += c["t"].replace("\n", '<br/>')
+        res += "</td>\n"
+    return res + "</tr>\n"
+
+
+def convert_to_html(jsonStr, maintag="html"):
+    data = json.loads(jsonStr)
+    res = "<"+ maintag +">"
+    res += "<h1>" +  data['Title'] + "</h1>\n"
+    res += "<table border=1>\n"
+    res += "<thead>\n"
+    for r in  data["Header"]:
+        res += add_html_table_row(r)
+    res += "</thead>\n"
+    res += "<tbody>\n"
+    for r in  data["Section"]:
+        res += add_html_table_row(r)
+    for r in  data["Data"]:
+        res += add_html_table_row(r)
+    res += "</tbody>\n"
+    res += "</table>"
+    res += "</" + maintag + ">"
+    return res;
+
+
+def dump_conflict (task, golden_json, json_to_check, match_info, conflict_file):
+    res = "<div>\n"
+    res += "<table border=1> <tr>\n"
+
+    res += "<tr>"
+    res += "<td colspan=3><h1>"
+    res += "f-score={}".format(match_info.f_score)
+    res += " worker_id={}".format(task['ASSIGNMENT:worker_id'])
+    res += " input_id={}".format(task['INPUT:input_id'])
+    res += " line_no={}".format(task['input_line_no'])
+    res += "</h1>"
+    res += "</td></tr>"
+
+    res += "<td width=30%>\n"
+
+    input_json = task["INPUT:input_json"]
+    res += convert_to_html(input_json, "div")
+    res += "</td>\n"
+
+    res += "<td width=30%>"
+    res += "<textarea cols=80 rows=90>"
+    res += json.dumps(golden_json, indent=4, ensure_ascii=False)
+    res += "</textarea>"
+    res += "</td>\n"
+
+    res += "<td>"
+    res += "<textarea cols=80 rows=90>"
+    res += json.dumps(json_to_check, indent=4, ensure_ascii=False)
+    res += "</textarea>"
+    res += "</td>\n"
+    res += "</tr><tr>\n"
+    res  += "<td colspan=3>"
+    res += "<h1>"
+    res += "f-score={}".format(match_info.f_score) + "<br/>"
+    res += "<br/>".join(match_info.dump_errors())
+    res += "</h1>"
+    res += "\n</tr></table>"
+    res  += "</td>"
+    conflict_file.write(res)
+
 
 def parse_args():
     parser = argparse.ArgumentParser()

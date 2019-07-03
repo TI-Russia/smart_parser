@@ -1,7 +1,7 @@
 import shutil
 import sys
 import os
-from decl_match_metric import calc_decl_match_one_pair, trunctate_json
+from decl_match_metric import calc_decl_match_one_pair, trunctate_json, dump_conflict
 import argparse
 from multiprocessing import Pool
 from collections import defaultdict
@@ -43,81 +43,7 @@ def avg(items):
 
 
 
-def  add_html_table_row(cells):
-    res = "<tr>"
-    for c in cells:
-        res  += "  <td"
-        if c["mc"] > 1:
-            res += " colspan=" + str(c["mc"])
-        res += ">"
-        res += c["t"].replace("\n", '<br/>')
-        res += "</td>\n"
-    return res + "</tr>\n"
 
-
-def convert_to_html(jsonStr, maintag="html"):
-    data = json.loads(jsonStr)
-    res = "<"+ maintag +">"
-    res += "<h1>" +  data['Title'] + "</h1>\n"
-    res += "<table border=1>\n"
-    res += "<thead>\n"
-    for r in  data["Header"]:
-        res += add_html_table_row(r)
-    res += "</thead>\n"
-    res += "<tbody>\n"
-    for r in  data["Section"]:
-        res += add_html_table_row(r)
-    for r in  data["Data"]:
-        res += add_html_table_row(r)
-    res += "</tbody>\n"
-    res += "</table>"
-    res += "</" + maintag + ">"
-    return res;
-
-
-
-def dump_conflict (task, match_info, conflict_file):
-    global DATA_FOLDER
-    input_id = task['INPUT:input_id']
-    res = "<div>\n"
-    res += "<table border=1> <tr>\n"
-
-    res += "<tr>"
-    res += "<td colspan=3><h1>"
-    res += "f-score={}".format(match_info.f_score)
-    res += " worker_id={}".format(task['ASSIGNMENT:worker_id'])
-    res += " input_id={}".format(task['INPUT:input_id'])
-    res += " line_no={}".format(task['input_line_no'])
-    res += "</h1>"
-    res += "</td></tr>"
-
-    res += "<td width=30%>\n"
-
-    input_json = task["INPUT:input_json"]
-    res += convert_to_html(input_json, "div")
-    res += "</td>\n"
-
-    res += "<td width=30%>"
-    res += "<textarea cols=80 rows=90>"
-    res += json.dumps(json.loads(task["OUTPUT:declaration_json"]), indent=4, ensure_ascii=False)
-    res += "</textarea>"
-    res += "</td>\n"
-
-    res += "<td>"
-    res += "<textarea cols=80 rows=90>"
-    with open (smart_parser_result_json_file(input_id), "r", encoding="utf8") as f:
-        res += f.read()
-    res += "</textarea>"
-    res += "</td>\n"
-    res += "</tr><tr>\n"
-    res  += "<td colspan=3>"
-    res += "<h1>"
-    res += "f-score={}".format(match_info.f_score) + "<br/>"
-    res += "<br/>".join(match_info.dump_errors())
-    res += "</h1>"
-    res += "\n</tr></table>"
-    res  += "</td>"
-    conflict_file.write(res)
 
 
 def convert_automatic_json(data):
@@ -165,15 +91,15 @@ class TTolokaStats:
             match_info.dump(input_id, x['ASSIGNMENT:worker_id'], self.errors)
 
             toloka_json_file = json_file[:-5] + "." + x['ASSIGNMENT:worker_id'] + ".json"
+            toloker_json_trunc = trunctate_json(toloker_json)
+            automatic_json_trunc = trunctate_json(automatic_json)
             with open(toloka_json_file,"w", encoding="utf8") as outf:
-                trunc_json = trunctate_json(toloker_json)
-                json.dump(trunc_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
+                json.dump(toloker_json_trunc, outf, indent=4, ensure_ascii=False, sort_keys=True)
             with open(json_file+".trunc", "w", encoding="utf8") as outf:
-                trunc_json = trunctate_json(automatic_json)
-                json.dump(trunc_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
+                json.dump(automatic_json_trunc, outf, indent=4, ensure_ascii=False, sort_keys=True)
 
             if conflict_file:
-                dump_conflict(x, match_info, conflict_file)
+                dump_conflict(task, toloker_json_trunc, automatic_json_trunc, conflict_file)
         self.decl_match[input_id] = avg(decl_matches)
 
 
