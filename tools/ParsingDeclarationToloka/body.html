@@ -21,6 +21,7 @@
                     <button onclick=window.add_declarant() title="ФИО декларанта (чиновника)"><u>Ф</u>ИО</button>
                     <button onclick=window.set_declarant_end() title="Выделите строку, с которой начинается новый декларант после первого и нажмите на эту кнопку "><u>О</u>брезать</button>
                     <button onclick=window.undo() title="undo">Откатить</button>
+                    <button onclick=window.strike_arbitary() title="перечеркнуть текст">Перечеркнуть</button>
                     <button onclick=window.check_mandatory_fields() title="проверка заполнения json">Проверка</button>
                 </td></tr>
                 <tr> <td>
@@ -39,7 +40,7 @@
                 </td></tr>
             </table>
             <br/>
-            {{{field type="textarea" name="declaration_json" width="100%" rows="20"}}}
+            {{{field type="textarea" name="declaration_json" width="100%" rows="30"}}}
             <br>
             <textarea id="debug_console"  rows="2" cols="50"> </textarea>
 
@@ -125,6 +126,7 @@
 <!-- download handlebars.js from https://handlebarsjs.com -->
 <script type="text/javascript" src="handlebars.js"></script>
 <script type="text/javascript" src="myscript.js"></script>
+<script type="text/javascript" src="toloka_environment.js"></script>
 
 </body>
 </html>
