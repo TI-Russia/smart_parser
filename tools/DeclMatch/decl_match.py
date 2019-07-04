@@ -43,9 +43,6 @@ def avg(items):
 
 
 
-
-
-
 def convert_automatic_json(data):
     for p in  data.get('persons', []):
         for i in p.get('incomes', []):
@@ -69,7 +66,7 @@ class TTolokaStats:
                     continue
                 task_id = task['INPUT:input_id']
                 task['input_line_no'] = line_no
-                if task["GOLDEN:declaration_json"] == "" or args.process_golden:
+                if task.get("GOLDEN:declaration_json", "") == "" or args.process_golden:
                     self.tasks[task_id].append (task)
                 else:
                     self.golden_task_assignments += 1
@@ -84,13 +81,17 @@ class TTolokaStats:
         automatic_json = convert_automatic_json(automatic_json);
         decl_matches = []
 
-        for x in self.tasks[input_id]:
-            toloker_json = json.loads(x['OUTPUT:declaration_json'])
+        for task in self.tasks[input_id]:
+            toloker_json = json.loads(task['OUTPUT:declaration_json'])
             match_info = calc_decl_match_one_pair(toloker_json, automatic_json)
             decl_matches.append(match_info.f_score)
-            match_info.dump(input_id, x['ASSIGNMENT:worker_id'], self.errors)
+            if match_info.f_score == 1.0:
+                continue
 
-            toloka_json_file = json_file[:-5] + "." + x['ASSIGNMENT:worker_id'] + ".json"
+            worker_id = task.get('ASSIGNMENT:worker_id', "unknown");
+            match_info.dump(input_id, worker_id, self.errors)
+
+            toloka_json_file = json_file[:-5] + "." + worker_id + ".json"
             toloker_json_trunc = trunctate_json(toloker_json)
             automatic_json_trunc = trunctate_json(automatic_json)
             with open(toloka_json_file,"w", encoding="utf8") as outf:
@@ -99,7 +100,7 @@ class TTolokaStats:
                 json.dump(automatic_json_trunc, outf, indent=4, ensure_ascii=False, sort_keys=True)
 
             if conflict_file:
-                dump_conflict(task, toloker_json_trunc, automatic_json_trunc, conflict_file)
+                dump_conflict(task, toloker_json_trunc, automatic_json_trunc, match_info, conflict_file)
         self.decl_match[input_id] = avg(decl_matches)
 
 

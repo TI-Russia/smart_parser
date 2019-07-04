@@ -1,9 +1,7 @@
 import shutil
-import sys
 import os
 from decl_match_metric import calc_decl_match_one_pair, trunctate_json, dump_conflict
 import argparse
-from multiprocessing import Pool
 from collections import defaultdict
 import json
 import csv
@@ -43,48 +41,74 @@ class TTolokaStats:
         with open (args.golden_pool, "r", encoding="utf8") as tsv:
             for task in csv.DictReader(tsv, delimiter="\t", quotechar='"'):
                 self.golden_pool[task["INPUT:input_id"]] = task['GOLDEN:declaration_json']
+        self.tasks = []
+        self.tolokers = {}
 
-    def collect_stats(self, filename):
+    def read_tasks(self, filename):
         line_no = 1 # header
-        if args.dump_conflicts:
-            conflict_file = open(args.dump_conflicts, "w", encoding="utf8")
-        else:
-            conflict_file = None
-        global DATA_FOLDER
-        decl_matches = []
         with open (filename, "r", encoding="utf8") as tsv:
             for task in csv.DictReader(tsv, delimiter="\t", quotechar='"'):
                 line_no += 1
                 task['input_line_no'] = line_no
                 if args.toloka_tsv_line_no > 0 and args.toloka_tsv_line_no != line_no:
                     continue
-                input_id = task["INPUT:input_id"]
-                json_str = task['OUTPUT:declaration_json']
-                if json_str == '':
-                    print (input_id + " no json, skipped")
+                if task.get('OUTPUT:declaration_json', '') == '':
+                    print(task["INPUT:input_id"] + " no json, skipped")
                     continue
+                self.tasks.append(task)
 
-                toloker_json = json.loads(json_str)
-                golden_json = json.loads(self.golden_pool[input_id])
-                with open(os.path.join(DATA_FOLDER, input_id+".toloker.json"), "w", encoding="utf8") as outf:
-                    json.dump(toloker_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
-                with open(os.path.join(DATA_FOLDER, input_id+".golden.json"), "w", encoding="utf8") as outf:
-                    json.dump(golden_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
-                match_info = calc_decl_match_one_pair(golden_json, toloker_json)
-                if match_info.f_score != 1.0:
-                    dump_conflict(task,golden_json, toloker_json, match_info, conflict_file)
-                print (match_info.f_score)
-                for e in match_info.dump_errors():
-                    print (e)
-                decl_matches.append(match_info.f_score)
+    def calc_decl_match(self):
+        decl_matches = []
+        tolokers_decl_match = defaultdict(list)
+        for task in self.tasks:
+            input_id = task["INPUT:input_id"]
+            toloker_json = json.loads(task['OUTPUT:declaration_json'])
+            golden_json = json.loads(self.golden_pool[input_id])
+            match_info = calc_decl_match_one_pair(golden_json, toloker_json)
+            task['match_info'] = match_info
+            print (match_info.f_score)
+            for e in match_info.dump_errors():
+                print (e)
+            decl_matches.append(match_info.f_score)
+            tolokers_decl_match[task['ASSIGNMENT:worker_id']].append (match_info.f_score)
+
+        for t in tolokers_decl_match:
+            self.tolokers[t] =  {'avg':avg(tolokers_decl_match[t]), 'tasks': len(tolokers_decl_match[t])}
+
+        print ("Avg decl_match:" + str(avg(decl_matches)))
+
+
+    def report(self):
+        if args.dump_conflicts:
+            conflict_file = open(args.dump_conflicts, "w", encoding="utf8")
+        else:
+            conflict_file = None
+        global DATA_FOLDER
+        for task in self.tasks:
+            match_info = task['match_info']
+            if match_info.f_score == 1.0:
+                continue
+
+            input_id = task["INPUT:input_id"]
+            toloker_json = json.loads(task['OUTPUT:declaration_json'])
+            golden_json = json.loads(self.golden_pool[input_id])
+            with open(os.path.join(DATA_FOLDER, input_id+".toloker.json"), "w", encoding="utf8") as outf:
+                json.dump(toloker_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
+            with open(os.path.join(DATA_FOLDER, input_id+".golden.json"), "w", encoding="utf8") as outf:
+                json.dump(golden_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
+            dump_conflict(task, golden_json, toloker_json, match_info, conflict_file)
 
         if args.dump_conflicts:
             conflict_file.close()
-        print ("Avg decl_match:" + str(avg(decl_matches)) )
+
+        for t in self.tolokers:
+            print (t + ": " + str(self.tolokers[t]))
 
 
 if __name__ == '__main__':
     args = parse_args()
     toloka_stats = TTolokaStats(args)
-    toloka_stats.collect_stats (args.toloka)
+    toloka_stats.read_tasks(args.toloka);
+    toloka_stats.calc_decl_match()
+    toloka_stats.report()
 

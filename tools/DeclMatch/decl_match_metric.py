@@ -41,6 +41,9 @@ def read_field(dct, field_name):
     value = value.replace("\\r", "")
     value = value.replace("\r", "")
     value = value.lower()
+    if field_name == "country_raw":
+        if value in {"россия", "российская федерация", "рф"}:
+            value = "россия"
 
     return value
 
@@ -82,20 +85,8 @@ def get_property(person, field_name, relative):
     return {}
 
 
-def check_incomes_or_auto(person1, person2, field_name, check_field_name, match_info):
-    v1 = get_property(person1, field_name, None)
-    v2 = get_property(person2, field_name, None)
-    check_field (v1, v2, field_name + "/relative=null", check_field_name, match_info)
-
-    relative = u"Супруг(а)"
-    v1 = get_property(person1, field_name, relative)
-    v2 = get_property(person2, field_name, relative)
-    check_field (v1, v2, field_name + "/" + relative, check_field_name, match_info)
-
-
 def is_null(v):
     return v is None or len(v) == 0
-
 
 
 def are_equal_realty(p1, p2):
@@ -105,12 +96,12 @@ def are_equal_realty(p1, p2):
              check_equal_value(p1, p2, "type_raw")[0] ) and
              check_equal_value(p1, p2, "square_raw")[0] and
              check_equal_value(p1, p2, "relative")[0] and
-            # to do check country
+             check_equal_value(p1, p2, "country_raw")[0] and
              check_equal_value(p1, p2, "own_type_by_column_type")[0]);
 
 
 def describe_realty(p):
-    return u"real estate {0}, {1}, {2}, {3}, {4} {5}".format(
+    return u"real estate {0}, {1}, {2}, {3}, {4} relative={5}".format(
         p.get("text", "").replace("\n", "\\n"),
         p.get("type_raw", "").replace("\n", "\\n"),
         p.get("own_type_raw", ""),
@@ -119,27 +110,49 @@ def describe_realty(p):
         p.get("relative"))
 
 
-def check_realties(realties1, realties2, match_info):
+def are_equal_vehicle(p1, p2):
+    return (
+             check_equal_value(p1, p2, "text")[0] and
+             check_equal_value(p1, p2, "relative")[0]);
+
+
+def describe_vehicle(p):
+    return u"vehicle {0}, relative={1}".format(
+        p.get("text", "").replace("\n", "\\n"),
+        p.get("relative"))
+
+
+def are_equal_income(p1, p2):
+    return check_equal_value(p1, p2, "relative")[0] and check_equal_value(p1, p2, "size_raw")[0];
+
+
+def describe_income(p):
+    return u"income {0}, relative={1}".format(
+        p.get("size_raw", "").replace("\n", "\\n"),
+        p.get("relative"))
+
+
+def check_set_field(field1, field2, are_equal_func, describe_func, match_info ):
     used = set()
-    for p1 in realties1:
+    for p1 in field1:
         found = False
-        for i in range(len(realties2)):
-            p2 = realties2[i]
-            if i not in used and are_equal_realty(p1, p2):
+        for i in range(len(field2)):
+            p2 = field2[i]
+            if i not in used and are_equal_func(p1, p2):
                 found = True
                 used.add( i )
-                match_info.true_positive.append (describe_realty(p1))
+                match_info.true_positive.append (describe_func(p1))
                 break
         if not found:
-            match_info.false_negative.append(describe_realty(p1))
-    for i in range(len(realties2)):
+            match_info.false_negative.append(describe_func(p1))
+    for i in range(len(field2)):
         if i not in used:
-            match_info.false_positive.append(describe_realty(realties2[i]))
+            match_info.false_positive.append(describe_func(field2[i]))
 
 
 def calc_decl_match_one_pair(json1, json2):
     match_info = TMatchInfo()
-    if len(json1['persons']) == 0 and len(json2['persons']) == 0:
+    if len(json1.get('persons', [])) == 0 and len(json2.get('persons', [])) == 0:
         match_info.f_score = 1.0
         return match_info
     elif len(json1['persons']) == 0 or len(json2['persons']) == 0:
@@ -155,9 +168,21 @@ def calc_decl_match_one_pair(json1, json2):
     check_field(person_info_1, person_info_2, "person", "role", match_info)
     check_field(person_info_1, person_info_2, "person", "department", match_info)
     check_field(person1, person2, "", "year", match_info)
-    check_incomes_or_auto(person1, person2, "incomes", "size_raw", match_info)
-    check_incomes_or_auto(person1, person2, "vehicles", "text", match_info)
-    check_realties(person1.get('real_estates', []), person2.get('real_estates', []), match_info)
+    check_set_field(person1.get('incomes', []),
+                    person2.get('incomes', []),
+                    are_equal_income,
+                    describe_income,
+                    match_info)
+    check_set_field(person1.get('vehicles', []),
+                    person2.get('vehicles', []),
+                    are_equal_vehicle,
+                    describe_vehicle,
+                    match_info)
+    check_set_field(person1.get('real_estates', []),
+                    person2.get('real_estates', []),
+                    are_equal_realty,
+                    describe_realty,
+                    match_info)
     tp = len(match_info.true_positive)
     fp = len(match_info.false_positive)
     fn = len(match_info.false_negative)
@@ -205,14 +230,16 @@ def trunctate_json(j):
     return res
 
 
-def  add_html_table_row(cells):
+def  add_html_table_row(cells, make_bold=False):
     res = "<tr>"
     for c in cells:
         res  += "  <td"
         if c["mc"] > 1:
             res += " colspan=" + str(c["mc"])
         res += ">"
+        if make_bold: res += "<b>";
         res += c["t"].replace("\n", '<br/>')
+        if make_bold: res += "</b>";
         res += "</td>\n"
     return res + "</tr>\n"
 
@@ -220,15 +247,16 @@ def  add_html_table_row(cells):
 def convert_to_html(jsonStr, maintag="html"):
     data = json.loads(jsonStr)
     res = "<"+ maintag +">"
-    res += "<h1>" +  data['Title'] + "</h1>\n"
+    if data.get('Title') != None:
+        res += "<h1>" +  data['Title'] + "</h1>\n"
     res += "<table border=1>\n"
     res += "<thead>\n"
     for r in  data["Header"]:
-        res += add_html_table_row(r)
+        res += add_html_table_row(r, True)
     res += "</thead>\n"
     res += "<tbody>\n"
     for r in  data["Section"]:
-        res += add_html_table_row(r)
+        res += add_html_table_row(r, True)
     for r in  data["Data"]:
         res += add_html_table_row(r)
     res += "</tbody>\n"
@@ -244,9 +272,11 @@ def dump_conflict (task, golden_json, json_to_check, match_info, conflict_file):
     res += "<tr>"
     res += "<td colspan=3><h1>"
     res += "f-score={}".format(match_info.f_score)
-    res += " worker_id={}".format(task['ASSIGNMENT:worker_id'])
+    res += " worker_id={}".format(task.get('ASSIGNMENT:worker_id', "unknown"))
     res += " input_id={}".format(task['INPUT:input_id'])
     res += " line_no={}".format(task['input_line_no'])
+    res += " <a href={}> task link</a>".format(task.get('ASSIGNMENT:link', ""))
+    
     res += "</h1>"
     res += "</td></tr>"
 
