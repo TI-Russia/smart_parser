@@ -4,7 +4,6 @@ using System.Linq;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using TI.Declarator.ParserCommon;
 using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 
@@ -14,6 +13,10 @@ namespace RegressionTesting
     /// Summary description for ValidityTests
     /// </summary>
     [TestClass]
+    [DeploymentItem(SamplesDirectory)]
+    [DeploymentItem(@"JsonSerialization\import-schema.json")]
+    [DeploymentItem(@"JsonSerialization\import-schema-dicts.json")]
+    [DeploymentItem("log4net.config")]
     public class ValidityTests
     {
         public ValidityTests()
@@ -124,140 +127,84 @@ namespace RegressionTesting
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinDalVostok2015()
         {
             TestSmartParser("SmartParser\\MinDalVostok2015.xlsx", "prod");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void TestPdfOneLine()
         {
             TestSmartParser("SmartParser\\one_line_2017.pdf", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void SpellCheckRealtyType()
         {
             TestSmartParser("SmartParser\\SpellCheckRealtyType.docx", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void TestPdfTwoTables()
         {
             TestSmartParser("SmartParser\\two_tables_2017.pdf", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void IncomeNotFirstLine()
         {
             TestSmartParser("SmartParser\\IncomeNotFirstLine.docx", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void ManyManyColumns()
         {
             TestSmartParser("SmartParser\\256_Columns.xlsx", "npoi");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void TestExcelMinfin2016()
         {
             TestSmartParser("SmartParser\\minfin2016.xlsx", "npoi");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void TestMinZdrav2015()
         {
             TestSmartParser("SmartParser\\minzdrav2015.docx", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinSport2016()
         {
             TestSmartParser("SmartParser\\MinSport2016.docx", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinRes2011()
         {
             TestSmartParser("SmartParser\\MinRes2011.doc", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinZdorov2015Full()
         {
             TestSmartParser("SmartParser\\MinZdorov2015Full.docx", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinEkon2013()
         {
             TestSmartParser("SmartParser\\MinEkon2013.docx", "prod");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinStroy2014()
         {
             TestSmartParser("SmartParser\\MinStroy2014.docx", "xceed");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinObr2012()
         {
             // в этом тесте есть ошибка, последний обеъек не парсится
@@ -265,10 +212,6 @@ namespace RegressionTesting
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinTrans2011()
         {
             // в этом тесте есть ошибка, последний обеъек не парсится
@@ -276,10 +219,6 @@ namespace RegressionTesting
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinSevKavkaz2015()
         {
             // повтор Header внутри таблицы
@@ -287,60 +226,36 @@ namespace RegressionTesting
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinObr2016()
         {
             TestSmartParser("SmartParser\\MinObr2016.xlsx", "prod");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void Fsin2013()
         {
             TestSmartParser("SmartParser\\fsin2013.docx", "prod") ;
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinStroy2017()
         {
             TestSmartParser("SmartParser\\MinStroy2017.xlsx", "prod");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void MinEkonon2017()
         {
             TestSmartParser("SmartParser\\MinEkonon2017.docx", "prod");
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void TolokaGenerated()
         {
             TestSmartParser("SmartParser\\toloka.toloka_json", "prod", true);
         }
 
         [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("log4net.config")]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
         public void Unk2014()
         {
             TestSmartParser("SmartParser\\Unk2014.xlsx", "prod");
