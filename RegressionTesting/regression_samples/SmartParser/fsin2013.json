@@ -14,7 +14,8 @@
         },
         {
           "size": 84000.00,
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "real_estates": [
@@ -81,7 +82,8 @@
         },
         {
           "size": 248300.00,
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "real_estates": [
@@ -140,7 +142,8 @@
         },
         {
           "size": 380521.68,
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "real_estates": [
