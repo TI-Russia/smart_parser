@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
-using System.Reflection;
 using System.IO;
 using Parser.Lib;
+using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
 using CMDLine;
@@ -28,6 +28,7 @@ namespace Smart.Parser
         public static string TolokaFileName = "";
         public static string HtmlFileName = "";
         public static bool SkipRelativeOrphan = false;
+        public static bool SkipApiValidation = false;
 
         static string ParseArgs(string[] args)
         {
@@ -44,6 +45,7 @@ namespace Smart.Parser
             CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
             CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
+            CMDLineParser.Option skipApiValidationOpt = parser.AddBoolSwitch("-skip-api-validation", "skip API validation (useful if you're working offline)");
             parser.AddHelpOption();
             try
             {
@@ -94,6 +96,7 @@ namespace Smart.Parser
             Logger.SetLoggingLevel(verboseLevel);
 
             SkipRelativeOrphan = skipRelativeOrphanOpt.isMatched;
+            SkipApiValidation = skipApiValidationOpt.isMatched;
 
             if (adapterOpt.isMatched)
             {
@@ -534,11 +537,22 @@ namespace Smart.Parser
             }
             Logger.Info("Output size: " + output.Length);
 
+            if (!SkipApiValidation)
+            {
+                string validationResult = ApiClient.ValidateParserOutput(output);
+                if (validationResult != "[]")
+                {                    
+                    string errorsFileName = "validation_errors_" + Path.GetFileNameWithoutExtension(declarationFileName) + ".json";
+                    var rep = MiscSerializer.DeserializeValidationReport(validationResult);
+                    File.WriteAllText(errorsFileName, validationResult);
+                    Logger.Error("Api validation failed. Errors:" + errorsFileName);
+                }
+            }
+
             Logger.Info("Writing json to " + outFile);
             File.WriteAllText(outFile, output);
             return 0;
         }
-
     }
 
 }
