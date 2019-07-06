@@ -1,0 +1,1633 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ 
+    <meta charset="UTF-8">
+
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/favicon/manifest.json">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Росимущество  / Деятельность / Противодействие коррупции / Новости о мероприятиях по противодействию коррупции - Федеральное агентство по управлению государственным имуществом</title>
+    <meta name="description" content="Федеральное агентство по управлению государственным имуществом" />
+    <link rel="stylesheet" href="/css/jquery-ui.min.css"/>
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-select.css">
+    <link rel="stylesheet" href="/css/colorbox_e3.css">
+    <link rel="stylesheet" href="/css/style.css?v=1">
+    <link rel="stylesheet" href="/css/blind.css">
+
+
+    <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.ui.datepicker-ru.js"></script>
+   
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-dropdown.js"></script>
+    <script src="/js/bootstrap-tab.js"></script>
+    <script src="/js/bootstrap-select.min.js"></script>
+    <script src="/js/bootstrap-button.js"></script>
+    <script src="/js/bootstrap-carousel.js"></script>
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="/js/jquery.colorbox-min.js"></script>
+    <script src="/js/blind.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lt IE 10]>
+      <script src="/js/jquery.placeholder.min.js"></script>
+    <![endif]-->
+    
+    <link rel="stylesheet" href="/css/tooltipster.bundle.min.css" />
+    <script src="/js/tooltipster.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.tltp').tooltipster({
+                trigger: 'click',
+                interactive: true,
+                side: 'bottom',
+                theme: ['tooltipster-default', 'tooltipster-default-customized'],
+                contentCloning: true,
+                zIndex: 9998,
+                functionReady: function (origin, tooltip) {
+                    $('.viewpdf').colorbox({
+                        iframe: true, width: '90%', height: '90%', maxWidth: '900px', arrowKey: 'false',
+                        opacity: 0.40,
+                        rel: 'nofollow'
+                    });
+
+                    $('.viewoffice').colorbox({
+                        iframe: true, width: '90%', height: '90%', maxWidth: '900px', arrowKey: 'false',
+                        opacity: 0.40,
+                        rel: 'nofollow'
+                    });
+                },
+            });
+
+            $('.viewpdf').colorbox({
+                iframe: true, width: '90%', height: '90%', maxWidth: '900px', arrowKey: 'false',
+                opacity: 0.40,
+                rel: 'nofollow'
+            });
+
+            $('.viewoffice').colorbox({
+                iframe: true, width: '90%', height: '90%', maxWidth: '900px', arrowKey: 'false',
+                opacity: 0.40,
+                rel: 'nofollow'
+            });
+            $('.viewhtml').colorbox({
+                inline: true, width: '90%', height: '90%', maxWidth: '900px', arrowKey: 'false',
+                opacity: 0.40
+            });
+        });
+    </script>
+</head>
+<body>
+
+
+
+    <div class="blind-version-control">	
+        <dl class="a-fontsize">
+            <dt>Размер шрифта:</dt>
+            <dd><a href="#" data-rel="fontsize-small" class="a-fontsize-small"></a></dd>
+            <dd><a href="#" data-rel="fontsize-normal" class="a-fontsize-normal"></a></dd>
+            <dd><a href="#" data-rel="fontsize-big" class="a-fontsize-big"></a></dd>
+        </dl>
+    </div>
+
+    
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="myModalLabel">
+                <div class="btc"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>
+                <div id="m_body">
+                
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <header>
+        <div class="container-fluid">
+            
+		        
+
+<div id="atten" style="display:none;"><b>ВНИМАНИЕ!</b> Вы перешли на сайт центрального аппарата Росимущества</div>
+
+<div class="row mainrow">
+    <div id="search_form" style="display: none;">
+        <div class="searchform__wrapper">
+            <div class="col-xs-10 col-sm-10 col-md-11">
+                <form action="/search">
+                    <div class="input-group">
+                        <input type="text" placeholder="Введите название услуги или документа" class="form-control" aria-describedby="ico_s" onkeyup="checkSiteSearchForm();" id="serchContext" name="context" value="" />
+                        <span class="input-group-addon" id="ico_s"><input type="image" src="/images/i_search.png" id="serchButton" alt="Поиск по сайту" title="Поиск по сайту" /></span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-1 text-right bcl">
+                <button class="sclose" type="button"><i class="icon_close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 logo">
+        <a class="logo__link" href="/"><img src="/images/logo.png"  alt="Росимущество" title="Росимущество" /></a>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-8">
+        <div class="row icons">
+            <div class="col-xs-12 col-sm-7 col-md-offset-1 col-md-6">
+                <div id="geo-reg"></div>
+            </div>
+            <div id="ico_search" class="col-xs-3 col-sm-6 col-md-2 text-right">
+                <img src="/images/ico_search.png" alt="Поиск по сайту" />
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-3 text-right nowrap">
+                
+                        <div class="lang_trig"><span>RU</span> | <a href="/en">EN</a></div>
+                    
+                <span class="blind-version-opener" id="blind-link">
+                    <img src="/images/blind_eye.png" alt="Версия для слабовидящих" title="Версия для слабовидящих" /><em></em></span>
+                <a href="https://www.facebook.com/Rosim.ru/" target="_blank">
+                    <img src="/images/ico_f.png" alt="Facebook" /></a>
+            </div>
+        </div>
+        <div class="row menu">
+            <div class="col-sm-12 col-md-offset-1 col-md-11">
+                
+        <ul class="mmenu">
+    
+        <li ><a href="/about/structure/central">
+            Об агентстве</a></li>
+    
+        <li ><a href="/activities/sales">
+            Приватизация</a></li>
+    
+        <li ><a href="/activities/realization">
+            Продажа</a></li>
+    
+        <li ><a href="/activities/rent">
+            Аренда</a></li>
+    
+        <li ><a href="/activities/reestr/rfi">
+            Реестры</a></li>
+    
+        <li ><a href="/contacts">
+            Контакты</a></li>
+    
+        <li ><a href="/contacts/requests/send?record=2">
+            Обращение к Руководителю</a></li>
+    
+        </ul>
+    
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkSiteSearchForm() {
+        if ($('#serchContext').val() != '') {
+            $('#serchButton').removeAttr('disabled');
+            if ($('body').hasClass('color1') != true) {
+                $('#serchButton').attr('src', '/images/i_search_active.png');
+            }
+        }
+        else {
+            $('#serchButton').attr('disabled', 'disable');
+            $('#serchButton').attr('src', '/images/i_search.png');
+        }
+    }
+    function checkRegions() {
+        $('#regionsLink').attr('src', '/images/regions_s.png');
+    }
+    function unCheckRegions() {
+        $('#regionsLink').attr('src', '/images/regions.png');
+    }
+
+    $.ajax({
+        url: "/_ajax_geobase.aspx",
+        cache: false,
+        success: function (html) {
+            $("#geo-reg").html(html);
+        }
+    });
+    $(document).ready(function(e) {
+        var at = $('#atten');
+        at.css({
+            'margin-left':'-' + (at.width() / 2) + 'px'
+        });
+        if('0'==1)
+        {
+            $("#atten").show();
+            setTimeout(function() { $("#atten").hide('normal'); }, 5000);
+        }
+    });
+    $(window).load(function () {
+
+        $("#ico_search").click(function () {
+            $("#search_form").show();
+        });
+        $("#search_form .sclose").click(function () {
+            $("#search_form").hide();
+        });
+        $('#logo_contacts').click(function () {
+            var a = "/modal_contacts.aspx";
+            var b = $(this).attr("class");
+            $('#modal .modal-dialog').removeClass().addClass("modal-dialog logo_contacts");
+            $.get(a, function (data) {
+                $('#m_body').html(data);
+                $('#modal').modal();
+
+            });
+        });
+
+        $('#geo-reg').click(function () {
+            var a = $(this).children().attr("data-href");
+            var b = $(this).children().attr("class");
+            $('#modal .modal-dialog').removeClass().addClass("modal-dialog " + b);
+            $.get(a, function (data) {
+                $('#m_body').html(data);
+                $('#modal').modal();
+
+            });
+            $("#map_popover").hide();
+        });
+    });
+</script>
+
+
+
+	        
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-offset-1 col-md-11">
+                
+<div id="reg_list_user" class="row map_w" style="display: none;">
+    <div class="col-sm-12">
+        <div class="row">
+            <h6 class="col-xs-10 col-sm-10 col-md-11">Федеральные округа</h6>
+            <div class="col-xs-2 col-sm-2 col-md-1 text-right bcl">
+                <button class="sclose" type="button"><i class="icon_close"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                
+                
+                        <ul class="nav nav-pills sel_reg">
+                    
+                        <li class="active" role="presentation"><a href="#du_393" aria-controls="393" role="tab" data-toggle="pill">Центральный</a></li>
+                    
+                        <li  role="presentation"><a href="#du_395" aria-controls="395" role="tab" data-toggle="pill">Южный</a></li>
+                    
+                        <li  role="presentation"><a href="#du_394" aria-controls="394" role="tab" data-toggle="pill">Северо-Западный</a></li>
+                    
+                        <li  role="presentation"><a href="#du_399" aria-controls="399" role="tab" data-toggle="pill">Дальневосточный</a></li>
+                    
+                        <li  role="presentation"><a href="#du_398" aria-controls="398" role="tab" data-toggle="pill">Сибирский</a></li>
+                    
+                        <li  role="presentation"><a href="#du_397" aria-controls="397" role="tab" data-toggle="pill">Уральский</a></li>
+                    
+                        <li  role="presentation"><a href="#du_396" aria-controls="396" role="tab" data-toggle="pill">Приволжский</a></li>
+                    
+                        <li  role="presentation"><a href="#du_1660" aria-controls="1660" role="tab" data-toggle="pill">Северо-Кавказский</a></li>
+                    
+                        </ul>
+                    
+            </div>
+        </div>
+        <div class="tab-content">
+            
+                    <div role="tabpanel" class="tab-pane active" id='du_393'>
+                        <h6>Центральный</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=404&amp;action=sel_reg" id='usreg_404'>31 Белгородская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=405&amp;action=sel_reg" id='usreg_405'>32 Брянская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=406&amp;action=sel_reg" id='usreg_406'>33 Владимирская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=409&amp;action=sel_reg" id='usreg_409'>36 Воронежская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=414&amp;action=sel_reg" id='usreg_414'>37 Ивановская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=417&amp;action=sel_reg" id='usreg_417'>40 Калужская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=422&amp;action=sel_reg" id='usreg_422'>44 Костромская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=426&amp;action=sel_reg" id='usreg_426'>46 Курская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=428&amp;action=sel_reg" id='usreg_428'>48 Липецкая область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=430&amp;action=sel_reg" id='usreg_430'>50 Московская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=437&amp;action=sel_reg" id='usreg_437'>57 Орловская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=459&amp;action=sel_reg" id='usreg_459'>62 Рязанская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=464&amp;action=sel_reg" id='usreg_464'>67 Смоленская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=466&amp;action=sel_reg" id='usreg_466'>68 Тамбовская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=467&amp;action=sel_reg" id='usreg_467'>69 Тверская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=469&amp;action=sel_reg" id='usreg_469'>71 Тульская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=479&amp;action=sel_reg" id='usreg_479'>76 Ярославская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=411&amp;action=sel_reg" id='usreg_411'>77 г. Москва</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_395'>
+                        <h6>Южный</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=442&amp;action=sel_reg" id='usreg_442'>1 Республика Адыгея</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=448&amp;action=sel_reg" id='usreg_448'>8 Республика Калмыкия</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=423&amp;action=sel_reg" id='usreg_423'>23 Краснодарский край</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=403&amp;action=sel_reg" id='usreg_403'>30 Астраханская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=407&amp;action=sel_reg" id='usreg_407'>34 Волгоградская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=458&amp;action=sel_reg" id='usreg_458'>61 Ростовская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=209295&amp;action=sel_reg" id='usreg_209295'>91 Республика Крым</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=209296&amp;action=sel_reg" id='usreg_209296'>92 г. Севастополь</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_394'>
+                        <h6>Северо-Западный</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=449&amp;action=sel_reg" id='usreg_449'>10 Республика Карелия</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=450&amp;action=sel_reg" id='usreg_450'>11 Республика Коми</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=402&amp;action=sel_reg" id='usreg_402'>29 Архангельская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=408&amp;action=sel_reg" id='usreg_408'>35 Вологодская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=416&amp;action=sel_reg" id='usreg_416'>39 Калининградская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=427&amp;action=sel_reg" id='usreg_427'>47 Ленинградская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=431&amp;action=sel_reg" id='usreg_431'>51 Мурманская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=433&amp;action=sel_reg" id='usreg_433'>53 Новгородская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=441&amp;action=sel_reg" id='usreg_441'>60 Псковская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=410&amp;action=sel_reg" id='usreg_410'>78 г. Санкт-Петербург</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=483&amp;action=sel_reg" id='usreg_483'>83 Ненецкий автономный округ</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_399'>
+                        <h6>Дальневосточный</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=445&amp;action=sel_reg" id='usreg_445'>3 Республика Бурятия</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=453&amp;action=sel_reg" id='usreg_453'>14 Республика Саха (Якутия)</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=440&amp;action=sel_reg" id='usreg_440'>25 Приморский край</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=473&amp;action=sel_reg" id='usreg_473'>27 Хабаровский край</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=401&amp;action=sel_reg" id='usreg_401'>28 Амурская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=418&amp;action=sel_reg" id='usreg_418'>41 Камчатский край</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=429&amp;action=sel_reg" id='usreg_429'>49 Магаданская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=462&amp;action=sel_reg" id='usreg_462'>65 Сахалинская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=476&amp;action=sel_reg" id='usreg_476'>75 Забайкальский край</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=412&amp;action=sel_reg" id='usreg_412'>79 Еврейская автономная область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=478&amp;action=sel_reg" id='usreg_478'>87 Чукотский автономный округ</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_398'>
+                        <h6>Сибирский</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=443&amp;action=sel_reg" id='usreg_443'>4 Республика Алтай</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=456&amp;action=sel_reg" id='usreg_456'>17 Республика Тыва</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=457&amp;action=sel_reg" id='usreg_457'>19 Республика Хакасия</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=400&amp;action=sel_reg" id='usreg_400'>22 Алтайский край</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=424&amp;action=sel_reg" id='usreg_424'>24 Красноярский край</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=413&amp;action=sel_reg" id='usreg_413'>38 Иркутская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=420&amp;action=sel_reg" id='usreg_420'>42 Кемеровская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=434&amp;action=sel_reg" id='usreg_434'>54 Новосибирская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=435&amp;action=sel_reg" id='usreg_435'>55 Омская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=468&amp;action=sel_reg" id='usreg_468'>70 Томская область</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_397'>
+                        <h6>Уральский</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=425&amp;action=sel_reg" id='usreg_425'>45 Курганская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=463&amp;action=sel_reg" id='usreg_463'>66 Свердловская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=470&amp;action=sel_reg" id='usreg_470'>72 Тюменская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=474&amp;action=sel_reg" id='usreg_474'>74 Челябинская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=486&amp;action=sel_reg" id='usreg_486'>86 Ханты-Мансийский автономный округ — Югра</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=488&amp;action=sel_reg" id='usreg_488'>89 Ямало-Ненецкий автономный округ</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_396'>
+                        <h6>Приволжский</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=444&amp;action=sel_reg" id='usreg_444'>2 Республика Башкортостан</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=451&amp;action=sel_reg" id='usreg_451'>12 Республика Марий Эл</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=452&amp;action=sel_reg" id='usreg_452'>13 Республика Мордовия</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=455&amp;action=sel_reg" id='usreg_455'>16 Республика Татарстан</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=471&amp;action=sel_reg" id='usreg_471'>18 Удмуртская Республика</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=477&amp;action=sel_reg" id='usreg_477'>21 Чувашская Республика</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=421&amp;action=sel_reg" id='usreg_421'>43 Кировская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=432&amp;action=sel_reg" id='usreg_432'>52 Нижегородская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=436&amp;action=sel_reg" id='usreg_436'>56 Оренбургская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=438&amp;action=sel_reg" id='usreg_438'>58 Пензенская область</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=439&amp;action=sel_reg" id='usreg_439'>59 Пермский край</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=460&amp;action=sel_reg" id='usreg_460'>63 Самарская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=461&amp;action=sel_reg" id='usreg_461'>64 Саратовская область</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=472&amp;action=sel_reg" id='usreg_472'>73 Ульяновская область</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+                    <div role="tabpanel" class="tab-pane " id='du_1660'>
+                        <h6>Северо-Кавказский</h6>
+                        
+                        
+                                <div class=" col-sm-4">
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=446&amp;action=sel_reg" id='usreg_446'>5 Республика Дагестан</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=447&amp;action=sel_reg" id='usreg_447'>6 Республика Ингушетия</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=415&amp;action=sel_reg" id='usreg_415'>7 Кабардино-Балкарская Республика</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=419&amp;action=sel_reg" id='usreg_419'>9 Карачаево-Черкесская Республика</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=454&amp;action=sel_reg" id='usreg_454'>15 Республика Северная Осетия-Алания</a>
+                            
+                                
+                                        </div>
+                                        <div class=" col-sm-4">
+                                    
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=475&amp;action=sel_reg" id='usreg_475'>20 Чеченская Республика</a>
+                            
+                                
+                                <a class="sflink" data-href="/geo_region.aspx?reg_no=465&amp;action=sel_reg" id='usreg_465'>26 Ставропольский край</a>
+                            
+                                </div>
+                            
+                    </div>
+                
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".sflink").click(function () {
+            var r_text = $(this).text();
+            var dh = $(this).attr("data-href");
+            //$(".geo").attr("data-href",dh);
+            //$(".geo span.gs").text(r_text);
+            $('#modal .modal-dialog').removeClass().addClass("modal-dialog geo");
+            $.get(dh, function (data) {
+                $('#m_body').html(data);
+                $('#modal').modal();
+            });
+            //$("#reg_list_user").hide();
+            //$("#map").show();
+        });
+        $("#reg_list_user .sclose").click(function () {
+            $("#reg_list_user").hide();
+            $("#map").show();
+        });
+        $("*").keydown(function (event) {
+            if (event.which == 27) {
+                $("#reg_list_user").hide();
+                $("#map").show();
+            }
+        });
+    });
+</script>
+
+            </div>
+        </div>
+
+        
+        
+
+<div id="path" class="row">
+    <div class="col-xs-12 col-sm-12  col-md-12  col-lg-offset-1 col-lg-11 path">
+        <ul class="breadcrumb">
+            <li><a href="/">Главная</a> </li>
+
+    
+     
+	
+     
+	
+     
+            <li><a href='/activities'>Деятельность</a></li>
+            
+    
+	
+     
+            <li><a href='/activities/anticorruption'>Противодействие коррупции</a></li>
+            
+    
+	
+
+        </ul>
+    </div>
+</div>
+
+
+<div id="ch_name" class="row">
+    <div class="col-xs-12 col-sm-12  col-md-12  col-lg-offset-1 col-lg-11 ch_name_w">
+        <div class="ch_name">
+            <h2 class="col-sm-12 col-md-12 col-lg-8">
+
+        Новости о мероприятиях по противодействию коррупции
+    
+            </h2>
+        </div>
+    </div>
+</div>
+
+    
+
+
+
+
+
+    
+
+        <div class="row">
+             
+                    <div id="right_col" class="col-sm-6 col-md-3 col-md-push-9 col-lg-3 col-lg-push-9">
+                        
+        
+    
+    
+
+    
+        
+        
+    
+
+
+
+
+    
+        <ul class="rmenu">
+    
+    
+
+        <li class="active">
+            
+
+                
+                    <p><b>Новости о мероприятиях по противодействию коррупции</b></p>
+                
+            
+            
+            
+
+            
+
+                
+
+
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/sovet_anticor'>
+                    Совет по анализу ведомственных рисков и антикоррупции</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/npa'>
+                    Нормативные и иные акты в сфере противодействия коррупции</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/expertise'>
+                    Антикоррупционная экспертиза</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/metod'>
+                    Методические материалы</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/forms'>
+                    Формы документов, связанных с противодействием коррупции, для заполнения</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/about/job/earnings'>
+                    Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/activ_commission'>
+                    Комиссия по соблюдению требований к служебному поведению и урегулированию конфликта интересов (аттестационная комиссия)</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/reports'>
+                    Доклады, отчеты, обзоры, статистическая информация </a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/contacts/requests'>
+                    Обратная связь для сообщений о фактах коррупции</a>
+            
+
+            
+         </li>
+    
+
+    
+    
+
+        <li >
+            
+                <a href='/activities/anticorruption/fgup'>
+                    Информация для подведомственных организаций</a>
+            
+
+            
+         </li>
+    
+
+    
+            </ul>
+    
+
+
+
+
+
+
+
+    
+                    </div>
+                    <div id="main_col" class="col-sm-12 col-md-9 col-md-pull-3 col-lg-offset-1 col-lg-8 col-lg-pull-3">
+                        
+        
+
+
+
+        
+        
+
+        
+            
+        
+
+        
+
+
+
+        
+
+        
+
+
+    
+
+
+
+
+
+
+
+    
+
+ 
+
+
+
+
+        
+
+        
+
+    
+
+
+
+        
+                <br />
+                <div class="row">
+                <div class="col-sm-12">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+<ul class="unstyled list tab-pane fade in active" id="news_list" style="padding-left:0;">
+
+<li style="padding-left:0;">
+        
+        <a href="/press/news/341843" class="list_title">Росимущество стало участником семинара-совещания по вопросам применения антикоррупционного законодательства</a>
+        <div class="date">
+            12.12.2018
+            
+        
+            / Новости 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+        <a href="/press/news/332536" class="list_title">В Росимуществе обсудили исполнение ведомственного плана по противодействию коррупции за прошедший год</a>
+        <div class="date">
+            29.06.2018
+            
+        
+            / Новости 
+        
+        </div>
+
+
+    <span class="glyphicon glyphicon-camera" aria-hidden="true">
+    </span>
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+                <a href="/press/news/328543">
+                
+                        <img src="/Thumbnail.ashx?id=101945&type=news_list" width="169" height="100" alt="" />
+                    
+                    </a>
+            
+        <a href="/press/news/328543" class="list_title">В Росимуществе состоялся обучающий семинар-совещание по вопросам сбора и обработки сведений о доходах с представителями подведомственных организаций</a>
+        <div class="date">
+            02.04.2018
+            
+        
+            / Новости 
+        
+        </div>
+
+
+    <span class="glyphicon glyphicon-camera" aria-hidden="true">
+    </span>
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+        <a href="/press/news/326563" class="list_title">В Росимуществе состоялся семинар-совещание с работниками, ответственными  за сбор и обработку сведений о доходах государственных гражданских служащих агентства и его территориальных органов</a>
+        <div class="date">
+            22.02.2018
+            
+        
+            / Новости 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+        <a href="/press/news/321677" class="list_title">Начальник управления государственной службы, кадров и контроля деятельности территориальных органов Росимущества Ирина Фадеева приняла участие в семинаре-совещании по противодействию коррупции </a>
+        <div class="date">
+            24.11.2017
+            
+        
+            / Новости 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+                <a href="/press/news/308300">
+                
+                        <img src="/Thumbnail.ashx?id=84280&type=news_list" width="169" height="100" alt="" />
+                    
+                    </a>
+            
+        <a href="/press/news/308300" class="list_title">В Росимуществе прошел информационный семинар по заполнению справок о доходах, расходах и имуществе</a>
+        <div class="date">
+            27.03.2017
+            
+        
+            / Новости 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+                <a href="/press/news/300922">
+                
+                        <img src="/Thumbnail.ashx?id=77658&type=news_list" width="169" height="100" alt="" />
+                    
+                    </a>
+            
+        <a href="/press/news/300922" class="list_title">Работники Росимущества предупреждены о запрете дарить и принимать подарки</a>
+        <div class="date">
+            09.12.2016
+            
+        
+            / Новости 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+                <a href="/press/news/300885">
+                
+                        <img src="/Thumbnail.ashx?id=77626&type=news_list" width="169" height="100" alt="" />
+                    
+                    </a>
+            
+        <a href="/press/news/300885" class="list_title">9 декабря - Международный день борьбы с коррупцией</a>
+        <div class="date">
+            08.12.2016
+            
+        
+            / Новости 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+        <a href="/press/news/285133" class="list_title">В Росимуществе прошли совещания с территориальными органами по актуальным вопросам противодействия коррупции</a>
+        <div class="date">
+            21.04.2016
+            
+        
+            / Новости 
+        
+            / Мероприятия 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+<li style="padding-left:0;">
+        
+        <a href="/press/news/284734" class="list_title">В Росимуществе состоялось первое заседание Рабочей группы по реализации проекта «ФГУП - АнтиКорр»</a>
+        <div class="date">
+            14.04.2016
+            
+        
+            / Новости 
+        
+            / Мероприятия 
+        
+            / Пресс-релизы 
+        
+        </div>
+
+
+
+
+
+</li>
+
+</ul>
+<div class="scroller paging">
+    
+	
+	
+	
+	<span class="current">1</span>
+	<a href="/activities/anticorruption/news?news_page=1"><span>2</span></a><a href="/activities/anticorruption/news?news_page=2"><span>3</span></a>
+	<a href="/activities/anticorruption/news?news_page=1"><span>вперед &raquo;</span></a>
+	
+	
+</div>
+
+
+
+                </div>
+
+                
+                </div>
+
+                <br />
+
+            
+
+        
+    
+    
+    
+    
+        <p>&nbsp;</p>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+                    </div>
+                
+        </div>
+        <div class="row">
+            <div  class="col-xs-12 col-sm-9 text-center legend_errm">
+                Нашли ошибку в тексте? Выделите ее и нажмите <span>CTRL</span> + <span>ENTER</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+
+            
+        
+
+<div class="row">
+    <div class="col-sm-0 col-md-2">
+        <img src="/images/logo_sm.png" alt="" />
+        
+        
+    </div>
+    
+    
+
+
+
+
+        <div class="col-sm-4 col-md-3 bmenu">
+            <ul>
+    
+        
+        
+                <li>
+                    <a  href="/about">Об агентстве</a>
+                <ul>
+            
+                <li><a  href="/about/common">
+                    Общие сведения</a></li>
+            
+                <li><a  href="/about/structure">
+                    Структура и руководство</a></li>
+            
+                <li><a  href="/about/job">
+                    Госслужба</a></li>
+            
+                <li><a  href="/about/reports">
+                    Планы и отчеты</a></li>
+            
+                <li><a  href="/about/systems">
+                    Информационные системы</a></li>
+            
+                </ul></li>
+    
+        
+        
+                <li><a href="/documents">Документы</a></li>
+            
+    
+        
+        
+                <li>
+                    <a  href="/press">Пресс-служба</a>
+                <ul>
+            
+                <li><a  href="/press/news">
+                    Новости</a></li>
+            
+                </ul></li>
+    
+        
+        
+                <li>
+                    <a  href="/contacts">Контакты</a>
+                <ul>
+            
+                <li><a  href="/contacts/info">
+                    Контактная информация</a></li>
+            
+                <li><a  href="/contacts/dep_contacts">
+                    Контакты структурных подразделений</a></li>
+            
+                <li><a  href="/contacts/requests">
+                    Обращения граждан</a></li>
+            
+                </ul></li>
+    
+        
+        
+                <li><a href="/opendata">Открытые данные</a></li>
+            
+    
+        
+        
+                <li><a href="/activities/increase_transparency/public/sostav">Общественный совет</a></li>
+            
+    
+        
+                </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 bmenu">
+                    <ul>
+            
+        
+                <li>
+                    <a  href="/activities">Деятельность</a>
+                <ul>
+            
+                <li><a  href="/activities/services">
+                    Государственные услуги</a></li>
+            
+                <li><a  href="/activities/realization">
+                    Реализация и распоряжение имуществом</a></li>
+            
+                <li><a  href="/activities/sales">
+                    Приватизация</a></li>
+            
+                <li><a  href="/activities/land">
+                    Федеральные земельные участки</a></li>
+            
+                <li><a  href="/activities/rent">
+                    Аренда федерального имущества</a></li>
+            
+                <li><a  href="/activities/purchases">
+                    Государственные закупки</a></li>
+            
+                <li><a  href="/activities/interaction">
+                    Межведомственное взаимодействие</a></li>
+            
+                <li><a  href="/activities/programs">
+                    Федеральные целевые и государственные программы</a></li>
+            
+                <li><a  href="/activities/international">
+                    Международное сотрудничество</a></li>
+            
+                <li><a  href="/activities/court">
+                    Обзор судебных дел</a></li>
+            
+                <li><a  href="/activities/anticorruption">
+                    Противодействие коррупции</a></li>
+            
+                <li><a  href="/activities/corp">
+                    Корпоративное управление</a></li>
+            
+                <li><a  href="/activities/increase_transparency">
+                    Открытое Агентство</a></li>
+            
+                <li><a  href="/activities/reestr">
+                    Учет федерального имущества и ведение его реестра</a></li>
+            
+                <li><a  href="/activities/bankrotstvo">
+                    Информация о ходе и результатах рассмотрения обращений, поступивших в рамках статьи 130 Федерального закона от 26 октября 2002 г. № 127-ФЗ «О несостоятельности (банкротстве)» </a></li>
+            
+                <li><a  href="/activities/protect">
+                    Деятельность в области защиты населения и территорий от чрезвычайных ситуаций природного и техногенного характера</a></li>
+            
+                </ul></li>
+    
+            </ul>
+        </div>
+    
+
+
+
+   
+    <div class="col-sm-offset-1 col-sm-3 col-md-offset-1 col-md-3 bmenu bpages">
+        
+    <ul>
+
+    <li><a
+        href="/search">
+        Поиск по сайту</a></li>
+
+    <li><a
+        href="/map">
+        Карта сайта</a></li>
+
+    <li><a
+        href="/reg/subs">
+        Подписка</a></li>
+
+    <li><a
+        href="/rss">
+        RSS</a></li>
+
+    <li><a
+        href="/tag/theme">
+        Теги</a></li>
+
+    <li><a
+        href="/tag/geo">
+        География</a></li>
+
+    <li><a
+        href="/terms">
+        Условия пользования сайтом</a></li>
+
+    <li><a
+        href="http://old.rosim.ru">
+        Старая версия сайта</a></li>
+
+    <li><a href="https://metrika.yandex.ru/dashboard?id=42190024" target="_blank">Статистика посещаемости</a></li>
+
+    </ul>
+    <span id="sputnik-informer"></span>
+
+
+        <div class="copy">
+            <h1>&copy; 2019 Федеральное агентство по управлению государственным имуществом.</h1>
+<p>Свидетельство о регистрации средства массовой информации Эл № ФС77-65713 от 13 мая 2016 года. <br /> <a href="/images/SVIDETELSTVO_o_postanovke_na_uchet.pdf" target="_blank">Свидетельство о постановке на налоговый учет</a>. <a href="/images/SVIDETELSTVO_o_registracii.pdf" target="_blank">Свидетельство о регистрации</a>.</p>
+<script type="text/javascript">// <![CDATA[
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-28621187-2']);
+_gaq.push(['_setDomainName', '.rosim.ru']);
+_gaq.push(['_trackPageview']);
+(function () {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+// ]]></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">// <![CDATA[
+(function (d, w, c) {
+        (w[c] = w[c] || []).push(function () {
+            try {
+                w.yaCounter42190024 = new Ya.Metrika({
+                    id: 42190024,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true
+                });
+            } catch (e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+// ]]></script>
+<noscript>&amp;lt;div&amp;gt;&amp;lt;img src="https://mc.yandex.ru/watch/42190024" style="position:absolute; left:-9999px;" alt="" /&amp;gt;&amp;lt;/div&amp;gt;</noscript><!-- /Yandex.Metrika counter -->
+<script type="text/javascript">// <![CDATA[
+(function (d, t, p) {
+        var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+        j.src = ("https:" == p ? "https:" : "http:") + "//stat.sputnik.ru/cnt.js";;
+        var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+    })(document, "script", document.location.protocol);
+// ]]></script>
+        </div>
+        <div class="svreg">
+           
+            <p><a href="http://maps.yandex.ru/?text=109012%2C+%D0%B3.+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C+%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9+%D0%BF%D0%B5%D1%80.%2C+%D0%B4.9" target="_blank">109012, г. Москва, Никольский пер.,9</a>, тел. <span>+7 495 539-58-62; +7 495 647-71-77</span>, факс +7 495 647-72-39, <a href="mailto:rosim0@rosim.ru">rosim0@rosim.ru</a></p>
+<p>Служба технической поддержки сайта: <a href="mailto:support_site@rosim.ru">support_site@rosim.ru</a></p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getSelectedText(){
+        var text = "";
+        if (window.getSelection) {
+            text = window.getSelection();
+        }else if (document.getSelection) {
+            text = document.getSelection();
+        }else if (document.selection) {
+            text = document.selection.createRange().text;
+        }
+        return text.toString();
+    }
+    $(document).ready(function() {
+        var isCtrl = false;
+        var selText='';
+        $(document).keyup(function (e) {
+            if(e.which == 17) isCtrl = false;
+        }).keydown(function (e) {
+            if(e.which == 17) isCtrl=true;
+            if (e.which == 13 && isCtrl == true) {
+                selText = getSelectedText();
+                if (selText != "") {
+                    var a = "/error_message.aspx";
+                    $('#modal .modal-dialog').removeClass().addClass("modal-dialog err_msg");
+                    $.post(a, { param_text: selText, param_url: window.location.href }, function (data) {
+                        $('#m_body').html(data);
+                        $('#modal').modal();
+                    });
+                }
+                isCtrl = false;
+            }
+        });
+    });
+</script>
+
+	
+
+        </div>
+    </footer>
+    <!--[if lt IE 10]>
+      <script>
+        $('input').placeholder();
+      </script>
+    <![endif]-->
+</body>
+</html>
+
+

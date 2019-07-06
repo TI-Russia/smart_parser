@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+
+<!--<html lang="ru" class="no-js" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://ogp.me/ns#">-->
+<html lang="ru" class="no-js">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="index, follow" />
+<link href="/bitrix/js/main/core/css/core.css?14184056688964" type="text/css"  rel="stylesheet" />
+<link href="/local/tpl/css/blind.css?1456320166153916" type="text/css"  rel="stylesheet" />
+<link href="/local/tpl/css/global.css?1476163542258535" type="text/css"  rel="stylesheet" />
+<link href="/local/tpl/vendor/chosen.css?141933397110916" type="text/css"  rel="stylesheet" />
+<link href="/local/tpl/vendor/jquery.jscrollpane.css?14193339712076" type="text/css"  rel="stylesheet" />
+<link href="/local/tpl/vendor/base/jquery-ui-1.9.2.custom.css?147583314222309" type="text/css"  rel="stylesheet" />
+<link href="/local/tpl_ext/style.css?14546766203068" type="text/css"  rel="stylesheet" />
+<link href="/local/include/kladrapi-jsclient-master/jquery.kladr.min.css?1453990380830" type="text/css"  rel="stylesheet" />
+<link href="/local/include/kladrapi-jsclient-master/examples/css/all.css?14539903803937" type="text/css"  rel="stylesheet" />
+<link href="/local/templates/.default/components/bitrix/menu/section/style.css?1453451637383" type="text/css"  rel="stylesheet" />
+<link href="/local/templates/main_2_col/template_styles.css?141847820083" type="text/css"  data-template-style="true"  rel="stylesheet" />
+<script type="text/javascript">if(!window.BX)window.BX={message:function(mess){if(typeof mess=='object') for(var i in mess) BX.message[i]=mess[i]; return true;}};</script>
+<script type="text/javascript">(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
+<script type="text/javascript">(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','USER_ID':'','SERVER_TIME':'1562403039','SERVER_TZ_OFFSET':'0','USER_TZ_OFFSET':'0','USER_TZ_AUTO':'Y','bitrix_sessid':'a783e2d6acd41a093f0133a400436b80','SITE_ID':'s1'});</script>
+
+
+<script type="text/javascript" src="/bitrix/js/main/core/core.js?141840566878911"></script>
+<script type="text/javascript" src="/bitrix/js/main/core/core_ajax.js?141840566830654"></script>
+<script type="text/javascript" src="/bitrix/js/main/session.js?14184056682880"></script>
+<script type="text/javascript" src="https://www.youtube.com/player_api"></script>
+
+<script type="text/javascript">
+bxSession.Expand(1440, 'a783e2d6acd41a093f0133a400436b80', false, '5f3dac90b5e1d4810b7c476eedfe5482');
+</script>
+
+<script type="text/javascript" src="/local/include/lodash/lodash.js?1453844820464386"></script>
+<script type="text/javascript" src="/local/tpl/vendor/modernizr.min.js?141933397110556"></script>
+<script type="text/javascript" src="/local/tpl/vendor/jquery.min.js?141933397195700"></script>
+<script type="text/javascript" src="/local/tpl/vendor/jquery-ui.min.js?141933397168069"></script>
+<script type="text/javascript" src="/local/tpl/vendor/masonry.min.js?141933397125250"></script>
+<script type="text/javascript" src="/local/tpl/vendor/imagesloaded.pkgd.min.js?14193339716949"></script>
+<script type="text/javascript" src="/local/tpl/vendor/jquery.mousewheel.js?14193339717348"></script>
+<script type="text/javascript" src="/local/tpl/vendor/jquery.jscrollpane.min.js?141933397114114"></script>
+<script type="text/javascript" src="/local/include/jquery-cookie/jquery.cookie.js?14184782173121"></script>
+<script type="text/javascript" src="/local/include/kladrapi-jsclient-master/jquery.kladr.min.js?145399038011897"></script>
+<script type="text/javascript" src="/local/tpl/vendor/chosen.jquery.min.js?141933397026966"></script>
+<script type="text/javascript" src="/local/tpl/vendor/jquery-ui-1.9.2.custom.min.js?147583282273831"></script>
+<script type="text/javascript" src="/local/tpl/js/global.js?142926444727749"></script>
+<script type="text/javascript" src="/local/tpl/js/index.js?14761644534984"></script>
+<script type="text/javascript" src="/local/tpl_ext/script.js?14551805404695"></script>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="application-name" content="РОСРЕЕСТР"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta http-equiv="x-dns-prefetch-control" content="on"/>
+	<link rel="shortcut icon" href="/site/favicon.png" />
+
+	<title>Противодействие коррупции</title>
+
+	<link rel="shortcut icon" href="/local/tpl/img/favicon.png"/>
+
+	
+					
+															 		
+		<!--[if lt IE 9]>
+	<script src="/local/tpl/vendor/respond.min.js"></script>
+	<![endif]-->
+</head>
+<!--[if lt IE 7]>
+<body class="lt-ie9 lt-ie8 lt-ie7 "><![endif]-->
+<!--[if IE 7]>
+<body class="lt-ie9 lt-ie8 "><![endif]-->
+<!--[if IE 8]>
+<body class="lt-ie9 "><![endif]-->
+<!--[if gt IE 8]><!-->
+<body class="">
+<!--<![endif]-->
+
+<!--[if lt IE 7]><body class="lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><body class="lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><body class="lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+
+<!--[if lt IE 8]>
+<p class="chromeframe">Вы используете <strong>устаревший</strong> браузер. Пожалуйста <a href="http://browsehappy.com/">обновите
+	его</a> или <a href="http://www.google.com/chromeframe/?redirect=true">активируйте Google Chrome Frame</a> для
+	повышения производительности.
+</p>
+<![endif]-->
+<div id="page_wrap" class="css_main">
+		<div id="page">
+		<div id="page_header">
+			 
+			<div class="blind_panel" id="blind_panel" >
+                    <div class="width_fix">
+                        <a class="to_main_version" href="./?contrast=Y">Обычная версия
+                            <span></span>
+                        </a>
+                        <div class="font_toggle">
+                            <span class="a_small js-toggle_fontsize selected" data-class="fontsize_small">a</span>
+                            <span class="a_normal js-toggle_fontsize" data-class="fontsize_middle">a</span>
+                            <span class="a_big js-toggle_fontsize" data-class="fontsize_big">a</span>
+                        </div>
+                        <div class="color_toggle">
+                            <span class="white js-toggle_color selected" data-class="color_white"></span>
+                            <span class="black js-toggle_color" data-class="color_black"></span>
+                            <span class="blue js-toggle_color" data-class="color_blue"></span>
+                        </div>
+                        <div class="image_toggle">
+                            Картинки
+                            <div class="js-toggle_img" data-class="image_off">
+                                <span></span>выкл</div>
+                            <div class="js-toggle_img selected" data-class="image_on">
+                                <span></span>вкл</div>
+                        </div>
+                       <div class="settings_ico">Настройки</div>
+                        <div class="settings_block">
+                            <div class="set_title">Настройка шрифта</div>
+                            <div class="set">
+                                <div class="label">шрифт:</div>
+                                <div class="button_link js-toggle_font selected" data-class="sans_serif">Arial</div>
+                                <div class="button_link js-toggle_font" data-class="serif">Times New Roman</div>
+                            </div>
+                            <div class="set">
+                                <div class="label">Интервал:</div>
+                                <div class="button_link js-interlinear selected" data-class="standart_interlinear">Стандартный</div>
+                                <div class="button_link js-interlinear" data-class="middle_interlinear">Средний</div>
+                                <div class="button_link js-interlinear" data-class="big_interlinear">Большой</div>
+                            </div>
+                            <div class="set">
+                                <div class="label">Выбор цветовой схемы</div>
+                                <div class="white js-toggle_color selected" data-class="color_white">Черным по белому</div>
+                                <div class="black js-toggle_color" data-class="color_black">Белым по черному</div>
+                                <div class="blue js-toggle_color" data-class="color_blue">Черным по синему</div>
+                            </div>
+                            <div class="center">
+                                <div class="button_link js-default_set">Стандартные настройки</div>
+                                <div class="button_link js-close_sets">Закрыть панель</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			
+			
+			<div id="top_panel">
+								
+				
+				<div id="top_lang" class="js-slideContainer">
+		
+	<div class="current_lang js-slideOpen">Рус
+		<span class="flag_RU"></span>
+	</div>
+	<div class="choice_lang js-slideBox">
+		<a class="selected" href="/site/">
+			<span class="flag_RU"></span>Русский</a>
+		<a href="/site/en/">
+			<span class="flag_EN"></span>english</a>
+	</div>
+	
+	</div>
+												
+<div id="top_location" class="top_location js-openContainer" style="position: relative;">
+    <div class="current_location js-open" data-regionid="77"></div>
+    <div class="search_location js-openBox">
+        <div class="criss_cross js-close"></div>
+        <form id="current_location_form">
+            <div class="input">
+                <input name="region" type="text" placeholder="Укажите регион">
+
+                <div class="button blue_button">
+                    <input type="submit" value="Найти">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var region_cookie = $.cookie('region_name');
+        if (!region_cookie) region_cookie = 'Москва';
+        $('.current_location').text(region_cookie);
+
+        $('[name="region"]').kladr({
+            type: $.kladr.type.region,
+            select: function (obj) {
+                //console.log(obj.name);
+                region_full_name = '';
+	            /*
+                if (obj.name == 'Севастополь' || obj.name == 'Крым') {
+
+                    obj.name = 'Крымский федеральный округ';
+                    obj.contentType = "region";
+                    obj.id = "9100000000000";
+                    obj.okato = "35000000000";
+                    obj.type = "";
+                    obj.typeShort = "";
+                }
+				*/
+                if (obj.type == 'Республика') {
+                    region_full_name = obj.type + ' ' + obj.name;
+                } else if (
+                    obj.type == 'Автономный округ' ||
+                    obj.type == 'Край' ||
+                    obj.type == 'Область' ||
+                    obj.type == 'Автономная область'
+                ) {
+                    region_full_name = obj.name + ' ' + obj.type;
+                } else {
+                    region_full_name = obj.name;
+                }
+                $('.current_location').text(region_full_name).attr('data-regionID', obj.id.substring(2, 0));
+            }
+        });
+        $('#current_location_form').on('submit', function (e) {
+            e.preventDefault();
+            var region_name = $('#top_panel .current_location').text();
+            var region_id = $('#top_panel .current_location').attr('data-regionID');
+            if (region_name) {
+                var date = new Date();
+                date.setTime(date.getTime() + (30 * 1000));
+                $.cookie('region_name', region_name, {expires: 7, path: '/'});
+                $.cookie('region_id', region_id, {expires: 7, path: '/'});
+                document.location.reload();
+            }
+        })
+    });
+</script>
+
+
+				                <a href="https://rosreestr.ru/wps/portal/p/PrivateOffice" style="display: block;
+    position: absolute;
+    line-height: 2;
+    background: #50ab36;
+    background: linear-gradient(to top, #50ab36, #7dc862);
+    color: #fff;
+    text-decoration: none;
+    padding: 0 20px;
+    border-radius: 2px;
+    font-size: 17px;
+    text-transform: uppercase;
+    left: 52%;
+    margin-top: 105px;">Личный кабинет</a>
+			</div>
+			<header>
+
+									<a id="logo" href="/site/"></a>
+								<div class="top_contact_block">
+	<div>единый справочный телефон:</div>
+	<div class="phone_number"><a style="text-decoration: none" href="skype:88001003434?call">8 (800) 100-34-34</a></div>
+	<div class="grey">Звонок из регионов России бесплатный</div> 
+</div>
+
+<div class="top_contact_block">
+	<div>Телефон доверия:</div>
+	<div class="phone_number"><a  style="text-decoration: none" href="skype:84959173825?call">(495) 917-38-25</a></div>
+</div>
+				<div class="clearfix"></div>
+			</header>
+			<div id="menu_container">
+				<div class="open_menu_ico">меню</div>
+				<div class="open_menu">
+
+					<form id="top_search" action="/site/search/">
+	<div class="white_input">
+		<span class="search_ico"></span>
+		<input type="text" name="q" value="" maxlength="50" />
+		<div class="button grey_button">
+			<input name="s" type="submit" value="Найти" />
+		</div>
+	</div>
+</form>					
+						<nav class="main_menu">
+		<ol class="main_menu_list">
+
+				
+		
+							<li class="main_menu_item ">
+					<a href="/site/about/" class="main_menu_link">О Росреестре</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/struct/" class="level1_link">Структура</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/rukovodstvo/" class="level1_link">Руководство</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/kolleg/" class="level1_link">Коллегиальные и совещательные органы</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/history/" class="level1_link">История</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/kadry/" class="level1_link">Кадровое обеспечение</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/gosbuy/" class="level1_link">Государственные закупки</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/activity/" class="main_menu_link">Деятельность</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/okazanie-gosudarstvennykh-uslug/" class="level1_link">Оказание государственных услуг</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/gosudarstvennye-programmy/" class="level1_link">Государственные программы</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/dorozhnye-karty/" class="level1_link">Дорожные карты</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/gosudarstvennyy-nadzor/" class="level1_link">Государственный надзор</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/kadastrovaya-otsenka/" class="level1_link">Кадастровая оценка</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/geodeziya-i-kartografiya/" class="level1_link">Геодезия и картография</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/gosudarstvennoe-upravlenie-v-sfere-ispolzovaniya-i-okhrany-zemel/" class="level1_link">Государственное управление в сфере использования и охраны земель</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/obespechenie-kadastrovoy-deyatelnosti/" class="level1_link">Обеспечение кадастровой деятельности</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="https://rosreestr.ru/site/activity/vnesenie-svedeniy-v-gosudarstvennyy-reestr-samoreguliruemykh-organizatsiy-operatorov-elektronnykh-pl/" class="level1_link">Внесение сведений в государственный реестр СРО операторов электронных площадок</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/mezhdunarodnaya-deyatelnost/" class="level1_link">Международная деятельность</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/vzaimodeystvie-s-obrazovatelnymi-organizatsiyami/" class="level1_link">Взаимодействие с образовательными организациями</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="https://rosreestr.ru/site/activity/mezhvedomstvennoe-vzaimodeystvie/uchastnikam-mezhvedomstvennogo-vzaimodeystviya/" class="level1_link">Межведомственное взаимодействие</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/wps/portal/p/cc_ib_support/cc_ib_docs/cc_ib_documents" class="level1_link">Документы</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/fiz/" class="main_menu_link">Физическим лицам</a>
+				</li>
+			
+		
+							
+		
+							<li class="main_menu_item ">
+					<a href="/site/ur/" class="main_menu_link">Юридическим лицам</a>
+				</li>
+			
+		
+							
+		
+							<li class="main_menu_item ">
+					<a href="/site/spec/" class="main_menu_link">Специалистам</a>
+				</li>
+			
+		
+							
+		
+							<li class="main_menu_item  active ">
+					<a href="/site/open-service/" class="main_menu_link">Открытая служба</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/printsipy-otkrytosti/" class="level1_link">Принципы открытости</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/audits/" class="level1_link">Проведение проверок</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/statistika-i-analitika/" class="level1_link">Статистика и аналитика</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item  active ">
+					<a href="/site/open-service/anticorruption/" class="level1_link">Противодействие коррупции</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/poleznye-ssylki/" class="level1_link">Полезные ссылки</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/publichnaya-oferta/" class="level1_link">Публичная оферта</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/plan-raboty-i-pokazateli-deyatelnosti/" class="level1_link">План работы и показатели деятельности</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/sistema-menedzhmenta-kachestva/" class="level1_link">Система менеджмента качества</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/obmen-opytom-/" class="level1_link">Обмен опытом</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="https://rosreestr.ru/wps/portal/cc_ib_opendata" class="level1_link">Открытые данные</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/feedback/" class="main_menu_link">Обратная связь</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/poryadok-rassmotreniya/" class="level1_link">Обращения граждан</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/faq/" class="level1_link">Часто задаваемые вопросы</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/contacts/" class="level1_link">Контакты</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/polls/" class="level1_link">Опросы</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/press/" class="main_menu_link">Пресс-центр</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#news" class="level1_link">Новости</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#smi_o_nas" class="level1_link">Публикации</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#press_pub" class="level1_link">Печатные издания</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#analitica" class="level1_link">Аналитические материалы и презентации</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#multimedia_anons" class="level1_link">Фотогалерея и видеоархив</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#contacts" class="level1_link">Контакты для сми</a>
+				</li>
+			
+		
+			
+	</ol></li>
+		</ol>
+	</nav>
+					
+										<div class="top_link">
+	
+
+	<a style="margin-right: 10px;" id="no_see" href="./?contrast=Y">  		<img src="/local/tpl/img/eye.png" alt="Версия для слабовидящих" width="106" height="71">
+		<div>Версия для слабовидящих</div>
+	</a>
+
+</div>
+
+					<div class="soc_block">
+						<div>Будьте с нами:</div>
+						 <a target="_blank" rel="nofollow" class="soc_ico fb" href="https://www.facebook.com/rosreestr.ru" ></a> <a target="_blank" rel="nofollow" class="soc_ico vk" href="https://vk.com/rosreestr_ru" ></a> <a target="_blank" rel="nofollow" class="soc_ico tw" href="https://twitter.com/rosreestr_info" ></a> <a target="_blank" rel="nofollow" class="soc_ico lj" href="http://rosreestr.livejournal.com/" ></a> <a target="_blank" rel="nofollow" class="soc_ico rss" href="/site/rss/" ></a>					</div>
+					<div class="close_menu"></div>
+				</div>
+			</div>
+		</div>
+<!--		<main role="main">-->
+        <main>
+		  							<div class="width_fix">
+												<div class="bg_white">
+											<nav class="breadcrumbs"><a href="/site/" title="Главная">Главная</a><a href="/site/open-service/" title="Открытая служба">Открытая служба</a><a class="current">Противодействие коррупции</a></nav>					
+				
+
+<div class="side_block">
+	
+	<nav id="side_menu" class="side_menu_mod">
+
+					<div class="back_link">
+				<a href="/site/open-service/">Открытая служба</a>
+			</div>
+				<div class="open_side_menu">Меню раздела</div>
+		<ul id="side_menu_list">
+
+			
+									<li class=" level_1">
+				<a href="/site/open-service/printsipy-otkrytosti/">Принципы открытости</a>
+
+				
+					
+					
+									<li class=" level_1">
+				<a href="/site/open-service/audits/">Проведение проверок</a>
+
+				
+					
+					
+									<li class=" level_1">
+				<a href="/site/open-service/statistika-i-analitika/">Статистика и аналитика</a>
+
+								<ul class="sub_menu">
+					
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/statistika-i-analitika/finansovo-ekonomicheskaya-deyatelnost/">Финансово-экономическая деятельность</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/statistika-i-analitika/litsenzirovanie-geodezicheskikh-i-kartograficheskikh-rabot-federalnogo-naznacheniya/">Лицензирование геодезических и картографических работ федерального назначения</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/statistika-i-analitika/statisticheskaya-otchetnost/">Статистическая отчетность</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/statistika-i-analitika/nauchno-issledovatelskie-raboty/">Научно-исследовательские работы</a>
+
+				
+					
+					
+										</ul></li>						<li class=" current  level_1">
+				<a href="/site/open-service/anticorruption/">Противодействие коррупции</a>
+
+								<ul class="sub_menu">
+					
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/">Нормативные правовые и иные акты в сфере противодействия коррупции</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/antikorruptsionnaya-ekspertiza/">Антикоррупционная экспертиза</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/metodicheskie-materialy/">Методические материалы</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/formy-dokumentov-svyazannykh-s-protivodeystviem-korruptsii-dlya-zapolneniya/">Формы документов, связанных с противодействием коррупции для заполнения</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-/">Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/komissiya-po-soblyudeniyu-trebovaniy-k-sluzhebnomu-povedeniyu-i-uregulirovaniyu-konflikta-interesov-/">Комиссия по соблюдению требований к служебному поведению и урегулированию конфликта интересов (аттестационная комиссия) </a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/obratnaya-svyaz-dlya-soobshcheniy-o-faktakh-korruptsii-/">Обратная связь для сообщений о фактах коррупции</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/doklady-otchety-obzory/">Доклады, отчеты, обзоры, статистическая информация</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/anticorruption/Krumskiy-fo/">Республика Крым и Севастополь</a>
+
+				
+					
+					
+										</ul></li>						<li class=" level_1">
+				<a href="/site/open-service/poleznye-ssylki/">Полезные ссылки</a>
+
+				
+					
+					
+									<li class=" level_1">
+				<a href="/site/open-service/publichnaya-oferta/">Публичная оферта</a>
+
+								<ul class="sub_menu">
+					
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/publichnaya-oferta/publichnaya-oferta-o-vzaimodeystvii-pri-prieme-platezhey-fizicheskikh-lits/?clear_cache=Y">Публичная оферта о взаимодействии при приеме платежей физических лиц</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/publichnaya-oferta/publichnaya-oferta-o-vzaimodeystvii-pri-prieme-platezhey-yuridicheskikh-lits/?clear_cache=Y">Публичная оферта о взаимодействии при приеме платежей юридических лиц</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/publichnaya-oferta/publichnaya-oferta-o-vzaimodeystvii-rosreestra-i-organizatsiy-predostavlyayushchikh-svedeniya-o-tsen/?clear_cache=Y">Публичная оферта о взаимодействии Росреестра и организаций, предоставляющих сведения о ценах спроса и предложения на объекты недвижимости в целях ведения фонда данных государственной кадастровой оценки при проведении мониторинга рынка недвижимости</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/publichnaya-oferta/perechen-organizatsiy/?clear_cache=Y">Перечень организаций</a>
+
+				
+					
+					
+									<li class=" level_2">
+				<a href="/site/open-service/publichnaya-oferta/rekvizity-dlya-oplaty-po-kodu-platezha/?clear_cache=Y">Реквизиты для оплаты по коду платежа</a>
+
+				
+					
+					
+										</ul></li>						<li class=" level_1">
+				<a href="/site/open-service/plan-raboty-i-pokazateli-deyatelnosti/">План работы и показатели деятельности</a>
+
+				
+					
+					
+									<li class=" level_1">
+				<a href="/site/open-service/sistema-menedzhmenta-kachestva/">Система менеджмента качества</a>
+
+				
+					
+					
+									<li class=" level_1">
+				<a href="/site/open-service/obmen-opytom-/">Обмен опытом</a>
+
+				
+					
+					
+									<li class=" level_1">
+				<a href="https://rosreestr.ru/wps/portal/cc_ib_opendata">Открытые данные</a>
+
+				
+					
+					
+									</ul>
+	</nav>
+		</div>
+
+
+
+<div class="main_colum">
+	<h1>Противодействие коррупции</h1>
+<ul>
+			<li id="bx_962773785_99"><a href="/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/">Нормативные правовые и иные акты в сфере противодействия коррупции</a></li>
+			<li id="bx_962773785_100"><a href="/site/open-service/anticorruption/antikorruptsionnaya-ekspertiza/">Антикоррупционная экспертиза</a></li>
+			<li id="bx_962773785_101"><a href="/site/open-service/anticorruption/metodicheskie-materialy/">Методические материалы</a></li>
+			<li id="bx_962773785_102"><a href="/site/open-service/anticorruption/formy-dokumentov-svyazannykh-s-protivodeystviem-korruptsii-dlya-zapolneniya/">Формы документов, связанных с противодействием коррупции для заполнения</a></li>
+			<li id="bx_962773785_103"><a href="/site/open-service/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-/">Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера</a></li>
+			<li id="bx_962773785_104"><a href="/site/open-service/anticorruption/komissiya-po-soblyudeniyu-trebovaniy-k-sluzhebnomu-povedeniyu-i-uregulirovaniyu-konflikta-interesov-/">Комиссия по соблюдению требований к служебному поведению и урегулированию конфликта интересов (аттестационная комиссия) </a></li>
+			<li id="bx_962773785_105"><a href="/site/open-service/anticorruption/obratnaya-svyaz-dlya-soobshcheniy-o-faktakh-korruptsii-/">Обратная связь для сообщений о фактах коррупции</a></li>
+			<li id="bx_962773785_1703"><a href="/site/open-service/anticorruption/doklady-otchety-obzory/">Доклады, отчеты, обзоры, статистическая информация</a></li>
+			<li id="bx_962773785_4975"><a href="/site/open-service/anticorruption/Krumskiy-fo/">Республика Крым и Севастополь</a></li>
+	</ul>
+ 
+
+ 
+
+</div><!-- main_colum -->
+<div class="clearfix"></div>
+
+
+
+
+
+        								
+				
+
+
+          
+				  
+				
+
+
+									<div id="partner_links">
+									<a target="_blank" href="http://government.ru/" id="bx_3010025326_8854">
+				<img src="/upload/iblock/61f/c03fa347c1d21feae20e00a48ca61182.jpg" alt="" />
+			</a>
+											<a target="_blank" href="http://economy.gov.ru/minec/main" id="bx_3010025326_8855">
+				<img src="/upload/iblock/df4/6f60d5b776bbf0f43cb78d5172479232.jpg" alt="" />
+			</a>
+											<a target="_blank" href="https://www.gosuslugi.ru/" id="bx_3010025326_8856">
+				<img src="/upload/iblock/c4f/eecf7d70e497e08bfb44f3b55eba5101.jpg" alt="" />
+			</a>
+											<a target="_blank" href="https://vashkontrol.ru" id="bx_3010025326_8853">
+				<img src="/upload/iblock/5eb/657ff96cd6_banner.jpg" alt="" />
+			</a>
+			</div>								</div>			</div>
+            		</main>
+
+	</div></div>
+<div id="foot_wrap" class="css_main">
+	<div class="blind_panel">
+            <div class="width_fix">
+                <div class="settings_ico">Настройки</div>
+                <a class="to_main_version" href="#">Обычная версия
+                    <span></span>
+                </a>
+                <div class="font_toggle">
+                    <span class="a_small js-toggle_fontsize selected" data-class="fontsize_small">a</span>
+                    <span class="a_normal js-toggle_fontsize" data-class="fontsize_middle">a</span>
+                    <span class="a_big js-toggle_fontsize" data-class="fontsize_big">a</span>
+                </div>
+                <div class="color_toggle">
+                    <span class="white js-toggle_color selected" data-class="color_white"></span>
+                    <span class="black js-toggle_color" data-class="color_black"></span>
+                    <span class="blue js-toggle_color" data-class="color_blue"></span>
+                </div>
+                <div class="image_toggle">
+                    Картинки
+                    <div class="js-toggle_img" data-class="image_off">
+                        <span></span>выкл</div>
+                    <div class="js-toggle_img selected" data-class="image_on">
+                        <span></span>вкл</div>
+                </div>
+                <div class="settings_block">
+                    <div class="set_title">Настройка шрифта</div>
+                    <div class="set">
+                        <div class="label">шрифт:</div>
+                        <div class="button_link js-toggle_font selected" data-class="sans_serif">Arial</div>
+                        <div class="button_link js-toggle_font" data-class="serif">Times New Roman</div>
+                    </div>
+                    <div class="set">
+                        <div class="label">Интервал:</div>
+                        <div class="button_link js-interlinear selected" data-class="standart_interlinear">Стандартный</div>
+                        <div class="button_link js-interlinear" data-class="middle_interlinear">Средний</div>
+                        <div class="button_link js-interlinear" data-class="big_interlinear">Большой</div>
+                    </div>
+                    <div class="set">
+                        <div class="label">Выбор цветовой схемы</div>
+                        <div class="white js-toggle_color selected" data-class="color_white">Черным по белому</div>
+                        <div class="black js-toggle_color" data-class="color_black">Белым по черному</div>
+                        <div class="blue js-toggle_color" data-class="color_blue">Черным по синему</div>
+                    </div>
+                    <div class="center">
+                        <div class="button_link js-default_set">Стандартные настройки</div>
+                        <div class="button_link js-close_sets">Закрыть панель</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="foot_panel">
+            <div class="foot_space">
+                <a class="blind_logo" href="/site/"></a>
+                				
+<div id="top_location" class="top_location js-openContainer" style="position: relative;">
+    <div class="current_location js-open" data-regionid="77"></div>
+    <div class="search_location js-openBox">
+        <div class="criss_cross js-close"></div>
+        <form id="current_location_form">
+            <div class="input">
+                <input name="region" type="text" placeholder="Укажите регион">
+
+                <div class="button blue_button">
+                    <input type="submit" value="Найти">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var region_cookie = $.cookie('region_name');
+        if (!region_cookie) region_cookie = 'Москва';
+        $('.current_location').text(region_cookie);
+
+        $('[name="region"]').kladr({
+            type: $.kladr.type.region,
+            select: function (obj) {
+                //console.log(obj.name);
+                region_full_name = '';
+	            /*
+                if (obj.name == 'Севастополь' || obj.name == 'Крым') {
+
+                    obj.name = 'Крымский федеральный округ';
+                    obj.contentType = "region";
+                    obj.id = "9100000000000";
+                    obj.okato = "35000000000";
+                    obj.type = "";
+                    obj.typeShort = "";
+                }
+				*/
+                if (obj.type == 'Республика') {
+                    region_full_name = obj.type + ' ' + obj.name;
+                } else if (
+                    obj.type == 'Автономный округ' ||
+                    obj.type == 'Край' ||
+                    obj.type == 'Область' ||
+                    obj.type == 'Автономная область'
+                ) {
+                    region_full_name = obj.name + ' ' + obj.type;
+                } else {
+                    region_full_name = obj.name;
+                }
+                $('.current_location').text(region_full_name).attr('data-regionID', obj.id.substring(2, 0));
+            }
+        });
+        $('#current_location_form').on('submit', function (e) {
+            e.preventDefault();
+            var region_name = $('#top_panel .current_location').text();
+            var region_id = $('#top_panel .current_location').attr('data-regionID');
+            if (region_name) {
+                var date = new Date();
+                date.setTime(date.getTime() + (30 * 1000));
+                $.cookie('region_name', region_name, {expires: 7, path: '/'});
+                $.cookie('region_id', region_id, {expires: 7, path: '/'});
+                document.location.reload();
+            }
+        })
+    });
+</script>
+
+
+				                <a class="foot_search_link" href="/site/search/">Найти</a>
+            </div>
+
+            	<nav class="main_menu">
+		<ol class="main_menu_list">
+
+				
+		
+							<li class="main_menu_item ">
+					<a href="/site/about/" class="main_menu_link">О Росреестре</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/struct/" class="level1_link">Структура</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/rukovodstvo/" class="level1_link">Руководство</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/kolleg/" class="level1_link">Коллегиальные и совещательные органы</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/history/" class="level1_link">История</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/kadry/" class="level1_link">Кадровое обеспечение</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/about/gosbuy/" class="level1_link">Государственные закупки</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/activity/" class="main_menu_link">Деятельность</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/okazanie-gosudarstvennykh-uslug/" class="level1_link">Оказание государственных услуг</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/gosudarstvennye-programmy/" class="level1_link">Государственные программы</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/dorozhnye-karty/" class="level1_link">Дорожные карты</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/gosudarstvennyy-nadzor/" class="level1_link">Государственный надзор</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/kadastrovaya-otsenka/" class="level1_link">Кадастровая оценка</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/geodeziya-i-kartografiya/" class="level1_link">Геодезия и картография</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/gosudarstvennoe-upravlenie-v-sfere-ispolzovaniya-i-okhrany-zemel/" class="level1_link">Государственное управление в сфере использования и охраны земель</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/obespechenie-kadastrovoy-deyatelnosti/" class="level1_link">Обеспечение кадастровой деятельности</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="https://rosreestr.ru/site/activity/vnesenie-svedeniy-v-gosudarstvennyy-reestr-samoreguliruemykh-organizatsiy-operatorov-elektronnykh-pl/" class="level1_link">Внесение сведений в государственный реестр СРО операторов электронных площадок</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/mezhdunarodnaya-deyatelnost/" class="level1_link">Международная деятельность</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/activity/vzaimodeystvie-s-obrazovatelnymi-organizatsiyami/" class="level1_link">Взаимодействие с образовательными организациями</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="https://rosreestr.ru/site/activity/mezhvedomstvennoe-vzaimodeystvie/uchastnikam-mezhvedomstvennogo-vzaimodeystviya/" class="level1_link">Межведомственное взаимодействие</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/wps/portal/p/cc_ib_support/cc_ib_docs/cc_ib_documents" class="level1_link">Документы</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/fiz/" class="main_menu_link">Физическим лицам</a>
+				</li>
+			
+		
+							
+		
+							<li class="main_menu_item ">
+					<a href="/site/ur/" class="main_menu_link">Юридическим лицам</a>
+				</li>
+			
+		
+							
+		
+							<li class="main_menu_item ">
+					<a href="/site/spec/" class="main_menu_link">Специалистам</a>
+				</li>
+			
+		
+							
+		
+							<li class="main_menu_item  active ">
+					<a href="/site/open-service/" class="main_menu_link">Открытая служба</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/printsipy-otkrytosti/" class="level1_link">Принципы открытости</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/audits/" class="level1_link">Проведение проверок</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/statistika-i-analitika/" class="level1_link">Статистика и аналитика</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item  active ">
+					<a href="/site/open-service/anticorruption/" class="level1_link">Противодействие коррупции</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/poleznye-ssylki/" class="level1_link">Полезные ссылки</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/publichnaya-oferta/" class="level1_link">Публичная оферта</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/plan-raboty-i-pokazateli-deyatelnosti/" class="level1_link">План работы и показатели деятельности</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/sistema-menedzhmenta-kachestva/" class="level1_link">Система менеджмента качества</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/open-service/obmen-opytom-/" class="level1_link">Обмен опытом</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="https://rosreestr.ru/wps/portal/cc_ib_opendata" class="level1_link">Открытые данные</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/feedback/" class="main_menu_link">Обратная связь</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/poryadok-rassmotreniya/" class="level1_link">Обращения граждан</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/faq/" class="level1_link">Часто задаваемые вопросы</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/contacts/" class="level1_link">Контакты</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/feedback/polls/" class="level1_link">Опросы</a>
+				</li>
+			
+		
+										</ol></li>		
+		
+							<li class="main_menu_item ">
+					<a href="/site/press/" class="main_menu_link">Пресс-центр</a>
+					<ol class="submenu_level1">
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#news" class="level1_link">Новости</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#smi_o_nas" class="level1_link">Публикации</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#press_pub" class="level1_link">Печатные издания</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#analitica" class="level1_link">Аналитические материалы и презентации</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#multimedia_anons" class="level1_link">Фотогалерея и видеоархив</a>
+				</li>
+			
+		
+							
+		
+							<li class="level1_item ">
+					<a href="/site/press/#contacts" class="level1_link">Контакты для сми</a>
+				</li>
+			
+		
+			
+	</ol></li>
+		</ol>
+	</nav>
+
+            <!---->
+            <!---->
+            		
+
+<nav id="foot_menu">
+			<div><a href="/site/about/">О росреестре</a></div>
+			<div><a href="/site/activity/">Деятельность</a></div>
+			<div><a href="/site/fiz/">Физическим лицам</a></div>
+			<div><a href="/site/ur/">Юридическим лицам</a></div>
+			<div><a href="/site/spec/">Cпециалистам</a></div>
+			<div><a href="/site/open-service/">Открытая служба</a></div>
+			<div><a href="/site/feedback/">Обратная связь</a></div>
+			<div><a href="/site/press/">Пресс-центр</a></div>
+	</nav>				
+		<div class="soc_block">
+					</div>
+		<div id="copy">
+					</div>
+        </div>
+
+	<footer class="footer">
+		<div class="width_fix">
+	    		
+
+<nav id="foot_menu">
+			<div><a href="/site/about/">О росреестре</a></div>
+			<div><a href="/site/activity/">Деятельность</a></div>
+			<div><a href="/site/fiz/">Физическим лицам</a></div>
+			<div><a href="/site/ur/">Юридическим лицам</a></div>
+			<div><a href="/site/spec/">Cпециалистам</a></div>
+			<div><a href="/site/open-service/">Открытая служба</a></div>
+			<div><a href="/site/feedback/">Обратная связь</a></div>
+			<div><a href="/site/press/">Пресс-центр</a></div>
+	</nav>				
+<nav class="useful_links">
+	<ul>	<li>
+				<a href="/site/search/">Поиск</a>
+			</li>	
+							<li>
+			<a href="http://rosreestr.ru/wps/portal/cc_faq_query">Помощь и поддержка</a>			</li>
+				
+			<li>
+			<a href="/site/about/struct/territorialnye-organy/">Территориальная сеть</a>
+			</li>
+			<li>
+			<a href="/site/legals/">Правила и условия использования контента сайта</a>
+			</li>
+			<li>
+									<a href="/site/en/">English version</a>
+							</li>	
+			<li>
+			<a href="/site/search/map.php">Карта сайта</a>			</li>
+			<li>
+				<a href="/site/press/multimedia/archive/?s=video">Видеоинструкции</a>
+			</li>
+			<li>
+			<a href="/site/eservices/">Электронные услуги и сервисы</a>
+			</li>
+	</ul>
+</nav>
+		<div class="soc_block">
+			 <a target="_blank" rel="nofollow" class="soc_ico fb" href="https://www.facebook.com/rosreestr.ru" ></a> <a target="_blank" rel="nofollow" class="soc_ico vk" href="https://vk.com/rosreestr_ru" ></a> <a target="_blank" rel="nofollow" class="soc_ico tw" href="https://twitter.com/rosreestr_info" ></a> <a target="_blank" rel="nofollow" class="soc_ico lj" href="http://rosreestr.livejournal.com/" ></a> <a target="_blank" rel="nofollow" class="soc_ico rss" href="/site/rss/" ></a>		</div>
+		<div id="copy">
+			&copy; 2019 Федеральная служба государственной регистрации, кадастра и картографии		</div>
+		<div id="short_footer">
+                    <div class="site_map">
+                        <a href="/site/search/map.php">Карта сайта</a>
+                    </div>
+                    <div class="rss">
+                        <a href="/site/rss/">RSS-рассылка</a>
+                    </div>
+                                  </div>
+                <div id="scroll_top">
+                    <span>Вверх</span>
+                </div>
+                </div>
+	</footer>
+</div>
+<div class="js-window modal_overlay">
+	<div class="modal_content">
+		<div class="close js-closeModal">&times;</div>
+	</div>
+</div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter22210993 = new Ya.Metrika({id:22210993,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/22210993" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57865710-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<!-- widget start -->
+<script type="text/javascript" src="https://gosmonitor.ru/widget.js?id=234"></script>
+<!-- / widget end -->
+
+</body>
+</html>

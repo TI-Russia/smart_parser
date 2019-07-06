@@ -1,0 +1,913 @@
+[
+    {
+        "url": "http://www.mvd.ru",
+        "name": "Министерство внутренних дел Российской Федерации",
+        "anticorruption_div": {
+            "url": "https://xn--b1aew.xn--p1ai/anticorr",
+            "engine": "selenium"
+        },
+        "law_div": {
+            "url": "https://xn--b1aew.xn--p1ai/anticorr/NPA",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rosminzdrav.ru",
+        "name": "Министерство здравоохранения Российской Федерации",
+        "anticorruption_div": {
+            "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/4",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.mid.ru",
+        "name": "Министерство иностранных дел Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.mid.ru/ru/activity/corruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.mid.ru/ru/activity/corruption/normoact",
+            "link_text": " Нормативно-правовые акты и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.mkrf.ru",
+        "name": "Министерство культуры Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_tsentralnomu_federalnomu_okrugu_/anti-corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.mkrf.ru/activities/anti_corruption/regulations/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.mil.ru",
+        "name": "Министерство обороны Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://mil.ru/anti-corruption.htm",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://mil.ru/anti-corruption/docs.htm",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "https://edu.gov.ru/",
+        "name": "Министерство просвещения Российской Федерации",
+        "anticorruption_div": {
+            "url": "https://open.edu.gov.ru/anti-corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "<urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>"
+        }
+    },
+    {
+        "url": "http://minobrnauki.gov.ru/",
+        "name": "Министерство науки и высшего образования Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://minobrnauki.gov.ru/ru/activity/anticorr/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.mnr.gov.ru",
+        "name": "Министерство природных ресурсов и экологии Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.mnr.gov.ru/open_ministry/anticorruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/",
+            "link_text": "\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tНПА в сфере противодействия коррупции\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.minpromtorg.gov.ru",
+        "name": "Министерство промышленности и торговли Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/npa/",
+            "link_text": "\n\n        Нормативные правовые и иные акты в сфере противодействия коррупции\n\n    ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.mchs.gov.ru",
+        "name": "Министерство Российской Федерации по делам гражданской обороны, чрезвычайным ситуациям и ликвидации последствий стихийных бедствий",
+        "anticorruption_div": {
+            "url": "http://www.mchs.gov.ru/dop/Korrupcija",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://minvostokrazvitia.ru",
+        "name": "Министерство Российской Федерации по развитию Дальнего Востока и Арктики",
+        "anticorruption_div": {
+            "url": "http://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https:///minvr.ru/opened-ministry/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii",
+            "link_text": "\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\tНормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "https://digital.gov.ru/",
+        "name": "Министерство цифрового развития, связи и массовых коммуникаций Российской Федерации",
+        "anticorruption_div": {
+            "url": "https://digital.gov.ru/ru/ministry/anticorruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://digital.gov.ru/ru/ministry/anticorruption/anticorruption/#section-3",
+            "engine": "manual",
+            "exception": "no element found"
+        }
+    },
+    {
+        "url": "http://www.minkavkaz.gov.ru",
+        "name": "Министерство Российской Федерации по делам Северного Кавказа",
+        "anticorruption_div": {
+            "url": "http://www.minkavkaz.gov.ru/feedback/anticorruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.minkavkaz.gov.ru/feedback/anticorruption/laws/",
+            "link_text": "Нормативные правовые акты и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.mcx.ru",
+        "name": "Министерство сельского хозяйства Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.mcx.ru/activity/anti-corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.mcx.ru/activity/anti-corruption/normative-acts/",
+            "link_text": "Нормативные, правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.minsport.gov.ru",
+        "name": "Министерство спорта Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.minsport.gov.ru/activities/anticorruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.minsport.gov.ru/normativnye-pravovye/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.minstroyrf.ru",
+        "name": "Министерство строительства и жилищно-коммунального хозяйства Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.minstroyrf.ru/about/anti-corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.minstroyrf.ru/about/anti-corruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.mintrans.ru",
+        "name": "Министерство транспорта Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.mintrans.ru/activities/anti-corruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.mintrans.ru/activities/anti-corruption/150",
+            "link_text": "\n                                    Нормативные правовые и иные акты в сфере противодействия коррупции\n                                ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://rosmintrud.ru",
+        "name": "Министерство труда и социальной защиты Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://rosmintrud.ru/ministry/anticorruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://rosmintrud.ru/ministry/anticorruption/legislation",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.minfin.ru",
+        "name": "Министерство финансов Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.minfin.ru/ru/om/anticorMK/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.minfin.ru/ru/om/anticorMK/korr-npa/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.economy.gov.ru",
+        "name": "Министерство экономического развития Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://minenergo.gov.ru",
+        "name": "Министерство энергетики Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://minenergo.gov.ru/aboutminen/komissiya",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://minenergo.gov.ru/node/459",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.minjust.ru",
+        "name": "Министерство юстиции Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.minjust.ru/ru/activity/corruption_counteraction_main",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.minjust.ru/node/226231",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "https://gfs.gov.ru/",
+        "name": "Государственная фельдъегерская служба Российской Федерации",
+        "anticorruption_div": {
+            "url": "https://gfs.gov.ru/protivodejstvie-korrupcii/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://gfs.gov.ru/protivodejstvie-korrupcii/pravovaya-osnova-protivodejstviya-korrupcii/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://svr.gov.ru",
+        "name": "Служба внешней разведки Российской Федерации",
+        "anticorruption_div": {
+            "exception": "no anticorruption link found"
+        },
+        "law_div": {
+            "url": "http://svr.gov.ru/antikorr/doc-korrupcija.htm",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.fas.gov.ru",
+        "name": "Федеральная антимонопольная служба",
+        "anticorruption_div": {
+            "url": "http://www.fas.gov.ru/pages/vazhnaya-informacziya/anticorruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.nalog.ru",
+        "name": "Федеральная налоговая служба",
+        "anticorruption_div": {
+            "url": "http://www.nalog.ru/rn77/related_activities/prevention_corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.nalog.ru/#t1",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fsb.ru",
+        "name": "Федеральная служба безопасности Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://www.fsb.ru/fsb/corruption.htm",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.fsb.ru/fsb/corruption/npa/agency.htm",
+            "engine": "manual",
+            "exception": "<urlopen error [Errno 11004] getaddrinfo failed>"
+        }
+    },
+    {
+        "url": "http://rosgvard.ru/",
+        "name": "Федеральная служба войск национальной гвардии Российской Федерации",
+        "anticorruption_div": {
+            "url": "http://rosgvard.ru/ru/page/index/protivodejstvie-korrupcii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://rosgvard.ru/ru/page/index/normativnye-pravovye-i-inye-akty-v-sfere-protivodejstviya-korrupcii",
+            "link_text": "\n\n                    Нормативные, правовые и иные акты в сфере противодействия коррупции\n\n                ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://rosreestr.ru",
+        "name": "Федеральная служба государственной регистрации, кадастра и картографии",
+        "anticorruption_div": {
+            "url": "http://rosreestr.ru/site/open-service/anticorruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.gks.ru",
+        "name": "Федеральная служба государственной статистики",
+        "anticorruption_div": {
+            "exception": "no element found",
+            "comment": "не вижу глазами"
+        }
+    },
+    {
+        "url": "http://www.fsin.su",
+        "name": "Федеральная служба исполнения наказаний",
+        "anticorruption_div": {
+            "url": "http://www.fsin.su/activity/corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
+        }
+    },
+    {
+        "url": "http://www.fso.gov.ru",
+        "name": "Федеральная служба охраны Российской Федерации",
+        "anticorruption_div": {
+            "exception": "no element found"
+        },
+        "law_div": {
+            "url": "http://www.fso.gov.ru/korrup/p1_2.html",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.fsa.gov.ru",
+        "name": "Федеральная служба по аккредитации",
+        "anticorruption_div": {
+            "url": "http://www.fsa.gov.ru/index/staticview/id/21/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.fsa.gov.ru/index/staticview/id/28/",
+            "link_text": "Нормативно-правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fsvps.ru",
+        "name": "Федеральная служба по ветеринарному и фитосанитарному надзору",
+        "anticorruption_div": {
+            "url": "http://www.fsvps.ru/fsvps/corruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.fsvps.ru/fsvps/corruption/laws.html",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fsvts.gov.ru",
+        "name": "Федеральная служба по военно-техническому сотрудничеству",
+        "anticorruption_div": {
+            "exception": "no element found"
+        },
+        "law_div": {
+            "url": "http://www.fsvts.gov.ru/materials/943AFDEDBE0AE3EB44257B16004A8446.html",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.meteorf.ru",
+        "name": "Федеральная служба по гидрометеорологии и мониторингу окружающей среды",
+        "anticorruption_div": {
+            "url": "http://www.meteorf.ru/about/corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.meteorf.ru/about/corruption/npa/",
+            "link_text": "\n                                        Нормативные правовые и иные акты в сфере противодействия коррупции                                    ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rupto.ru",
+        "name": "Федеральная служба по интеллектуальной собственности",
+        "anticorruption_div": {
+            "url": "http://www.rupto.ru/ru/activities/acorr",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.rupto.ru/ru/activities/acorr/norm_doc",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rospotrebnadzor.ru",
+        "name": "Федеральная служба по надзору в сфере защиты прав потребителей и благополучия человека",
+        "anticorruption_div": {
+            "url": "http://www.rospotrebnadzor.ru/anticorruption/index.php",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "Message: Tried to run command without establishing a connection\n",
+            "url": "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.roszdravnadzor.ru",
+        "name": "Федеральная служба по надзору в сфере здравоохранения",
+        "anticorruption_div": {
+            "url": "http://www.roszdravnadzor.ru/about/anti_corruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.roszdravnadzor.ru/about/anti_corruption/legal",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.obrnadzor.gov.ru",
+        "name": "Федеральная служба по надзору в сфере образования и науки",
+        "anticorruption_div": {
+            "url": "http://www.obrnadzor.gov.ru/ru/about/Anti_corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "no element found",
+            "url": "http://www.obrnadzor.gov.ru/ru/about/Anti_corruption/",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://rpn.gov.ru",
+        "name": "Федеральная служба по надзору в сфере природопользования",
+        "anticorruption_div": {
+            "url": "http://rpn.gov.ru/protivodeystvie",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://rpn.gov.ru/protivodeystvie?qt-protivodeystvie=0#qt-protivodeystvie",
+            "link_text": "Нормативные правовые акты и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rkn.gov.ru",
+        "name": "Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций",
+        "anticorruption_div": {
+            "exception": "no element found",
+            "comment": "не вижу глазами"
+        }
+    },
+    {
+        "url": "http://www.rostransnadzor.ru",
+        "name": "Федеральная служба по надзору в сфере транспорта",
+        "anticorruption_div": {
+            "url": "http://rostransnadzor.ru/protivodejstvie-korruptsii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe",
+            "link_text": "\n                                                Нормативные правовые и иные акты в сфере противодействия коррупции\n                                            ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fstec.ru",
+        "name": "Федеральная служба по техническому и экспортному контролю",
+        "anticorruption_div": {
+            "url": "http://www.fstec.ru#",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "no element found",
+            "url": "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.rostrud.ru",
+        "name": "Федеральная служба по труду и занятости",
+        "anticorruption_div": {
+            "url": "http://www.rostrud.ru/rostrud/protivodeystvie-korruptsii/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.rostrud.ru/rostrud/protivodeystvie-korruptsii/normativnye-pravovye/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fsrar.ru",
+        "name": "Федеральная служба по регулированию алкогольного рынка",
+        "anticorruption_div": {
+            "url": "http://www.fsrar.ru/antikorrupcionn-deyatelnost",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.fsrar.ru/about/antikorrupcionn-deyatelnost/npiiavcpk",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fedsfm.ru",
+        "name": "Федеральная служба по финансовому мониторингу",
+        "anticorruption_div": {
+            "url": "http://www.fedsfm.ru/career/anti-corruption-commission",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.fedsfm.ru/career/anti-corruption/acts",
+            "link_text": "Нормативные правовые акты и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.gosnadzor.ru",
+        "name": "Федеральная служба по экологическому, технологическому и атомному надзору",
+        "anticorruption_div": {
+            "url": "http://www.gosnadzor.ru/corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.gosnadzor.ru/corruption/acts/",
+            "link_text": "\n\n\t\t\t\t\t\t\t\t\t\t\tНормативные правовые и иные акты в сфере противодействия коррупции\t\t\t\t\t\t\t\t\t\t",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fssprus.ru",
+        "name": "Федеральная служба судебных приставов",
+        "anticorruption_div": {
+            "url": "http://fssprus.ru/corupt/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "Message: Tried to run command without establishing a connection\n",
+            "url": "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.customs.ru",
+        "name": "Федеральная таможенная служба",
+        "anticorruption_div": {
+            "url": "http://www.customs.ru/index.php?option=com_content&view=article&id=13769&Itemid=1854",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___www.customs.ru_index.php?option=com_content&view=article&id=13769&Itemid=1854'",
+            "url": "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.roskazna.ru",
+        "name": "Федеральное казначейство (федеральная служба)",
+        "anticorruption_div": {
+            "url": "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.gusp.gov.ru",
+        "name": "Главное управление специальных программ Президента Российской Федерации (федеральное агентство)",
+        "anticorruption_div": {
+            "url": "http://www.gusp.gov.ru/pages/gusp/4010/4011/index.shtml",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.gusp.gov.ru/pages/gusp/4010/4011/index.shtml",
+            "engine": "manual",
+            "exception": "Message: Tried to run command without establishing a connection\n"
+        }
+    },
+    {
+        "url": "http://www.udprf.ru",
+        "name": "Управление делами Президента Российской Федерации (федеральное агентство)",
+        "anticorruption_div": {
+            "url": "http://www.udprf.ru/protivodeistvie-korruptsii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "no element found",
+            "url": "http://www.udprf.ru/protivodeistvie-korruptsii",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://voda.mnr.gov.ru",
+        "name": "Федеральное агентство водных ресурсов",
+        "anticorruption_div": {
+            "url": "http://voda.mnr.gov.ru/anti-corruption/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://voda.mnr.gov.ru/anti-corruption/list.php?part=215",
+            "engine": "manual",
+            "exception": "no element found"
+        }
+    },
+    {
+        "url": "http://www.favt.ru",
+        "name": "Федеральное агентство воздушного транспорта",
+        "anticorruption_div": {
+            "url": "http://www.favt.ru/www.favt.ru/antikorrupcionnaja-dejatelnost-faq/?id=375",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/",
+            "engine": "manual",
+            "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___www.favt.ru__www.favt.ru_antikorrupcionnaja-dejatelnost-faq_?id=375'"
+        }
+    },
+    {
+        "url": "http://www.roszeldor.ru",
+        "name": "Федеральное агентство железнодорожного транспорта",
+        "anticorruption_div": {
+            "url": "http://www.roszeldor.ru/anticorruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.roszeldor.ru/docs_corruption",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://rosleshoz.gov.ru",
+        "name": "Федеральное агентство лесного хозяйства",
+        "anticorruption_div": {
+            "url": "http://rosleshoz.gov.ru/nocorrupt",
+            "engine": "selenium"
+        },
+        "law_div": {
+            "url": "http://rosleshoz.gov.ru/nocorrupt/legislation",
+            "link_text": "НОРМАТИВНЫЕ ПРАВОВЫЕ И ИНЫЕ АКТЫ В СФЕРЕ ПРОТИВОДЕЙСТВИЯ КОРРУПЦИИ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.morflot.ru",
+        "name": "Федеральное агентство морского и речного транспорта",
+        "anticorruption_div": {
+            "url": "http://www.morflot.ru/protivodeystvie_korruptsii/nornativnie_pravovie_i_inie_akti.html",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
+        }
+    },
+    {
+        "url": "http://www.rosreserv.ru",
+        "name": "Федеральное агентство по государственным резервам",
+        "anticorruption_div": {
+            "url": "http://www.rosreserv.ru/Protivodejstvie_korrupcii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://fadm.gov.ru",
+        "name": "Федеральное агентство по делам молодежи",
+        "anticorruption_div": {
+            "url": "https://fadm.gov.ru/anticorruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://fadm.gov.ru/anticorruption/8",
+            "engine": "manual",
+            "exception": "Message: Tried to run command without establishing a connection\n"
+        }
+    },
+    {
+        "url": "http://fadn.gov.ru/",
+        "name": "Федеральное агентство по делам национальностей",
+        "anticorruption_div": {
+            "url": "http://fadn.gov.ru/protivodeystvie-korruptsii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://fadn.gov.ru/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://rs.gov.ru",
+        "name": "Федеральное агентство по делам Содружества Независимых Государств, соотечественников, проживающих за рубежом и по международному гуманитарному сотрудничеству",
+        "anticorruption_div": {
+            "url": "http://rs.gov.ru/ru/pages/45",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://rs.gov.ru/%20/pages/98",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rosnedra.gov.ru",
+        "name": "Федеральное агентство по недропользованию",
+        "anticorruption_div": {
+            "url": "http://www.rosnedra.gov.ru/category/218.html",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.rosnedra.gov.ru/category/220.html",
+            "link_text": "НОРМАТИВНО-ПРАВОВЫЕ АКТЫ В СФЕРЕ ПРОТИВОДЕЙСТВИЯ КОРРУПЦИИ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.fapmc.ru",
+        "name": "Федеральное агентство по печати и массовым коммуникациям",
+        "anticorruption_div": {
+            "exception": "no element found"
+        },
+        "law_div": {
+            "url": "http://www.fapmc.ru/rospechat/activities/opposition/activities.html",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.fish.gov.ru",
+        "name": "Федеральное агентство по рыболовству",
+        "anticorruption_div": {
+            "url": "http://www.fish.gov.ru/protivodejstvie-korruptsii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.fish.gov.ru/protivodejstvie-korruptsii/spisok-vedomstvennykh-normativnykh-pravovykh-aktov",
+            "engine": "manual"
+        }
+    },
+    {
+        "url": "http://www.gost.ru",
+        "name": "Федеральное агентство по техническому регулированию и метрологии",
+        "anticorruption_div": {
+            "url": "http://www.gost.ru/portal/gost/home/activity/anticorruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.gost.ru/portal/gost/home/activity/anticorruption/pravo",
+            "link_text": "\n                                \n                                    \n                                        \n                                            \n                                                \n    Нормативно-правовые и иные акты в сфере противодействия коррупции\n    \n        \n            \n\n\n                                            \n                                            \n                                        \n                                        \n                                    \n                                \n                                \n                                    Нормативно-правовые и иные акты в сфере противодействия коррупции\n                                    \n                                \n                            ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.russiatourism.ru",
+        "name": "Федеральное агентство по туризму",
+        "anticorruption_div": {
+            "url": "http://www.russiatourism.ru/contents/otkrytoe_agentstvo/protivodeystvie-korruptsii/",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.russiatourism.ru/content/3/section/40/detail/3503/",
+            "link_text": "\n\t\t\t\t\t\tНормативные правовые и иные акты в сфере противодействия коррупции\n\t\t\t\t\t",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rosim.ru",
+        "name": "Федеральное агентство по управлению государственным имуществом",
+        "anticorruption_div": {
+            "url": "http://www.rosim.ru/activities/anticorruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.rosim.ru/activities/anticorruption/npa",
+            "link_text": "\n\n                    Нормативные и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rossvyaz.ru",
+        "name": "Федеральное агентство связи",
+        "anticorruption_div": {
+            "url": "https://rossvyaz.ru/deyatelnost/protivodeistvie-korrupcii/obshaya-informaciya",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "https://rossvyaz.ru/deyatelnost/protivodeistvie-korrupcii/npa-v-sfere-protivodeistviya-korrupcii",
+            "link_text": "\n                                                    \n                                                        Нормативные правовые и иные акты в сфере противодействия коррупции\n                                                    \n                                                ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.archives.ru",
+        "name": "Федеральное архивное агентство",
+        "anticorruption_div": {
+            "url": "http://www.archives.ru/anticorruption.shtml",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.archives.ru/anticorruption/npa.shtml",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://www.rosavtodor.ru",
+        "name": "Федеральное дорожное агентство",
+        "anticorruption_div": {
+            "url": "http://www.rosavtodor.ru/about/upravlenie-fda/protivodeystvie-korruptsii",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://www.rosavtodor.ru/about/upravlenie-fda/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii",
+            "link_text": "\n                            Нормативные правовые и иные акты в сфере противодействия коррупции\n                        ",
+            "engine": "urllib"
+        }
+    },
+    {
+        "url": "http://fmbaros.ru/",
+        "name": "Федеральное медико-биологическое агентство",
+        "anticorruption_div": {
+            "url": "http://fmbaros.ru/Public/Ru/anticorruption",
+            "engine": "urllib"
+        },
+        "law_div": {
+            "url": "http://fmbaros.ru/#r1",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        }
+    }
+]
