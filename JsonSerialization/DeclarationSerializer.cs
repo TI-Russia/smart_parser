@@ -192,14 +192,15 @@ namespace TI.Declarator.JsonSerialization
                     new JProperty("relative", null)));
             }
 
-            foreach (var rel in servant.Relatives)
+            foreach (var relWithIndex in servant.Relatives.Select((relative, index) => new {relative, index}))
             {
-                var income = rel.DeclaredYearlyIncome;
+                var income = relWithIndex.relative.DeclaredYearlyIncome;
                 if (income.HasValue && income > 0.0m)
                 {
                     jIncomes.Add(new JObject(
                     new JProperty("size", income),
-                    new JProperty("relative", GetRelationshipName(rel.RelationType))));
+                    new JProperty("relative", GetRelationshipName(relWithIndex.relative.RelationType)),
+                    new JProperty("relative_index", relWithIndex.index + 1)));
                 }
             }
 

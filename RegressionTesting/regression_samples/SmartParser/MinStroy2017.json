@@ -95,7 +95,8 @@
         },
         {
           "size": 1200000.0,
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "real_estates": [
