@@ -34,7 +34,7 @@
         },
         "law_div": {
             "url": "http://www.mid.ru/ru/activity/corruption/normoact",
-            "link_text": " Нормативно-правовые акты и иные акты в сфере противодействия коррупции",
+            "link_text": "Нормативно-правовые акты и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -72,6 +72,7 @@
             "engine": "urllib"
         },
         "law_div": {
+            "comment": "не грузится",
             "exception": "<urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>"
         }
     },
@@ -110,7 +111,7 @@
         },
         "law_div": {
             "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/npa/",
-            "link_text": "\n\n        Нормативные правовые и иные акты в сфере противодействия коррупции\n\n    ",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -214,7 +215,7 @@
         },
         "law_div": {
             "url": "http://www.mintrans.ru/activities/anti-corruption/150",
-            "link_text": "\n                                    Нормативные правовые и иные акты в сфере противодействия коррупции\n                                ",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -355,7 +356,7 @@
         },
         "law_div": {
             "url": "http://rosgvard.ru/ru/page/index/normativnye-pravovye-i-inye-akty-v-sfere-protivodejstviya-korrupcii",
-            "link_text": "\n\n                    Нормативные, правовые и иные акты в сфере противодействия коррупции\n\n                ",
+            "link_text": "Нормативные, правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -388,7 +389,8 @@
             "engine": "urllib"
         },
         "law_div": {
-            "exception": "Message: Tried to run command without establishing a connection\n"
+            "comment": "не вижу глазами",
+            "exception": "Message: Failed to decode response from marionette\n"
         }
     },
     {
@@ -448,7 +450,7 @@
         },
         "law_div": {
             "url": "http://www.meteorf.ru/about/corruption/npa/",
-            "link_text": "\n                                        Нормативные правовые и иные акты в сфере противодействия коррупции                                    ",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -534,7 +536,7 @@
         },
         "law_div": {
             "url": "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe",
-            "link_text": "\n                                                Нормативные правовые и иные акты в сфере противодействия коррупции\n                                            ",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -599,7 +601,7 @@
         },
         "law_div": {
             "url": "http://www.gosnadzor.ru/corruption/acts/",
-            "link_text": "\n\n\t\t\t\t\t\t\t\t\t\t\tНормативные правовые и иные акты в сфере противодействия коррупции\t\t\t\t\t\t\t\t\t\t",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -828,7 +830,7 @@
         },
         "law_div": {
             "url": "http://www.gost.ru/portal/gost/home/activity/anticorruption/pravo",
-            "link_text": "\n                                \n                                    \n                                        \n                                            \n                                                \n    Нормативно-правовые и иные акты в сфере противодействия коррупции\n    \n        \n            \n\n\n                                            \n                                            \n                                        \n                                        \n                                    \n                                \n                                \n                                    Нормативно-правовые и иные акты в сфере противодействия коррупции\n                                    \n                                \n                            ",
+            "link_text": "Нормативно-правовые и иные акты в сфере противодействия коррупции\n    \n        \n            \n\n\n\n                                            \n\n                                            \n\n                                        \n\n                                        \n\n                                    \n\n                                \n\n                                \n\n                                    Нормативно-правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -841,7 +843,7 @@
         },
         "law_div": {
             "url": "http://www.russiatourism.ru/content/3/section/40/detail/3503/",
-            "link_text": "\n\t\t\t\t\t\tНормативные правовые и иные акты в сфере противодействия коррупции\n\t\t\t\t\t",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -854,7 +856,7 @@
         },
         "law_div": {
             "url": "http://www.rosim.ru/activities/anticorruption/npa",
-            "link_text": "\n\n                    Нормативные и иные акты в сфере противодействия коррупции",
+            "link_text": "Нормативные и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -867,7 +869,7 @@
         },
         "law_div": {
             "url": "https://rossvyaz.ru/deyatelnost/protivodeistvie-korrupcii/npa-v-sfere-protivodeistviya-korrupcii",
-            "link_text": "\n                                                    \n                                                        Нормативные правовые и иные акты в сфере противодействия коррупции\n                                                    \n                                                ",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -893,7 +895,7 @@
         },
         "law_div": {
             "url": "http://www.rosavtodor.ru/about/upravlenie-fda/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii",
-            "link_text": "\n                            Нормативные правовые и иные акты в сфере противодействия коррупции\n                        ",
+            "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
         }
     },

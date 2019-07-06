@@ -40,7 +40,7 @@ def find_links_with_selenium (url, check_text_func):
             e.click()
             time.sleep(6)
             browser.switch_to_window(browser.window_handles[-1])
-            links.append ({'url':  browser.current_url, 'text': e.text.strip('\n ')})
+            links.append ({'url':  browser.current_url, 'text': e.text.strip('\n\r\t ')})
             browser.switch_to_window(browser.window_handles[0])
         browser.close()
     return links
