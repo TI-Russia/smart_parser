@@ -148,6 +148,28 @@ def find_law_div(offices):
     write_offices(offices)
 
 
+
+def check_office_decree_link_text(text):
+    text = text.strip(' \n\t\r').lower()
+    if text.startswith(u'ведомственные'):
+        return True
+    if text.startswith(u'иные'):
+        return True
+    return False
+
+
+def find_office_decrees_section(offices):
+    for office_info in offices:
+        url = office_info.get('law_div', {}).get('url', '')
+        if url == '':
+            sys.stderr.write("skip url " + office_info['url'] + " (no law div info)\n")
+            continue
+        sys.stderr.write(url + "\n")
+        click_links_and_get_url(office_info, 'office_decrees', url, check_office_decree_link_text, True)
+
+    write_offices(offices)
+
+
 def check_decree_link_text(text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'приказ'):
@@ -155,13 +177,19 @@ def check_decree_link_text(text):
     return False
 
 
-def download_decrees_html(video_links):
+def download_decrees_html(offices):
     for office_info in offices:
         url = office_info.get('law_div', {}).get('url', '')
         if url == '':
             sys.stderr.write("skip url " + office_info['url'] +  " (no law div info) \n")
             continue
-        click_links_and_get_url(office_info, 'decrees', url, check_decree_link_text, False)
+        office_url = office_info.get('office_decrees', {}).get('url', '')
+        if office_url != "":
+            url = office_url
+        sys.stderr.write(url + "\n")
+
+        click_links_and_get_url(office_info, 'office_decrees', url, check_decree_link_text, False)
+
     write_offices(offices)
 
 
@@ -172,4 +200,5 @@ if __name__ == "__main__":
     offices = read_office_list()
     #find_anticorruption_div(offices)
     #find_law_div(offices)
-    download_decrees_html(offices)
+    find_office_decrees_section(offices)
+    #download_decrees_html(offices)

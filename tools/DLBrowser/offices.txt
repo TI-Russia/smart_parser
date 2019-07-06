@@ -10,6 +10,11 @@
             "url": "https://xn--b1aew.xn--p1ai/anticorr/NPA",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "https://мвд.рф/anticorr/NPA/acts",
+            "link_text": "Ведомственная наука",
+            "engine": "urllib"
         }
     },
     {
@@ -23,6 +28,9 @@
             "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/4",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -36,6 +44,11 @@
             "url": "http://www.mid.ru/ru/activity/corruption/normoact",
             "link_text": "Нормативно-правовые акты и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
+            "url" : "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii",
+            "engine":  "manual"
         }
     },
     {
@@ -49,6 +62,9 @@
             "url": "http://www.mkrf.ru/activities/anti_corruption/regulations/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -62,6 +78,11 @@
             "url": "http://mil.ru/anti-corruption/docs.htm",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://mil.ru/anti-corruption/comission/orders_of_minister.htm",
+            "engine" : "manual",
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -87,6 +108,9 @@
             "url": "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -100,6 +124,9 @@
             "url": "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/",
             "link_text": "\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tНПА в сфере противодействия коррупции\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -139,6 +166,9 @@
             "url": "https:///minvr.ru/opened-ministry/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii",
             "link_text": "\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\tНормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "<urlopen error no host given>"
         }
     },
     {
@@ -165,6 +195,9 @@
             "url": "http://www.minkavkaz.gov.ru/feedback/anticorruption/laws/",
             "link_text": "Нормативные правовые акты и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -177,6 +210,11 @@
         "law_div": {
             "url": "http://www.mcx.ru/activity/anti-corruption/normative-acts/",
             "link_text": "Нормативные, правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -191,6 +229,11 @@
             "url": "http://www.minsport.gov.ru/normativnye-pravovye/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "no link found"
+            "url": "https://www.minsport.gov.ru/activities/anticorruption/podrazdel/63//",
+            "engine": "manual"
         }
     },
     {
@@ -203,6 +246,11 @@
         "law_div": {
             "url": "http://www.minstroyrf.ru/about/anti-corruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.minstroyrf.ru/about/anti-corruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/vedomstvennye-normativnye-pravovye-akty/",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -217,6 +265,11 @@
             "url": "http://www.mintrans.ru/activities/anti-corruption/150",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.mintrans.ru/activities/anti-corruption/150/152",
+            "link_text": "Ведомственные нормативные правовые акты в сфере противодействия коррупции",
+            "engine": "urllib"
         }
     },
     {
@@ -229,6 +282,11 @@
         "law_div": {
             "url": "http://rosmintrud.ru/ministry/anticorruption/legislation",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://rosmintrud.ru/ministry/anticorruption/legislation/1",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -243,6 +301,11 @@
             "url": "http://www.minfin.ru/ru/om/anticorMK/korr-npa/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/",
+            "link_text": "Ведомственные нормативные правовые акты",
+            "engine": "urllib"
         }
     },
     {
@@ -255,6 +318,11 @@
         "law_div": {
             "url": "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/",
+            "link_text": "Ведомственные правовые акты",
             "engine": "urllib"
         }
     },
@@ -282,6 +350,9 @@
             "url": "http://www.minjust.ru/node/226231",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -295,6 +366,9 @@
             "url": "https://gfs.gov.ru/protivodejstvie-korrupcii/pravovaya-osnova-protivodejstviya-korrupcii/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -306,6 +380,9 @@
         "law_div": {
             "url": "http://svr.gov.ru/antikorr/doc-korrupcija.htm",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -319,6 +396,9 @@
             "url": "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -332,6 +412,10 @@
             "url": "http://www.nalog.ru/#t1",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/",
+            "engine": "manual"
         }
     },
     {
@@ -345,6 +429,9 @@
             "url": "http://www.fsb.ru/fsb/corruption/npa/agency.htm",
             "engine": "manual",
             "exception": "<urlopen error [Errno 11004] getaddrinfo failed>"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -358,6 +445,9 @@
             "url": "http://rosgvard.ru/ru/page/index/normativnye-pravovye-i-inye-akty-v-sfere-protivodejstviya-korrupcii",
             "link_text": "Нормативные, правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -371,6 +461,9 @@
             "url": "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "no link found"
         }
     },
     {
@@ -402,6 +495,9 @@
         "law_div": {
             "url": "http://www.fso.gov.ru/korrup/p1_2.html",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -414,6 +510,11 @@
         "law_div": {
             "url": "http://www.fsa.gov.ru/index/staticview/id/28/",
             "link_text": "Нормативно-правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://fsa.gov.ru/index/staticview/id/404/",
+            "link_text": "Ведомственные нормативные правовые акты по вопросам противодействия коррупции",
             "engine": "urllib"
         }
     },
@@ -428,6 +529,9 @@
             "url": "http://www.fsvps.ru/fsvps/corruption/laws.html",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -439,6 +543,9 @@
         "law_div": {
             "url": "http://www.fsvts.gov.ru/materials/943AFDEDBE0AE3EB44257B16004A8446.html",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -451,6 +558,11 @@
         "law_div": {
             "url": "http://www.meteorf.ru/about/corruption/npa/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.meteorf.ru/about/corruption/npa/npa/",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -465,6 +577,11 @@
             "url": "http://www.rupto.ru/ru/activities/acorr/norm_doc",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "https://rupto.ru/ru/activities/acorr/norm_doc_rospatent",
+            "engine" : "manual",
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -478,6 +595,9 @@
             "exception": "Message: Tried to run command without establishing a connection\n",
             "url": "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\https___www.rospotrebnadzor.ru_anticorruption_normativ_?SECTION_ID=84'"
         }
     },
     {
@@ -491,6 +611,9 @@
             "url": "http://www.roszdravnadzor.ru/about/anti_corruption/legal",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -504,6 +627,9 @@
             "exception": "no element found",
             "url": "http://www.obrnadzor.gov.ru/ru/about/Anti_corruption/",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -517,6 +643,11 @@
             "url": "http://rpn.gov.ru/protivodeystvie?qt-protivodeystvie=0#qt-protivodeystvie",
             "link_text": "Нормативные правовые акты и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://rpn.gov.ru/node/8372",
+            "engine" : "manual"
+            "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___rpn.gov.ru_protivodeystvie?qt-protivodeystvie=0#qt-protivodeystvie'"
         }
     },
     {
@@ -538,6 +669,11 @@
             "url": "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe/vedomstvenny-e-normativny-e-pravovy-e",
+            "link_text": "Ведомственные нормативные правовые акты в сфере противодействия коррупции",
+            "engine": "urllib"
         }
     },
     {
@@ -551,6 +687,11 @@
             "exception": "no element found",
             "url": "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "url": "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye",
+            "link_text": "Иные",
+            "engine": "urllib"
         }
     },
     {
@@ -563,6 +704,11 @@
         "law_div": {
             "url": "http://www.rostrud.ru/rostrud/protivodeystvie-korruptsii/normativnye-pravovye/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.rostrud.ru/?CAT_ID=7",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -577,6 +723,11 @@
             "url": "http://www.fsrar.ru/about/antikorrupcionn-deyatelnost/npiiavcpk",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.fsrar.ru/about/antikorrupcionn-deyatelnost/npiiavcpk/vedomstvennye-normativnye-pravovye-akty",
+            "link_text": "Ведомственные нормативные правовые акты",
+            "engine": "urllib"
         }
     },
     {
@@ -589,6 +740,11 @@
         "law_div": {
             "url": "http://www.fedsfm.ru/career/anti-corruption/acts",
             "link_text": "Нормативные правовые акты и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -603,6 +759,11 @@
             "url": "http://www.gosnadzor.ru/corruption/acts/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.gosnadzor.ru/about_gosnadzor/award/",
+            "link_text": "Ведомственные награды Ростехнадзора",
+            "engine": "urllib"
         }
     },
     {
@@ -616,6 +777,9 @@
             "exception": "Message: Tried to run command without establishing a connection\n",
             "url": "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -629,6 +793,9 @@
             "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___www.customs.ru_index.php?option=com_content&view=article&id=13769&Itemid=1854'",
             "url": "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___www.customs.ru_index.php?option=com_newsfts&view=category&id=382&Itemid=2377'"
         }
     },
     {
@@ -641,6 +808,11 @@
         "law_div": {
             "url": "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/vedomstvennye-normativnye-pravovye-akty/",
+            "link_text": "Ведомственные нормативные правовые и иные акты",
             "engine": "urllib"
         }
     },
@@ -655,6 +827,9 @@
             "url": "http://www.gusp.gov.ru/pages/gusp/4010/4011/index.shtml",
             "engine": "manual",
             "exception": "Message: Tried to run command without establishing a connection\n"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -668,6 +843,11 @@
             "exception": "no element found",
             "url": "http://www.udprf.ru/protivodeistvie-korruptsii",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "url": "http://www.udprf.ru/content/vedomstvennye-nagrady-upravleniya-delami-prezidenta-rossiyskoy-federacii",
+            "link_text": "Ведомственные награды",
+            "engine": "urllib"
         }
     },
     {
@@ -681,6 +861,9 @@
             "url": "http://voda.mnr.gov.ru/anti-corruption/list.php?part=215",
             "engine": "manual",
             "exception": "no element found"
+        },
+        "office_decrees": {
+            "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___voda.mnr.gov.ru_anti-corruption_list.php?part=215'"
         }
     },
     {
@@ -694,6 +877,11 @@
             "url": "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/",
             "engine": "manual",
             "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___www.favt.ru__www.favt.ru_antikorrupcionnaja-dejatelnost-faq_?id=375'"
+        },
+        "office_decrees": {
+            "url": "https://www.favt.ru/www.favt.ru/dejatelnost-vedomstvennie-celevie-programmy/",
+            "link_text": "Ведомственные целевые программы",
+            "engine": "urllib"
         }
     },
     {
@@ -707,6 +895,9 @@
             "url": "http://www.roszeldor.ru/docs_corruption",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -719,6 +910,11 @@
         "law_div": {
             "url": "http://rosleshoz.gov.ru/nocorrupt/legislation",
             "link_text": "НОРМАТИВНЫЕ ПРАВОВЫЕ И ИНЫЕ АКТЫ В СФЕРЕ ПРОТИВОДЕЙСТВИЯ КОРРУПЦИИ",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://rosleshoz.gov.ru/nocorrupt/legislation/local",
+            "link_text": "ИНЫЕ НОРМАТИВНЫЕ ПРАВОВЫЕ АКТЫ",
             "engine": "urllib"
         }
     },
@@ -744,6 +940,11 @@
             "url": "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti",
+            "link_text": "Ведомственные акты",
+            "engine": "urllib"
         }
     },
     {
@@ -756,6 +957,9 @@
         "law_div": {
             "url": "https://fadm.gov.ru/anticorruption/8",
             "engine": "manual",
+            "exception": "Message: Tried to run command without establishing a connection\n"
+        },
+        "office_decrees": {
             "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
@@ -770,6 +974,11 @@
             "url": "http://fadn.gov.ru/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://fadn.gov.ru/protivodeystvie-korruptsii/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/stranitsa-43",
+            "link_text": "Ведомственные нормативные правовые акты по вопросам противодействия коррупции",
+            "engine": "urllib"
         }
     },
     {
@@ -783,6 +992,9 @@
             "url": "http://rs.gov.ru/%20/pages/98",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -796,6 +1008,9 @@
             "url": "http://www.rosnedra.gov.ru/category/220.html",
             "link_text": "НОРМАТИВНО-ПРАВОВЫЕ АКТЫ В СФЕРЕ ПРОТИВОДЕЙСТВИЯ КОРРУПЦИИ",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -807,6 +1022,9 @@
         "law_div": {
             "url": "http://www.fapmc.ru/rospechat/activities/opposition/activities.html",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -819,6 +1037,11 @@
         "law_div": {
             "url": "http://www.fish.gov.ru/protivodejstvie-korruptsii/spisok-vedomstvennykh-normativnykh-pravovykh-aktov",
             "engine": "manual"
+        },
+        "office_decrees": {
+            "url": "http://www.fish.gov.ru/otraslevaya-deyatelnost/vedomstvennyj-i-vneshnij-kontrol",
+            "link_text": "Ведомственный и внешний контроль",
+            "engine": "urllib"
         }
     },
     {
@@ -832,6 +1055,9 @@
             "url": "http://www.gost.ru/portal/gost/home/activity/anticorruption/pravo",
             "link_text": "Нормативно-правовые и иные акты в сфере противодействия коррупции\n    \n        \n            \n\n\n\n                                            \n\n                                            \n\n                                        \n\n                                        \n\n                                    \n\n                                \n\n                                \n\n                                    Нормативно-правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -845,6 +1071,9 @@
             "url": "http://www.russiatourism.ru/content/3/section/40/detail/3503/",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
             "engine": "urllib"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     },
     {
@@ -857,6 +1086,11 @@
         "law_div": {
             "url": "http://www.rosim.ru/activities/anticorruption/npa",
             "link_text": "Нормативные и иные акты в сфере противодействия коррупции",
+            "engine": "urllib"
+        },
+        "office_decrees": {
+            "url": "http://www.rosim.ru/activities/anticorruption/npa/local_npa",
+            "link_text": "Ведомственные нормативные правовые акты",
             "engine": "urllib"
         }
     },
@@ -907,9 +1141,12 @@
             "engine": "urllib"
         },
         "law_div": {
-            "url": "http://fmbaros.ru/#r1",
+            "url": "http://fmbaros.ru/Public/Ru/anticorruption",
             "link_text": "Нормативные правовые и иные акты в сфере противодействия коррупции",
-            "engine": "urllib"
+            "engine": "manual"
+        },
+        "office_decrees": {
+            "exception": "Message: Tried to run command without establishing a connection\n"
         }
     }
 ]
