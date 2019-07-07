@@ -221,21 +221,16 @@ def check_decree_link_text(text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'приказ'):
         return True
+    if text.startswith(u'скачать'):
+        return True
     return False
 
 
-def download_decrees_html(offices):
+def download_decrees_docs(offices):
     for office_info in offices:
-        url = office_info.get('law_div', {}).get('url', '')
-        if url == '':
-            sys.stderr.write("skip url " + office_info['url'] +  " (no law div info) \n")
-            continue
-        office_url = office_info.get('office_decrees', {}).get('url', '')
-        if office_url != "":
-            url = office_url
-        sys.stderr.write(url + "\n")
-
-        click_links_and_get_url(office_info, 'office_decrees', url, check_decree_link_text, False)
+        for url in office_info.get('decree_pages', []):
+            sys.stderr.write(url + "\n")
+            links = click_links_and_get_url(office_info, 'office_decrees', url, check_decree_link_text, False)
 
     write_offices(offices)
 
