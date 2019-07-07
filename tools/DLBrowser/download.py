@@ -3,6 +3,7 @@ import urllib.parse
 import urllib.request
 import json
 import hashlib
+from urllib.parse import urlparse, quote, urlunparse
 
 # selenium staff
 import os
@@ -35,7 +36,6 @@ def find_links_with_selenium (url, check_text_func):
     browser.implicitly_wait(5)
     browser.get(url)
     time.sleep(6)
-    html = browser.page_source
     elements = browser.find_elements_by_xpath('//button | //a')
     links = []
     for e in elements:
@@ -45,13 +45,20 @@ def find_links_with_selenium (url, check_text_func):
             browser.switch_to_window(browser.window_handles[-1])
             links.append ({'url':  browser.current_url, 'text': e.text.strip('\n\r\t ')})
             browser.switch_to_window(browser.window_handles[0])
-        browser.close()
+    browser.quit()
     return links
+
+def is_html_contents(info):
+    content_type = info.get('Content-Type')
+    return content_type.startswith('text')
 
 
 def download_html_with_urllib (url):
     mvd = "https://" + u'мвд.рф'.encode('idna').decode('latin')
     url = url.replace('http://www.mvd.ru', mvd)
+    o = list(urlparse(url)[:])
+    o[2] = quote(o[2])
+    url = urlunparse(o)
     #url = url.encode("utf8")
     context = ssl._create_unverified_context()
     req = urllib.request.Request(
@@ -63,13 +70,14 @@ def download_html_with_urllib (url):
         }
     )
     data = ''
-    info = None
+    info = {}
     with urllib.request.urlopen(req, context=context) as request:
         data =  request.read()
         info = request.info()
-
     try:
-        return data.decode('utf8', errors="ignore"), info
+        if is_html_contents(info):
+            data = data.decode('utf8', errors="ignore")
+        return data, info
     except AttributeError:
         return (data, info)
 
@@ -101,16 +109,25 @@ def download_with_cache(url, use_selenium=False):
         if not use_selenium:
             with open(localfile, encoding="utf8") as f:
                 return f.read()
-    info =  None
     if use_selenium:
         html = download_html_with_selenium(url)
+        info = {'Content-Type': 'text/html'}
     else:
         html, info = download_html_with_urllib(url)
     if len(html) == 0:
         return html
-    with open(localfile, "w", encoding="utf8") as f:
-        f.write(html)
+
+    if is_html_contents(info):
+        with open(localfile, "w", encoding="utf8") as f:
+            f.write(html)
+    else:
+        with open(localfile, "wb") as f:
+            f.write(html)
+
     if info is not None:
         with open(localfile + ".headers", "w", encoding="utf8") as f:
-            f.write(json.dumps(info._headers))
+            headers_and_url = {}
+            headers_and_url['input_url'] = url
+            headers_and_url['headers'] = dict(info._headers)
+            f.write(json.dumps(headers_and_url, indent=4, ensure_ascii=False))
     return html

@@ -189,6 +189,7 @@ def find_office_decrees_section(offices):
 
     write_offices(offices)
 
+
 def get_decree_pages(offices):
     for office_info in offices:
         url = office_info.get('law_div', {}).get('url', '')
@@ -221,17 +222,23 @@ def check_decree_link_text(text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'приказ'):
         return True
+    if text.startswith(u'распоряжение'):
+        return True
+    if text.startswith(u'кодекс'):
+        return True
     if text.startswith(u'скачать'):
         return True
     return False
 
-
-def download_decrees_docs(offices):
+def find_decrees_doc_urls(offices):
     for office_info in offices:
+        docs = dict()
         for url in office_info.get('decree_pages', []):
             sys.stderr.write(url + "\n")
-            links = click_links_and_get_url(office_info, 'office_decrees', url, check_decree_link_text, False)
-
+            page_info = {}
+            click_links_and_get_url(page_info, 'urls', url, check_decree_link_text, False)
+            docs.update((l['url'], l['link_text']) for l in page_info['urls'].get('links', []))
+        office_info['anticor_doc_urls'] = docs
     write_offices(offices)
 
 
@@ -250,6 +257,5 @@ if __name__ == "__main__":
     #find_anticorruption_div(offices)
     #find_law_div(offices)
     #find_office_decrees_section(offices)
-    #find_office_decrees_section(offices)
     get_decree_pages(offices)
-    # download_decrees_html(offices)
+    #find_decrees_doc_urls(offices)

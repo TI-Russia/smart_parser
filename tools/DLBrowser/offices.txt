@@ -57,28 +57,28 @@
             "engine": "manual"
         },
         "decree_pages": [
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1334753",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3211882",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/673595",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2855477",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1889273",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2239695",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3439546",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/56022",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1651637",
             "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2038767",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii?p_p_id=101_INSTANCE_dVIKK3TSysQS&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_dVIKK3TSysQS_delta=20&_101_INSTANCE_dVIKK3TSysQS_keywords=&_101_INSTANCE_dVIKK3TSysQS_advancedSearch=false&_101_INSTANCE_dVIKK3TSysQS_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_dVIKK3TSysQS_cur=2",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2277403",
             "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2348509",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1889263",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3565207",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2772682",
             "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3022939",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/93026",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/93010",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/226718",
             "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2211643",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/673595",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii?p_p_id=101_INSTANCE_dVIKK3TSysQS&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_dVIKK3TSysQS_delta=20&_101_INSTANCE_dVIKK3TSysQS_keywords=&_101_INSTANCE_dVIKK3TSysQS_advancedSearch=false&_101_INSTANCE_dVIKK3TSysQS_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_dVIKK3TSysQS_cur=2",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2855477",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/93010",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1889273",
             "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii",
-            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2277403"
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3565207",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1334753",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1651637",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/226718",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/56022",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/1889263",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2772682",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/2239695",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/93026",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3211882",
+            "http://www.mid.ru/ru/normativnye-pravovye-akty-mid-rossii/-/asset_publisher/dVIKK3TSysQS/content/id/3439546"
         ]
     },
     {
@@ -97,25 +97,25 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=4",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=1",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt",
             "http://www.mkrf.ru/activities/anti_corruption/regulations/",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=5",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=5",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=def",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=7",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=11",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=7",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=1",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=6",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=1",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=4",
             "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=2",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=11",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=4",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=1",
             "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=2",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=11",
             "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=3",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=5",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=4",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt",
             "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=3",
-            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=6"
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=11",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=6",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=5",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=7",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?PAGEN_1=6",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=alt&PAGEN_1=7",
+            "http://www.mkrf.ru/activities/anti_corruption/regulations/?show=def"
         ]
     },
     {
@@ -167,16 +167,16 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/president/",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/government/",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/index.php?order_57=P_DATE&dir_57=DESC&page_57=2",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/index.php",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/federallaws/index.php",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/federallaws/",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/government/index.php",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/",
             "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/?order_57=P_DATE&dir_57=DESC&page_57=2",
-            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/president/index.php"
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/federallaws/",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/president/index.php",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/government/index.php",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/president/",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/index.php?order_57=P_DATE&dir_57=DESC&page_57=2",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/government/",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/federallaws/index.php",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/index.php",
+            "https://minobrnauki.gov.ru/ru/activity/anticorr/npa/"
         ]
     },
     {
@@ -195,14 +195,14 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
-            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rossiyskoy_federatsii_ot_05_07_2013_568_o_rasprostranenii_na_otdelnye_kat/",
-            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rf_ot_9_yanvarya_2014_10_o_poryadke_soobshcheniya_otdelnymi_kategoriyami_/?special_version=Y",
-            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rf_ot_9_yanvarya_2014_10_o_poryadke_soobshcheniya_otdelnymi_kategoriyami_/",
-            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/",
             "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rossiyskoy_federatsii_ot_05_07_2013_568_o_rasprostranenii_na_otdelnye_kat/?special_version=Y",
-            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/?PAGEN_5=3&SECTION_CODE=npa_v_sfere_protivodeystviya_korruptsii",
-            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/?special_version=Y",
             "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rossiyskoy_federatsii_ot_13_03_2013_207_ob_utverzhdenii_pravil_proverki_d/?special_version=Y",
+            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rf_ot_9_yanvarya_2014_10_o_poryadke_soobshcheniya_otdelnymi_kategoriyami_/",
+            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rossiyskoy_federatsii_ot_05_07_2013_568_o_rasprostranenii_na_otdelnye_kat/",
+            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/?special_version=Y",
+            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rf_ot_9_yanvarya_2014_10_o_poryadke_soobshcheniya_otdelnymi_kategoriyami_/?special_version=Y",
+            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/?PAGEN_5=3&SECTION_CODE=npa_v_sfere_protivodeystviya_korruptsii",
+            "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/",
             "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/postanovlenie_pravitelstva_rossiyskoy_federatsii_ot_13_03_2013_207_ob_utverzhdenii_pravil_proverki_d/",
             "http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/?PAGEN_5=2&SECTION_CODE=npa_v_sfere_protivodeystviya_korruptsii"
         ]
@@ -236,10 +236,10 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere/?pdf=1",
-            "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere/?print=1",
             "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere/?doc=1",
-            "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere"
+            "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere",
+            "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere/?print=1",
+            "http://www.mchs.gov.ru/dop/Korrupcija/Normativnie_pravovie_i_inie_akti_v_sfere/?pdf=1"
         ]
     },
     {
@@ -314,44 +314,44 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-304/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-09-2016-398/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-28-05-2015-215/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-05-03-2012-170/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-304/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-25-11-2015-582/?print=Y",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-09-2012-493/",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-26-09-2014-371/?print=Y",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-31-01-2014-29/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-26-09-2014-371/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-24-11-2016-532/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-04-12-2013-448/",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-28-05-2015-215/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-11-2015-593/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-04-2016-137/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-04-2016-164/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-25-11-2015-582/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-304/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-303/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-09-2012-493/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-02-2015-47/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-02-2015-47/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-04-2016-164/?print=Y",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/rasporyazhenie-minselkhoza-rossii-ot-31-03-2016-30-r/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-04-2016-137/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-01-10-2015-451/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-04-12-2013-448/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-11-2015-593/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-05-03-2012-170/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-24-11-2016-532/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-303/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-09-2012-493/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-28-05-2015-215/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-24-11-2016-532/?print=Y",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-01-10-2015-451/",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-09-2016-398/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-05-03-2012-170/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-25-11-2015-582/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-31-01-2014-29/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-09-2012-493/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-25-11-2015-582/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-04-12-2013-448/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-303/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-304/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-02-2015-47/",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-03-2014-98/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-11-2015-593/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-09-2016-398/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-04-2016-164/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-24-11-2016-532/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/rasporyazhenie-minselkhoza-rossii-ot-31-03-2016-30-r/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-09-2016-398/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-04-12-2013-448/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-04-2016-137/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-11-2015-593/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-01-10-2015-451/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-31-01-2014-29/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-05-03-2012-170/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-26-09-2014-371/",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-04-2016-137/?print=Y",
             "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-03-2014-98/?print=Y",
-            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/rasporyazhenie-minselkhoza-rossii-ot-31-03-2016-30-r/?print=Y"
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-27-04-2016-164/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-11-02-2015-47/?print=Y",
+            "http://www.mcx.ru/activity/anti-corruption/normative-acts/departmental-acts/prikaz-minselkhoza-rossii-ot-08-08-2013-303/"
         ]
     },
     {
@@ -415,8 +415,8 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.mintrans.ru/activities/anti-corruption/150/152/documents",
-            "http://www.mintrans.ru/activities/anti-corruption/150/152"
+            "http://www.mintrans.ru/activities/anti-corruption/150/152",
+            "http://www.mintrans.ru/activities/anti-corruption/150/152/documents"
         ]
     },
     {
@@ -437,9 +437,9 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://rosmintrud.ru/ministry/anticorruption/legislation/1",
+            "http://rosmintrud.ru/ministry/anticorruption/legislation/1/archive_min/",
             "http://rosmintrud.ru/ministry/anticorruption/legislation/1/archive_min",
-            "http://rosmintrud.ru/ministry/anticorruption/legislation/1/archive_min/"
+            "http://rosmintrud.ru/ministry/anticorruption/legislation/1"
         ]
     },
     {
@@ -460,24 +460,24 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=127783&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=124664&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121945&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122646&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121423&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122064&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122627&page_id=1294&popup=Y&area_id=57",
             "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122675&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=117934&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121946&page_id=1294&popup=Y&area_id=57",
             "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=65025&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=124670&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121946&page_id=1294&popup=Y&area_id=57",
             "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=80007&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?order_57=LIST_ORDER&dir_57=DESC&page_57=2",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=124664&page_id=1294&popup=Y&area_id=57",
             "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=126186&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=127783&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=117934&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122064&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?order_57=LIST_ORDER&dir_57=DESC&page_57=2",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=126467&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121423&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121945&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=124670&page_id=1294&popup=Y&area_id=57",
             "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=121972&page_id=1294&popup=Y&area_id=57",
-            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=126467&page_id=1294&popup=Y&area_id=57"
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122627&page_id=1294&popup=Y&area_id=57",
+            "http://www.minfin.ru/ru/om/anticorMK/korr-npa/korr-vnpa/?id_57=122646&page_id=1294&popup=Y&area_id=57"
         ]
     },
     {
@@ -498,22 +498,22 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/20151103048",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_Page.6592b3004309ca4b98d5bb1aee474279=3",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201701115",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_PageSize.6592b3004309ca4b98d5bb1aee474279=30",
             "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/20150908410",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201829071",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_PageSize.6592b3004309ca4b98d5bb1aee474279=20",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201405077",
             "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201818092",
             "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201410072",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201819091",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_PageSize.6592b3004309ca4b98d5bb1aee474279=30",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/20151103048",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201701115",
             "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_PageSize.6592b3004309ca4b98d5bb1aee474279=40",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/20150908640",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_PageSize.6592b3004309ca4b98d5bb1aee474279=20",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201829071",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/",
             "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/2017070619",
             "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_Page.6592b3004309ca4b98d5bb1aee474279=2",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/",
-            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201405077"
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/20150908640",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/201819091",
+            "http://www.economy.gov.ru/wps/wcm/connect/economylib4/mer/activity/sections/anticorruptpolicy/information/veddocs/?WCM_PI=1&WCM_Page.6592b3004309ca4b98d5bb1aee474279=3"
         ]
     },
     {
@@ -604,11 +604,11 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
-            "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6",
-            "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6?page=4",
             "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6?page=3",
+            "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6",
             "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6?page=5",
-            "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6?page=2"
+            "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6?page=2",
+            "http://new.fas.gov.ru/anticorruption_items/anticorruption_types/6?page=4"
         ]
     },
     {
@@ -628,57 +628,57 @@
             "engine": "manual"
         },
         "decree_pages": [
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7026648/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/4.html",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7756311/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490458/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8177073/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7634765/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7103374/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7623969/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8365107/print/",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7961224/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7634765/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419294/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/4.html",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7026648/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7756311/print/",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419311/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8177073/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7751860/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8177073/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7026648/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/3.html",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7623969/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7646803/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/2.html",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7634765/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8365107/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8365107/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419311/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419311/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7751860/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/1.html",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7751860/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7103374/",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7756311/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7580408/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7026648/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490470/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490458/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7580408/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490470/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7646803/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7634765/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490470/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419294/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490458/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419294/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8177073/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7103374/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7961224/print/",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7103374/print/",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7623969/print/",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7646803/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7751860/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7623969/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7580408/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7103374/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/1.html",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8365107/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7026648/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/2.html",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7646803/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419311/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8365107/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490470/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490470/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7634765/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419294/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8177073/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8365107/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7634765/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419311/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490458/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7103374/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7623969/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7961224/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7751860/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/8177073/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490458/",
             "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7580408/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419294/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7756311/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7751860/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7419294/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7026648/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7961224/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7580408/tel:88002222222",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7646803/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490470/print/",
-            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/3.html"
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7490458/tel:88002222222",
+            "https://www.nalog.ru/rn77/related_activities/prevention_corruption/norm2/7961224/tel:88002222222"
         ]
     },
     {
@@ -735,25 +735,25 @@
             "exception": "no link found"
         },
         "decree_pages": [
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/187.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/255.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/196300",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/103.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/12_03_2013_N__25D0_259F_87.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/70147070",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/195051",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/kodeks_etiki.rtf",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/?contrast=Y",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/plan_2012_2013.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/_25D0_259F555.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/198625",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/Plan_5F25_06_2014_187.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/otchet_2012.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/198780",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/195554",
             "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/P_103.doc",
-            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/_25D0_259F345.doc"
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/12_03_2013_N__25D0_259F_87.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/195051",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/198780",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/196300",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/198625",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/otchet_2012.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/195554",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/plan_2012_2013.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/_25D0_259F345.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/103.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/us/corupcia/kodeks_etiki.rtf",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/_25D0_259F555.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/Plan_5F25_06_2014_187.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/base.garant.ru/70147070",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/?contrast=Y",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/187.doc",
+            "http://rosreestr.ru/site/open-service/anticorruption/normativnye-pravovye-i-inye-akty-v-sfere-protivodeystviya-korruptsii/www.to77.rosreestr.ru/upload/to77/files/about/pr_kor/255.doc"
         ]
     },
     {
@@ -868,12 +868,12 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.meteorf.ru/about/corruption/npa/npa/",
+            "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=3",
             "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=2",
-            "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=1",
-            "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=0",
             "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=4",
-            "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=3"
+            "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=0",
+            "http://www.meteorf.ru/about/corruption/npa/npa/?PAGEN_1=1",
+            "http://www.meteorf.ru/about/corruption/npa/npa/"
         ]
     },
     {
@@ -913,11 +913,11 @@
             "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\https___www.rospotrebnadzor.ru_anticorruption_normativ_?SECTION_ID=84'"
         },
         "decree_pages": [
-            "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84",
-            "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&SHOWALL_1=1",
             "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&PAGEN_1=2",
-            "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&PAGEN_1=4",
+            "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&SHOWALL_1=1",
             "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&PAGEN_1=3",
+            "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&PAGEN_1=4",
+            "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84",
             "https://www.rospotrebnadzor.ru/anticorruption/normativ/?SECTION_ID=84&PAGEN_1=5"
         ]
     },
@@ -937,61 +937,61 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/49919",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/356",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/354",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/392?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/353?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12574",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54965",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/49919?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/364?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/26515",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/350",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12575?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/364",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12574?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13236?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12575",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/b454",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13237?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/b1397",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/352?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/362?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/352",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13236",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/50424",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/60714?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/360?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54930?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/357?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13237",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/362",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/26515?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/358?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/53939",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/350?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54673?print",
             "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/360",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/53939?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/356?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54930",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/357",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/55452",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/55452?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/31088",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/53939",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/360?print",
             "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/354?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54673",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/31088?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/31088",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/357",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/356",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/362?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/353?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/26515?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/362",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/b1397",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/55452?print",
             "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/60714",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/29159",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/358",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/392",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/353",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/352",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12574",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12574?print",
             "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/50424?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/29159",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/364",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/49919",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54673?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/357?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/53939?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/b454",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/358",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/352?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/55452",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/49919?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12575?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13236",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/26515",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal",
             "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/29159?print",
-            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54965?print"
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/364?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/392?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/354",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/50424",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/358?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/350",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/60714?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54965?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/12575",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/350?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54930?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/356?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54965",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/31088?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13237",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/392",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54930",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/353",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13236?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/13237?print",
+            "http://www.roszdravnadzor.ru/about/anti_corruption/legal/documents/54673"
         ]
     },
     {
@@ -1060,8 +1060,8 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe/vedomstvenny-e-normativny-e-pravovy-e",
             "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe/vedomstvenny-e-normativny-e-pravovy-e?limited=1",
+            "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe/vedomstvenny-e-normativny-e-pravovy-e",
             "http://rostransnadzor.ru/protivodejstvie-korruptsii/normativny-e-pravovy-e-i-iny-e-akty-v-sfe/vedomstvenny-e-normativny-e-pravovy-e?print"
         ]
     },
@@ -1083,17 +1083,17 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1701-obzor-praktiki-pravoprimeneniya",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1644-metodicheskie-rekomendatsii",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/125-tipovoe-polozhenie-ot-18-fevralya-2010-g-n-647p-p16?tmpl=component&print=1",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1423-zhurnal-grazhdanin-i-pravo-n-8-avgust-2017-g?tmpl=component&print=1",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1701-obzor-praktiki-pravoprimeneniya?tmpl=component&print=1",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/125-tipovoe-polozhenie-ot-18-fevralya-2010-g-n-647p-p16",
             "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1423-zhurnal-grazhdanin-i-pravo-n-8-avgust-2017-g",
             "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1661-plan-protivodejstviya-korruptsii-federalnoj-sluzhby-po-tekhnicheskomu-i-eksportnomu-kontrolyu-na-2018-2020-gody?tmpl=component&print=1",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/125-tipovoe-polozhenie-ot-18-fevralya-2010-g-n-647p-p16",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1644-metodicheskie-rekomendatsii?tmpl=component&print=1",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1423-zhurnal-grazhdanin-i-pravo-n-8-avgust-2017-g?tmpl=component&print=1",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1701-obzor-praktiki-pravoprimeneniya?tmpl=component&print=1",
-            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1661-plan-protivodejstviya-korruptsii-federalnoj-sluzhby-po-tekhnicheskomu-i-eksportnomu-kontrolyu-na-2018-2020-gody"
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/125-tipovoe-polozhenie-ot-18-fevralya-2010-g-n-647p-p16?tmpl=component&print=1",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1661-plan-protivodejstviya-korruptsii-federalnoj-sluzhby-po-tekhnicheskomu-i-eksportnomu-kontrolyu-na-2018-2020-gody",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1644-metodicheskie-rekomendatsii",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1701-obzor-praktiki-pravoprimeneniya",
+            "https://fstec.ru/protivodejstvie-korruptsii/normativnye-pravovye-i-inye-akty/48-inye/1644-metodicheskie-rekomendatsii?tmpl=component&print=1"
         ]
     },
     {
@@ -1157,29 +1157,29 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2856",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2855",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3402",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/378",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/379",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3347",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/617",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts?index=2",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3753",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2854",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1843",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts?index=1",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3487",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2969",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1080",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1079",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2970",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/387",
             "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2089",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2090",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3753",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/379",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/378",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1080",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2969",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2855",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts?index=2",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2970",
             "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1150",
-            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1149"
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1843",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1149",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3402",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts?index=1",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/1079",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/617",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/387",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2090",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3347",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/3487",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2854",
+            "http://www.fedsfm.ru/career/anti-corruption/acts/legal-acts/2856"
         ]
     },
     {
@@ -1199,40 +1199,40 @@
             "engine": "manual"
         },
         "decree_pages": [
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ о наградах на сайт Ростехнадзора.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/ППК 2018 - 2020 + Приказ.doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/ПОРЯДОК РАБОТЫ ТЕЛЕФОНА ГОРЯЧЕЙ ЛИНИИ к приказу № 615 от 31 10 2012 г .doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/ПРИКАЗ  О РАБОТЕ ГОРЯЧЕЙ ЛИНИИ № 615 от 31.10.2012 г..doc",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/328 Кодекс в редакции от 30 06 2014 г .doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 130 от  02.04.2015 (подведы).docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/archive",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ 77.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-33-2018.doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%B5%D1%86%20%D1%81%D1%82%D0%B5%D0%BD%D0%B4%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%B5%D0%B4%D0%B8%D0%BD%D1%8B%D1%85%20%D1%82%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9.doc",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/816 с изменениями.doc",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ и Положение по Комиссии ТО 508.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 130 от  02.04.2015 (подведы).docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/1310721-466456-466983.pdf",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 155 от 16.04.2015 г. (подведы).docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/archive/",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/484.docx",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 144 от 10.04.2015.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ № 495  от  04.09.12 по иной деятельности.doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-44 от 03.02.2017 порядок представления сведений.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/%D0%95%D0%94%D0%98%D0%9D%D0%AB%D0%95%20%D0%A2%D0%A0%D0%95%D0%91%D0%9E%D0%92%D0%90%D0%9D%D0%98%D0%AF.doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Пр-587-18 от 26.11.2018.PDF",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-33-2018.doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ №505 по подаркам.doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 191 от 20.05.2015.docx",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-175.docx",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/ПРИКАЗ  О РАБОТЕ ГОРЯЧЕЙ ЛИНИИ № 615 от 31.10.2012 г..doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ и Положение по Комиссии ЦА 508.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ № 648 от 27.12.2013 г. о персональной ответ..doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/archive",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/ПОРЯДОК РАБОТЫ ТЕЛЕФОНА ГОРЯЧЕЙ ЛИНИИ к приказу № 615 от 31 10 2012 г .doc",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ № 152 от  12 03 2012 в ред  16 06 2014 г .doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/484.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ 77.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 155 от 16.04.2015 г. (подведы).docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%B5%D1%86%20%D1%81%D1%82%D0%B5%D0%BD%D0%B4%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%B5%D0%B4%D0%B8%D0%BD%D1%8B%D1%85%20%D1%82%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9.doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-553.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 78 от 27.02.2015 подведы.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/archive/",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ Ростехнадзора от 16.08.2016 №343.docx",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 271 от 25.06.2013 (в ред. приказа № 187).docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%B5%D1%86%20%E2%84%96%201%20%D0%BA%20%D0%B5%D0%B4%D0%B8%D0%BD%D1%8B%D0%BC%20%D1%82%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%D0%BC.doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ №505 по подаркам.doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ о наградах на сайт Ростехнадзора.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/%D0%95%D0%94%D0%98%D0%9D%D0%AB%D0%95%20%D0%A2%D0%A0%D0%95%D0%91%D0%9E%D0%92%D0%90%D0%9D%D0%98%D0%AF.doc",
             "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ Ростехнадзора от 16.10.2017 №431-1.doc",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/1310721-466456-466983.pdf",
-            "http://www.gosnadzor.ru/corruption/acts/normative_acts/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%B5%D1%86%20%E2%84%96%201%20%D0%BA%20%D0%B5%D0%B4%D0%B8%D0%BD%D1%8B%D0%BC%20%D1%82%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%D0%BC.doc"
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ Ростехнадзора от 16.08.2016 №343.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ № 648 от 27.12.2013 г. о персональной ответ..doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 191 от 20.05.2015.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-44 от 03.02.2017 порядок представления сведений.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 78 от 27.02.2015 подведы.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ № 495  от  04.09.12 по иной деятельности.doc",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/пр-553.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Пр-587-18 от 26.11.2018.PDF",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/приказ № 271 от 25.06.2013 (в ред. приказа № 187).docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/Приказ и Положение по Комиссии ЦА 508.docx",
+            "http://www.gosnadzor.ru/corruption/acts/normative_acts/ППК 2018 - 2020 + Приказ.doc"
         ]
     },
     {
@@ -1251,9 +1251,9 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
+            "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK/",
             "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK?print=1",
-            "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK",
-            "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK/"
+            "http://fssprus.ru/inye_normativnye_pravovye_akty_UPK"
         ]
     },
     {
@@ -1272,11 +1272,11 @@
             "exception": "[WinError 123] Синтаксическая ошибка в имени файла, имени папки или метке тома: 'data\\\\http___www.customs.ru_index.php?option=com_newsfts&view=category&id=382&Itemid=2377'"
         },
         "decree_pages": [
+            "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377",
             "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377&limitstart=40",
             "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377&limitstart=20",
             "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377&limitstart=30",
-            "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377&limitstart=10",
-            "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377"
+            "http://www.customs.ru/index.php?option=com_newsfts&view=category&id=382&Itemid=2377&limitstart=10"
         ]
     },
     {
@@ -1297,9 +1297,9 @@
             "engine": "urllib"
         },
         "decree_pages": [
+            "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/vedomstvennye-normativnye-pravovye-akty/?PAGEN_1=3",
             "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/vedomstvennye-normativnye-pravovye-akty/?PAGEN_1=2",
-            "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/vedomstvennye-normativnye-pravovye-akty/",
-            "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/vedomstvennye-normativnye-pravovye-akty/?PAGEN_1=3"
+            "http://www.roskazna.ru/inaya-deyatelnost/protivodejstvie-korrupcii/normativnye-dokumenty/vedomstvennye-normativnye-pravovye-akty/"
         ]
     },
     {
@@ -1374,9 +1374,9 @@
         },
         "decree_pages": [
             "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/?page=2",
-            "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/",
             "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/?page=1",
-            "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/?rss"
+            "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/?rss",
+            "https://www.favt.ru/antikorrupcionnaja-dejatelnost-normativnie-pravovie-akti-vedomstvennie-normativnie-i-pravovie-akty/"
         ]
     },
     {
@@ -1452,10 +1452,10 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti?print=1",
-            "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti?doc=1",
+            "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti?pdf=1",
             "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti",
-            "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti?pdf=1"
+            "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti?print=1",
+            "http://www.rosreserv.ru/Protivodejstvie_korrupcii/Normativnie_pravovie_akti/Vedomstvennie_akti?doc=1"
         ]
     },
     {
@@ -1514,8 +1514,8 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
-            "http://rs.gov.ru/%20/pages/98",
-            "http://rs.gov.ru/%20/pages/981"
+            "http://rs.gov.ru/%20/pages/981",
+            "http://rs.gov.ru/%20/pages/98"
         ]
     },
     {
@@ -1551,9 +1551,9 @@
             "exception": "Message: Tried to run command without establishing a connection\n"
         },
         "decree_pages": [
+            "http://www.fapmc.ru/rospechat/activities/opposition/activities.html?print=true",
             "http://www.fapmc.ru/rospechat/activities/opposition/activities.html",
-            "http://www.fapmc.ru/rospechat/activities/opposition/activities.html?signcheck=true",
-            "http://www.fapmc.ru/rospechat/activities/opposition/activities.html?print=true"
+            "http://www.fapmc.ru/rospechat/activities/opposition/activities.html?signcheck=true"
         ]
     },
     {
@@ -1573,8 +1573,8 @@
             "engine": "urllib"
         },
         "decree_pages": [
-            "http://www.fish.gov.ru/otraslevaya-deyatelnost/vedomstvennyj-i-vneshnij-kontrol?tmpl=component&print=1",
-            "http://www.fish.gov.ru/otraslevaya-deyatelnost/vedomstvennyj-i-vneshnij-kontrol"
+            "http://www.fish.gov.ru/otraslevaya-deyatelnost/vedomstvennyj-i-vneshnij-kontrol",
+            "http://www.fish.gov.ru/otraslevaya-deyatelnost/vedomstvennyj-i-vneshnij-kontrol?tmpl=component&print=1"
         ]
     },
     {
