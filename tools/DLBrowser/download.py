@@ -39,7 +39,7 @@ def find_links_with_selenium (url, check_text_func):
     elements = browser.find_elements_by_xpath('//button | //a')
     links = []
     for e in elements:
-        if check_text_func(e.text):
+        if check_text_func('', e.text):
             e.click()
             time.sleep(6)
             browser.switch_to_window(browser.window_handles[-1])
@@ -64,16 +64,18 @@ def download_html_with_urllib (url):
     req = urllib.request.Request(
         url,
         data=None,
-
         headers={
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
         }
     )
     data = ''
     info = {}
-    with urllib.request.urlopen(req, context=context) as request:
+    print ("\turlopen..")
+    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
+        print("\treaddata...")
         data =  request.read()
         info = request.info()
+    print("\tencoding..")
     try:
         if is_html_contents(info):
             data = data.decode('utf8', errors="ignore")
@@ -105,10 +107,19 @@ def get_local_file_name_by_url(url):
 
 def download_with_cache(url, use_selenium=False):
     localfile = get_local_file_name_by_url(url)
+    info_file = localfile + ".headers"
     if os.path.exists(localfile):
         if not use_selenium:
-            with open(localfile, encoding="utf8") as f:
-                return f.read()
+            is_binary = False
+            with open(info_file, "r", encoding="utf8") as inf:
+                info = json.loads(inf.read())
+                cached_headers = info['headers']
+                is_binary = not is_html_contents(cached_headers)
+            if is_binary:
+                return 'binary_data'
+            else:
+                with open(localfile, encoding="utf8") as f:
+                    return f.read()
     if use_selenium:
         html = download_html_with_selenium(url)
         info = {'Content-Type': 'text/html'}
@@ -125,9 +136,12 @@ def download_with_cache(url, use_selenium=False):
             f.write(html)
 
     if info is not None:
-        with open(localfile + ".headers", "w", encoding="utf8") as f:
+        with open(info_file, "w", encoding="utf8") as f:
             headers_and_url = {}
             headers_and_url['input_url'] = url
             headers_and_url['headers'] = dict(info._headers)
             f.write(json.dumps(headers_and_url, indent=4, ensure_ascii=False))
-    return html
+    if is_html_contents(info):
+        return html
+    else:
+        return 'binary_data'

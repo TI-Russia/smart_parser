@@ -5,6 +5,29 @@ from bs4 import BeautifulSoup
 from download import download_html_with_urllib, download_with_cache, find_links_with_selenium, FILE_CACHE_FOLDER
 from urllib.parse import urljoin
 
+
+class TLink:
+    def __init__(self, url='', link_text='', json_dict=None):
+        if json_dict is not None:
+            self.from_json(json_dict)
+        else:
+            self.link_url = url
+            self.link_text = link_text.strip(' \r\n\t')
+
+    def __hash__(self):
+        return self.link_url.__hash__()
+
+    def __eq__(self, other):
+        return self.link_url == other.link_url
+
+    def to_json(self):
+        return {'url': self.link_url, 'link_text': self.link_text }
+
+    def from_json(self, js):
+        self.link_url = js.get('url', '')
+        self.link_text = js.get('link_text', '')
+
+
 def make_link(main_url, href):
     url = urljoin(main_url, href)
     i = url.find('#')
@@ -17,11 +40,11 @@ def find_links_by_text(main_url, html, check_text_func):
     soup = BeautifulSoup(html, 'html5lib')
     links = []
     for  l in soup.findAll('a'):
-        if  check_text_func(l.text):
-            href = l.attrs.get('href')
-            if href is not None:
+        href = l.attrs.get('href')
+        if href is not None:
+            if  check_text_func(href, l.text):
                 url = make_link(main_url, href)
-                links.append( {"url":url, "link_text": l.text.strip(' \r\n\t')} )
+                links.append(TLink(url, l.text))
     return links
 
 
@@ -33,7 +56,7 @@ def find_links_to_subpages(main_url, html):
         if href is not None:
             url = make_link(main_url, href)
             if url.startswith(main_url):
-                links.add( url )
+                links.add( TLink(url, l.text ) )
 
     return links
 
@@ -47,7 +70,7 @@ def check_url(main_url, url):
     return main_url.strip('/') != url.strip('/')
 
 
-def click_links_and_get_url(office_info, div_name, url, link_text_predicate, take_first=True):
+def click_first_link_and_get_url(office_info, div_name, url, link_text_predicate):
     ad = {}
     old_ad = office_info.get(div_name, {})
     if 'comment' in old_ad:
@@ -57,29 +80,40 @@ def click_links_and_get_url(office_info, div_name, url, link_text_predicate, tak
         html = download_with_cache(url)
         links = find_links_by_text(url, html, link_text_predicate)
         engine = ""
-        if len(links) > 0 and check_url(url, links[0]["url"]):
+        if len(links) > 0 and check_url(url, links[0].link_url):
             engine = "urllib"
-        else:
+        elif use_selenium:
             links = find_links_with_selenium(url, link_text_predicate)
-            if len(links) > 0 and check_url(url, links[0]["url"]):
+            if len(links) > 0 and check_url(url, links[0].link_url):
                 engine = "selenium"
             else:
                 ad['exception'] = "no link found"
 
         if engine != "":
             if take_first:
-                ad['url'] = links[0]["url"]
-                ad['link_text'] = links[0]["link_text"]
+                ad['url'] = links[0].link_url
+                ad['link_text'] = links[0].link_text
                 ad['engine'] = engine
             else:
                 ad['engine'] = engine
-                ad['links'] = links
+                ad['links'] = [ l.to_json() for l in links ]
 
     except Exception as err:
         sys.stderr.write('cannot download page: ' + url + "\n")
         ad['exception'] = str(err)
 
     office_info[div_name] = ad
+
+
+def find_links_in_page_with_urllib(link, link_text_predicate):
+    try:
+        html = download_with_cache(link.link_url)
+        if html == "binary_data":
+            return []
+        return find_links_by_text(link.link_url, html, link_text_predicate)
+    except Exception as err:
+        sys.stderr.write('cannot download page: ' + url + "\n")
+        return []
 
 
 def read_one_office_info (table_url):
@@ -125,7 +159,7 @@ def create_office_list():
     return offices
 
 
-def check_anticorr_link_text(text):
+def check_anticorr_link_text(href, text):
     text = text.strip().lower()
     if text.startswith(u'противодействие'):
         return text.find("коррупц") != -1
@@ -135,12 +169,12 @@ def find_anticorruption_div(offices):
     for office_info in offices:
         url = office_info['url']
         sys.stderr.write(url + "\n")
-        click_links_and_get_url (office_info, 'anticorruption_div', url,  check_anticorr_link_text)
+        click_first_link_and_get_url(office_info, 'anticorruption_div', url,  check_anticorr_link_text)
 
     write_offices(offices)
 
 
-def check_law_link_text(text):
+def check_law_link_text(href, text):
     text = text.strip().lower()
     if text.find("коррупц") == -1:
         return False
@@ -163,13 +197,13 @@ def find_law_div(offices):
             sys.stderr.write("skip manual url updating "  + url +  "\n")
             continue
         sys.stderr.write(url + "\n")
-        click_links_and_get_url(office_info, 'law_div', url, check_law_link_text)
+        click_first_link_and_get_url(office_info, 'law_div', url, check_law_link_text)
 
     write_offices(offices)
 
 
 
-def check_office_decree_link_text(text):
+def check_office_decree_link_text(href, text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'ведомственные'):
         return True
@@ -185,61 +219,98 @@ def find_office_decrees_section(offices):
             sys.stderr.write("skip url " + office_info['url'] + " (no law div info)\n")
             continue
         sys.stderr.write(url + "\n")
-        click_links_and_get_url(office_info, 'office_decrees', url, check_office_decree_link_text, True)
+        click_first_link_and_get_url(office_info, 'office_decrees', url, check_office_decree_link_text)
 
     write_offices(offices)
 
 
 def get_decree_pages(offices):
     for office_info in offices:
-        url = office_info.get('law_div', {}).get('url', '')
-        if url == '':
+        law_div = office_info.get('law_div', {})
+        main_link = TLink(json_dict=law_div)
+        if main_link.link_url == '':
             sys.stderr.write("skip url " + office_info['url'] +  " (no law div info) \n")
             continue
-        office_url = office_info.get('office_decrees', {}).get('url', '')
-        if office_url != "":
-            url = office_url
-        all_links = set([url])
+        office_link = TLink(json_dict=office_info.get('office_decrees', {}))
+        if office_link.link_url != "":
+            main_link = office_link
+        all_links = set([main_link])
         processed_links = set()
         left_urls = all_links
         while len(left_urls) > 0:
-            url = list(left_urls)[0]
-            sys.stderr.write(url + "\n")
+            link = list(left_urls)[0]
+            sys.stderr.write(link.link_url + "\n")
             try:
-                html = download_with_cache(url)
-                links = find_links_to_subpages(url, html)
+                html = download_with_cache(link.link_url)
+                links = find_links_to_subpages(link.link_url, html)
                 all_links = all_links.union(links)
             except  Exception as err:
-                sys.stderr.write("cannot process " + url + ": " + str(err) + "\n")
+                sys.stderr.write("cannot process " + link.link_url + ": " + str(err) + "\n")
                 pass
-            processed_links.add(url)
+            processed_links.add(link)
             left_urls = all_links.difference(processed_links)
-        office_info['decree_pages'] = list(all_links)
+        office_info['decree_pages'] = list( l.to_json() for l in all_links)
 
     write_offices(offices)
 
-def check_decree_link_text(text):
+def check_download_text(href, text):
+    if text.startswith(u'кодекс'):
+        return True
+    if text.startswith(u'скачать'):
+        return True
+    if text.startswith(u'загрузить'):
+        return True
+    if text.startswith(u'docx'):
+        return True
+    if text.startswith(u'doc'):
+        return True
+    if text.find('.doc') != -1 or text.find('.docx') != -1 or text.find('.pdf') != -1 or  text.find('.rtf') != -1:
+        return True
+    return False
+
+def check_decree_link_text(href, text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'приказ'):
         return True
     if text.startswith(u'распоряжение'):
         return True
-    if text.startswith(u'кодекс'):
-        return True
-    if text.startswith(u'скачать'):
+    if check_download_text(href, text):
         return True
     return False
 
+
 def find_decrees_doc_urls(offices):
     for office_info in offices:
-        docs = dict()
-        for url in office_info.get('decree_pages', []):
-            sys.stderr.write(url + "\n")
-            page_info = {}
-            click_links_and_get_url(page_info, 'urls', url, check_decree_link_text, False)
-            docs.update((l['url'], l['link_text']) for l in page_info['urls'].get('links', []))
-        office_info['anticor_doc_urls'] = docs
-    write_offices(offices)
+        docs = set()
+        for link_json in office_info.get('decree_pages', []):
+            link = TLink()
+            link.from_json(link_json)
+            sys.stderr.write(link.link_url + "\n")
+            new_docs = find_links_in_page_with_urllib(link, check_decree_link_text)
+            docs = doc.union(new_docs)
+
+        additional_docs = dict()
+        for link in docs:
+            sys.stderr.write("download " +  link.link_url + "\n")
+            try:
+                html = download_with_cache(url)
+                new_docs =  find_links_in_page_with_urllib(link, check_download_text)
+                additional_docs = additional_docs.union(new_docs)
+            except  Exception as err:
+                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
+                pass
+
+        for link in additional_docs:
+            sys.stderr.write("download additional" + link.link_url + "\n")
+            try:
+                download_with_cache(link.link_urlurl)
+            except  Exception as err:
+                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
+                pass
+
+        docs = docs.union(additional_docs)
+        office_info['anticor_doc_urls'] = [x.to_json() for x in docs]
+        write_offices(offices)
 
 
 if __name__ == "__main__":
