@@ -1,7 +1,8 @@
 import ssl
 import urllib.parse
 import urllib.request
-
+import json
+import hashlib
 
 # selenium staff
 import os
@@ -13,6 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import staleness_of
+FILE_CACHE_FOLDER="cached"
 
 def download_html_with_selenium (url):
     # open page with selenium
@@ -25,6 +27,7 @@ def download_html_with_selenium (url):
     browser.close()
     browser.quit()
     return html
+
 
 def find_links_with_selenium (url, check_text_func):
     browser = webdriver.Firefox() #Chrome
@@ -60,20 +63,31 @@ def download_html_with_urllib (url):
         }
     )
     data = ''
+    info = None
     with urllib.request.urlopen(req, context=context) as request:
         data =  request.read()
+        info = request.info()
 
     try:
-        return data.decode('utf8', errors="ignore")
+        return data.decode('utf8', errors="ignore"), info
     except AttributeError:
-        return data
+        return (data, info)
 
 def get_local_file_name_by_url(url):
+    global FILE_CACHE_FOLDER
     localfile = url
+    if localfile.startswith('http://'):
+        localfile = localfile[7:]
+    if localfile.startswith('https://'):
+        localfile = localfile[8:]
     localfile = localfile.replace(':', '_')
-    localfile = localfile.replace('/', '_')
-
-    localfile = os.path.join("data", localfile)
+    localfile = localfile.replace('/', '\\')
+    localfile = localfile.replace('&', '_')
+    localfile = localfile.replace('=', '_')
+    localfile = localfile.replace('?', '_')
+    if len(localfile) > 64:
+        localfile = localfile[0:64] + "_" + hashlib.md5(url.encode('utf8',  errors="ignore")).hexdigest()
+    localfile = os.path.join(FILE_CACHE_FOLDER, localfile)
     if not localfile.endswith('html') and not localfile.endswith('htm'):
         localfile += "/index.html"
     if not os.path.exists(os.path.dirname(localfile)):
@@ -87,12 +101,16 @@ def download_with_cache(url, use_selenium=False):
         if not use_selenium:
             with open(localfile, encoding="utf8") as f:
                 return f.read()
+    info =  None
     if use_selenium:
         html = download_html_with_selenium(url)
     else:
-        html = download_html_with_urllib(url)
+        html, info = download_html_with_urllib(url)
     if len(html) == 0:
         return html
     with open(localfile, "w", encoding="utf8") as f:
         f.write(html)
+    if info is not None:
+        with open(localfile + ".headers", "w", encoding="utf8") as f:
+            f.write(json.dumps(info._headers))
     return html

@@ -2,22 +2,42 @@
 import os
 import json
 from bs4 import BeautifulSoup
-from download import download_html_with_urllib, download_with_cache, find_links_with_selenium
-from urllib.parse import urlparse
+from download import download_html_with_urllib, download_with_cache, find_links_with_selenium, FILE_CACHE_FOLDER
+from urllib.parse import urljoin
+
+def make_link(main_url, href):
+    url = urljoin(main_url, href)
+    i = url.find('#')
+    if i != -1:
+        url = url[0:i]
+    return url
+
 
 def find_links_by_text(main_url, html, check_text_func):
     soup = BeautifulSoup(html, 'html5lib')
     links = []
     for  l in soup.findAll('a'):
         if  check_text_func(l.text):
-            url = l.attrs['href']
-            if not url.startswith('http'):
-                parsed_uri = urlparse(main_url)
-                url = url.lstrip('/')
-                url = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri) + url
-            links.append( {"url":url, "link_text": l.text.strip(' \r\n\t')} )
+            href = l.attrs.get('href')
+            if href is not None:
+                url = make_link(main_url, href)
+                links.append( {"url":url, "link_text": l.text.strip(' \r\n\t')} )
     return links
 
+
+def find_links_to_subpages(main_url, html):
+    soup = BeautifulSoup(html, 'html5lib')
+    links = set()
+    for  l in soup.findAll('a'):
+        href = l.attrs.get('href')
+        if href is not None:
+            url = make_link(main_url, href)
+            if url.startswith(main_url):
+                links.add( url )
+
+    return links
+
+#попробовать автоматизировать консультант плюс !!!
 
 def check_url(main_url, url):
     if url == "":
@@ -169,6 +189,33 @@ def find_office_decrees_section(offices):
 
     write_offices(offices)
 
+def get_decree_pages(offices):
+    for office_info in offices:
+        url = office_info.get('law_div', {}).get('url', '')
+        if url == '':
+            sys.stderr.write("skip url " + office_info['url'] +  " (no law div info) \n")
+            continue
+        office_url = office_info.get('office_decrees', {}).get('url', '')
+        if office_url != "":
+            url = office_url
+        all_links = set([url])
+        processed_links = set()
+        left_urls = all_links
+        while len(left_urls) > 0:
+            url = list(left_urls)[0]
+            sys.stderr.write(url + "\n")
+            try:
+                html = download_with_cache(url)
+                links = find_links_to_subpages(url, html)
+                all_links = all_links.union(links)
+            except  Exception as err:
+                sys.stderr.write("cannot process " + url + ": " + str(err) + "\n")
+                pass
+            processed_links.add(url)
+            left_urls = all_links.difference(processed_links)
+        office_info['decree_pages'] = list(all_links)
+
+    write_offices(offices)
 
 def check_decree_link_text(text):
     text = text.strip(' \n\t\r').lower()
@@ -194,11 +241,20 @@ def download_decrees_html(offices):
 
 
 if __name__ == "__main__":
-    if not os.path.exists("data"):
-        os.mkdir("data")
+    global FILE_CACHE_FOLDER
+
+    #url = 'http://www.mnr.gov.ru/open_ministry/anticorruption/npa_v_sfere_protivodeystviya_korruptsii/'
+    #html = download_with_cache(url)
+    #links = find_links_to_subpages(url, html)
+    #exit(1)
+    
+    if not os.path.exists(FILE_CACHE_FOLDER):
+        os.mkdir(FILE_CACHE_FOLDER)
     # offices = create_office_list():
     offices = read_office_list()
     #find_anticorruption_div(offices)
     #find_law_div(offices)
-    find_office_decrees_section(offices)
-    #download_decrees_html(offices)
+    #find_office_decrees_section(offices)
+    #find_office_decrees_section(offices)
+    get_decree_pages(offices)
+    # download_decrees_html(offices)
