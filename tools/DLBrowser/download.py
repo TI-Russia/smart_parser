@@ -1,4 +1,5 @@
 import ssl
+import sys
 import urllib.parse
 import urllib.request
 import json
@@ -115,6 +116,8 @@ def download_with_cache(url, use_selenium=False):
                 info = json.loads(inf.read())
                 cached_headers = info['headers']
                 is_binary = not is_html_contents(cached_headers)
+                if info.get('input_url', '') != url:
+                    sys.stderr.write("Warning! one cached local file for different urls {}!={}\n".format(url, info.get('input_url', '') ))
             if is_binary:
                 return 'binary_data'
             else:

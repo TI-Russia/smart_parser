@@ -112,7 +112,7 @@ def find_links_in_page_with_urllib(link, link_text_predicate):
             return []
         return find_links_by_text(link.link_url, html, link_text_predicate)
     except Exception as err:
-        sys.stderr.write('cannot download page: ' + url + "\n")
+        sys.stderr.write('cannot download page: ' + link.link_url + "\n")
         return []
 
 
@@ -283,29 +283,27 @@ def find_decrees_doc_urls(offices):
     for office_info in offices:
         docs = set()
         for link_json in office_info.get('decree_pages', []):
-            link = TLink()
-            link.from_json(link_json)
+            link = TLink(json_dict=link_json)
             sys.stderr.write(link.link_url + "\n")
             new_docs = find_links_in_page_with_urllib(link, check_decree_link_text)
-            docs = doc.union(new_docs)
+            docs = docs.union(new_docs)
 
-        additional_docs = dict()
+        additional_docs = set()
         for link in docs:
             sys.stderr.write("download " +  link.link_url + "\n")
             try:
-                html = download_with_cache(url)
                 new_docs =  find_links_in_page_with_urllib(link, check_download_text)
                 additional_docs = additional_docs.union(new_docs)
             except  Exception as err:
-                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
+                sys.stderr.write("cannot download " + link.link_url + ": " + str(err) + "\n")
                 pass
 
         for link in additional_docs:
-            sys.stderr.write("download additional" + link.link_url + "\n")
+            sys.stderr.write("download additional " + link.link_url + "\n")
             try:
-                download_with_cache(link.link_urlurl)
+                download_with_cache(link.link_url)
             except  Exception as err:
-                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
+                sys.stderr.write("cannot download " + link.link_url + ": " + str(err) + "\n")
                 pass
 
         docs = docs.union(additional_docs)
@@ -328,5 +326,5 @@ if __name__ == "__main__":
     #find_anticorruption_div(offices)
     #find_law_div(offices)
     #find_office_decrees_section(offices)
-    get_decree_pages(offices)
-    #find_decrees_doc_urls(offices)
+    #get_decree_pages(offices)
+    find_decrees_doc_urls(offices)
