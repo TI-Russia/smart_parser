@@ -28,7 +28,7 @@ namespace Smart.Parser
         public static string TolokaFileName = "";
         public static string HtmlFileName = "";
         public static bool SkipRelativeOrphan = false;
-        public static bool SkipApiValidation = false;
+        public static bool ValidateByApi = false;
 
         static string ParseArgs(string[] args)
         {
@@ -45,7 +45,7 @@ namespace Smart.Parser
             CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
             CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
-            CMDLineParser.Option skipApiValidationOpt = parser.AddBoolSwitch("-skip-api-validation", "skip API validation (useful if you're working offline)");
+            CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             parser.AddHelpOption();
             try
             {
@@ -96,7 +96,7 @@ namespace Smart.Parser
             Logger.SetLoggingLevel(verboseLevel);
 
             SkipRelativeOrphan = skipRelativeOrphanOpt.isMatched;
-            SkipApiValidation = skipApiValidationOpt.isMatched;
+            ValidateByApi = apiValidationOpt.isMatched;
 
             if (adapterOpt.isMatched)
             {
@@ -537,7 +537,7 @@ namespace Smart.Parser
             }
             Logger.Info("Output size: " + output.Length);
 
-            if (!SkipApiValidation)
+            if (ValidateByApi)
             {
                 string validationResult = ApiClient.ValidateParserOutput(output);
                 if (validationResult != "[]")
