@@ -18,5 +18,7 @@ namespace TI.Declarator.ParserCommon
 
         public int RangeLow { set; get; }
         public int RangeHigh { set; get; }
+
+        public string document_position { set; get; }
     }
 }

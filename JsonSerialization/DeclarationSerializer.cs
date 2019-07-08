@@ -158,6 +158,7 @@ namespace TI.Declarator.JsonSerialization
             personProp.Add(new JProperty("name_raw", servant.NameRaw));
             personProp.Add(new JProperty("role", servant.Occupation));
             AddNotNullProp(personProp, "department", servant.Department);
+            AddNotNullProp(personProp, "document_position", servant.document_position);
 
             return new JProperty("person", personProp);
         }
