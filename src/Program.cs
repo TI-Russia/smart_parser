@@ -63,6 +63,10 @@ namespace Smart.Parser
             if (licenseOpt.isMatched)
             {
                 AsposeLicense.SetLicense(licenseOpt.Value.ToString());
+                if (!AsposeLicense.Licensed)
+                {
+                    throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
+                }
             }
             if (maxRowsToProcessOpt.isMatched)
             {
