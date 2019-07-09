@@ -59,7 +59,8 @@ namespace Smart.Parser.Lib
 
         TI.Declarator.ParserCommon.Person CreateNewRelative(int row, string relativeStr,
             PublicServant currentServant, 
-            TI.Declarator.ParserCommon.Person currentPerson)
+            TI.Declarator.ParserCommon.Person currentPerson,
+            string documentPosition)
         {
             Logger.Debug("Relative {0} at row {1}", relativeStr, row);
             if (currentServant == null)
@@ -86,12 +87,14 @@ namespace Smart.Parser.Lib
             }
             relative.RelationType = relationType;
             //Logger.Debug("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
+            relative.document_position = documentPosition;
             return currentPerson;
         }
 
         PublicServant CreateNewServant(int row, string fioStr, string occupationStr, 
             DeclarationSection currentSection, PublicServant currentServant, 
-            ref TI.Declarator.ParserCommon.Person currentPerson)
+            ref TI.Declarator.ParserCommon.Person currentPerson,
+            string documentPosition)
         {
             Logger.Debug("Declarant {0} at row {1}", fioStr, row);
             if (currentPerson != null)
@@ -110,6 +113,8 @@ namespace Smart.Parser.Lib
 
             currentPerson = currentServant;
             currentPerson.RangeLow = row;
+            currentPerson.document_position = documentPosition;
+
             return currentServant;
         }
         DeclarationSection CreateNewSection(int row, string sectionTitle,
@@ -180,6 +185,7 @@ namespace Smart.Parser.Lib
                 int mergedRowCount = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                string documentPosition = Adapter.GetDocumentPosition(row, DeclarationField.NameOrRelativeType);
                 string relativeType = "";
                 if  (DataHelper.IsEmptyValue(nameOrRelativeType) &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
                 {
@@ -209,7 +215,9 @@ namespace Smart.Parser.Lib
                 }
                 else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    currentServant = CreateNewServant(row, nameOrRelativeType, occupationStr, currentSection, currentServant, ref currentPerson);
+                    currentServant = CreateNewServant(row, nameOrRelativeType, occupationStr, 
+                        currentSection, currentServant, ref currentPerson,
+                        documentPosition);
                     declaration.PublicServants.Add(currentServant);
                 }
                 else
@@ -218,7 +226,7 @@ namespace Smart.Parser.Lib
                         relativeType = nameOrRelativeType;
                     if (DataHelper.IsRelativeInfo(relativeType, occupationStr))
                     {
-                        currentPerson = CreateNewRelative(row, relativeType, currentServant, currentPerson);
+                        currentPerson = CreateNewRelative(row, relativeType, currentServant, currentPerson, documentPosition);
                     }
                     else
                     {

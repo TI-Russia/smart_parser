@@ -101,6 +101,18 @@ namespace Smart.Parser.Adapters
 
     public abstract class IAdapter
     {
+        public virtual string GetDocumentPosition(int row, DeclarationField field)
+        {
+            return null;
+        }
+        public string GetDocumentPositionExcel(int row, DeclarationField field)
+        {
+            int col = 0;
+            ColumnOrdering.ColumnOrder.TryGetValue(field, out col);
+            //return ((char)('A' + col + 1)).ToString() + (row + 1).ToString();
+            return "R" + (row + 1).ToString() + "C" + (col + 1).ToString();
+        }
+
         // some excel files contain 32000 columns, most of them are empty
         // we try to found real column number in the header, by default is 256
         public int MaxNotEmptyColumnsFoundInHeader = 256;

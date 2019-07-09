@@ -43,6 +43,12 @@ namespace Smart.Parser.Adapters
             return new AsposeExcelAdapter(fileName);
         }
 
+        public override string GetDocumentPosition(int row, DeclarationField field)
+        {
+            return GetDocumentPositionExcel(row, field);
+        }
+
+
         //Cell IAdapter.GetCell(string cellNum)
         //{
         //    Aspose.Cells.Cell cell = worksheet.Cells[cellNum];
