@@ -1,8 +1,13 @@
 ﻿import sys
 import os
+import re
 import json
 from bs4 import BeautifulSoup
-from download import download_html_with_urllib, download_with_cache, find_links_with_selenium, FILE_CACHE_FOLDER
+from download import download_html_with_urllib, \
+    download_with_cache, \
+    find_links_with_selenium, \
+    FILE_CACHE_FOLDER, \
+    build_temp_local_file
 from urllib.parse import urljoin
 
 
@@ -308,7 +313,129 @@ def find_decrees_doc_urls(offices):
 
         docs = docs.union(additional_docs)
         office_info['anticor_doc_urls'] = [x.to_json() for x in docs]
-        write_offices(offices)
+    write_offices(offices)
+
+
+def convert_to_text(offices):
+    for office_info in offices:
+        txtfiles = []
+        for d in office_info.get('anticor_doc_urls', []):
+            link = TLink(json_dict= d)
+
+            try:
+                file_name = build_temp_local_file(link.link_url)
+                if file_name == "":
+                    continue
+                txt_file = file_name + ".txt"
+                if not os.path.exists(txt_file) or os.path.getsize(txt_file) == 0:
+                    cmd = "..\\DocConvertor\\DocConvertor\\DocConvertor\\bin\\Debug\\DocConvertor.exe {} > {}".format(
+                        file_name, txt_file
+                    )
+                    sys.stderr.write(cmd + "\n")
+                    os.system (cmd)
+                if os.path.exists(txt_file) and os.path.getsize(txt_file) > 0:
+                    txtfiles.append(txt_file)
+            except Exception as err:
+                sys.stderr.write(str(err) + "\n")
+
+        office_info['txt_files'] = txtfiles
+    write_offices(offices)
+
+
+def check_decree_content(text):
+    if text.find("К сожалению") != -1 or text.find("технические работы") != -1 or text.find(
+            "ведутся работы по наполнению") != -1:
+        return False
+    return True
+
+def cut_content(text):
+    starter_found = False
+    prikaz_found = False
+    good_lines = []
+    for line in text.split("\n"):
+        if len(line) < 100:
+            continue
+        if not prikaz_found:
+            if text.find(u"приказываю") != -1 or text.find(u"п р и к а з ы в а ю:") != -1 :
+                starter_found = True
+                good_lines = []
+                prikaz_found = True
+        if len(text) > 250:
+            starter_found = True
+        if starter_found:
+            good_lines.append (line)
+    text = " ".join(good_lines)
+    return re.sub('\s+', ' ',text)
+
+
+def delete_common_prefix(texts):
+    if len(texts) == 0:
+        return
+    commonPrefix = ""
+    for i in range(1, len(texts[0]['text'])):
+        prefix = texts[0]['text'][0:i]
+        if not prefix.endswith(' '):
+            continue
+        hasPrefixCount = 0
+        for k in texts:
+            if k['text'].startswith(prefix):
+                hasPrefixCount += 1
+        if hasPrefixCount !=  len(texts):
+            break
+        else:
+            commonPrefix = prefix
+
+    if  len(commonPrefix) > 0:
+        for k in texts:
+            if k['text'].startswith(commonPrefix):
+                k['text'] = k['text'][len(commonPrefix):]
+    return
+
+def get_decree_id(text):
+    obj = re.search(u'(?:(?:от)|(?:ОТ))\s+([0-9][0-9]\.[0-9][0-9]\.[0-9][0-9][0-9][0-9])\s*[N№]\s*([0-9]+)', text, re.UNICODE)
+    if obj:
+        return obj.group(1) + " N " + obj.group(2)
+
+    #«20» __04______2015 г.                                                                                                               № 1 / 2999
+    obj = re.search(u'([0-9][0-9]?[»«\s_]+[а-я]+[\s_]+[0-9][0-9][0-9][0-9])[\s_]+(?:г.)?[_\s]*[N№]\s+([0-9 /]+)', text, re.UNICODE)
+    if obj:
+        return obj.group(1) + " N " + obj.group(2)
+    return ""
+
+
+def create_text_corpus(offices, corpus_file_name):
+    corpus = []
+    for office_info in offices:
+        filtered_texts = []
+        text_size = 0
+        uses_ids = set()
+        for txt_file in office_info.get('txt_files', []):
+            if not os.path.exists(txt_file) or os.path.getsize(txt_file) == 0:
+                continue
+            text = ""
+            with open (txt_file, "r", encoding="utf8") as inpf:
+                text = inpf.read()
+            decree_id = get_decree_id(text)
+            if decree_id in uses_ids:
+                continue
+            if decree_id != "":
+                uses_ids.add(decree_id)
+            if check_decree_content(text):
+                text = cut_content(text)
+                text_size += len(text)
+                if len (text) > 0:
+                    filtered_texts.append ({ 'file': txt_file,
+                                         'decree_id' : decree_id,
+                                 'text': text})
+        delete_common_prefix(filtered_texts)
+        corpus.append ({
+            'office_name': office_info['name'],
+            'texts_size': text_size,
+            'filtered_texts': filtered_texts
+        })
+
+    with open(corpus_file_name, "w", encoding="utf8") as outf:
+        outf.write(json.dumps(corpus, indent=4, ensure_ascii=False))
 
 
 if __name__ == "__main__":
@@ -327,4 +454,9 @@ if __name__ == "__main__":
     #find_law_div(offices)
     #find_office_decrees_section(offices)
     #get_decree_pages(offices)
-    find_decrees_doc_urls(offices)
+    #find_decrees_doc_urls(offices)
+    #find_decrees_doc_urls(offices)
+    #convert_to_text(offices)
+    s = u"от 25.01.2019 №799"
+    get_decree_id(s)
+    create_text_corpus(offices, "decree_corpus.txt")

@@ -4,6 +4,7 @@ import urllib.parse
 import urllib.request
 import json
 import hashlib
+import shutil
 from urllib.parse import urlparse, quote, urlunparse
 
 # selenium staff
@@ -104,6 +105,42 @@ def get_local_file_name_by_url(url):
     if not os.path.exists(os.path.dirname(localfile)):
         os.makedirs(os.path.dirname(localfile))
     return localfile
+
+def build_temp_local_file(url):
+    localfile = get_local_file_name_by_url(url)
+    if not os.path.exists(localfile):
+        return "";
+    content_type = "text"
+    info_file = localfile + ".headers"
+    with open(info_file, "r", encoding="utf8") as inf:
+        info = json.loads(inf.read())
+        content_type = info['headers'].get('Content-Type', "text")
+    dest_file = ""
+    if url.endswith('.docx'):
+        dest_file = "temp_file.docx"
+    elif url.endswith('.doc'):
+        dest_file = "temp_file.doc"
+    elif url.endswith('.pdf'):
+        dest_file = "temp_file.pdf"
+    elif url.endswith('.rtf'):
+        dest_file = "temp_file.pdf"
+    elif content_type.startswith("text"):
+        dest_file = "temp_file.html"
+    elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
+        dest_file = "temp_file.docx"
+    elif content_type.startswith("application/msword"):
+        dest_file = "temp_file.doc"
+    elif content_type.startswith("application/rtf"):
+        dest_file = "temp_file.rtf"
+    elif content_type.startswith("application/pdf"):
+        dest_file = "temp_file.pdf"
+    else:
+        return ""
+    dest_file = os.path.join(os.path.dirname(localfile), dest_file)
+    dest_file = os.path.abspath(dest_file)
+    shutil.copy(localfile, dest_file)
+    return dest_file
+
 
 
 def download_with_cache(url, use_selenium=False):
