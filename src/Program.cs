@@ -139,6 +139,18 @@ namespace Smart.Parser
             return Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
         }
 
+        static bool IsDirectory(string fileName)
+        {
+            try
+            {
+                return (File.GetAttributes(fileName) & FileAttributes.Directory) == FileAttributes.Directory;
+            }
+            catch
+            {
+                return false; 
+            }
+        }
+
 
         public static int Main(string[] args)
         {
@@ -150,7 +162,7 @@ namespace Smart.Parser
                 return 1;
             }
 
-            bool isDirectory = (File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
+            bool isDirectory = IsDirectory(declarationFile); //(File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
 
             if (isDirectory)
             {
