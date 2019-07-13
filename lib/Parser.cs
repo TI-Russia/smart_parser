@@ -177,7 +177,7 @@ namespace Smart.Parser.Lib
                 string sectionName;
                 if (Adapter.IsSectionRow(currRow, out sectionName))
                 {
-                    currentSection = CreateNewSection(rowOffset, sectionName, ref currentServant, ref currentPerson);
+                    currentSection = CreateNewSection(row, sectionName, ref currentServant, ref currentPerson);
                     declaration.Sections.Add(currentSection);
                     continue;
                 }

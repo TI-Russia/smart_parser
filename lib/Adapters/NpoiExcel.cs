@@ -91,7 +91,7 @@ namespace Smart.Parser.Adapters
                 result.Add(cell);
 
                 index += cell.MergedColsCount;
-                if (index >= MaxNotEmptyColumnsFoundInHeader)
+                if (index > MaxNotEmptyColumnsFoundInHeader)
                 {
                     break;
                 }

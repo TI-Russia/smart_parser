@@ -261,6 +261,12 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\Unk2014.xlsx", "prod");
         }
 
+        [TestMethod]
+        public void SectionExample()
+        {
+            TestSmartParser("SmartParser\\section_example.toloka_json", "prod", true);
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
