@@ -205,42 +205,24 @@ namespace Smart.Parser.Lib
         {
             id = null;
             archive_file = null;
-
-            char[] separators = new char[] {
-                Path.DirectorySeparatorChar,
-                Path.AltDirectorySeparatorChar
-            };
-
-            string[] folders = filename.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-            List<string> rest = new List<string>();
-            bool procRest = false;
-            foreach (var f in folders)
+            string filePath = Path.GetFullPath(filename);
+            string dirName = new DirectoryInfo(Path.GetDirectoryName(filePath)).Name;
+            int dirId;
+            bool dirParseRes = Int32.TryParse(dirName, out dirId);
+            // dirty hack
+            if (dirParseRes && (dirId > 2020 || dirId < 2000))
             {
-                if (procRest)
-                {
-                    rest.Add(f);
-                }
-                var match = Regex.Match(f, @"(^\d+)(\.|$)");
-                if (match.Success)
-                {
-                    rest.Clear();
-                    string number = match.Groups[1].Value;
-                    id = int.Parse(number);
-                    procRest = true;
-                }
+                id = Int32.Parse(dirName);
+                archive_file = Path.GetFileName(filename);
+                return true;
             }
-            if (!procRest)
+            else
             {
-                return false;
+                int val;
+                bool res = Int32.TryParse(Path.GetFileNameWithoutExtension(filename), out val);
+                if (res) { id = val; }
+                return res;
             }
-
-            if (rest.Count > 0)
-            {
-                archive_file = string.Join(Path.DirectorySeparatorChar.ToString(), rest);
-            }
-
-            return true;
         }
     }
 }

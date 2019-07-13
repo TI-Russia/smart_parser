@@ -29,6 +29,7 @@ namespace Smart.Parser
         public static string HtmlFileName = "";
         public static bool SkipRelativeOrphan = false;
         public static bool ValidateByApi = false;
+        public static bool IgnoreDirectoryIds = false;
 
         static string ParseArgs(string[] args)
         {
@@ -181,7 +182,7 @@ namespace Smart.Parser
                 {
                     OutFile = BuildOutFileNameByInput(declarationFile);
                 }
-                ParseOneFile(declarationFile, OutFile);
+                ParseFile(declarationFile, OutFile);
             }
             catch (SmartParserException e)
             {
@@ -258,7 +259,7 @@ namespace Smart.Parser
                 try
                 {
                     Logger.SetOutSecond();
-                    ParseOneFile(file, BuildOutFileNameByInput(file));
+                    ParseFile(file, BuildOutFileNameByInput(file));
                 }
                 catch (SmartParserException e)
                 {
@@ -379,7 +380,7 @@ namespace Smart.Parser
             return null;
         }
 
-        public static int ParseOneFile(string declarationFile, string outFile)
+        public static int ParseFile(string declarationFile, string outFile)
         {
             if (CheckJson && File.Exists(outFile))
             {
@@ -402,12 +403,12 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseOneFile(adapter, curOutFile, declarationFile);
+                    ParseFile(adapter, curOutFile, declarationFile);
                 }
             }
             else
             {
-                ParseOneFile(adapter, outFile, declarationFile);
+                ParseFile(adapter, outFile, declarationFile);
             }
             adapter = null;
 
@@ -496,7 +497,7 @@ namespace Smart.Parser
                 file.WriteLine(id + "\t"+ "\"" + jsonStr + "\"\t\t");
             }
         }
-        public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFile)
+        public static int ParseFile(IAdapter adapter, string outFile, string declarationFile)
         {
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);

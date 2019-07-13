@@ -45,10 +45,12 @@ namespace test
         }
 
         [TestMethod]
+        [DeploymentItem(@"Test Samples\2577\6.docx")]
         public void TestParseDocumentFileName()
         {
             string file1 = @"C:\Users\user\Dropbox\RawDeclarations\Ministries\min_agr_new\2013\9037\dep_gos_slyzhbi_2013.xls";
             string file2 = @"C:\Users\user\Dropbox\RawDeclarations\Ministries\min_agr_new\2014\30202.xls";
+            string file3 = @"Test Samples\2577\6.docx";
 
             int? id;
             string archive_file;
@@ -63,6 +65,10 @@ namespace test
             Assert.AreEqual(30202, id.Value);
             Assert.AreEqual(null, archive_file);
 
+            result = DataHelper.ParseDocumentFileName(file3, out id, out archive_file);
+            Assert.IsTrue(result);
+            Assert.AreEqual(2577, id.Value);
+            Assert.AreEqual("6.docx", archive_file);
         }
 
     }

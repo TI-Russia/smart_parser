@@ -121,7 +121,7 @@ namespace RegressionTesting
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
-            Smart.Parser.Program.ParseOneFile(workingCopy, outFileName);
+            Smart.Parser.Program.ParseFile(workingCopy, outFileName);
             string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
             Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }

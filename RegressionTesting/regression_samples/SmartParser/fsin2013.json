@@ -65,8 +65,7 @@
           "text": "автомобиль легковой Киа Спортаж",
           "relative": null
         }
-      ],
-      "person_index": 1
+      ]
     },
     {
       "person": {
@@ -125,8 +124,7 @@
           "text": "автомобиль легковой Тойота Королла",
           "relative": null
         }
-      ],
-      "person_index": 2
+      ]
     },
     {
       "person": {
@@ -185,8 +183,7 @@
           "text": "автомобиль легковой Опель Вектра",
           "relative": null
         }
-      ],
-      "person_index": 3
+      ]
     }
   ],
   "document": {

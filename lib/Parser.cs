@@ -94,7 +94,7 @@ namespace Smart.Parser.Lib
         PublicServant CreateNewServant(int row, string fioStr, string occupationStr, 
             DeclarationSection currentSection, PublicServant currentServant, 
             ref TI.Declarator.ParserCommon.Person currentPerson,
-            string documentPosition)
+            string documentPosition, int? index)
         {
             Logger.Debug("Declarant {0} at row {1}", fioStr, row);
             if (currentPerson != null)
@@ -111,9 +111,12 @@ namespace Smart.Parser.Lib
                 currentServant.Department = currentSection.Name;
             }
 
+            currentServant.Index = index;
+
             currentPerson = currentServant;
             currentPerson.RangeLow = row;
             currentPerson.document_position = documentPosition;
+            
 
             return currentServant;
         }
@@ -215,9 +218,22 @@ namespace Smart.Parser.Lib
                 }
                 else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    currentServant = CreateNewServant(row, nameOrRelativeType, occupationStr, 
+                    int? index = null;
+                    if (Adapter.HasDeclarationField(DeclarationField.Number))
+                    {
+                        string indexStr = Adapter.GetDeclarationField(row, DeclarationField.Number).Text
+                            .Replace(".", "").CleanWhitespace();
+                        int indVal;
+                        bool dummyRes = Int32.TryParse(indexStr, out indVal);
+                        if (dummyRes)
+                        {
+                            index = indVal;
+                        }
+                    }
+
+                    currentServant = CreateNewServant(row, nameOrRelativeType, occupationStr,
                         currentSection, currentServant, ref currentPerson,
-                        documentPosition);
+                        documentPosition, index);
                     declaration.PublicServants.Add(currentServant);
                 }
                 else
