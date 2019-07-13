@@ -128,7 +128,7 @@ def are_equal_income(p1, p2):
 
 def describe_income(p):
     return u"income {0}, relative={1}".format(
-        p.get("size_raw", "").replace("\n", "\\n"),
+        str(p.get("size_raw", "")).replace("\n", "\\n"),
         p.get("relative"))
 
 
@@ -178,7 +178,7 @@ def calc_decl_match_one_pair(json1, json2):
                     are_equal_vehicle,
                     describe_vehicle,
                     match_info)
-    check_set_field(person1.get('real_estates', []),
+    check_set_field(person1.get('real_estates', []),    
                     person2.get('real_estates', []),
                     are_equal_realty,
                     describe_realty,

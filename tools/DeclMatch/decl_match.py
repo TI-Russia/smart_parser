@@ -1,11 +1,7 @@
-import shutil
-import sys
 import os
 from decl_match_metric import calc_decl_match_one_pair, trunctate_json, dump_conflict
 import argparse
-from multiprocessing import Pool
 from collections import defaultdict
-import signal
 import json
 import csv
 import shutil
@@ -15,7 +11,7 @@ DATA_FOLDER = "data"
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--toloka",  dest='toloka', help ="toloka assignments file")
-    parser.add_argument("--smart-parser", dest='smart_parser')
+    parser.add_argument("--smart-parser", dest='smart_parser', default="../../src/bin/Release/smart_parser.exe")
     parser.add_argument("--process-golden", action='store_true', default=False, dest="process_golden")
     parser.add_argument("--dump-conflicts", dest='dump_conflicts')
     parser.add_argument("-l", dest='toloka_tsv_line_no', type=int, default=0)
