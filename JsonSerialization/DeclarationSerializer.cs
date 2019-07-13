@@ -118,9 +118,9 @@ namespace TI.Declarator.JsonSerialization
         public static string Serialize(Declaration declaration, ref string comment, bool validate = true)
         {
             var jServants = new JArray();
-            foreach (var servWithInd in declaration.PublicServants.Select((serv, ind) => new { serv, ind }))
+            foreach (var servant in declaration.PublicServants)
             {
-                jServants.Add(Serialize(servWithInd.serv, servWithInd.ind, declaration.Properties));
+                jServants.Add(Serialize(servant, declaration.Properties));
             }
 
             var jPersonsProp = new JProperty("persons", jServants);
@@ -140,15 +140,16 @@ namespace TI.Declarator.JsonSerialization
             return json;
         }
 
-        private static JObject Serialize(PublicServant servant, int ind, DeclarationProperties declarationProperties)
+        private static JObject Serialize(PublicServant servant, DeclarationProperties declarationProperties)
         {
             var jServ = new JObject(
                 GetPersonalData(servant),
                 GetYear(declarationProperties),
                 GetIncomes(servant),
                 GetRealEstateProperties(servant),
-                GetVehicles(servant),
-                GetPersonIndexProp(ind + 1));
+                GetVehicles(servant));
+
+            AddNotNullProp(jServ, "person_index", servant.Index);
             return jServ;
         }
 
@@ -207,11 +208,6 @@ namespace TI.Declarator.JsonSerialization
 
             var res = new JProperty("incomes", jIncomes);
             return res;            
-        }
-
-        private static JProperty GetPersonIndexProp(int index)
-        {
-            return new JProperty("person_index", index);
         }
 
         private static void AddNotNullProp(JObject jobj, string prop, object val)
