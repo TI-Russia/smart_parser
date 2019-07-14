@@ -29,10 +29,10 @@ class TMatchInfo:
         return errors
 
 
-def read_field(dct, field_name):
-    value = dct.get(field_name)
+def read_field_to_compare(dct, field_name):
+    value = dct.get(field_name, "")
     if value is None:
-        return value
+        return ""
     value = str(value)
     value = value.strip("\n \r\t")
     value = value.replace(" ", "")
@@ -42,17 +42,17 @@ def read_field(dct, field_name):
     value = value.replace("\r", "")
     value = value.lower()
     if field_name == "country_raw":
-        if value in {"россия", "российская федерация", "рф"}:
+        if value in {"россия", "российскаяфедерация", "рф"}:
             value = "россия"
 
     return value
 
 def  check_equal_value(d1, d2, field_name):
-    v1 = read_field(d1, field_name)
-    v2 = read_field(d2, field_name)
+    v1 = read_field_to_compare(d1, field_name)
+    v2 = read_field_to_compare(d2, field_name)
     if v1 == v2:
         return (True, v1, v2)
-    if v1 is None or v2 is None:
+    if v1 == "" or v2 == "":
         return (False, v1, v2)
     try:
         f1 = float(v1.replace(",", "."))
@@ -178,7 +178,7 @@ def calc_decl_match_one_pair(json1, json2):
                     are_equal_vehicle,
                     describe_vehicle,
                     match_info)
-    check_set_field(person1.get('real_estates', []),    
+    check_set_field(person1.get('real_estates', []),
                     person2.get('real_estates', []),
                     are_equal_realty,
                     describe_realty,
@@ -203,7 +203,7 @@ def trunctate_json(j):
         'person': {
             'name_raw': person_info.get('name_raw', ''),
             'role': person_info.get('role', ''),
-            'deparment': person_info.get('deparment', '')
+            'department': person_info.get('department', '')
         },
         'year': p.get('year', ''),
         'vehicles': [ ],
@@ -264,19 +264,34 @@ def convert_to_html(jsonStr, maintag="html"):
     res += "</" + maintag + ">"
     return res;
 
+def get_check_url(task):
+    ass_link = task.get('ASSIGNMENT:link', "")
+    if ass_link == "":
+        return ""
+    pool = ass_link.split('/')[4]
+    PROJECT_ID = "22283"
+    "https://toloka.yandex.ru/requester/project/22283/pool/5762585/assignments/000057ee19--5d29cf67c43d7e011d61e9fa?workerId=154ca43f5d4497041f35dda32a23b94d"
+    url = "https://toloka.yandex.ru/requester/project/{}/pool/{}/assignments/{}?workerId={}".format(
+        PROJECT_ID,
+        pool,
+        task.get('ASSIGNMENT:assignment_id', 'unk'),
+        task.get('ASSIGNMENT:worker_id', 'unk')
+    )
+    return url
 
-def dump_conflict (task, golden_json, json_to_check, match_info, conflict_file):
+def dump_conflict (task, res1, res2, match_info, conflict_file):
     res = "<div>\n"
     res += "<table border=1> <tr>\n"
 
     res += "<tr>"
     res += "<td colspan=3><h1>"
-    res += "f-score={}".format(match_info.f_score)
-    res += " worker_id={}".format(task.get('ASSIGNMENT:worker_id', "unknown"))
-    res += " input_id={}".format(task['INPUT:input_id'])
-    res += " line_no={}".format(task['input_line_no'])
-    res += " <a href={}> task link</a>".format(task.get('ASSIGNMENT:link', ""))
-    
+    res += "f-score={}\n".format(match_info.f_score)
+    res += " worker_id={}\n".format(task.get('ASSIGNMENT:worker_id', "unknown"))
+    res += " input_id={}\n".format(task['INPUT:input_id'])
+    res += " line_no={}\n".format(task['input_line_no'])
+    res += " <a href={}> show link</a>\n".format(task.get('ASSIGNMENT:link', ""))
+    res += " <a href={}> check link</a>\n".format(get_check_url(task))  # может не работать
+
     res += "</h1>"
     res += "</td></tr>"
 
@@ -287,16 +302,19 @@ def dump_conflict (task, golden_json, json_to_check, match_info, conflict_file):
     res += "</td>\n"
 
     res += "<td width=30%>"
+    res += res1[0] + "<br/>"
     res += "<textarea cols=80 rows=90>"
-    res += json.dumps(golden_json, indent=4, ensure_ascii=False)
+    res += json.dumps(res1[1], indent=4, ensure_ascii=False)
     res += "</textarea>"
     res += "</td>\n"
 
     res += "<td>"
+    res += res2[0] + "<br/>"
     res += "<textarea cols=80 rows=90>"
-    res += json.dumps(json_to_check, indent=4, ensure_ascii=False)
+    res += json.dumps(res2[1], indent=4, ensure_ascii=False)
     res += "</textarea>"
     res += "</td>\n"
+
     res += "</tr><tr>\n"
     res  += "<td colspan=3>"
     res += "<h1>"
