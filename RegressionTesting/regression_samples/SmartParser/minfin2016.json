@@ -3,8 +3,7 @@
     {
       "person": {
         "name_raw": "ГОРНИН Л.В.",
-        "role": "Заместитель Министра",
-        "document_position": "R12C2"
+        "role": "Заместитель Министра"
       },
       "year": 2016,
       "incomes": [
@@ -167,7 +166,8 @@
           "relative": null
         }
       ],
-      "person_index": 1
+      "person_index": 1,
+      "document_position": "R12C2"
     }
   ],
   "document": {

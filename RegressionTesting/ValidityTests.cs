@@ -127,84 +127,98 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void MinDalVostok2015()
         {
             TestSmartParser("SmartParser\\MinDalVostok2015.xlsx", "prod");
         }
 
         [TestMethod]
+        [TestCategory("pdf")]
         public void TestPdfOneLine()
         {
             TestSmartParser("SmartParser\\one_line_2017.pdf", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void SpellCheckRealtyType()
         {
             TestSmartParser("SmartParser\\SpellCheckRealtyType.docx", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("pdf")]
         public void TestPdfTwoTables()
         {
             TestSmartParser("SmartParser\\two_tables_2017.pdf", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void IncomeNotFirstLine()
         {
             TestSmartParser("SmartParser\\IncomeNotFirstLine.docx", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void ManyManyColumns()
         {
             TestSmartParser("SmartParser\\256_Columns.xlsx", "npoi");
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void TestExcelMinfin2016()
         {
             TestSmartParser("SmartParser\\minfin2016.xlsx", "npoi");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void TestMinZdrav2015()
         {
             TestSmartParser("SmartParser\\minzdrav2015.docx", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinSport2016()
         {
             TestSmartParser("SmartParser\\MinSport2016.docx", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("doc")]
         public void MinRes2011()
         {
             TestSmartParser("SmartParser\\MinRes2011.doc", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinZdorov2015Full()
         {
             TestSmartParser("SmartParser\\MinZdorov2015Full.docx", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinEkon2013()
         {
             TestSmartParser("SmartParser\\MinEkon2013.docx", "prod");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinStroy2014()
         {
             TestSmartParser("SmartParser\\MinStroy2014.docx", "xceed");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinObr2012()
         {
             // в этом тесте есть ошибка, последний обеъек не парсится
@@ -212,6 +226,7 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinTrans2011()
         {
             // в этом тесте есть ошибка, последний обеъек не парсится
@@ -219,6 +234,7 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinSevKavkaz2015()
         {
             // повтор Header внутри таблицы
@@ -226,24 +242,28 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void MinObr2016()
         {
             TestSmartParser("SmartParser\\MinObr2016.xlsx", "prod");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void Fsin2013()
         {
             TestSmartParser("SmartParser\\fsin2013.docx", "prod") ;
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void MinStroy2017()
         {
             TestSmartParser("SmartParser\\MinStroy2017.xlsx", "prod");
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinEkonon2017()
         {
             TestSmartParser("SmartParser\\MinEkonon2017.docx", "prod");
@@ -256,6 +276,7 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void Unk2014()
         {
             TestSmartParser("SmartParser\\Unk2014.xlsx", "prod");
@@ -268,12 +289,14 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("docx")]
         public void MinKult2015()
         {
             TestSmartParser("SmartParser\\MinKult2015.docx", "prod");
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
         public void MinDalVostok2017()
         {
             TestSmartParser("SmartParser\\MinDalVostok2017.xlsx", "prod");
