@@ -197,6 +197,7 @@ namespace Smart.Parser.Lib
 
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
             Adapter.SetMaxColumnsCountByHeader(rowOffset);
+            Adapter.ColumnOrdering.InitHeaderEndColumns(Adapter.GetColsCount());
 
             TBorderFinder borderFinder = new TBorderFinder(declaration, FailOnRelativeOrphan);
             

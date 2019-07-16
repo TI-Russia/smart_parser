@@ -20,10 +20,9 @@ namespace Smart.Parser.Adapters
         }
         public string GetDocumentPositionExcel(int row, DeclarationField field)
         {
-            int col = 0;
+            TColumnSpan col;
             ColumnOrdering.ColumnOrder.TryGetValue(field, out col);
-            //return ((char)('A' + col + 1)).ToString() + (row + 1).ToString();
-            return "R" + (row + 1).ToString() + "C" + (col + 1).ToString();
+            return "R" + (row + 1).ToString() + "C" + (col.BeginColumn + 1).ToString();
         }
 
         // some excel files contain 32000 columns, most of them are empty
@@ -56,13 +55,31 @@ namespace Smart.Parser.Adapters
 
         public Cell GetDeclarationField(int row, DeclarationField field)
         {
-            int columnIndex = -1;
-            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out columnIndex))
+            TColumnSpan colSpan;
+            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
                 //return -1;
                 throw new SystemException("Field " + field.ToString() + " not found");
             }
-            return GetCell(row, columnIndex);
+            var exactCell = GetCell(row, colSpan.BeginColumn);
+            if (exactCell.Text.Trim() != "")
+            {
+                return exactCell;
+            }
+            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+            {
+                var mergedCell = GetCell(row, i);
+                if (mergedCell == null)
+                {
+                    break;
+                }
+                if (mergedCell.Text.Trim() != "")
+                {
+                    return mergedCell;
+                }
+                i += mergedCell.MergedColsCount;
+            }
+            return exactCell;
         }
 
         public string GetContents(int row, DeclarationField field)

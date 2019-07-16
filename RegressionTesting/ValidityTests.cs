@@ -262,6 +262,12 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        public void File17207()
+        {
+            TestSmartParser("SmartParser\\17207.xls", "prod");
+        }
+
+        [TestMethod]
         public void SectionExample()
         {
             TestSmartParser("SmartParser\\section_example.toloka_json", "prod", true);

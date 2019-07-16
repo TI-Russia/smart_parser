@@ -70,6 +70,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="regression_samples\SmartParser\17207.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\17207.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\fsin2013.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
