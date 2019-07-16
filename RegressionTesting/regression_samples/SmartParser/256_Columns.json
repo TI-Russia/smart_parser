@@ -3,8 +3,7 @@
     {
       "person": {
         "name_raw": "Аляшетдинов М.Т.",
-        "role": "Помощник Министра",
-        "document_position": "R12C6"
+        "role": "Помощник Министра"
       },
       "year": 2016,
       "incomes": [
@@ -35,7 +34,8 @@
         }
       ],
       "vehicles": [],
-      "person_index": 1
+      "person_index": 1,
+      "document_position": "R12C6"
     }
   ],
   "document": {

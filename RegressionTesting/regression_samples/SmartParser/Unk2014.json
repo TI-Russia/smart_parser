@@ -3,8 +3,7 @@
     {
       "person": {
         "name_raw": "Герасимов В.В.",
-        "role": "",
-        "document_position": "R5C2"
+        "role": ""
       },
       "year": 2014,
       "incomes": [
@@ -88,7 +87,8 @@
         }
       ],
       "vehicles": [],
-      "person_index": 1
+      "person_index": 1,
+      "document_position": "R5C2"
     }
   ],
   "document": {

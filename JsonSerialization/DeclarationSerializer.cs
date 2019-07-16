@@ -150,6 +150,7 @@ namespace TI.Declarator.JsonSerialization
                 GetVehicles(servant));
 
             AddNotNullProp(jServ, "person_index", servant.Index);
+            AddNotNullProp(jServ, "document_position", servant.document_position);
             return jServ;
         }
 
@@ -159,7 +160,6 @@ namespace TI.Declarator.JsonSerialization
             personProp.Add(new JProperty("name_raw", servant.NameRaw));
             personProp.Add(new JProperty("role", servant.Occupation));
             AddNotNullProp(personProp, "department", servant.Department);
-            AddNotNullProp(personProp, "document_position", servant.document_position);
 
             return new JProperty("person", personProp);
         }

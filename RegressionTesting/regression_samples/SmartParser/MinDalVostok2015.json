@@ -3,8 +3,7 @@
     {
       "person": {
         "name_raw": "Осипов А. М.",
-        "role": "Первый заместитель Министра",
-        "document_position": "R5C2"
+        "role": "Первый заместитель Министра"
       },
       "year": 2015,
       "incomes": [
@@ -141,7 +140,8 @@
           "relative": "Супруг(а)"
         }
       ],
-      "person_index": 1
+      "person_index": 1,
+      "document_position": "R5C2"
     }
   ],
   "document": {
