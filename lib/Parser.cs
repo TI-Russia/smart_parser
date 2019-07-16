@@ -72,7 +72,6 @@ namespace Smart.Parser.Lib
             }
             return index;
         }
-
         
         int FindNextPersonIndex(int row, int mergedRowCount)
         {
@@ -173,7 +172,7 @@ namespace Smart.Parser.Lib
                 }
                 CurrentPerson.RangeHigh = row - 1;
                 Relative relative = new Relative();
-                CurrentServant.Relatives.Add(relative);
+                CurrentServant.AddRelative(relative);
                 CurrentPerson = relative;
                 CurrentPerson.RangeLow = row;
 

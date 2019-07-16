@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
+using System.Text;
 
 namespace RegressionTesting
 {
@@ -121,6 +122,8 @@ namespace RegressionTesting
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
+            string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
+            Smart.Parser.Adapters.IAdapter.ConvertedFileDir = outDir;
             Smart.Parser.Program.ParseFile(workingCopy, outFileName);
             string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
             Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
@@ -316,6 +319,23 @@ namespace RegressionTesting
             Parser.Lib.Logger.SetupForTests("Main", "Second");
         }
 
+        public static string RunFileCompare(string expectedFile, string actualFile)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "fc.exe";
+            p.StartInfo.Arguments = expectedFile + " " + actualFile;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.Start();
+
+            string output = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            byte[] data = p.StandardOutput.CurrentEncoding.GetBytes(output);
+            string utf8 = Encoding.UTF8.GetString(data);
+
+            return utf8;
+        }
+
         private static bool TestValidity(string expectedFile, string actualFile, string logFile)
         {
             Log(logFile, ($"Running regression test on {actualFile}."));
@@ -359,6 +379,9 @@ namespace RegressionTesting
                     Log(logFile, $"Expected number of lines: {expectedOutput.Count()}");
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
+
+                string fcOut = RunFileCompare(expectedFile, actualFile);
+                Console.Write(fcOut);
 
                 return false;
             }

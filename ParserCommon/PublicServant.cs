@@ -12,7 +12,22 @@ namespace TI.Declarator.ParserCommon
 
         public int? Index { get; set; }
 
-        public List<Relative> Relatives = new List<Relative>();
+        public void AddRelative(Relative relative)
+        {
+            relative.PersonIndex = relatives.Count + 1;
+            relatives.Add(relative);
+        }
+
+        public IEnumerable<Relative> Relatives
+        {
+            get
+            {
+                return relatives;
+            }
+        }
+
+        List<Relative> relatives = new List<Relative>();
+        public override int? PersonIndex { get { return null; } }
 
     }
 }

@@ -188,21 +188,27 @@ namespace TI.Declarator.JsonSerialization
             var jIncomes = new JArray();
             
             if (servant.DeclaredYearlyIncome.HasValue)
-            { 
-                jIncomes.Add(new JObject(
-                    new JProperty("size", servant.DeclaredYearlyIncome),
-                    new JProperty("relative", null)));
+            {
+                JObject jIncomeProp = new JObject();
+
+                jIncomeProp.Add(new JProperty("size", servant.DeclaredYearlyIncome));
+                jIncomeProp.Add(new JProperty("relative", null));
+
+                jIncomes.Add(jIncomeProp);
             }
 
-            foreach (var relWithIndex in servant.Relatives.Select((relative, index) => new {relative, index}))
+            foreach (var relative in servant.Relatives)
             {
-                var income = relWithIndex.relative.DeclaredYearlyIncome;
+                var income = relative.DeclaredYearlyIncome;
                 if (income.HasValue && income > 0.0m)
                 {
-                    jIncomes.Add(new JObject(
-                    new JProperty("size", income),
-                    new JProperty("relative", GetRelationshipName(relWithIndex.relative.RelationType)),
-                    new JProperty("relative_index", relWithIndex.index + 1)));
+                    JObject jIncomeProp = new JObject();
+
+                    jIncomeProp.Add(new JProperty("size", income));
+                    jIncomeProp.Add(new JProperty("relative", GetRelationshipName(relative.RelationType)));
+                    AddNotNullProp(jIncomeProp, "relative_index", relative.PersonIndex);
+
+                    jIncomes.Add(jIncomeProp);
                 }
             }
 
@@ -218,7 +224,7 @@ namespace TI.Declarator.JsonSerialization
             }
         }
 
-        private static JObject GetRealEstate(RealEstateProperty prop, string relationshipName = null)
+        private static JObject GetRealEstate(RealEstateProperty prop, string relationshipName = null, int? relative_index = null)
         {
             JObject jRealEstate = new JObject();
 
@@ -226,7 +232,8 @@ namespace TI.Declarator.JsonSerialization
             jRealEstate.Add(new JProperty("text", prop.Text));
             jRealEstate.Add(new JProperty("square", prop.square));
             jRealEstate.Add(new JProperty("relative", relationshipName));
-           jRealEstate.Add(new JProperty("own_type_by_column", prop.own_type_by_column));
+            AddNotNullProp(jRealEstate, "relative_index", relative_index);
+            jRealEstate.Add(new JProperty("own_type_by_column", prop.own_type_by_column));
             AddNotNullProp(jRealEstate, "square_raw", prop.square_raw);
             AddNotNullProp(jRealEstate, "country_raw", prop.country_raw);
             AddNotNullProp(jRealEstate, "type_raw", prop.type_raw);
@@ -277,6 +284,7 @@ namespace TI.Declarator.JsonSerialization
                     JObject jVehicle = new JObject();
                     jVehicle.Add(new JProperty("text", vehicleInfo.Text));
                     jVehicle.Add(new JProperty("relative", GetRelationshipName(rel.RelationType)));
+                    AddNotNullProp(jVehicle, "relative_index", rel.PersonIndex);
                     AddNotNullProp(jVehicle, "type_raw", vehicleInfo.Type);
                     jVehicles.Add(jVehicle);
                 }

@@ -24,7 +24,15 @@ namespace Smart.Parser.Adapters
         {
             Application excel = new Application();
             var doc = excel.Workbooks.Open(Path.GetFullPath(filename),ReadOnly:true);
-            TempFileName = Path.GetTempFileName();
+
+            if (ConvertedFileDir != null)
+            {
+                TempFileName = Path.Combine(ConvertedFileDir, Path.GetFileNameWithoutExtension(filename) + ".xlsx");
+            }
+            else
+            {
+                TempFileName = Path.GetTempFileName();
+            }
             Logger.Debug(string.Format("use {0} to store temp xlsx file", TempFileName));
             excel.DisplayAlerts = false;
             doc.SaveAs(

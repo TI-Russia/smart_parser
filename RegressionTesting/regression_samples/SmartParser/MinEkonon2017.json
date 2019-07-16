@@ -73,7 +73,8 @@
       "vehicles": [
         {
           "text": "Автомобили легковые: Опель \nОпель \nТойота",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 1

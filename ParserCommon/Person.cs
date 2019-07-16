@@ -20,5 +20,6 @@ namespace TI.Declarator.ParserCommon
         public int RangeHigh { set; get; }
 
         public string document_position { set; get; }
+        virtual public int? PersonIndex { set; get; } = null;
     }
 }

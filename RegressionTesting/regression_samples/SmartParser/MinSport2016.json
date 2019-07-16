@@ -215,11 +215,13 @@
       "vehicles": [
         {
           "text": "легковой автомобиль BMW 535 GT",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "легковой автомобиль Audi Q7",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 6
@@ -358,7 +360,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль ТОЙОТА Wish",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 11
@@ -985,15 +988,18 @@
       "vehicles": [
         {
           "text": "легковой автомобиль VOLVO XC 60",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "легковой автомобиль VOLVO XC 70",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "ССТ-713206, ССТ-713206",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 36
@@ -1103,7 +1109,8 @@
         },
         {
           "text": "легковой автомобиль Volvo XC 60",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 40
@@ -1344,7 +1351,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль ТОЙОТА CAMRY",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 48
@@ -1517,7 +1525,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль\nLexus NX 200,\nНИССАН Qashqai",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 51
@@ -1731,11 +1740,13 @@
       "vehicles": [
         {
           "text": "легковой автомобиль НИССАН Qashqai",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "легковой автомобиль СеАЗ 1113",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 60
@@ -1988,7 +1999,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль\nФОЛЬКСВАГЕН Multivan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 68
@@ -2747,7 +2759,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль СИТРОЕН c-crosser",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 89
@@ -2852,7 +2865,8 @@
         },
         {
           "text": "легковой автомобиль АУДИ A5",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 93
@@ -2920,7 +2934,8 @@
         },
         {
           "text": "легковой автомобиль ЛЭНД РОВЕР Дискавери 4",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 96
@@ -3091,7 +3106,8 @@
         },
         {
           "text": "легковой автомобиль АУДИ S6",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 100
@@ -3178,7 +3194,8 @@
       "vehicles": [
         {
           "text": "водный транспорт SaVA 500",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 103
@@ -3283,7 +3300,8 @@
         },
         {
           "text": "легковой автомобиль ТОЙОТА ЛЕКСУС RX450H",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 105
@@ -3383,7 +3401,8 @@
         },
         {
           "text": "легковой автомобиль ФОЛЬКСВАГЕН Туарег",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 111
@@ -3890,11 +3909,13 @@
       "vehicles": [
         {
           "text": "легковой автомобиль УАЗ Hunter",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "легковой автомобиль BMW X5",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 119
@@ -3962,7 +3983,8 @@
         },
         {
           "text": "легковой автомобиль Mitsubishi Outlander",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 123
@@ -4109,11 +4131,13 @@
         },
         {
           "text": "легковой автомобиль МИЦУБИСИ OUTLANDER",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "мототранспортное средство Буран Буран",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 126
@@ -4351,7 +4375,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль \nVOLVO V50",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 133
@@ -4442,7 +4467,8 @@
         },
         {
           "text": "легковой автомобиль\nСеАЗ 1113",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 137
@@ -4736,7 +4762,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль АУДИ Q5",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 143
@@ -4996,7 +5023,8 @@
         },
         {
           "text": "легковой автомобиль ХУНДАЙ Solaris",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 150
@@ -5057,11 +5085,13 @@
       "vehicles": [
         {
           "text": "легковой автомобиль РЕНО Logan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         },
         {
           "text": "легковой автомобиль ХУНДАЙ Solaris",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 152
@@ -5120,7 +5150,8 @@
         },
         {
           "text": "легковой автомобиль ТОЙОТА RAV 4",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 154
@@ -5253,7 +5284,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль ФОЛЬКСВАГЕН Гольф",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 159
@@ -5461,7 +5493,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль ТОЙОТА HILUX",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 165
@@ -5603,7 +5636,8 @@
         },
         {
           "text": "легковой автомобиль\nФОРД Kuga",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 170
@@ -5722,7 +5756,8 @@
         },
         {
           "text": "легковой автомобиль ХОНДА CR-V",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 172
@@ -5949,7 +5984,8 @@
       "vehicles": [
         {
           "text": "легковой автомобиль \nNissan, Qushkai",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 178

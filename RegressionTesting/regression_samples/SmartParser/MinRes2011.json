@@ -166,8 +166,9 @@
           "relative": null
         },
         {
-          "text": "а/м\nPorsche \nCayenne GTS\n\n2 мотоцикла:\nYamaha YZF-R1,\nDucati GT1000",
-          "relative": "Супруг(а)"
+          "text": "а/м\nPorsche Cayenne GTS\n\n2 мотоцикла:\n\nYamaha YZF-R1,\nDucati GT1000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -279,7 +280,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "нежилое  помещение (индивидуальная)",
+          "text": "нежилое",
           "square": 150.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -349,7 +350,8 @@
       "vehicles": [
         {
           "text": "а/м \nVolkswagen\nTiguan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -496,7 +498,8 @@
         },
         {
           "text": "а/м\nAudi Q5",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -625,7 +628,8 @@
         },
         {
           "text": "а/м:\nТойота RAV4",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -939,7 +943,8 @@
       "vehicles": [
         {
           "text": "а/м\nNissan Qashqai",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -1446,7 +1451,8 @@
       "vehicles": [
         {
           "text": "а/м \nHyundai Tucson",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -1498,7 +1504,8 @@
       "vehicles": [
         {
           "text": "а/м\nSsang Yong Kyron",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -1561,7 +1568,8 @@
         },
         {
           "text": "а/м \nDaewoo Nexia",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -1611,7 +1619,8 @@
       "vehicles": [
         {
           "text": "а/м \nMitsubishi ASX 1.8",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -1873,7 +1882,8 @@
         },
         {
           "text": "2 а/м \nNissan Teana,\nInfiniti FX 37",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -2297,7 +2307,8 @@
       "vehicles": [
         {
           "text": "а/м \nNissan Murano",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -2343,7 +2354,8 @@
         },
         {
           "text": "а/м \nToyota Sprinter",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -2480,7 +2492,8 @@
       "vehicles": [
         {
           "text": "а/м \nHyundai Tucson",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -2536,7 +2549,8 @@
         },
         {
           "text": "а/м \nVolkswagen Touareg",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -2602,7 +2616,8 @@
       "vehicles": [
         {
           "text": "2 а/м: \nВАЗ 21013, \nSsang Yong Rexton RX, \n\nавтоприцеп",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -2782,7 +2797,8 @@
       "vehicles": [
         {
           "text": "2 а/м: Москвич 2141,\nDaewoo Nexia",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -3077,7 +3093,8 @@
       "vehicles": [
         {
           "text": "2 а/м\nHonda CR-V,\nVolvo S60",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -3248,7 +3265,8 @@
       "vehicles": [
         {
           "text": "3 а/м: \nDodge Nitro,\nJeep Grand Cherokee,\nBMW 740",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -3305,7 +3323,8 @@
         },
         {
           "text": "а/м \nChevrolet",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -3439,7 +3458,8 @@
         },
         {
           "text": "а/м \nKIA",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -3678,7 +3698,8 @@
       "vehicles": [
         {
           "text": "2 а/м:\nAudi Q5,\nAudi Q7",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -3968,7 +3989,8 @@
       "vehicles": [
         {
           "text": "а/м \nRenault Logan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -4019,7 +4041,8 @@
       "vehicles": [
         {
           "text": "а/м \nВАЗ 2104",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -4219,7 +4242,8 @@
       "vehicles": [
         {
           "text": "а/м \nCitroen C4",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -4324,7 +4348,8 @@
       "vehicles": [
         {
           "text": "а/м\nChevrolet Lacetti",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -4840,7 +4865,8 @@
         },
         {
           "text": "а/м\nBMW 3251",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -5181,7 +5207,8 @@
       "vehicles": [
         {
           "text": "а/м Honda Stream",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -5363,7 +5390,8 @@
         },
         {
           "text": "а/м\nSuzuki SX4",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -5737,7 +5765,8 @@
       "vehicles": [
         {
           "text": "а/м \nMazda 3",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -5834,7 +5863,8 @@
       "vehicles": [
         {
           "text": "а/м Chevrolet Lacetti",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6159,7 +6189,8 @@
         },
         {
           "text": "а/м\nVolvo XC 90",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6331,7 +6362,8 @@
       "vehicles": [
         {
           "text": "а/м Nissan Tiida",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6613,7 +6645,8 @@
       "vehicles": [
         {
           "text": "а/м \nFord Galaxy",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6666,7 +6699,8 @@
       "vehicles": [
         {
           "text": "а/м \nOpel Astra",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6726,7 +6760,8 @@
       "vehicles": [
         {
           "text": "1 а/м Volkswagen-golf",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6785,7 +6820,8 @@
       "vehicles": [
         {
           "text": "2 а/м:\nToyota Corolla,\nNissan Note",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -6998,7 +7034,8 @@
       "vehicles": [
         {
           "text": "а/м\nFord Focus",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -7387,7 +7424,8 @@
       "vehicles": [
         {
           "text": "а/м \nFord Focus",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -7476,7 +7514,8 @@
         },
         {
           "text": "а/м УАЗ",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -7552,7 +7591,8 @@
       "vehicles": [
         {
           "text": "а/м \nMazda 3",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -8000,7 +8040,8 @@
       "vehicles": [
         {
           "text": "а/м\nВАЗ 2110",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -8095,7 +8136,8 @@
       "vehicles": [
         {
           "text": "а/м \nPeugeot 206",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
@@ -8185,7 +8227,8 @@
       "vehicles": [
         {
           "text": "2 а/м \nRenault Logan\nУАЗ 39629",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ]
     },
