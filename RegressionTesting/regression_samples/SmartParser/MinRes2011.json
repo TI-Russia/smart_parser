@@ -166,7 +166,7 @@
           "relative": null
         },
         {
-          "text": "а/м\nPorsche Cayenne GTS\n\n2 мотоцикла:\n\nYamaha YZF-R1,\nDucati GT1000",
+          "text": "а/м\nPorsche \nCayenne GTS\n\n2 мотоцикла:\nYamaha YZF-R1,\nDucati GT1000",
           "relative": "Супруг(а)"
         }
       ]
@@ -279,7 +279,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "нежилое",
+          "text": "нежилое  помещение (индивидуальная)",
           "square": 150.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
