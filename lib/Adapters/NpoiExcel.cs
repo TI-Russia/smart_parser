@@ -195,7 +195,14 @@ namespace Smart.Parser.Adapters
 
         public override int GetColsCount()
         {
-            return Math.Min(MaxNotEmptyColumnsFoundInHeader, WorkBook.GetSheetAt(0).GetRow(0).Cells.Count);
+            var firstSheet = WorkBook.GetSheetAt(0);
+
+            // firstSheet.GetRow(0) can fail, we have to use enumerators
+            var iter = firstSheet.GetRowEnumerator();
+            iter.MoveNext();
+            IRow firstRow = (IRow)iter.Current;
+            int firstLineColsCount = firstRow.Cells.Count;
+            return Math.Min(MaxNotEmptyColumnsFoundInHeader, firstLineColsCount);
         }
 
         public override int GetColsCount(int row)
