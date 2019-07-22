@@ -18,18 +18,18 @@ namespace test
 
             ColumnOrdering ordering = ColumnDetector.ExamineHeader(adapter);
             Assert.IsTrue(ordering.ColumnOrder.Count == 12);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType] == 0);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation] == 1);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType] == 2);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateOwnershipType] == 3);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateSquare] == 4);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateCountry] == 5);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyType] == 6);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertySquare] == 7);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyCountry] == 8);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Vehicle] == 9);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome] == 10);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DataSources] == 11);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 0);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 1);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType].BeginColumn == 2);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateOwnershipType].BeginColumn == 3);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateSquare].BeginColumn == 4);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateCountry].BeginColumn == 5);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyType].BeginColumn == 6);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertySquare].BeginColumn == 7);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyCountry].BeginColumn == 8);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Vehicle].BeginColumn == 9);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn == 10);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DataSources].BeginColumn == 11);
         }
 
         [TestMethod]
@@ -40,18 +40,18 @@ namespace test
 
             ColumnOrdering ordering = ColumnDetector.ExamineHeader(adapter);
             Assert.IsTrue(ordering.ColumnOrder.Count == 12);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType] == 0);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation] == 1);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType] == 2);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateOwnershipType] == 3);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateSquare] == 4);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateCountry] == 5);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyType] == 6);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertySquare] == 7);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyCountry] == 8);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Vehicle] == 9);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome] == 10);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DataSources] == 11);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 0);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 1);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType].BeginColumn == 2);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateOwnershipType].BeginColumn == 3);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateSquare].BeginColumn == 4);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateCountry].BeginColumn == 5);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyType].BeginColumn == 6);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertySquare].BeginColumn == 7);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.StatePropertyCountry].BeginColumn == 8);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Vehicle].BeginColumn == 9);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn == 10);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DataSources].BeginColumn == 11);
         }
     }
 }

@@ -39,7 +39,8 @@
           "relative": null
         }
       ],
-      "person_index": 1
+      "person_index": 1,
+      "document_position": "R12C6"
     },
     {
       "person": {
@@ -80,7 +81,8 @@
           "relative": null
         }
       ],
-      "person_index": 2
+      "person_index": 2,
+      "document_position": "R14C6"
     },
     {
       "person": {
@@ -183,7 +185,8 @@
           "relative": null
         }
       ],
-      "person_index": 3
+      "person_index": 3,
+      "document_position": "R15C6"
     }
   ],
   "document": {

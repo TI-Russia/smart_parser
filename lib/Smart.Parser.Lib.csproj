@@ -100,6 +100,7 @@
     <Compile Include="Adapters\AsposeDocAdapter.cs" />
     <Compile Include="Adapters\AsposeExcelAdapter.cs" />
     <Compile Include="Adapters\AsposeLicense.cs" />
+    <Compile Include="Adapters\IAdapterRow.cs" />
     <Compile Include="Adapters\IAdapter.cs" />
     <Compile Include="Adapters\MicrosoftExcel.cs" />
     <Compile Include="Adapters\NpoiExcel.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Adapters\Section.cs" />
     <Compile Include="SmartParserException.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -96,7 +96,11 @@ class TTolokaStats:
                 json.dump(toloker_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
             with open(os.path.join(DATA_FOLDER, input_id+".golden.json"), "w", encoding="utf8") as outf:
                 json.dump(golden_json, outf, indent=4, ensure_ascii=False, sort_keys=True)
-            dump_conflict(task, golden_json, toloker_json, match_info, conflict_file)
+            dump_conflict(task,
+                          ("Golden", golden_json),
+                          ("Toloker", toloker_json),
+                          match_info,
+                          conflict_file)
 
         if args.dump_conflicts:
             conflict_file.close()

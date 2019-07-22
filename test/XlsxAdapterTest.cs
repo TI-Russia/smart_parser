@@ -11,6 +11,8 @@ namespace test
     public class XlsxAdapterTest
     {
         [TestMethod]
+        [DeploymentItem(@"JsonSerialization\import-schema.json")]
+        [DeploymentItem(@"JsonSerialization\import-schema-dicts.json")]
         public void XlsxTypeCTest()
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "c_sample.xlsx");
@@ -32,8 +34,11 @@ namespace test
 
             //parser.Process();
         }
+        /*
         [TestMethod]
-        public void XlsxTest2()
+        [DeploymentItem(@"JsonSerialization\import-schema.json")]
+        [DeploymentItem(@"JsonSerialization\import-schema-dicts.json")]
+        public void XlsxTest2
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract2.xlsx");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
@@ -45,6 +50,6 @@ namespace test
 
             string comments = "";
             string output = DeclarationSerializer.Serialize(declaration, ref comments);
-        }
+        }*/
     }
 }

@@ -54,10 +54,10 @@
       "vehicles": [
         {
           "text": "Volkswagen(Индивидуальная)",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
-      ],
-      "person_index": 1
+      ]
     },
     {
       "person": {
@@ -94,8 +94,7 @@
           "text": "Audi Q5 (индивидуальная)",
           "relative": null
         }
-      ],
-      "person_index": 2
+      ]
     }
   ],
   "document": {

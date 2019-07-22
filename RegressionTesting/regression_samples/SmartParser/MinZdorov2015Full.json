@@ -93,7 +93,8 @@
         },
         {
           "text": "а/м легковой Toyota Камри",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 1
@@ -293,7 +294,8 @@
         },
         {
           "text": "а/м легковой\nBMW 320i",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 2
@@ -558,7 +560,8 @@
         },
         {
           "text": "а/м легковой Москвич 2 141S",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 6
@@ -800,7 +803,8 @@
         },
         {
           "text": "а/м легковой BMW X5",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 9
@@ -1551,7 +1555,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Mercedes-Benz ML",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 20
@@ -1741,7 +1746,8 @@
       "vehicles": [
         {
           "text": "а/м легковой AUDI Q-7",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 22
@@ -1824,7 +1830,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Hyundai Accent",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 24
@@ -1910,7 +1917,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Toyota Corolla; а/м легковой\nToyota Corolla",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 25
@@ -2290,7 +2298,8 @@
         },
         {
           "text": "а/м легковой Toyota Camry",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 31
@@ -2366,7 +2375,8 @@
         },
         {
           "text": "а/м легковой Nissan Almera Classic",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 33
@@ -2903,7 +2913,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Toyota Avensis",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 42
@@ -3245,7 +3256,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Subaru Forester",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 48
@@ -3325,7 +3337,8 @@
         },
         {
           "text": "а/м легковой Volkswagen Passat CC",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 49
@@ -3672,7 +3685,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Mercedes 150A",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 56
@@ -3911,7 +3925,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Kia Ceed",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 61
@@ -4202,7 +4217,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Nissan Almera Classik; а/м легковой\nRenault Logan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 66
@@ -5244,7 +5260,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Hyundai Солярис",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 83
@@ -5341,7 +5358,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Seat Alhambra",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 85
@@ -5976,7 +5994,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Volkswagen Amarok",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 96
@@ -6023,7 +6042,8 @@
       "vehicles": [
         {
           "text": "а/м легковой Land Rover Freelander",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 97
@@ -6316,7 +6336,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 101
+      "person_index": 102
     },
     {
       "person": {
@@ -6370,7 +6390,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 102
+      "person_index": 103
     },
     {
       "person": {
@@ -6446,7 +6466,7 @@
           "relative": null
         }
       ],
-      "person_index": 103
+      "person_index": 104
     },
     {
       "person": {
@@ -6559,10 +6579,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Toyota \nLand Cruiser; а/м легковой\nNissan Pathfinder; а/м легковой Hyundai i30",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 104
+      "person_index": 105
     },
     {
       "person": {
@@ -6625,7 +6646,7 @@
           "relative": null
         }
       ],
-      "person_index": 105
+      "person_index": 106
     },
     {
       "person": {
@@ -6692,10 +6713,11 @@
         },
         {
           "text": "а/м легковой Dodge Caravan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 106
+      "person_index": 107
     },
     {
       "person": {
@@ -6749,10 +6771,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Renault Megane",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 107
+      "person_index": 108
     },
     {
       "person": {
@@ -6778,7 +6801,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 108
+      "person_index": 109
     },
     {
       "person": {
@@ -6829,10 +6852,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Mitsubishi Outlander",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 109
+      "person_index": 110
     },
     {
       "person": {
@@ -6881,7 +6905,7 @@
           "relative": null
         }
       ],
-      "person_index": 110
+      "person_index": 111
     },
     {
       "person": {
@@ -6907,7 +6931,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 111
+      "person_index": 112
     },
     {
       "person": {
@@ -7013,7 +7037,7 @@
           "relative": null
         }
       ],
-      "person_index": 112
+      "person_index": 113
     },
     {
       "person": {
@@ -7078,10 +7102,11 @@
         },
         {
           "text": "а/м легковой Mazda 6",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 113
+      "person_index": 114
     },
     {
       "person": {
@@ -7117,7 +7142,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 114
+      "person_index": 115
     },
     {
       "person": {
@@ -7188,7 +7213,7 @@
           "relative": null
         }
       ],
-      "person_index": 115
+      "person_index": 116
     },
     {
       "person": {
@@ -7214,7 +7239,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 116
+      "person_index": 117
     },
     {
       "person": {
@@ -7294,7 +7319,7 @@
           "relative": null
         }
       ],
-      "person_index": 117
+      "person_index": 118
     },
     {
       "person": {
@@ -7331,7 +7356,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 118
+      "person_index": 119
     },
     {
       "person": {
@@ -7366,7 +7391,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 119
+      "person_index": 120
     },
     {
       "person": {
@@ -7412,7 +7437,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 120
+      "person_index": 121
     },
     {
       "person": {
@@ -7503,10 +7528,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Mazda 6;\nа/м легковой Honda CR-V\nа/м грузовой Volkswagen 2kn caddy maxi",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 121
+      "person_index": 122
     },
     {
       "person": {
@@ -7547,7 +7573,7 @@
           "relative": null
         }
       ],
-      "person_index": 122
+      "person_index": 123
     },
     {
       "person": {
@@ -7574,7 +7600,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 123
+      "person_index": 124
     },
     {
       "person": {
@@ -7679,10 +7705,11 @@
         },
         {
           "text": "а/м легковой Volkswagen Polo sedan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 124
+      "person_index": 125
     },
     {
       "person": {
@@ -7765,10 +7792,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Nissan Патфайндер",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 125
+      "person_index": 126
     },
     {
       "person": {
@@ -7820,7 +7848,7 @@
           "relative": null
         }
       ],
-      "person_index": 126
+      "person_index": 127
     },
     {
       "person": {
@@ -7961,7 +7989,7 @@
           "relative": null
         }
       ],
-      "person_index": 127
+      "person_index": 128
     },
     {
       "person": {
@@ -7988,7 +8016,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 128
+      "person_index": 129
     },
     {
       "person": {
@@ -8036,10 +8064,11 @@
         },
         {
           "text": "а/м легковой \nMercedes GLK 220",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 129
+      "person_index": 130
     },
     {
       "person": {
@@ -8075,7 +8104,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 130
+      "person_index": 131
     },
     {
       "person": {
@@ -8139,7 +8168,7 @@
           "relative": null
         }
       ],
-      "person_index": 131
+      "person_index": 132
     },
     {
       "person": {
@@ -8188,7 +8217,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 132
+      "person_index": 133
     },
     {
       "person": {
@@ -8240,7 +8269,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 133
+      "person_index": 134
     },
     {
       "person": {
@@ -8305,10 +8334,11 @@
         },
         {
           "text": "а/м легковой Lada ВАЗ-21 053",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 134
+      "person_index": 135
     },
     {
       "person": {
@@ -8390,7 +8420,7 @@
           "relative": null
         }
       ],
-      "person_index": 135
+      "person_index": 136
     },
     {
       "person": {
@@ -8442,7 +8472,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 136
+      "person_index": 137
     },
     {
       "person": {
@@ -8505,10 +8535,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Mazda 323;\nа/м легковой Ford Crown Victoria",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 137
+      "person_index": 138
     },
     {
       "person": {
@@ -8563,7 +8594,7 @@
           "relative": null
         }
       ],
-      "person_index": 138
+      "person_index": 139
     },
     {
       "person": {
@@ -8621,7 +8652,7 @@
           "relative": null
         }
       ],
-      "person_index": 139
+      "person_index": 140
     },
     {
       "person": {
@@ -8713,7 +8744,7 @@
           "relative": null
         }
       ],
-      "person_index": 140
+      "person_index": 141
     },
     {
       "person": {
@@ -8772,7 +8803,7 @@
           "relative": null
         }
       ],
-      "person_index": 141
+      "person_index": 142
     },
     {
       "person": {
@@ -8814,7 +8845,7 @@
           "relative": null
         }
       ],
-      "person_index": 142
+      "person_index": 143
     },
     {
       "person": {
@@ -8846,7 +8877,7 @@
           "relative": null
         }
       ],
-      "person_index": 143
+      "person_index": 144
     },
     {
       "person": {
@@ -8899,10 +8930,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Toyota Camry",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 144
+      "person_index": 145
     },
     {
       "person": {
@@ -8954,7 +8986,7 @@
           "relative": null
         }
       ],
-      "person_index": 145
+      "person_index": 146
     },
     {
       "person": {
@@ -8989,7 +9021,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 146
+      "person_index": 147
     },
     {
       "person": {
@@ -9044,10 +9076,11 @@
         },
         {
           "text": "а/м легковой Kia Sportage",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 147
+      "person_index": 148
     },
     {
       "person": {
@@ -9079,7 +9112,7 @@
           "relative": null
         }
       ],
-      "person_index": 148
+      "person_index": 149
     },
     {
       "person": {
@@ -9105,7 +9138,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 149
+      "person_index": 150
     },
     {
       "person": {
@@ -9152,7 +9185,7 @@
           "relative": null
         }
       ],
-      "person_index": 150
+      "person_index": 151
     },
     {
       "person": {
@@ -9179,7 +9212,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 151
+      "person_index": 152
     },
     {
       "person": {
@@ -9225,7 +9258,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 152
+      "person_index": 153
     },
     {
       "person": {
@@ -9269,7 +9302,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 153
+      "person_index": 154
     },
     {
       "person": {
@@ -9296,7 +9329,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 154
+      "person_index": 155
     },
     {
       "person": {
@@ -9407,10 +9440,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Ssang Yong Kyron",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 155
+      "person_index": 156
     },
     {
       "person": {
@@ -9461,7 +9495,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 156
+      "person_index": 157
     },
     {
       "person": {
@@ -9488,7 +9522,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 157
+      "person_index": 158
     },
     {
       "person": {
@@ -9599,10 +9633,11 @@
         },
         {
           "text": "а/м легковой Форд Фьюжн",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 158
+      "person_index": 159
     },
     {
       "person": {
@@ -9709,7 +9744,7 @@
           "relative": null
         }
       ],
-      "person_index": 159
+      "person_index": 160
     },
     {
       "person": {
@@ -9760,10 +9795,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Ford Fiesta",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 160
+      "person_index": 161
     },
     {
       "person": {
@@ -9810,10 +9846,11 @@
         },
         {
           "text": "а/м легковой Citroen C1",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 161
+      "person_index": 162
     },
     {
       "person": {
@@ -9863,7 +9900,7 @@
           "relative": null
         }
       ],
-      "person_index": 162
+      "person_index": 163
     },
     {
       "person": {
@@ -9894,7 +9931,7 @@
           "relative": null
         }
       ],
-      "person_index": 163
+      "person_index": 164
     },
     {
       "person": {
@@ -9920,7 +9957,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 164
+      "person_index": 165
     },
     {
       "person": {
@@ -9980,10 +10017,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Renault Megan",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 165
+      "person_index": 166
     },
     {
       "person": {
@@ -10015,7 +10053,7 @@
           "relative": null
         }
       ],
-      "person_index": 166
+      "person_index": 167
     },
     {
       "person": {
@@ -10053,10 +10091,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Honda Accord",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 167
+      "person_index": 168
     },
     {
       "person": {
@@ -10144,10 +10183,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Volkswagen Passat",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 168
+      "person_index": 169
     },
     {
       "person": {
@@ -10228,7 +10268,7 @@
           "relative": null
         }
       ],
-      "person_index": 169
+      "person_index": 170
     },
     {
       "person": {
@@ -10272,10 +10312,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Kia Rio",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 170
+      "person_index": 171
     },
     {
       "person": {
@@ -10366,7 +10407,7 @@
           "relative": null
         }
       ],
-      "person_index": 171
+      "person_index": 172
     },
     {
       "person": {
@@ -10425,7 +10466,7 @@
           "relative": null
         }
       ],
-      "person_index": 172
+      "person_index": 173
     },
     {
       "person": {
@@ -10510,7 +10551,7 @@
           "relative": null
         }
       ],
-      "person_index": 173
+      "person_index": 174
     },
     {
       "person": {
@@ -10611,7 +10652,7 @@
           "relative": null
         }
       ],
-      "person_index": 174
+      "person_index": 175
     },
     {
       "person": {
@@ -10637,7 +10678,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 175
+      "person_index": 176
     },
     {
       "person": {
@@ -10710,10 +10751,11 @@
       "vehicles": [
         {
           "text": "а/м легковой Skoda Superb",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 176
+      "person_index": 177
     },
     {
       "person": {
@@ -10739,7 +10781,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 177
+      "person_index": 178
     },
     {
       "person": {
@@ -10794,7 +10836,7 @@
           "relative": null
         }
       ],
-      "person_index": 178
+      "person_index": 179
     },
     {
       "person": {
@@ -10825,7 +10867,7 @@
           "relative": null
         }
       ],
-      "person_index": 179
+      "person_index": 180
     },
     {
       "person": {
@@ -10851,7 +10893,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 180
+      "person_index": 181
     },
     {
       "person": {
@@ -10903,7 +10945,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 181
+      "person_index": 182
     },
     {
       "person": {
@@ -10949,7 +10991,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 182
+      "person_index": 183
     },
     {
       "person": {
@@ -10994,7 +11036,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 183
+      "person_index": 184
     },
     {
       "person": {
@@ -11071,10 +11113,11 @@
         },
         {
           "text": "а/м легковой УАЗ Патриот; а/м легковой ГАЗ 33 023",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 184
+      "person_index": 185
     },
     {
       "person": {
@@ -11109,7 +11152,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 185
+      "person_index": 186
     },
     {
       "person": {
@@ -11162,7 +11205,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 186
+      "person_index": 187
     },
     {
       "person": {
@@ -11205,10 +11248,11 @@
       "vehicles": [
         {
           "text": "а/м легковой ВАЗ 2 105; а/м легковой ВАЗ Lada 2 019 060",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 187
+      "person_index": 188
     },
     {
       "person": {
@@ -11280,10 +11324,11 @@
         },
         {
           "text": "а/м легковой Skoda Yeti",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
-      "person_index": 188
+      "person_index": 189
     },
     {
       "person": {
@@ -11310,7 +11355,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 189
+      "person_index": 190
     },
     {
       "person": {
@@ -11376,7 +11421,7 @@
         }
       ],
       "vehicles": [],
-      "person_index": 190
+      "person_index": 191
     },
     {
       "person": {
@@ -11471,7 +11516,7 @@
           "relative": null
         }
       ],
-      "person_index": 191
+      "person_index": 192
     },
     {
       "person": {
@@ -11545,7 +11590,7 @@
           "relative": null
         }
       ],
-      "person_index": 192
+      "person_index": 193
     }
   ],
   "document": {

@@ -17,11 +17,15 @@ namespace TI.Declarator.DeclaratorApiClient
         
         private static HttpClient HttpClient { get; set; }
 
-        private static readonly string Username = "david_parsers";
-        private static readonly string Password = "vMrkq002";
+        private static string Username { get; set; }
+        private static string Password { get; set; }
 
         static ApiClient()
         {
+            string[] authLines = File.ReadAllLines("auth.txt");
+            Username = authLines[0];
+            Password = authLines[1];
+
             HttpClient = new HttpClient();
 
             byte[] authBytes = Encoding.ASCII.GetBytes($"{Username}:{Password}");

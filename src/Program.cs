@@ -28,7 +28,8 @@ namespace Smart.Parser
         public static string TolokaFileName = "";
         public static string HtmlFileName = "";
         public static bool SkipRelativeOrphan = false;
-        public static bool SkipApiValidation = false;
+        public static bool ValidateByApi = false;
+        public static bool IgnoreDirectoryIds = false;
 
         static string ParseArgs(string[] args)
         {
@@ -45,7 +46,7 @@ namespace Smart.Parser
             CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
             CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
-            CMDLineParser.Option skipApiValidationOpt = parser.AddBoolSwitch("-skip-api-validation", "skip API validation (useful if you're working offline)");
+            CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             parser.AddHelpOption();
             try
             {
@@ -63,6 +64,10 @@ namespace Smart.Parser
             if (licenseOpt.isMatched)
             {
                 AsposeLicense.SetLicense(licenseOpt.Value.ToString());
+                if (!AsposeLicense.Licensed)
+                {
+                    throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
+                }
             }
             if (maxRowsToProcessOpt.isMatched)
             {
@@ -96,7 +101,7 @@ namespace Smart.Parser
             Logger.SetLoggingLevel(verboseLevel);
 
             SkipRelativeOrphan = skipRelativeOrphanOpt.isMatched;
-            SkipApiValidation = skipApiValidationOpt.isMatched;
+            ValidateByApi = apiValidationOpt.isMatched;
 
             if (adapterOpt.isMatched)
             {
@@ -135,6 +140,18 @@ namespace Smart.Parser
             return Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
         }
 
+        static bool IsDirectory(string fileName)
+        {
+            try
+            {
+                return (File.GetAttributes(fileName) & FileAttributes.Directory) == FileAttributes.Directory;
+            }
+            catch
+            {
+                return false; 
+            }
+        }
+
 
         public static int Main(string[] args)
         {
@@ -146,7 +163,7 @@ namespace Smart.Parser
                 return 1;
             }
 
-            bool isDirectory = (File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
+            bool isDirectory = IsDirectory(declarationFile); //(File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
 
             if (isDirectory)
             {
@@ -165,7 +182,7 @@ namespace Smart.Parser
                 {
                     OutFile = BuildOutFileNameByInput(declarationFile);
                 }
-                ParseOneFile(declarationFile, OutFile);
+                ParseFile(declarationFile, OutFile);
             }
             catch (SmartParserException e)
             {
@@ -242,7 +259,7 @@ namespace Smart.Parser
                 try
                 {
                     Logger.SetOutSecond();
-                    ParseOneFile(file, BuildOutFileNameByInput(file));
+                    ParseFile(file, BuildOutFileNameByInput(file));
                 }
                 catch (SmartParserException e)
                 {
@@ -363,7 +380,7 @@ namespace Smart.Parser
             return null;
         }
 
-        public static int ParseOneFile(string declarationFile, string outFile)
+        public static int ParseFile(string declarationFile, string outFile)
         {
             if (CheckJson && File.Exists(outFile))
             {
@@ -386,12 +403,12 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseOneFile(adapter, curOutFile, declarationFile);
+                    ParseFile(adapter, curOutFile, declarationFile);
                 }
             }
             else
             {
-                ParseOneFile(adapter, outFile, declarationFile);
+                ParseFile(adapter, outFile, declarationFile);
             }
             adapter = null;
 
@@ -480,7 +497,7 @@ namespace Smart.Parser
                 file.WriteLine(id + "\t"+ "\"" + jsonStr + "\"\t\t");
             }
         }
-        public static int ParseOneFile(IAdapter adapter, string outFile, string declarationFile)
+        public static int ParseFile(IAdapter adapter, string outFile, string declarationFile)
         {
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
@@ -537,7 +554,7 @@ namespace Smart.Parser
             }
             Logger.Info("Output size: " + output.Length);
 
-            if (!SkipApiValidation)
+            if (ValidateByApi)
             {
                 string validationResult = ApiClient.ValidateParserOutput(output);
                 if (validationResult != "[]")

@@ -1,11 +1,7 @@
-import shutil
-import sys
 import os
 from decl_match_metric import calc_decl_match_one_pair, trunctate_json, dump_conflict
 import argparse
-from multiprocessing import Pool
 from collections import defaultdict
-import signal
 import json
 import csv
 import shutil
@@ -15,7 +11,7 @@ DATA_FOLDER = "data"
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--toloka",  dest='toloka', help ="toloka assignments file")
-    parser.add_argument("--smart-parser", dest='smart_parser')
+    parser.add_argument("--smart-parser", dest='smart_parser', default="../../src/bin/Release/smart_parser.exe")
     parser.add_argument("--process-golden", action='store_true', default=False, dest="process_golden")
     parser.add_argument("--dump-conflicts", dest='dump_conflicts')
     parser.add_argument("-l", dest='toloka_tsv_line_no', type=int, default=0)
@@ -56,6 +52,9 @@ class TTolokaStats:
         self.decl_match = {}
         self.errors = []
         self.args = args
+        self.toloker_tasks = defaultdict(int)
+        self.toloker_conflicts = defaultdict(int)
+
 
     def collect_stats(self, filename):
         line_no = 1
@@ -85,10 +84,12 @@ class TTolokaStats:
             toloker_json = json.loads(task['OUTPUT:declaration_json'])
             match_info = calc_decl_match_one_pair(toloker_json, automatic_json)
             decl_matches.append(match_info.f_score)
+            worker_id = task.get('ASSIGNMENT:worker_id', "unknown");
+            self.toloker_tasks[worker_id] += 1
             if match_info.f_score == 1.0:
                 continue
+            self.toloker_conflicts[worker_id] += 1
 
-            worker_id = task.get('ASSIGNMENT:worker_id', "unknown");
             match_info.dump(input_id, worker_id, self.errors)
 
             toloka_json_file = json_file[:-5] + "." + worker_id + ".json"
@@ -100,7 +101,11 @@ class TTolokaStats:
                 json.dump(automatic_json_trunc, outf, indent=4, ensure_ascii=False, sort_keys=True)
 
             if conflict_file:
-                dump_conflict(task, toloker_json_trunc, automatic_json_trunc, match_info, conflict_file)
+                dump_conflict(task,
+                              ("Toloker", toloker_json_trunc),
+                              ("SmartParser", automatic_json_trunc),
+                              match_info,
+                              conflict_file)
         self.decl_match[input_id] = avg(decl_matches)
 
 
@@ -140,13 +145,16 @@ class TTolokaStats:
 
 
     def report(self):
+        print ("toloker summary: worker_id, tasks, conflicts, rate")
+        for t in self.toloker_tasks.keys():
+            print ("{} {} {} {}".format(t, self.toloker_tasks[t], self.toloker_conflicts[t], self.toloker_conflicts[t] / self.toloker_tasks[t] ))
+
         return {
             "Uniq not golden tasks": len(self.tasks),
             "Average overlap": avg (list(len(t) for t in self.tasks.values())),
             "Found assignments without golden": sum (list(len(t) for t in self.tasks.values())),
             "Average decl_match": avg (t for t in self.decl_match.values())
         }
-
 
 if __name__ == '__main__':
     args = parse_args()

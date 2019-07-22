@@ -24,7 +24,15 @@ namespace Smart.Parser.Adapters
         {
             Application excel = new Application();
             var doc = excel.Workbooks.Open(Path.GetFullPath(filename),ReadOnly:true);
-            TempFileName = Path.GetTempFileName();
+
+            if (ConvertedFileDir != null)
+            {
+                TempFileName = Path.Combine(ConvertedFileDir, Path.GetFileNameWithoutExtension(filename) + ".xlsx");
+            }
+            else
+            {
+                TempFileName = Path.GetTempFileName();
+            }
             Logger.Debug(string.Format("use {0} to store temp xlsx file", TempFileName));
             excel.DisplayAlerts = false;
             doc.SaveAs(
@@ -66,6 +74,12 @@ namespace Smart.Parser.Adapters
             if (TempFileName != null) File.Delete(TempFileName);
         }
 
+        public override string GetDocumentPosition(int row, DeclarationField field)
+        {
+            return GetDocumentPositionExcel(row, field);
+        }
+
+
         public Cell GetCell(string cellIndex)
         {
             CellReference cellRef = new CellReference(cellIndex);
@@ -85,7 +99,7 @@ namespace Smart.Parser.Adapters
                 result.Add(cell);
 
                 index += cell.MergedColsCount;
-                if (index >= MaxNotEmptyColumnsFoundInHeader)
+                if (index > MaxNotEmptyColumnsFoundInHeader)
                 {
                     break;
                 }
@@ -189,7 +203,14 @@ namespace Smart.Parser.Adapters
 
         public override int GetColsCount()
         {
-            return Math.Min(MaxNotEmptyColumnsFoundInHeader, WorkBook.GetSheetAt(0).GetRow(0).Cells.Count);
+            var firstSheet = WorkBook.GetSheetAt(0);
+
+            // firstSheet.GetRow(0) can fail, we have to use enumerators
+            var iter = firstSheet.GetRowEnumerator();
+            iter.MoveNext();
+            IRow firstRow = (IRow)iter.Current;
+            int firstLineColsCount = firstRow.Cells.Count;
+            return Math.Min(MaxNotEmptyColumnsFoundInHeader, firstLineColsCount);
         }
 
         public override int GetColsCount(int row)

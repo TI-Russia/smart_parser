@@ -3,37 +3,50 @@ using System.Collections.Generic;
 
 namespace TI.Declarator.ParserCommon
 {
+    public class TColumnSpan
+    {
+        public int BeginColumn;
+        public int EndColumn;
+    }
     public class ColumnOrdering
     {
-        public Dictionary<DeclarationField, int> ColumnOrder = new Dictionary<DeclarationField, int>();
-
-        public int? this[DeclarationField field]
-        {
-            get
-            {
-                if (ColumnOrder.ContainsKey(field))
-                {
-                    return ColumnOrder[field];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        public Dictionary<DeclarationField, TColumnSpan> ColumnOrder = new Dictionary<DeclarationField, TColumnSpan>();
 
         public bool ContainsField(DeclarationField field)
         {
             return ColumnOrder.ContainsKey(field);
         }
 
-        public void Add(DeclarationField field, int order)
+        public void Add(DeclarationField field, int beginColumn)
         {
             if (ColumnOrder.ContainsKey(field))
             {
                 return;
             }
-            ColumnOrder.Add(field, order);
+            TColumnSpan s = new TColumnSpan();
+            s.BeginColumn = beginColumn;
+            s.EndColumn = beginColumn + 1;
+            ColumnOrder.Add(field, s);
+        }
+
+        public void InitHeaderEndColumns(int lastColumn)
+        {
+            foreach (var i in ColumnOrder) {
+                int start = i.Value.BeginColumn;
+                int end = lastColumn;
+                foreach (var k in ColumnOrder)
+                {
+                    int newEnd = k.Value.BeginColumn;
+                    if (newEnd > start)
+                    {
+                        if (newEnd < end )
+                        {
+                            end = newEnd;
+                        };
+                    }
+                }
+                i.Value.EndColumn = end;
+            }
         }
 
         public bool OwnershipTypeInSeparateField

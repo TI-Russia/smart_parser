@@ -17,6 +17,7 @@ def parse_args():
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--smart-parser-options", dest='smart_parser_options', default="-v debug -max-rows 100 -adapter prod")
+    parser.add_argument("--toloka", dest='toloka', default=False, action="store_true")
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes", default=4, type=int)
     parser.add_argument("-e", dest='extensions',  default=[], action='append',  help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
     
@@ -84,7 +85,9 @@ class ProcessOneFile(object):
     def __call__(self, filename):
         smart_parser = os.path.abspath(self.args.smart_parser)
         log = filename + ".stdout"
-        cmd = "{} {} \"{}\" > \"{}\" ".format(smart_parser, self.args.smart_parser_options, filename, log)
+        toloka_arg = " -toloka \"{}.toloka\" ".format(filename) if self.args.toloka else ""
+        print (self.args.smart_parser_options)
+        cmd = "{} {} {} \"{}\" > \"{}\" ".format(smart_parser, toloka_arg, self.args.smart_parser_options, filename, log)
         print(fix_encoding(cmd))
         try:
             os.system(cmd)

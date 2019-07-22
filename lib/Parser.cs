@@ -57,76 +57,22 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        TI.Declarator.ParserCommon.Person CreateNewRelative(int row, string relativeStr,
-            PublicServant currentServant, 
-            TI.Declarator.ParserCommon.Person currentPerson)
-        {
-            Logger.Debug("Relative {0} at row {1}", relativeStr, row);
-            if (currentServant == null)
+        int? GetPersonIndex(int row) {
+            int? index = null;
+            if (Adapter.HasDeclarationField(DeclarationField.Number))
             {
-                if (FailOnRelativeOrphan) {
-                    throw new SmartParserException(
-                        string.Format("Relative {0} at row {1} without main Person", relativeStr, row));
-                }
-                else {
-                    return null;
+                string indexStr = Adapter.GetDeclarationField(row, DeclarationField.Number).Text
+                    .Replace(".", "").CleanWhitespace();
+                int indVal;
+                bool dummyRes = Int32.TryParse(indexStr, out indVal);
+                if (dummyRes)
+                {
+                    index = indVal;
                 }
             }
-            currentPerson.RangeHigh = row - 1;
-            Relative relative = new Relative();
-            currentServant.Relatives.Add(relative);
-            currentPerson = relative;
-            currentPerson.RangeLow = row;
-
-            RelationType relationType = DataHelper.ParseRelationType(relativeStr, false);
-            if (relationType == RelationType.Error)
-            {
-                throw new SmartParserException(
-                    string.Format("Wrong relative name '{0}' at row {1} ", relativeStr, row));
-            }
-            relative.RelationType = relationType;
-            //Logger.Debug("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
-            return currentPerson;
+            return index;
         }
-
-        PublicServant CreateNewServant(int row, string fioStr, string occupationStr, 
-            DeclarationSection currentSection, PublicServant currentServant, 
-            ref TI.Declarator.ParserCommon.Person currentPerson)
-        {
-            Logger.Debug("Declarant {0} at row {1}", fioStr, row);
-            if (currentPerson != null)
-            {
-                currentPerson.RangeHigh = row - 1;
-            }
-            currentServant = new PublicServant()
-            {
-                NameRaw = fioStr,
-                Occupation = occupationStr
-            };
-            if (currentSection != null)
-            {
-                currentServant.Department = currentSection.Name;
-            }
-
-            currentPerson = currentServant;
-            currentPerson.RangeLow = row;
-            return currentServant;
-        }
-        DeclarationSection CreateNewSection(int row, string sectionTitle,
-            ref PublicServant currentServant,
-            ref TI.Declarator.ParserCommon.Person currentPerson)
-        {
-            DeclarationSection currentSection = new DeclarationSection() { Row = row, Name = sectionTitle };
-            Logger.Debug(String.Format("find section at line {0}:'{1}'", row, sectionTitle));
-            currentServant = null;
-            if (currentPerson != null)
-            {
-                currentPerson.RangeHigh = row - 1;
-            }
-            currentPerson = null;
-            return currentSection;
-        }
-
+        
         int FindNextPersonIndex(int row, int mergedRowCount)
         {
             if (Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
@@ -142,25 +88,123 @@ namespace Smart.Parser.Lib
             }
             return row + mergedRowCount;
         }
+        class TBorderFinder
+        {
+            DeclarationSection CurrentSection = null;
+            PublicServant CurrentServant = null;
+            TI.Declarator.ParserCommon.Person CurrentPerson = null;
+            Declaration _Declaration;
+            bool FailOnRelativeOrphan;
+
+            public TBorderFinder(Declaration declaration, bool failOnRelativeOrphan)
+            {
+                _Declaration = declaration;
+                FailOnRelativeOrphan = failOnRelativeOrphan;
+            }
+
+            public void CreateNewSection(int row, string sectionTitle)
+            {
+                CurrentSection = new DeclarationSection() { Row = row, Name = sectionTitle };
+                Logger.Debug(String.Format("find section at line {0}:'{1}'", row, sectionTitle));
+                CurrentServant = null;
+                if (CurrentPerson != null)
+                {
+                    CurrentPerson.RangeHigh = row - 1;
+                }
+                CurrentPerson = null;
+                _Declaration.Sections.Add(CurrentSection);
+            }
+            public void ShiftPersonRangeHigh(int rangeHigh)
+            {
+                if (CurrentPerson == null)
+                {
+                    if (FailOnRelativeOrphan)
+                    {
+                        throw new SmartParserException("No person to attach info");
+                    }
+                }
+                else
+                {
+                    CurrentPerson.RangeHigh = rangeHigh; //see MinSevKavkaz2015_s.docx  in regression tests
+                }
+
+            }
+
+            public void CreateNewServant(int row, string fioStr, string occupationStr, string documentPosition, int? index)
+            {
+                Logger.Debug("Declarant {0} at row {1}", fioStr, row);
+                if (CurrentPerson != null)
+                {
+                    CurrentPerson.RangeHigh = row - 1;
+                }
+                CurrentServant = new PublicServant()
+                {
+                    NameRaw = fioStr,
+                    Occupation = occupationStr
+                };
+                if (CurrentSection != null)
+                {
+                    CurrentServant.Department = CurrentSection.Name;
+                }
+
+                CurrentServant.Index = index;
+
+                CurrentPerson = CurrentServant;
+                CurrentPerson.RangeLow = row;
+                CurrentPerson.document_position = documentPosition;
+                _Declaration.PublicServants.Add(CurrentServant);
+            }
+
+            public void CreateNewRelative(int row, string relativeStr, string documentPosition)
+            {
+                Logger.Debug("Relative {0} at row {1}", relativeStr, row);
+                if (CurrentServant == null)
+                {
+                    if (FailOnRelativeOrphan)
+                    {
+                        throw new SmartParserException(
+                            string.Format("Relative {0} at row {1} without main Person", relativeStr, row));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                CurrentPerson.RangeHigh = row - 1;
+                Relative relative = new Relative();
+                CurrentServant.AddRelative(relative);
+                CurrentPerson = relative;
+                CurrentPerson.RangeLow = row;
+
+                RelationType relationType = DataHelper.ParseRelationType(relativeStr, false);
+                if (relationType == RelationType.Error)
+                {
+                    throw new SmartParserException(
+                        string.Format("Wrong relative name '{0}' at row {1} ", relativeStr, row));
+                }
+                relative.RelationType = relationType;
+                //Logger.Debug("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
+                relative.document_position = documentPosition;
+            }
+        }
 
         public Declaration Parse()
-        {
+         {
             FirstPassStartTime = DateTime.Now;
 
             Declaration declaration =  InitializeDeclaration();
 
             int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
             Adapter.SetMaxColumnsCountByHeader(rowOffset);
+            Adapter.ColumnOrdering.InitHeaderEndColumns(Adapter.GetColsCount());
 
-            DeclarationSection currentSection = null;
-            PublicServant currentServant = null;
-            TI.Declarator.ParserCommon.Person currentPerson = null;
+            TBorderFinder borderFinder = new TBorderFinder(declaration, FailOnRelativeOrphan);
             
             if (Adapter.ColumnOrdering.Section != null)
             {
-                currentSection = CreateNewSection(rowOffset, Adapter.ColumnOrdering.Section, ref currentServant, ref currentPerson);
-                declaration.Sections.Add(currentSection);
+                borderFinder.CreateNewSection(rowOffset, Adapter.ColumnOrdering.Section);
             }
+
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
                 Row currRow = Adapter.GetRow(row);
@@ -172,14 +216,14 @@ namespace Smart.Parser.Lib
                 string sectionName;
                 if (Adapter.IsSectionRow(currRow, out sectionName))
                 {
-                    currentSection = CreateNewSection(rowOffset, sectionName, ref currentServant, ref currentPerson);
-                    declaration.Sections.Add(currentSection);
+                    borderFinder.CreateNewSection(row, sectionName);
                     continue;
                 }
 
                 int mergedRowCount = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
                 string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                string documentPosition = Adapter.GetDocumentPosition(row, DeclarationField.NameOrRelativeType);
                 string relativeType = "";
                 if  (DataHelper.IsEmptyValue(nameOrRelativeType) &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
                 {
@@ -194,23 +238,13 @@ namespace Smart.Parser.Lib
 
                 if (DataHelper.IsEmptyValue(nameOrRelativeType) && DataHelper.IsEmptyValue(relativeType))
                 {
-                    if (currentPerson == null)
-                    {
-                        if (FailOnRelativeOrphan)
-                        {
-                            throw new SmartParserException(
-                                string.Format("No Person  at row {0}", row));
-                        }
-                    }
-                    else
-                    {
-                        currentPerson.RangeHigh = row + mergedRowCount - 1; //see MinSevKavkaz2015_s.docx  in regression tests
-                    }
+                    borderFinder.ShiftPersonRangeHigh(row + mergedRowCount - 1);
                 }
                 else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    currentServant = CreateNewServant(row, nameOrRelativeType, occupationStr, currentSection, currentServant, ref currentPerson);
-                    declaration.PublicServants.Add(currentServant);
+                    int? index = GetPersonIndex(row);
+                    borderFinder.CreateNewServant(row, nameOrRelativeType, occupationStr, documentPosition, index);
+                    
                 }
                 else
                 {
@@ -218,7 +252,7 @@ namespace Smart.Parser.Lib
                         relativeType = nameOrRelativeType;
                     if (DataHelper.IsRelativeInfo(relativeType, occupationStr))
                     {
-                        currentPerson = CreateNewRelative(row, relativeType, currentServant, currentPerson);
+                        borderFinder.CreateNewRelative(row, relativeType, documentPosition);
                     }
                     else
                     {
@@ -232,11 +266,7 @@ namespace Smart.Parser.Lib
                     row = FindNextPersonIndex(row, mergedRowCount) - 1; // we are in for cycle
                 }
             }
-            if (currentPerson != null)
-            {
-                currentPerson.RangeHigh = Adapter.GetRowsCount() - 1;
-            }
-
+            borderFinder.ShiftPersonRangeHigh(Adapter.GetRowsCount() - 1);
 
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
 

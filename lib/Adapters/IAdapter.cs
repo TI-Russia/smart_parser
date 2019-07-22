@@ -12,95 +12,19 @@ using Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
-    public class Cell
+    public abstract class IAdapter : TSectionPredicates
     {
-        public virtual bool IsMerged { set; get; } = false;
-        public virtual int FirstMergedRow { set; get; } = -1;
-        public virtual int MergedRowsCount { set; get; } = -1;
-        public virtual int MergedColsCount { set; get; } = 1;
-        public virtual bool IsEmpty { set; get; } = true;
-        public virtual string Text { set; get; } = "";
-
-        public virtual string GetText(bool trim = true)
+        public virtual string GetDocumentPosition(int row, DeclarationField field)
         {
-            var text = Text;
-            if (trim)
-            {
-                char[] spaces = { ' ', '\n', '\r', '\t' };
-                text = text.CoalesceWhitespace().Trim(spaces);
-            }
-
-            return text;
+            return null;
         }
-        public virtual string GetTextOneLine()
+        public string GetDocumentPositionExcel(int row, DeclarationField field)
         {
-            return Text.Replace("\n", " ").Trim();
+            TColumnSpan col;
+            ColumnOrdering.ColumnOrder.TryGetValue(field, out col);
+            return "R" + (row + 1).ToString() + "C" + (col.BeginColumn + 1).ToString();
         }
 
-        public int Row { get; set; } = -1;
-        public int Col { get; set; } = -1;
-
-    };
-
-    public class Row
-    {
-        public Row(IAdapter adapter, int row)
-        {
-            this.row = row;
-            this.adapter = adapter;
-            Cells = adapter.GetCells(row);
-        }
-
-        public string GetContents(DeclarationField field)
-        {
-            var c = adapter.GetDeclarationField(row, field);
-            if (c == null)
-            {
-                return "";
-            }
-            return c.GetText(true);
-        }
-        public ColumnOrdering ColumnOrdering
-        {
-            get
-            {
-                return adapter.ColumnOrdering;
-            }
-        }
-
-        public bool IsEmpty()
-        {
-            return Cells.All(cell => cell.Text.IsNullOrWhiteSpace());
-        }
-
-        public List<Cell> Cells { get; set; }
-        IAdapter adapter;
-        int row;
-    }
-
-    public class Rows
-    {
-        private IAdapter adapter;
-
-        // ctor etc.
-
-        public Row this[int index]
-        {
-            get
-            {
-                return adapter.GetRow(index);
-            }
-        }
-
-        public Rows(IAdapter adapter)
-        {
-            this.adapter = adapter;
-        }
-    }
-
-
-    public abstract class IAdapter
-    {
         // some excel files contain 32000 columns, most of them are empty
         // we try to found real column number in the header, by default is 256
         public int MaxNotEmptyColumnsFoundInHeader = 256;
@@ -131,24 +55,42 @@ namespace Smart.Parser.Adapters
 
         public Cell GetDeclarationField(int row, DeclarationField field)
         {
-            int columnIndex = -1;
-            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out columnIndex))
+            TColumnSpan colSpan;
+            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
                 //return -1;
                 throw new SystemException("Field " + field.ToString() + " not found");
             }
-            return GetCell(row, columnIndex);
+            var exactCell = GetCell(row, colSpan.BeginColumn);
+            if (exactCell.Text.Trim() != "")
+            {
+                return exactCell;
+            }
+            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+            {
+                var mergedCell = GetCell(row, i);
+                if (mergedCell == null)
+                {
+                    break;
+                }
+                if (mergedCell.Text.Trim() != "")
+                {
+                    return mergedCell;
+                }
+                i += mergedCell.MergedColsCount;
+            }
+            return exactCell;
         }
 
         public string GetContents(int row, DeclarationField field)
         {
             return GetDeclarationField(row, field).GetText(true);
         }
-    
+
 
         abstract public int GetRowsCount();
         abstract public int GetColsCount();
-        
+
 
         public virtual int GetColsCount(int Row)
         {
@@ -189,41 +131,12 @@ namespace Smart.Parser.Adapters
             }
             return true;
         }
-        public bool IsSectionRow(Row r, out string text)
+        public bool IsSectionRow(Smart.Parser.Adapters.Row r, out string text)
         {
-            text = null;
-            if (r.Cells.Count == 0)
-            {
-                return false;
-            }
-            int maxMergedCols = 0;
-            string rowText = "";
-            int cellsWithTextCount = 0;
-            foreach (var c in r.Cells)
-            {
-                maxMergedCols = Math.Max(c.MergedColsCount, maxMergedCols);
-                if (c.Text.Trim(' ', '\n').Length > 0)
-                {
-                    rowText += c.Text;
-                    cellsWithTextCount++;
-                }
-            }
-            rowText = rowText.Trim(' ', '\n');
-            if (cellsWithTextCount == 1) {
-                // possible title, exact number of not empty columns is not yet defined
-                if (maxMergedCols > 5 && rowText.Contains("Сведения о"))
-                {
-                    text = rowText;
-                    return true;
-                };
-                if (rowText.Length > 10 && maxMergedCols > GetColsCount() * 0.7)
-                {
-                    text = rowText;
-                    return true;
-                }
-            }
-            return false;
+            return IAdapter.IsSectionRow(r, GetColsCount(), out text);
         }
+        
+
         public class TJsonCell
         {
             public int mc;
@@ -389,6 +302,8 @@ namespace Smart.Parser.Adapters
         {
             return null;
         }
+
+        public static string ConvertedFileDir { set; get; } = null;
 
     }
 }
