@@ -112,6 +112,25 @@ namespace RegressionTesting
             get { return Path.GetFullPath(SmartParserLogFile); }
         }
 
+        public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
+        {
+            SetupLog4Net();
+            var workingCopy = Path.GetFileName(filename);
+            File.Copy(filename, workingCopy);
+            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
+            Smart.Parser.Program.AdapterFamily = adapterName;
+            Smart.Parser.Program.SkipRelativeOrphan = false;
+            string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
+            Smart.Parser.Adapters.IAdapter.ConvertedFileDir = outDir;
+            string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
+            Smart.Parser.Program.ParseFile(filename, outFileName);
+            foreach (var outfile in outfiles)
+            {
+                string expectedFile = Path.Combine(SmartParserFilesDirectory, outfile);
+                Assert.IsTrue(TestValidity(expectedFile, outfile, SmartParserLogFile));
+            }
+        }
+
 
         public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
@@ -310,6 +329,16 @@ namespace RegressionTesting
         {
             TestSmartParser("SmartParser\\MinDalVostok2017.xlsx", "prod");
         }
+
+
+        [TestMethod]
+        [TestCategory("xlsx")]
+        public void Rykovodstvo2013()
+        {
+            TestSmartParserMultipleOut("npoi", "SmartParser\\9037\\rykovodstvo_2013.xlsx", "rykovodstvo_2013_0.json", "rykovodstvo_2013_1.json");
+        }
+
+
 
         private static void SetupLog4Net()
         {

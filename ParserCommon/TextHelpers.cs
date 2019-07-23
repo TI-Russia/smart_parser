@@ -8,7 +8,6 @@ namespace TI.Declarator.ParserCommon
     {
         
         private static readonly CultureInfo RussianCulture = CultureInfo.CreateSpecificCulture("ru-ru");
-        private static readonly Regex ExtractYearRegex = new Regex("[0-9]{4}", RegexOptions.Compiled);
         public static decimal ParseDecimalValue(this string val)
         {
             decimal res;
@@ -36,7 +35,8 @@ namespace TI.Declarator.ParserCommon
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static int? ExtractYear(this string str)
+        private static readonly Regex ExtractYearRegex = new Regex("[0-9]{4}", RegexOptions.Compiled);
+        public static int? ExtractYear(string str)
         {
             Match m = ExtractYearRegex.Match(str);
             if (m.Success)

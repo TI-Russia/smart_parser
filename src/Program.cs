@@ -505,7 +505,7 @@ namespace Smart.Parser
             // Try to extract declaration year from file name if we weren't able to get it from document title
             if (!columnOrdering.Year.HasValue)
             {
-                columnOrdering.Year = declarationFileName.ExtractYear();
+                columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
             }
             adapter.ColumnOrdering = columnOrdering;
 
