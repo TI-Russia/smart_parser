@@ -145,16 +145,23 @@ namespace Smart.Parser.Lib
         static void SecondLevelHeader(IAdapter adapter, Cell parentCell, List<Cell> subCells, ColumnOrdering result)
         {
             string text = parentCell.GetText(true);
+            DeclarationField prev_field = DeclarationField.None;
+
             foreach (var cell in subCells)
             {
                 string cellText = cell.GetText(true);
                 string fullText = text + " " + cellText;
 
                 DeclarationField field = DeclarationField.None;
-                //  пустая колонка страны (предыдущая колонка - площадь
-                if (cellText == "" && field == DeclarationField.StatePropertySquare)
+                if (cellText == "" && prev_field == DeclarationField.StatePropertySquare)
                 {
+                    //  пустая колонка страны (предыдущая колонка - площадь)
                     field = DeclarationField.StatePropertyCountry;
+                }
+                else if (cellText == "" && prev_field == DeclarationField.None) {
+                    // пустая колонка, перед которой ничего не было (скорее всего "вид недвижимости")
+                    // пример такого файла: 9037\rabotniki_podved_organizacii_2013.xlsx
+                    field = DeclarationField.OwnedRealEstateType;
                 }
                 else
                 {
@@ -166,6 +173,7 @@ namespace Smart.Parser.Lib
                 {
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", cell.Row,cell.Col, fullText));
                 }
+                prev_field = field;
                 result.Add(field, cell.Col);
             }
         }
