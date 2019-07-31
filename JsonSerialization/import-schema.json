@@ -630,6 +630,24 @@
             "Сведения о доходах, об имуществе и обязательствах имущественного характера Губернатора Санкт-Петербурга, а также его супруги за период с 1 января 2016 года по 31 декабря 2016 года"
           ]
         },
+        "file_size": {
+          "$id": "/properties/document/properties/file_size",
+          "type": "number",
+          "title": "Размер файла документа",
+          "default": null
+        },
+        "parser_log": {
+          "$id": "/properties/document/properties/parser_log",
+          "type": "string",
+          "title": "Лог парсера",
+          "default": null
+        },
+        "parser_time": {
+          "$id": "/properties/document/properties/parser_time",
+          "type": "number",
+          "title": "Время работы парсера (в секундах)",
+          "default": null
+        },
         "url": {
           "$id": "/properties/document/properties/url",
           "type": "string",
@@ -650,11 +668,12 @@
         },
         "year": {
           "$id": "/properties/document/properties/year",
-          "type": "integer",
+          "type": ["integer", "null"],
           "title": "Год декларируемых доходов",
-          "default": 0,
+          "default": null,
           "examples": [
-            2016
+            2016,
+            null
           ]
         },
         "office": {

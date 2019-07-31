@@ -8,24 +8,28 @@ import signal
 import json
 
 
-#======================= copy data from drop box ========================
+# ======================= copy data from drop box ========================
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help ="can be copy_data,process,report or full",  default='full')
+    parser.add_argument("--action", dest='action', help="can be copy_data,process,report or full", default='full')
     parser.add_argument("--output-folder", dest='output_folder', required=True)
-    parser.add_argument("--file-list", dest='file_list', default="_files.txt", help="a file to store declaration input file names")
+    parser.add_argument("--file-list", dest='file_list', default="_files.txt",
+                        help="a file to store declaration input file names")
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
-    parser.add_argument("--smart-parser-options", dest='smart_parser_options', default="-v debug -max-rows 100 -adapter prod")
+    parser.add_argument("--smart-parser-options", dest='smart_parser_options',
+                        default="-v debug -max-rows 100 -adapter prod")
     parser.add_argument("--toloka", dest='toloka', default=False, action="store_true")
-    parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes", default=4, type=int)
-    parser.add_argument("-e", dest='extensions',  default=[], action='append',  help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
-    
+    parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
+                        default=4, type=int)
+    parser.add_argument("-e", dest='extensions', default=[], action='append',
+                        help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
+
     return parser.parse_args()
 
 
 def check_extension(filename, all_extension):
-    if all_extension is None: 
+    if all_extension is None:
         return True
     for x in all_extension:
         if filename.endswith(x):
@@ -59,12 +63,13 @@ def copy_data(args):
                     file_list_stream.write(output_file + "\n")
                     file_count += 1
 
-    print ("{0} files copied to {1}".format(file_count, args.output_folder))
+    print("{0} files copied to {1}".format(file_count, args.output_folder))
 
-#======================= run smart_parser ========================
+
+# ======================= run smart_parser ========================
 def read_file_list(args):
     with open(args.file_list, "r") as file_list_stream:
-        for filename in  file_list_stream:
+        for filename in file_list_stream:
             filename = filename.strip()
             if check_extension(filename, args.extensions):
                 yield filename
@@ -77,6 +82,7 @@ def kill_process_windows(pid):
 def fix_encoding(line):
     return line.encode('utf8', 'ignore').decode('utf8')
 
+
 class ProcessOneFile(object):
     def __init__(self, args, parent_pid):
         self.args = args
@@ -86,14 +92,14 @@ class ProcessOneFile(object):
         smart_parser = os.path.abspath(self.args.smart_parser)
         log = filename + ".stdout"
         toloka_arg = " -toloka \"{}.toloka\" ".format(filename) if self.args.toloka else ""
-        print (self.args.smart_parser_options)
-        cmd = "{} {} {} \"{}\" > \"{}\" ".format(smart_parser, toloka_arg, self.args.smart_parser_options, filename, log)
+        print(self.args.smart_parser_options)
+        cmd = "{} {} {} \"{}\" > \"{}\" ".format(smart_parser, toloka_arg, self.args.smart_parser_options, filename,
+                                                 log)
         print(fix_encoding(cmd))
         try:
             os.system(cmd)
         except KeyboardInterrupt:
             kill_process_windows(self.parent_pid)
-
 
 
 def process(args):
@@ -107,22 +113,23 @@ def process(args):
     try:
         res = pool.map(ProcessOneFile(args, os.getpid()), filenames)
     except KeyboardInterrupt:
-        print ("stop processing...")
+        print("stop processing...")
         pool.terminate()
     else:
         pool.close()
 
-#======================= report ========================
+
+# ======================= report ========================
 class TCorpusFile:
     def __init__(self, sourcefile):
         self.SourceFile = sourcefile
-        s  = sourcefile[:sourcefile.rfind('.')] + ".json"
+        s = sourcefile[:sourcefile.rfind('.')] + ".json"
         self.JsonFile = s if os.path.exists(s) else None
         self.SourceFileSize = os.path.getsize(self.SourceFile)
 
 
 def report(args):
-    processed_files =   []
+    processed_files = []
     for f in read_file_list(args):
         processed_files.append(TCorpusFile(f))
 
@@ -136,7 +143,7 @@ def report(args):
             good_size += x.SourceFileSize
 
     processed_files = sorted(processed_files, key=lambda x: x.SourceFileSize, reverse=True)
-    errors = open ("errors.txt", "w")
+    errors = open("errors.txt", "w")
     for x in processed_files:
         if x.JsonFile is None:
             errors.write(x.SourceFile + " " + str(x.SourceFileSize) + "\n")
@@ -144,15 +151,16 @@ def report(args):
     return {
         "All found logs": len(processed_files),
         "All found jsons": jsons_count,
-        "Source file size" :  all_size,
+        "Source file size": all_size,
         "Source file with jsons size": good_size,
-        "header_recall" : round(good_size/all_size, 2)
+        "header_recall": round(good_size / all_size, 2)
     }
+
 
 if __name__ == '__main__':
     args = parse_args()
-    if args.extensions == []:
-        args.extensions=['doc', 'docx', 'pdf', 'xls', 'xlsx']
+    if not args.extensions:
+        args.extensions = ['doc', 'docx', 'pdf', 'xls', 'xlsx']
 
     if args.action == 'full' or args.action == 'copy_data':
         copy_data(args)
@@ -161,6 +169,5 @@ if __name__ == '__main__':
         process(args)
 
     if args.action == 'full' or args.action == 'report':
-        metrics =  report(args)
+        metrics = report(args)
         print(json.dumps(metrics, indent=2))
-
