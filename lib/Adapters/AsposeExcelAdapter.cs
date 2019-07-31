@@ -38,6 +38,8 @@ namespace Smart.Parser.Adapters
     }
     public class AsposeExcelAdapter : IAdapter
     {
+        public override bool IsExcel() { return true; }
+
         public static IAdapter CreateAdapter(string fileName)
         {
             return new AsposeExcelAdapter(fileName);

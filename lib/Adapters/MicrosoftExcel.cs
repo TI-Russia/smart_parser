@@ -44,6 +44,8 @@ namespace Smart.Parser.Adapters
             return new MicrosoftExcelAdapter(fileName, maxRowsToProcess);
         }
 
+        public override bool IsExcel() { return true; }
+
         public MicrosoftExcelAdapter(string filename, int maxRowsToProcess=-1)
         {
             MaxRowsToProcess = maxRowsToProcess;

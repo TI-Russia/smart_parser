@@ -46,8 +46,31 @@ namespace Smart.Parser.Adapters
             Cells = adapter.GetCells(row);
         }
 
-        public string GetContents(DeclarationField field)
+        public bool IsEmpty(params DeclarationField[] fields)
         {
+            return fields.All(field => GetContents(field, false).IsNullOrWhiteSpace());
+        }
+
+        public int GetRowIndex()
+        {
+            return Cells[0].Row;
+        }
+
+        public void Merge(Row other)
+        {
+            for (int i = 0; i < Cells.Count(); i++)
+            {
+                Cells[i].Text += " " + other.Cells[i].Text;
+            }
+        }
+
+        public string GetContents(DeclarationField field, bool except = true)
+        {
+            if (!adapter.HasDeclarationField(field))
+            {
+                if (!except)
+                    return null;
+            }
             var c = adapter.GetDeclarationField(row, field);
             if (c == null)
             {
