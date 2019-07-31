@@ -80,7 +80,8 @@
         },
         {
           "text": "маломерное судно \"Прогресс\"-4",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 2

@@ -292,6 +292,7 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("toloka")]
         public void TolokaGenerated()
         {
             TestSmartParser("SmartParser\\toloka.toloka_json", "prod", true);
@@ -305,12 +306,14 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xls")]
         public void File17207()
         {
             TestSmartParser("SmartParser\\17207.xls", "prod");
         }
 
         [TestMethod]
+        [TestCategory("toloka")]
         public void SectionExample()
         {
             TestSmartParser("SmartParser\\section_example.toloka_json", "prod", true);

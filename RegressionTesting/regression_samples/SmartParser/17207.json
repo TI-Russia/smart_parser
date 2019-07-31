@@ -111,7 +111,8 @@
         },
         {
           "text": "легковой автомобиль Хундай Solaris",
-          "relative": "Супруг(а)"
+          "relative": "Супруг(а)",
+          "relative_index": 1
         }
       ],
       "person_index": 1,
