@@ -14,6 +14,7 @@ namespace Smart.Parser.Adapters
 {
     public abstract class IAdapter : TSectionPredicates
     {
+        public virtual bool IsExcel() { return false; }
         public virtual string GetDocumentPosition(int row, DeclarationField field)
         {
             return null;

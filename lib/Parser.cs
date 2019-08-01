@@ -288,7 +288,7 @@ namespace Smart.Parser.Lib
 
             if (String.IsNullOrEmpty(prop.country_raw))
             {
-                Logger.Error(CurrentRow, "wrong country: {0}", prop.country_raw);
+                //Logger.Error(CurrentRow, "wrong country: {0}", prop.country_raw);
             }
         }
 
@@ -435,14 +435,40 @@ namespace Smart.Parser.Lib
                         Logger.Debug(((PublicServant)person).NameRaw.CleanWhitespace());
                     }
                     bool foundIncomeInfo = false;
-                    for (int row = person.RangeLow; row <= person.RangeHigh; row++)
+                    
+                    List<Row> rows = new List<Row>();
+                    for (int rowIndex = person.RangeLow; rowIndex <= person.RangeHigh; rowIndex++)
                     {
-                        CurrentRow = row;
-                        Row currRow = Adapter.GetRow(row);
-                        if (currRow == null || currRow.Cells.Count == 0)
+                        Row row = Adapter.GetRow(rowIndex);
+                        if (row == null || row.Cells.Count == 0)
                         {
                             continue;
                         }
+                        // if state and square cell is empty then merge this row with previous
+                        if (Adapter.IsExcel() && row.IsEmpty(DeclarationField.MixedRealEstateSquare,
+                                DeclarationField.OwnedRealEstateSquare,
+                                DeclarationField.StatePropertySquare,
+                                DeclarationField.NameOrRelativeType))
+                        {
+                            rows.Last().Merge(row);
+                        }
+                        else
+                        {
+                            rows.Add(row);
+                        }
+                    }
+
+
+                    //for (int rowIndex = person.RangeLow; rowIndex <= person.RangeHigh; rowIndex++)
+                    foreach (var currRow in rows)
+                    {
+                        CurrentRow = currRow.GetRowIndex();
+                        //Row row = Adapter.GetRow(rowIndex);
+                        //if (row == null || row.Cells.Count == 0)
+                        //{
+                        //    continue;
+                        //}
+                        //currRow = row;
 
                         if (!foundIncomeInfo)
                         {

@@ -48,6 +48,8 @@ namespace Smart.Parser.Adapters
             return TempFileName;
         }
 
+        public override bool IsExcel() { return true; }
+
         public NpoiExcelAdapter(string fileName, int maxRowsToProcess = -1)
         {
             DocumentFile = fileName;
