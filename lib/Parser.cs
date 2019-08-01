@@ -92,7 +92,7 @@ namespace Smart.Parser.Lib
         {
             DeclarationSection CurrentSection = null;
             PublicServant CurrentServant = null;
-            TI.Declarator.ParserCommon.Person CurrentPerson = null;
+            public TI.Declarator.ParserCommon.Person CurrentPerson = null;
             Declaration _Declaration;
             bool FailOnRelativeOrphan;
 
@@ -266,7 +266,11 @@ namespace Smart.Parser.Lib
                     row = FindNextPersonIndex(row, mergedRowCount) - 1; // we are in for cycle
                 }
             }
-            borderFinder.ShiftPersonRangeHigh(Adapter.GetRowsCount() - 1);
+
+            // CurrentPerson пустой, когда последней идёт клеткая шириной на все столбцы (см. файл 35446.doc)
+            if (borderFinder.CurrentPerson != null) {
+                borderFinder.ShiftPersonRangeHigh(Adapter.GetRowsCount() - 1);
+            }
 
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
 

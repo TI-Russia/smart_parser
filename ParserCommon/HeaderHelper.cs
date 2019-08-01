@@ -1,4 +1,5 @@
 ﻿using System;
+using static Algorithms.LevenshteinDistance;
 
 namespace TI.Declarator.ParserCommon
 {
@@ -61,7 +62,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsNumber(this string str)
         {
-            return str.Contains("№") || str.Contains("N п/п");
+            return str.Contains("№") || str.ToLower().Contains("n п/п");
         }
 
         private static bool IsName(this string s)
@@ -79,7 +80,8 @@ namespace TI.Declarator.ParserCommon
         private static bool IsOccupation(this string s)
         {
             return (s.Contains("должность") || 
-                    s.Contains("должностей"));
+                    s.Contains("должностей") ||
+                    s.Contains("долж-ность"));
         }
 
 
@@ -105,16 +107,16 @@ namespace TI.Declarator.ParserCommon
         }
         private static bool HasOwnedString(this string s)
         {
-            return s.Contains("собственности");
+            return s.Contains("собственности") || s.Contains("собствен-ности");
         }
         private static bool HasSquareString(this string s)
         {
-            return s.Contains("площадь");
+            return s.Contains("площадь") || s.Contains("пло-щадь");
         }
 
         private static bool HasCountryString(this string s)
         {
-            return s.Contains("страна");
+            return s.Contains("страна") || s.Contains("стра-на");
         }
         
         private static bool IsStateColumn(this string s)
@@ -142,7 +144,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateOwnershipType(this string s)
         {
-            return IsOwnedColumn(s) && s.Contains("вид собственности");
+            return IsOwnedColumn(s) && (s.Contains("вид собственности") || s.Contains("вид собствен-ности"));
         }
 
         private static bool IsOwnedRealEstateSquare(this string s)

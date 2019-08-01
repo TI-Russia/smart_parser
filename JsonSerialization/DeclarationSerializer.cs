@@ -178,9 +178,10 @@ namespace TI.Declarator.JsonSerialization
             { 
                 return new JProperty("year", declarationInfo.Year.Value);
             }
-            {
-                throw new Exception("Error serializing declaration: year is missing");
-            }
+            return new JProperty("year", null);
+            //{
+            //    throw new Exception("Error serializing declaration: year is missing");
+            //}
         }
 
         private static JProperty GetIncomes(PublicServant servant)

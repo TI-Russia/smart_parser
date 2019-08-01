@@ -4,4 +4,5 @@
 packages/*
 .vs/*
 TestResults/*
+tools/CorpusProcess/out
 src/Smart.Parser.csproj.user

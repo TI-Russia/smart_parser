@@ -9,6 +9,7 @@ namespace TI.Declarator.ParserCommon
         RelativeTypeStrict,
         NameOrRelativeType,
         Occupation,
+        Department,
 
         // Для случая, когда один и тот же набор колонок содержит сведения и о частной, и о государственной собственности
         MixedRealEstateType,

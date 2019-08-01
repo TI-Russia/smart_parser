@@ -50,6 +50,7 @@
     <Compile Include="DeclarationProperties.cs" />
     <Compile Include="HeaderHelper.cs" />
     <Compile Include="IDeclarationParser.cs" />
+    <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicServant.cs" />

@@ -3,6 +3,7 @@ using Smart.Parser.Adapters;
 using TI.Declarator.ParserCommon;
 using System.IO;
 using Smart.Parser.Lib;
+using static Algorithms.LevenshteinDistance;
 
 namespace test
 {
@@ -16,6 +17,14 @@ namespace test
             //IAdapter adapter = AsposeExcelAdapter.CreateAsposeExcelAdapter(xlsxFile);
             IAdapter adapter = AsposeDocAdapter.CreateAdapter(docFile);
 
+        }
+        [TestMethod]
+        public void StringComparisonTest()
+        {
+            string s1 = "собствен-ности";
+            string s2 = "собственности";
+            int result = Calculate(s1, s2);
+            Assert.AreEqual(1, result);
         }
     }
 }
