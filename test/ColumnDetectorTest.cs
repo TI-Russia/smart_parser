@@ -33,7 +33,7 @@ namespace test
         }
 
         [TestMethod]
-        public void EmptyReatStateTypeColumnDetectorTest1()
+        public void EmptyRealStateTypeColumnDetectorTest1()
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "rabotniki_podved_organizacii_2013.xlsx");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);

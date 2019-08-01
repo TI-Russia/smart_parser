@@ -121,7 +121,7 @@ def run_job(file_url, df_id, archive_file=None):
     else:
         file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
-    # download_file(declarator_domain + file_url, file_path)
+    download_file(declarator_domain + file_url, file_path)
     time_delta = run_smart_parser(file_path)
     post_results(file_path, df_id, archive_file, time_delta)
 

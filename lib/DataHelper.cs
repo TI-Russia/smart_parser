@@ -58,6 +58,7 @@ namespace Smart.Parser.Lib
                 case "сынжены": return RelationType.Child;
                 case "дочьжены": return RelationType.Child;
                 case "несовершеннолетнийребёнок": return RelationType.Child;
+                case "несовершен нолетний": return RelationType.Child;
                 case "племяницасупруги": return RelationType.Spouse;
                 case "подопечный": return RelationType.Spouse;
                 case "ребёнок": return RelationType.Child;

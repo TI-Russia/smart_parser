@@ -25,6 +25,7 @@ namespace TI.Declarator.ParserCommon
         StatePropertyType,
         StatePropertySquare,
         StatePropertyCountry,
+        StatePropertyOwnershipType,
 
         Vehicle,
         DeclaredYearlyIncome,

@@ -31,6 +31,7 @@ namespace TI.Declarator.ParserCommon
             if (str.IsName()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsRelativeType()) { return DeclarationField.RelativeTypeStrict; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
+            if (str.IsDepartment()) { return DeclarationField.Department; }
 
             if (str.IsMixedRealEstateType()) { return DeclarationField.MixedRealEstateType; }
             if (str.IsMixedRealEstateSquare()) { return DeclarationField.MixedRealEstateSquare; }
@@ -41,9 +42,12 @@ namespace TI.Declarator.ParserCommon
             if (str.IsOwnedRealEstateOwnershipType()) { return DeclarationField.OwnedRealEstateOwnershipType; }
             if (str.IsOwnedRealEstateSquare()) { return DeclarationField.OwnedRealEstateSquare; }
             if (str.IsOwnedRealEstateCountry()) { return DeclarationField.OwnedRealEstateCountry; }
+
             if (str.IsStatePropertyType()) { return DeclarationField.StatePropertyType; }
             if (str.IsStatePropertySquare()) { return DeclarationField.StatePropertySquare; }
             if (str.IsStatePropertyCountry()) { return DeclarationField.StatePropertyCountry; }
+            if (str.IsStatePropertyOwnershipType()) { return DeclarationField.StatePropertyOwnershipType; }
+
             if (str.IsVehicleType()) { return DeclarationField.VehicleType; }
             if (str.IsVehicleModel()) { return DeclarationField.VehicleModel; }
             if (str.IsVehicle()) { return DeclarationField.Vehicle; }
@@ -62,14 +66,15 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsNumber(this string str)
         {
-            return str.Contains("№") || str.ToLower().Contains("n п/п");
+            return str.Contains("№") || str.ToLower().Contains("n п/п") || str.ToLower().Equals("п/п");
         }
 
         private static bool IsName(this string s)
         {
             return (s.Contains("фамилия") ||
                     s.Contains("фио") ||
-                    s.Contains("ф.и.о"));
+                    s.Contains("ф.и.о") ||
+                    s.Contains("ф. и.о"));
         }
 
         private static bool IsRelativeType(this string s)
@@ -84,6 +89,10 @@ namespace TI.Declarator.ParserCommon
                     s.Contains("долж-ность"));
         }
 
+        private static bool IsDepartment(this string s)
+        {
+            return (s.Contains("наименование организации"));
+        }
 
         private static bool IsMixedRealEstateOwnershipType(this string s)
         {
@@ -161,7 +170,10 @@ namespace TI.Declarator.ParserCommon
         {
             return IsStateColumn(s) && HasRealEstateTypeStr(s);
         }
-
+        private static bool IsStatePropertyOwnershipType(this string s)
+        {
+            return HasStateString(s) && (s.Contains("вид собственности") || s.Contains("вид собственкостн"));
+        }
         private static bool IsStatePropertySquare(this string s)
         {
             return IsStateColumn(s) && HasSquareString(s);
