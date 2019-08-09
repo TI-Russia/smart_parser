@@ -199,10 +199,10 @@
     <None Include="regression_samples\SmartParser\one_line_2017.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\rykovodstvo_2013_0.json">
+    <None Include="regression_samples\SmartParser\rykovodstvo_2013.xlsx_0.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\rykovodstvo_2013_1.json">
+    <None Include="regression_samples\SmartParser\rykovodstvo_2013.xlsx_1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\section_example.json">

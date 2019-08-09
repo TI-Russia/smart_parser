@@ -338,7 +338,7 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void Rykovodstvo2013()
         {
-            TestSmartParserMultipleOut("npoi", "SmartParser\\9037\\rykovodstvo_2013.xlsx", "rykovodstvo_2013_0.json", "rykovodstvo_2013_1.json");
+            TestSmartParserMultipleOut("npoi", "SmartParser\\9037\\rykovodstvo_2013.xlsx", "rykovodstvo_2013.xlsx_0.json", "rykovodstvo_2013.xlsx_1.json");
         }
 
 

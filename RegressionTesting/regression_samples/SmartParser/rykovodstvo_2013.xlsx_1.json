@@ -1,0 +1,1132 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Манылов И. Е.",
+        "role": "Первый заместитель Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 3947109.05,
+          "relative": null
+        },
+        {
+          "size": 1113025.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок под ИЖС",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под ИЖС",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 76.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "76,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Земельный участок под ИЖС",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под ИЖС",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 228.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "228,3",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 229.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "229,7",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 120.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "120,2",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Машиноместо",
+          "square": 15.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "15,5",
+          "country_raw": "Россия",
+          "type_raw": "Машиноместо",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 76.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "76,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 38.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 38.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,7",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 35.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "35,1",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 30.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "30,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Машиноместо",
+          "square": 15.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "15,3",
+          "country_raw": "Россия",
+          "type_raw": "Машиноместо",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Машиноместо",
+          "square": 16.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "16,1",
+          "country_raw": "Россия",
+          "type_raw": "Машиноместо",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 76.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "76,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 76.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "76,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Мотоцикл Honda VFR 1200",
+          "relative": null
+        },
+        {
+          "text": "Автомобиль легковой\nSuzuki Grand Vitara XL-7",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "Автомобиль легковой\nToyota Land Cruiser 150",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "Автоприцеп\nET 20 SC",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R6C2"
+    },
+    {
+      "person": {
+        "name_raw": "Шестаков И. В.",
+        "role": "Заместитель Министра - руководитель Федерального агентства по рыболовству",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 3846974.27,
+          "relative": null
+        },
+        {
+          "size": 890501.75,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок под ИЖС",
+          "square": 1242.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1242",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под ИЖС",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 208.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "208,9",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 107.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "107,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 152.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "152,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Машиноместо",
+          "square": 13.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "13,8",
+          "country_raw": "Россия",
+          "type_raw": "Машиноместо",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 107.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "107,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 107.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "107,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 107.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "107,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nBMW X5",
+          "relative": null
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R21C2"
+    },
+    {
+      "person": {
+        "name_raw": "Волков А. В.",
+        "role": "Заместитель Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 9477091.53,
+          "relative": null
+        },
+        {
+          "size": 15195647.09,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок",
+          "square": 1120.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1120",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 326.40,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "326,40",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 182.96,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "182,96",
+          "country_raw": "Испания",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 143.70,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "143,70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/3 доля"
+        },
+        {
+          "text": "Гараж-бокс",
+          "square": 18.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "18",
+          "country_raw": "Россия",
+          "type_raw": "Гараж-бокс",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 182.96,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "182,96",
+          "country_raw": "Испания",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 143.70,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "143,70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/3 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 38.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Машиноместо",
+          "square": 16.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "16,7",
+          "country_raw": "Россия",
+          "type_raw": "Машиноместо",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Нежилое помещение",
+          "square": 433.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "433,7",
+          "country_raw": "Россия",
+          "type_raw": "Нежилое помещение",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Нежилое помещение",
+          "square": 228.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "228,8",
+          "country_raw": "Россия",
+          "type_raw": "Нежилое помещение",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Нежилое помещение",
+          "square": 197.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "197,1",
+          "country_raw": "Россия",
+          "type_raw": "Нежилое помещение",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nVolvo С80",
+          "relative": null
+        },
+        {
+          "text": "Автомобиль легковой\nVolvo\nXC90",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R29C2"
+    },
+    {
+      "person": {
+        "name_raw": "Юрьев Д. В.",
+        "role": "Заместитель Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 4651371.36,
+          "relative": null
+        },
+        {
+          "size": 45026.13,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 44.9,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,9",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 44.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,9",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 44.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,9",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой Toyota RAV 4",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 4,
+      "document_position": "R41C2"
+    },
+    {
+      "person": {
+        "name_raw": "Семенов П. В.",
+        "role": "Заместитель Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 3934468.44,
+          "relative": null
+        },
+        {
+          "size": 225271.68,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок",
+          "square": 1400.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1400",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 115.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "115",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 146.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "146,1",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 88.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "88",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/5 доля"
+        },
+        {
+          "text": "Административное здание",
+          "square": 148.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "148,2",
+          "country_raw": "Россия",
+          "type_raw": "Административное здание",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Административное здание",
+          "square": 491.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "491,8",
+          "country_raw": "Россия",
+          "type_raw": "Административное здание",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Помещение нежилое",
+          "square": 27.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "27",
+          "country_raw": "Россия",
+          "type_raw": "Помещение нежилое",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 53.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "53,4",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/4 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 115.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "115",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 53.4,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "53,4",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/4 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 115.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "115",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 115.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "115",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nMercedes-Benz ML 350",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 5,
+      "document_position": "R44C2"
+    },
+    {
+      "person": {
+        "name_raw": "Петриков  А.В.",
+        "role": "Статс-секретарь -  заместитель Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 4329894.46,
+          "relative": null
+        },
+        {
+          "size": 565834.57,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок",
+          "square": 1839.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1839",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 184.8,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "184,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 168.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "168,2",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 1839.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1839",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 184.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "184,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 168.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "168,2",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 73.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "73",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 6,
+      "document_position": "R53C2"
+    },
+    {
+      "person": {
+        "name_raw": "Гаршина О.В.",
+        "role": "Помощник Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1715130.17,
+          "relative": null
+        },
+        {
+          "size": 1050671.77,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 48.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,6",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 48.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48,6",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой BMW X3 2.0D",
+          "relative": null
+        }
+      ],
+      "person_index": 7,
+      "document_position": "R58C2"
+    },
+    {
+      "person": {
+        "name_raw": "Долгушина И.Ф.",
+        "role": "Помощник Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1715907.51,
+          "relative": null
+        },
+        {
+          "size": 1604395.39,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 68.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,1",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 51.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "51",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 102.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "102,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 51.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "51",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 31.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "31,7",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 102.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "102,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 51.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "51",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 8,
+      "document_position": "R60C2"
+    },
+    {
+      "person": {
+        "name_raw": "Васильев В.И.",
+        "role": "Помощник Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1517235.93,
+          "relative": null
+        },
+        {
+          "size": 151164.91,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 54.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "54,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Комната",
+          "square": 18.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "18",
+          "country_raw": "Россия",
+          "type_raw": "Комната"
+        },
+        {
+          "text": "Гараж",
+          "square": 20.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20,8",
+          "country_raw": "Россия",
+          "type_raw": "Гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 52.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,4",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 54.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "54,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 9,
+      "document_position": "R65C2"
+    },
+    {
+      "person": {
+        "name_raw": "Белецкий С.О.",
+        "role": "Советник Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1840256.86,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Садовый участок",
+          "square": 1220.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1220",
+          "country_raw": "Россия",
+          "type_raw": "Садовый участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 87.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "87",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 42.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,9",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 32.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "32,1",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 45.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "45",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nBMW X5",
+          "relative": null
+        },
+        {
+          "text": "Мототранспортные средства\nSuzuki Skywave 400",
+          "relative": null
+        }
+      ],
+      "person_index": 10,
+      "document_position": "R68C2"
+    },
+    {
+      "person": {
+        "name_raw": "Воробьев О.А.",
+        "role": "Советник Министра",
+        "department": "РУКОВОДСТВО"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1630400.71,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок под ИЖС",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под ИЖС",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок под ИЖС",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под ИЖС",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок под ИЖС",
+          "square": 1000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1000",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под ИЖС",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 211.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "211,4",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 59.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,6",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой Lexus RX 350",
+          "relative": null
+        },
+        {
+          "text": "Автомобиль легковой BMW X5",
+          "relative": null
+        }
+      ],
+      "person_index": 11,
+      "document_position": "R72C2"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих \nМинистерства сельского хозяйства Российской Федерации и членов их семей \nза период с 1 января 2013 г. по 31 декабря 2013 г.",
+    "year": 2013,
+    "sheet_number": 1,
+    "documentfile_id": 9037,
+    "archive_file": "rykovodstvo_2013.xlsx"
+  }
+}
