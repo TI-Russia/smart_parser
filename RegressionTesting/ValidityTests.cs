@@ -144,7 +144,7 @@ namespace RegressionTesting
             string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
             Smart.Parser.Adapters.IAdapter.ConvertedFileDir = outDir;
             Smart.Parser.Program.ParseFile(workingCopy, outFileName);
-            string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
+            string expectedFile = Path.Combine(SmartParserFilesDirectory, Path.GetFileNameWithoutExtension(workingCopy) + ".json");
             Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }
 

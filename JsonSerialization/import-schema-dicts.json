@@ -105,8 +105,9 @@
                                     "$id": "/properties/persons/properties/real_estates/items/properties/relative", 
                                     "enum": [
                                         null, 
-                                        "Супруг(а)", 
-                                        "Ребенок"
+                                        "Супруг(а)",
+                                        "Ребенок",
+                                        "Иное"
                                     ], 
                                     "default": null, 
                                     "examples": [

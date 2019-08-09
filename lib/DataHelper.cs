@@ -44,25 +44,32 @@ namespace Smart.Parser.Lib
                 case "супруга(супруг)": return RelationType.Spouse;
                 case "суруга": return RelationType.Spouse;
                 case "супруга": return RelationType.Spouse;
+                case "супруга.": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
                 case "несовершеннолетнийребенок": return RelationType.Child;
                 case "несовершенолетнийребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
+                case "дочь.": return RelationType.Child;
                 case "дочьсупроги": return RelationType.Child;
                 case "дочьсупруги": return RelationType.Child;
                 case "сынсупруги": return RelationType.Child;
                 case "сын": return RelationType.Child;
+                case "сына": return RelationType.Child;
                 case "падчерица": return RelationType.Child;
                 case "сынжены": return RelationType.Child;
                 case "дочьжены": return RelationType.Child;
                 case "несовершеннолетнийребёнок": return RelationType.Child;
-                case "несовершен нолетний": return RelationType.Child;
-                case "племяницасупруги": return RelationType.Spouse;
+                case "несовершеннолетний": return RelationType.Child;
+                case "племяницасупруги": return RelationType.Other;
+                case "муж": return RelationType.Spouse;
+                case "мать": return RelationType.Other;
+                case "жена": return RelationType.Spouse;
                 case "подопечный": return RelationType.Spouse;
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
+                case "иждивенец": return RelationType.Child;
                 default:
                     if (throwException)
                     {

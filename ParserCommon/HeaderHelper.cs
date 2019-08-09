@@ -10,7 +10,7 @@ namespace TI.Declarator.ParserCommon
     {
         public static bool IsSecondLevelHeader(string str)
         {
-            string strLower = str.ToLower();
+            string strLower = str.ToLower().Replace("-", "");
             return (strLower.Contains("объекты") ||
                     strLower.Contains("недвижимости"));
         }
@@ -71,10 +71,10 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsName(this string s)
         {
+            string clean = s.Replace("-", "").Replace(" ", "");
             return (s.Contains("фамилия") ||
                     s.Contains("фио") ||
-                    s.Contains("ф.и.о") ||
-                    s.Contains("ф. и.о"));
+                    s.Contains("ф.и.о"));
         }
 
         private static bool IsRelativeType(this string s)
@@ -84,9 +84,9 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOccupation(this string s)
         {
-            return (s.Contains("должность") || 
-                    s.Contains("должностей") ||
-                    s.Contains("долж-ность"));
+            string clean = s.Replace("-", "");
+            return (clean.Contains("должность") || 
+                    s.Contains("должностей"));
         }
 
         private static bool IsDepartment(this string s)
@@ -116,16 +116,19 @@ namespace TI.Declarator.ParserCommon
         }
         private static bool HasOwnedString(this string s)
         {
-            return s.Contains("собственности") || s.Contains("собствен-ности");
+            string clean = s.Replace("-", "");
+            return clean.Contains("собственности");
         }
         private static bool HasSquareString(this string s)
         {
-            return s.Contains("площадь") || s.Contains("пло-щадь");
+            string clean = s.Replace("-", "");
+            return clean.Contains("площадь");
         }
 
         private static bool HasCountryString(this string s)
         {
-            return s.Contains("страна") || s.Contains("стра-на");
+            string clean = s.Replace("-", "");
+            return clean.Contains("страна");
         }
         
         private static bool IsStateColumn(this string s)
@@ -168,7 +171,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsStatePropertyType(this string s)
         {
-            return IsStateColumn(s) && HasRealEstateTypeStr(s);
+            return (IsStateColumn(s) && HasRealEstateTypeStr(s)) || s.Equals("Объекты недвижимости, находящиеся в вид объекта");
         }
         private static bool IsStatePropertyOwnershipType(this string s)
         {
@@ -201,7 +204,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsVehicle(this string s)
         {
-            return ((s.Contains("транспорт") || s.Contains("движимое имущество")) &&
+            return ((s.Contains("транспорт") || s.Contains("т ранспорт") || s.Contains("движимое имущество")) &&
                     (!s.Contains("источник")));
         }
 

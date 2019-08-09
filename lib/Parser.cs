@@ -445,9 +445,16 @@ namespace Smart.Parser.Lib
                             continue;
                         }
                         // if state and square cell is empty then merge this row with previous
-                        if (Adapter.IsExcel() && row.IsEmpty(DeclarationField.MixedRealEstateSquare,
+                        if (Adapter.IsExcel() && 
+                            !row.IsEmpty(DeclarationField.StatePropertyType,
+                                DeclarationField.MixedRealEstateType,
+                                DeclarationField.OwnedRealEstateType) && 
+                            row.IsEmpty(DeclarationField.MixedRealEstateSquare,
                                 DeclarationField.OwnedRealEstateSquare,
                                 DeclarationField.StatePropertySquare,
+                                DeclarationField.OwnedRealEstateCountry,
+                                DeclarationField.MixedRealEstateCountry,
+                                DeclarationField.StatePropertyCountry,
                                 DeclarationField.NameOrRelativeType))
                         {
                             rows.Last().Merge(row);

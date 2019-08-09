@@ -137,7 +137,7 @@ namespace Smart.Parser
 
         public static string BuildOutFileNameByInput(string declarationFile)
         {
-            return Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileNameWithoutExtension(declarationFile) + ".json");
+            return Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".json");
         }
 
         static bool IsDirectory(string fileName)
