@@ -54,7 +54,7 @@ namespace Smart.Parser.Adapters
             return ColumnOrdering.ColumnOrder.ContainsKey(field);
         }
 
-        public Cell GetDeclarationField(int row, DeclarationField field)
+        virtual public Cell GetDeclarationField(int row, DeclarationField field)
         {
             TColumnSpan colSpan;
             if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
@@ -62,7 +62,19 @@ namespace Smart.Parser.Adapters
                 //return -1;
                 throw new SystemException("Field " + field.ToString() + " not found");
             }
+
             var exactCell = GetCell(row, colSpan.BeginColumn);
+
+            //int cellIndex = 0;
+            //for (int i = 0; i < ColumnOrdering.ColumnOrder.Keys.Count; i++)
+            //{
+            //    if (ColumnOrdering.ColumnOrder.ElementAt(i).Key == field)
+            //    {
+            //        cellIndex = i;
+            //    }
+            //}
+            //var exactCell = GetRow(row).Cells[cellIndex];
+
             if (exactCell.Text.Trim() != "")
             {
                 return exactCell;

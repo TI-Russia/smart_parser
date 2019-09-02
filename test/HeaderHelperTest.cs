@@ -26,5 +26,14 @@ namespace test
             int result = Calculate(s1, s2);
             Assert.AreEqual(1, result);
         }
+
+        //[TestMethod]
+        //public void HeaderDetectionTest()
+        //{
+        //    string big_header = "Перечень объектов недвижимого имущества, принадлежащих на праве собственности или находящихся в пользовании";
+        //    DeclarationField field = HeaderHelpers.GetField(big_header.Replace('\n', ' '));
+
+        //}
+
     }
 }

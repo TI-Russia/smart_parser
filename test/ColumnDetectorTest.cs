@@ -53,6 +53,7 @@ namespace test
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DataSources].BeginColumn == 12);
         }
 
+ 
         [TestMethod]
         public void ColumnDetectorTest1TIAdapter()
         {

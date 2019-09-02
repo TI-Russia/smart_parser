@@ -447,6 +447,55 @@ namespace Smart.Parser.Adapters
             return  TableRows[row][cellNo];
         }
 
+        override public Cell GetDeclarationField(int row, DeclarationField field)
+        {
+            TColumnSpan colSpan;
+            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
+            {
+                //return -1;
+                throw new SystemException("Field " + field.ToString() + " not found");
+            }
+
+            
+            Cell exactCell;
+            // if column count is just the same - get cell by index
+            if (GetRow(row).Cells.Count == ColumnOrdering.ColumnOrder.Keys.Count)
+            {
+                int cellIndex = 0;
+                for (int i = 0; i < ColumnOrdering.ColumnOrder.Keys.Count; i++)
+                {
+                    if (ColumnOrdering.ColumnOrder.ElementAt(i).Key == field)
+                    {
+                        cellIndex = i;
+                    }
+                }
+                exactCell = GetRow(row).Cells[cellIndex];
+            }
+            // otherwise - GetCell will return correct merge span 
+            else {
+                exactCell = GetCell(row, colSpan.BeginColumn);
+            }
+
+
+            if (exactCell.Text.Trim() != "")
+            {
+                return exactCell;
+            }
+            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+            {
+                var mergedCell = GetCell(row, i);
+                if (mergedCell == null)
+                {
+                    break;
+                }
+                if (mergedCell.Text.Trim() != "")
+                {
+                    return mergedCell;
+                }
+                i += mergedCell.MergedColsCount;
+            }
+            return exactCell;
+        }
 
         public override int GetRowsCount()
         {

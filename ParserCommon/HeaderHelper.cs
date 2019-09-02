@@ -84,7 +84,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOccupation(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return (clean.Contains("должность") || 
                     s.Contains("должностей"));
         }
@@ -128,7 +128,7 @@ namespace TI.Declarator.ParserCommon
         private static bool HasCountryString(this string s)
         {
             string clean = s.Replace("-", "");
-            return clean.Contains("страна");
+            return clean.Contains("страна") || clean.Contains("регион");
         }
         
         private static bool IsStateColumn(this string s)
