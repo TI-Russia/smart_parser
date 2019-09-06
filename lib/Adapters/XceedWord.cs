@@ -185,7 +185,7 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        void CopyPortion(List<List<TJsonCell>> portion)
+        void CopyPortion(List<List<TJsonCell>> portion, bool ignoreMergedRows)
         {
             for (int i = 0;  i < portion.Count; i++)
             {
@@ -196,7 +196,10 @@ namespace Smart.Parser.Adapters
                 {
                     var cell = new XceedWordCell(c);
                     cell.Row = TableRows.Count;
-                    cell.MergedRowsCount = 1;
+                    if (ignoreMergedRows)
+                    {
+                        cell.MergedRowsCount = 1;
+                    }
                     //if (i + 1 == portion.Count) cell.MergedRowsCount = 1;
                     newRow.Add(cell);
                 }
@@ -214,9 +217,9 @@ namespace Smart.Parser.Adapters
             TJsonTablePortion portion = JsonConvert.DeserializeObject<TJsonTablePortion>(jsonStr);
             Title = portion.Title;
             DocumentFile = portion.InputFileName;
-            CopyPortion(portion.Header);
-            CopyPortion(portion.Section);
-            CopyPortion(portion.Data);
+            CopyPortion(portion.Header, false);
+            CopyPortion(portion.Section, true);
+            CopyPortion(portion.Data, true);
         }
 
         public override string GetTitle()

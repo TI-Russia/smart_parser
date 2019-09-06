@@ -28,6 +28,10 @@ namespace TI.Declarator.ParserCommon
             s.EndColumn = beginColumn + 1;
             ColumnOrder.Add(field, s);
         }
+        public void Delete(DeclarationField field)
+        {
+            ColumnOrder.Remove(field);
+        }
 
         public void InitHeaderEndColumns(int lastColumn)
         {

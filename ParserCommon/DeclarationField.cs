@@ -16,6 +16,7 @@ namespace TI.Declarator.ParserCommon
         MixedRealEstateSquare,
         MixedRealEstateCountry,
         MixedRealEstateOwnershipType,
+        MixedColumnWithNaturalText,
 
         OwnedRealEstateType,
         OwnedRealEstateOwnershipType,
