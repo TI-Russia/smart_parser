@@ -1,0 +1,1013 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Лешуков Игорь Евгеньевич",
+        "role": "Директор Департамента\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 9403786.91,
+          "relative": null
+        },
+        {
+          "size": 2677921.4,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом\n(собственность)",
+          "square": 68.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "68,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(долевая собственность 1/5)",
+          "square": 69.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "69,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(долевая собственность 1/4)",
+          "square": 91.1,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "91,1",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Ауди ТТ\n(собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Барон Юрий Лазаревич",
+        "role": "заместитель директора Департамента\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 1656486.0,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 800.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "800",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность)",
+          "square": 70.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "70",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дача(1/2 дома)\n(собственность)",
+          "square": 100.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "100",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Доржинкевич Станислав Иренеушович",
+        "role": "заместитель директора Департамента\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 1210328.0,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(найм)",
+          "square": 13.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "13.1",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Тойота Камри\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Макуха Сергей Петрович",
+        "role": "заместитель директора Департамента\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 1755460.09,
+          "relative": null
+        },
+        {
+          "size": 420675.42,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 2224.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "2224",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Мицубиси Лансер\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Корзникова Мария Васильевна",
+        "role": "заместитель директора Департамента\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 1250638.17,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(собственность)",
+          "square": 61.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "61",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "комната\n(собственность)",
+          "square": 11.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "11,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Алексеева Вера Семеновна",
+        "role": "начальник отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 936557.43,
+          "relative": null
+        },
+        {
+          "size": 130000.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Белослудцев Константин Алексеевич",
+        "role": "начальник отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 852093.84,
+          "relative": null
+        },
+        {
+          "size": 906399.18,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Еропкина Татьяна Васильевна",
+        "role": "начальник отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 964776.01,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок\nсадовый\n(собственность)",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность)",
+          "square": 48.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "48,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м ВАЗ-21063\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Ковряков Николай Александрович",
+        "role": "начальник отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 932235.0,
+          "relative": null
+        },
+        {
+          "size": 547320.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(совместная собственность)",
+          "square": 45.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "45,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 600.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(совместная собственность)",
+          "square": 45.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "45,4",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м ВАЗ 21043\n(собственность)\nа/м Рено Сценик\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Леднева Марина Алексеевна",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 431872.08,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(бессрочное пользование)",
+          "square": 63.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "63,9",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Свиридов Николай Викторович",
+        "role": "начальник отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 905714.61,
+          "relative": null
+        },
+        {
+          "size": 77325.55,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "гаражный бокс\n(кооператив)",
+          "square": 18.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "18",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность)",
+          "square": 78.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "78",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м КИА Кларус\n(собственность)\nа/м Тойота Авенсис\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Базылева Елена Юрьевна",
+        "role": "заместитель начальника отдела \n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 640290.94,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(долевая собственность, 20%)",
+          "square": 79.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "79,2",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Москвич 2141\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Жогова Ирина Тимофеевна",
+        "role": "начальник отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 800402.21,
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": [
+        {
+          "text": "а/м ВАЗ 21099\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Качелин Александр Сергеевич",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 446771.47,
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": [
+        {
+          "text": "а/м Шкода Октавия\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Мариничева Елена Николаевна",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 563773.34,
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Матвеева Елена Владимировна",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 602150.0,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "дача\n(собственность)",
+          "square": 52.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "52,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дача\n(собственность)",
+          "square": 34.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "34,7",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Петрова Ирина Викторовна",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 564474.43,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(собственность)",
+          "square": 53.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "53,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность)",
+          "square": 67.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "67,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гараж",
+          "square": 18.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "18,0",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Рассохина Лариса Евгеньевна",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 576211.75,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(собственность)",
+          "square": 75.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "75",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Мерседес-Бенс А-180\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Умрихин Анатолий Федорович",
+        "role": "заместитель начальника отдела\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 729911.50,
+          "relative": null
+        },
+        {
+          "size": 1148540.63,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира\n(совместная собственность)",
+          "square": 75.6,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "75,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(совместная собственность)",
+          "square": 75.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "75,6",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Игнатов Сергей Михайлович",
+        "role": "ведущий советник\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 1961910.2,
+          "relative": null
+        },
+        {
+          "size": 639337.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность)",
+          "square": 52.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "52",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность)",
+          "square": 55.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "55,9",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Ниссан Тиида\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Кульков Анатолий Иванович",
+        "role": "ведущий советник\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 673509.72,
+          "relative": null
+        },
+        {
+          "size": 404238.60,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дачный дом\n(собственность)",
+          "square": 44.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "44,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гаражный бокс\n(собственность)",
+          "square": 24.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "24,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(долевая собственность 1/2)",
+          "square": 67.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "67,9",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Форд Фокус\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Мерзликина Лидия Ивановна",
+        "role": "ведущий советник\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 698230.01,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок \n(собственность)",
+          "square": 539.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "539",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(собственность 1/2)",
+          "square": 60.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "60,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Зуйкова Галина Николаевна",
+        "role": "советник\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 529400.72,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок \n(собственность)",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира \n(общая собственность)",
+          "square": 74.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "74,7",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Кириллова Надежда Алексеевна",
+        "role": "советник\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 680709.6,
+          "relative": null
+        },
+        {
+          "size": 153165.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок \n(собственность)",
+          "square": 798.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "798",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира \n(совместная собственность)",
+          "square": 52.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "52",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира \n(совместная собственность)",
+          "square": 52.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "52",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Газ 2410\n(собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Кузнецов Александр Дмитриевич",
+        "role": "советник\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 641866.0,
+          "relative": null
+        },
+        {
+          "size": 773292.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок \n(собственность)",
+          "square": 1507.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1507",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира \n(собственность)\nсовместно с супругой",
+          "square": 77.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "77",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира \n(собственность) совместно с супругом",
+          "square": 77.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "77",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м Ниссан Примьера\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Давыдов Михаил Олегович",
+        "role": "консультант\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 415794.0,
+          "relative": null
+        },
+        {
+          "size": 462000.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": [
+        {
+          "text": "а/м Ситроен С3\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Евграфов Сергей Александрович",
+        "role": "консультант\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 547107.62,
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": [
+        {
+          "text": "а/м ВАЗ 2112\n(собственность)",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Левинина Людмила Николаевна",
+        "role": "консультант\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 630377.0,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира \n(совместная собственность)",
+          "square": 37.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "37,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Сазонова Елена Николаевна",
+        "role": "консультант\n"
+      },
+      "year": 2010,
+      "incomes": [
+        {
+          "size": 557983.68,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира \n(собственность)",
+          "square": 44.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "44,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 1000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок\n(собственность)",
+          "square": 6000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "6000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира\n(долевая собственность 1/3)",
+          "square": 43.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "43,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гараж\n(собственность)",
+          "square": 15.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "15",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м ДЭУ Нексия\n(собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "\n\n\nСведения о доходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными служащими Министерства энергетики Российской Федерации за отчетный финансовый год с 1 января 2010 года по 31 декабря 2010 года\n\n\n",
+    "year": 2010
+  }
+}
