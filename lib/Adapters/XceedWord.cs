@@ -399,7 +399,7 @@ namespace Smart.Parser.Adapters
                                     .Value; ;
                return Int32.Parse(el);
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return 0;

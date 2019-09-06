@@ -16,11 +16,12 @@ namespace Smart.Parser.Adapters
     {
         // some excel files contain 32000 columns, most of them are empty
         // we try to found real column number in the header, by default is 256
-        public int MaxNotEmptyColumnsFoundInHeader = 256;
+        static private readonly int MaxColumnsCount = 256;
+        public int MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
 
         public void RestartAdapterForExcelSheet()
         {
-            MaxNotEmptyColumnsFoundInHeader = 256;
+            MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
         }
         public virtual bool IsExcel() { return false; }
         public virtual string GetDocumentPosition(int row, DeclarationField field)
