@@ -219,6 +219,20 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void MinYust2012()
+        {
+            TestSmartParser("SmartParser\\MinYust2012.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void DepEnergo2010()
+        {
+            TestSmartParser("SmartParser\\DepEnergo2010.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void MinZdorov2015Full()
         {
