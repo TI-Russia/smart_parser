@@ -105,10 +105,10 @@ namespace Smart.Parser.Adapters
                 result.Add(cell);
 
                 index += cell.MergedColsCount;
-                //if (index > MaxNotEmptyColumnsFoundInHeader)
-                //{
-                //    break;
-                //}
+                if (index > MaxNotEmptyColumnsFoundInHeader)
+                {
+                    break;
+                }
             }
 
             return result;
@@ -303,6 +303,7 @@ namespace Smart.Parser.Adapters
             }
             WorkBook.SetActiveSheet(SheetIndex);
             InvalidateCache();
+            RestartAdapterForExcelSheet();
         }
 
         public override string GetWorksheetName()
