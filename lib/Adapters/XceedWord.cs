@@ -91,7 +91,7 @@ namespace Smart.Parser.Adapters
         string ConvertFile2TempDocX(string filename)
         {
             Application word = new Application();
-            var doc = word.Documents.Open(Path.GetFullPath(filename),ReadOnly:true);
+            var doc = word.Documents.OpenNoRepairDialog(Path.GetFullPath(filename),ReadOnly:true);
             string docXPath;
             if (ConvertedFileDir != null)
             {
