@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
+using System.Xml.XPath;
+using System.Xml;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 
@@ -85,8 +87,9 @@ namespace Smart.Parser.Adapters
         private List<List<XceedWordCell>> TableRows;
         private string Title;
         private int UnmergedColumnsCount;
-        private static readonly XNamespace WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+        private static readonly string WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
         private static Dictionary<string, double> Bigrams = ReadBigrams();
+        XmlNamespaceManager NamespaceManager;
 
         string ConvertFile2TempDocX(string filename)
         {
@@ -133,6 +136,9 @@ namespace Smart.Parser.Adapters
 
         public XceedWordAdapter(string fileName, int maxRowsToProcess)
         {
+            NamespaceManager = new XmlNamespaceManager(new NameTable());
+            NamespaceManager.AddNamespace("w", WordXNamespace);
+
             TableRows = new List<List<XceedWordCell>>();
 
             if (fileName.EndsWith(".toloka_json"))
@@ -185,7 +191,7 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        void CopyPortion(List<List<TJsonCell>> portion)
+        void CopyPortion(List<List<TJsonCell>> portion, bool ignoreMergedRows)
         {
             for (int i = 0;  i < portion.Count; i++)
             {
@@ -196,7 +202,10 @@ namespace Smart.Parser.Adapters
                 {
                     var cell = new XceedWordCell(c);
                     cell.Row = TableRows.Count;
-                    cell.MergedRowsCount = 1;
+                    if (ignoreMergedRows)
+                    {
+                        cell.MergedRowsCount = 1;
+                    }
                     //if (i + 1 == portion.Count) cell.MergedRowsCount = 1;
                     newRow.Add(cell);
                 }
@@ -214,9 +223,9 @@ namespace Smart.Parser.Adapters
             TJsonTablePortion portion = JsonConvert.DeserializeObject<TJsonTablePortion>(jsonStr);
             Title = portion.Title;
             DocumentFile = portion.InputFileName;
-            CopyPortion(portion.Header);
-            CopyPortion(portion.Section);
-            CopyPortion(portion.Data);
+            CopyPortion(portion.Header, false);
+            CopyPortion(portion.Section, true);
+            CopyPortion(portion.Data, true);
         }
 
         public override string GetTitle()
@@ -380,6 +389,22 @@ namespace Smart.Parser.Adapters
             }
         }
 
+        int GetRowGridBefore(Xceed.Words.NET.Row row)
+        {
+            try
+            {
+                var el = ((IEnumerable<object>)row.Xml.XPathEvaluate("./w:trPr/w:gridBefore/@w:val", NamespaceManager))
+                                    .OfType<XAttribute>()
+                                    .Single()
+                                    .Value; ;
+               return Int32.Parse(el);
+            }
+            catch (Exception)
+            {
+            }
+            return 0;
+        }
+
         void CollectRows(DocX wordDocument, int maxRowsToProcess)
         {
             bool titleFoundInText = (Title != "");
@@ -390,11 +415,16 @@ namespace Smart.Parser.Adapters
                 {
                     List<XceedWordCell> newRow = new List<XceedWordCell>();
                     int sumspan = 0;
-                    var cells = wordDocument.Tables[t].Rows[r].Cells;
+                    var row = wordDocument.Tables[t].Rows[r];
+                    int rowGridBefore = GetRowGridBefore(row);
+                    var cells = row.Cells;
+                    
 
                     foreach (var rowCell in cells)
                     {
                         var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
+                        if (newRow.Count == 0)
+                            c.MergedColsCount += rowGridBefore;
                         newRow.Add(c);
                         sumspan += c.MergedColsCount;
                     }
@@ -446,57 +476,7 @@ namespace Smart.Parser.Adapters
             if (cellNo == -1) return null;
             return  TableRows[row][cellNo];
         }
-
-        override public Cell GetDeclarationField(int row, DeclarationField field)
-        {
-            TColumnSpan colSpan;
-            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
-            {
-                //return -1;
-                throw new SystemException("Field " + field.ToString() + " not found");
-            }
-
-            
-            Cell exactCell;
-            // if column count is just the same - get cell by index
-            if (GetRow(row).Cells.Count == ColumnOrdering.ColumnOrder.Keys.Count)
-            {
-                int cellIndex = 0;
-                for (int i = 0; i < ColumnOrdering.ColumnOrder.Keys.Count; i++)
-                {
-                    if (ColumnOrdering.ColumnOrder.ElementAt(i).Key == field)
-                    {
-                        cellIndex = i;
-                    }
-                }
-                exactCell = GetRow(row).Cells[cellIndex];
-            }
-            // otherwise - GetCell will return correct merge span 
-            else {
-                exactCell = GetCell(row, colSpan.BeginColumn);
-            }
-
-
-            if (exactCell.Text.Trim() != "")
-            {
-                return exactCell;
-            }
-            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
-            {
-                var mergedCell = GetCell(row, i);
-                if (mergedCell == null)
-                {
-                    break;
-                }
-                if (mergedCell.Text.Trim() != "")
-                {
-                    return mergedCell;
-                }
-                i += mergedCell.MergedColsCount;
-            }
-            return exactCell;
-        }
-
+        
         public override int GetRowsCount()
         {
             return TableRows.Count;

@@ -166,7 +166,7 @@
           "relative": null
         },
         {
-          "text": "а/м\nPorsche Cayenne GTS\n\n2 мотоцикла:\n\nYamaha YZF-R1,\nDucati GT1000",
+          "text": "а/м\nPorsche Cayenne GTS\n\n2 мотоцикла:\nYamaha YZF-R1,\nDucati GT1000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -280,7 +280,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "нежилое",
+          "text": "нежилое  помещение (индивидуальная)",
           "square": 150.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -406,7 +406,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "административное здание (индивидуальная)",
+          "text": "административное",
           "square": 148.2,
           "relative": null,
           "own_type_by_column": null,
@@ -414,7 +414,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "нежилое помещение (индивидуальная)",
+          "text": "здание (индивидуальная)",
           "square": 27.0,
           "relative": null,
           "own_type_by_column": null,
@@ -661,13 +661,13 @@
           "type_raw": "Квартира\n(безвозмездное пользование)"
         },
         {
-          "text": "Квартира\n(безвозмездное пользование)",
+          "text": "Квартира\n\n(безвозмездное пользование)",
           "square": 170.3,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
           "square_raw": "170,3",
           "country_raw": "Россия",
-          "type_raw": "Квартира\n(безвозмездное пользование)"
+          "type_raw": "Квартира\n\n(безвозмездное пользование)"
         }
       ],
       "vehicles": [
@@ -931,18 +931,18 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Квартира\n(безвозмездное пользование)",
+          "text": "Квартира\n\n(безвозмездное пользование)",
           "square": 31.2,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
           "square_raw": "31,2",
           "country_raw": "Россия",
-          "type_raw": "Квартира\n(безвозмездное пользование)"
+          "type_raw": "Квартира\n\n(безвозмездное пользование)"
         }
       ],
       "vehicles": [
         {
-          "text": "а/м\nNissan Qashqai",
+          "text": "а/м\n\nNissan Qashqai",
           "relative": "Супруг(а)",
           "relative_index": 1
         }

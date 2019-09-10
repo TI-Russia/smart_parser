@@ -55,6 +55,7 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
+            if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
             return DeclarationField.None;
         }
 
@@ -191,6 +192,13 @@ namespace TI.Declarator.ParserCommon
         {
             return IsMixedColumn(s) && HasRealEstateTypeStr(s);
         }
+
+        private static bool IsMixedRealEstate(this string s)
+        {
+            // в этой колонке нет подколонок, все записано на естественном языке
+            return IsMixedColumn(s);
+        }
+        
 
         private static bool IsMixedRealEstateSquare(this string s)
         {

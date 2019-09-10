@@ -14,6 +14,15 @@ namespace Smart.Parser.Adapters
 {
     public abstract class IAdapter : TSectionPredicates
     {
+        // some excel files contain 32000 columns, most of them are empty
+        // we try to found real column number in the header, by default is 256
+        static private readonly int MaxColumnsCount = 256;
+        public int MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
+
+        public void RestartAdapterForExcelSheet()
+        {
+            MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
+        }
         public virtual bool IsExcel() { return false; }
         public virtual string GetDocumentPosition(int row, DeclarationField field)
         {
@@ -26,10 +35,7 @@ namespace Smart.Parser.Adapters
             return "R" + (row + 1).ToString() + "C" + (col.BeginColumn + 1).ToString();
         }
 
-        // some excel files contain 32000 columns, most of them are empty
-        // we try to found real column number in the header, by default is 256
-        public int MaxNotEmptyColumnsFoundInHeader = 256;
-        //        Cell GetCell(string cellNum);
+        
         abstract public Cell GetCell(int row, int column);
         public virtual List<Cell> GetCells(int row)
         {
