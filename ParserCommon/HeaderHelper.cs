@@ -99,7 +99,7 @@ namespace TI.Declarator.ParserCommon
         {
             return (s.Contains("праве собственности") &&
                     s.Contains("пользовании") &&
-                    s.Contains("вид собственности"));
+                    HasOwnershipTypeString(s));
         }
 
         private static bool HasRealEstateTypeStr(this string s)
@@ -111,6 +111,14 @@ namespace TI.Declarator.ParserCommon
              s.Contains("вид и наименование имущества") ||
              s.Contains("вид недвижимости"));
         }
+
+        private static bool HasOwnershipTypeString(this string s)
+        {
+            string clean = s.Replace("-", "").Replace(" ", "");
+            return clean.Contains("видсобственности")
+                || clean.Contains("видсобственкостн")
+                || clean.Contains("видсобствеивостн")                ;
+        }
         private static bool HasStateString(this string s)
         {
             return s.Contains("пользовании");
@@ -120,6 +128,7 @@ namespace TI.Declarator.ParserCommon
             string clean = s.Replace("-", "");
             return clean.Contains("собственности");
         }
+
         private static bool HasSquareString(this string s)
         {
             string clean = s.Replace("-", "");
@@ -157,7 +166,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateOwnershipType(this string s)
         {
-            return IsOwnedColumn(s) && (s.Contains("вид собственности") || s.Contains("вид собствен-ности"));
+            return IsOwnedColumn(s) && HasOwnershipTypeString(s);
         }
 
         private static bool IsOwnedRealEstateSquare(this string s)
@@ -176,7 +185,7 @@ namespace TI.Declarator.ParserCommon
         }
         private static bool IsStatePropertyOwnershipType(this string s)
         {
-            return HasStateString(s) && (s.Contains("вид собственности") || s.Contains("вид собственкостн"));
+            return HasStateString(s) && HasOwnershipTypeString(s);
         }
         private static bool IsStatePropertySquare(this string s)
         {
