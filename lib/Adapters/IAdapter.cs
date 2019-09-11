@@ -130,6 +130,10 @@ namespace Smart.Parser.Adapters
         {
             return 1;
         }
+        public virtual int GetTablesCount()
+        {
+            return GetWorkSheetCount();
+        }
 
         public virtual void SetCurrentWorksheet(int sheetIndex)
         {
