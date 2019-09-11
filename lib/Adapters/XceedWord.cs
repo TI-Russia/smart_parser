@@ -90,6 +90,7 @@ namespace Smart.Parser.Adapters
         private static readonly string WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
         private static Dictionary<string, double> Bigrams = ReadBigrams();
         XmlNamespaceManager NamespaceManager;
+        private int TablesCount;
 
         string ConvertFile2TempDocX(string filename)
         {
@@ -409,6 +410,8 @@ namespace Smart.Parser.Adapters
         {
             bool titleFoundInText = (Title != "");
             int firstTableWithData = 0;
+            TablesCount = wordDocument.Tables.Count;
+
             for (int t = 0;  t < wordDocument.Tables.Count; ++t)
             {
                 for (int r = 0; r < wordDocument.Tables[t].Rows.Count; ++r)
@@ -418,8 +421,7 @@ namespace Smart.Parser.Adapters
                     var row = wordDocument.Tables[t].Rows[r];
                     int rowGridBefore = GetRowGridBefore(row);
                     var cells = row.Cells;
-                    
-
+                
                     foreach (var rowCell in cells)
                     {
                         var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
@@ -491,6 +493,11 @@ namespace Smart.Parser.Adapters
         {
             return GetCells(row).Count;
         }
+        public override int GetTablesCount()
+        {
+            return TablesCount;
+        }
+
     }
 }
 

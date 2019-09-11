@@ -393,6 +393,10 @@ namespace Smart.Parser
 
             Logger.Info(String.Format("Parsing {0}", declarationFile));
             IAdapter adapter = GetAdapter(declarationFile);
+
+            Logger.Info(String.Format("TablesCount = {0}", adapter.GetTablesCount()));
+            Logger.Info(String.Format("RowsCount = {0}", adapter.GetRowsCount()));
+
             if (HtmlFileName != "") adapter.WriteHtmlFile(HtmlFileName);
             string declarationFileName = Path.GetFileName(declarationFile);
             if (adapter.GetWorkSheetCount() > 1)
