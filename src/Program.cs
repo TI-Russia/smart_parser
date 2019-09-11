@@ -31,6 +31,22 @@ namespace Smart.Parser
         public static bool ValidateByApi = false;
         public static bool IgnoreDirectoryIds = false;
 
+        public static void SetAsposeLicenseFromEnvironment()
+        {
+            var envVars = Environment.GetEnvironmentVariables();
+            if (envVars.Contains("ASPOSE_LIC"))
+            {
+                string path = envVars["ASPOSE_LIC"].ToString();
+                AsposeLicense.SetLicense(path);
+                if (!AsposeLicense.Licensed)
+                {
+                    throw new SmartParserException("Not valid aspose licence " + path);
+                }
+
+            }
+        }
+    
+
         static string ParseArgs(string[] args)
         {
             CMDLineParser parser = new CMDLineParser();
@@ -69,6 +85,7 @@ namespace Smart.Parser
                     throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
                 }
             }
+            SetAsposeLicenseFromEnvironment();
             if (maxRowsToProcessOpt.isMatched)
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
@@ -352,7 +369,7 @@ namespace Smart.Parser
                     return AsposeDocAdapter.CreateAdapter(declarationFile);
                 case ".xls":
                 case ".xlsx":
-                    if (AdapterFamily == "aspose")
+                    if (AdapterFamily == "aspose" || AdapterFamily == "prod")
                     {
                         if (!AsposeLicense.Licensed && extension == ".xls")
                         {
@@ -363,7 +380,7 @@ namespace Smart.Parser
                             return AsposeExcelAdapter.CreateAdapter(declarationFile);
                         }
                     }
-                    else if (AdapterFamily == "npoi" || AdapterFamily == "prod")
+                    else if (AdapterFamily == "npoi")
                     {
                         return NpoiExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                     }

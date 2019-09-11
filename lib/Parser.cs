@@ -214,7 +214,7 @@ namespace Smart.Parser.Lib
                 }
 
                 string sectionName;
-                if (Adapter.IsSectionRow(currRow, out sectionName))
+                if (Adapter.IsSectionRow(currRow, false, out sectionName))
                 {
                     borderFinder.CreateNewSection(row, sectionName);
                     continue;

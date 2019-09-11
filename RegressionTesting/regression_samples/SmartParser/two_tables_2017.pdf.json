@@ -1,0 +1,141 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Абрамов Иван  Андреевич",
+        "role": "Начальник отдела \n"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": 1462642.81,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 71.10,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "71.10",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Ачкасов Павел  Викторович",
+        "role": "Начальник отдела \n"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": 1309210.43,
+          "relative": null
+        },
+        {
+          "size": 575924.00,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок",
+          "square": 2072.00,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2072.00",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 36.00,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "36.00",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 428.00,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "428.00",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 208.60,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "208.60",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 35.10,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "35.10",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 193.30,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "193.30",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира",
+          "own_type_raw": "Общая долевая (1/2)"
+        },
+        {
+          "text": "Гараж",
+          "square": 18.20,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "18.20",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Гараж",
+          "own_type_raw": "Общая долевая (1/2)"
+        },
+        {
+          "text": "Квартира",
+          "square": 36.00,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "36.00",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Легковой \nавтомобиль: \nFord S-Max",
+          "relative": null
+        }
+      ],
+      "person_index": 2
+    }
+  ],
+  "document": {
+    "sheet_title": "  \n  \nСведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных  гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период  с 1 января 2017 г. по 31 декабря 2017 г.  \n    \n",
+    "year": 2017
+  }
+}

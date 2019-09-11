@@ -112,9 +112,11 @@ namespace RegressionTesting
             get { return Path.GetFullPath(SmartParserLogFile); }
         }
 
+
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
+            Smart.Parser.Program.SetAsposeLicenseFromEnvironment();
             var workingCopy = Path.GetFileName(filename);
             File.Copy(filename, workingCopy);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
@@ -135,6 +137,7 @@ namespace RegressionTesting
         public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
             SetupLog4Net();
+            Smart.Parser.Program.SetAsposeLicenseFromEnvironment();
             var workingCopy = Path.GetFileName(filename);
             File.Copy(filename, workingCopy);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
@@ -144,7 +147,8 @@ namespace RegressionTesting
             string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
             Smart.Parser.Adapters.IAdapter.ConvertedFileDir = outDir;
             Smart.Parser.Program.ParseFile(workingCopy, outFileName);
-            string expectedFile = Path.Combine(SmartParserFilesDirectory, Path.GetFileNameWithoutExtension(workingCopy) + ".json");
+            //string expectedFile = Path.Combine(SmartParserFilesDirectory, Path.GetFileNameWithoutExtension(workingCopy) + ".json");
+            string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
             Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }
 
