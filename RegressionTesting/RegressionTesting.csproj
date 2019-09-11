@@ -70,10 +70,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="regression_samples\SmartParser\17207.json">
+    <None Include="regression_samples\SmartParser\17207.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\17207.xls">
+    <None Include="regression_samples\SmartParser\17207.xls.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\256_Columns.xlsx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\9037\rykovodstvo_2013.xlsx">
@@ -82,70 +85,82 @@
     <None Include="regression_samples\SmartParser\DepEnergo2010.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\DepEnergo2010.json">
+    <None Include="regression_samples\SmartParser\DepEnergo2010.doc.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\fsin2013.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\fsin2013.json">
+    <None Include="regression_samples\SmartParser\fsin2013.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinDalVostok2015.json">
+    <None Include="regression_samples\SmartParser\IncomeNotFirstLine.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinDalVostok2015.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinDalVostok2017.json">
+    <None Include="regression_samples\SmartParser\MinDalVostok2015.xlsx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinDalVostok2017.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinDalVostok2017.xlsx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinEkon2013.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinEkon2013.json">
+    <None Include="regression_samples\SmartParser\MinEkon2013.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinEkonon2017.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinEkonon2017.json">
+    <None Include="regression_samples\SmartParser\MinEkonon2017.docx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\minfin2016.xlsx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinKult2015.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinKult2015.json">
+    <None Include="regression_samples\SmartParser\MinKult2015.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinObr2016.json">
+    <None Include="regression_samples\SmartParser\MinObr2012.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinObr2016.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinObr2016.xlsx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinRes2011.doc.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinSevKavkaz2015.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinSevKavkaz2015.json">
+    <None Include="regression_samples\SmartParser\MinSevKavkaz2015.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinStroy2017.json">
+    <None Include="regression_samples\SmartParser\MinSport2016.docx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinStroy2014.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinStroy2017.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinStroy2017.xlsx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinTrans2011.docx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\MinTrans2011.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\256_Columns.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\256_Columns.xlsx">
@@ -154,61 +169,46 @@
     <None Include="regression_samples\SmartParser\IncomeNotFirstLine.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\IncomeNotFirstLine.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\minfin2016.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="regression_samples\SmartParser\minfin2016.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinObr2012.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinObr2012.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="regression_samples\SmartParser\MinRes2011.doc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\MinRes2011.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinSport2016.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinSport2016.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="regression_samples\SmartParser\MinStroy2014.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinStroy2014.json">
+    <None Include="regression_samples\SmartParser\MinTrans2011.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinYust2012.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinYust2012.json">
+    <None Include="regression_samples\SmartParser\MinYust2012.doc.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\MinZdorov2015Full.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\MinZdorov2015Full.json">
+    <None Include="regression_samples\SmartParser\MinZdorov2015Full.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\minzdrav2015.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\minzdrav2015.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\one_line_2017.json">
+    <None Include="regression_samples\SmartParser\minzdrav2015.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\one_line_2017.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\one_line_2017.pdf.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\rykovodstvo_2013.xlsx_0.json">
@@ -217,25 +217,22 @@
     <None Include="regression_samples\SmartParser\rykovodstvo_2013.xlsx_1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\section_example.json">
+    <None Include="regression_samples\SmartParser\section_example.toloka_json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\section_example.toloka_json">
+    <None Include="regression_samples\SmartParser\section_example.toloka_json.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\SpellCheckRealtyType.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\SpellCheckRealtyType.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="regression_samples\SmartParser\toloka.json">
+    <None Include="regression_samples\SmartParser\SpellCheckRealtyType.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\toloka.toloka_json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="regression_samples\SmartParser\two_tables_2017.json">
+    <None Include="regression_samples\SmartParser\toloka.toloka_json.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\two_tables_2017.pdf">
@@ -245,10 +242,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="regression_samples\SmartParser\Unk2014.json">
+    <None Include="regression_samples\SmartParser\two_tables_2017.pdf.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="regression_samples\SmartParser\Unk2014.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\Unk2014.xlsx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
