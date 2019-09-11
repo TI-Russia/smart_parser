@@ -28,11 +28,13 @@ namespace test
         }
 
         [TestMethod]
-        public void LineBreakFieldDetectionTest()
+        public void HeaderDetectionTest()
         {
             string big_header = "Объекты недвижимости, находящиеся в собственности Вид\nсобствен\nности";
             DeclarationField field = HeaderHelpers.GetField(big_header);
 
+            big_header = "Объекты недвижимости имущества находящиеся в пользовании Вид обьекта";
+            field = HeaderHelpers.GetField(big_header);
         }
 
     }

@@ -106,6 +106,7 @@ namespace TI.Declarator.ParserCommon
         {
             return (s.Contains("вид объекта") ||
              s.Contains("вид объектов") ||
+             s.Contains("вид обьекта") ||
              s.Contains("виды объектов") ||
              s.Contains("виды недвижимости") ||
              s.Contains("вид и наименование имущества") ||
@@ -117,27 +118,28 @@ namespace TI.Declarator.ParserCommon
             string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("видсобственности")
                 || clean.Contains("видсобственкостн")
-                || clean.Contains("видсобствеивостн")                ;
+                || clean.Contains("видсобствеивостн");
         }
         private static bool HasStateString(this string s)
         {
-            return s.Contains("пользовании");
+            string clean = s.Replace("-", "").Replace(" ", "");
+            return clean.Contains("пользовании");
         }
         private static bool HasOwnedString(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("собственности");
         }
 
         private static bool HasSquareString(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("площадь");
         }
 
         private static bool HasCountryString(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("страна") || clean.Contains("регион");
         }
         
@@ -245,7 +247,7 @@ namespace TI.Declarator.ParserCommon
                     || strLower.Contains("суммадохода") 
                     || strLower.Contains("декларированныйдоход")
                     || strLower.Contains("декларированногодохода")
-                    || strLower.Contains("общая сумма дохода")
+                    || strLower.Contains("общаясуммадохода")
                    );
         }
 
