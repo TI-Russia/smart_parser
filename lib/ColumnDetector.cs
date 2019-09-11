@@ -83,11 +83,12 @@ namespace Smart.Parser.Lib
             int? year = null;
 
             bool findTitle = false;
+            bool prevRowIsSection = false;
             while (true)
             {
                 Row currRow = adapter.Rows[row];
                 string section_text;
-                bool isSection = adapter.IsSectionRow(currRow, out section_text);
+                bool isSection = adapter.IsSectionRow(currRow, prevRowIsSection, out section_text);
                 if (isSection)
                 {
                     if (section_text.Length > 20)
@@ -111,6 +112,7 @@ namespace Smart.Parser.Lib
                 {
                     throw new ColumnDetectorException(String.Format("Headers not found"));
                 }
+                prevRowIsSection = isSection;
             }
             if (!findTitle) {
                 if (GetValuesFromTitle(adapter.GetTitle(), ref title, ref year, ref ministry))

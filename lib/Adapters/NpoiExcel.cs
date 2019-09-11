@@ -100,8 +100,6 @@ namespace Smart.Parser.Adapters
             while (true)
             {
                 var cell = GetCell(row, index);
-
-                if (cell == EmptyCell) break;
                 result.Add(cell);
 
                 index += cell.MergedColsCount;

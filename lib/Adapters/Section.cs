@@ -35,7 +35,7 @@ namespace Smart.Parser.Adapters
             return false;
         }
 
-        public static bool IsSectionRow(Smart.Parser.Adapters.Row r, int colsCount, out string text)
+        public static bool IsSectionRow(Smart.Parser.Adapters.Row r, bool prevRowIsSection, int colsCount, out string text)
         {
             text = null;
             if (r.Cells.Count == 0)
@@ -88,6 +88,16 @@ namespace Smart.Parser.Adapters
                 if (manyColsAreMerged && langModel)
                 {
                     text = cellText;
+                    return true;
+                }
+            }
+
+            // в начале могут быть многострочные заголовки, которые обычно начинаются с маленькой буквы
+            if (prevRowIsSection && hasEnoughLength && r.Cells[0].Row < 10)
+            {
+                if (char.IsLower(rowText[0]))
+                {
+                    text = rowText;
                     return true;
                 }
             }

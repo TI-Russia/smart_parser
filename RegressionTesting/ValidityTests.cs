@@ -112,9 +112,11 @@ namespace RegressionTesting
             get { return Path.GetFullPath(SmartParserLogFile); }
         }
 
+
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
+            Smart.Parser.Program.SetAsposeLicenseFromEnvironment();
             var workingCopy = Path.GetFileName(filename);
             File.Copy(filename, workingCopy);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
@@ -135,6 +137,7 @@ namespace RegressionTesting
         public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
             SetupLog4Net();
+            Smart.Parser.Program.SetAsposeLicenseFromEnvironment();
             var workingCopy = Path.GetFileName(filename);
             File.Copy(filename, workingCopy);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));

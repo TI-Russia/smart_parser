@@ -150,9 +150,9 @@ namespace Smart.Parser.Adapters
             }
             return true;
         }
-        public bool IsSectionRow(Smart.Parser.Adapters.Row r, out string text)
+        public bool IsSectionRow(Smart.Parser.Adapters.Row r, bool prevRowIsSection, out string text)
         {
-            return IAdapter.IsSectionRow(r, GetColsCount(), out text);
+            return IAdapter.IsSectionRow(r, prevRowIsSection, GetColsCount(), out text);
         }
         
 
@@ -235,7 +235,8 @@ namespace Smart.Parser.Adapters
             for (int i = body_start; i >= headerEnd; i--)
             {
                 string dummy;
-                if (IsSectionRow(GetRow(i), out dummy))
+                // cannot use prevRowIsSection
+                if (IsSectionRow(GetRow(i), false, out dummy))
                 {
                     table.Section.Add(GetJsonByRow(i));
                     break;
