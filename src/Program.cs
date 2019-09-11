@@ -369,7 +369,7 @@ namespace Smart.Parser
                     return AsposeDocAdapter.CreateAdapter(declarationFile);
                 case ".xls":
                 case ".xlsx":
-                    if (AdapterFamily == "aspose")
+                    if (AdapterFamily == "aspose" || AdapterFamily == "prod")
                     {
                         if (!AsposeLicense.Licensed && extension == ".xls")
                         {
@@ -380,7 +380,7 @@ namespace Smart.Parser
                             return AsposeExcelAdapter.CreateAdapter(declarationFile);
                         }
                     }
-                    else if (AdapterFamily == "npoi" || AdapterFamily == "prod")
+                    else if (AdapterFamily == "npoi")
                     {
                         return NpoiExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                     }

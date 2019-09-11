@@ -30,20 +30,20 @@
         },
         {
           "text": "жилой дом",
-          "square": 35.6,
+          "square": 35.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "35,6",
+          "square_raw": "35.60",
           "country_raw": "Россия",
           "type_raw": "жилой дом",
           "own_type_raw": "индивидуальная"
         },
         {
           "text": "квартира",
-          "square": 84.8,
+          "square": 84.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "84,8",
+          "square_raw": "84.80",
           "country_raw": "Россия",
           "type_raw": "квартира",
           "own_type_raw": "индивидуальная"
@@ -70,10 +70,10 @@
         },
         {
           "text": "квартира",
-          "square": 84.8,
+          "square": 84.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "84,8",
+          "square_raw": "84.80",
           "country_raw": "Россия",
           "type_raw": "квартира"
         },
@@ -89,39 +89,39 @@
         },
         {
           "text": "жилой дом",
-          "square": 67.8,
+          "square": 67.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "67,8",
+          "square_raw": "67.80",
           "country_raw": "Россия",
           "type_raw": "жилой дом",
           "own_type_raw": "индивидуальная"
         },
         {
           "text": "часть жилого дома",
-          "square": 182.8,
+          "square": 182.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "182,8",
+          "square_raw": "182.80",
           "country_raw": "Россия",
           "type_raw": "часть жилого дома",
           "own_type_raw": "индивидуальная"
         },
         {
           "text": "жилой дом",
-          "square": 318.9,
+          "square": 318.90,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "318,9",
+          "square_raw": "318.89999999999998",
           "country_raw": "Россия",
           "type_raw": "жилой дом"
         },
         {
           "text": "квартира",
-          "square": 84.8,
+          "square": 84.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "84,8",
+          "square_raw": "84.80",
           "country_raw": "Россия",
           "type_raw": "квартира"
         }
@@ -147,6 +147,7 @@
   ],
   "document": {
     "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, \nпредставленных федеральными государственными гражданскими служащими Министерства Российской Федерации по развитию Дальнего Востока, \nза период с 1 января 2015 г. по 31 декабря 2015 г.",
-    "year": 2015
+    "year": 2015,
+    "sheet_number": 0
   }
 }
