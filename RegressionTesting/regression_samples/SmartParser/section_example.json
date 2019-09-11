@@ -1,0 +1,306 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Савинская Л.А.",
+        "role": "главный бухгалтер",
+        "department": "ФАУ \"Дальневосточный НИИ рынка \""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 576059.47,
+          "relative": null
+        },
+        {
+          "size": 596562.33,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 177216.0,
+          "relative": "Ребенок",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 50.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "50,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        },
+        {
+          "text": "земельный участок",
+          "square": 900.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "900",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "долевая, 1/3"
+        },
+        {
+          "text": "квартира",
+          "square": 80.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "80",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом",
+          "square": 80.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "80",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "долевая, 1/3"
+        },
+        {
+          "text": "квартира",
+          "square": 50.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "50,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м легковой\nМинивен Toyota estima emina",
+          "relative": null
+        },
+        {
+          "text": "маломерное судно \"Прогресс\"-4",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 2
+    },
+    {
+      "person": {
+        "name_raw": "Лебедев В.В.",
+        "role": "исполняющий обязанности директора",
+        "department": "ФГУП \"Информационно-вычислительный центр \"Инфосервис\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 2656904.52,
+          "relative": null
+        },
+        {
+          "size": 1147082.23,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 84.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "84,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        },
+        {
+          "text": "земельный участок (садовый)",
+          "square": 680.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "680",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (садовый)",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 84.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "84,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        },
+        {
+          "text": "квартира",
+          "square": 84.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "84,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м легковой Nissan Bassara",
+          "relative": null
+        },
+        {
+          "text": "а/м легковой Hyundai Grand Starex",
+          "relative": null
+        }
+      ],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Агеев С.В.",
+        "role": "начальник",
+        "department": "ФКУ \"Объект № 5066\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 469429.0,
+          "relative": null
+        },
+        {
+          "size": 180000.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 60.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "60",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        },
+        {
+          "text": "квартира",
+          "square": 60.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "60",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м легковой Nissan PATHFINDER",
+          "relative": null
+        }
+      ],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Агеев Д.С.",
+        "role": "заместитель начальника",
+        "department": "ФКУ \"Объект № 5066\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 222373.0,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 60.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "60",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м легковой ВАЗ 2110",
+          "relative": null
+        }
+      ],
+      "person_index": 2
+    },
+    {
+      "person": {
+        "name_raw": "Борисонова Л.И.",
+        "role": "главный бухгалтер",
+        "department": "ФКУ \"Объект № 5066\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 252735.0,
+          "relative": null
+        },
+        {
+          "size": 255218.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок (садовый)",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (садовый)",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 61.01,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,01",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        },
+        {
+          "text": "квартира",
+          "square": 61.01,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,01",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая, 1/4"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "а/м легковой ВАЗ 2104",
+          "relative": null
+        }
+      ],
+      "person_index": 3
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, \nработников организаций, созданных для выполнения задач, поставленных перед Министерством Российской Федерации по развитию Дальнего Востока, \nза отчетный период  с 1 января 2015 г. по 31 декабря 2015 г.",
+    "year": 2015,
+    "documentfile_id": 35298
+  }
+}
