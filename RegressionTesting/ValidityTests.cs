@@ -359,6 +359,12 @@ namespace RegressionTesting
             TestSmartParserMultipleOut("npoi", "SmartParser\\9037\\rykovodstvo_2013.xlsx", "rykovodstvo_2013.xlsx_0.json", "rykovodstvo_2013.xlsx_1.json");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Spasat2016()
+        {
+            TestSmartParser("SmartParser\\Spasat2016.docx", "prod");
+        }
 
 
         private static void SetupLog4Net()

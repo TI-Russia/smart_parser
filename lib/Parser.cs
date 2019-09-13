@@ -16,7 +16,8 @@ namespace Smart.Parser.Lib
         DateTime FirstPassStartTime;
         DateTime SecondPassStartTime;
         bool FailOnRelativeOrphan;
-
+        static readonly string OwnedString = "В собственности";
+        static readonly string StateString = "В пользовании";
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
         public Parser(IAdapter adapter, bool failOnRelativeOrphan=true)
@@ -292,11 +293,23 @@ namespace Smart.Parser.Lib
             }
         }
 
+        void AddRealEstateWithNaturalText (Row currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
+        {
+            if (Adapter.HasDeclarationField(fieldName))
+            {
+                RealEstateProperty realEstateProperty = new RealEstateProperty();
+                realEstateProperty.Text = currRow.GetContents(fieldName);
+                realEstateProperty.own_type_by_column = ownTypeByColumn;
+                CheckProperty(realEstateProperty);
+                person.RealEstateProperties.Add(realEstateProperty);
+            }
+
+        }
         public void ParseOwnedProperty(Row currRow, Person person)
         {
             if (!Adapter.HasDeclarationField(DeclarationField.OwnedRealEstateSquare))
             {
-                // no square, no entry
+                AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, OwnedString, person);
                 return;
             }
             string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
@@ -330,7 +343,7 @@ namespace Smart.Parser.Lib
         {
             if (!Adapter.HasDeclarationField(DeclarationField.MixedRealEstateSquare))
             {
-                // no square, no entry
+                AddRealEstateWithNaturalText(currRow, DeclarationField.MixedColumnWithNaturalText, null, person);
                 return;
             }
             string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
@@ -359,7 +372,7 @@ namespace Smart.Parser.Lib
         {
             if (!Adapter.HasDeclarationField(DeclarationField.StatePropertySquare))
             {
-                // no square, no entry
+                AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
                 return;
             }
             string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
@@ -535,7 +548,7 @@ namespace Smart.Parser.Lib
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
             stateProperty.square_raw = statePropSquareStr;
             stateProperty.country_raw = statePropCountryStr;
-            stateProperty.own_type_by_column = "В пользовании";
+            stateProperty.own_type_by_column = StateString;
             CheckProperty(stateProperty);
             person.RealEstateProperties.Add(stateProperty);
         }
@@ -560,7 +573,7 @@ namespace Smart.Parser.Lib
             {
                 realEstateProperty.type_raw = estateTypeStr;
                 realEstateProperty.own_type_raw = ownTypeStr;
-                realEstateProperty.own_type_by_column = "В собственности";
+                realEstateProperty.own_type_by_column = OwnedString;
                 realEstateProperty.Text = estateTypeStr;
             }
             else // колонка содержит тип недвижимости и тип собственности

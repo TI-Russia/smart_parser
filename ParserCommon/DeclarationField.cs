@@ -22,11 +22,13 @@ namespace TI.Declarator.ParserCommon
         OwnedRealEstateOwnershipType,
         OwnedRealEstateSquare,
         OwnedRealEstateCountry,
+        OwnedColumnWithNaturalText,
 
         StatePropertyType,
         StatePropertySquare,
         StatePropertyCountry,
         StatePropertyOwnershipType,
+        StateColumnWithNaturalText,
 
         Vehicle,
         DeclaredYearlyIncome,

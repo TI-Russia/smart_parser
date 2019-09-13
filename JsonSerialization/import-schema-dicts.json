@@ -15,9 +15,7 @@
                         "items": {
                             "$id": "/properties/persons/properties/real_estates/items", 
                             "required": [
-                                "text", 
-                                "square", 
-                                "country_raw"
+                                "text"
                             ], 
                             "type": "object", 
                             "properties": {

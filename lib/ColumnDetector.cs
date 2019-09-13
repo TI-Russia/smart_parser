@@ -3,9 +3,7 @@ using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Lib

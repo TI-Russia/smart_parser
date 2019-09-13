@@ -223,6 +223,12 @@
     <None Include="regression_samples\SmartParser\section_example.toloka_json.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\Spasat2016.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\Spasat2016.docx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\SpellCheckRealtyType.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

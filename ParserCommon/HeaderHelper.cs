@@ -3,16 +3,13 @@ using static Algorithms.LevenshteinDistance;
 
 namespace TI.Declarator.ParserCommon
 {
-    /*
-     Объекты недвижимости, находящиеся в пользовании 
-     */
     public static class HeaderHelpers
     {
-        public static bool IsSecondLevelHeader(string str)
+        public static bool HasRealEstateStr(string str)
         {
             string strLower = str.ToLower().Replace("-", "");
-            return (strLower.Contains("объекты") ||
-                    strLower.Contains("недвижимости"));
+            return strLower.Contains("недвижимости")
+                || strLower.Contains("недвижимого");
         }
         public static DeclarationField GetField(string str)
         {
@@ -56,6 +53,8 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
 
             if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
+            if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
+            if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
             return DeclarationField.None;
         }
 
@@ -101,7 +100,7 @@ namespace TI.Declarator.ParserCommon
                     s.Contains("пользовании") &&
                     s.Contains("вид собственности"));
         }
-
+        
         private static bool HasRealEstateTypeStr(this string s)
         {
             return (s.Contains("вид объекта") ||
@@ -196,9 +195,19 @@ namespace TI.Declarator.ParserCommon
         private static bool IsMixedRealEstate(this string s)
         {
             // в этой колонке нет подколонок, все записано на естественном языке
-            return IsMixedColumn(s);
+            return IsMixedColumn(s) && HasRealEstateStr(s);
         }
-        
+
+        private static bool IsStateRealEstate(this string s)
+        {
+            // в этой колонке нет подколонок, все записано на естественном языке
+            return IsStateColumn(s) && HasRealEstateStr(s);
+        }
+        private static bool IsOwnedRealEstate(this string s)
+        {
+            // в этой колонке нет подколонок, все записано на естественном языке
+            return IsOwnedColumn(s) && HasRealEstateStr(s);
+        }
 
         private static bool IsMixedRealEstateSquare(this string s)
         {
