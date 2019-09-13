@@ -27,13 +27,15 @@ namespace test
             Assert.AreEqual(1, result);
         }
 
-        //[TestMethod]
-        //public void HeaderDetectionTest()
-        //{
-        //    string big_header = "Перечень объектов недвижимого имущества, принадлежащих на праве собственности или находящихся в пользовании";
-        //    DeclarationField field = HeaderHelpers.GetField(big_header.Replace('\n', ' '));
+        [TestMethod]
+        public void HeaderDetectionTest()
+        {
+            string big_header = "Объекты недвижимости, находящиеся в собственности Вид\nсобствен\nности";
+            DeclarationField field = HeaderHelpers.GetField(big_header);
 
-        //}
+            big_header = "Объекты недвижимости имущества находящиеся в пользовании Вид обьекта";
+            field = HeaderHelpers.GetField(big_header);
+        }
 
     }
 }

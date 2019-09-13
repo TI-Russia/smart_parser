@@ -98,36 +98,47 @@ namespace TI.Declarator.ParserCommon
         {
             return (s.Contains("праве собственности") &&
                     s.Contains("пользовании") &&
-                    s.Contains("вид собственности"));
+                    HasOwnershipTypeString(s));
         }
-        
+
         private static bool HasRealEstateTypeStr(this string s)
         {
             return (s.Contains("вид объекта") ||
              s.Contains("вид объектов") ||
+             s.Contains("вид обьекта") ||
              s.Contains("виды объектов") ||
              s.Contains("виды недвижимости") ||
              s.Contains("вид и наименование имущества") ||
              s.Contains("вид недвижимости"));
         }
+
+        private static bool HasOwnershipTypeString(this string s)
+        {
+            string clean = s.Replace("-", "").Replace(" ", "");
+            return clean.Contains("видсобственности")
+                || clean.Contains("видсобственкостн")
+                || clean.Contains("видсобствеивостн");
+        }
         private static bool HasStateString(this string s)
         {
-            return s.Contains("пользовании");
+            string clean = s.Replace("-", "").Replace(" ", "");
+            return clean.Contains("пользовании");
         }
         private static bool HasOwnedString(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("собственности");
         }
+
         private static bool HasSquareString(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("площадь");
         }
 
         private static bool HasCountryString(this string s)
         {
-            string clean = s.Replace("-", "");
+            string clean = s.Replace("-", "").Replace(" ", "");
             return clean.Contains("страна") || clean.Contains("регион");
         }
         
@@ -156,7 +167,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateOwnershipType(this string s)
         {
-            return IsOwnedColumn(s) && (s.Contains("вид собственности") || s.Contains("вид собствен-ности"));
+            return IsOwnedColumn(s) && HasOwnershipTypeString(s);
         }
 
         private static bool IsOwnedRealEstateSquare(this string s)
@@ -175,7 +186,7 @@ namespace TI.Declarator.ParserCommon
         }
         private static bool IsStatePropertyOwnershipType(this string s)
         {
-            return HasStateString(s) && (s.Contains("вид собственности") || s.Contains("вид собственкостн"));
+            return HasStateString(s) && HasOwnershipTypeString(s);
         }
         private static bool IsStatePropertySquare(this string s)
         {
@@ -245,7 +256,7 @@ namespace TI.Declarator.ParserCommon
                     || strLower.Contains("суммадохода") 
                     || strLower.Contains("декларированныйдоход")
                     || strLower.Contains("декларированногодохода")
-                    || strLower.Contains("общая сумма дохода")
+                    || strLower.Contains("общаясуммадохода")
                    );
         }
 
