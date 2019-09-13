@@ -210,6 +210,21 @@ namespace Smart.Parser.Lib
         }
 
 
+        static void FixBadColumnName01(IAdapter adapter)
+        {
+            //move MixedColumnWithNaturalText  to MixedRealEstateType
+            ColumnOrdering c = adapter.ColumnOrdering;
+            if (!c.ContainsField(DeclarationField.MixedColumnWithNaturalText)) return;
+            if (        c.ContainsField(DeclarationField.MixedRealEstateCountry)  
+                    &&  c.ContainsField(DeclarationField.MixedRealEstateSquare)
+                )
+            {
+                c.Add(DeclarationField.MixedRealEstateType, c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText].BeginColumn);
+                c.Delete(DeclarationField.MixedColumnWithNaturalText);
+            }
+        }
+
+
         static public ColumnOrdering ExamineHeader(IAdapter adapter)
         {
             ColumnOrdering res = new ColumnOrdering();
@@ -279,7 +294,7 @@ namespace Smart.Parser.Lib
                 throw new SmartParserException("cannot find headers");
             }
             FixMissingSubheadersForMixedRealEstate(adapter);
-
+            FixBadColumnName01(adapter);
             return res;
         }
     }

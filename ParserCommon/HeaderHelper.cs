@@ -55,6 +55,9 @@ namespace TI.Declarator.ParserCommon
             if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
             if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
             if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
+
+            if (HasSquareString(str)) { return DeclarationField.MixedRealEstateSquare; }
+            if (HasCountryString(str)) { return DeclarationField.MixedRealEstateCountry; }
             return DeclarationField.None;
         }
 

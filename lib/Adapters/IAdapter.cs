@@ -156,7 +156,7 @@ namespace Smart.Parser.Adapters
         }
         public bool IsSectionRow(Smart.Parser.Adapters.Row r, bool prevRowIsSection, out string text)
         {
-            return IAdapter.IsSectionRow(r, prevRowIsSection, GetColsCount(), out text);
+            return IAdapter.IsSectionRow(r.Cells, prevRowIsSection, GetColsCount(), out text);
         }
         
 

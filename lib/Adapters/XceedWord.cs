@@ -414,6 +414,7 @@ namespace Smart.Parser.Adapters
 
             for (int t = 0;  t < wordDocument.Tables.Count; ++t)
             {
+                bool prevRowIsSection = false;
                 for (int r = 0; r < wordDocument.Tables[t].Rows.Count; ++r)
                 {
                     List<XceedWordCell> newRow = new List<XceedWordCell>();
@@ -439,13 +440,18 @@ namespace Smart.Parser.Adapters
                         Logger.Debug(string.Format("skip row {0} at table {1} because it looks like a repeated header", r, t));
                         continue;
                     }
-                    if (!titleFoundInText && t == 0 && wordDocument.Tables[t].Rows.Count < 5 && wordDocument.Tables[t].Rows[0].Cells.Count < 3)
+                    if (!titleFoundInText && t == 0 && wordDocument.Tables[t].Rows.Count < 5 )
                     {
-                        Title += GetTextByRow(newRow) + "\n";
-                        firstTableWithData = 1;
-                        continue;
+                        string titleLine;
+                        prevRowIsSection = TSectionPredicates.IsSectionRow(newRow.ToList<Cell>(), prevRowIsSection, sumspan, out titleLine);
+                        if (prevRowIsSection)
+                        {
+                            Title += titleLine + "\n";
+                            firstTableWithData = 1;
+                            continue;
+                        }
                     }
-                    else if (r == 0 && t > firstTableWithData && CheckMergeRow(TableRows.Last(), newRow))
+                    if (r == 0 && t > firstTableWithData && CheckMergeRow(TableRows.Last(), newRow))
                     {
                         MergeRow(TableRows.Last(), newRow);
                     } 
@@ -453,7 +459,8 @@ namespace Smart.Parser.Adapters
                     {
                         TableRows.Add(newRow);
                     }
-        
+                    prevRowIsSection = false;
+
                     if ((maxRowsToProcess != -1) && (TableRows.Count >= maxRowsToProcess)) {
                         break;
                     }

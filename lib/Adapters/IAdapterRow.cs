@@ -91,7 +91,7 @@ namespace Smart.Parser.Adapters
             return Cells.All(cell => cell.Text.IsNullOrWhiteSpace());
         }
 
-        public List<Cell> Cells { get; set; }
+        public List<Cell> Cells;
         IAdapter adapter;
         int row;
     }

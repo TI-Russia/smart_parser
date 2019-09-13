@@ -35,10 +35,10 @@ namespace Smart.Parser.Adapters
             return false;
         }
 
-        public static bool IsSectionRow(Smart.Parser.Adapters.Row r, bool prevRowIsSection, int colsCount, out string text)
+        public static bool IsSectionRow(List<Cell> cells, bool prevRowIsSection, int colsCount, out string text)
         {
             text = null;
-            if (r.Cells.Count == 0)
+            if (cells.Count == 0)
             {
                 return false;
             }
@@ -46,7 +46,7 @@ namespace Smart.Parser.Adapters
             string rowText = "";
             string cellText = "";
             int cellsWithTextCount = 0;
-            foreach (var c in r.Cells)
+            foreach (var c in cells)
             {
                 string trimmedText = c.Text.Trim(' ', '\n');
                 if (c.MergedColsCount > maxMergedCols)
@@ -93,7 +93,7 @@ namespace Smart.Parser.Adapters
             }
 
             // в начале могут быть многострочные заголовки, которые обычно начинаются с маленькой буквы
-            if (prevRowIsSection && hasEnoughLength && r.Cells[0].Row < 10)
+            if (prevRowIsSection && hasEnoughLength && cells[0].Row < 10)
             {
                 if (char.IsLower(rowText[0]))
                 {

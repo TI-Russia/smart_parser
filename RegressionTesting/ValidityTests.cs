@@ -366,6 +366,12 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\Spasat2016.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("doc")]
+        public void DepGosPol2012()
+        {
+            TestSmartParser("SmartParser\\DepGosPol2012.doc", "prod");
+        }
 
         private static void SetupLog4Net()
         {
