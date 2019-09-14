@@ -67,5 +67,14 @@ namespace TI.Declarator.ParserCommon
         public int? Year { get; set; }
         public int? HeaderBegin { get; set; }
         public int? HeaderEnd { get; set; }
+        public int GetPossibleHeaderBegin()
+        {
+            return HeaderBegin ?? 0;
+        }
+        public int GetPossibleHeaderEnd()
+        {
+            return HeaderEnd ?? GetPossibleHeaderBegin() + 2;
+        }
+
     }
 }

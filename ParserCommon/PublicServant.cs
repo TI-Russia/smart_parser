@@ -28,6 +28,6 @@ namespace TI.Declarator.ParserCommon
 
         List<Relative> relatives = new List<Relative>();
         public override int? PersonIndex { get { return null; } }
-
+        public ColumnOrdering Ordering;
     }
 }

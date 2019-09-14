@@ -208,7 +208,7 @@ namespace Smart.Parser
             catch (Exception e)
             {
                 Logger.Error("Unknown Parsing Exception " + e.ToString());
-                //Logger.Info("Stack: " + e.StackTrace);
+                Logger.Info("Stack: " + e.StackTrace);
             }
             finally
             {
@@ -470,12 +470,12 @@ namespace Smart.Parser
             return 0;
         }
 
-        static void DumpColumn(IAdapter adapter, DeclarationField columnToDump)
+        static void DumpColumn(IAdapter adapter, ColumnOrdering columnOrdering, DeclarationField columnToDump)
         {
-            int rowOffset = adapter.ColumnOrdering.FirstDataRow;
+            int rowOffset = columnOrdering.FirstDataRow;
             for (var row = rowOffset; row < adapter.GetRowsCount(); row++)
             {
-                var cell = adapter.GetDeclarationField(row, columnToDump);
+                var cell = adapter.GetDeclarationField(columnOrdering, row, columnToDump);
                 var s = (cell == null) ? "null" : cell.GetText();
                 s = s.Replace("\n", "\\n");
                 Console.WriteLine(s);
@@ -498,7 +498,7 @@ namespace Smart.Parser
             return CalculateMD5(filename) + "_" + adapter.GetWorksheetName();
         }
 
-        public static void SaveRandomPortionToToloka(IAdapter adapter, Declaration declaration, string declarationFileName)
+        public static void SaveRandomPortionToToloka(IAdapter adapter, ColumnOrdering columnOrdering, Declaration declaration, string declarationFileName)
         {
             if (TolokaFileName == "") return;
             string fileID = BuildInputFileId(adapter, declarationFileName); 
@@ -506,10 +506,10 @@ namespace Smart.Parser
             {
                 file.WriteLine("INPUT:input_id\tINPUT:input_json\tGOLDEN:declaration_json\tHINT:text");
                 Random random = new Random();
-                int dataRowsCount = Math.Min(20, adapter.GetRowsCount() - adapter.GetPossibleHeaderEnd());
-                int dataStart = random.Next(adapter.GetPossibleHeaderEnd(), adapter.GetRowsCount() - dataRowsCount);
+                int dataRowsCount = Math.Min(20, adapter.GetRowsCount() - columnOrdering.GetPossibleHeaderEnd());
+                int dataStart = random.Next(columnOrdering.GetPossibleHeaderEnd(), adapter.GetRowsCount() - dataRowsCount);
                 int dataEnd = dataStart + dataRowsCount;
-                var json = adapter.TablePortionToJson(dataStart, dataEnd);
+                var json = adapter.TablePortionToJson(columnOrdering, dataStart, dataEnd);
                 json.InputFileName = declarationFileName;
                 json.Title = declaration.Properties.Title;
                 string jsonStr = JsonConvert.SerializeObject(json);
@@ -528,7 +528,6 @@ namespace Smart.Parser
             {
                 columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
             }
-            adapter.ColumnOrdering = columnOrdering;
 
 
             Logger.Info("Column ordering: ");
@@ -542,7 +541,7 @@ namespace Smart.Parser
                 return 0;
             if (ColumnToDump != DeclarationField.None)
             {
-                DumpColumn(adapter, ColumnToDump);
+                DumpColumn(adapter, columnOrdering, ColumnToDump);
                 return 0;
             }
 
@@ -560,8 +559,8 @@ namespace Smart.Parser
             }
 
 
-            Declaration declaration = parser.Parse();
-            SaveRandomPortionToToloka(adapter, declaration, declarationFile);
+            Declaration declaration = parser.Parse(columnOrdering);
+            SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
 

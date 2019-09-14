@@ -46,9 +46,8 @@ namespace Smart.Parser.Lib
             return true;
         }
 
-        static private bool IsHeader(Row r)
+        static private bool IsHeader(List<Cell> cells)
         {
-            var cells = r.Cells;
             string text = "";
             int nonEmptyCellCount = 0;
             foreach (var cell in cells)
@@ -73,7 +72,7 @@ namespace Smart.Parser.Lib
                    (cells.First().GetText(true) != "1");
         }
 
-        static int ProcessTitle(IAdapter adapter, ColumnOrdering res)
+        static int ProcessTitle(IAdapter adapter, ColumnOrdering columnOrdering)
         {
             int row = 0;
             string title = null;
@@ -84,7 +83,7 @@ namespace Smart.Parser.Lib
             bool prevRowIsSection = false;
             while (true)
             {
-                Row currRow = adapter.Rows[row];
+                var currRow = adapter.GetCells(row);
                 string section_text;
                 bool isSection = adapter.IsSectionRow(currRow, prevRowIsSection, out section_text);
                 if (isSection)
@@ -98,7 +97,7 @@ namespace Smart.Parser.Lib
                     }
                     else
                     {
-                        res.Section = section_text;
+                        columnOrdering.Section = section_text;
                     }
                 }
                 else if (IsHeader(currRow))
@@ -121,17 +120,17 @@ namespace Smart.Parser.Lib
 
             if (findTitle)
             {
-                res.Title = title;
-                res.Year = year;
-                res.MinistryName = ministry;
+                columnOrdering.Title = title;
+                columnOrdering.Year = year;
+                columnOrdering.MinistryName = ministry;
             }
             return row;
         }
         static List<Cell> FindSubcellsUnder(IAdapter adapter, Cell cell)
         {
-            Row underRow = adapter.Rows[cell.Row + cell.MergedRowsCount];
+            var undercCells = adapter.GetCells(cell.Row + cell.MergedRowsCount);
             var subCells = new List<Cell>();
-            foreach (var underCell in underRow.Cells)
+            foreach (var underCell in undercCells)
             {
                 if (underCell.Col < cell.Col)
                     continue;
@@ -178,22 +177,22 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter)
+        static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, ColumnOrdering columnOrdering)
         {
             //see DepEnergo2010.doc  in tests
-            if (!adapter.HasDeclarationField(DeclarationField.MixedColumnWithNaturalText))
+            if (!columnOrdering.ContainsField(DeclarationField.MixedColumnWithNaturalText))
             {
                 return;
             }
-            var headerCell = adapter.GetDeclarationField(adapter.ColumnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText);
+            var headerCell = adapter.GetDeclarationField(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText);
             var subCells = FindSubcellsUnder(adapter, headerCell);
             if (subCells.Count != 3)
             {
                 return;
             }
-            for (int row = adapter.ColumnOrdering.FirstDataRow; row < adapter.GetRowsCount(); row++)
+            for (int row = columnOrdering.FirstDataRow; row < adapter.GetRowsCount(); row++)
             {
-                if (row > adapter.ColumnOrdering.FirstDataRow + 5) break;
+                if (row > columnOrdering.FirstDataRow + 5) break;
                 TColumnSpan middleCol = new TColumnSpan();
                 middleCol.BeginColumn = subCells[1].Col; // we check only the  second column, todo check the  first one and  the third
                 middleCol.EndColumn = subCells[2].Col;
@@ -203,17 +202,16 @@ namespace Smart.Parser.Lib
                     return;
                 }
             }
-            adapter.ColumnOrdering.Add(DeclarationField.MixedRealEstateType, subCells[0].Col);
-            adapter.ColumnOrdering.Add(DeclarationField.MixedRealEstateSquare, subCells[1].Col);
-            adapter.ColumnOrdering.Add(DeclarationField.MixedRealEstateCountry, subCells[2].Col);
-            adapter.ColumnOrdering.Delete(DeclarationField.MixedColumnWithNaturalText);
+            columnOrdering.Add(DeclarationField.MixedRealEstateType, subCells[0].Col);
+            columnOrdering.Add(DeclarationField.MixedRealEstateSquare, subCells[1].Col);
+            columnOrdering.Add(DeclarationField.MixedRealEstateCountry, subCells[2].Col);
+            columnOrdering.Delete(DeclarationField.MixedColumnWithNaturalText);
         }
 
 
-        static void FixBadColumnName01(IAdapter adapter)
+        static void FixBadColumnName01(ColumnOrdering c)
         {
             //move MixedColumnWithNaturalText  to MixedRealEstateType
-            ColumnOrdering c = adapter.ColumnOrdering;
             if (!c.ContainsField(DeclarationField.MixedColumnWithNaturalText)) return;
             if (        c.ContainsField(DeclarationField.MixedRealEstateCountry)  
                     &&  c.ContainsField(DeclarationField.MixedRealEstateSquare)
@@ -227,15 +225,14 @@ namespace Smart.Parser.Lib
 
         static public ColumnOrdering ExamineHeader(IAdapter adapter)
         {
-            ColumnOrdering res = new ColumnOrdering();
-            adapter.ColumnOrdering = res;
-            int headerStartRow = ProcessTitle(adapter, res);
+            ColumnOrdering columnOrdering = new ColumnOrdering();
+            int headerStartRow = ProcessTitle(adapter, columnOrdering);
             int headerEndRow = headerStartRow + 1;
-            var firstRow = adapter.Rows[headerStartRow];
+            var firstRow = adapter.GetCells(headerStartRow);
 
             int colCount = 0;
             bool headerCanHaveSecondLevel = true;
-            foreach (var cell in firstRow.Cells)
+            foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
                 Logger.Debug("column title: " + text);
@@ -256,10 +253,10 @@ namespace Smart.Parser.Lib
                         {
                             throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerStartRow, colCount));
                         }
-                        res.Add(field, cell.Col);
+                        columnOrdering.Add(field, cell.Col);
                         if (DeclarationField.NameOrRelativeType == field && cell.MergedRowsCount == 1)
                         {
-                            string fioAfterHeader = adapter.GetDeclarationField(headerEndRow, field).GetText(true);
+                            string fioAfterHeader = adapter.GetDeclarationField(columnOrdering, headerEndRow, field).GetText(true);
                             headerCanHaveSecondLevel = fioAfterHeader.Length == 0;
                         }
                         colCount++;
@@ -269,15 +266,15 @@ namespace Smart.Parser.Lib
                 // with the second row reserved for subheaders
                 else
                 {
-                    SecondLevelHeader(adapter, cell, subCells, res);
+                    SecondLevelHeader(adapter, cell, subCells, columnOrdering);
                     headerEndRow = Math.Max(headerEndRow, subCells[0].Row + subCells[0].MergedRowsCount);
                     colCount += cell.MergedColsCount;
                 }
             }
 
-            res.HeaderBegin = headerStartRow;
-            res.HeaderEnd = headerEndRow;
-            int firstDataRow = res.HeaderEnd.Value;
+            columnOrdering.HeaderBegin = headerStartRow;
+            columnOrdering.HeaderEnd = headerEndRow;
+            int firstDataRow = columnOrdering.HeaderEnd.Value;
 
             // пропускаем колонку с номерами
             string cellText1 = adapter.GetCell(firstDataRow, 0).GetText();
@@ -287,15 +284,15 @@ namespace Smart.Parser.Lib
                 firstDataRow++;
             }
 
-            res.FirstDataRow = firstDataRow;
+            columnOrdering.FirstDataRow = firstDataRow;
 
-            if (res.ColumnOrder.Count() == 0)
+            if (columnOrdering.ColumnOrder.Count() == 0)
             {
                 throw new SmartParserException("cannot find headers");
             }
-            FixMissingSubheadersForMixedRealEstate(adapter);
-            FixBadColumnName01(adapter);
-            return res;
+            FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
+            FixBadColumnName01(columnOrdering);
+            return columnOrdering;
         }
     }
 }

@@ -45,22 +45,10 @@ namespace Smart.Parser.Adapters
             return new AsposeExcelAdapter(fileName);
         }
 
-        public override string GetDocumentPosition(int row, DeclarationField field)
+        public override string GetDocumentPosition(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
-            return GetDocumentPositionExcel(row, field);
+            return GetDocumentPositionExcel(columnOrdering, row, field);
         }
-
-
-        //Cell IAdapter.GetCell(string cellNum)
-        //{
-        //    Aspose.Cells.Cell cell = worksheet.Cells[cellNum];
-        //
-        //    return new AsposeExcelCell(cell);
-        //}
-        //Cell IAdapter.GetCell(int row, int column)
-        //{
-        //    return this.GetCell(row, column);
-        //}
 
 
         public override Cell GetCell(int row, int column)

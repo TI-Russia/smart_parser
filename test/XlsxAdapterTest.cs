@@ -21,12 +21,11 @@ namespace test
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
             var columnOrdering = ColumnDetector.ExamineHeader(adapter);
-            adapter.ColumnOrdering = columnOrdering;
 
 
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
 
-            Declaration declaration = parser.Parse();
+            Declaration declaration = parser.Parse(columnOrdering);
 
             string comments = "";
             string output = DeclarationSerializer.Serialize(declaration, ref comments);

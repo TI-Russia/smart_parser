@@ -68,8 +68,10 @@ namespace Smart.Parser.Adapters
                     {
                         s += textOrBreak.Value;
                     }
-                    else if (   (textOrBreak.Name == w + "br") ||
-                                (textOrBreak.Name == w + "lastRenderedPageBreak") )
+                    else if (   (textOrBreak.Name == w + "br")
+                                            /* do  not use lastRenderedPageBreak, see MinRes2011 for wrong lastRenderedPageBreak in Семенов 
+                                            ||
+                                                  (textOrBreak.Name == w + "lastRenderedPageBreak") */)
                     {
                         s += "\n";
                     }
@@ -334,18 +336,6 @@ namespace Smart.Parser.Adapters
                 if (token.Count() > 0) result.Add(token);
             }
             return result;
-        }
-
-        static string GetTextByRow(List<XceedWordCell> row)
-        {
-            string text = "";
-            foreach (var c  in row)
-            {
-                text += c.Text;
-
-            }
-            return text;
-
         }
 
         static bool CheckMergeRow(List<XceedWordCell> row1, List<XceedWordCell> row2)

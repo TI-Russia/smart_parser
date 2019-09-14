@@ -3961,7 +3961,7 @@
     {
       "person": {
         "name_raw": "Пояркова Е.С.",
-        "role": "Начальник \nотдела\n"
+        "role": "Начальник отдела\n"
       },
       "year": 2015,
       "incomes": [
@@ -4059,7 +4059,7 @@
       ],
       "vehicles": [
         {
-          "text": "а/м легковой \nMercedes-Benz GL350",
+          "text": "а/м легковой Mercedes-Benz GL350",
           "relative": null
         }
       ],
@@ -6578,7 +6578,7 @@
       ],
       "vehicles": [
         {
-          "text": "а/м легковой Toyota \nLand Cruiser; а/м легковой\nNissan Pathfinder; а/м легковой Hyundai i30",
+          "text": "а/м легковой Toyota Land Cruiser; а/м легковой\nNissan Pathfinder; а/м легковой Hyundai i30",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7147,7 +7147,7 @@
     {
       "person": {
         "name_raw": "Леготина О.Н.",
-        "role": "Заместитель директора \nдепартамента\n"
+        "role": "Заместитель директора департамента\n"
       },
       "year": 2015,
       "incomes": [
@@ -8063,7 +8063,7 @@
           "relative": null
         },
         {
-          "text": "а/м легковой \nMercedes GLK 220",
+          "text": "а/м легковой Mercedes GLK 220",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -10581,13 +10581,13 @@
           "type_raw": "квартира"
         },
         {
-          "text": "земельный \nучасток",
+          "text": "земельный участок",
           "square": 875.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "875,0",
           "country_raw": "Россия",
-          "type_raw": "земельный \nучасток",
+          "type_raw": "земельный участок",
           "own_type_raw": "индивидуальная"
         },
         {
@@ -11257,7 +11257,7 @@
     {
       "person": {
         "name_raw": "Сафронова О.В.",
-        "role": "начальник \nотдела\n"
+        "role": "начальник отдела\n"
       },
       "year": 2015,
       "incomes": [
@@ -11319,7 +11319,7 @@
       ],
       "vehicles": [
         {
-          "text": "а/м легковой \nToyota RAV 4",
+          "text": "а/м легковой Toyota RAV 4",
           "relative": null
         },
         {

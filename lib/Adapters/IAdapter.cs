@@ -24,14 +24,14 @@ namespace Smart.Parser.Adapters
             MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
         }
         public virtual bool IsExcel() { return false; }
-        public virtual string GetDocumentPosition(int row, DeclarationField field)
+        public virtual string GetDocumentPosition(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
             return null;
         }
-        public string GetDocumentPositionExcel(int row, DeclarationField field)
+        public string GetDocumentPositionExcel(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
             TColumnSpan col;
-            ColumnOrdering.ColumnOrder.TryGetValue(field, out col);
+            columnOrdering.ColumnOrder.TryGetValue(field, out col);
             return "R" + (row + 1).ToString() + "C" + (col.BeginColumn + 1).ToString();
         }
 
@@ -42,44 +42,25 @@ namespace Smart.Parser.Adapters
             throw new NotImplementedException();
         }
 
-        public Rows Rows
+        public Row GetRow(ColumnOrdering columnOrdering, int row)
         {
-            get
-            {
-                return new Rows(this);
-            }
+            return new Row(this, columnOrdering, row);
         }
 
-        public Row GetRow(int row)
-        {
-            return new Row(this, row);
-        }
 
-        public bool HasDeclarationField(DeclarationField field)
-        {
-            return ColumnOrdering.ColumnOrder.ContainsKey(field);
-        }
-
-        virtual public Cell GetDeclarationField(int row, DeclarationField field)
+        virtual public Cell GetDeclarationField(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
             TColumnSpan colSpan;
-            if (!ColumnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
+            if (!columnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
-                //return -1;
-                throw new SystemException("Field " + field.ToString() + " not found");
+                throw new SystemException(String.Format("Field {0} not found, row={1}", field.ToString(), row));
             }
 
             var exactCell = GetCell(row, colSpan.BeginColumn);
-
-            //int cellIndex = 0;
-            //for (int i = 0; i < ColumnOrdering.ColumnOrder.Keys.Count; i++)
-            //{
-            //    if (ColumnOrdering.ColumnOrder.ElementAt(i).Key == field)
-            //    {
-            //        cellIndex = i;
-            //    }
-            //}
-            //var exactCell = GetRow(row).Cells[cellIndex];
+            if (exactCell == null)
+            {
+                throw new SystemException(String.Format("Field {0} not found, row={1}, col={2}", field.ToString(), row, colSpan.BeginColumn));
+            }
 
             if (exactCell.Text.Trim() != "")
             {
@@ -101,9 +82,9 @@ namespace Smart.Parser.Adapters
             return exactCell;
         }
 
-        public string GetContents(int row, DeclarationField field)
+        public string GetContents(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
-            return GetDeclarationField(row, field).GetText(true);
+            return GetDeclarationField(columnOrdering, row, field).GetText(true);
         }
 
 
@@ -116,9 +97,6 @@ namespace Smart.Parser.Adapters
             throw new NotImplementedException();
         }
 
-
-
-        public ColumnOrdering ColumnOrdering { get; set; }
         public virtual string GetTitle()
         {
             throw new NotImplementedException();
@@ -146,17 +124,15 @@ namespace Smart.Parser.Adapters
         }
         public bool IsEmptyRow(int rowIndex)
         {
-            Row r = Rows[rowIndex];
-            if (r == null) return true;
-            foreach (var cell in r.Cells)
+            foreach (var cell in GetCells(rowIndex))
             {
                 if (!cell.IsEmpty) return false;
             }
             return true;
         }
-        public bool IsSectionRow(Smart.Parser.Adapters.Row r, bool prevRowIsSection, out string text)
+        public bool IsSectionRow(List<Cell> cells, bool prevRowIsSection, out string text)
         {
-            return IAdapter.IsSectionRow(r.Cells, prevRowIsSection, GetColsCount(), out text);
+            return IAdapter.IsSectionRow(cells, prevRowIsSection, GetColsCount(), out text);
         }
         
 
@@ -178,11 +154,10 @@ namespace Smart.Parser.Adapters
             public List<List<TJsonCell>> Section = new List<List<TJsonCell>>();
             public List<List<TJsonCell>> Data = new List<List<TJsonCell>>();
         }
-        List<TJsonCell> GetJsonByRow(int rowIndex)
+        List<TJsonCell> GetJsonByRow(List<Cell> row)
         {
             var outputList = new List<TJsonCell>();
-            Row row = GetRow(rowIndex);
-            foreach (var c in row.Cells)
+            foreach (var c in row)
             {
                 var jc = new TJsonCell();
                 jc.mc = c.MergedColsCount;
@@ -194,11 +169,10 @@ namespace Smart.Parser.Adapters
             }
             return outputList;
         }
-        string GetHtmlByRow(int rowIndex)
+        string GetHtmlByRow(List<Cell> row, int rowIndex)
         {
-            Row row = GetRow(rowIndex);
             string res = string.Format("<tr rowindex={0}>\n", rowIndex);
-            foreach (var c in row.Cells)
+            foreach (var c in row)
             {
                 res += "\t<td";
                 if (c.MergedColsCount > 1)
@@ -215,23 +189,15 @@ namespace Smart.Parser.Adapters
             res += "</tr>\n";
             return res;
         }
-        public int GetPossibleHeaderBegin()
-        {
-            return ColumnOrdering.HeaderBegin ?? 0;
-        }
-        public int GetPossibleHeaderEnd()
-        {
-            return ColumnOrdering.HeaderEnd ?? GetPossibleHeaderBegin() + 2;
-        }
 
-        public TJsonTablePortion TablePortionToJson(int body_start, int body_end)
+        public TJsonTablePortion TablePortionToJson(ColumnOrdering columnOrdering, int body_start, int body_end)
         {
             var table = new TJsonTablePortion();
             table.DataStart = body_start;
-            int headerEnd = GetPossibleHeaderEnd();
-            for (int i= GetPossibleHeaderBegin();  i < GetPossibleHeaderEnd(); i++)
+            int headerEnd = columnOrdering.GetPossibleHeaderEnd();
+            for (int i= columnOrdering.GetPossibleHeaderBegin();  i < columnOrdering.GetPossibleHeaderEnd(); i++)
             {
-                var row = GetJsonByRow(i);
+                var row = GetJsonByRow(GetCells(i));
                 table.Header.Add(row);
             }
 
@@ -240,9 +206,10 @@ namespace Smart.Parser.Adapters
             {
                 string dummy;
                 // cannot use prevRowIsSection
-                if (IsSectionRow(GetRow(i), false, out dummy))
+                var row = GetCells(i);
+                if (IsSectionRow(row, false, out dummy))
                 {
-                    table.Section.Add(GetJsonByRow(i));
+                    table.Section.Add(GetJsonByRow(row));
                     break;
                 }
             }
@@ -254,7 +221,7 @@ namespace Smart.Parser.Adapters
             {
                 if (!IsEmptyRow(table.DataEnd))
                 {
-                    table.Data.Add(GetJsonByRow(table.DataEnd));
+                    table.Data.Add(GetJsonByRow(GetCells(table.DataEnd)));
                     addedRows++;
                 }
                 table.DataEnd++;
@@ -262,14 +229,14 @@ namespace Smart.Parser.Adapters
             return table;
         }
 
-        public void WriteHtmlFile(string htmlFileName)
+        public void WriteHtmlFile( string htmlFileName)
         {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(htmlFileName))
             {
                 file.WriteLine("<html><table>");
                 for (int i = 0; i < GetRowsCount(); i++)
                 {
-                    file.WriteLine(GetHtmlByRow(i));
+                    file.WriteLine(GetHtmlByRow(GetCells(i), i));
                 }
                 file.WriteLine("</table></html>");
             }

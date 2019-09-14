@@ -39,10 +39,11 @@ namespace Smart.Parser.Adapters
 
     public class Row
     {
-        public Row(IAdapter adapter, int row)
+        public Row(IAdapter adapter, ColumnOrdering columnOrdering, int row)
         {
             this.row = row;
             this.adapter = adapter;
+            this.ColumnOrdering = columnOrdering;
             Cells = adapter.GetCells(row);
         }
 
@@ -66,24 +67,17 @@ namespace Smart.Parser.Adapters
 
         public string GetContents(DeclarationField field, bool except = true)
         {
-            if (!adapter.HasDeclarationField(field))
+            if (!ColumnOrdering.ContainsField(field))
             {
                 if (!except)
                     return null;
             }
-            var c = adapter.GetDeclarationField(row, field);
+            var c = adapter.GetDeclarationField(ColumnOrdering, row, field);
             if (c == null)
             {
                 return "";
             }
             return c.GetText(true);
-        }
-        public ColumnOrdering ColumnOrdering
-        {
-            get
-            {
-                return adapter.ColumnOrdering;
-            }
         }
 
         public bool IsEmpty()
@@ -93,27 +87,9 @@ namespace Smart.Parser.Adapters
 
         public List<Cell> Cells;
         IAdapter adapter;
+        public ColumnOrdering ColumnOrdering;
         int row;
     }
 
-    public class Rows
-    {
-        private IAdapter adapter;
-
-        // ctor etc.
-
-        public Row this[int index]
-        {
-            get
-            {
-                return adapter.GetRow(index);
-            }
-        }
-
-        public Rows(IAdapter adapter)
-        {
-            this.adapter = adapter;
-        }
-    }
 
 }

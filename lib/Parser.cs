@@ -26,7 +26,7 @@ namespace Smart.Parser.Lib
             FailOnRelativeOrphan = failOnRelativeOrphan;
         }
 
-        Declaration InitializeDeclaration()
+        Declaration InitializeDeclaration(ColumnOrdering columnOrdering)
         {
             // parse filename
             int? id;
@@ -35,9 +35,9 @@ namespace Smart.Parser.Lib
 
             DeclarationProperties properties = new DeclarationProperties()
             {
-                Title = Adapter.ColumnOrdering.Title,
-                MinistryName = Adapter.ColumnOrdering.MinistryName,
-                Year = Adapter.ColumnOrdering.Year,
+                Title = columnOrdering.Title,
+                MinistryName = columnOrdering.MinistryName,
+                Year = columnOrdering.Year,
                 SheetName = Adapter.GetWorksheetName(),
                 documentfile_id = id,
                 archive_file = archive,
@@ -45,7 +45,8 @@ namespace Smart.Parser.Lib
             };
             if (properties.Year == null)
             {
-                var incomeHeader = Adapter.Rows[0].GetContents(DeclarationField.DeclaredYearlyIncome);
+                var firstRow = Adapter.GetRow(columnOrdering, 0);
+                var incomeHeader = firstRow.GetContents(DeclarationField.DeclaredYearlyIncome);
                 string dummy = "";
                 int? year = null;
                 ColumnDetector.GetValuesFromTitle(incomeHeader, ref dummy, ref year, ref dummy);
@@ -58,11 +59,11 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        int? GetPersonIndex(int row) {
+        int? GetPersonIndex(ColumnOrdering columnOrdering, int row) {
             int? index = null;
-            if (Adapter.HasDeclarationField(DeclarationField.Number))
+            if (columnOrdering.ContainsField(DeclarationField.Number))
             {
-                string indexStr = Adapter.GetDeclarationField(row, DeclarationField.Number).Text
+                string indexStr = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.Number).Text
                     .Replace(".", "").CleanWhitespace();
                 int indVal;
                 bool dummyRes = Int32.TryParse(indexStr, out indVal);
@@ -74,13 +75,13 @@ namespace Smart.Parser.Lib
             return index;
         }
         
-        int FindNextPersonIndex(int row, int mergedRowCount)
+        int FindNextPersonIndex(ColumnOrdering columnOrdering, int row, int mergedRowCount)
         {
-            if (Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
+            if (columnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
             {
                 for (int i = row + 1; i < row + mergedRowCount; i++)
                 {
-                    string text = Adapter.GetDeclarationField(i, DeclarationField.RelativeTypeStrict).Text;
+                    string text = Adapter.GetDeclarationField(columnOrdering, i, DeclarationField.RelativeTypeStrict).Text;
                     if (text.CleanWhitespace() != "")
                     {
                         return i;
@@ -92,7 +93,7 @@ namespace Smart.Parser.Lib
         class TBorderFinder
         {
             DeclarationSection CurrentSection = null;
-            PublicServant CurrentServant = null;
+            PublicServant CurrentDeclarant = null;
             public TI.Declarator.ParserCommon.Person CurrentPerson = null;
             Declaration _Declaration;
             bool FailOnRelativeOrphan;
@@ -107,7 +108,7 @@ namespace Smart.Parser.Lib
             {
                 CurrentSection = new DeclarationSection() { Row = row, Name = sectionTitle };
                 Logger.Debug(String.Format("find section at line {0}:'{1}'", row, sectionTitle));
-                CurrentServant = null;
+                CurrentDeclarant = null;
                 if (CurrentPerson != null)
                 {
                     CurrentPerson.RangeHigh = row - 1;
@@ -131,35 +132,36 @@ namespace Smart.Parser.Lib
 
             }
 
-            public void CreateNewServant(int row, string fioStr, string occupationStr, string documentPosition, int? index)
+            public void CreateNewDeclarant(ColumnOrdering columnOrdering, IAdapter adapter, int row, string fioStr, string occupationStr, string documentPosition, int? index)
             {
                 Logger.Debug("Declarant {0} at row {1}", fioStr, row);
                 if (CurrentPerson != null)
                 {
                     CurrentPerson.RangeHigh = row - 1;
                 }
-                CurrentServant = new PublicServant()
+                CurrentDeclarant = new PublicServant()
                 {
                     NameRaw = fioStr,
-                    Occupation = occupationStr
+                    Occupation = occupationStr,
+                    Ordering = columnOrdering
                 };
                 if (CurrentSection != null)
                 {
-                    CurrentServant.Department = CurrentSection.Name;
+                    CurrentDeclarant.Department = CurrentSection.Name;
                 }
 
-                CurrentServant.Index = index;
+                CurrentDeclarant.Index = index;
 
-                CurrentPerson = CurrentServant;
+                CurrentPerson = CurrentDeclarant;
                 CurrentPerson.RangeLow = row;
                 CurrentPerson.document_position = documentPosition;
-                _Declaration.PublicServants.Add(CurrentServant);
+                _Declaration.PublicServants.Add(CurrentDeclarant);
             }
 
             public void CreateNewRelative(int row, string relativeStr, string documentPosition)
             {
                 Logger.Debug("Relative {0} at row {1}", relativeStr, row);
-                if (CurrentServant == null)
+                if (CurrentDeclarant == null)
                 {
                     if (FailOnRelativeOrphan)
                     {
@@ -173,7 +175,7 @@ namespace Smart.Parser.Lib
                 }
                 CurrentPerson.RangeHigh = row - 1;
                 Relative relative = new Relative();
-                CurrentServant.AddRelative(relative);
+                CurrentDeclarant.AddRelative(relative);
                 CurrentPerson = relative;
                 CurrentPerson.RangeLow = row;
 
@@ -189,52 +191,52 @@ namespace Smart.Parser.Lib
             }
         }
 
-        public Declaration Parse()
+        public Declaration Parse(ColumnOrdering columnOrdering)
          {
             FirstPassStartTime = DateTime.Now;
 
-            Declaration declaration =  InitializeDeclaration();
+            Declaration declaration =  InitializeDeclaration(columnOrdering);
 
-            int rowOffset = Adapter.ColumnOrdering.FirstDataRow;
+            int rowOffset = columnOrdering.FirstDataRow;
             Adapter.SetMaxColumnsCountByHeader(rowOffset);
-            Adapter.ColumnOrdering.InitHeaderEndColumns(Adapter.GetColsCount());
+            columnOrdering.InitHeaderEndColumns(Adapter.GetColsCount());
 
             TBorderFinder borderFinder = new TBorderFinder(declaration, FailOnRelativeOrphan);
             
-            if (Adapter.ColumnOrdering.Section != null)
+            if (columnOrdering.Section != null)
             {
-                borderFinder.CreateNewSection(rowOffset, Adapter.ColumnOrdering.Section);
+                borderFinder.CreateNewSection(rowOffset, columnOrdering.Section);
             }
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
-                Row currRow = Adapter.GetRow(row);
+                Row currRow = Adapter.GetRow(columnOrdering, row);
                 if (currRow == null || currRow.IsEmpty())
                 {
                     continue;
                 }
 
                 string sectionName;
-                if (Adapter.IsSectionRow(currRow, false, out sectionName))
+                if (Adapter.IsSectionRow(currRow.Cells, false, out sectionName))
                 {
                     borderFinder.CreateNewSection(row, sectionName);
                     continue;
                 }
 
-                int mergedRowCount = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).MergedRowsCount;
+                int mergedRowCount = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.NameOrRelativeType).MergedRowsCount;
 
-                string nameOrRelativeType = Adapter.GetDeclarationField(row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
-                string documentPosition = Adapter.GetDocumentPosition(row, DeclarationField.NameOrRelativeType);
+                string nameOrRelativeType = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
+                string documentPosition = Adapter.GetDocumentPosition(columnOrdering, row, DeclarationField.NameOrRelativeType);
                 string relativeType = "";
-                if  (DataHelper.IsEmptyValue(nameOrRelativeType) &&  Adapter.HasDeclarationField(DeclarationField.RelativeTypeStrict))
+                if  (DataHelper.IsEmptyValue(nameOrRelativeType) && columnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
                 {
-                    relativeType = Adapter.GetDeclarationField(row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
+                    relativeType = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
                 }
                 
                 string occupationStr = "";
-                if (Adapter.HasDeclarationField(DeclarationField.Occupation))
+                if (columnOrdering.ContainsField(DeclarationField.Occupation))
                 {
-                    occupationStr = Adapter.GetDeclarationField(row, DeclarationField.Occupation).Text;
+                    occupationStr = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.Occupation).Text;
                 }
 
                 if (DataHelper.IsEmptyValue(nameOrRelativeType) && DataHelper.IsEmptyValue(relativeType))
@@ -243,8 +245,8 @@ namespace Smart.Parser.Lib
                 }
                 else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    int? index = GetPersonIndex(row);
-                    borderFinder.CreateNewServant(row, nameOrRelativeType, occupationStr, documentPosition, index);
+                    int? index = GetPersonIndex(columnOrdering, row);
+                    borderFinder.CreateNewDeclarant(columnOrdering, Adapter, row, nameOrRelativeType, occupationStr, documentPosition, index);
                     
                 }
                 else
@@ -264,7 +266,7 @@ namespace Smart.Parser.Lib
                 }
                 if (mergedRowCount > 1)
                 {
-                    row = FindNextPersonIndex(row, mergedRowCount) - 1; // we are in for cycle
+                    row = FindNextPersonIndex(columnOrdering, row, mergedRowCount) - 1; // we are in for cycle
                 }
             }
 
@@ -295,7 +297,7 @@ namespace Smart.Parser.Lib
 
         void AddRealEstateWithNaturalText (Row currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
-            if (Adapter.HasDeclarationField(fieldName))
+            if (currRow.ColumnOrdering.ContainsField(fieldName))
             {
                 RealEstateProperty realEstateProperty = new RealEstateProperty();
                 realEstateProperty.Text = currRow.GetContents(fieldName);
@@ -307,7 +309,7 @@ namespace Smart.Parser.Lib
         }
         public void ParseOwnedProperty(Row currRow, Person person)
         {
-            if (!Adapter.HasDeclarationField(DeclarationField.OwnedRealEstateSquare))
+            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
             {
                 AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, OwnedString, person);
                 return;
@@ -341,7 +343,7 @@ namespace Smart.Parser.Lib
 
         public void ParseMixedProperty(Row currRow, Person person)
         {
-            if (!Adapter.HasDeclarationField(DeclarationField.MixedRealEstateSquare))
+            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.MixedRealEstateSquare))
             {
                 AddRealEstateWithNaturalText(currRow, DeclarationField.MixedColumnWithNaturalText, null, person);
                 return;
@@ -370,7 +372,7 @@ namespace Smart.Parser.Lib
 
         public void ParseStateProperty(Row currRow, Person person)
         {
-            if (!Adapter.HasDeclarationField(DeclarationField.StatePropertySquare))
+            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.StatePropertySquare))
             {
                 AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
                 return;
@@ -398,7 +400,7 @@ namespace Smart.Parser.Lib
         }
         bool ParseIncome(Row currRow, Person person)
         {
-            if (Adapter.HasDeclarationField(DeclarationField.DeclaredYearlyIncomeThousands))
+            if (currRow.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
             {
 
                 string s1 = currRow.GetContents(DeclarationField.DeclaredYearlyIncomeThousands);
@@ -452,7 +454,7 @@ namespace Smart.Parser.Lib
                     List<Row> rows = new List<Row>();
                     for (int rowIndex = person.RangeLow; rowIndex <= person.RangeHigh; rowIndex++)
                     {
-                        Row row = Adapter.GetRow(rowIndex);
+                        Row row = Adapter.GetRow(servant.Ordering, rowIndex);
                         if (row == null || row.Cells.Count == 0)
                         {
                             continue;

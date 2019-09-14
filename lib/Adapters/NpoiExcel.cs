@@ -81,9 +81,9 @@ namespace Smart.Parser.Adapters
             if (TempFileName != null) File.Delete(TempFileName);
         }
 
-        public override string GetDocumentPosition(int row, DeclarationField field)
+        public override string GetDocumentPosition(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
-            return GetDocumentPositionExcel(row, field);
+            return GetDocumentPositionExcel(columnOrdering, row, field);
         }
 
 
