@@ -1,0 +1,161 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Федоров В.В.",
+        "role": "Начальник ГУ Минюста России  по Москве \n\n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 2602261.61,
+          "relative": null
+        },
+        {
+          "size": 1597360.84,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 98.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "98,3 Россия",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индиви-дуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 58.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,5 Россия",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая 1/4"
+        },
+        {
+          "text": "квартира",
+          "square": 62.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "62,9 Россия",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "долевая 1/3"
+        },
+        {
+          "text": "квартира",
+          "square": 98.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "98, 3",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nHonda Pilot",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Шарбур Е.А.",
+        "role": "Начальник управления Минюста России по Магаданской области и Чукотскому автономному округу\n\n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 1681422.41,
+          "relative": null
+        },
+        {
+          "size": 1922874.00,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 51.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "51,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1064.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1 064,0 Россия",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "долевая 1/3"
+        },
+        {
+          "text": "квартира",
+          "square": 75.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "75,3 Россия",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индиви- дуальная"
+        },
+        {
+          "text": "ангар",
+          "square": 149.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "149,6 Россия",
+          "country_raw": "Россия",
+          "type_raw": "ангар",
+          "own_type_raw": "долевая 1/3"
+        },
+        {
+          "text": "ангар",
+          "square": 308.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "308,2 Россия",
+          "country_raw": "Россия",
+          "type_raw": "ангар",
+          "own_type_raw": "долевая 1/3"
+        },
+        {
+          "text": "Квартира",
+          "square": 51.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "51,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Легковой автомобиль Nissan Рrеria\n\nДельталет Форсаж-ш",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 30
+    }
+  ],
+  "document": {
+    "sheet_title": " \n  Сведения\nо доходах, расходах, об имуществе и обязательствах имущественного характера, представленные начальниками, заместителями начальников Главных  и межрегиональных управлений, начальниками территориальных управлений Министерства юстиции Российской Федерации                               за отчетный период с 1 января 2015 года по 31 декабря 2015 года. \n\n\n",
+    "year": 2015
+  }
+}

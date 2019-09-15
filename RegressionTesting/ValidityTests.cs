@@ -373,6 +373,13 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\DepGosPol2012.doc", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void HeaderInsideTable()
+        {
+            TestSmartParser("SmartParser\\HeaderInsideTable.docx", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));

@@ -535,7 +535,7 @@ namespace Smart.Parser.Lib
             stateProperty.type_raw = statePropTypeStr;
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
             stateProperty.square_raw = statePropSquareStr;
-            stateProperty.country_raw = statePropCountryStr;
+            stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
             stateProperty.own_type_by_column = StateString;
             CheckProperty(stateProperty);
             person.RealEstateProperties.Add(stateProperty);
@@ -554,7 +554,7 @@ namespace Smart.Parser.Lib
 
             realEstateProperty.square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = areaStr;
-            realEstateProperty.country_raw = countryStr;
+            realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
 
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)

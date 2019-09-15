@@ -1,17 +1,48 @@
-﻿using Parser.Lib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Globalization;
 using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Lib
 {
     public class DataHelper
     {
+        static string CountryRegexp;
+        // Non-breaking space or breaking space can be between digits like "1 680,0"
+        static string SquareRegexp = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
+        static DataHelper()
+        {
+            CountryRegexp = string.Join(")|(?:", new List<string>(ReadCountryList()).ToArray());
+            CountryRegexp = "((?:" + CountryRegexp + "))";
+            
+        }
+        static HashSet<string> ReadCountryList() {
+            HashSet<string> countries = new HashSet<string>();
+
+            CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures);
+
+            //loop through all the cultures found
+            var savCulture = Thread.CurrentThread.CurrentUICulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("ru-RU");
+            foreach (CultureInfo culture in cultures)
+            {
+                try { 
+                    RegionInfo region = new RegionInfo(culture.LCID);
+                    countries.Add(region.DisplayName.ToLower());
+                }
+                catch (ArgumentException ex)
+                {
+                    continue;
+                }
+            }
+            Thread.CurrentThread.CurrentUICulture = savCulture;
+            countries.Add("российская федерация");
+            return countries;
+        }
         static public bool IsPublicServantInfo(string nameOrRelativeType)
         {
             if (IsEmptyValue(nameOrRelativeType)) return false;
@@ -144,71 +175,44 @@ namespace Smart.Parser.Lib
             return key;
         }
 
-        private static readonly string[] SquareSeparators = new string[] { "\n", " " };
+        static bool ReadSquareAndCountry(string str, out decimal square, out string country)
+        {
+            square = 0;
+            country = "";
+            string regexp = SquareRegexp + " +" + CountryRegexp;
+            var match = Regex.Match(str, regexp, RegexOptions.IgnoreCase);
+            if (!match.Success)
+                return false;
+            square = Decimal.Round(match.Groups[1].ToString().ParseDecimalValue(), 2);
+            country = match.Groups[2].ToString();
+            return true;
+        }
 
         public static decimal? ParseSquare(string strSquares)
         {
+            decimal square;
+            string dummy;
+            if (ReadSquareAndCountry(strSquares, out square, out dummy))
+            {
+                return square;
+            }
             if (Regex.Match(strSquares, "[а-я]+", RegexOptions.IgnoreCase).Success)
                 return null;
 
-            decimal? area = null;
-            // Non-breaking space or breaking space can be between digits like "1 680,0"
-            var match = Regex.Match(strSquares, "\\d[\\d\u00A0 ]*([,.]\\d+)?");
-            if (match.Success)
-            {
-
-                Decimal d = match.Value.ParseDecimalValue();
-                area = Decimal.Round(d, 2);
-            }
-            return area;
+            var match = Regex.Match(strSquares, SquareRegexp);
+            if (!match.Success) return null;
+            return  Decimal.Round(match.Value.ParseDecimalValue(), 2);
         }
-
-
-        public static List<decimal?> ParseSquares(string strSquares)
+        public static string ParseCountry(string str)
         {
-            var res = new List<decimal?>();
-            foreach (var str in strSquares.Split(SquareSeparators, StringSplitOptions.RemoveEmptyEntries))
+            decimal dummy;
+            string country;
+            if (ReadSquareAndCountry(str, out dummy, out country))
             {
-                if (str.Contains("м")) // м. п.м, и т.д.
-                {
-                    continue;
-                }
-
-                decimal? area;
-                var match = Regex.Match(str, "(\\d+)/(\\d+)");
-                if (match.Success)
-                {
-                    string d1 = match.Groups[1].Value;
-                    string d2 = match.Groups[2].Value;
-                    area = d1.ParseDecimalValue() / d2.ParseDecimalValue();
-                }
-                else if (Regex.Match(str, "[а-я]+").Success)
-                {
-                    area = null;
-                }
-                else if (IsEmptyValue(str))
-                {
-                    area = null;
-                }
-                else
-                {
-                    try
-                    {
-                        area = str.ParseDecimalValue();
-                    }
-                    catch
-                    {
-                        area = null;
-                    }
-                }
-
-                res.Add(area);
+                return country;
             }
-
-            return res;
+            return str;
         }
-
-
         static public bool ParseDocumentFileName(string filename, out int? id, out string archive_file)
         {
             id = null;

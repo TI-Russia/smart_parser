@@ -100,6 +100,12 @@
     <None Include="regression_samples\SmartParser\fsin2013.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\HeaderInsideTable.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\HeaderInsideTable.docx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\IncomeNotFirstLine.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
