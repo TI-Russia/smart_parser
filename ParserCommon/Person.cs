@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Linq;
 
+
 namespace TI.Declarator.ParserCommon
 {
     public abstract class Person
@@ -11,13 +12,12 @@ namespace TI.Declarator.ParserCommon
 
         public List<RealEstateProperty> RealEstateProperties = new List<RealEstateProperty>();
         public List<Vehicle> Vehicles = new List<Vehicle>();
-
         public decimal? DeclaredYearlyIncome;
 
         public string DataSources = "";
 
-        public int RangeLow { set; get; }
-        public int RangeHigh { set; get; }
+        // better to use Row reference here
+        public HashSet<int> InputRowIndices = new HashSet<int>();
 
         public string document_position { set; get; }
         virtual public int? PersonIndex { set; get; } = null;

@@ -58,34 +58,7 @@ namespace Smart.Parser.Lib
             }
             return false;
         }
-/*
-        static private bool IsHeader(List<Cell> cells)
-        {
-            string text = "";
-            int nonEmptyCellCount = 0;
-            foreach (var cell in cells)
-            {
-                string cellText = cell.GetText(true);
-                if (!String.IsNullOrWhiteSpace(cellText))
-                {
-                    nonEmptyCellCount++;
-                }
 
-                text += cell.GetText();
-            }
-
-            if (text.Trim() == "")
-            {
-                return false;
-            }
-
-            string first = cells.First().GetText(true);
-
-            return (nonEmptyCellCount > 4) &&
-                   (cells.First().GetText(true) != "1");
-        }
-
-    */
         static int ProcessTitle(IAdapter adapter, ColumnOrdering columnOrdering)
         {
             int row = 0;
@@ -237,10 +210,16 @@ namespace Smart.Parser.Lib
         }
 
 
-        static public ColumnOrdering ExamineHeader(IAdapter adapter)
+        static public ColumnOrdering ExamineTableBeginning(IAdapter adapter)
         {
             ColumnOrdering columnOrdering = new ColumnOrdering();
             int headerStartRow = ProcessTitle(adapter, columnOrdering);
+            ReadHeader(adapter, headerStartRow, columnOrdering);
+            return columnOrdering;
+        }
+
+        static public void ReadHeader(IAdapter adapter, int headerStartRow, ColumnOrdering columnOrdering)
+        { 
             int headerEndRow = headerStartRow + 1;
             var firstRow = adapter.GetCells(headerStartRow);
 
@@ -306,7 +285,6 @@ namespace Smart.Parser.Lib
             }
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
-            return columnOrdering;
         }
     }
 }

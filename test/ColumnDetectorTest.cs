@@ -16,7 +16,7 @@ namespace test
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract.xlsx");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineHeader(adapter);
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 12);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 0);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 1);
@@ -38,7 +38,7 @@ namespace test
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "rabotniki_podved_organizacii_2013.xlsx");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineHeader(adapter);
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 12);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 1);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType].BeginColumn == 3);
@@ -60,7 +60,7 @@ namespace test
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract.xlsx");
             IAdapter adapter = NpoiExcelAdapter.CreateAdapter(xlsxFile);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineHeader(adapter);
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 12);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 0);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 1);

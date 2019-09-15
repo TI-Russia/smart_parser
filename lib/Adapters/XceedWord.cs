@@ -421,7 +421,7 @@ namespace Smart.Parser.Adapters
                         newRow.Add(c);
                         sumspan += c.MergedColsCount;
                     }
-                    if (t > firstTableWithData &&
+                    /*if (t > firstTableWithData &&
                             (    CheckEqualByText(newRow, TableRows[0])
                               || CheckEqualByText(newRow, TableRows[1])
                             )
@@ -429,7 +429,7 @@ namespace Smart.Parser.Adapters
                     {
                         Logger.Debug(string.Format("skip row {0} at table {1} because it looks like a repeated header", r, t));
                         continue;
-                    }
+                    }*/
                     if (!titleFoundInText && t == 0 && wordDocument.Tables[t].Rows.Count < 5 )
                     {
                         string titleLine;

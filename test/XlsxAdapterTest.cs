@@ -20,7 +20,7 @@ namespace test
 
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
-            var columnOrdering = ColumnDetector.ExamineHeader(adapter);
+            var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
 
 
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);

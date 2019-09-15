@@ -522,7 +522,7 @@ namespace Smart.Parser
         {
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
-            var columnOrdering = ColumnDetector.ExamineHeader(adapter);
+            var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
             // Try to extract declaration year from file name if we weren't able to get it from document title
             if (!columnOrdering.Year.HasValue)
             {
