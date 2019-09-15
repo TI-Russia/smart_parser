@@ -191,6 +191,14 @@ namespace Smart.Parser.Lib
             }
         }
 
+        bool IsHeaderRow(Row row, out ColumnOrdering columnOrdering, out int headerHeight)
+        {
+            columnOrdering = null;
+            headerHeight = 0;
+            if (!ColumnDetector.WeakHeaderCheck(row.Cells)) return false;
+            return false;
+        }
+
         public Declaration Parse(ColumnOrdering columnOrdering)
          {
             FirstPassStartTime = DateTime.Now;
@@ -222,7 +230,16 @@ namespace Smart.Parser.Lib
                     borderFinder.CreateNewSection(row, sectionName);
                     continue;
                 }
-
+                {
+                    ColumnOrdering newColumnOrdering;
+                    int headerHeight;
+                    if (IsHeaderRow(currRow, out newColumnOrdering, out headerHeight))
+                    {
+                        columnOrdering = newColumnOrdering;
+                        row += headerHeight - 1; // row++ in "for" cycle
+                        continue;
+                    }
+                }
                 var nameCell = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType);
                 int mergedRowCount = nameCell.MergedRowsCount;
                 string nameOrRelativeType = nameCell.Text.CleanWhitespace();

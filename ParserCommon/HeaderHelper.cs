@@ -67,17 +67,17 @@ namespace TI.Declarator.ParserCommon
                          .RemoveStupidTranslit();
         }
 
-        private static bool IsNumber(this string str)
+        public static bool IsNumber(this string str)
         {
             return str.Contains("№") || str.ToLower().Contains("n п/п") || str.ToLower().Equals("п/п");
         }
 
-        private static bool IsName(this string s)
+        public static bool IsName(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
-            return (s.Contains("фамилия") ||
-                    s.Contains("фио") ||
-                    s.Contains("ф.и.о"));
+            string clean = s.Replace("-", "").Replace(" ", "").ToLower();
+            return (clean.Contains("фамилия") ||
+                    clean.Contains("фио") ||
+                    clean.Contains("ф.и.о"));
         }
 
         private static bool IsRelativeType(this string s)

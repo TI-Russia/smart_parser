@@ -46,6 +46,19 @@ namespace Smart.Parser.Lib
             return true;
         }
 
+        public static bool WeakHeaderCheck(List<Cell> cells)
+        {
+            int colCount = 0;
+            foreach (var c in cells)
+            {
+                if (HeaderHelpers.IsName(c.Text)) return true;
+                if (HeaderHelpers.IsNumber(c.Text)) return true;
+                colCount += 1;
+                if (colCount > 3) break;
+            }
+            return false;
+        }
+/*
         static private bool IsHeader(List<Cell> cells)
         {
             string text = "";
@@ -72,6 +85,7 @@ namespace Smart.Parser.Lib
                    (cells.First().GetText(true) != "1");
         }
 
+    */
         static int ProcessTitle(IAdapter adapter, ColumnOrdering columnOrdering)
         {
             int row = 0;
@@ -100,7 +114,7 @@ namespace Smart.Parser.Lib
                         columnOrdering.Section = section_text;
                     }
                 }
-                else if (IsHeader(currRow))
+                else if (WeakHeaderCheck(currRow))
                     break;
 
                 row += 1;
