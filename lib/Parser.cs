@@ -314,7 +314,7 @@ namespace Smart.Parser.Lib
                 ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
             }
             string squareStr = currRow.GetContents(DeclarationField.OwnedRealEstateSquare);
-            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry);
+            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry, false);
 
             try
             {

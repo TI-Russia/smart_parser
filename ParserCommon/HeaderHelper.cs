@@ -69,7 +69,7 @@ namespace TI.Declarator.ParserCommon
 
         public static bool IsNumber(this string str)
         {
-            return str.Contains("№") || str.ToLower().Contains("n п/п") || str.ToLower().Equals("п/п");
+            return str.StartsWith("№") || str.ToLower().Contains("n п/п") || str.ToLower().Equals("п/п");
         }
 
         public static bool IsName(this string s)

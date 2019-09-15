@@ -380,6 +380,14 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\HeaderInsideTable.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void dnko2014()
+        {
+            // внутри заголовка в таблице в конце написан бред, но падать не будем
+            TestSmartParser("SmartParser\\dnko-2014.docx", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));

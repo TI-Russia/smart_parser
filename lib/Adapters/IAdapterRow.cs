@@ -75,7 +75,7 @@ namespace Smart.Parser.Adapters
             if (!ColumnOrdering.ContainsField(field))
             {
                 if (!except)
-                    return null;
+                    return "";
             }
             var c = adapter.GetDeclarationField(ColumnOrdering, row, field);
             if (c == null)

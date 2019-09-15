@@ -94,6 +94,12 @@
     <None Include="regression_samples\SmartParser\DepGosPol2012.doc.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\dnko-2014.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\dnko-2014.docx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\fsin2013.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
