@@ -223,20 +223,20 @@ namespace Smart.Parser.Lib
                     continue;
                 }
 
-                int mergedRowCount = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.NameOrRelativeType).MergedRowsCount;
-
-                string nameOrRelativeType = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.NameOrRelativeType).Text.CleanWhitespace();
-                string documentPosition = Adapter.GetDocumentPosition(columnOrdering, row, DeclarationField.NameOrRelativeType);
+                var nameCell = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType);
+                int mergedRowCount = nameCell.MergedRowsCount;
+                string nameOrRelativeType = nameCell.Text.CleanWhitespace();
+                string documentPosition = Adapter.GetDocumentPosition(row, nameCell.Col);
                 string relativeType = "";
                 if  (DataHelper.IsEmptyValue(nameOrRelativeType) && columnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
                 {
-                    relativeType = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
+                    relativeType = currRow.GetDeclarationField(DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
                 }
                 
                 string occupationStr = "";
                 if (columnOrdering.ContainsField(DeclarationField.Occupation))
                 {
-                    occupationStr = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.Occupation).Text;
+                    occupationStr = currRow.GetDeclarationField(DeclarationField.Occupation).Text;
                 }
 
                 if (DataHelper.IsEmptyValue(nameOrRelativeType) && DataHelper.IsEmptyValue(relativeType))

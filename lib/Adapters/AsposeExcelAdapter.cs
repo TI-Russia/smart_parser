@@ -45,9 +45,9 @@ namespace Smart.Parser.Adapters
             return new AsposeExcelAdapter(fileName);
         }
 
-        public override string GetDocumentPosition(ColumnOrdering columnOrdering, int row, DeclarationField field)
+        public override string GetDocumentPosition(int row, int col)
         {
-            return GetDocumentPositionExcel(columnOrdering, row, field);
+            return GetDocumentPositionExcel(row, col);
         }
 
 

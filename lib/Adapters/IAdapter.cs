@@ -24,15 +24,13 @@ namespace Smart.Parser.Adapters
             MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
         }
         public virtual bool IsExcel() { return false; }
-        public virtual string GetDocumentPosition(ColumnOrdering columnOrdering, int row, DeclarationField field)
+        public virtual string GetDocumentPosition(int row, int col)
         {
             return null;
         }
-        public string GetDocumentPositionExcel(ColumnOrdering columnOrdering, int row, DeclarationField field)
+        public string GetDocumentPositionExcel(int row, int col)
         {
-            TColumnSpan col;
-            columnOrdering.ColumnOrder.TryGetValue(field, out col);
-            return "R" + (row + 1).ToString() + "C" + (col.BeginColumn + 1).ToString();
+            return "R" + (row + 1).ToString() + "C" + (col + 1).ToString();
         }
 
         

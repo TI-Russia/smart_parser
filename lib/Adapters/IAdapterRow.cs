@@ -65,6 +65,11 @@ namespace Smart.Parser.Adapters
             }
         }
 
+        public Cell GetDeclarationField(DeclarationField field)
+        {
+            return adapter.GetDeclarationField(ColumnOrdering, row, field);
+        }
+
         public string GetContents(DeclarationField field, bool except = true)
         {
             if (!ColumnOrdering.ContainsField(field))
