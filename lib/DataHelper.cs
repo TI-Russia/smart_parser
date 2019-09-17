@@ -34,7 +34,7 @@ namespace Smart.Parser.Lib
                     RegionInfo region = new RegionInfo(culture.LCID);
                     countries.Add(region.DisplayName.ToLower());
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException )
                 {
                     continue;
                 }

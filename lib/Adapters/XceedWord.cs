@@ -395,66 +395,71 @@ namespace Smart.Parser.Adapters
             }
             return 0;
         }
+        
+        void ProcessWordTable(Xceed.Words.NET.Table table, bool titleFoundInText, int maxRowsToProcess, ref int firstTableWithData)
+        {
+            bool prevRowIsSection = false;
+            for (int r = 0; r < table.Rows.Count; ++r)
+            {
+                List<XceedWordCell> newRow = new List<XceedWordCell>();
+                int sumspan = 0;
+                var row = table.Rows[r];
+                int rowGridBefore = GetRowGridBefore(row);
+                var cells = row.Cells;
 
+                foreach (var rowCell in cells)
+                {
+                    var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
+                    if (newRow.Count == 0)
+                        c.MergedColsCount += rowGridBefore;
+                    newRow.Add(c);
+                    sumspan += c.MergedColsCount;
+                }
+/*                if (!titleFoundInText && t == 0 && r < table.Rows.Count < 5)
+                {
+                    string titleLine;
+                    prevRowIsSection = TSectionPredicates.IsSectionRow(newRow.ToList<Cell>(), prevRowIsSection, sumspan, out titleLine);
+                    if (prevRowIsSection)
+                    {
+                        Title += titleLine + "\n";
+                        firstTableWithData = 1;
+                        continue;
+                    }
+                }*/
+                if (r == 0 && TableRows.Count > 0 && CheckMergeRow(TableRows.Last(), newRow))
+                {
+                    MergeRow(TableRows.Last(), newRow);
+                }
+                else
+                {
+                    TableRows.Add(newRow);
+                }
+                prevRowIsSection = false;
+
+                if ((maxRowsToProcess != -1) && (TableRows.Count >= maxRowsToProcess))
+                {
+                    break;
+                }
+            }
+        }
+        
         void CollectRows(DocX wordDocument, int maxRowsToProcess)
         {
             bool titleFoundInText = (Title != "");
             int firstTableWithData = 0;
             TablesCount = wordDocument.Tables.Count;
+            Header first = wordDocument.Headers.First;
+            if (first != null)
+            {
+                for (int t = 0; t < first.Tables.Count; ++t)
+                {
+
+                }
+            }
 
             for (int t = 0;  t < wordDocument.Tables.Count; ++t)
             {
-                bool prevRowIsSection = false;
-                for (int r = 0; r < wordDocument.Tables[t].Rows.Count; ++r)
-                {
-                    List<XceedWordCell> newRow = new List<XceedWordCell>();
-                    int sumspan = 0;
-                    var row = wordDocument.Tables[t].Rows[r];
-                    int rowGridBefore = GetRowGridBefore(row);
-                    var cells = row.Cells;
-                
-                    foreach (var rowCell in cells)
-                    {
-                        var c = new XceedWordCell(rowCell, TableRows.Count, sumspan);
-                        if (newRow.Count == 0)
-                            c.MergedColsCount += rowGridBefore;
-                        newRow.Add(c);
-                        sumspan += c.MergedColsCount;
-                    }
-                    /*if (t > firstTableWithData &&
-                            (    CheckEqualByText(newRow, TableRows[0])
-                              || CheckEqualByText(newRow, TableRows[1])
-                            )
-                       )
-                    {
-                        Logger.Debug(string.Format("skip row {0} at table {1} because it looks like a repeated header", r, t));
-                        continue;
-                    }*/
-                    if (!titleFoundInText && t == 0 && wordDocument.Tables[t].Rows.Count < 5 )
-                    {
-                        string titleLine;
-                        prevRowIsSection = TSectionPredicates.IsSectionRow(newRow.ToList<Cell>(), prevRowIsSection, sumspan, out titleLine);
-                        if (prevRowIsSection)
-                        {
-                            Title += titleLine + "\n";
-                            firstTableWithData = 1;
-                            continue;
-                        }
-                    }
-                    if (r == 0 && t > firstTableWithData && CheckMergeRow(TableRows.Last(), newRow))
-                    {
-                        MergeRow(TableRows.Last(), newRow);
-                    } 
-                    else
-                    {
-                        TableRows.Add(newRow);
-                    }
-                    prevRowIsSection = false;
-
-                    if ((maxRowsToProcess != -1) && (TableRows.Count >= maxRowsToProcess)) {
-                        break;
-                    }
-                }
+                ProcessWordTable(wordDocument.Tables[t], titleFoundInText, maxRowsToProcess, ref firstTableWithData);
             }
         }
 
