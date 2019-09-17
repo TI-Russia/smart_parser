@@ -388,6 +388,14 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\dnko-2014.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("doc")]
+        public void ZagranApp2016()
+        {
+            TestSmartParser("SmartParser\\ZagranApp2016.doc", "prod");
+        }
+
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
