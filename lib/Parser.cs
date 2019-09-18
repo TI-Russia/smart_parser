@@ -57,7 +57,7 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        int? GetPersonIndex(ColumnOrdering columnOrdering, Row row) {
+        int? GetPersonIndex(ColumnOrdering columnOrdering, DataRow row) {
             int? index = null;
             if (columnOrdering.ContainsField(DeclarationField.Number))
             {
@@ -164,7 +164,7 @@ namespace Smart.Parser.Lib
             
         }
 
-        bool IsHeaderRow(Row row, out ColumnOrdering columnOrdering)
+        bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
             if (!ColumnDetector.WeakHeaderCheck(row.Cells)) return false;
@@ -201,7 +201,7 @@ namespace Smart.Parser.Lib
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
-                Row currRow = Adapter.GetRow(columnOrdering, row);
+                DataRow currRow = Adapter.GetRow(columnOrdering, row);
                 if (currRow == null || currRow.IsEmpty())
                 {
                     continue;
@@ -288,7 +288,7 @@ namespace Smart.Parser.Lib
             }
         }
 
-        void AddRealEstateWithNaturalText (Row currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
+        void AddRealEstateWithNaturalText (DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
             if (currRow.ColumnOrdering.ContainsField(fieldName))
             {
@@ -300,7 +300,7 @@ namespace Smart.Parser.Lib
             }
 
         }
-        public void ParseOwnedProperty(Row currRow, Person person)
+        public void ParseOwnedProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
             {
@@ -334,7 +334,7 @@ namespace Smart.Parser.Lib
 
         }
 
-        public void ParseMixedProperty(Row currRow, Person person)
+        public void ParseMixedProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.MixedRealEstateSquare))
             {
@@ -363,7 +363,7 @@ namespace Smart.Parser.Lib
 
         }
 
-        public void ParseStateProperty(Row currRow, Person person)
+        public void ParseStateProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.StatePropertySquare))
             {
@@ -391,7 +391,7 @@ namespace Smart.Parser.Lib
             }
 
         }
-        bool ParseIncome(Row currRow, Person person)
+        bool ParseIncome(DataRow currRow, Person person)
         {
             if (currRow.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
             {
@@ -444,10 +444,10 @@ namespace Smart.Parser.Lib
                     }
                     bool foundIncomeInfo = false;
                     
-                    List<Row> rows = new List<Row>();
+                    List<DataRow> rows = new List<DataRow>();
                     foreach (int rowIndex in person.InputRowIndices)
                     {
-                        Row row = Adapter.GetRow(servant.Ordering, rowIndex);
+                        DataRow row = Adapter.GetRow(servant.Ordering, rowIndex);
                         if (row == null || row.Cells.Count == 0)
                         {
                             continue;
@@ -504,7 +504,7 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        private void AddVehicle(Row r, Person person)
+        private void AddVehicle(DataRow r, Person person)
         {
             if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.Vehicle))
             {

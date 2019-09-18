@@ -475,7 +475,7 @@ namespace Smart.Parser
             int rowOffset = columnOrdering.FirstDataRow;
             for (var row = rowOffset; row < adapter.GetRowsCount(); row++)
             {
-                Row currRow = adapter.GetRow(columnOrdering, row);
+                DataRow currRow = adapter.GetRow(columnOrdering, row);
                 var cell = currRow.GetDeclarationField(columnToDump);
                 var s = (cell == null) ? "null" : cell.GetText();
                 s = s.Replace("\n", "\\n");

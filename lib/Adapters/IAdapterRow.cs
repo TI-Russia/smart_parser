@@ -38,9 +38,9 @@ namespace Smart.Parser.Adapters
         public int CellWidth = -1;
     };
 
-    public class Row
+    public class DataRow
     {
-        public Row(IAdapter adapter, ColumnOrdering columnOrdering, int row)
+        public DataRow(IAdapter adapter, ColumnOrdering columnOrdering, int row)
         {
             this.row = row;
             this.adapter = adapter;
@@ -58,7 +58,7 @@ namespace Smart.Parser.Adapters
             return Cells[0].Row;
         }
 
-        public void Merge(Row other)
+        public void Merge(DataRow other)
         {
             for (int i = 0; i < Cells.Count(); i++)
             {

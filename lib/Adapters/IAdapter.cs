@@ -40,9 +40,9 @@ namespace Smart.Parser.Adapters
             throw new NotImplementedException();
         }
 
-        public Row GetRow(ColumnOrdering columnOrdering, int row)
+        public DataRow GetRow(ColumnOrdering columnOrdering, int row)
         {
-            return new Row(this, columnOrdering, row);
+            return new DataRow(this, columnOrdering, row);
         }
 
 
