@@ -12,7 +12,7 @@ namespace Smart.Parser.Adapters
 
     class AsposeExcelCell : Cell
     {
-        public AsposeExcelCell(Aspose.Cells.Cell cell)
+        public AsposeExcelCell(Aspose.Cells.Cell cell, Aspose.Cells.Worksheet worksheet)
         {
             if (cell == null)
                 return;
@@ -34,6 +34,7 @@ namespace Smart.Parser.Adapters
             }
             Row = cell.Row;
             Col = cell.Column;
+            CellWidth = (int)worksheet.Cells.GetColumnWidth(cell.Column);
         }
     }
     public class AsposeExcelAdapter : IAdapter
@@ -54,7 +55,7 @@ namespace Smart.Parser.Adapters
         public override Cell GetCell(int row, int column)
         {
             Aspose.Cells.Cell cell = worksheet.Cells.GetCell(row, column);
-            return new AsposeExcelCell(cell);
+            return new AsposeExcelCell(cell, worksheet);
         }
 
         public override int GetRowsCount()
@@ -79,7 +80,7 @@ namespace Smart.Parser.Adapters
             for (int i = 0; i <= lastCell.Column; i++)
             {
                 Aspose.Cells.Cell cell = row.GetCellOrNull(i);
-                result.Add(new AsposeExcelCell(cell));
+                result.Add(new AsposeExcelCell(cell, worksheet));
                 if (cell != null && cell.IsMerged && cell.GetMergedRange().ColumnCount > 1)
                 {
                     i += cell.GetMergedRange().ColumnCount - 1;

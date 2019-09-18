@@ -161,7 +161,7 @@ namespace Smart.Parser.Lib
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", cell.Row, cell.Col, fullText));
                 }
                 prev_field = field;
-                result.Add(field, cell.Col);
+                result.Add(field, cell.Col, cell.CellWidth);
             }
         }
 
@@ -190,9 +190,9 @@ namespace Smart.Parser.Lib
                     return;
                 }
             }
-            columnOrdering.Add(DeclarationField.MixedRealEstateType, subCells[0].Col);
-            columnOrdering.Add(DeclarationField.MixedRealEstateSquare, subCells[1].Col);
-            columnOrdering.Add(DeclarationField.MixedRealEstateCountry, subCells[2].Col);
+            columnOrdering.Add(DeclarationField.MixedRealEstateType, subCells[0].Col, subCells[0].CellWidth);
+            columnOrdering.Add(DeclarationField.MixedRealEstateSquare, subCells[1].Col, subCells[1].CellWidth);
+            columnOrdering.Add(DeclarationField.MixedRealEstateCountry, subCells[2].Col, subCells[2].CellWidth);
             columnOrdering.Delete(DeclarationField.MixedColumnWithNaturalText);
         }
 
@@ -205,7 +205,8 @@ namespace Smart.Parser.Lib
                     &&  c.ContainsField(DeclarationField.MixedRealEstateSquare)
                 )
             {
-                c.Add(DeclarationField.MixedRealEstateType, c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText].BeginColumn);
+                TColumnSpan s = c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText];
+                c.Add(DeclarationField.MixedRealEstateType, s.BeginColumn, s.ColumnWidth);
                 c.Delete(DeclarationField.MixedColumnWithNaturalText);
             }
         }
@@ -247,7 +248,7 @@ namespace Smart.Parser.Lib
                         {
                             throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerStartRow, colCount));
                         }
-                        columnOrdering.Add(field, cell.Col);
+                        columnOrdering.Add(field, cell.Col, cell.CellWidth);
                         if (DeclarationField.NameOrRelativeType == field && cell.MergedRowsCount == 1)
                         {
                             string fioAfterHeader = adapter.GetDeclarationFieldWeak(columnOrdering, headerEndRow, field).GetText(true);

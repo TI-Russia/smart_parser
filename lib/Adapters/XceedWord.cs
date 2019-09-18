@@ -43,6 +43,7 @@ namespace Smart.Parser.Adapters
             Text = cellContents;
             Row = row;
             Col = column;
+            CellWidth = (int)inputCell.Width;
         }
         public XceedWordCell(IAdapter.TJsonCell cell)
         {

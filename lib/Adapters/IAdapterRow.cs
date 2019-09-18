@@ -35,6 +35,7 @@ namespace Smart.Parser.Adapters
         public int Row { get; set; } = -1;
         public int Col { get; set; } = -1;
 
+        public int CellWidth = -1;
     };
 
     public class Row

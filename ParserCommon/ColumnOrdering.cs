@@ -7,6 +7,7 @@ namespace TI.Declarator.ParserCommon
     {
         public int BeginColumn;
         public int EndColumn;
+        public int ColumnWidth;
     }
     public class ColumnOrdering
     {
@@ -16,7 +17,7 @@ namespace TI.Declarator.ParserCommon
             return ColumnOrder.ContainsKey(field);
         }
 
-        public void Add(DeclarationField field, int beginColumn)
+        public void Add(DeclarationField field, int beginColumn, int columnWidth)
         {
             if (ColumnOrder.ContainsKey(field))
             {
@@ -25,6 +26,7 @@ namespace TI.Declarator.ParserCommon
             TColumnSpan s = new TColumnSpan();
             s.BeginColumn = beginColumn;
             s.EndColumn = beginColumn + 1;
+            s.ColumnWidth = columnWidth;
             ColumnOrder.Add(field, s);
         }
         public void Delete(DeclarationField field)

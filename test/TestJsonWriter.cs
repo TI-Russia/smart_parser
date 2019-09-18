@@ -14,8 +14,7 @@ namespace test
         public void TestColumnOrderJson()
         {
             ColumnOrdering co = new ColumnOrdering();
-
-            co.Add(DeclarationField.NameOrRelativeType, 1);
+            co.Add(DeclarationField.NameOrRelativeType, 1, -1);
 
             JsonWriter.WriteJson("co.json", co);
 

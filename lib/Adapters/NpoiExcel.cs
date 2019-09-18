@@ -187,7 +187,9 @@ namespace Smart.Parser.Adapters
                 Text = cellContents,
                 Row = row,
                 Col = column,
+                CellWidth = defaultSheet.GetColumnWidth(column)
             };
+            
         }
 
         void TrimEmptyLines()
