@@ -6,6 +6,11 @@ using System.Xml.Linq;
 
 namespace TI.Declarator.ParserCommon
 {
+    public interface DataRowInterface
+    {
+
+    }
+
     public abstract class Person
     {
         private static CultureInfo DefaultCulture = CultureInfo.InvariantCulture;
@@ -16,8 +21,7 @@ namespace TI.Declarator.ParserCommon
 
         public string DataSources = "";
 
-        // better to use Row reference here
-        public HashSet<int> InputRowIndices = new HashSet<int>();
+        public List<DataRowInterface> DateRows = new List<DataRowInterface>();
 
         public string document_position { set; get; }
         virtual public int? PersonIndex { set; get; } = null;

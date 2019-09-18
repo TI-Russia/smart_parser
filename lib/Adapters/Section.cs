@@ -43,9 +43,11 @@ namespace Smart.Parser.Adapters
                 return false;
             }
             int maxMergedCols = 0;
+            int maxCellWidth = 0;
             string rowText = "";
             string cellText = "";
             int cellsWithTextCount = 0;
+            int allWidth = 0;
             foreach (var c in cells)
             {
                 string trimmedText = c.Text.Trim(' ', '\n');
@@ -53,17 +55,28 @@ namespace Smart.Parser.Adapters
                 {
                     cellText = trimmedText;
                     maxMergedCols = c.MergedColsCount;
-                }
+                };
                 if (trimmedText.Length > 0)
                 {
                     rowText += c.Text;
                     cellsWithTextCount++;
+                    if (c.CellWidth > maxCellWidth)
+                    {
+                        maxCellWidth = c.CellWidth;
+                    }
                 }
+                allWidth += c.CellWidth;
+
             }
             rowText = rowText.Trim(' ', '\n');
             bool manyColsAreMerged = maxMergedCols > colsCount * 0.7;
+            bool OneColumnIsLarge = maxCellWidth > 1000 || maxCellWidth >= allWidth * 0.3;
             bool hasEnoughLength = rowText.Length > 10; // "Руководство";
             bool langModel = CheckSectionLanguageModel(cellText);
+            if (!OneColumnIsLarge)
+            {
+                return false;
+            }
             if (!hasEnoughLength)
             {
                 return false;

@@ -50,7 +50,7 @@ namespace Smart.Parser.Adapters
         // во всех остальных случаях надо использовать Row.GetDeclarationField
         virtual public Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
-            TColumnSpan colSpan;
+            TColumnInfo colSpan;
             if (!columnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
                 throw new SystemException(String.Format("Field {0} not found, row={1}", field.ToString(), row));

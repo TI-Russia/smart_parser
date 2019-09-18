@@ -86,13 +86,9 @@ namespace Smart.Parser.Lib
                 _Declaration = declaration;
                 FailOnRelativeOrphan = failOnRelativeOrphan;
             }
-            public void FinishDeclarant(int row)
+            public void FinishDeclarant()
             {
                 CurrentDeclarant = null;
-                if (CurrentPerson != null)
-                {
-                    CurrentPerson.InputRowIndices.Add(row - 1);
-                }
                 CurrentPerson = null;
             }
             public void CreateNewSection(int row, string sectionTitle)
@@ -101,13 +97,13 @@ namespace Smart.Parser.Lib
                 Logger.Debug(String.Format("find section at line {0}:'{1}'", row, sectionTitle));
                 _Declaration.Sections.Add(CurrentSection);
 
-                FinishDeclarant(row);
+                FinishDeclarant();
             }
-            public void AddInputRowToCurrentPerson(int rowIndex)
+            public void AddInputRowToCurrentPerson(DataRow row)
             {
                 if (CurrentPerson != null)
                 {
-                    CurrentPerson.InputRowIndices.Add(rowIndex);
+                    CurrentPerson.DateRows.Add(row);
                 }
             }
 
@@ -264,7 +260,7 @@ namespace Smart.Parser.Lib
                             string.Format("Wrong nameOrRelativeType {0} (occupation {2}) at row {1}", nameOrRelativeType, row, occupationStr));
                     }
                 }
-                borderFinder.AddInputRowToCurrentPerson(row);
+                borderFinder.AddInputRowToCurrentPerson(currRow);
             }
 
             
@@ -445,9 +441,8 @@ namespace Smart.Parser.Lib
                     bool foundIncomeInfo = false;
                     
                     List<DataRow> rows = new List<DataRow>();
-                    foreach (int rowIndex in person.InputRowIndices)
+                    foreach (DataRow row in person.DateRows)
                     {
-                        DataRow row = Adapter.GetRow(servant.Ordering, rowIndex);
                         if (row == null || row.Cells.Count == 0)
                         {
                             continue;

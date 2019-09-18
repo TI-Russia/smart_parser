@@ -37,4 +37,5 @@ namespace TI.Declarator.ParserCommon
         VehicleType,
         VehicleModel,
     }
+
 }

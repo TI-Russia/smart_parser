@@ -181,7 +181,7 @@ namespace Smart.Parser.Lib
             for (int row = columnOrdering.FirstDataRow; row < adapter.GetRowsCount(); row++)
             {
                 if (row > columnOrdering.FirstDataRow + 5) break;
-                TColumnSpan middleCol = new TColumnSpan();
+                TColumnInfo middleCol = new TColumnInfo();
                 middleCol.BeginColumn = subCells[1].Col; // we check only the  second column, todo check the  first one and  the third
                 middleCol.EndColumn = subCells[2].Col;
                 string areaStr = adapter.GetCell(row, middleCol.BeginColumn).GetText(true);
@@ -205,8 +205,8 @@ namespace Smart.Parser.Lib
                     &&  c.ContainsField(DeclarationField.MixedRealEstateSquare)
                 )
             {
-                TColumnSpan s = c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText];
-                c.Add(DeclarationField.MixedRealEstateType, s.BeginColumn, s.ColumnWidth);
+                TColumnInfo s = c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText];
+                c.Add(DeclarationField.MixedRealEstateType, s.BeginColumn, s.ColumnPixelWidth);
                 c.Delete(DeclarationField.MixedColumnWithNaturalText);
             }
         }

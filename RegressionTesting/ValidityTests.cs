@@ -395,6 +395,13 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\ZagranApp2016.doc", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("xlsx")]
+        public void BadColumnns()
+        {
+            TestSmartParser("SmartParser\\BadColumns.doc", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {

@@ -203,6 +203,12 @@ namespace Smart.Parser.Lib
             if (!match.Success) return null;
             return  Decimal.Round(match.Value.ParseDecimalValue(), 2);
         }
+        public static bool IsCountryStrict(string str)
+        {
+            var match = Regex.Match(str, CountryRegexp, RegexOptions.IgnoreCase);
+            return match.Success;
+        }
+
         public static string ParseCountry(string str)
         {
             decimal dummy;

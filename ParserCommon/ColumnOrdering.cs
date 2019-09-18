@@ -1,17 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace TI.Declarator.ParserCommon
 {
-    public class TColumnSpan
+    public class TColumnInfo
     {
+        public DeclarationField Field;
         public int BeginColumn;
         public int EndColumn;
-        public int ColumnWidth;
+        public int ColumnPixelStart;
+        public int ColumnPixelWidth;
     }
     public class ColumnOrdering
     {
-        public Dictionary<DeclarationField, TColumnSpan> ColumnOrder = new Dictionary<DeclarationField, TColumnSpan>();
+        public Dictionary<DeclarationField, TColumnInfo> ColumnOrder = new Dictionary<DeclarationField, TColumnInfo>();
+        public List<TColumnInfo> MergedColumnOrder = new List<TColumnInfo>();
         public bool ContainsField(DeclarationField field)
         {
             return ColumnOrder.ContainsKey(field);
@@ -23,10 +27,11 @@ namespace TI.Declarator.ParserCommon
             {
                 return;
             }
-            TColumnSpan s = new TColumnSpan();
+            TColumnInfo s = new TColumnInfo();
             s.BeginColumn = beginColumn;
             s.EndColumn = beginColumn + 1;
-            s.ColumnWidth = columnWidth;
+            s.ColumnPixelWidth = columnWidth;
+            s.Field = field;
             ColumnOrder.Add(field, s);
         }
         public void Delete(DeclarationField field)
@@ -35,6 +40,41 @@ namespace TI.Declarator.ParserCommon
         }
         public void FinishOrderingBuilding()
         {
+            MergedColumnOrder.Clear();
+            foreach (var x in ColumnOrder.Values)
+            {
+                MergedColumnOrder.Add(x);
+            }
+            MergedColumnOrder.Sort((x, y) => x.BeginColumn.CompareTo(y.BeginColumn));
+            int sumwidth = 0;
+            foreach (var x in MergedColumnOrder)
+            {
+                x.ColumnPixelStart = sumwidth;
+                sumwidth += x.ColumnPixelWidth;
+            }
+        }
+        public static int PeriodIntersection(int start1, int end1, int start2, int end2)
+        {
+            if (start1 <= end2 && start2 <= end1) // overlap exists
+            {
+                return Math.Min(end1, end2) - Math.Max(start1, start2);
+            }
+            return 0;
+        }
+        public DeclarationField FindByPixelIntersection(int start, int end)
+        {
+            DeclarationField field = DeclarationField.None;
+            int maxInterSize = 0;
+            foreach (var x in ColumnOrder)
+            {
+                int interSize = PeriodIntersection(start, end, x.Value.ColumnPixelStart, x.Value.ColumnPixelStart + x.Value.ColumnPixelWidth);
+                if (interSize > maxInterSize)
+                {
+                    maxInterSize = interSize;
+                    field = x.Key; 
+                }
+            }
+            return field;
         }
 
         public void InitHeaderEndColumns(int lastColumn)
