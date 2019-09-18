@@ -67,7 +67,7 @@ namespace Smart.Parser.Adapters
 
         public Cell GetDeclarationField(DeclarationField field)
         {
-            return adapter.GetDeclarationField(ColumnOrdering, row, field);
+            return adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field);
         }
 
         public string GetContents(DeclarationField field, bool except = true)
@@ -77,7 +77,7 @@ namespace Smart.Parser.Adapters
                 if (!except)
                     return "";
             }
-            var c = adapter.GetDeclarationField(ColumnOrdering, row, field);
+            var c = GetDeclarationField(field);
             if (c == null)
             {
                 return "";

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace TI.Declarator.ParserCommon
 {
@@ -11,7 +11,6 @@ namespace TI.Declarator.ParserCommon
     public class ColumnOrdering
     {
         public Dictionary<DeclarationField, TColumnSpan> ColumnOrder = new Dictionary<DeclarationField, TColumnSpan>();
-
         public bool ContainsField(DeclarationField field)
         {
             return ColumnOrder.ContainsKey(field);
@@ -31,6 +30,9 @@ namespace TI.Declarator.ParserCommon
         public void Delete(DeclarationField field)
         {
             ColumnOrder.Remove(field);
+        }
+        public void FinishOrderingBuilding()
+        {
         }
 
         public void InitHeaderEndColumns(int lastColumn)

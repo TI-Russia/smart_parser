@@ -57,11 +57,11 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        int? GetPersonIndex(ColumnOrdering columnOrdering, int row) {
+        int? GetPersonIndex(ColumnOrdering columnOrdering, Row row) {
             int? index = null;
             if (columnOrdering.ContainsField(DeclarationField.Number))
             {
-                string indexStr = Adapter.GetDeclarationField(columnOrdering, row, DeclarationField.Number).Text
+                string indexStr = row.GetDeclarationField(DeclarationField.Number).Text
                     .Replace(".", "").CleanWhitespace();
                 int indVal;
                 bool dummyRes = Int32.TryParse(indexStr, out indVal);
@@ -246,7 +246,7 @@ namespace Smart.Parser.Lib
                 }
                 else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
                 {
-                    int? index = GetPersonIndex(columnOrdering, row);
+                    int? index = GetPersonIndex(columnOrdering, currRow);
                     borderFinder.CreateNewDeclarant(columnOrdering, Adapter, row, nameOrRelativeType, occupationStr, documentPosition, index);
                 }
                 else

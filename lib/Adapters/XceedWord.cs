@@ -313,15 +313,6 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        static bool CheckEqualByText(List<XceedWordCell> row1, List<XceedWordCell> row2)
-        {
-            if (row1.Count != row2.Count) return false;
-            for (int i = 0; i < row1.Count; ++i)
-            {
-                if (row1[i].Text != row2[i].Text) return false;
-            }
-            return true;
-        }
         static List<string> TokenizeCellText(string text)
         {
             List<string> result = new List<string>();

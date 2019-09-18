@@ -46,7 +46,9 @@ namespace Smart.Parser.Adapters
         }
 
 
-        virtual public Cell GetDeclarationField(ColumnOrdering columnOrdering, int row, DeclarationField field)
+        // используется, пока ColumnOrdering еще не построен
+        // во всех остальных случаях надо использовать Row.GetDeclarationField
+        virtual public Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field)
         {
             TColumnSpan colSpan;
             if (!columnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
@@ -78,11 +80,6 @@ namespace Smart.Parser.Adapters
                 i += mergedCell.MergedColsCount;
             }
             return exactCell;
-        }
-
-        public string GetContents(ColumnOrdering columnOrdering, int row, DeclarationField field)
-        {
-            return GetDeclarationField(columnOrdering, row, field).GetText(true);
         }
 
 

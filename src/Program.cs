@@ -208,7 +208,7 @@ namespace Smart.Parser
             catch (Exception e)
             {
                 Logger.Error("Unknown Parsing Exception " + e.ToString());
-                Logger.Info("Stack: " + e.StackTrace);
+                //Logger.Info("Stack: " + e.StackTrace);
             }
             finally
             {
@@ -475,7 +475,8 @@ namespace Smart.Parser
             int rowOffset = columnOrdering.FirstDataRow;
             for (var row = rowOffset; row < adapter.GetRowsCount(); row++)
             {
-                var cell = adapter.GetDeclarationField(columnOrdering, row, columnToDump);
+                Row currRow = adapter.GetRow(columnOrdering, row);
+                var cell = currRow.GetDeclarationField(columnToDump);
                 var s = (cell == null) ? "null" : cell.GetText();
                 s = s.Replace("\n", "\\n");
                 Console.WriteLine(s);

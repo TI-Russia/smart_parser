@@ -172,7 +172,7 @@ namespace Smart.Parser.Lib
             {
                 return;
             }
-            var headerCell = adapter.GetDeclarationField(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText);
+            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText);
             var subCells = FindSubcellsUnder(adapter, headerCell);
             if (subCells.Count != 3)
             {
@@ -250,7 +250,7 @@ namespace Smart.Parser.Lib
                         columnOrdering.Add(field, cell.Col);
                         if (DeclarationField.NameOrRelativeType == field && cell.MergedRowsCount == 1)
                         {
-                            string fioAfterHeader = adapter.GetDeclarationField(columnOrdering, headerEndRow, field).GetText(true);
+                            string fioAfterHeader = adapter.GetDeclarationFieldWeak(columnOrdering, headerEndRow, field).GetText(true);
                             headerCanHaveSecondLevel = fioAfterHeader.Length == 0;
                         }
                         colCount++;
@@ -286,6 +286,7 @@ namespace Smart.Parser.Lib
             }
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
+            columnOrdering.FinishOrderingBuilding();
         }
     }
 }
