@@ -10,7 +10,7 @@ namespace Smart.Parser.Adapters
 {
     class MSExcelCell : Cell
     {
-        public MSExcelCell(Excel.Range range)
+        public MSExcelCell(Excel.Range range, int width)
         {
             if (range == null || range.Count == 0)
                 return;
@@ -26,6 +26,7 @@ namespace Smart.Parser.Adapters
             }
             Row = range.Row - 1;
             Col = range.Column - 1;
+            CellWidth = width;
         }
 
     }
@@ -89,7 +90,7 @@ namespace Smart.Parser.Adapters
         public override Cell GetCell(int row, int column)
         {
             Excel.Range cell = WorkSheet.Cells[row + 1, column + 1];
-            return new MSExcelCell(cell);
+            return new MSExcelCell(cell, WorkSheet.Columns[column + 1]);
         }
 
         public override int GetRowsCount()
@@ -140,7 +141,8 @@ namespace Smart.Parser.Adapters
             List<Cell> result = new List<Cell>();
             for (int i = 1; i < TotalColumns; i++)
             {
-                Cell cell = new MSExcelCell( WorkSheet.Cells.Cells[rowIndex + 1, i]);
+                int width = WorkSheet.Columns.ColumnWidth[i];
+                Cell cell = new MSExcelCell( WorkSheet.Cells.Cells[rowIndex + 1, i], width);
                 result.Add(cell);
                 if (cell.IsMerged && cell.MergedColsCount > 1)
                 {
