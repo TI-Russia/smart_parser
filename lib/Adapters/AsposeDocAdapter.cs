@@ -74,7 +74,7 @@ namespace Smart.Parser.Adapters
             return table.Rows[0].Count;
         }
 
-        public override string GetTitle()
+        public override string GetTitleOutsideTheTable()
         {
             return title;
         }

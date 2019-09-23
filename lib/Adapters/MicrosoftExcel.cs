@@ -38,7 +38,6 @@ namespace Smart.Parser.Adapters
         private Excel.Worksheet WorkSheet = null;
         private int TotalRows;
         private int TotalColumns;
-        private string Title;
         private Microsoft.Office.Interop.Excel.Application ExcelApplication;
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess=-1)
         {
@@ -63,7 +62,6 @@ namespace Smart.Parser.Adapters
                                Excel.XlSearchOrder.xlByColumns, Excel.XlSearchDirection.xlPrevious,
                                false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
             TotalColumns = lastUsedColumn + 1;
-            FindTitle();
         }
         ~MicrosoftExcelAdapter()  
         {
@@ -112,28 +110,9 @@ namespace Smart.Parser.Adapters
         {
             return GetCells(row).Count();
         }
-        public override string GetTitle()
+        public override string GetTitleOutsideTheTable()
         {
-            return Title;
-        }
-
-        private void FindTitle()
-        {
-            int row = 0;
-            string text = "";
-            while (row < GetRowsCount())
-            {
-                Cell cell = GetCell(row, 0);
-                if (cell.IsMerged && cell.MergedColsCount > 3)
-                {
-                    text += cell.Text;
-                    row += cell.MergedRowsCount;
-                }
-                else
-                    break;
-            }
-
-            Title = text;
+            return "";
         }
 
         public override List<Cell> GetCells(int rowIndex)

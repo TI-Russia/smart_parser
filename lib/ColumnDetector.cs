@@ -49,7 +49,7 @@ namespace Smart.Parser.Lib
         public static bool WeakHeaderCheck(List<Cell> cells)
         {
             int colCount = 0;
-            if (cells.Count < 5) return false;
+            if (cells.Count < 4) return false;
             foreach (var c in cells)
             {
                 if (colCount == 0 && HeaderHelpers.IsNumber(c.Text)) return true;
@@ -100,7 +100,7 @@ namespace Smart.Parser.Lib
                 prevRowIsSection = isSection;
             }
             if (!findTitle) {
-                if (GetValuesFromTitle(adapter.GetTitle(), ref title, ref year, ref ministry))
+                if (GetValuesFromTitle(adapter.GetTitleOutsideTheTable(), ref title, ref year, ref ministry))
                 {
                     findTitle = true;
                 }

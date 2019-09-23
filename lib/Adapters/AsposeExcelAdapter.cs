@@ -116,9 +116,9 @@ namespace Smart.Parser.Adapters
         {
             return GetCells(row).Count();
         }
-        public override string GetTitle()
+        public override string GetTitleOutsideTheTable()
         {
-            return title;
+            return "";
         }
 
 
@@ -152,7 +152,6 @@ namespace Smart.Parser.Adapters
             totalRows = worksheet.Cells.Rows.Count;
             totalColumns = worksheet.Cells.MaxColumn + 1;
 
-            FindTitle();
         }
 
         public override void SetCurrentWorksheet(int sheetIndex)
@@ -179,25 +178,6 @@ namespace Smart.Parser.Adapters
         }
 
 
-
-        private void FindTitle()
-        {
-            int row = 0;
-            string text = "";
-            while (row < GetRowsCount())
-            {
-                Cell cell = GetCell(row, 0);
-                if (cell.IsMerged && cell.MergedColsCount > 3)
-                {
-                    text += cell.Text;
-                    row += cell.MergedRowsCount;
-                }
-                else
-                    break;
-            }
-
-            title = text;
-        }
         public override int GetWorkSheetCount()
         {
             return worksheetCount;
@@ -218,7 +198,6 @@ namespace Smart.Parser.Adapters
         private Aspose.Cells.Worksheet worksheet;
         private int totalRows;
         private int totalColumns;
-        private string title;
         private int worksheetCount;
         private string workSheetName;
     }

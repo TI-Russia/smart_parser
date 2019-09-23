@@ -92,7 +92,7 @@ namespace Smart.Parser.Adapters
             throw new NotImplementedException();
         }
 
-        public virtual string GetTitle()
+        public virtual string GetTitleOutsideTheTable()
         {
             throw new NotImplementedException();
         }

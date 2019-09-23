@@ -166,7 +166,7 @@ namespace Smart.Parser.Adapters
 
             using (DocX doc = DocX.Load(fileName))
             {
-                FindTitle(doc);
+                FindTitleAboveTheTable(doc);
                 CollectRows(doc, maxRowsToProcess);
                 InitUnmergedColumnsCount();
                 InitializeVerticallyMerge();
@@ -182,7 +182,7 @@ namespace Smart.Parser.Adapters
             return new XceedWordAdapter(fileName, maxRowsToProcess);
         }
 
-        private void FindTitle(DocX wordDocument)
+        private void FindTitleAboveTheTable(DocX wordDocument)
         {
             Title = "";
             foreach (var p in wordDocument.Paragraphs)
@@ -232,7 +232,7 @@ namespace Smart.Parser.Adapters
             CopyPortion(portion.Data, true);
         }
 
-        public override string GetTitle()
+        public override string GetTitleOutsideTheTable()
         {
             return Title;
         }
