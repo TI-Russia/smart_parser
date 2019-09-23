@@ -409,6 +409,14 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinKult2012.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("doc")]
+        public void MinKult2011()
+        {
+            //error in vehicle column
+            TestSmartParser("SmartParser\\MinKult2011.doc", "prod", true);
+        }
+
 
         private static void SetupLog4Net()
         {

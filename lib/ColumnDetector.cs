@@ -49,7 +49,7 @@ namespace Smart.Parser.Lib
         public static bool WeakHeaderCheck(List<Cell> cells)
         {
             int colCount = 0;
-            if (cells.Count < 4) return false;
+            if (cells.Count < 3) return false;
             foreach (var c in cells)
             {
                 if (colCount == 0 && HeaderHelpers.IsNumber(c.Text)) return true;
