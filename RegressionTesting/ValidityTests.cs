@@ -425,6 +425,13 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinSelhoz2015.xlsx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Fsin2011()
+        {
+            TestSmartParser("SmartParser\\Fsin2011.doc", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {

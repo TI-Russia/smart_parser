@@ -222,6 +222,20 @@ namespace Smart.Parser.Lib
             }
         }
 
+        static void FixBadColumnName02(ColumnOrdering c)
+        {
+            //move NameAndOccupationOrRelativeType  to NameOrRelativeType if Occupation  is present
+            if (     c.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)
+                  && c.ContainsField(DeclarationField.Occupation)
+                )
+            {
+                TColumnInfo s = c.ColumnOrder[DeclarationField.NameAndOccupationOrRelativeType];
+                s.Field = DeclarationField.NameOrRelativeType;
+                c.Add(s);
+                c.Delete(DeclarationField.NameAndOccupationOrRelativeType);
+            }
+        }
+
 
         static public ColumnOrdering ExamineTableBeginning(IAdapter adapter)
         {
@@ -299,6 +313,7 @@ namespace Smart.Parser.Lib
             }
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
+            FixBadColumnName02(columnOrdering);
             columnOrdering.FinishOrderingBuilding();
         }
     }
