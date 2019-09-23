@@ -54,15 +54,9 @@ namespace Smart.Parser.Lib
             return true;
         }
 
-        static public bool IsRelativeInfo(string relationshipStr, string occupationStr)
+        static public bool IsRelativeInfo(string relationshipStr)
         {
-            if (ParseRelationType(relationshipStr, false) != RelationType.Error)
-                return true;
-
-            return (!relationshipStr.IsNullOrWhiteSpace()
-                    && (!relationshipStr.Contains("фамилия"))
-                    && (!relationshipStr.Contains("фио"))
-                    && occupationStr.Length <= 1);
+            return ParseRelationType(relationshipStr, false) != RelationType.Error;
         }
 
 

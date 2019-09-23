@@ -25,6 +25,7 @@ namespace TI.Declarator.ParserCommon
         {
             str = NormalizeString(str);
             if (str.IsNumber()) { return DeclarationField.Number; }
+            if (str.IsNameAndOccupation()) { return DeclarationField.NameAndOccupationOrRelativeType; }
             if (str.IsName()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsRelativeType()) { return DeclarationField.RelativeTypeStrict; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
@@ -78,6 +79,10 @@ namespace TI.Declarator.ParserCommon
             return (clean.Contains("фамилия") ||
                     clean.Contains("фио") ||
                     clean.Contains("ф.и.о"));
+        }
+        public static bool IsNameAndOccupation(this string s)
+        {
+            return s.IsName() && s.IsOccupation();
         }
 
         private static bool IsRelativeType(this string s)

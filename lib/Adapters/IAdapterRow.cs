@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Parser.Lib;
+using static Parser.Lib.SmartParserException;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
+
 
 namespace Smart.Parser.Adapters
 {
@@ -189,11 +192,105 @@ namespace Smart.Parser.Adapters
             return Cells.All(cell => cell.Text.IsNullOrWhiteSpace());
         }
 
+        public int? GetPersonIndex()
+        {
+            int? index = null;
+            if (this.ColumnOrdering.ContainsField(DeclarationField.Number))
+            {
+                string indexStr = GetDeclarationField(DeclarationField.Number).Text
+                    .Replace(".", "").CleanWhitespace();
+                int indVal;
+                bool dummyRes = Int32.TryParse(indexStr, out indVal);
+                if (dummyRes)
+                {
+                    index = indVal;
+                }
+            }
+            return index;
+        }
+
+        void SetRelative(string value)
+        {
+            RelativeType = value;
+            if (RelativeType != String.Empty && !DataHelper.IsRelativeInfo(RelativeType))
+            {
+                throw new SmartParserException(
+                    string.Format("Wrong relative type {0} at row {1}", RelativeType, GetRowIndex()));
+            }
+        }
+        void DivideNameAndOccupation()
+        {
+            var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
+            NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
+
+            string v = nameCell.GetText(true);
+            if (DataHelper.IsEmptyValue(v)) return;
+            if (DataHelper.IsRelativeInfo(v))
+            {
+                SetRelative(v);
+            }
+            else
+            {
+                int delim = v.IndexOf("–");
+                if (delim == -1)
+                {
+                    throw new SmartParserException(
+                        string.Format("Cannot  parse  name+occupation value {0} at row {1}", v, GetRowIndex()));
+                }
+                PersonName = v.Substring(0, delim);
+                Occupation = v.Substring(delim + 1);
+            }
+        }
+
+        public void InitPersonData()
+        {
+            if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
+            {
+                SetRelative ( GetDeclarationField(DeclarationField.RelativeTypeStrict).Text.CleanWhitespace());
+            }
+
+            string nameOrRelativeType;
+            if (this.ColumnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType))
+            {
+                DivideNameAndOccupation();
+            }
+            else
+            {
+                var nameCell = GetDeclarationField(DeclarationField.NameOrRelativeType);
+                nameOrRelativeType = nameCell.Text.CleanWhitespace();
+                NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
+                if (this.ColumnOrdering.ContainsField(DeclarationField.Occupation))
+                {
+                    Occupation = GetDeclarationField(DeclarationField.Occupation).Text;
+                }
+                if (!DataHelper.IsEmptyValue(nameOrRelativeType))
+                {
+                    if (DataHelper.IsRelativeInfo(nameOrRelativeType))
+                    {
+                        SetRelative(nameOrRelativeType);
+                    }
+                    else
+                    { 
+                        PersonName = nameOrRelativeType;
+                    }
+                }
+            }
+        }
+
+
+
         public List<Cell> Cells;
         IAdapter adapter;
         public ColumnOrdering ColumnOrdering;
         int row;
         private Dictionary<DeclarationField, Cell> MappedHeader = null;
+        
+        //Initialized by InitPersonData
+        public string PersonName = "";
+        public string RelativeType = "";
+        public string NameDocPosition = "";
+        public string Occupation = "";
+
     }
 
 

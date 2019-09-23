@@ -402,6 +402,13 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\BadColumns.doc", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void MinKult2012()
+        {
+            TestSmartParser("SmartParser\\MinKult2012.docx", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {

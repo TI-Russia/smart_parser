@@ -8,6 +8,7 @@ namespace TI.Declarator.ParserCommon
         Number,
         RelativeTypeStrict,
         NameOrRelativeType,
+        NameAndOccupationOrRelativeType,
         Occupation,
         Department,
 

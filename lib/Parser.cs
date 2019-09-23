@@ -18,7 +18,7 @@ namespace Smart.Parser.Lib
         static readonly string StateString = "В пользовании";
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
-        public Parser(IAdapter adapter, bool failOnRelativeOrphan=true)
+        public Parser(IAdapter adapter, bool failOnRelativeOrphan = true)
         {
             Adapter = adapter;
             FailOnRelativeOrphan = failOnRelativeOrphan;
@@ -57,22 +57,8 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        int? GetPersonIndex(ColumnOrdering columnOrdering, DataRow row) {
-            int? index = null;
-            if (columnOrdering.ContainsField(DeclarationField.Number))
-            {
-                string indexStr = row.GetDeclarationField(DeclarationField.Number).Text
-                    .Replace(".", "").CleanWhitespace();
-                int indVal;
-                bool dummyRes = Int32.TryParse(indexStr, out indVal);
-                if (dummyRes)
-                {
-                    index = indVal;
-                }
-            }
-            return index;
-        }
         
+
         class TBorderFinder
         {
             DeclarationSection CurrentSection = null;
@@ -107,36 +93,35 @@ namespace Smart.Parser.Lib
                 }
             }
 
-            public void CreateNewDeclarant(ColumnOrdering columnOrdering, IAdapter adapter, int row, string fioStr, string occupationStr, string documentPosition, int? index)
+            public void CreateNewDeclarant(ColumnOrdering columnOrdering, IAdapter adapter, DataRow row)
             {
-                Logger.Debug("Declarant {0} at row {1}", fioStr, row);
+                Logger.Debug("Declarant {0} at row {1}", row.PersonName, row);
                 CurrentDeclarant = new PublicServant()
                 {
-                    NameRaw = fioStr,
-                    Occupation = occupationStr,
+                    NameRaw = row.PersonName,
+                    Occupation = row.Occupation,
                     Ordering = columnOrdering
                 };
                 if (CurrentSection != null)
                 {
                     CurrentDeclarant.Department = CurrentSection.Name;
                 }
-
-                CurrentDeclarant.Index = index;
+                CurrentDeclarant.Index = row.GetPersonIndex();
 
                 CurrentPerson = CurrentDeclarant;
-                CurrentPerson.document_position = documentPosition;
+                CurrentPerson.document_position = row.NameDocPosition;
                 _Declaration.PublicServants.Add(CurrentDeclarant);
             }
 
-            public void CreateNewRelative(int row, string relativeStr, string documentPosition)
+            public void CreateNewRelative(DataRow row )
             {
-                Logger.Debug("Relative {0} at row {1}", relativeStr, row);
+                Logger.Debug("Relative {0} at row {1}", row.RelativeType, row.GetRowIndex());
                 if (CurrentDeclarant == null)
                 {
                     if (FailOnRelativeOrphan)
                     {
                         throw new SmartParserException(
-                            string.Format("Relative {0} at row {1} without main Person", relativeStr, row));
+                            string.Format("Relative {0} at row {1} without main Person", row.RelativeType, row.GetRowIndex()));
                     }
                     else
                     {
@@ -147,17 +132,17 @@ namespace Smart.Parser.Lib
                 CurrentDeclarant.AddRelative(relative);
                 CurrentPerson = relative;
 
-                RelationType relationType = DataHelper.ParseRelationType(relativeStr, false);
+                RelationType relationType = DataHelper.ParseRelationType(row.RelativeType, false);
                 if (relationType == RelationType.Error)
                 {
                     throw new SmartParserException(
-                        string.Format("Wrong relative name '{0}' at row {1} ", relativeStr, row));
+                        string.Format("Wrong relative name '{0}' at row {1} ", row.RelativeType, row));
                 }
                 relative.RelationType = relationType;
                 //Logger.Debug("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
-                relative.document_position = documentPosition;
+                relative.document_position = row.NameDocPosition;
             }
-            
+
         }
 
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
@@ -172,7 +157,7 @@ namespace Smart.Parser.Lib
             }
             catch (Exception e)
             {
-                Logger.Error(String.Format("Cannot parse possible header, row={0}, error={1} ",e.ToString(), row.GetRowIndex()));
+                Logger.Error(String.Format("Cannot parse possible header, row={0}, error={1} ", e.ToString(), row.GetRowIndex()));
 
             }
             return false;
@@ -218,46 +203,21 @@ namespace Smart.Parser.Lib
                         continue;
                     }
                 }
-                var nameCell = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType);
-                string nameOrRelativeType = nameCell.Text.CleanWhitespace();
-                string documentPosition = Adapter.GetDocumentPosition(row, nameCell.Col);
-                string relativeType = "";
-                if  (DataHelper.IsEmptyValue(nameOrRelativeType) && columnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
-                {
-                    relativeType = currRow.GetDeclarationField(DeclarationField.RelativeTypeStrict).Text.CleanWhitespace();
-                }
-                
-                string occupationStr = "";
-                if (columnOrdering.ContainsField(DeclarationField.Occupation))
-                {
-                    occupationStr = currRow.GetDeclarationField(DeclarationField.Occupation).Text;
-                }
+                currRow.InitPersonData();
 
-                if (DataHelper.IsEmptyValue(nameOrRelativeType) && DataHelper.IsEmptyValue(relativeType))
+                if (currRow.PersonName != String.Empty)
+                {
+                    borderFinder.CreateNewDeclarant(columnOrdering, Adapter, currRow);
+                }
+                else if  (currRow.RelativeType !=  String.Empty)
+                {
+                    borderFinder.CreateNewRelative(currRow);
+                }
+                else 
                 {
                     if (borderFinder.CurrentPerson == null && FailOnRelativeOrphan)
                     {
                         throw new SmartParserException("No person to attach info");
-                    }
-                }
-                else if (DataHelper.IsPublicServantInfo(nameOrRelativeType))
-                {
-                    int? index = GetPersonIndex(columnOrdering, currRow);
-                    borderFinder.CreateNewDeclarant(columnOrdering, Adapter, row, nameOrRelativeType, occupationStr, documentPosition, index);
-                }
-                else
-                {
-                    if (DataHelper.IsEmptyValue(relativeType))
-                        relativeType = nameOrRelativeType;
-                    if (DataHelper.IsRelativeInfo(relativeType, occupationStr))
-                    {
-                        borderFinder.CreateNewRelative(row, relativeType, documentPosition);
-                    }
-                    else
-                    {
-                        // error
-                        throw new SmartParserException(
-                            string.Format("Wrong nameOrRelativeType {0} (occupation {2}) at row {1}", nameOrRelativeType, row, occupationStr));
                     }
                 }
                 borderFinder.AddInputRowToCurrentPerson(currRow);
