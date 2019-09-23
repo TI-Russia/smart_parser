@@ -1,0 +1,729 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Мельников А. И.",
+        "role": "Директор",
+        "department": "ФГБУ ГСАС \"Кулундинская\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 788287.74,
+          "relative": null
+        },
+        {
+          "size": 147051.64,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Приусадебный участок",
+          "square": 1600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1600,0",
+          "country_raw": "Россия",
+          "type_raw": "Приусадебный участок",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Производственный участок",
+          "square": 205000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "205 000,0",
+          "country_raw": "Россия",
+          "type_raw": "Производственный участок",
+          "own_type_raw": "Долевая, 3/311 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 84.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "84,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Приусадебный участок",
+          "square": 1600.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1600,0",
+          "country_raw": "Россия",
+          "type_raw": "Приусадебный участок",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Производственный участок",
+          "square": 205000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "205 000,0",
+          "country_raw": "Россия",
+          "type_raw": "Производственный участок",
+          "own_type_raw": "Долевая, 3/311 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 84.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "84,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой \nГАЗ 3110 \"Волга\"",
+          "relative": null
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R7C2"
+    },
+    {
+      "person": {
+        "name_raw": "Бернгардт И.И.",
+        "role": "Заместитель директора",
+        "department": "ФГБУ ГСАС \"Кулундинская\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 618259.0,
+          "relative": null
+        },
+        {
+          "size": 171745.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 64.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,7",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Гараж",
+          "square": 24.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "24",
+          "country_raw": "Россия",
+          "type_raw": "Гараж",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 64.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,7",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Гараж",
+          "square": 24.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "24",
+          "country_raw": "Россия",
+          "type_raw": "Гараж",
+          "own_type_raw": "Долевая, 1/2 доля"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nHyundai Tucson",
+          "relative": null
+        }
+      ],
+      "document_position": "R13C2"
+    },
+    {
+      "person": {
+        "name_raw": "Клиппа И.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУ ГСАС \"Кулундинская\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 440102.0,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Жилой дом",
+          "square": 107.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "107,4",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Комната",
+          "square": 15.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "15,6",
+          "country_raw": "Россия",
+          "type_raw": "Комната",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 107.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "107,4",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Долевая, 1/2 доля"
+        },
+        {
+          "text": "Комната",
+          "square": 15.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "15,6",
+          "country_raw": "Россия",
+          "type_raw": "Комната",
+          "own_type_raw": "Долевая, 1/2 доля"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nToyota Nadia",
+          "relative": null
+        }
+      ],
+      "document_position": "R17C2"
+    },
+    {
+      "person": {
+        "name_raw": "Веденеева Н. В.",
+        "role": "Директор",
+        "department": "ФГБУ ГЦАС \"Вологодский\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 776070.11,
+          "relative": null
+        },
+        {
+          "size": 147074.21,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 48.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,3",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Дачный земельный участок",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "Дачный земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 48.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48,3",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой Renault Duster",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "Автомобиль легковой KIA Spectra",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R22C2"
+    },
+    {
+      "person": {
+        "name_raw": "Бурова И.А.",
+        "role": "Заместитель директора",
+        "department": "ФГБУ ГЦАС \"Вологодский\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 696827.69,
+          "relative": null
+        },
+        {
+          "size": 146623.49,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 47.70,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "47.70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 1295.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1295",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 47.70,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "47.70",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R26C2"
+    },
+    {
+      "person": {
+        "name_raw": "Розова С.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУ ГЦАС \"Вологодский\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 499870.62,
+          "relative": null
+        },
+        {
+          "size": 207650.62,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 936023.39,
+          "relative": "Супруг(а)",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 60.90,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "60.90",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/2 доли"
+        },
+        {
+          "text": "Квартира",
+          "square": 27.30,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "27.30",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 60.90,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "60.90",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 52.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Совместная"
+        },
+        {
+          "text": "Дачный дом",
+          "square": 15.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "15,5",
+          "country_raw": "Россия",
+          "type_raw": "Дачный дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 34.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,2",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 61.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "61,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 466.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "466,0",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 52.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Совместная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R28C2"
+    },
+    {
+      "person": {
+        "name_raw": "Румянцев В.М.",
+        "role": "Проректор ",
+        "department": "ФГБУ ГЦАС \"Вологодский\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 1563760.31,
+          "relative": null
+        },
+        {
+          "size": 571705.83,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок",
+          "square": 2023.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2023,0",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 61.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/3 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 38.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 800.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "800,0",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 61.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Долевая, 1/3 доля"
+        },
+        {
+          "text": "Квартира",
+          "square": 50.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "50,9",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nHyundai IX35",
+          "relative": null
+        }
+      ],
+      "document_position": "R35C2"
+    },
+    {
+      "person": {
+        "name_raw": "Угольникова О.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУ ГЦАС \"Вологодский\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 1113040.02,
+          "relative": null
+        },
+        {
+          "size": 1013832.31,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 60766.88,
+          "relative": "Супруг(а)",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 54.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "54,2",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 36.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "36,7",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 60.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "60,8",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 800.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "800",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 60.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "60,4",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Гаражный бокс",
+          "square": 19.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "19,8",
+          "country_raw": "Россия",
+          "type_raw": "Гаражный бокс",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 1500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Земельный участок",
+          "square": 625.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "625",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой Nissan Tiida",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "Автомобиль легковой\nMitsubishi Pagero Sport",
+          "relative": "Супруг(а)",
+          "relative_index": 2
+        }
+      ],
+      "document_position": "R42C2"
+    },
+    {
+      "person": {
+        "name_raw": "Бальжинимаева Л.М.",
+        "role": "Проректор",
+        "department": "ФГБУ ГЦАС \"Вологодский\""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 1440000.00,
+          "relative": null
+        },
+        {
+          "size": 194400.00,
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 80.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "80",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 72.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "72",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 62.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "62",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Квартира",
+          "square": 72.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "72",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R50C2"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера                                                                                                                                        работников подведомственных Министерству сельского хозяйства Российской Федерации организаций и членов их семей \nза период с 1 января 2015 г. по 31 декабря 2015 г.",
+    "year": 2015,
+    "sheet_number": 0
+  }
+}

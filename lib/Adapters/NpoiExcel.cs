@@ -93,7 +93,7 @@ namespace Smart.Parser.Adapters
             return GetCell(cellRef.Row, cellRef.Col);
         }
 
-        public override List<Cell> GetCells(int row)
+        public override List<Cell> GetCells(int row, int maxColEnd = MaxColumnsCount)
         {
             int index = 0;
             List<Cell> result = new List<Cell>();
@@ -103,7 +103,7 @@ namespace Smart.Parser.Adapters
                 result.Add(cell);
 
                 index += cell.MergedColsCount;
-                if (index > MaxNotEmptyColumnsFoundInHeader)
+                if (index >= maxColEnd)
                 {
                     break;
                 }
@@ -176,6 +176,13 @@ namespace Smart.Parser.Adapters
             }
 
             var cellContents = cell.ToString();
+            int cellWidth = 0;
+            for (int i = 0; i < mergedColsCount; i++)
+            {
+                cellWidth += (int)defaultSheet.GetColumnWidth(column + i);
+                //   to do npoi
+            }
+
             return new Cell
             {
                 IsMerged = isMergedCell,
@@ -187,7 +194,7 @@ namespace Smart.Parser.Adapters
                 Text = cellContents,
                 Row = row,
                 Col = column,
-                CellWidth = defaultSheet.GetColumnWidth(column)
+                CellWidth = cellWidth
             };
             
         }
@@ -220,12 +227,7 @@ namespace Smart.Parser.Adapters
             iter.MoveNext();
             IRow firstRow = (IRow)iter.Current;
             int firstLineColsCount = firstRow.Cells.Count;
-            return Math.Min(MaxNotEmptyColumnsFoundInHeader, firstLineColsCount);
-        }
-
-        public override int GetColsCount(int row)
-        {
-            return GetCells(row).Count();
+            return firstLineColsCount;
         }
 
 
@@ -303,7 +305,7 @@ namespace Smart.Parser.Adapters
             }
             WorkBook.SetActiveSheet(SheetIndex);
             InvalidateCache();
-            RestartAdapterForExcelSheet();
+            
         }
 
         public override string GetWorksheetName()

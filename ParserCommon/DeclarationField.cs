@@ -2,6 +2,7 @@
 
 namespace TI.Declarator.ParserCommon
 {
+
     public enum DeclarationField : short
     {
         None = 0,

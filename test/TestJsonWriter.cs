@@ -14,11 +14,10 @@ namespace test
         public void TestColumnOrderJson()
         {
             ColumnOrdering co = new ColumnOrdering();
-            co.Add(DeclarationField.NameOrRelativeType, 1, -1);
-
+            TColumnInfo s = new TColumnInfo();
+            s.Field = DeclarationField.NameOrRelativeType;
+            co.Add(s);
             JsonWriter.WriteJson("co.json", co);
-
-
         }
     }
 }

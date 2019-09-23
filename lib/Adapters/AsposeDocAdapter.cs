@@ -40,7 +40,7 @@ namespace Smart.Parser.Adapters
             return new AsposeDocCell(cell);
         }
 
-        public override List<Cell> GetCells(int row)
+        public override List<Cell> GetCells(int row, int maxColEnd = -1)
         {
             int index = 0;
             List<Cell> result = new List<Cell>();

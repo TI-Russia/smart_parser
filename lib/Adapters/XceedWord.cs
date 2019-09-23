@@ -441,11 +441,15 @@ namespace Smart.Parser.Adapters
         }
 
 
-        public override List<Cell> GetCells(int row)
+        public override List<Cell> GetCells(int row, int maxColEnd = IAdapter.MaxColumnsCount)
         {
             var result = new List<Cell>();
             foreach (var r in TableRows[row])
             {
+                if (r.Col >= maxColEnd)
+                {
+                    break;
+                }
                 result.Add(r);
             }
             return result;
@@ -468,10 +472,6 @@ namespace Smart.Parser.Adapters
             return UnmergedColumnsCount;
         }
 
-        public override int GetColsCount(int row)
-        {
-            return GetCells(row).Count;
-        }
         public override int GetTablesCount()
         {
             return TablesCount;

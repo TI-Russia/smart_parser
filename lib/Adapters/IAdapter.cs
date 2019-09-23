@@ -16,13 +16,8 @@ namespace Smart.Parser.Adapters
     {
         // some excel files contain 32000 columns, most of them are empty
         // we try to found real column number in the header, by default is 256
-        static private readonly int MaxColumnsCount = 256;
-        public int MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
+        public const int MaxColumnsCount = 256;
 
-        public void RestartAdapterForExcelSheet()
-        {
-            MaxNotEmptyColumnsFoundInHeader = MaxColumnsCount;
-        }
         public virtual bool IsExcel() { return false; }
         public virtual string GetDocumentPosition(int row, int col)
         {
@@ -35,7 +30,7 @@ namespace Smart.Parser.Adapters
 
         
         abstract public Cell GetCell(int row, int column);
-        public virtual List<Cell> GetCells(int row)
+        public virtual List<Cell> GetCells(int row, int maxColEnd=MaxColumnsCount)
         {
             throw new NotImplementedException();
         }
@@ -46,11 +41,10 @@ namespace Smart.Parser.Adapters
         }
 
 
-        // используется, пока ColumnOrdering еще не построен
+        // напрямую используется, пока ColumnOrdering еще не построен
         // во всех остальных случаях надо использовать Row.GetDeclarationField
-        virtual public Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field)
+        virtual public Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
         {
-            TColumnInfo colSpan;
             if (!columnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
                 throw new SystemException(String.Format("Field {0} not found, row={1}", field.ToString(), row));
@@ -61,24 +55,6 @@ namespace Smart.Parser.Adapters
             {
                 throw new SystemException(String.Format("Field {0} not found, row={1}, col={2}", field.ToString(), row, colSpan.BeginColumn));
             }
-
-            if (exactCell.Text.Trim() != "")
-            {
-                return exactCell;
-            }
-            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
-            {
-                var mergedCell = GetCell(row, i);
-                if (mergedCell == null)
-                {
-                    break;
-                }
-                if (mergedCell.Text.Trim() != "")
-                {
-                    return mergedCell;
-                }
-                i += mergedCell.MergedColsCount;
-            }
             return exactCell;
         }
 
@@ -86,11 +62,6 @@ namespace Smart.Parser.Adapters
         abstract public int GetRowsCount();
         abstract public int GetColsCount();
 
-
-        public virtual int GetColsCount(int Row)
-        {
-            throw new NotImplementedException();
-        }
 
         public virtual string GetTitleOutsideTheTable()
         {
@@ -124,10 +95,6 @@ namespace Smart.Parser.Adapters
                 if (!cell.IsEmpty) return false;
             }
             return true;
-        }
-        public bool IsSectionRow(List<Cell> cells, bool prevRowIsSection, out string text)
-        {
-            return IAdapter.IsSectionRow(cells, prevRowIsSection, GetColsCount(), out text);
         }
         
 
@@ -202,7 +169,7 @@ namespace Smart.Parser.Adapters
                 string dummy;
                 // cannot use prevRowIsSection
                 var row = GetCells(i);
-                if (IsSectionRow(row, false, out dummy))
+                if (IsSectionRow(row, columnOrdering.GetMaxColumnEndIndex(), false, out dummy))
                 {
                     table.Section.Add(GetJsonByRow(row));
                     break;
@@ -259,29 +226,6 @@ namespace Smart.Parser.Adapters
             }
             csv.Flush();
         }
-
-        public void SetMaxColumnsCountByHeader(int headerRowCount)
-        {
-            int maxfound = 0;
-            for (int row = 0; row < headerRowCount; ++row)
-            {
-                for (int col = 0; col < 256; ++col)
-                {
-                    var c = GetCell(row, col);
-                    if (c == null)
-                    {
-                        break;
-                    }
-                    if (c.GetText() != "")
-                    {
-                        maxfound = Math.Max(col, maxfound);
-                    }
-                }
-            }
-            MaxNotEmptyColumnsFoundInHeader = maxfound;
-            Logger.Debug($"Set MaxNotEmptyColumnsFoundInHeader to {maxfound}");
-        }
-
 
 
         public virtual int? GetWorksheetIndex()

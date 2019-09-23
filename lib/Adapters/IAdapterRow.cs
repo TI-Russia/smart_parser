@@ -67,7 +67,7 @@ namespace Smart.Parser.Adapters
             this.row = row;
             this.adapter = adapter;
             this.ColumnOrdering = columnOrdering;
-            Cells = adapter.GetCells(row);
+            Cells = adapter.GetCells(row, columnOrdering.GetMaxColumnEndIndex());
             MappedHeader = MapByOrderAndIntersection(columnOrdering, Cells);
             if (MappedHeader == null )
             {
@@ -169,7 +169,27 @@ namespace Smart.Parser.Adapters
             {
                 return cell;
             }
-            return adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field);
+            TColumnInfo colSpan;
+            var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
+            if (exactCell.Text.Trim() != "")
+            {
+                return exactCell;
+            }
+            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+            {
+                var mergedCell = adapter.GetCell(row, i);
+                if (mergedCell == null)
+                {
+                    break;
+                }
+                if (mergedCell.Text.Trim() != "")
+                {
+                    return mergedCell;
+                }
+                i += mergedCell.MergedColsCount;
+            }
+            return exactCell;
+
         }
 
         public string GetContents(DeclarationField field, bool except = true)

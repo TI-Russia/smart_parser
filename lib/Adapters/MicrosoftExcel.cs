@@ -88,7 +88,7 @@ namespace Smart.Parser.Adapters
         public override Cell GetCell(int row, int column)
         {
             Excel.Range cell = WorkSheet.Cells[row + 1, column + 1];
-            return new MSExcelCell(cell, WorkSheet.Columns[column + 1]);
+            return new MSExcelCell(cell, WorkSheet.Columns[column + 1].ColumnWidth);
         }
 
         public override int GetRowsCount()
@@ -106,16 +106,12 @@ namespace Smart.Parser.Adapters
             return TotalColumns;
         }
 
-        public override int GetColsCount(int row)
-        {
-            return GetCells(row).Count();
-        }
         public override string GetTitleOutsideTheTable()
         {
             return "";
         }
 
-        public override List<Cell> GetCells(int rowIndex)
+        public override List<Cell> GetCells(int rowIndex, int maxColEnd = -1)
         {
             List<Cell> result = new List<Cell>();
             for (int i = 1; i < TotalColumns; i++)

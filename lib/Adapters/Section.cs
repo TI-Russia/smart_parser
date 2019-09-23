@@ -35,7 +35,7 @@ namespace Smart.Parser.Adapters
             return false;
         }
 
-        public static bool IsSectionRow(List<Cell> cells, bool prevRowIsSection, int colsCount, out string text)
+        public static bool IsSectionRow(List<Cell> cells, int colsCount, bool prevRowIsSection, out string text)
         {
             text = null;
             if (cells.Count == 0)

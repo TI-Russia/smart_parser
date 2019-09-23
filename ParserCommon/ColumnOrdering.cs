@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace TI.Declarator.ParserCommon
 {
@@ -8,31 +8,28 @@ namespace TI.Declarator.ParserCommon
     {
         public DeclarationField Field;
         public int BeginColumn;
-        public int EndColumn;
-        public int ColumnPixelStart;
+        public int EndColumn; //initialized in ColumnOrdering::FinishOrderingBuilding 
+        public int ColumnPixelStart; //initialized in ColumnOrdering::FinishOrderingBuilding 
         public int ColumnPixelWidth;
     }
+
     public class ColumnOrdering
     {
         public Dictionary<DeclarationField, TColumnInfo> ColumnOrder = new Dictionary<DeclarationField, TColumnInfo>();
         public List<TColumnInfo> MergedColumnOrder = new List<TColumnInfo>();
+        
         public bool ContainsField(DeclarationField field)
         {
             return ColumnOrder.ContainsKey(field);
         }
 
-        public void Add(DeclarationField field, int beginColumn, int columnWidth)
+        public void Add(TColumnInfo s)
         {
-            if (ColumnOrder.ContainsKey(field))
+            if (ColumnOrder.ContainsKey(s.Field))
             {
                 return;
             }
-            TColumnInfo s = new TColumnInfo();
-            s.BeginColumn = beginColumn;
-            s.EndColumn = beginColumn + 1;
-            s.ColumnPixelWidth = columnWidth;
-            s.Field = field;
-            ColumnOrder.Add(field, s);
+            ColumnOrder.Add(s.Field, s);
         }
         public void Delete(DeclarationField field)
         {
@@ -77,26 +74,11 @@ namespace TI.Declarator.ParserCommon
             return field;
         }
 
-        public void InitHeaderEndColumns(int lastColumn)
+        public int GetMaxColumnEndIndex()
         {
-            foreach (var i in ColumnOrder) {
-                int start = i.Value.BeginColumn;
-                int end = lastColumn;
-                foreach (var k in ColumnOrder)
-                {
-                    int newEnd = k.Value.BeginColumn;
-                    if (newEnd > start)
-                    {
-                        if (newEnd < end )
-                        {
-                            end = newEnd;
-                        };
-                    }
-                }
-                i.Value.EndColumn = end;
-            }
+            Debug.Assert(MergedColumnOrder.Count > 0);
+            return MergedColumnOrder[MergedColumnOrder.Count - 1].EndColumn;
         }
-
         public bool OwnershipTypeInSeparateField
         {
             get

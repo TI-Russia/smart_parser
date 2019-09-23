@@ -170,8 +170,6 @@ namespace Smart.Parser.Lib
             Declaration declaration =  InitializeDeclaration(columnOrdering);
 
             int rowOffset = columnOrdering.FirstDataRow;
-            Adapter.SetMaxColumnsCountByHeader(rowOffset);
-            columnOrdering.InitHeaderEndColumns(Adapter.GetColsCount());
 
             TBorderFinder borderFinder = new TBorderFinder(declaration, FailOnRelativeOrphan);
             
@@ -189,7 +187,7 @@ namespace Smart.Parser.Lib
                 }
 
                 string sectionName;
-                if (Adapter.IsSectionRow(currRow.Cells, false, out sectionName))
+                if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))
                 {
                     borderFinder.CreateNewSection(row, sectionName);
                     continue;

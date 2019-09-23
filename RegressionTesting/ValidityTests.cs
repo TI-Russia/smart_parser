@@ -417,6 +417,14 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinKult2011.doc", "prod", true);
         }
 
+        [TestMethod]
+        [TestCategory("xlsx")]
+        public void MinSelhoz2015()
+        {
+            // повтор Header внутри таблицы
+            TestSmartParser("SmartParser\\MinSelhoz2015.xlsx", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {

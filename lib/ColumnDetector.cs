@@ -73,7 +73,7 @@ namespace Smart.Parser.Lib
             {
                 var currRow = adapter.GetCells(row);
                 string section_text;
-                bool isSection = adapter.IsSectionRow(currRow, prevRowIsSection, out section_text);
+                bool isSection = IAdapter.IsSectionRow(currRow,  adapter.GetColsCount(), prevRowIsSection, out section_text);
                 if (isSection)
                 {
                     if (section_text.Length > 20)
@@ -129,6 +129,17 @@ namespace Smart.Parser.Lib
             }
             return subCells;
         }
+        static void AddColumn(ColumnOrdering ordering, DeclarationField field, Cell  cell)
+        {
+            TColumnInfo s = new TColumnInfo();
+            s.BeginColumn = cell.Col;
+            s.EndColumn = cell.Col + cell.MergedColsCount;
+            s.ColumnPixelWidth = cell.CellWidth;
+            //s.ColumnPixelStart is unknown and initialized in FinishOrderingBuilding
+            s.Field = field;
+
+            ordering.Add(s);
+        }
         static void SecondLevelHeader(IAdapter adapter, Cell parentCell, List<Cell> subCells, ColumnOrdering result)
         {
             string text = parentCell.GetText(true);
@@ -161,7 +172,7 @@ namespace Smart.Parser.Lib
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", cell.Row, cell.Col, fullText));
                 }
                 prev_field = field;
-                result.Add(field, cell.Col, cell.CellWidth);
+                AddColumn(result, field, cell);
             }
         }
 
@@ -172,7 +183,8 @@ namespace Smart.Parser.Lib
             {
                 return;
             }
-            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText);
+            TColumnInfo dummy;
+            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText,out dummy);
             var subCells = FindSubcellsUnder(adapter, headerCell);
             if (subCells.Count != 3)
             {
@@ -181,18 +193,16 @@ namespace Smart.Parser.Lib
             for (int row = columnOrdering.FirstDataRow; row < adapter.GetRowsCount(); row++)
             {
                 if (row > columnOrdering.FirstDataRow + 5) break;
-                TColumnInfo middleCol = new TColumnInfo();
-                middleCol.BeginColumn = subCells[1].Col; // we check only the  second column, todo check the  first one and  the third
-                middleCol.EndColumn = subCells[2].Col;
-                string areaStr = adapter.GetCell(row, middleCol.BeginColumn).GetText(true);
+                // we check only the  second column, todo check the  first one and  the third
+                string areaStr = adapter.GetCell(row, subCells[1].Col).GetText(true);
                 if (!DataHelper.ParseSquare(areaStr).HasValue)
                 {
                     return;
                 }
             }
-            columnOrdering.Add(DeclarationField.MixedRealEstateType, subCells[0].Col, subCells[0].CellWidth);
-            columnOrdering.Add(DeclarationField.MixedRealEstateSquare, subCells[1].Col, subCells[1].CellWidth);
-            columnOrdering.Add(DeclarationField.MixedRealEstateCountry, subCells[2].Col, subCells[2].CellWidth);
+            AddColumn(columnOrdering, DeclarationField.MixedRealEstateType, subCells[0]);
+            AddColumn(columnOrdering, DeclarationField.MixedRealEstateSquare, subCells[1]);
+            AddColumn(columnOrdering, DeclarationField.MixedRealEstateCountry, subCells[2]);
             columnOrdering.Delete(DeclarationField.MixedColumnWithNaturalText);
         }
 
@@ -206,7 +216,8 @@ namespace Smart.Parser.Lib
                 )
             {
                 TColumnInfo s = c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText];
-                c.Add(DeclarationField.MixedRealEstateType, s.BeginColumn, s.ColumnPixelWidth);
+                s.Field = DeclarationField.MixedRealEstateType;
+                c.Add(s);
                 c.Delete(DeclarationField.MixedColumnWithNaturalText);
             }
         }
@@ -248,11 +259,12 @@ namespace Smart.Parser.Lib
                         {
                             throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerStartRow, colCount));
                         }
-                        columnOrdering.Add(field, cell.Col, cell.CellWidth);
+                        AddColumn(columnOrdering, field, cell);
                         if (DeclarationField.NameOrRelativeType == field && cell.MergedRowsCount == 1)
                         {
-                            string fioAfterHeader = adapter.GetDeclarationFieldWeak(columnOrdering, headerEndRow, field).GetText(true);
-                            headerCanHaveSecondLevel = fioAfterHeader.Length == 0;
+                            TColumnInfo dummy;
+                            string cellBelowName = adapter.GetDeclarationFieldWeak(columnOrdering, headerEndRow, field, out dummy).GetText(true);
+                            headerCanHaveSecondLevel = cellBelowName.Length == 0;
                         }
                         colCount++;
                     }

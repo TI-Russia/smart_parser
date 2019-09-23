@@ -34,7 +34,12 @@ namespace Smart.Parser.Adapters
             }
             Row = cell.Row;
             Col = cell.Column;
-            CellWidth = (int)worksheet.Cells.GetColumnWidth(cell.Column);
+            CellWidth = 0;
+            for (int i = 0; i < MergedColsCount;i++)
+            {
+                CellWidth += (int)worksheet.Cells.GetColumnWidth(cell.Column + i);
+                //   to do npoi
+            }
         }
     }
     public class AsposeExcelAdapter : IAdapter
@@ -68,7 +73,7 @@ namespace Smart.Parser.Adapters
             return totalColumns;
         }
 
-        public override List<Cell> GetCells(int rowIndex)
+        public override List<Cell> GetCells(int rowIndex, int maxColEnd = IAdapter.MaxColumnsCount)
         {
             List<Cell> result = new List<Cell>();
             Aspose.Cells.Row row = worksheet.Cells.Rows[rowIndex];
@@ -79,6 +84,10 @@ namespace Smart.Parser.Adapters
 
             for (int i = 0; i <= lastCell.Column; i++)
             {
+                if (i >= maxColEnd)
+                {
+                    break;
+                }
                 Aspose.Cells.Cell cell = row.GetCellOrNull(i);
                 result.Add(new AsposeExcelCell(cell, worksheet));
                 if (cell != null && cell.IsMerged && cell.GetMergedRange().ColumnCount > 1)
@@ -112,10 +121,6 @@ namespace Smart.Parser.Adapters
             return result;
         }
 
-        public override int GetColsCount(int row)
-        {
-            return GetCells(row).Count();
-        }
         public override string GetTitleOutsideTheTable()
         {
             return "";
