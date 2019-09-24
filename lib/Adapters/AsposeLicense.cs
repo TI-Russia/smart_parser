@@ -39,23 +39,35 @@ namespace Smart.Parser.Adapters
             return result;
         }
 
+        public static System.IO.Stream GetAsposeLicenseStream(string uriString)
+        {
+            //Console.WriteLine(uriString);
+            if (uriString.StartsWith("http"))
+            {
+                var uri = new Uri(uriString);
+                try
+                {
+                    return  GetContentStream(new Uri(uriString));
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return DecryptStream(System.IO.File.OpenRead(uriString));
+            }
+
+        }
         public static void SetLicense(string uriString)
         {
-            var uri = new Uri(uriString);
-            System.IO.Stream stream = null;
-            try
-            {
-                stream = GetContentStream(new Uri(uriString));
-            }
-            catch
-            {
-                return;
-            }
             Aspose.Cells.License cell_license = new Aspose.Cells.License();
-            cell_license.SetLicense(stream);
-            stream = GetContentStream(new Uri(uriString));
+            cell_license.SetLicense(GetAsposeLicenseStream(uriString));
+
             Aspose.Words.License word_license = new Aspose.Words.License();
-            word_license.SetLicense(stream);
+            word_license.SetLicense(GetAsposeLicenseStream(uriString));
+
             Licensed = word_license.IsLicensed;
         }
         public static bool Licensed { set; get; } = false;
