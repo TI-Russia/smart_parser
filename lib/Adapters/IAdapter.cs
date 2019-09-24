@@ -15,8 +15,8 @@ namespace Smart.Parser.Adapters
     public abstract class IAdapter : TSectionPredicates
     {
         // some excel files contain 32000 columns, most of them are empty
-        // we try to found real column number in the header, by default is 256
-        public const int MaxColumnsCount = 256;
+        // we try to found real column number in the header, by default is 1024
+        public const int MaxColumnsCount = 1024;
 
         public virtual bool IsExcel() { return false; }
         public virtual string GetDocumentPosition(int row, int col)

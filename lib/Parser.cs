@@ -95,7 +95,7 @@ namespace Smart.Parser.Lib
 
             public void CreateNewDeclarant(ColumnOrdering columnOrdering, IAdapter adapter, DataRow row)
             {
-                Logger.Debug("Declarant {0} at row {1}", row.PersonName, row);
+                Logger.Debug("Declarant {0} at row {1}", row.PersonName, row.GetRowIndex());
                 CurrentDeclarant = new PublicServant()
                 {
                     NameRaw = row.PersonName,

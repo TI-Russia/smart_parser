@@ -128,18 +128,28 @@ namespace Smart.Parser.Adapters
         static Dictionary<DeclarationField, Cell> MapByMaxIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
             var res = new Dictionary<DeclarationField, Cell>();
+            var sizes = new Dictionary<DeclarationField, int>();
             int start = 0;
             foreach (var c in cells)
             {
-                if (c.CellWidth > 0)
+                if (c.CellWidth >  0 )
                 {
-                    var field = columnOrdering.FindByPixelIntersection(start, start + c.CellWidth);
-                    if (field == DeclarationField.None)
+                    int interSize = 0;
+                    var field = columnOrdering.FindByPixelIntersection(start, start + c.CellWidth, out interSize);
+                   
+                    // cannot map some text,so it is a failure
+                    if (field == DeclarationField.None && c.Text.Trim().Length > 0)
                     {
                         return null;
                     }
-                    start += c.CellWidth;
+                    // take only fields with maximal pixel intersection
+                    if (!sizes.ContainsKey(field) || sizes[field] < interSize)
+                    {
+                        res[field] = c;
+                        sizes[field] = interSize;
+                    }
                 }
+                start += c.CellWidth;
             }
             return res;
         }
@@ -231,6 +241,10 @@ namespace Smart.Parser.Adapters
 
         void SetRelative(string value)
         {
+            if (DataHelper.IsEmptyValue(value))
+            {
+                value = String.Empty;
+            }
             RelativeType = value;
             if (RelativeType != String.Empty && !DataHelper.IsRelativeInfo(RelativeType))
             {
