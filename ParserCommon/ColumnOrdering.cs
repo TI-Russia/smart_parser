@@ -11,6 +11,10 @@ namespace TI.Declarator.ParserCommon
         public int EndColumn; //initialized in ColumnOrdering::FinishOrderingBuilding 
         public int ColumnPixelStart; //initialized in ColumnOrdering::FinishOrderingBuilding 
         public int ColumnPixelWidth;
+        public override string ToString()
+        {
+            return String.Format("[{0},{1})", BeginColumn,  EndColumn);
+        }
     }
 
     public class ColumnOrdering
@@ -58,10 +62,10 @@ namespace TI.Declarator.ParserCommon
             }
             return 0;
         }
-        public DeclarationField FindByPixelIntersection(int start, int end)
+        public DeclarationField FindByPixelIntersection(int start, int end, out int maxInterSize)
         {
             DeclarationField field = DeclarationField.None;
-            int maxInterSize = 0;
+            maxInterSize = 0;
             foreach (var x in ColumnOrder)
             {
                 int interSize = PeriodIntersection(start, end, x.Value.ColumnPixelStart, x.Value.ColumnPixelStart + x.Value.ColumnPixelWidth);

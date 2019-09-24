@@ -1,0 +1,95 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Абрамова Наталья Юрьевна",
+        "role": "Ведущий консультант\n"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 715382.21,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 44.9,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,9",
+          "country_raw": "РФ",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Абросимова Елена Игоревна",
+        "role": "Референт\n"
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1153174.94,
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 78.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "78,5",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "общая"
+        },
+        {
+          "text": "садовый участок",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "",
+          "type_raw": "садовый участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "садовый дом",
+          "square": 39.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,4",
+          "country_raw": "",
+          "type_raw": "садовый дом",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 78.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "78,5",
+          "country_raw": "РФ",
+          "type_raw": "квартира",
+          "own_type_raw": "общая"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Легковой автомобиль ВАЗ-21108 \"Премьер\"",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных\nгражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей\nза период с 1 января 2013 г. по 31 декабря 2013 г.",
+    "year": 2013
+  }
+}

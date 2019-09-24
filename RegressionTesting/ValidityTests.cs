@@ -303,6 +303,14 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xlsx")]
+        public void MinStroy2017_1()
+        {
+            //  Беру строки из середины файла
+            TestSmartParser("SmartParser\\MinStroy2017_1.xlsx", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void MinEkonon2017()
         {
@@ -432,6 +440,19 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\Fsin2011.doc", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void MinEkonom2014()
+        {
+            TestSmartParser("SmartParser\\MinEkonom2014.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void MinProm2013()
+        {
+            TestSmartParser("SmartParser\\MinProm2013.docx", "prod");
+        }
 
         private static void SetupLog4Net()
         {
