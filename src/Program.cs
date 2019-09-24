@@ -380,7 +380,7 @@ namespace Smart.Parser
                         }
                         if (AsposeLicense.Licensed)
                         {
-                            return AsposeExcelAdapter.CreateAdapter(declarationFile);
+                            return AsposeExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                         }
                     }
                     else if (AdapterFamily == "npoi")

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -98,7 +98,7 @@ namespace Smart.Parser.Adapters
         string ConvertFile2TempDocX(string filename)
         {
             Application word = new Application();
-            var doc = word.Documents.OpenNoRepairDialog(Path.GetFullPath(filename),ReadOnly:true);
+            var doc = word.Documents.OpenNoRepairDialog(Path.GetFullPath(filename),ReadOnly:true, ConfirmConversions:false);
             string docXPath;
             if (ConvertedFileDir != null)
             {
@@ -159,7 +159,13 @@ namespace Smart.Parser.Adapters
                 || extension == ".doc"
                 )
             {
-                fileName = ConvertFile2TempDocX(fileName);
+                try
+                {
+                    fileName = ConvertFile2TempDocX(fileName);
+                }catch (Exception) {
+                    Thread.Sleep(10000); //10 seconds
+                    fileName = ConvertFile2TempDocX(fileName);
+                }
                 removeTempFile = false;
             }
 

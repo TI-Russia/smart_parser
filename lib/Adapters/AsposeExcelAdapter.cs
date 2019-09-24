@@ -46,9 +46,9 @@ namespace Smart.Parser.Adapters
     {
         public override bool IsExcel() { return true; }
 
-        public static IAdapter CreateAdapter(string fileName)
+        public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess = -1)
         {
-            return new AsposeExcelAdapter(fileName);
+            return new AsposeExcelAdapter(fileName, maxRowsToProcess);
         }
 
         public override string GetDocumentPosition(int row, int col)
@@ -65,6 +65,10 @@ namespace Smart.Parser.Adapters
 
         public override int GetRowsCount()
         {
+            if (MaxRowsToProcess != -1)
+            {
+                return Math.Min(MaxRowsToProcess, totalRows);
+            }
             return totalRows;
         }
 
@@ -127,8 +131,9 @@ namespace Smart.Parser.Adapters
         }
 
 
-        private AsposeExcelAdapter(string fileName)
+        private AsposeExcelAdapter(string fileName, int maxRowsToProcess)
         {
+            MaxRowsToProcess = maxRowsToProcess;
             DocumentFile = fileName;
             workbook = new Aspose.Cells.Workbook(fileName);
             // if there are multiple worksheets it is a problem
@@ -205,5 +210,7 @@ namespace Smart.Parser.Adapters
         private int totalColumns;
         private int worksheetCount;
         private string workSheetName;
+        private int MaxRowsToProcess;
+
     }
 }
