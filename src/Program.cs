@@ -85,7 +85,10 @@ namespace Smart.Parser
                     throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
                 }
             }
-            SetAsposeLicenseFromEnvironment();
+            else
+            {
+                SetAsposeLicenseFromEnvironment();
+            }
             if (maxRowsToProcessOpt.isMatched)
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
