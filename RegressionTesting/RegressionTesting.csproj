@@ -196,6 +196,12 @@
     <None Include="regression_samples\SmartParser\MinRes2011.doc.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinSelhoz2013.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinSelhoz2013.xlsx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinSelhoz2015.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

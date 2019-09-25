@@ -136,6 +136,10 @@ namespace Smart.Parser.Adapters
             string res = string.Format("<tr rowindex={0}>\n", rowIndex);
             foreach (var c in row)
             {
+                if (c.FirstMergedRow != rowIndex)
+                {
+                    continue;
+                }
                 res += "\t<td";
                 if (c.MergedColsCount > 1)
                 {
@@ -195,7 +199,7 @@ namespace Smart.Parser.Adapters
         {
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(htmlFileName))
             {
-                file.WriteLine("<html><table>");
+                file.WriteLine("<html><table border=1>");
                 for (int i = 0; i < GetRowsCount(); i++)
                 {
                     file.WriteLine(GetHtmlByRow(GetCells(i), i));

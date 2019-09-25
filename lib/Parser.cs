@@ -157,7 +157,7 @@ namespace Smart.Parser.Lib
             }
             catch (Exception e)
             {
-                Logger.Error(String.Format("Cannot parse possible header, row={0}, error={1} ", e.ToString(), row.GetRowIndex()));
+                Logger.Error(String.Format("Cannot parse possible header, row={0}, error={1}, so skip it may be it is a data row ", e.ToString(), row.GetRowIndex()));
 
             }
             return false;
@@ -405,7 +405,6 @@ namespace Smart.Parser.Lib
                         {
                             continue;
                         }
-                        // if state and square cell is empty then merge this row with previous
                         if (Adapter.IsExcel() && 
                             !row.IsEmpty(DeclarationField.StatePropertyType,
                                 DeclarationField.MixedRealEstateType,
@@ -418,6 +417,7 @@ namespace Smart.Parser.Lib
                                 DeclarationField.StatePropertyCountry,
                                 DeclarationField.NameOrRelativeType))
                         {
+                            Logger.Debug("Merge row to the last if state and square cell is empty");
                             rows.Last().Merge(row);
                         }
                         else

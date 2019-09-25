@@ -418,7 +418,6 @@ namespace Smart.Parser
             Logger.Info(String.Format("RowsCount = {0}", adapter.GetRowsCount()));
 
             if (HtmlFileName != "") adapter.WriteHtmlFile(HtmlFileName);
-            string declarationFileName = Path.GetFileName(declarationFile);
             if (adapter.GetWorkSheetCount() > 1)
             {
                 Logger.Info(String.Format("File has multiple ({0}) worksheets", adapter.GetWorkSheetCount()));
@@ -427,49 +426,14 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseFile(adapter, curOutFile, declarationFile);
+                    ParseDocumentSheet(adapter, curOutFile, declarationFile);
                 }
             }
             else
             {
-                ParseFile(adapter, outFile, declarationFile);
+                ParseDocumentSheet(adapter, outFile, declarationFile);
             }
-            adapter = null;
 
-#if false
-            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
-            var columnOrdering = ColumnDetector.ExamineHeader(adapter);
-            adapter.ColumnOrdering = columnOrdering;
-
-
-            Logger.Info("Column ordering: ");
-            foreach (var ordering in columnOrdering.ColumnOrder)
-            {
-                Logger.Info(ordering.ToString());
-            }
-            Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
-            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
-            if (ColumnsOnly)
-                return 0;
-
-            Declaration declaration = parser.Parse();
-
-            string schema_errors = null;
-            string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
-
-            if (!String.IsNullOrEmpty(schema_errors))
-            {
-                Logger.Error("Json schema errors:" + schema_errors);
-            }
-            else
-            {
-                Logger.Info("Json schema OK");
-            }
-            Logger.Info("Output size: " + output.Length);
-
-            Logger.Info("Writing json to " + outFile);
-            File.WriteAllText(outFile, output);
-#endif
             return 0;
         }
 
@@ -522,7 +486,7 @@ namespace Smart.Parser
                 file.WriteLine(id + "\t"+ "\"" + jsonStr + "\"\t\t");
             }
         }
-        public static int ParseFile(IAdapter adapter, string outFile, string declarationFile)
+        public static int ParseDocumentSheet(IAdapter adapter, string outFile, string declarationFile)
         {
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);

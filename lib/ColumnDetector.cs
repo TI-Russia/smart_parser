@@ -116,6 +116,10 @@ namespace Smart.Parser.Lib
         }
         static List<Cell> FindSubcellsUnder(IAdapter adapter, Cell cell)
         {
+            if (cell.Row + cell.MergedRowsCount >= adapter.GetRowsCount() )
+            {
+                return new List<Cell>();
+            }
             var undercCells = adapter.GetCells(cell.Row + cell.MergedRowsCount);
             var subCells = new List<Cell>();
             foreach (var underCell in undercCells)
@@ -158,7 +162,7 @@ namespace Smart.Parser.Lib
                 }
                 else if (cellText == "" && prev_field == DeclarationField.None) {
                     // пустая колонка, перед которой ничего не было (скорее всего "вид недвижимости")
-                    // пример такого файла: 9037\rabotniki_podved_organizacii_2013.xlsx
+                    // пример такого файла в тестах: MinSelhoz2013.xlsx
                     field = DeclarationField.OwnedRealEstateType;
                 }
                 else
@@ -255,12 +259,13 @@ namespace Smart.Parser.Lib
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
-                Logger.Debug("column title: " + text);
-
+                
                 if (text == "")
                 {
                     continue;
                 }
+                Logger.Debug("column title: " + text);
+
                 var subCells = FindSubcellsUnder(adapter, cell);
 
                 if (subCells.Count() <= 1 || ! headerCanHaveSecondLevel)
@@ -298,11 +303,14 @@ namespace Smart.Parser.Lib
             int firstDataRow = columnOrdering.HeaderEnd.Value;
 
             // пропускаем колонку с номерами
-            string cellText1 = adapter.GetCell(firstDataRow, 0).GetText();
-            string cellText2 = adapter.GetCell(firstDataRow, 1).GetText();
-            if (cellText1 == "1" && cellText2 == "2")
+            if (firstDataRow < adapter.GetRowsCount())
             {
-                firstDataRow++;
+                string cellText1 = adapter.GetCell(firstDataRow, 0).GetText();
+                string cellText2 = adapter.GetCell(firstDataRow, 1).GetText();
+                if (cellText1 == "1" && cellText2 == "2")
+                {
+                    firstDataRow++;
+                }
             }
 
             columnOrdering.FirstDataRow = firstDataRow;
