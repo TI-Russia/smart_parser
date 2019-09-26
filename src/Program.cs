@@ -64,6 +64,7 @@ namespace Smart.Parser
             CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
             CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
+            CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             parser.AddHelpOption();
             try
             {
@@ -154,6 +155,7 @@ namespace Smart.Parser
             ColumnsOnly = columnsOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
             BuildTrigrams = buildTrigramsOpt.isMatched;
+            ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
             return String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
         }
 
@@ -218,6 +220,10 @@ namespace Smart.Parser
             finally
             {
                 Logger.SetOutMain();
+            }
+            if (ColumnPredictor.CalcPrecision)
+            {
+                Logger.Info(ColumnPredictor.GetPrecisionStr());
             }
 
             if (Logger.Errors.Count() > 0)
@@ -346,6 +352,11 @@ namespace Smart.Parser
                 Logger.Info("Output UnknownRealEstate to file {0}", dictfile);
             }
 
+            if (ColumnPredictor.CalcPrecision)
+            {
+                Logger.Info(ColumnPredictor.GetPrecisionStr());
+            }
+
             return 0;
         }
 
@@ -410,7 +421,7 @@ namespace Smart.Parser
                 return 0;
 
             }
-            ColumnPredictor.Initialize();
+            ColumnPredictor.InitializeIfNotAlready();
 
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
             Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
@@ -437,7 +448,7 @@ namespace Smart.Parser
             {
                 ParseDocumentSheet(adapter, outFile, declarationFile);
             }
-
+            
             return 0;
         }
 

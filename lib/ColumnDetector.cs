@@ -283,17 +283,25 @@ namespace Smart.Parser.Lib
             const int maxRowToCollect = 10;
             for (int i = 0; i < maxRowToCollect; i++)
             {
-                var c = adapter.GetCell(rowIndex, headerCell.Col);
-                if (c != null)
-                {
-                    texts.Add(c.GetText(true));
-                    rowIndex += c.MergedRowsCount;
-                }
-                else
+                List<Cell> cells = adapter.GetCells(rowIndex, IAdapter.MaxColumnsCount);
+                string dummy;
+                if (IAdapter.IsSectionRow(cells, IAdapter.MaxColumnsCount, false, out dummy))
                 {
                     rowIndex += 1;
                 }
-                
+                else
+                {
+                    var c = adapter.GetCell(rowIndex, headerCell.Col);
+                    if (c != null)
+                    {
+                        texts.Add(c.GetText(true));
+                        rowIndex += c.MergedRowsCount;
+                    }
+                    else
+                    {
+                        rowIndex += 1;
+                    }
+                }                
                 if (rowIndex >= adapter.GetRowsCount()) break;
             }
             var field = ColumnPredictor.ClassifyStrings(texts);
@@ -315,6 +323,8 @@ namespace Smart.Parser.Lib
                     field |= DeclarationField.Owned;
                 }
             }
+            Logger.Debug(string.Format("predict by {0}  -> {1}",
+                String.Join("\\n", texts), field));
             return field;
         }
         static public void MapStringsToConstants(IAdapter adapter, List<Cell> cells, ColumnOrdering columnOrdering)
@@ -340,6 +350,21 @@ namespace Smart.Parser.Lib
                 if (field == DeclarationField.None)
                 {
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} title:{1}", cell.Row, text));
+                }
+                if (ColumnPredictor.CalcPrecision)
+                {
+                    var predicted_field = PredictField(adapter, cell);
+                    if (predicted_field ==  field)
+                    {
+                        ColumnPredictor.CorrectCount += 1;
+                    } else
+                    {
+                        Logger.Debug(
+                            string.Format("wrong predicted as {0} must be {1} ",
+                            predicted_field, field));
+
+                    }
+                    ColumnPredictor.AllCount += 1;
                 }
                 AddColumn(columnOrdering, field, cell);
             }

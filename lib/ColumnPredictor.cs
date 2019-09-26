@@ -19,14 +19,21 @@ namespace Parser.Lib
         static  TrigramsDict Trigrams = new TrigramsDict();
         static Dictionary<DeclarationField, double> ClassFreq;
         static double SampleLen;
+        static public bool CalcPrecision =  false;
+        static public int CorrectCount = 0;
+        static public int AllCount = 0;
 
 
         //static ColumnPredictor() //do not know why static constructor is not called,use Initialize
-        public static void Initialize()
+        public static void InitializeIfNotAlready()
         {
-            ReadData();
-            BuildClassFreqs();
+            if (SampleLen == 0)
+            {
+                ReadData();
+                BuildClassFreqs();
+            }
         }
+
         static string GetDataPath()
         {
             string executableLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -147,6 +154,13 @@ namespace Parser.Lib
 
                 }
             }
+        }
+        public static string GetPrecisionStr()
+        {
+            return String.Format(
+                    "Predictor precision all={0} correct={1}, precision={2}",
+                    AllCount, CorrectCount,
+                    CorrectCount / ((double)AllCount + 10E-10));
         }
     }
 }
