@@ -351,7 +351,10 @@ namespace Smart.Parser.Adapters
                     string key = tokens1.Last() + " " + tokens2.First();
                     if (Bigrams.ContainsKey(key))
                     {
-                        Logger.Debug(string.Format("Join rows using mutual information on cells \"{0}\" and \"{1}\"", row1[i].GetTextOneLine(), row2[i].GetTextOneLine()));
+                        Logger.Debug(string.Format(
+                            "Join rows using mutual information on cells \"{0}\" and \"{1}\"", 
+                            row1[i].Text.ReplaceEolnWithSpace(), 
+                            row2[i].Text.ReplaceEolnWithSpace()));
                         return true;
                     }
                 }

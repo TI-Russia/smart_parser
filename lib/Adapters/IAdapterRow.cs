@@ -27,15 +27,10 @@ namespace Smart.Parser.Adapters
             var text = Text;
             if (trim)
             {
-                char[] spaces = { ' ', '\n', '\r', '\t' };
-                text = text.CoalesceWhitespace().Trim(spaces);
+                text = text.CoalesceWhitespace().Trim();
             }
 
             return text;
-        }
-        public virtual string GetTextOneLine()
-        {
-            return Text.Replace("\n", " ").Trim();
         }
 
         public int Row { get; set; } = -1;

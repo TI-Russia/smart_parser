@@ -11,7 +11,7 @@ namespace TI.Declarator.ParserCommon
         public static decimal ParseDecimalValue(this string val)
         {
             decimal res;
-            string processedVal = val.Replace(" ", "").Replace("\n", "").Replace(((char)160).ToString(), "");
+            string processedVal = Regex.Replace(val, @"\s+", "");
             if (!Decimal.TryParse(processedVal, NumberStyles.Any, RussianCulture, out res))
             {
                 if (!Decimal.TryParse(processedVal, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
