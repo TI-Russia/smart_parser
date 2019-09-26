@@ -93,7 +93,7 @@ class ProcessOneFile(object):
         log = filename + ".stdout"
         toloka_arg = " -toloka \"{}.toloka\" ".format(filename) if self.args.toloka else ""
         print(self.args.smart_parser_options)
-        cmd = "{} {} {} \"{}\" > \"{}\" ".format(smart_parser, toloka_arg, self.args.smart_parser_options, filename,
+        cmd = "{} -license lic.bin {} {} \"{}\" > \"{}\" ".format(smart_parser, toloka_arg, self.args.smart_parser_options, filename,
                                                  log)
         print(fix_encoding(cmd))
         try:
@@ -131,6 +131,11 @@ class TCorpusFile:
         self.SourceFileSize = os.path.getsize(self.SourceFile)
 
 
+def check_json(fileName):
+    data = json.load(open(fileName, encoding="utf8"))
+    return len(data.get('persons', []))  > 0
+
+
 def report(args):
     processed_files = []
     for f in read_file_list(args):
@@ -141,7 +146,7 @@ def report(args):
     good_size = 0
     for x in processed_files:
         all_size += x.SourceFileSize
-        if x.JsonFile is not None:
+        if x.JsonFile is not None and check_json(x.JsonFile):
             jsons_count += 1
             good_size += x.SourceFileSize
 
