@@ -13,7 +13,7 @@ using TI.Declarator.JsonSerialization;
 using CMDLine;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
-using CsvHelper;
+
 
 namespace Smart.Parser
 {
@@ -30,7 +30,7 @@ namespace Smart.Parser
         public static bool SkipRelativeOrphan = false;
         public static bool ValidateByApi = false;
         public static bool IgnoreDirectoryIds = false;
-
+        public static bool BuildTrigrams = false;
         public static void SetAsposeLicenseFromEnvironment()
         {
             var envVars = Environment.GetEnvironmentVariables();
@@ -63,6 +63,7 @@ namespace Smart.Parser
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
             CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
             CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
+            CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             parser.AddHelpOption();
             try
             {
@@ -152,6 +153,7 @@ namespace Smart.Parser
 
             ColumnsOnly = columnsOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
+            BuildTrigrams = buildTrigramsOpt.isMatched;
             return String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
         }
 
@@ -408,6 +410,8 @@ namespace Smart.Parser
                 return 0;
 
             }
+            ColumnPredictor.Initialize();
+
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
             Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
 
@@ -496,7 +500,7 @@ namespace Smart.Parser
             {
                 columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
             }
-
+            
 
             Logger.Info("Column ordering: ");
             foreach (var ordering in columnOrdering.ColumnOrder)
@@ -527,7 +531,7 @@ namespace Smart.Parser
             }
 
 
-            Declaration declaration = parser.Parse(columnOrdering);
+            Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams);
             SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);

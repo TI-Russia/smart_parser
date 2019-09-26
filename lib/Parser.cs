@@ -163,7 +163,7 @@ namespace Smart.Parser.Lib
             return false;
         }
 
-        public Declaration Parse(ColumnOrdering columnOrdering)
+        public Declaration Parse(ColumnOrdering columnOrdering, bool updateTrigrams)
          {
             FirstPassStartTime = DateTime.Now;
 
@@ -177,6 +177,7 @@ namespace Smart.Parser.Lib
             {
                 borderFinder.CreateNewSection(rowOffset, columnOrdering.Section);
             }
+            
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -201,6 +202,9 @@ namespace Smart.Parser.Lib
                         continue;
                     }
                 }
+
+                if (updateTrigrams) ColumnPredictor.UpdateByRow(columnOrdering, currRow);
+
                 currRow.InitPersonData();
 
                 if (currRow.PersonName != String.Empty)
@@ -220,8 +224,8 @@ namespace Smart.Parser.Lib
                 }
                 borderFinder.AddInputRowToCurrentPerson(currRow);
             }
+            if (updateTrigrams) ColumnPredictor.WriteData();
 
-            
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
 
             ParsePersonalProperties(declaration);
@@ -394,7 +398,7 @@ namespace Smart.Parser.Lib
                 {
                     if (person is PublicServant)
                     {
-                        Logger.Debug(((PublicServant)person).NameRaw.CleanWhitespace());
+                        Logger.Debug(((PublicServant)person).NameRaw.ReplaceEolnWithSpace());
                     }
                     bool foundIncomeInfo = false;
                     
@@ -497,7 +501,7 @@ namespace Smart.Parser.Lib
         static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
         {
             estateTypeStr = estateTypeStr.Trim();
-            areaStr = areaStr.CleanWhitespace();
+            areaStr = areaStr.ReplaceEolnWithSpace();
             if (DataHelper.IsEmptyValue(estateTypeStr))
             {
                 return;
@@ -543,7 +547,7 @@ namespace Smart.Parser.Lib
 
         static string SliceArrayAndTrim(string[] lines, int start, int end)
         {
-            return  String.Join("\n", lines.Skip(start).Take(end - start)).CleanWhitespace();
+            return  String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
         }
 
         static List<string> DivideByBordersOrEmptyLines(string value, List<int> borders)

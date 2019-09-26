@@ -116,12 +116,16 @@ namespace Smart.Parser.Lib
         }
         static List<Cell> FindSubcellsUnder(IAdapter adapter, Cell cell)
         {
+            var subCells = new List<Cell>();
             if (cell.Row + cell.MergedRowsCount >= adapter.GetRowsCount() )
             {
-                return new List<Cell>();
+                return subCells;
+            }
+            if (cell.CellWidth ==  0)
+            {
+                return subCells;
             }
             var undercCells = adapter.GetCells(cell.Row + cell.MergedRowsCount);
-            var subCells = new List<Cell>();
             foreach (var underCell in undercCells)
             {
                 if (underCell.Col < cell.Col)
@@ -143,41 +147,6 @@ namespace Smart.Parser.Lib
             s.Field = field;
 
             ordering.Add(s);
-        }
-        static void SecondLevelHeader(IAdapter adapter, Cell parentCell, List<Cell> subCells, ColumnOrdering result)
-        {
-            string text = parentCell.GetText(true);
-            DeclarationField prev_field = DeclarationField.None;
-
-            foreach (var cell in subCells)
-            {
-                string cellText = cell.GetText(true);
-                string fullText = text + " " + cellText;
-
-                DeclarationField field = DeclarationField.None;
-                if (cellText == "" && prev_field == DeclarationField.StatePropertySquare)
-                {
-                    //  пустая колонка страны (предыдущая колонка - площадь)
-                    field = DeclarationField.StatePropertyCountry;
-                }
-                else if (cellText == "" && prev_field == DeclarationField.None) {
-                    // пустая колонка, перед которой ничего не было (скорее всего "вид недвижимости")
-                    // пример такого файла в тестах: MinSelhoz2013.xlsx
-                    field = DeclarationField.OwnedRealEstateType;
-                }
-                else
-                {
-                    field = HeaderHelpers.TryGetField(fullText);
-                }
-
-
-                if (field == DeclarationField.None)
-                {
-                    throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1} text:'{2}'", cell.Row, cell.Col, fullText));
-                }
-                prev_field = field;
-                AddColumn(result, field, cell);
-            }
         }
 
         static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, ColumnOrdering columnOrdering)
@@ -210,20 +179,38 @@ namespace Smart.Parser.Lib
             columnOrdering.Delete(DeclarationField.MixedColumnWithNaturalText);
         }
 
+        static void FixBadColumnName01_Template(ColumnOrdering c, DeclarationField naturalText, DeclarationField country, DeclarationField square, DeclarationField type)
+        {
+            //move MixedColumnWithNaturalText  to MixedRealEstateType
+            if (!c.ContainsField(naturalText)) return;
+            if (c.ContainsField(country)
+                    && c.ContainsField(square)
+                )
+            {
+                TColumnInfo s = c.ColumnOrder[naturalText];
+                s.Field = type;
+                c.Add(s);
+                c.Delete(naturalText);
+            }
+        }
 
         static void FixBadColumnName01(ColumnOrdering c)
         {
-            //move MixedColumnWithNaturalText  to MixedRealEstateType
-            if (!c.ContainsField(DeclarationField.MixedColumnWithNaturalText)) return;
-            if (        c.ContainsField(DeclarationField.MixedRealEstateCountry)  
-                    &&  c.ContainsField(DeclarationField.MixedRealEstateSquare)
-                )
-            {
-                TColumnInfo s = c.ColumnOrder[DeclarationField.MixedColumnWithNaturalText];
-                s.Field = DeclarationField.MixedRealEstateType;
-                c.Add(s);
-                c.Delete(DeclarationField.MixedColumnWithNaturalText);
-            }
+            FixBadColumnName01_Template(c,
+                DeclarationField.MixedColumnWithNaturalText,
+                DeclarationField.MixedRealEstateCountry,
+                DeclarationField.MixedRealEstateSquare,
+                DeclarationField.MixedRealEstateType);
+            FixBadColumnName01_Template(c,
+                DeclarationField.StateColumnWithNaturalText,
+                DeclarationField.StatePropertyCountry,
+                DeclarationField.StatePropertySquare,
+                DeclarationField.StatePropertyType);
+            FixBadColumnName01_Template(c,
+                DeclarationField.OwnedColumnWithNaturalText,
+                DeclarationField.OwnedRealEstateCountry,
+                DeclarationField.OwnedRealEstateSquare,
+                DeclarationField.OwnedRealEstateType);
         }
 
         static void FixBadColumnName02(ColumnOrdering c)
@@ -249,54 +236,120 @@ namespace Smart.Parser.Lib
             return columnOrdering;
         }
 
-        static public void ReadHeader(IAdapter adapter, int headerStartRow, ColumnOrdering columnOrdering)
-        { 
-            int headerEndRow = headerStartRow + 1;
+        static public List<Cell> GetColumnCells(IAdapter adapter, int headerStartRow, out int headerEndRow)
+        {
+            headerEndRow = headerStartRow + 1;
             var firstRow = adapter.GetCells(headerStartRow);
 
-            int colCount = 0;
+            List<Cell> columnCells =  new List<Cell>();
             bool headerCanHaveSecondLevel = true;
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
-                
-                if (text == "")
-                {
-                    continue;
-                }
-                Logger.Debug("column title: " + text);
+                if (cell.CellWidth == 0) continue;
+                var underCells = FindSubcellsUnder(adapter, cell);
 
-                var subCells = FindSubcellsUnder(adapter, cell);
-
-                if (subCells.Count() <= 1 || ! headerCanHaveSecondLevel)
+                if (underCells.Count() <= 1 || !headerCanHaveSecondLevel)
                 {
                     headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
-                    if (!text.IsNullOrWhiteSpace())
+                    columnCells.Add(cell);
+                    
+                    // обработка ошибки документа DepEnergo2010
+                    if (columnCells.Count == 1 && cell.MergedRowsCount == 1 && underCells.Count == 1)
                     {
-                        DeclarationField field = HeaderHelpers.GetField(text.Replace('\n', ' '));
-                        if (field == DeclarationField.None)
-                        {
-                            throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} col:{1}", headerStartRow, colCount));
-                        }
-                        AddColumn(columnOrdering, field, cell);
-                        if (DeclarationField.NameOrRelativeType == field && cell.MergedRowsCount == 1)
-                        {
-                            TColumnInfo dummy;
-                            string cellBelowName = adapter.GetDeclarationFieldWeak(columnOrdering, headerEndRow, field, out dummy).GetText(true);
-                            headerCanHaveSecondLevel = cellBelowName.Length == 0;
-                        }
-                        colCount++;
+                        string cellBelowName = underCells[0].GetText(true);
+                        headerCanHaveSecondLevel = cellBelowName.Length == 0;
                     }
                 }
                 // current cell spans several columns, so the header probably occupies two rows instead of just one
                 // with the second row reserved for subheaders
                 else
                 {
-                    SecondLevelHeader(adapter, cell, subCells, columnOrdering);
-                    headerEndRow = Math.Max(headerEndRow, subCells[0].Row + subCells[0].MergedRowsCount);
-                    colCount += cell.MergedColsCount;
+                    foreach (var underCell in underCells)
+                    {
+                        underCell.TextAbove = cell.GetText(true);
+                        columnCells.Add(underCell);
+                    }
+                    headerEndRow = Math.Max(headerEndRow, underCells[0].Row + underCells[0].MergedRowsCount);
                 }
             }
+            return columnCells;
+        }
+
+        static DeclarationField PredictField(IAdapter adapter, Cell headerCell)
+        {
+            List<string> texts = new List<string>();
+            int rowIndex = headerCell.Row + headerCell.MergedRowsCount;
+            const int maxRowToCollect = 10;
+            for (int i = 0; i < maxRowToCollect; i++)
+            {
+                var c = adapter.GetCell(rowIndex, headerCell.Col);
+                if (c != null)
+                {
+                    texts.Add(c.GetText(true));
+                    rowIndex += c.MergedRowsCount;
+                }
+                else
+                {
+                    rowIndex += 1;
+                }
+                
+                if (rowIndex >= adapter.GetRowsCount()) break;
+            }
+            var field = ColumnPredictor.ClassifyStrings(texts);
+            if (headerCell.TextAbove != null)
+            {
+                string h = headerCell.TextAbove;
+                // AllOwnTypes defined from 
+                field &= ~DeclarationField.AllOwnTypes;
+                if (HeaderHelpers.IsMixedColumn(h))
+                {
+                    field |= DeclarationField.Mixed;
+                }
+                else if (HeaderHelpers.IsStateColumn(h))
+                {
+                    field |= DeclarationField.State;
+                }
+                else if (HeaderHelpers.IsOwnedColumn(h))
+                {
+                    field |= DeclarationField.Owned;
+                }
+            }
+            return field;
+        }
+        static public void MapStringsToConstants(IAdapter adapter, List<Cell> cells, ColumnOrdering columnOrdering)
+        {
+            foreach (var cell in cells)
+            {
+                string text = cell.GetText(true);
+                Logger.Debug("column title: " + text.ReplaceEolnWithSpace().CoalesceWhitespace());
+                DeclarationField field;
+                if (text == "")
+                {
+                    field = PredictField(adapter, cell);
+                    Logger.Debug("Predict: " + field.ToString());
+                }
+                else {
+                    if (cell.TextAbove != null)
+                    {
+                        text = cell.TextAbove + " " + text;
+                    }
+                    field = HeaderHelpers.GetField(text.Replace('\n', ' '));
+                }
+
+                if (field == DeclarationField.None)
+                {
+                    throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} title:{1}", cell.Row, text));
+                }
+                AddColumn(columnOrdering, field, cell);
+            }
+        }
+
+        static public void ReadHeader(IAdapter adapter, int headerStartRow, ColumnOrdering columnOrdering)
+        { 
+            int headerEndRow;
+            var cells = GetColumnCells(adapter, headerStartRow, out headerEndRow);
+            MapStringsToConstants(adapter, cells, columnOrdering);
 
             columnOrdering.HeaderBegin = headerStartRow;
             columnOrdering.HeaderEnd = headerEndRow;
@@ -319,6 +372,7 @@ namespace Smart.Parser.Lib
             {
                 throw new SmartParserException("cannot find headers");
             }
+            // todo check whether we need them
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
             FixBadColumnName02(columnOrdering);

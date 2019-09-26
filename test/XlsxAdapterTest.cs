@@ -25,7 +25,7 @@ namespace test
 
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter);
 
-            Declaration declaration = parser.Parse(columnOrdering);
+            Declaration declaration = parser.Parse(columnOrdering, false);
 
             string comments = "";
             string output = DeclarationSerializer.Serialize(declaration, ref comments);

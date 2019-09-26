@@ -20,6 +20,8 @@ namespace Smart.Parser.Adapters
         public virtual bool IsEmpty { set; get; } = true;
         public virtual string Text { set; get; } = "";
 
+        public string TextAbove = null;
+
         public virtual string GetText(bool trim = true)
         {
             var text = Text;
@@ -44,23 +46,6 @@ namespace Smart.Parser.Adapters
 
     public class DataRow : DataRowInterface
     {
-        static readonly DeclarationField[] IntFieldsArray = new DeclarationField[] {
-            DeclarationField.Number,
-            DeclarationField.MixedRealEstateSquare,
-            DeclarationField.OwnedRealEstateSquare,
-            DeclarationField.StatePropertySquare,
-            DeclarationField.DeclaredYearlyIncome,
-            DeclarationField.DeclaredYearlyIncomeThousands
-        };
-        static readonly HashSet<DeclarationField> IntegerFields = new HashSet<DeclarationField>(IntFieldsArray);
-
-        static readonly DeclarationField[] CountryFieldsArray = new DeclarationField[] {
-            DeclarationField.MixedRealEstateCountry,
-            DeclarationField.OwnedRealEstateCountry,
-            DeclarationField.StatePropertyCountry,
-            DeclarationField.StatePropertySquare
-        };
-        static readonly HashSet<DeclarationField> CountryFields = new HashSet<DeclarationField>(CountryFieldsArray);
 
         public DataRow(IAdapter adapter, ColumnOrdering columnOrdering, int row)
         {
@@ -79,12 +64,12 @@ namespace Smart.Parser.Adapters
         {
             if (cell.IsEmpty) return false;
             string text = cell.GetText(true);
-            if (IntegerFields.Contains(field) )
+            if ((field & DeclarationField.StartsWithDigitMask) > 0)
             {
                 if (Char.IsNumber(text[0]))
                     return true;
             }
-            else  if (CountryFields.Contains(field))
+            else if ((field & DeclarationField.CountryMask) > 0)
             {
                 if (DataHelper.IsCountryStrict(text))
                 {
@@ -228,7 +213,7 @@ namespace Smart.Parser.Adapters
             if (this.ColumnOrdering.ContainsField(DeclarationField.Number))
             {
                 string indexStr = GetDeclarationField(DeclarationField.Number).Text
-                    .Replace(".", "").CleanWhitespace();
+                    .Replace(".", "").ReplaceEolnWithSpace();
                 int indVal;
                 bool dummyRes = Int32.TryParse(indexStr, out indVal);
                 if (dummyRes)
@@ -280,7 +265,7 @@ namespace Smart.Parser.Adapters
         {
             if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
             {
-                SetRelative ( GetDeclarationField(DeclarationField.RelativeTypeStrict).Text.CleanWhitespace());
+                SetRelative ( GetDeclarationField(DeclarationField.RelativeTypeStrict).Text.ReplaceEolnWithSpace());
             }
 
             string nameOrRelativeType;
@@ -291,7 +276,7 @@ namespace Smart.Parser.Adapters
             else
             {
                 var nameCell = GetDeclarationField(DeclarationField.NameOrRelativeType);
-                nameOrRelativeType = nameCell.Text.CleanWhitespace();
+                nameOrRelativeType = nameCell.Text.ReplaceEolnWithSpace();
                 NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
                 if (this.ColumnOrdering.ContainsField(DeclarationField.Occupation))
                 {

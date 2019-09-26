@@ -150,19 +150,19 @@ namespace TI.Declarator.ParserCommon
             return clean.Contains("страна") || clean.Contains("регион");
         }
         
-        private static bool IsStateColumn(this string s)
+        public static bool IsStateColumn(this string s)
         {
             return    !HasOwnedString(s)
                     && HasStateString(s);
         }
 
-        private static bool IsOwnedColumn(this string s)
+        public static bool IsOwnedColumn(this string s)
         {
             return       HasOwnedString(s)
                     &&  !HasStateString(s);
         }
 
-        private static bool IsMixedColumn(this string s)
+        public static bool IsMixedColumn(this string s)
         {
             return     HasOwnedString(s)
                     && HasStateString(s);

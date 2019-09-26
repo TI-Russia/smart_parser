@@ -216,7 +216,7 @@ namespace Smart.Parser.Adapters
                     {
                         cell.MergedRowsCount = 1;
                     }
-                    //if (i + 1 == portion.Count) cell.MergedRowsCount = 1;
+                    cell.CellWidth = 10; //  no cell width serialized in html
                     newRow.Add(cell);
                 }
                 TableRows.Add(newRow);

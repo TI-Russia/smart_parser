@@ -31,14 +31,16 @@ namespace Smart.Parser.Adapters
             else
             {
                 MergedColsCount = 1;
+                MergedRowsCount = 1;
+                FirstMergedRow = cell.Row;
             }
             Row = cell.Row;
             Col = cell.Column;
             CellWidth = 0;
             for (int i = 0; i < MergedColsCount;i++)
             {
-                CellWidth += (int)worksheet.Cells.GetColumnWidth(cell.Column + i);
-                //   to do npoi
+                //test File17207: GetColumnWidthPixel returns 45, GetColumnWidth returns 0 for the same cell 
+                CellWidth += (int)worksheet.Cells.GetColumnWidthPixel(cell.Column + i);
             }
         }
     }
