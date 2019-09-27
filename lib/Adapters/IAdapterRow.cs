@@ -55,26 +55,7 @@ namespace Smart.Parser.Adapters
             }
             
         }
-        static bool TestFieldSemantics(DeclarationField field, Cell cell)
-        {
-            if (cell.IsEmpty) return false;
-            string text = cell.GetText(true);
-            if ((field & DeclarationField.StartsWithDigitMask) > 0)
-            {
-                if (Char.IsNumber(text[0]))
-                    return true;
-            }
-            else if ((field & DeclarationField.CountryMask) > 0)
-            {
-                if (DataHelper.IsCountryStrict(text))
-                {
-                    return true;
-                }
-            }
-            return false;
-
-        }
-
+   
         static Dictionary<DeclarationField, Cell> MapByOrderAndIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
             if (columnOrdering.MergedColumnOrder.Count != cells.Count)
@@ -92,7 +73,7 @@ namespace Smart.Parser.Adapters
                 int e2 = colInfo.ColumnPixelStart + colInfo.ColumnPixelWidth;
                 if (ColumnOrdering.PeriodIntersection(s1, e1, s2, e2) == 0)
                 {
-                    if (!TestFieldSemantics(colInfo.Field, cells[i]))
+                    if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
                     {
                         return null;
                     }

@@ -41,6 +41,8 @@ namespace Smart.Parser.Lib
             }
             Thread.CurrentThread.CurrentUICulture = savCulture;
             countries.Add("российская федерация");
+            countries.Add("абхазия");
+            countries.Add("южная осетия");
             return countries;
         }
         static public bool IsPublicServantInfo(string nameOrRelativeType)

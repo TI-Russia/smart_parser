@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
@@ -9,6 +8,7 @@ using System.Reflection;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 using Smart.Parser.Adapters;
+using Smart.Parser.Lib;
 
 
 namespace Parser.Lib
@@ -74,27 +74,10 @@ namespace Parser.Lib
                 }
             }
         }
-
-        // follow https://habr.com/ru/post/120194/
-        public static DeclarationField ClassifyString(string words)
+    
+        static DeclarationField FindMin(Dictionary<DeclarationField, double> freqs)
         {
-            Debug.Assert(SampleLen > 0);
-            var freqs = new Dictionary<DeclarationField, double>();
-            foreach (var i in Trigrams)
-            {
-                freqs[i.Key] = -Math.Log(ClassFreq[i.Key] / SampleLen);
-            }
-            foreach (var trigram in String2Trigrams(words))
-            {
-                foreach  (var i in Trigrams)
-                {
-                    DeclarationField field = i.Key;
-                    int freq = 0;
-                    i.Value.TryGetValue(trigram, out freq);
-                    double trigramProb = ((double)freq + 10E-10) / ClassFreq[field];
-                    freqs[field] += -Math.Log(trigramProb);
-                }
-            }
+            // Linq is slower
             double minValue = Double.MaxValue;
             DeclarationField resultField = DeclarationField.None;
             foreach (var i in freqs)
@@ -107,10 +90,76 @@ namespace Parser.Lib
             }
             return resultField;
         }
-        public static DeclarationField ClassifyStrings(List<string> words)
+
+        static bool TestFieldRegexpWeak(DeclarationField field, string text)
         {
-           return ClassifyString(String.Join("$^", words));
+            if (text.Length == 0) return true;
+            if (    ((field & DeclarationField.StartsWithDigitMask) > 0)
+                 && !Char.IsNumber(text[0]))
+            {
+                    return false;
+            }
+            if (    DataHelper.IsCountryStrict(text)
+                &&  (field & DeclarationField.CountryMask) == 0)
+            {
+                return false;
+            }
+            return true;
+
         }
+
+
+        // follow https://habr.com/ru/post/120194/
+        public static DeclarationField PredictByString(string words)
+        {
+            Debug.Assert(SampleLen > 0);
+            var freqs = new Dictionary<DeclarationField, double>();
+            foreach (var i in Trigrams)
+            {
+                if (TestFieldRegexpWeak(i.Key, words))
+                    freqs[i.Key] = -Math.Log(ClassFreq[i.Key] / SampleLen);
+            }
+            var fields = new List <DeclarationField > (freqs.Keys);
+            foreach (var trigram in String2Trigrams(words))
+            {
+                foreach  (var field in fields)
+                {
+                    //DeclarationField field = i.Key;
+                    int freq = 0;
+                    Trigrams[field].TryGetValue(trigram, out freq);
+                    double trigramProb = ((double)freq + 10E-10) / ClassFreq[field];
+                    freqs[field] += -Math.Log(trigramProb);
+                }
+            }
+            return FindMin(freqs);
+        }
+
+        public static DeclarationField PredictByStrings(List<string> words)
+        {
+            var negativeFreqs = new Dictionary<DeclarationField, double>();
+            foreach (string w in words) {
+                if (DataHelper.IsEmptyValue(w)) continue;
+                var f = PredictByString(w);
+                if (negativeFreqs.ContainsKey(f))
+                {
+                    negativeFreqs[f] -= 1;
+                }
+                else
+                {
+                    negativeFreqs[f] = -1;
+                }
+            }
+            return FindMin(negativeFreqs);
+        }
+
+        public static bool TestFieldWithoutOwntypes(DeclarationField field, Cell cell)
+        {
+            if (cell.IsEmpty) return false;
+            string text = cell.GetText(true);
+            var predictedField = ColumnPredictor.PredictByString(text);
+            return (predictedField & ~DeclarationField.AllOwnTypes) == (field & ~DeclarationField.AllOwnTypes);
+        }
+
 
         public static void WriteData()
         {
@@ -161,6 +210,73 @@ namespace Parser.Lib
                     "Predictor precision all={0} correct={1}, precision={2}",
                     AllCount, CorrectCount,
                     CorrectCount / ((double)AllCount + 10E-10));
+        }
+        public static DeclarationField PredictEmptyColumnTitle(IAdapter adapter, Cell headerCell)
+        {
+            List<string> texts = new List<string>();
+            int rowIndex = headerCell.Row + headerCell.MergedRowsCount;
+            const int maxRowToCollect = 10;
+            for (int i = 0; i < maxRowToCollect; i++)
+            {
+                var cells = adapter.GetCells(rowIndex, IAdapter.MaxColumnsCount);
+                string dummy;
+                if (IAdapter.IsSectionRow(cells, adapter.GetColsCount(), false, out dummy))
+                {
+                    rowIndex += 1;
+                }
+                else
+                {
+                    var c = adapter.GetCell(rowIndex, headerCell.Col);
+                    if (c != null)
+                    {
+                        texts.Add(c.GetText(true));
+                        rowIndex += c.MergedRowsCount;
+                    }
+                    else
+                    {
+                        rowIndex += 1;
+                    }
+                }
+                if (rowIndex >= adapter.GetRowsCount()) break;
+            }
+            var field = PredictByStrings(texts);
+            if (headerCell.TextAbove != null && ((field & DeclarationField.AllOwnTypes) > 0))
+            {
+                string h = headerCell.TextAbove;
+                // AllOwnTypes defined from 
+                field &= ~DeclarationField.AllOwnTypes;
+                if (HeaderHelpers.IsMixedColumn(h))
+                {
+                    field |= DeclarationField.Mixed;
+                }
+                else if (HeaderHelpers.IsStateColumn(h))
+                {
+                    field |= DeclarationField.State;
+                }
+                else if (HeaderHelpers.IsOwnedColumn(h))
+                {
+                    field |= DeclarationField.Owned;
+                }
+            }
+            Logger.Debug(string.Format("predict by {0}  -> {1}",
+                String.Join("\\n", texts), field));
+            return field;
+        }
+        public static void PredictForPrecisionCheck(IAdapter adapter, Cell headerCell, DeclarationField field)
+        {
+            var predicted_field = PredictEmptyColumnTitle(adapter, headerCell);
+            if (predicted_field == field)
+            {
+                CorrectCount += 1;
+            }
+            else
+            {
+                Logger.Debug(
+                    string.Format("wrong predicted as {0} must be {1} ",
+                    predicted_field, field));
+
+            }
+            AllCount += 1;
         }
     }
 }

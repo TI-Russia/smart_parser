@@ -243,6 +243,7 @@ namespace Smart.Parser.Lib
 
             List<Cell> columnCells =  new List<Cell>();
             bool headerCanHaveSecondLevel = true;
+            var texts = new List<string>();
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
@@ -253,6 +254,7 @@ namespace Smart.Parser.Lib
                 {
                     headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
                     columnCells.Add(cell);
+                    texts.Add(cell.Text.NormSpaces());
                     
                     // обработка ошибки документа DepEnergo2010
                     if (columnCells.Count == 1 && cell.MergedRowsCount == 1 && underCells.Count == 1)
@@ -267,66 +269,19 @@ namespace Smart.Parser.Lib
                 {
                     foreach (var underCell in underCells)
                     {
-                        underCell.TextAbove = cell.GetText(true);
+                        underCell.TextAbove = cell.Text.NormSpaces();
                         columnCells.Add(underCell);
+                        texts.Add(underCell.TextAbove + "^" + underCell.Text.NormSpaces());
                     }
                     headerEndRow = Math.Max(headerEndRow, underCells[0].Row + underCells[0].MergedRowsCount);
                 }
+                
             }
+            Logger.Debug("column titles: " + String.Join("|", texts));
             return columnCells;
         }
 
-        static DeclarationField PredictField(IAdapter adapter, Cell headerCell)
-        {
-            List<string> texts = new List<string>();
-            int rowIndex = headerCell.Row + headerCell.MergedRowsCount;
-            const int maxRowToCollect = 10;
-            for (int i = 0; i < maxRowToCollect; i++)
-            {
-                List<Cell> cells = adapter.GetCells(rowIndex, IAdapter.MaxColumnsCount);
-                string dummy;
-                if (IAdapter.IsSectionRow(cells, IAdapter.MaxColumnsCount, false, out dummy))
-                {
-                    rowIndex += 1;
-                }
-                else
-                {
-                    var c = adapter.GetCell(rowIndex, headerCell.Col);
-                    if (c != null)
-                    {
-                        texts.Add(c.GetText(true));
-                        rowIndex += c.MergedRowsCount;
-                    }
-                    else
-                    {
-                        rowIndex += 1;
-                    }
-                }                
-                if (rowIndex >= adapter.GetRowsCount()) break;
-            }
-            var field = ColumnPredictor.ClassifyStrings(texts);
-            if (headerCell.TextAbove != null)
-            {
-                string h = headerCell.TextAbove;
-                // AllOwnTypes defined from 
-                field &= ~DeclarationField.AllOwnTypes;
-                if (HeaderHelpers.IsMixedColumn(h))
-                {
-                    field |= DeclarationField.Mixed;
-                }
-                else if (HeaderHelpers.IsStateColumn(h))
-                {
-                    field |= DeclarationField.State;
-                }
-                else if (HeaderHelpers.IsOwnedColumn(h))
-                {
-                    field |= DeclarationField.Owned;
-                }
-            }
-            Logger.Debug(string.Format("predict by {0}  -> {1}",
-                String.Join("\\n", texts), field));
-            return field;
-        }
+        
         static public void MapStringsToConstants(IAdapter adapter, List<Cell> cells, ColumnOrdering columnOrdering)
         {
             foreach (var cell in cells)
@@ -336,7 +291,7 @@ namespace Smart.Parser.Lib
                 DeclarationField field;
                 if (text == "")
                 {
-                    field = PredictField(adapter, cell);
+                    field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());
                 }
                 else {
@@ -347,24 +302,13 @@ namespace Smart.Parser.Lib
                     field = HeaderHelpers.GetField(text.Replace('\n', ' '));
                 }
 
-                if (field == DeclarationField.None)
+                if (field == DeclarationField.None && !DataHelper.IsEmptyValue(text) )
                 {
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} title:{1}", cell.Row, text));
                 }
                 if (ColumnPredictor.CalcPrecision)
                 {
-                    var predicted_field = PredictField(adapter, cell);
-                    if (predicted_field ==  field)
-                    {
-                        ColumnPredictor.CorrectCount += 1;
-                    } else
-                    {
-                        Logger.Debug(
-                            string.Format("wrong predicted as {0} must be {1} ",
-                            predicted_field, field));
-
-                    }
-                    ColumnPredictor.AllCount += 1;
+                    ColumnPredictor.PredictForPrecisionCheck(adapter, cell, field);
                 }
                 AddColumn(columnOrdering, field, cell);
             }

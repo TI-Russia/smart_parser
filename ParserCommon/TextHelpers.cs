@@ -74,6 +74,11 @@ namespace TI.Declarator.ParserCommon
             return Regex.Replace(str, @"[ ]+", " ");
         }
 
+        public static string NormSpaces(this string str)
+        {
+            return str.ReplaceEolnWithSpace().CoalesceWhitespace();
+        }
+
         public static string ReplaceFirst(this string str, string substr, string replStr)
         {
             var replRegex = new Regex(Regex.Escape(substr));
