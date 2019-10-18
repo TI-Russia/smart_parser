@@ -11,7 +11,7 @@ import json
 # ======================= copy data from drop box ========================
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="can be copy_data,process,report or full", default='full')
+    parser.add_argument("--action", dest='action', help="can be copy_data, process, report or full", default='full')
     parser.add_argument("--output-folder", dest='output_folder', required=True)
     parser.add_argument("--file-list", dest='file_list', default="_files.txt",
                         help="a file to store declaration input file names")
@@ -23,7 +23,7 @@ def parse_args():
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
                         default=4, type=int)
     parser.add_argument("-e", dest='extensions', default=[], action='append',
-                        help="extesions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
+                        help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
 
     return parser.parse_args()
 
