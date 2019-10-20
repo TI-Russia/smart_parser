@@ -57,8 +57,8 @@ def get_parsing_list(filename):
 
     if not os.path.isfile(filename):
         result = client.get(declarator_domain + '/media/dumps/%s' % filename)
-        with open(filename, "w") as fp:
-            fp.write(result.text)
+        with open(filename, "wb") as fp:
+            fp.write(result.content)
 
     file_list = json.load(open(filename))
 
@@ -120,7 +120,10 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
         del data['document']['sheet_number']
 
     data['document']['file_size'] = os.path.getsize(sourcefile)
-    data['document']['parser_log'] = open(sourcefile + ".log", 'rb').read().decode('utf-8', errors='ignore')
+    try:
+        data['document']['parser_log'] = open(sourcefile + ".log", 'rb').read().decode('utf-8', errors='ignore')
+    except FileNotFoundError:
+        data['document']['parser_log'] = "FileNotFoundError: " + sourcefile + ".log"
 
     if time_delta:
         data['document']['parser_time'] = time_delta
@@ -177,16 +180,16 @@ def do_job(job):
 
 def job_iterator():
     jobs = get_parsing_list(job_list_file)
-    for job in jobs:
+    for job in jobs[:4]:
         if job.get('done'):
             continue
 
         yield job
 
         # mark this job as done
-        job['done'] = datetime.now()
+        job['done'] = True
         with open(job_list_file, 'w') as fp:
-            json.dump(job, fp)
+            json.dump(jobs, fp, indent=4, ensure_ascii=False)
 
 
 if __name__ == '__main__':

@@ -123,10 +123,10 @@ def process(args):
 class TCorpusFile:
     def __init__(self, sourcefile):
         self.SourceFile = sourcefile
-        s = sourcefile +  ".json"
+        s = sourcefile + ".json"
         self.JsonFile = s if os.path.exists(s) else None
-        if self.JsonFile == None:
-            s = sourcefile +  "_0.json"
+        if self.JsonFile is None:
+            s = sourcefile + "_0.json"
             self.JsonFile = s if os.path.exists(s) else None
         self.SourceFileSize = os.path.getsize(self.SourceFile)
 
