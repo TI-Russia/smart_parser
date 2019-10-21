@@ -123,7 +123,6 @@ namespace RegressionTesting
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = false;
             string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
-            Smart.Parser.Adapters.IAdapter.ConvertedFileDir = outDir;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
             Smart.Parser.Program.ParseFile(filename, outFileName);
             foreach (var outfile in outfiles)
@@ -145,9 +144,7 @@ namespace RegressionTesting
             Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
             string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
-            Smart.Parser.Adapters.IAdapter.ConvertedFileDir = outDir;
             Smart.Parser.Program.ParseFile(workingCopy, outFileName);
-            //string expectedFile = Path.Combine(SmartParserFilesDirectory, Path.GetFileNameWithoutExtension(workingCopy) + ".json");
             string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
             Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }

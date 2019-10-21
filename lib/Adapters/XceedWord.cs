@@ -99,17 +99,7 @@ namespace Smart.Parser.Adapters
         {
             Application word = new Application();
             var doc = word.Documents.OpenNoRepairDialog(Path.GetFullPath(filename),ReadOnly:true, ConfirmConversions:false);
-            string docXPath;
-            if (ConvertedFileDir != null)
-            {
-                docXPath = Path.Combine(ConvertedFileDir, Path.GetFileNameWithoutExtension(filename) + ".docx");
-            }
-            else
-            {
-                docXPath = Path.GetTempFileName();
-            }
-
-
+            string docXPath = Path.GetTempFileName();
             doc.SaveAs2(docXPath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
             word.ActiveDocument.Close();
             word.Quit();
@@ -166,7 +156,7 @@ namespace Smart.Parser.Adapters
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
                 }
-                removeTempFile = false;
+                removeTempFile = true;
             }
 
 

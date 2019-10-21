@@ -237,7 +237,5 @@ namespace Smart.Parser.Adapters
             return null;
         }
 
-        public static string ConvertedFileDir { set; get; } = null;
-
     }
 }
