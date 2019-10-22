@@ -1,0 +1,1 @@
+python run_smart_parser.py > parser.log

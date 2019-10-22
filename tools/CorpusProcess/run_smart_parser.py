@@ -24,9 +24,9 @@ f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 f_handler.setFormatter(f_format)
 
 # Add handlers to the logger
-logger.addHandler(f_handler)
+# logger.addHandler(f_handler)
 
-job_list_file = 'parser-job-priority-1.json'
+job_list_file = 'parser-job-priority-2.json'
 smart_parser = '..\\..\\src\\bin\\Release\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
@@ -39,6 +39,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
                         default=4, type=int)
+    parser.add_argument("--restart", dest='restart', help="Parse all files, ignore existing JSONs",
+                        default=False, type=bool)
     return parser.parse_args()
 
 
@@ -60,22 +62,25 @@ def get_parsing_list(filename):
         with open(filename, "wb") as fp:
             fp.write(result.content)
 
-    file_list = json.load(open(filename))
+    file_list = json.load(open(filename, 'r', encoding='utf8'))
 
     logger.info("%i files listed" % len(file_list))
     return file_list
 
 
-def run_smart_parser(filepath):
+def run_smart_parser(filepath, args):
     """start SmartParser for one file"""
     start_time = datetime.now()
     sourcefile = filepath[:filepath.rfind('.')]
 
     json_list = glob.glob("%s*.json" % sourcefile)
     if json_list:
-        logger.info("Delete existed JSON file(s).")
-        for jf in json_list:
-            os.remove(jf)
+        if args.restart:
+            logger.info("Delete existed JSON file(s).")
+            for jf in json_list:
+                os.remove(jf)
+        else:
+            return
 
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
         smart_parser_options = "-adapter aspose -license \"http://95.165.168.93:8088/lic.bin\""
@@ -96,25 +101,29 @@ def run_smart_parser(filepath):
 
 def post_results(sourcefile, df_id, archive_file, time_delta=None):
     filename = sourcefile[:sourcefile.rfind('.')]
-    json_list = glob.glob("%s*.json" % filename)
 
-    if not json_list:
-        data = {'document': {'documentfile_id': df_id}, 'persons': []}
-        if archive_file:
-            data['document']['archive_file'] = archive_file
-
-    elif len(json_list) == 1:
+    json_list = glob.glob("%s.json" % filename)
+    if len(json_list) == 1:
+        # Properly constructed final JSON found
         data = json.load(open(json_list[0], encoding='utf8'))
-
     else:
-        data = {'persons': [], 'document': {}}
-        for json_file in json_list:
-            file_data = json.load(open(json_file, encoding='utf8'))
-            data['persons'] += file_data['persons']
-            if data['document']:
-                if data['document'].get('sheet_title') != file_data['document'].get('sheet_title'):
-                    logger.warning("Document sheet title changed in one XLSX!")
-            data['document'] = file_data['document']
+        json_list = glob.glob("%s*.json" % filename)
+        if not json_list:
+            # Build empty JSON to post report in API and skip parsing attemp in a future
+            data = {'document': {'documentfile_id': df_id}, 'persons': []}
+            if archive_file:
+                data['document']['archive_file'] = archive_file
+        else:
+            # Join separated JSON files (of XLSX lists)
+            json_list = glob.glob("%s*.json" % filename)
+            data = {'persons': [], 'document': {}}
+            for json_file in json_list:
+                file_data = json.load(open(json_file, encoding='utf8'))
+                data['persons'] += file_data['persons']
+                if data['document']:
+                    if data['document'].get('sheet_title') != file_data['document'].get('sheet_title'):
+                        logger.warning("Document sheet title changed in one XLSX!")
+                data['document'] = file_data['document']
 
     if 'sheet_number' in data['document']:
         del data['document']['sheet_number']
@@ -128,28 +137,18 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
     if time_delta:
         data['document']['parser_time'] = time_delta
 
-    logger.info("POSTing results: %i persons, %i files, file_size %i" % (
-        len(data['persons']), len(json_list), data['document']['file_size']))
+    logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
+        df_id, len(data['persons']), len(json_list), data['document']['file_size']))
+    
     body = json.dumps(data, ensure_ascii=False, indent=4).encode('utf-8', errors='ignore')
+    
+    with open(filename + ".json", "wb") as fp:
+        fp.write(body)
+
     response = client.post(declarator_domain + '/api/jsonfile/validate/', data=body)
     if response.status_code != requests.codes.ok:
         logger.error(response)
         logger.error(response.text)
-
-
-def run_job(file_url, df_id, archive_file=None):
-    logger.info("Running job (id=%i) with URL: %s" % (df_id, file_url))
-    url_path, filename = os.path.split(file_url)
-    filename, ext = os.path.splitext(filename)
-
-    if archive_file:
-        file_path = os.path.join("out", str(df_id), "%s%s" % (filename, ext))
-    else:
-        file_path = os.path.join("out", "%i%s" % (df_id, ext))
-
-    download_file(declarator_domain + file_url, file_path)
-    time_delta = run_smart_parser(file_path)
-    post_results(file_path, df_id, archive_file, time_delta)
 
 
 def kill_process_windows(pid):
@@ -163,33 +162,34 @@ class ProcessOneFile(object):
 
     def __call__(self, job):
         try:
-            # call smart parser
-            run_job(job['file'], job['id'])
+            # ZIP-Archives parse in one process file by file
+            if job['file'].endswith('.zip'):
+                for sub_job in job['archive_files']:
+                    if job['file'].endswith('.pdf'):
+                        continue
+                    url = "/office/view-zip-file/%i/%s" % (job['id'], sub_job)
+                    self.run_job(url, job['id'], sub_job)
+            if job['file'].endswith('.pdf'):
+                pass
+            else:
+                self.run_job(job['file'], job['id'])
         except KeyboardInterrupt:
-            kill_process_windows(self.parent_pid)
+           kill_process_windows(self.parent_pid)
 
+    def run_job(self, file_url, df_id, archive_file=None):
+        logger.info("Running job (id=%i) with URL: %s" % (df_id, file_url))
+        url_path, filename = os.path.split(file_url)
+        filename, ext = os.path.splitext(filename)
 
-def do_job(job):
-    if job['file'].endswith('.zip'):
-        for sub_job in job['archive_files']:
-            url = "/office/view-zip-file/%i/%s" % (job['id'], sub_job)
-            run_job(url, job['id'], sub_job)
-    else:
-        run_job(job['file'], job['id'])
+        if archive_file:
+            file_path = os.path.join("out", str(df_id), "%s%s" % (filename, ext))
+        else:
+            file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
-
-def job_iterator():
-    jobs = get_parsing_list(job_list_file)
-    for job in jobs[:4]:
-        if job.get('done'):
-            continue
-
-        yield job
-
-        # mark this job as done
-        job['done'] = True
-        with open(job_list_file, 'w') as fp:
-            json.dump(jobs, fp, indent=4, ensure_ascii=False)
+        download_file(declarator_domain + file_url, file_path)
+        time_delta = run_smart_parser(file_path, self.args)
+        if time_delta:
+            post_results(file_path, df_id, archive_file, time_delta)
 
 
 if __name__ == '__main__':
@@ -198,8 +198,9 @@ if __name__ == '__main__':
     pool = Pool(args.parallel_pool_size)
     original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     signal.signal(signal.SIGINT, original_sigint_handler)
+
     try:
-        res = pool.map(ProcessOneFile(args, os.getpid()), job_iterator())
+        res = pool.map(ProcessOneFile(args, os.getpid()), get_parsing_list(job_list_file))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
