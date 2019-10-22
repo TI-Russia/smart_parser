@@ -102,7 +102,7 @@ namespace Smart.Parser.Adapters
             string docXPath = Path.GetTempFileName();
             doc.SaveAs2(docXPath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
             word.ActiveDocument.Close();
-            word.Quit();
+            word.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
             return docXPath;
         }
         static Dictionary<string, double> ReadBigrams()
