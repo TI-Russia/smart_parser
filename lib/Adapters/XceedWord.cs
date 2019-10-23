@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml;
+using Microsoft.Win32;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 
@@ -95,10 +96,47 @@ namespace Smart.Parser.Adapters
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
 
+        public static void DeleteRegistryKey(string keyName)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
+            {
+                if (key != null)
+                {
+                    foreach (var v in key.GetValueNames()) {
+                        key.DeleteValue(v, false);
+                    }
+                }
+            }
+
+        }
+        public static void DeleteLastCrashedDialog()
+        {
+            try
+            {
+                string wordVersion;
+                Application word = new Application();
+                wordVersion = word.Version;
+                word.Quit();
+                string keyName = 
+                    @"Software\Microsoft\Office\"
+                    + wordVersion
+                    + @"\Word\Resiliency\DisabledItems";
+                DeleteRegistryKey(keyName);
+            }
+            catch (Exception e) {
+                
+            }
+            
+        }
         string ConvertFile2TempDocX(string filename)
         {
+            DeleteLastCrashedDialog();
             Application word = new Application();
-            var doc = word.Documents.OpenNoRepairDialog(Path.GetFullPath(filename),ReadOnly:true, ConfirmConversions:false);
+            var doc = word.Documents.OpenNoRepairDialog(
+                Path.GetFullPath(filename),
+                ReadOnly:true, 
+                ConfirmConversions:false,
+                OpenAndRepair:false);
             string docXPath = Path.GetTempFileName();
             doc.SaveAs2(docXPath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
             word.ActiveDocument.Close();
