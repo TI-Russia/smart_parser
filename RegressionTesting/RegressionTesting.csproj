@@ -329,6 +329,12 @@
     <None Include="regression_samples\SmartParser\Unk2014.xlsx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\ZabSud2017.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\ZabSud2017.docx.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\ZagranApp2016.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -19,7 +19,9 @@ namespace Smart.Parser.Adapters
             { }
 
             IsEmpty = cell.Type == Aspose.Cells.CellValueType.IsNull;
-            Text = cell.GetStringValue(Aspose.Cells.CellValueFormatStrategy.None);
+            // nobody wants to know how excel represents numbers inside itself
+            // for "size_raw"
+            Text = cell.GetStringValue(Aspose.Cells.CellValueFormatStrategy.DisplayStyle);
 
             IsMerged = cell.IsMerged;
             if (IsMerged)

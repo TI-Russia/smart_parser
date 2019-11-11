@@ -123,7 +123,7 @@ namespace Smart.Parser.Adapters
                     + @"\Word\Resiliency\DisabledItems";
                 DeleteRegistryKey(keyName);
             }
-            catch (Exception e) {
+            catch (Exception ) {
                 
             }
             

@@ -18,7 +18,7 @@ namespace Smart.Parser.Lib
         {
             CountryRegexp = string.Join(")|(?:", new List<string>(ReadCountryList()).ToArray());
             CountryRegexp = "((?:" + CountryRegexp + "))";
-            
+
         }
         static HashSet<string> ReadCountryList() {
             HashSet<string> countries = new HashSet<string>();
@@ -30,11 +30,11 @@ namespace Smart.Parser.Lib
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("ru-RU");
             foreach (CultureInfo culture in cultures)
             {
-                try { 
+                try {
                     RegionInfo region = new RegionInfo(culture.LCID);
                     countries.Add(region.DisplayName.ToLower());
                 }
-                catch (ArgumentException )
+                catch (ArgumentException)
                 {
                     continue;
                 }
@@ -122,6 +122,26 @@ namespace Smart.Parser.Lib
                 || s == "не имеет";
         }
 
+        static decimal ParseRoubles(string val) {
+            decimal res = val.ParseDecimalValue();
+            if (res > 10000000000)
+            {
+                throw new Exception("income is greater than 10.000.000.000");
+            }
+            if (res == 0)
+            {
+                return res;
+            }
+
+            string processedVal = Regex.Replace(val, @"\s+", "").Trim();
+            //no more than two digits after comma, cannot start with 0    
+            Regex regex = new Regex("^([1-9][0-9]*)([.,][0-9]{1,2})?$", RegexOptions.Compiled);
+            var matches = regex.Matches(processedVal);
+            if (matches.Count > 0) { 
+                return res;
+            }
+            throw new Exception(String.Format("bad format in income field {0}", val));
+        }
         public static decimal? ParseDeclaredIncome(string strIncome)
         {
             Decimal result;
@@ -135,11 +155,11 @@ namespace Smart.Parser.Lib
                     var matches = regex.Matches(strIncome);
                     if (matches.Count > 0)
                     {
-                        result = strIncome.Substring(0, matches[0].Index).ParseDecimalValue();
+                        result = ParseRoubles(strIncome.Substring(0, matches[0].Index));
                     }
                     else
                     {
-                        result = strIncome.ParseDecimalValue();
+                        result = ParseRoubles(strIncome);
                     }
                 }
                 catch (Exception)
@@ -152,6 +172,7 @@ namespace Smart.Parser.Lib
             return Decimal.Round(result, 2);
 
         }
+
         public static string ParseDataSources(string src)
         {
             if (IsEmptyValue(src)) return null;

@@ -203,7 +203,7 @@ namespace TI.Declarator.JsonSerialization
             foreach (var relative in servant.Relatives)
             {
                 var income = relative.DeclaredYearlyIncome;
-                if (income.HasValue && income > 0.0m)
+                if (income.HasValue && income > 0.0m || (relative.DeclaredYearlyIncomeRaw.Length > 0))
                 {
                     JObject jIncomeProp = new JObject();
 

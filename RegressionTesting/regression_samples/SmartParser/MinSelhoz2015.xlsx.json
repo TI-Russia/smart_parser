@@ -314,10 +314,10 @@
       "real_estates": [
         {
           "text": "Квартира",
-          "square": 47.70,
+          "square": 47.7,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "47.70",
+          "square_raw": "47,7",
           "country_raw": "Россия",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -334,10 +334,10 @@
         },
         {
           "text": "Квартира",
-          "square": 47.70,
+          "square": 47.7,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.70",
+          "square_raw": "47,7",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         }
@@ -374,30 +374,30 @@
       "real_estates": [
         {
           "text": "Квартира",
-          "square": 60.90,
+          "square": 60.9,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "60.90",
+          "square_raw": "60,9",
           "country_raw": "Россия",
           "type_raw": "Квартира",
           "own_type_raw": "Долевая, 1/2 доли"
         },
         {
           "text": "Квартира",
-          "square": 27.30,
+          "square": 27.3,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "27.30",
+          "square_raw": "27,3",
           "country_raw": "Россия",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
         },
         {
           "text": "Квартира",
-          "square": 60.90,
+          "square": 60.9,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "60.90",
+          "square_raw": "60,9",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         },
@@ -569,7 +569,7 @@
         },
         {
           "size": 1013832.31,
-          "size_raw": "1013832.31",
+          "size_raw": "1 013 832,31",
           "relative": "Супруг(а)",
           "relative_index": 1
         },

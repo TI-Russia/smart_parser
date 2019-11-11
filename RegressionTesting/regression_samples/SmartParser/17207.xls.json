@@ -8,13 +8,13 @@
       "year": 2014,
       "incomes": [
         {
-          "size": 1558190.0,
-          "size_raw": "1558190",
+          "size": 1558190.00,
+          "size_raw": "1 558 190,00",
           "relative": null
         },
         {
-          "size": 685000.0,
-          "size_raw": "685000",
+          "size": 685000.00,
+          "size_raw": "685 000,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -129,7 +129,7 @@
       "incomes": [
         {
           "size": 2634045.68,
-          "size_raw": "2634045.6800000002",
+          "size_raw": "2 634 045,68",
           "relative": null
         }
       ],

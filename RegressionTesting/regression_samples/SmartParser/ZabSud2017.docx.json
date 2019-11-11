@@ -1,0 +1,71 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Базаржапова А.Б.",
+        "role": "Помощник судьи\n"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": 555696.97,
+          "size_raw": "555696,97",
+          "relative": null
+        },
+        {
+          "size": null,
+          "size_raw": "840984,171024170,86",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 0.00,
+          "size_raw": "0,00",
+          "relative": "Ребенок",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 34.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "34,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 34.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "34,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        },
+        {
+          "text": "Квартира",
+          "square": 34.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "34,5",
+          "country_raw": "Россия",
+          "type_raw": "Квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "НИССАН Teana 2/3 Premium",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 7
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах,\nоб имуществе и обязательствах имущественного характера\nгосударственных гражданских служащих Забайкальского краевого суда\nза период с 1 января 2017 г. по 31 декабря 2017 г.\n",
+    "year": 2017
+  }
+}
