@@ -10,10 +10,12 @@
       "incomes": [
         {
           "size": 53394512.00,
+          "size_raw": "53394512,\n00",
           "relative": null
         },
         {
           "size": 5076883.00,
+          "size_raw": "5076883,0\n0",
           "relative": "Супруг(а)",
           "relative_index": 1
         }

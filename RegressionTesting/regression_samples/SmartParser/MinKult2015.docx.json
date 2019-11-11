@@ -10,10 +10,12 @@
       "incomes": [
         {
           "size": 10256798.0,
+          "size_raw": "10 256 798",
           "relative": null
         },
         {
           "size": 388000.0,
+          "size_raw": "388 000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -66,10 +68,12 @@
       "incomes": [
         {
           "size": 2949777.0,
+          "size_raw": "2 949 777",
           "relative": null
         },
         {
           "size": 215922.0,
+          "size_raw": "215 922",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -146,6 +150,7 @@
       "incomes": [
         {
           "size": 7502517.0,
+          "size_raw": "7 502 517",
           "relative": null
         }
       ],

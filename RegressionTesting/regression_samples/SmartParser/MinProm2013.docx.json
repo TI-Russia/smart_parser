@@ -9,6 +9,7 @@
       "incomes": [
         {
           "size": 715382.21,
+          "size_raw": "715 382,21",
           "relative": null
         }
       ],
@@ -34,6 +35,7 @@
       "incomes": [
         {
           "size": 1153174.94,
+          "size_raw": "1 153 174,94",
           "relative": null
         }
       ],

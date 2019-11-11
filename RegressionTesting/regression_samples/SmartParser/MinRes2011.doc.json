@@ -9,10 +9,12 @@
       "incomes": [
         {
           "size": 15863749.0,
+          "size_raw": "15863749",
           "relative": null
         },
         {
           "size": 888414.0,
+          "size_raw": "888414",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -83,10 +85,12 @@
       "incomes": [
         {
           "size": 4231736.0,
+          "size_raw": "4231736",
           "relative": null
         },
         {
           "size": 1792098.0,
+          "size_raw": "1792098",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -181,10 +185,12 @@
       "incomes": [
         {
           "size": 15773422.0,
+          "size_raw": "15773422",
           "relative": null
         },
         {
           "size": 14131894.0,
+          "size_raw": "14131894",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -299,6 +305,7 @@
       "incomes": [
         {
           "size": 1973726.0,
+          "size_raw": "1973726",
           "relative": null
         }
       ],
@@ -364,10 +371,12 @@
       "incomes": [
         {
           "size": 1989869.0,
+          "size_raw": "1989869",
           "relative": null
         },
         {
           "size": 296088.0,
+          "size_raw": "296088",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -512,10 +521,12 @@
       "incomes": [
         {
           "size": 1293908.0,
+          "size_raw": "1293908",
           "relative": null
         },
         {
           "size": 967798.0,
+          "size_raw": "967798",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -579,10 +590,12 @@
       "incomes": [
         {
           "size": 1599642.0,
+          "size_raw": "1599642",
           "relative": null
         },
         {
           "size": 566530.0,
+          "size_raw": "566530",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -642,10 +655,12 @@
       "incomes": [
         {
           "size": 1025508.0,
+          "size_raw": "1025508",
           "relative": null
         },
         {
           "size": 45000.0,
+          "size_raw": "45000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -686,10 +701,12 @@
       "incomes": [
         {
           "size": 891669.0,
+          "size_raw": "891669",
           "relative": null
         },
         {
           "size": 974849.0,
+          "size_raw": "974849",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -753,10 +770,12 @@
       "incomes": [
         {
           "size": 7931695.0,
+          "size_raw": "7931695",
           "relative": null
         },
         {
           "size": 417810.0,
+          "size_raw": "417810",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -809,10 +828,12 @@
       "incomes": [
         {
           "size": 4666018.0,
+          "size_raw": "4666018",
           "relative": null
         },
         {
           "size": 378099.0,
+          "size_raw": "378099",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -860,6 +881,7 @@
       "incomes": [
         {
           "size": 1371884.0,
+          "size_raw": "1371884",
           "relative": null
         }
       ],
@@ -905,10 +927,12 @@
       "incomes": [
         {
           "size": 1424023.0,
+          "size_raw": "1424023",
           "relative": null
         },
         {
           "size": 763072.0,
+          "size_raw": "763072",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -957,10 +981,12 @@
       "incomes": [
         {
           "size": 3245973.0,
+          "size_raw": "3245973",
           "relative": null
         },
         {
           "size": 283953.0,
+          "size_raw": "283953",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1031,6 +1057,7 @@
       "incomes": [
         {
           "size": 1036389.0,
+          "size_raw": "1036389",
           "relative": null
         }
       ],
@@ -1060,6 +1087,7 @@
       "incomes": [
         {
           "size": 707672.0,
+          "size_raw": "707672",
           "relative": null
         }
       ],
@@ -1092,6 +1120,7 @@
       "incomes": [
         {
           "size": 860746.0,
+          "size_raw": "860746",
           "relative": null
         }
       ],
@@ -1117,10 +1146,12 @@
       "incomes": [
         {
           "size": 699051.0,
+          "size_raw": "699051",
           "relative": null
         },
         {
           "size": 1296871.0,
+          "size_raw": "1296871",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1178,10 +1209,12 @@
       "incomes": [
         {
           "size": 1107052.0,
+          "size_raw": "1107052",
           "relative": null
         },
         {
           "size": 160000.0,
+          "size_raw": "160000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1216,6 +1249,7 @@
       "incomes": [
         {
           "size": 598448.0,
+          "size_raw": "598448",
           "relative": null
         }
       ],
@@ -1240,10 +1274,12 @@
       "incomes": [
         {
           "size": 620706.0,
+          "size_raw": "620706",
           "relative": null
         },
         {
           "size": 139457.0,
+          "size_raw": "139457",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1288,10 +1324,12 @@
       "incomes": [
         {
           "size": 790576.0,
+          "size_raw": "790576",
           "relative": null
         },
         {
           "size": 160705.0,
+          "size_raw": "160705",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1332,6 +1370,7 @@
       "incomes": [
         {
           "size": 554533.0,
+          "size_raw": "554533",
           "relative": null
         }
       ],
@@ -1361,10 +1400,12 @@
       "incomes": [
         {
           "size": 474940.0,
+          "size_raw": "474940",
           "relative": null
         },
         {
           "size": 1557583.0,
+          "size_raw": "1557583",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1414,10 +1455,12 @@
       "incomes": [
         {
           "size": 915675.0,
+          "size_raw": "915675",
           "relative": null
         },
         {
           "size": 1770262.0,
+          "size_raw": "1770262",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1465,10 +1508,12 @@
       "incomes": [
         {
           "size": 500447.0,
+          "size_raw": "500447",
           "relative": null
         },
         {
           "size": 500627.0,
+          "size_raw": "500627",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1518,10 +1563,12 @@
       "incomes": [
         {
           "size": 3134456.0,
+          "size_raw": "3134456",
           "relative": null
         },
         {
           "size": 458724.0,
+          "size_raw": "458724",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1582,10 +1629,12 @@
       "incomes": [
         {
           "size": 491473.0,
+          "size_raw": "491473",
           "relative": null
         },
         {
           "size": 480000.0,
+          "size_raw": "480000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1633,6 +1682,7 @@
       "incomes": [
         {
           "size": 1239736.0,
+          "size_raw": "1239736",
           "relative": null
         }
       ],
@@ -1670,15 +1720,18 @@
       "incomes": [
         {
           "size": 1239363.0,
+          "size_raw": "1239363",
           "relative": null
         },
         {
           "size": 798676.0,
+          "size_raw": "798676",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 5000.0,
+          "size_raw": "5000",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -1769,10 +1822,12 @@
       "incomes": [
         {
           "size": 1301557.0,
+          "size_raw": "1301557",
           "relative": null
         },
         {
           "size": 12705613.0,
+          "size_raw": "12705613",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1896,6 +1951,7 @@
       "incomes": [
         {
           "size": 945480.0,
+          "size_raw": "945480",
           "relative": null
         }
       ],
@@ -1944,6 +2000,7 @@
       "incomes": [
         {
           "size": 689817.0,
+          "size_raw": "689817",
           "relative": null
         }
       ],
@@ -1982,6 +2039,7 @@
       "incomes": [
         {
           "size": 908060.0,
+          "size_raw": "908060",
           "relative": null
         }
       ],
@@ -2053,6 +2111,7 @@
       "incomes": [
         {
           "size": 484889.0,
+          "size_raw": "484889",
           "relative": null
         }
       ],
@@ -2078,10 +2137,12 @@
       "incomes": [
         {
           "size": 932733.0,
+          "size_raw": "932733",
           "relative": null
         },
         {
           "size": 1004413.0,
+          "size_raw": "1004413",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2153,10 +2214,12 @@
       "incomes": [
         {
           "size": 579478.0,
+          "size_raw": "579478",
           "relative": null
         },
         {
           "size": 601569.0,
+          "size_raw": "601569",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2195,6 +2258,7 @@
       "incomes": [
         {
           "size": 832862.0,
+          "size_raw": "832862",
           "relative": null
         }
       ],
@@ -2219,6 +2283,7 @@
       "incomes": [
         {
           "size": 661296.0,
+          "size_raw": "661296",
           "relative": null
         }
       ],
@@ -2251,10 +2316,12 @@
       "incomes": [
         {
           "size": 1538299.0,
+          "size_raw": "1538299",
           "relative": null
         },
         {
           "size": 19508353.0,
+          "size_raw": "19508353",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2321,10 +2388,12 @@
       "incomes": [
         {
           "size": 1206995.0,
+          "size_raw": "1206995",
           "relative": null
         },
         {
           "size": 3063884.0,
+          "size_raw": "3063884",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2368,6 +2437,7 @@
       "incomes": [
         {
           "size": 974096.0,
+          "size_raw": "974096",
           "relative": null
         }
       ],
@@ -2406,10 +2476,12 @@
       "incomes": [
         {
           "size": 478122.0,
+          "size_raw": "478122",
           "relative": null
         },
         {
           "size": 5474193.0,
+          "size_raw": "5474193",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2506,10 +2578,12 @@
       "incomes": [
         {
           "size": 973028.0,
+          "size_raw": "973028",
           "relative": null
         },
         {
           "size": 420000.0,
+          "size_raw": "420000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2563,10 +2637,12 @@
       "incomes": [
         {
           "size": 924140.0,
+          "size_raw": "924140",
           "relative": null
         },
         {
           "size": 7221027.0,
+          "size_raw": "7221027",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2630,10 +2706,12 @@
       "incomes": [
         {
           "size": 535938.0,
+          "size_raw": "535938",
           "relative": null
         },
         {
           "size": 276121.0,
+          "size_raw": "276121",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2699,10 +2777,12 @@
       "incomes": [
         {
           "size": 755360.0,
+          "size_raw": "755360",
           "relative": null
         },
         {
           "size": 160817.0,
+          "size_raw": "160817",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2757,6 +2837,7 @@
       "incomes": [
         {
           "size": 844031.0,
+          "size_raw": "844031",
           "relative": null
         }
       ],
@@ -2811,6 +2892,7 @@
       "incomes": [
         {
           "size": 397589.0,
+          "size_raw": "397589",
           "relative": null
         }
       ],
@@ -2841,10 +2923,12 @@
       "incomes": [
         {
           "size": 773077.0,
+          "size_raw": "773077",
           "relative": null
         },
         {
           "size": 139884.0,
+          "size_raw": "139884",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2907,10 +2991,12 @@
       "incomes": [
         {
           "size": 1528209.0,
+          "size_raw": "1528209",
           "relative": null
         },
         {
           "size": 94199.0,
+          "size_raw": "94199",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2996,6 +3082,7 @@
       "incomes": [
         {
           "size": 898614.0,
+          "size_raw": "898614",
           "relative": null
         }
       ],
@@ -3021,10 +3108,12 @@
       "incomes": [
         {
           "size": 906855.0,
+          "size_raw": "906855",
           "relative": null
         },
         {
           "size": 1580280.0,
+          "size_raw": "1580280",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3107,6 +3196,7 @@
       "incomes": [
         {
           "size": 950678.0,
+          "size_raw": "950678",
           "relative": null
         }
       ],
@@ -3140,10 +3230,12 @@
       "incomes": [
         {
           "size": 862741.0,
+          "size_raw": "862741",
           "relative": null
         },
         {
           "size": 1824995.0,
+          "size_raw": "1824995",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3279,6 +3371,7 @@
       "incomes": [
         {
           "size": 1048843.0,
+          "size_raw": "1048843",
           "relative": null
         }
       ],
@@ -3337,6 +3430,7 @@
       "incomes": [
         {
           "size": 474083.0,
+          "size_raw": "474083",
           "relative": null
         }
       ],
@@ -3385,10 +3479,12 @@
       "incomes": [
         {
           "size": 666255.0,
+          "size_raw": "666255",
           "relative": null
         },
         {
           "size": 4844321.0,
+          "size_raw": "4844321",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3472,10 +3568,12 @@
       "incomes": [
         {
           "size": 688628.0,
+          "size_raw": "688628",
           "relative": null
         },
         {
           "size": 231869.0,
+          "size_raw": "231869",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3536,6 +3634,7 @@
       "incomes": [
         {
           "size": 708542.0,
+          "size_raw": "708542",
           "relative": null
         }
       ],
@@ -3573,6 +3672,7 @@
       "incomes": [
         {
           "size": 696581.0,
+          "size_raw": "696581",
           "relative": null
         }
       ],
@@ -3629,10 +3729,12 @@
       "incomes": [
         {
           "size": 1559505.0,
+          "size_raw": "1559505",
           "relative": null
         },
         {
           "size": 8669052.0,
+          "size_raw": "8669052",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3712,10 +3814,12 @@
       "incomes": [
         {
           "size": 1090573.0,
+          "size_raw": "1090573",
           "relative": null
         },
         {
           "size": 600000.0,
+          "size_raw": "600000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3764,10 +3868,12 @@
       "incomes": [
         {
           "size": 1422675.0,
+          "size_raw": "1422675",
           "relative": null
         },
         {
           "size": 132000.0,
+          "size_raw": "132000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3822,10 +3928,12 @@
       "incomes": [
         {
           "size": 1216337.0,
+          "size_raw": "1216337",
           "relative": null
         },
         {
           "size": 763175.0,
+          "size_raw": "763175",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3881,10 +3989,12 @@
       "incomes": [
         {
           "size": 909629.0,
+          "size_raw": "909629",
           "relative": null
         },
         {
           "size": 144000.0,
+          "size_raw": "144000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3935,10 +4045,12 @@
       "incomes": [
         {
           "size": 522207.0,
+          "size_raw": "522207",
           "relative": null
         },
         {
           "size": 1292406.0,
+          "size_raw": "1292406",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4003,10 +4115,12 @@
       "incomes": [
         {
           "size": 815486.0,
+          "size_raw": "815486",
           "relative": null
         },
         {
           "size": 64240.0,
+          "size_raw": "64240",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4055,10 +4169,12 @@
       "incomes": [
         {
           "size": 726412.0,
+          "size_raw": "726412",
           "relative": null
         },
         {
           "size": 2990324.0,
+          "size_raw": "2990324",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4100,6 +4216,7 @@
       "incomes": [
         {
           "size": 958845.0,
+          "size_raw": "958845",
           "relative": null
         }
       ],
@@ -4148,6 +4265,7 @@
       "incomes": [
         {
           "size": 685817.0,
+          "size_raw": "685817",
           "relative": null
         }
       ],
@@ -4189,10 +4307,12 @@
       "incomes": [
         {
           "size": 849876.0,
+          "size_raw": "849876",
           "relative": null
         },
         {
           "size": 630564.0,
+          "size_raw": "630564",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4256,6 +4376,7 @@
       "incomes": [
         {
           "size": 716124.0,
+          "size_raw": "716124",
           "relative": null
         }
       ],
@@ -4281,6 +4402,7 @@
       "incomes": [
         {
           "size": 828266.0,
+          "size_raw": "828266",
           "relative": null
         }
       ],
@@ -4310,10 +4432,12 @@
       "incomes": [
         {
           "size": 1507045.0,
+          "size_raw": "1507045",
           "relative": null
         },
         {
           "size": 420000.0,
+          "size_raw": "420000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4362,10 +4486,12 @@
       "incomes": [
         {
           "size": 600.0,
+          "size_raw": "600",
           "relative": null
         },
         {
           "size": 180000.0,
+          "size_raw": "180000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4417,10 +4543,12 @@
       "incomes": [
         {
           "size": 821828.0,
+          "size_raw": "821828",
           "relative": null
         },
         {
           "size": 1328000.0,
+          "size_raw": "1328000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4493,6 +4621,7 @@
       "incomes": [
         {
           "size": 453622.0,
+          "size_raw": "453622",
           "relative": null
         }
       ],
@@ -4517,10 +4646,12 @@
       "incomes": [
         {
           "size": 808229.0,
+          "size_raw": "808229",
           "relative": null
         },
         {
           "size": 625092.0,
+          "size_raw": "625092",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4578,10 +4709,12 @@
       "incomes": [
         {
           "size": 511442.0,
+          "size_raw": "511442",
           "relative": null
         },
         {
           "size": 556200.0,
+          "size_raw": "556200",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4603,10 +4736,12 @@
       "incomes": [
         {
           "size": 1586300.0,
+          "size_raw": "1586300",
           "relative": null
         },
         {
           "size": 367700.0,
+          "size_raw": "367700",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4669,6 +4804,7 @@
       "incomes": [
         {
           "size": 7746995.0,
+          "size_raw": "7746995",
           "relative": null
         }
       ],
@@ -4693,6 +4829,7 @@
       "incomes": [
         {
           "size": 843724.0,
+          "size_raw": "843724",
           "relative": null
         }
       ],
@@ -4738,10 +4875,12 @@
       "incomes": [
         {
           "size": 1243796.0,
+          "size_raw": "1243796",
           "relative": null
         },
         {
           "size": 701672.0,
+          "size_raw": "701672",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4805,10 +4944,12 @@
       "incomes": [
         {
           "size": 540878.0,
+          "size_raw": "540878",
           "relative": null
         },
         {
           "size": 264723.0,
+          "size_raw": "264723",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4879,6 +5020,7 @@
       "incomes": [
         {
           "size": 918747.0,
+          "size_raw": "918747",
           "relative": null
         }
       ],
@@ -4904,6 +5046,7 @@
       "incomes": [
         {
           "size": 1026287.0,
+          "size_raw": "1026287",
           "relative": null
         }
       ],
@@ -4950,10 +5093,12 @@
       "incomes": [
         {
           "size": 781419.0,
+          "size_raw": "781419",
           "relative": null
         },
         {
           "size": 339111.0,
+          "size_raw": "339111",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5016,10 +5161,12 @@
       "incomes": [
         {
           "size": 569460.0,
+          "size_raw": "569460",
           "relative": null
         },
         {
           "size": 271081.0,
+          "size_raw": "271081",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5073,6 +5220,7 @@
       "incomes": [
         {
           "size": 509420.0,
+          "size_raw": "509420",
           "relative": null
         }
       ],
@@ -5097,15 +5245,18 @@
       "incomes": [
         {
           "size": 847982.0,
+          "size_raw": "847982",
           "relative": null
         },
         {
           "size": 190469.0,
+          "size_raw": "190469",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 144568.0,
+          "size_raw": "144568",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -5170,10 +5321,12 @@
       "incomes": [
         {
           "size": 1068146.0,
+          "size_raw": "1068146",
           "relative": null
         },
         {
           "size": 112569.0,
+          "size_raw": "112569",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5221,6 +5374,7 @@
       "incomes": [
         {
           "size": 956934.0,
+          "size_raw": "956934",
           "relative": null
         }
       ],
@@ -5245,6 +5399,7 @@
       "incomes": [
         {
           "size": 950687.0,
+          "size_raw": "950687",
           "relative": null
         }
       ],
@@ -5287,10 +5442,12 @@
       "incomes": [
         {
           "size": 727327.0,
+          "size_raw": "727327",
           "relative": null
         },
         {
           "size": 1013448.0,
+          "size_raw": "1013448",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5340,10 +5497,12 @@
       "incomes": [
         {
           "size": 512083.0,
+          "size_raw": "512083",
           "relative": null
         },
         {
           "size": 541497.0,
+          "size_raw": "541497",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5404,6 +5563,7 @@
       "incomes": [
         {
           "size": 1053129.0,
+          "size_raw": "1053129",
           "relative": null
         }
       ],
@@ -5452,10 +5612,12 @@
       "incomes": [
         {
           "size": 583082.0,
+          "size_raw": "583082",
           "relative": null
         },
         {
           "size": 102700.0,
+          "size_raw": "102700",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5520,6 +5682,7 @@
       "incomes": [
         {
           "size": 537835.0,
+          "size_raw": "537835",
           "relative": null
         }
       ],
@@ -5545,6 +5708,7 @@
       "incomes": [
         {
           "size": 290000.0,
+          "size_raw": "290000",
           "relative": null
         }
       ],
@@ -5574,10 +5738,12 @@
       "incomes": [
         {
           "size": 743535.0,
+          "size_raw": "743535",
           "relative": null
         },
         {
           "size": 360000.0,
+          "size_raw": "360000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5635,6 +5801,7 @@
       "incomes": [
         {
           "size": 654962.0,
+          "size_raw": "654962",
           "relative": null
         }
       ],
@@ -5664,10 +5831,12 @@
       "incomes": [
         {
           "size": 524191.0,
+          "size_raw": "524191",
           "relative": null
         },
         {
           "size": 884521.0,
+          "size_raw": "884521",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5725,10 +5894,12 @@
       "incomes": [
         {
           "size": 756799.0,
+          "size_raw": "756799",
           "relative": null
         },
         {
           "size": 394351.0,
+          "size_raw": "394351",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5779,6 +5950,7 @@
       "incomes": [
         {
           "size": 723401.0,
+          "size_raw": "723401",
           "relative": null
         }
       ],
@@ -5826,10 +5998,12 @@
       "incomes": [
         {
           "size": 763647.0,
+          "size_raw": "763647",
           "relative": null
         },
         {
           "size": 219825.0,
+          "size_raw": "219825",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5877,10 +6051,12 @@
       "incomes": [
         {
           "size": 568696.0,
+          "size_raw": "568696",
           "relative": null
         },
         {
           "size": 14967.0,
+          "size_raw": "14967",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5951,6 +6127,7 @@
       "incomes": [
         {
           "size": 542161.0,
+          "size_raw": "542161",
           "relative": null
         }
       ],
@@ -6004,6 +6181,7 @@
       "incomes": [
         {
           "size": 845289.0,
+          "size_raw": "845289",
           "relative": null
         }
       ],
@@ -6028,10 +6206,12 @@
       "incomes": [
         {
           "size": 153546.0,
+          "size_raw": "153546",
           "relative": null
         },
         {
           "size": 555080.0,
+          "size_raw": "555080",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6089,6 +6269,7 @@
       "incomes": [
         {
           "size": 1600663.0,
+          "size_raw": "1600663",
           "relative": null
         }
       ],
@@ -6113,25 +6294,30 @@
       "incomes": [
         {
           "size": 1096021.0,
+          "size_raw": "1096021",
           "relative": null
         },
         {
           "size": 5525000.0,
+          "size_raw": "5525000",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 45609.0,
+          "size_raw": "45609",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 45368.0,
+          "size_raw": "45368",
           "relative": "Ребенок",
           "relative_index": 3
         },
         {
           "size": 45368.0,
+          "size_raw": "45368",
           "relative": "Ребенок",
           "relative_index": 4
         }
@@ -6203,6 +6389,7 @@
       "incomes": [
         {
           "size": 1006217.0,
+          "size_raw": "1006217",
           "relative": null
         }
       ],
@@ -6228,6 +6415,7 @@
       "incomes": [
         {
           "size": 1148923.0,
+          "size_raw": "1148923",
           "relative": null
         }
       ],
@@ -6253,6 +6441,7 @@
       "incomes": [
         {
           "size": 937452.0,
+          "size_raw": "937452",
           "relative": null
         }
       ],
@@ -6278,6 +6467,7 @@
       "incomes": [
         {
           "size": 996187.0,
+          "size_raw": "996187",
           "relative": null
         }
       ],
@@ -6316,10 +6506,12 @@
       "incomes": [
         {
           "size": 740748.0,
+          "size_raw": "740748",
           "relative": null
         },
         {
           "size": 30989.0,
+          "size_raw": "30989",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6376,6 +6568,7 @@
       "incomes": [
         {
           "size": 7310421.0,
+          "size_raw": "7310421",
           "relative": null
         }
       ],
@@ -6401,6 +6594,7 @@
       "incomes": [
         {
           "size": 1085287.0,
+          "size_raw": "1085287",
           "relative": null
         }
       ],
@@ -6448,6 +6642,7 @@
       "incomes": [
         {
           "size": 522844.0,
+          "size_raw": "522844",
           "relative": null
         }
       ],
@@ -6472,10 +6667,12 @@
       "incomes": [
         {
           "size": 919055.0,
+          "size_raw": "919055",
           "relative": null
         },
         {
           "size": 708011.0,
+          "size_raw": "708011",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6524,6 +6721,7 @@
       "incomes": [
         {
           "size": 549793.0,
+          "size_raw": "549793",
           "relative": null
         }
       ],
@@ -6548,6 +6746,7 @@
       "incomes": [
         {
           "size": 506336.0,
+          "size_raw": "506336",
           "relative": null
         }
       ],
@@ -6573,6 +6772,7 @@
       "incomes": [
         {
           "size": 694676.0,
+          "size_raw": "694676",
           "relative": null
         }
       ],
@@ -6598,10 +6798,12 @@
       "incomes": [
         {
           "size": 354725.0,
+          "size_raw": "354725",
           "relative": null
         },
         {
           "size": 146273.0,
+          "size_raw": "146273",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6659,10 +6861,12 @@
       "incomes": [
         {
           "size": 719620.0,
+          "size_raw": "719620",
           "relative": null
         },
         {
           "size": 401233.0,
+          "size_raw": "401233",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6713,10 +6917,12 @@
       "incomes": [
         {
           "size": 921069.0,
+          "size_raw": "921069",
           "relative": null
         },
         {
           "size": 174000.0,
+          "size_raw": "174000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6774,10 +6980,12 @@
       "incomes": [
         {
           "size": 769098.0,
+          "size_raw": "769098",
           "relative": null
         },
         {
           "size": 1304507.0,
+          "size_raw": "1304507",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6834,10 +7042,12 @@
       "incomes": [
         {
           "size": 513016.0,
+          "size_raw": "513016",
           "relative": null
         },
         {
           "size": 152628.0,
+          "size_raw": "152628",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6911,10 +7121,12 @@
       "incomes": [
         {
           "size": 726850.0,
+          "size_raw": "726850",
           "relative": null
         },
         {
           "size": 210096.0,
+          "size_raw": "210096",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6961,6 +7173,7 @@
       "incomes": [
         {
           "size": 718395.0,
+          "size_raw": "718395",
           "relative": null
         }
       ],
@@ -6986,10 +7199,12 @@
       "incomes": [
         {
           "size": 502651.0,
+          "size_raw": "502651",
           "relative": null
         },
         {
           "size": 1014731.0,
+          "size_raw": "1014731",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7048,10 +7263,12 @@
       "incomes": [
         {
           "size": 1527601.0,
+          "size_raw": "1527601",
           "relative": null
         },
         {
           "size": 78850.0,
+          "size_raw": "78850",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7087,10 +7304,12 @@
       "incomes": [
         {
           "size": 1093158.0,
+          "size_raw": "1093158",
           "relative": null
         },
         {
           "size": 370066.0,
+          "size_raw": "370066",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7132,10 +7351,12 @@
       "incomes": [
         {
           "size": 1370878.0,
+          "size_raw": "1370878",
           "relative": null
         },
         {
           "size": 160000.0,
+          "size_raw": "160000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7198,6 +7419,7 @@
       "incomes": [
         {
           "size": 1190269.0,
+          "size_raw": "1190269",
           "relative": null
         }
       ],
@@ -7236,6 +7458,7 @@
       "incomes": [
         {
           "size": 772227.0,
+          "size_raw": "772227",
           "relative": null
         }
       ],
@@ -7260,6 +7483,7 @@
       "incomes": [
         {
           "size": 108168.0,
+          "size_raw": "108168",
           "relative": null
         }
       ],
@@ -7285,6 +7509,7 @@
       "incomes": [
         {
           "size": 552142.0,
+          "size_raw": "552142",
           "relative": null
         }
       ],
@@ -7309,6 +7534,7 @@
       "incomes": [
         {
           "size": 516199.0,
+          "size_raw": "516199",
           "relative": null
         }
       ],
@@ -7341,10 +7567,12 @@
       "incomes": [
         {
           "size": 209853.0,
+          "size_raw": "209853",
           "relative": null
         },
         {
           "size": 1671305.0,
+          "size_raw": "1671305",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7394,10 +7622,12 @@
       "incomes": [
         {
           "size": 926875.0,
+          "size_raw": "926875",
           "relative": null
         },
         {
           "size": 145000.0,
+          "size_raw": "145000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7438,6 +7668,7 @@
       "incomes": [
         {
           "size": 535415.0,
+          "size_raw": "535415",
           "relative": null
         }
       ],
@@ -7462,10 +7693,12 @@
       "incomes": [
         {
           "size": 1421559.0,
+          "size_raw": "1421559",
           "relative": null
         },
         {
           "size": 84133.0,
+          "size_raw": "84133",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7528,10 +7761,12 @@
       "incomes": [
         {
           "size": 1021229.0,
+          "size_raw": "1021229",
           "relative": null
         },
         {
           "size": 839010.0,
+          "size_raw": "839010",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7605,10 +7840,12 @@
       "incomes": [
         {
           "size": 1078623.0,
+          "size_raw": "1078623",
           "relative": null
         },
         {
           "size": 100962.0,
+          "size_raw": "100962",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7657,6 +7894,7 @@
       "incomes": [
         {
           "size": 685685.0,
+          "size_raw": "685685",
           "relative": null
         }
       ],
@@ -7687,10 +7925,12 @@
       "incomes": [
         {
           "size": 625690.0,
+          "size_raw": "625690",
           "relative": null
         },
         {
           "size": 822820.0,
+          "size_raw": "822820",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7739,6 +7979,7 @@
       "incomes": [
         {
           "size": 586887.0,
+          "size_raw": "586887",
           "relative": null
         }
       ],
@@ -7764,6 +8005,7 @@
       "incomes": [
         {
           "size": 468642.0,
+          "size_raw": "468642",
           "relative": null
         }
       ],
@@ -7817,10 +8059,12 @@
       "incomes": [
         {
           "size": 788305.0,
+          "size_raw": "788305",
           "relative": null
         },
         {
           "size": 154962.0,
+          "size_raw": "154962",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -7884,15 +8128,18 @@
       "incomes": [
         {
           "size": 729025.0,
+          "size_raw": "729025",
           "relative": null
         },
         {
           "size": 84937.0,
+          "size_raw": "84937",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 5811.0,
+          "size_raw": "5811",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -8001,10 +8248,12 @@
       "incomes": [
         {
           "size": 755942.0,
+          "size_raw": "755942",
           "relative": null
         },
         {
           "size": 672832.0,
+          "size_raw": "672832",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -8054,10 +8303,12 @@
       "incomes": [
         {
           "size": 835513.0,
+          "size_raw": "835513",
           "relative": null
         },
         {
           "size": 132000.0,
+          "size_raw": "132000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -8150,10 +8401,12 @@
       "incomes": [
         {
           "size": 688191.0,
+          "size_raw": "688191",
           "relative": null
         },
         {
           "size": 139425.0,
+          "size_raw": "139425",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -8241,10 +8494,12 @@
       "incomes": [
         {
           "size": 619949.0,
+          "size_raw": "619949",
           "relative": null
         },
         {
           "size": 120000.0,
+          "size_raw": "120000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }

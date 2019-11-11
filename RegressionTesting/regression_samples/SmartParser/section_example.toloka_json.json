@@ -10,15 +10,18 @@
       "incomes": [
         {
           "size": 576059.47,
+          "size_raw": "576059,47",
           "relative": null
         },
         {
           "size": 596562.33,
+          "size_raw": "596562,33",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 177216.0,
+          "size_raw": "177216",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -96,10 +99,12 @@
       "incomes": [
         {
           "size": 2656904.52,
+          "size_raw": "2656904,52",
           "relative": null
         },
         {
           "size": 1147082.23,
+          "size_raw": "1147082,23",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -168,10 +173,12 @@
       "incomes": [
         {
           "size": 469429.0,
+          "size_raw": "469429",
           "relative": null
         },
         {
           "size": 180000.0,
+          "size_raw": "180000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -216,6 +223,7 @@
       "incomes": [
         {
           "size": 222373.0,
+          "size_raw": "222373",
           "relative": null
         }
       ],
@@ -249,10 +257,12 @@
       "incomes": [
         {
           "size": 252735.0,
+          "size_raw": "252735",
           "relative": null
         },
         {
           "size": 255218.0,
+          "size_raw": "255218",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
