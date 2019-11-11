@@ -193,6 +193,8 @@ namespace TI.Declarator.JsonSerialization
                 JObject jIncomeProp = new JObject();
 
                 jIncomeProp.Add(new JProperty("size", servant.DeclaredYearlyIncome));
+                if (servant.DeclaredYearlyIncomeRaw.Length > 0)
+                    jIncomeProp.Add(new JProperty("size_raw", servant.DeclaredYearlyIncomeRaw));
                 jIncomeProp.Add(new JProperty("relative", null));
 
                 jIncomes.Add(jIncomeProp);
@@ -206,6 +208,8 @@ namespace TI.Declarator.JsonSerialization
                     JObject jIncomeProp = new JObject();
 
                     jIncomeProp.Add(new JProperty("size", income));
+                    if (relative.DeclaredYearlyIncomeRaw.Length > 0)
+                        jIncomeProp.Add(new JProperty("size_raw", relative.DeclaredYearlyIncomeRaw));
                     jIncomeProp.Add(new JProperty("relative", GetRelationshipName(relative.RelationType)));
                     AddNotNullProp(jIncomeProp, "relative_index", relative.PersonIndex);
 

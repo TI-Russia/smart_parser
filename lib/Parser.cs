@@ -358,6 +358,7 @@ namespace Smart.Parser.Lib
                 if (s1 != "")
                 {
                     person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s1) * 1000;
+                    person.DeclaredYearlyIncomeRaw = s1;       
                     return true;
                 }
                 else
@@ -369,6 +370,7 @@ namespace Smart.Parser.Lib
             if (s2 != "")
             {
                 person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s2);
+                person.DeclaredYearlyIncomeRaw = s2;
                 return true;
             }
             return false;

@@ -18,6 +18,7 @@ namespace TI.Declarator.ParserCommon
         public List<RealEstateProperty> RealEstateProperties = new List<RealEstateProperty>();
         public List<Vehicle> Vehicles = new List<Vehicle>();
         public decimal? DeclaredYearlyIncome;
+        public string DeclaredYearlyIncomeRaw = "";
 
         public string DataSources = "";
 
