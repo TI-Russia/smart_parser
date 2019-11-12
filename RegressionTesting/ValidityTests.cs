@@ -466,6 +466,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Mchs2010()
+        {
+            TestSmartParser("SmartParser\\Mchs2010.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("xls")]
         public void MinObor2012()
         {

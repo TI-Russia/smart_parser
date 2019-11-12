@@ -127,6 +127,12 @@
     <None Include="regression_samples\SmartParser\IncomeNotFirstLine.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\Mchs2010.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\Mchs2010.doc.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinDalVostok2015.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -137,9 +137,10 @@ namespace Smart.Parser.Lib
             {
                 //"1 039 300 94" -> 1 039 300,94
                 Regex subRegex = new Regex(@"([0-9])(\s+)([0-9][0-9])$", RegexOptions.Compiled);
-                val = subRegex.Replace(val,"$1,$3");
+                val = subRegex.Replace(val, "$1,$3");
                 res = val.ParseDecimalValue();
-            };
+
+            }
 
             string processedVal = Regex.Replace(val, @"\s+", "").Trim();
             //no more than two digits after comma, cannot start with 0    
