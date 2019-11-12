@@ -123,6 +123,7 @@ namespace Smart.Parser.Lib
         }
 
         static decimal ParseRoubles(string val) {
+            val = val.Trim();
             decimal res = val.ParseDecimalValue();
             if (res > 10000000000)
             {
@@ -132,6 +133,13 @@ namespace Smart.Parser.Lib
             {
                 return res;
             }
+            if (res > 2000000) // can be included in income charts...
+            {
+                //"1 039 300 94" -> 1 039 300,94
+                Regex subRegex = new Regex(@"([0-9])(\s+)([0-9][0-9])$", RegexOptions.Compiled);
+                val = subRegex.Replace(val,"$1,$3");
+                res = val.ParseDecimalValue();
+            };
 
             string processedVal = Regex.Replace(val, @"\s+", "").Trim();
             //no more than two digits after comma, cannot start with 0    

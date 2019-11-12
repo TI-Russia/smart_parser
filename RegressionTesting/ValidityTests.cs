@@ -465,6 +465,13 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\ZabSud2017.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("xls")]
+        public void MinObor2012()
+        {
+            TestSmartParser("SmartParser\\MinObor2012.xls", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
