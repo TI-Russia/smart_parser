@@ -133,7 +133,7 @@ namespace Smart.Parser.Lib
                 CurrentPerson = relative;
 
                 RelationType relationType = DataHelper.ParseRelationType(row.RelativeType, false);
-                if (relationType == RelationType.Error)
+                    if (relationType == RelationType.Error)
                 {
                     throw new SmartParserException(
                         string.Format("Wrong relative name '{0}' at row {1} ", row.RelativeType, row));
@@ -177,6 +177,7 @@ namespace Smart.Parser.Lib
             {
                 borderFinder.CreateNewSection(rowOffset, columnOrdering.Section);
             }
+            List<Decimal> incomes = new List<Decimal>();
             
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
@@ -223,8 +224,25 @@ namespace Smart.Parser.Lib
                     }
                 }
                 borderFinder.AddInputRowToCurrentPerson(currRow);
+                if (    columnOrdering.ContainsField (DeclarationField.DeclaredYearlyIncomeThousands)) {
+                    PublicServant dummy = new PublicServant();
+                    ParseIncome(currRow, dummy, declaration.MultiplyIncomeIfSpecified);
+                    if (dummy.DeclaredYearlyIncome != null)
+                    {
+                        incomes.Add(dummy.DeclaredYearlyIncome.Value);
+                    }
+                }
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
+            if (incomes.Count > 3) 
+            {
+                incomes.Sort();
+                Decimal medianIncome = incomes[incomes.Count / 2];
+                if (medianIncome > 10000000)
+                {
+                    declaration.MultiplyIncomeIfSpecified = false;
+                }
+            }
 
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
 
@@ -349,7 +367,7 @@ namespace Smart.Parser.Lib
             }
 
         }
-        bool ParseIncome(DataRow currRow, Person person)
+        bool ParseIncome(DataRow currRow, Person person, bool multiply1000)
         {
             if (currRow.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
             {
@@ -357,7 +375,11 @@ namespace Smart.Parser.Lib
                 string s1 = currRow.GetContents(DeclarationField.DeclaredYearlyIncomeThousands);
                 if (s1 != "")
                 {
-                    person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s1) * 1000;
+                    person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s1, true);
+                    if (multiply1000)
+                    {
+                        person.DeclaredYearlyIncome *= 1000;
+                    }
                     if (!DataHelper.IsEmptyValue(s1))
                         person.DeclaredYearlyIncomeRaw = s1;       
                     return true;
@@ -370,7 +392,7 @@ namespace Smart.Parser.Lib
             string s2 = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
             if (s2 != "")
             {
-                person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s2);
+                person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s2, false);
                 if (!DataHelper.IsEmptyValue(s2))
                     person.DeclaredYearlyIncomeRaw = s2;
                 return true;
@@ -441,7 +463,7 @@ namespace Smart.Parser.Lib
             
                         if (!foundIncomeInfo)
                         {
-                            if (ParseIncome(currRow, person))
+                            if (ParseIncome(currRow, person, declaration.MultiplyIncomeIfSpecified))
                             {
                                 totalIncome += person.DeclaredYearlyIncome == null ? 0 : person.DeclaredYearlyIncome.Value;
                                 foundIncomeInfo = true;
@@ -456,7 +478,6 @@ namespace Smart.Parser.Lib
                     }
                 }
             }
-
             Logger.Info("Total income: {0}", totalIncome);
             double seconds = DateTime.Now.Subtract(FirstPassStartTime).TotalSeconds;
             Logger.Info("Final Rate: {0:0.00} declarant in second", count / seconds);
@@ -634,7 +655,7 @@ namespace Smart.Parser.Lib
 
 
         IAdapter Adapter { get; set; }
-        static int CurrentRow { get; set;  } = -1;
+        static int CurrentRow { get; set; } = -1;
 
         
     }

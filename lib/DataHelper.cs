@@ -122,7 +122,7 @@ namespace Smart.Parser.Lib
                 || s == "не имеет";
         }
 
-        static decimal ParseRoubles(string val) {
+        static decimal ParseRoubles(string val, bool inThousands) {
             val = val.Trim();
             decimal res = val.ParseDecimalValue();
             if (res > 10000000000)
@@ -142,16 +142,22 @@ namespace Smart.Parser.Lib
 
             }
 
-            string processedVal = Regex.Replace(val, @"\s+", "").Trim();
-            //no more than two digits after comma, cannot start with 0    
-            Regex regex = new Regex("^([1-9][0-9]*)([.,][0-9]{1,2})?$", RegexOptions.Compiled);
-            var matches = regex.Matches(processedVal);
-            if (matches.Count > 0) { 
-                return res;
+
+            if (!inThousands)
+            {
+                string processedVal = Regex.Replace(val, @"\s+", "").Trim();
+                //no more than two digits after comma, cannot start with 0    
+                Regex regex = new Regex("^([1-9][0-9]*)([.,][0-9]{1,2})?$", RegexOptions.Compiled);
+                var matches = regex.Matches(processedVal);
+                if (matches.Count == 0)
+                {
+                    throw new Exception(String.Format("bad format in income field {0}", val)); ;
+                }
             }
-            throw new Exception(String.Format("bad format in income field {0}", val));
+            return res;
+            
         }
-        public static decimal? ParseDeclaredIncome(string strIncome)
+        public static decimal? ParseDeclaredIncome(string strIncome, bool inThousands)
         {
             Decimal result;
             if (IsEmptyValue(strIncome))
@@ -164,11 +170,11 @@ namespace Smart.Parser.Lib
                     var matches = regex.Matches(strIncome);
                     if (matches.Count > 0)
                     {
-                        result = ParseRoubles(strIncome.Substring(0, matches[0].Index));
+                        result = ParseRoubles(strIncome.Substring(0, matches[0].Index), inThousands);
                     }
                     else
                     {
-                        result = ParseRoubles(strIncome);
+                        result = ParseRoubles(strIncome, inThousands);
                     }
                 }
                 catch (Exception)
