@@ -31,6 +31,7 @@ namespace Smart.Parser
         public static bool ValidateByApi = false;
         public static bool IgnoreDirectoryIds = false;
         public static bool BuildTrigrams = false;
+        public static int? UserDocumentFileId;
         public static void SetAsposeLicenseFromEnvironment()
         {
             var envVars = Environment.GetEnvironmentVariables();
@@ -65,6 +66,7 @@ namespace Smart.Parser
             CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
+            CMDLineParser.Option docFileIdOpt = parser.AddIntParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
             parser.AddHelpOption();
             try
             {
@@ -95,6 +97,11 @@ namespace Smart.Parser
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
             }
+            if (docFileIdOpt.isMatched)
+            {
+                UserDocumentFileId = System.Convert.ToInt32(docFileIdOpt.Value.ToString());
+            }
+            
             string logFileName = "";
             if (mainLogOpt.isMatched)
             {
@@ -542,7 +549,7 @@ namespace Smart.Parser
             }
 
 
-            Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams);
+            Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);
             SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);

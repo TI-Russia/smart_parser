@@ -24,12 +24,14 @@ namespace Smart.Parser.Lib
             FailOnRelativeOrphan = failOnRelativeOrphan;
         }
 
-        Declaration InitializeDeclaration(ColumnOrdering columnOrdering)
+        Declaration InitializeDeclaration(ColumnOrdering columnOrdering, int? user_documentfile_id)
         {
             // parse filename
-            int? id;
+            int? documentfile_id;
             string archive;
-            bool result = DataHelper.ParseDocumentFileName(Adapter.DocumentFile, out id, out archive);
+            bool result = DataHelper.ParseDocumentFileName(Adapter.DocumentFile, out documentfile_id, out archive);
+            if (user_documentfile_id.HasValue)
+                documentfile_id = user_documentfile_id;
 
             DeclarationProperties properties = new DeclarationProperties()
             {
@@ -37,7 +39,7 @@ namespace Smart.Parser.Lib
                 MinistryName = columnOrdering.MinistryName,
                 Year = columnOrdering.Year,
                 SheetName = Adapter.GetWorksheetName(),
-                documentfile_id = id,
+                documentfile_id = documentfile_id,
                 archive_file = archive,
                 sheet_number = Adapter.GetWorksheetIndex()
             };
@@ -163,11 +165,11 @@ namespace Smart.Parser.Lib
             return false;
         }
 
-        public Declaration Parse(ColumnOrdering columnOrdering, bool updateTrigrams)
+        public Declaration Parse(ColumnOrdering columnOrdering, bool updateTrigrams, int? documentfile_id)
          {
             FirstPassStartTime = DateTime.Now;
 
-            Declaration declaration =  InitializeDeclaration(columnOrdering);
+            Declaration declaration =  InitializeDeclaration(columnOrdering, documentfile_id);
 
             int rowOffset = columnOrdering.FirstDataRow;
 
