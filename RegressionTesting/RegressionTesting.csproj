@@ -184,6 +184,12 @@
     <None Include="regression_samples\SmartParser\MinKult2012.docx.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="regression_samples\SmartParser\MinKult2015.doc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="regression_samples\SmartParser\MinKult2015.doc.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="regression_samples\SmartParser\MinKult2015.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
