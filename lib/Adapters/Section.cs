@@ -17,10 +17,12 @@ namespace Smart.Parser.Adapters
             }
             // first words: get it from previous results:
             // ~/media/json$ ls | xargs  jq -cr '.persons[].person.department' | awk '{print $1}' | sort | uniq -c  | sort -nr
+            // стоит перейти на более продвинутую модель на триграммах
             if (cellText.StartsWith("ФК") ||
                 cellText.StartsWith("ФГ") ||
                 cellText.StartsWith("ГУ") ||
                 cellText.StartsWith("Федеральн") ||
+                cellText.StartsWith("федеральн") ||
                 cellText.StartsWith("ФБУ") ||
                 cellText.StartsWith("Руководство") ||
                 cellText.StartsWith("ФАУ") ||
@@ -30,13 +32,13 @@ namespace Smart.Parser.Adapters
                 cellText.StartsWith("Государственное") ||
                 cellText.StartsWith("Главное") ||
                 cellText.StartsWith("Отдел") ||
-                cellText.StartsWith("Управление") ||
+                cellText.StartsWith("Управлени") ||
                 cellText.StartsWith("Фонд") ||
                 cellText.StartsWith("АНО") ||
                 cellText.StartsWith("УФСИН") ||
                 cellText.StartsWith("Центр") ||
                 cellText.StartsWith("ФСИН") ||
-                cellText.StartsWith("Министерство") ||
+                cellText.StartsWith("Министерств") ||
                 cellText.StartsWith("Лица") ||
                 cellText.StartsWith("ИК")
                 )
