@@ -500,6 +500,13 @@ namespace RegressionTesting
             TestSmartParser("SmartParser\\MinKult2015.doc", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("doc")]
+        public void MinKult2012doc()
+        {
+            TestSmartParser("SmartParser\\MinKult2012.doc", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));

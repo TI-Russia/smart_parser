@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
+using System.Text.RegularExpressions;
 
 
 namespace Smart.Parser.Adapters
@@ -213,6 +214,13 @@ namespace Smart.Parser.Adapters
                     string.Format("Wrong relative type {0} at row {1}", RelativeType, GetRowIndex()));
             }
         }
+        static bool CanBePatronymic(string s)
+        {
+            if (s.Length == 0) return false;
+            if (!Char.IsUpper(s[0])) return false;
+            return s.EndsWith("вич") || s.EndsWith("вна") || s.EndsWith(".");
+        }
+
         void DivideNameAndOccupation()
         {
             var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
@@ -226,14 +234,28 @@ namespace Smart.Parser.Adapters
             }
             else
             {
-                int delim = v.IndexOf("–");
-                if (delim == -1)
+                string pattern = @"\p{Pd}"; //UnicodeCategory.DashPunctuation
+                string[] result = Regex.Split(v, pattern);
+                if (result.Length < 2)
                 {
-                    throw new SmartParserException(
-                        string.Format("Cannot  parse  name+occupation value {0} at row {1}", v, GetRowIndex()));
+                    string[] words = Regex.Split(v, @"\s");
+                    if (words.Length > 3 && CanBePatronymic(words[2]))
+                    {
+                        PersonName = String.Join(" ", words.Take(3)).Trim();
+                        Occupation = String.Join(" ", words.Skip(3)).Trim();
+
+                    }
+                    else
+                    {
+                        throw new SmartParserException(
+                            string.Format("Cannot  parse  name+occupation value {0} at row {1}", v, GetRowIndex()));
+                    }
                 }
-                PersonName = v.Substring(0, delim);
-                Occupation = v.Substring(delim + 1);
+                else
+                {
+                    PersonName = result[0].Trim();
+                    Occupation = String.Join("-", result.Skip(1)).Trim();
+                }
             }
         }
 
