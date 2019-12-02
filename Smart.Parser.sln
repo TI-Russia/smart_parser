@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidateJson", "tools\Valid
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{ADFA12A5-C690-4842-AE9B-18C4EC3AAC9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicrosoftPdf2Docx", "tools\MicrosoftPdf2Docx\MicrosoftPdf2Docx.csproj", "{AAE590F1-46AC-438D-B4F1-120ADF4D77C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,12 +67,17 @@ Global
 		{6444B351-EEAB-4259-A190-15838149C77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6444B351-EEAB-4259-A190-15838149C77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6444B351-EEAB-4259-A190-15838149C77A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE590F1-46AC-438D-B4F1-120ADF4D77C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE590F1-46AC-438D-B4F1-120ADF4D77C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE590F1-46AC-438D-B4F1-120ADF4D77C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE590F1-46AC-438D-B4F1-120ADF4D77C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6444B351-EEAB-4259-A190-15838149C77A} = {ADFA12A5-C690-4842-AE9B-18C4EC3AAC9E}
+		{AAE590F1-46AC-438D-B4F1-120ADF4D77C0} = {ADFA12A5-C690-4842-AE9B-18C4EC3AAC9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD2A9583-38EC-41A7-9E73-34858556C2B6}
