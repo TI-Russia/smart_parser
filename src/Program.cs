@@ -67,6 +67,7 @@ namespace Smart.Parser
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             CMDLineParser.Option docFileIdOpt = parser.AddIntParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
+            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id", false);
             parser.AddHelpOption();
             try
             {
@@ -152,7 +153,10 @@ namespace Smart.Parser
             {
                 HtmlFileName = dumpHtmlOpt.Value.ToString();
             }
-            
+            if (convertedFileStorageUrlOpt.isMatched)
+            {
+                IAdapter.ConvertedFileStorageUrl = convertedFileStorageUrlOpt.Value.ToString();
+            }
             if (tolokaFileNameOpt.isMatched)
             {
                 TolokaFileName = tolokaFileNameOpt.Value.ToString();

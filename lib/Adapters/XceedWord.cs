@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml;
+using System.Text;
 using Microsoft.Win32;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
@@ -14,7 +16,7 @@ using Newtonsoft.Json;
 using Microsoft.Office.Interop.Word;
 using Xceed.Words.NET;
 using Parser.Lib;
-
+using System.Security.Cryptography;
 
 namespace Smart.Parser.Adapters
 {
@@ -128,8 +130,48 @@ namespace Smart.Parser.Adapters
             }
             
         }
+        private static string ToHex(byte[] bytes)
+        {
+            StringBuilder result = new StringBuilder(bytes.Length * 2);
+
+            for (int i = 0; i < bytes.Length; i++)
+                result.Append(bytes[i].ToString("x2"));
+
+            return result.ToString();
+        }
+
+        string DowloadFromConvertedStorage(string filename)
+        {
+            using (SHA256 mySHA256 = SHA256.Create())
+            {
+                string hashValue;
+                using (FileStream fileStream = File.Open(filename, FileMode.Open))
+                {
+                    hashValue = ToHex(mySHA256.ComputeHash(fileStream));
+                }
+                using (var client = new WebClient())
+                {
+                    string url = ConvertedFileStorageUrl + "?sha256=" + hashValue;
+                    string docXPath = Path.GetTempFileName();
+                    client.DownloadFile(url, docXPath);
+                    return docXPath;
+                }
+
+            }
+            return "";
+        }
         string ConvertFile2TempDocX(string filename)
         {
+            if (ConvertedFileStorageUrl != "" && filename.EndsWith("pdf"))
+            {
+                try
+                {
+                    return DowloadFromConvertedStorage(filename);
+                }
+                catch (Exception e) {
+                    // a new file try to load it into Microsoft Word
+                }
+             }
             DeleteLastCrashedDialog();
             Application word = new Application();
             var doc = word.Documents.OpenNoRepairDialog(
