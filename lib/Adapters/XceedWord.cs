@@ -199,7 +199,7 @@ namespace Smart.Parser.Adapters
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
             var result = new Dictionary<string, double>();
-            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.bigrams.txt"))
+            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.bigrams.txt"))
             {
                 using (var reader = new StreamReader(stream))
                 {

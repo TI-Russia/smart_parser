@@ -16,4 +16,12 @@
     <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj" />
     <ProjectReference Include="..\ParserCommon\ParserCommon.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="import-schema-dicts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="import-schema.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

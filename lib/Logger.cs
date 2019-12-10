@@ -22,10 +22,9 @@ namespace Parser.Lib
         private static void LoadConfig()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.log4net.config"))
+            var dummy = currentAssembly.GetManifestResourceNames();
+            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.log4net.config"))
             {
-                //var repo = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(),
-                //           typeof(log4net.Repository.Hierarchy.Hierarchy));
                 log4net.Config.XmlConfigurator.Configure(repo, stream);
             }
         }
@@ -39,15 +38,15 @@ namespace Parser.Lib
             }
             LoadConfig();
             SetLogFileName("Main", logFileName);
-            mainLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "Main");
-            secondLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "Second");
+            mainLog = LogManager.GetLogger(repo.Name, "Main");
+            secondLog = LogManager.GetLogger(repo.Name, "Second");
             log = mainLog;
         }
 
         public static void SetupForTests(string mainLogName, string auxLogName)
         {
-            mainLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), mainLogName);
-            secondLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "auxLogName");
+            mainLog = LogManager.GetLogger(repo.Name, mainLogName);
+            secondLog = LogManager.GetLogger(repo.Name, "auxLogName");
             log = mainLog;
         }
 
