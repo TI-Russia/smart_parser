@@ -2,11 +2,13 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-
+#if WIN64
+using Microsoft.Office.Interop.Excel;
+#endif
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
-using Microsoft.Office.Interop.Excel;
+
 
 using TI.Declarator.ParserCommon;
 using Parser.Lib;
@@ -22,6 +24,7 @@ namespace Smart.Parser.Adapters
         private Cell EmptyCell;
         private int MaxRowsToProcess;
         private string TempFileName;
+#if WIN64
         string ConvertFile2TempXlsX(string filename)
         {
             Application excel = new Application();
@@ -39,7 +42,7 @@ namespace Smart.Parser.Adapters
             excel = null;
             return TempFileName;
         }
-
+#endif
         public override bool IsExcel() { return true; }
 
         public NpoiExcelAdapter(string fileName, int maxRowsToProcess = -1)
@@ -47,10 +50,12 @@ namespace Smart.Parser.Adapters
             DocumentFile = fileName;
             TempFileName = null;
             string extension = Path.GetExtension(fileName);
+#if WIN64
             if (extension == ".xls")
             {
                 fileName = ConvertFile2TempXlsX(fileName);
             }
+#endif
             StreamReader file = new StreamReader(Path.GetFullPath(fileName));
             WorkBook = new XSSFWorkbook(file.BaseStream);
             //WorkBook = new XSSFWorkbook(Path.GetFullPath(fileName));

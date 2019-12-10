@@ -413,7 +413,7 @@ namespace Smart.Parser
                     }
                     else
                     {
-                        return MicrosoftExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                        return null ;
                     }
                     break;
                 default:

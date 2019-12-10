@@ -17,13 +17,16 @@ namespace Parser.Lib
     public class Logger
     {
         private const int MaxErrorCount = 150;
+        static log4net.Repository.ILoggerRepository repo = LogManager.GetRepository(Assembly.GetEntryAssembly());
 
         private static void LoadConfig()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
             using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.log4net.config"))
             {
-                log4net.Config.XmlConfigurator.Configure(stream);
+                //var repo = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(),
+                //           typeof(log4net.Repository.Hierarchy.Hierarchy));
+                log4net.Config.XmlConfigurator.Configure(repo, stream);
             }
         }
 
@@ -36,15 +39,15 @@ namespace Parser.Lib
             }
             LoadConfig();
             SetLogFileName("Main", logFileName);
-            mainLog = LogManager.GetLogger("Main");
-            secondLog = LogManager.GetLogger("Second");
+            mainLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "Main");
+            secondLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "Second");
             log = mainLog;
         }
 
         public static void SetupForTests(string mainLogName, string auxLogName)
         {
-            mainLog = LogManager.GetLogger(mainLogName);
-            secondLog = LogManager.GetLogger("auxLogName");
+            mainLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), mainLogName);
+            secondLog = LogManager.GetLogger(Assembly.GetExecutingAssembly(), "auxLogName");
             log = mainLog;
         }
 
@@ -57,12 +60,8 @@ namespace Parser.Lib
         {
             bool found = false;
             Errors.Clear();
-            //XmlConfigurator.Configure();
-            log4net.Repository.Hierarchy.Hierarchy h =
-            (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository();
-
-            foreach (log4net.Appender.IAppender a in
-           log4net.LogManager.GetRepository().GetAppenders())
+            var appenders = repo.GetAppenders();
+            foreach (log4net.Appender.IAppender a in appenders)
             {
                 if (a is FileAppender && a.Name == logger)
                 {
@@ -90,7 +89,7 @@ namespace Parser.Lib
         static public void SetLoggingLevel(LogLevel level)
         {
             log4net.Core.Level[] levels = { log4net.Core.Level.Debug, log4net.Core.Level.Info, log4net.Core.Level.Error };
-            log4net.Repository.Hierarchy.Hierarchy hier = (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository();
+            log4net.Repository.Hierarchy.Hierarchy hier = (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository(Assembly.GetExecutingAssembly());
             hier.Root.Level = levels[(int)level];
             hier.RaiseConfigurationChanged(EventArgs.Empty);
             foreach (log4net.Core.ILogger logger in hier.GetCurrentLoggers())

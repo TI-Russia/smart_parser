@@ -13,7 +13,9 @@ using Microsoft.Win32;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 
+#if WIN64
 using Microsoft.Office.Interop.Word;
+#endif
 using Xceed.Words.NET;
 using Parser.Lib;
 using System.Security.Cryptography;
@@ -98,6 +100,7 @@ namespace Smart.Parser.Adapters
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
 
+#if WIN64
         public static void DeleteRegistryKey(string keyName)
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
@@ -130,6 +133,7 @@ namespace Smart.Parser.Adapters
             }
             
         }
+#endif
         private static string ToHex(byte[] bytes)
         {
             StringBuilder result = new StringBuilder(bytes.Length * 2);
@@ -158,8 +162,9 @@ namespace Smart.Parser.Adapters
                 }
 
             }
-            return "";
         }
+
+
         string ConvertFile2TempDocX(string filename)
         {
             if (ConvertedFileStorageUrl != "" && filename.EndsWith("pdf"))
@@ -168,10 +173,11 @@ namespace Smart.Parser.Adapters
                 {
                     return DowloadFromConvertedStorage(filename);
                 }
-                catch (Exception e) {
+                catch (Exception ) {
                     // a new file try to load it into Microsoft Word
                 }
              }
+#if WIN64
             DeleteLastCrashedDialog();
             Application word = new Application();
             var doc = word.Documents.OpenNoRepairDialog(
@@ -184,7 +190,11 @@ namespace Smart.Parser.Adapters
             word.ActiveDocument.Close();
             word.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
             return docXPath;
+#else
+    return "";
+#endif
         }
+
         static Dictionary<string, double> ReadBigrams()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MicrosoftPdf2Docx</RootNamespace>
     <AssemblyName>MicrosoftPdf2Docx</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>netcoreapp3.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
