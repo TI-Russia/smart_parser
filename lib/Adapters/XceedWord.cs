@@ -165,6 +165,7 @@ namespace Smart.Parser.Adapters
         }
 
 
+
         string ConvertFile2TempDocX(string filename)
         {
             if (ConvertedFileStorageUrl != "" && filename.EndsWith("pdf"))
@@ -176,7 +177,26 @@ namespace Smart.Parser.Adapters
                 catch (Exception ) {
                     // a new file try to load it into Microsoft Word
                 }
-             }
+            }
+            /* Aspose.Pdf 19 works bad with tables, do not use it, winword is better 
+            if (filename.EndsWith("pdf"))
+            {
+                Aspose.Pdf.Document pdf = new Aspose.Pdf.Document(filename);
+                string docXPath = Path.GetTempFileName();
+                Console.WriteLine(String.Format("save to {0}", docXPath));
+                pdf.Save(docXPath, Aspose.Pdf.SaveFormat.DocX);
+                return docXPath;
+            }*/
+            //if ()
+            Aspose.Words.Document doc = new Aspose.Words.Document(filename);
+            using (MemoryStream dstStream = new MemoryStream())
+            {
+                // use libre office when aspose is not accessible
+                // "soffice --headless --convert-to docx docum.doc"
+                string docXPath = Path.GetTempFileName();
+                doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+                return docXPath;
+            }
 #if WIN64
             DeleteLastCrashedDialog();
             Application word = new Application();
@@ -191,7 +211,7 @@ namespace Smart.Parser.Adapters
             word.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
             return docXPath;
 #else
-    return "";
+            //return "";
 #endif
         }
 

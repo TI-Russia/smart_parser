@@ -47,7 +47,6 @@ namespace Smart.Parser
             }
         }
     
-
         static string ParseArgs(string[] args)
         {
             CMDLineParser parser = new CMDLineParser();
