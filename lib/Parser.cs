@@ -189,6 +189,7 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
+                Logger.Debug(currRow.DebugString());
 
                 string sectionName;
                 if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))

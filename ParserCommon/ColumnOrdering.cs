@@ -39,7 +39,7 @@ namespace TI.Declarator.ParserCommon
         {
             ColumnOrder.Remove(field);
         }
-        public void FinishOrderingBuilding()
+        public void FinishOrderingBuilding(int tableIndention)
         {
             MergedColumnOrder.Clear();
             foreach (var x in ColumnOrder.Values)
@@ -47,7 +47,7 @@ namespace TI.Declarator.ParserCommon
                 MergedColumnOrder.Add(x);
             }
             MergedColumnOrder.Sort((x, y) => x.BeginColumn.CompareTo(y.BeginColumn));
-            int sumwidth = 0;
+            int sumwidth = tableIndention;
             foreach (var x in MergedColumnOrder)
             {
                 x.ColumnPixelStart = sumwidth;

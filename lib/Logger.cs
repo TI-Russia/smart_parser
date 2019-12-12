@@ -22,7 +22,6 @@ namespace Parser.Lib
         private static void LoadConfig()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
-            var dummy = currentAssembly.GetManifestResourceNames();
             using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.log4net.config"))
             {
                 log4net.Config.XmlConfigurator.Configure(repo, stream);

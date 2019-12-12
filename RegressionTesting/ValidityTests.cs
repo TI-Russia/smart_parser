@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System.Reflection;
 using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 using System.Text;
@@ -104,7 +104,6 @@ namespace RegressionTesting
             Assert.AreEqual(0, nFailedChecks, $"Sample files validation test: {nFailedChecks} out of {nChecks} sample files are not valid. Validation log can be found in {SampleWordLogFilePath}");
         }
         */
-        private const string SmartParserFilesDirectory = @"SmartParser";
         private const string SmartParserLogFile = "smart_parser_files.log";
 
         private string SmartParserLogFilePath
@@ -112,22 +111,28 @@ namespace RegressionTesting
             get { return Path.GetFullPath(SmartParserLogFile); }
         }
 
+        public String GetCanonFolder()
+        {
+            string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(TestContext.TestDir));
+            return Path.Join(solution_dir, "RegressionTesting", "files");
+        }
+
 
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
             Smart.Parser.Program.SetAsposeLicenseFromEnvironment();
-            var workingCopy = Path.GetFileName(filename);
-            File.Copy(filename, workingCopy);
-            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
+            Directory.CreateDirectory(Path.GetDirectoryName(filename));
+            File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
+            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = false;
-            string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
-            string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
+            string outDir = Path.GetDirectoryName(Path.GetFullPath(filename));
+            string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(filename);
             Smart.Parser.Program.ParseFile(filename, outFileName);
             foreach (var outfile in outfiles)
             {
-                string expectedFile = Path.Combine(SmartParserFilesDirectory, outfile);
+                string expectedFile = Path.Combine(GetCanonFolder(), outfile);
                 Assert.IsTrue(TestValidity(expectedFile, outfile, SmartParserLogFile));
             }
         }
@@ -137,15 +142,14 @@ namespace RegressionTesting
         {
             SetupLog4Net();
             Smart.Parser.Program.SetAsposeLicenseFromEnvironment();
-            var workingCopy = Path.GetFileName(filename);
-            File.Copy(filename, workingCopy);
-            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", workingCopy, Directory.GetCurrentDirectory()));
+            File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
+            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
-            string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(workingCopy);
-            string outDir = Path.GetDirectoryName(Path.GetFullPath(workingCopy));
-            Smart.Parser.Program.ParseFile(workingCopy, outFileName);
-            string expectedFile = Path.Combine(SmartParserFilesDirectory, outFileName);
+            string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(filename);
+            string outDir = Path.GetDirectoryName(Path.GetFullPath(filename));
+            Smart.Parser.Program.ParseFile(filename, outFileName);
+            string expectedFile = Path.Combine(GetCanonFolder(), outFileName);
             Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }
 
@@ -153,105 +157,107 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void MinDalVostok2015()
         {
-            TestSmartParser("SmartParser\\MinDalVostok2015.xlsx", "prod");
+            TestSmartParser("MinDalVostok2015.xlsx", "prod");
         }
 
         [TestMethod]
-        [TestCategory("pdf")]
+        [TestCategory("docx")]
         public void TestPdfOneLine()
         {
-            TestSmartParser("SmartParser\\one_line_2017.pdf", "xceed");
+            // from pdf
+            TestSmartParser("one_line_2017.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void SpellCheckRealtyType()
         {
-            TestSmartParser("SmartParser\\SpellCheckRealtyType.docx", "xceed");
+            TestSmartParser("SpellCheckRealtyType.docx", "prod");
         }
 
         [TestMethod]
-        [TestCategory("pdf")]
+        [TestCategory("docx")]
         public void TestPdfTwoTables()
         {
-            TestSmartParser("SmartParser\\two_tables_2017.pdf", "xceed");
+            // from pdf
+            TestSmartParser("two_tables_2017.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void IncomeNotFirstLine()
         {
-            TestSmartParser("SmartParser\\IncomeNotFirstLine.docx", "xceed");
+            TestSmartParser("IncomeNotFirstLine.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void ManyManyColumns()
         {
-            TestSmartParser("SmartParser\\256_Columns.xlsx", "npoi");
+            TestSmartParser("256_Columns.xlsx", "npoi");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void TestExcelMinfin2016()
         {
-            TestSmartParser("SmartParser\\minfin2016.xlsx", "npoi");
+            TestSmartParser("minfin2016.xlsx", "npoi");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void TestMinZdrav2015()
         {
-            TestSmartParser("SmartParser\\minzdrav2015.docx", "xceed");
+            TestSmartParser("minzdrav2015.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinSport2016()
         {
-            TestSmartParser("SmartParser\\MinSport2016.docx", "xceed");
+            TestSmartParser("MinSport2016.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void MinRes2011()
         {
-            TestSmartParser("SmartParser\\MinRes2011.doc", "xceed");
+            TestSmartParser("MinRes2011.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void MinYust2012()
         {
-            TestSmartParser("SmartParser\\MinYust2012.doc", "prod");
+            TestSmartParser("MinYust2012.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void DepEnergo2010()
         {
-            TestSmartParser("SmartParser\\DepEnergo2010.doc", "prod");
+            TestSmartParser("DepEnergo2010.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinZdorov2015Full()
         {
-            TestSmartParser("SmartParser\\MinZdorov2015Full.docx", "xceed");
+            TestSmartParser("MinZdorov2015Full.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinEkon2013()
         {
-            TestSmartParser("SmartParser\\MinEkon2013.docx", "prod");
+            TestSmartParser("MinEkon2013.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinStroy2014()
         {
-            TestSmartParser("SmartParser\\MinStroy2014.docx", "xceed");
+            TestSmartParser("MinStroy2014.docx", "prod");
         }
 
         [TestMethod]
@@ -259,7 +265,7 @@ namespace RegressionTesting
         public void MinObr2012()
         {
             // в этом тесте есть ошибка, последний обеъек не парсится
-            TestSmartParser("SmartParser\\MinObr2012.docx", "xceed");
+            TestSmartParser("MinObr2012.docx", "prod");
         }
 
         [TestMethod]
@@ -267,7 +273,7 @@ namespace RegressionTesting
         public void MinTrans2011()
         {
             // в этом тесте есть ошибка, последний обеъек не парсится
-            TestSmartParser("SmartParser\\MinTrans2011.docx", "xceed");
+            TestSmartParser("MinTrans2011.docx", "prod");
         }
 
         [TestMethod]
@@ -275,28 +281,28 @@ namespace RegressionTesting
         public void MinSevKavkaz2015()
         {
             // повтор Header внутри таблицы
-            TestSmartParser("SmartParser\\MinSevKavkaz2015.docx", "xceed");
+            TestSmartParser("MinSevKavkaz2015.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void MinObr2016()
         {
-            TestSmartParser("SmartParser\\MinObr2016.xlsx", "prod");
+            TestSmartParser("MinObr2016.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void Fsin2013()
         {
-            TestSmartParser("SmartParser\\fsin2013.docx", "prod") ;
+            TestSmartParser("fsin2013.docx", "prod") ;
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void MinStroy2017()
         {
-            TestSmartParser("SmartParser\\MinStroy2017.xlsx", "prod");
+            TestSmartParser("MinStroy2017.xlsx", "prod");
         }
 
         [TestMethod]
@@ -304,56 +310,56 @@ namespace RegressionTesting
         public void MinStroy2017_1()
         {
             //  Беру строки из середины файла
-            TestSmartParser("SmartParser\\MinStroy2017_1.xlsx", "prod");
+            TestSmartParser("MinStroy2017_1.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinEkonon2017()
         {
-            TestSmartParser("SmartParser\\MinEkonon2017.docx", "prod");
+            TestSmartParser("MinEkonon2017.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("toloka")]
         public void TolokaGenerated()
         {
-            TestSmartParser("SmartParser\\toloka.toloka_json", "prod", true);
+            TestSmartParser("toloka.toloka_json", "prod", true);
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void Unk2014()
         {
-            TestSmartParser("SmartParser\\Unk2014.xlsx", "prod");
+            TestSmartParser("Unk2014.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xls")]
         public void File17207()
         {
-            TestSmartParser("SmartParser\\17207.xls", "prod");
+            TestSmartParser("17207.xls", "prod");
         }
 
         [TestMethod]
         [TestCategory("toloka")]
         public void SectionExample()
         {
-            TestSmartParser("SmartParser\\section_example.toloka_json", "prod", true);
+            TestSmartParser("section_example.toloka_json", "prod", true);
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinKult2015()
         {
-            TestSmartParser("SmartParser\\MinKult2015.docx", "prod");
+            TestSmartParser("MinKult2015.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void MinDalVostok2017()
         {
-            TestSmartParser("SmartParser\\MinDalVostok2017.xlsx", "prod");
+            TestSmartParser("MinDalVostok2017.xlsx", "prod");
         }
 
 
@@ -361,28 +367,28 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void Rykovodstvo2013()
         {
-            TestSmartParserMultipleOut("npoi", "SmartParser\\9037\\rykovodstvo_2013.xlsx", "rykovodstvo_2013.xlsx_0.json", "rykovodstvo_2013.xlsx_1.json");
+            TestSmartParserMultipleOut("npoi", "9037\\rykovodstvo_2013.xlsx", "9037\\rykovodstvo_2013.xlsx_0.json", "9037\\rykovodstvo_2013.xlsx_1.json");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void Spasat2016()
         {
-            TestSmartParser("SmartParser\\Spasat2016.docx", "prod");
+            TestSmartParser("Spasat2016.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void DepGosPol2012()
         {
-            TestSmartParser("SmartParser\\DepGosPol2012.doc", "prod");
+            TestSmartParser("DepGosPol2012.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void HeaderInsideTable()
         {
-            TestSmartParser("SmartParser\\HeaderInsideTable.docx", "prod");
+            TestSmartParser("HeaderInsideTable.docx", "prod");
         }
 
         [TestMethod]
@@ -390,28 +396,29 @@ namespace RegressionTesting
         public void dnko2014()
         {
             // внутри заголовка в таблице в конце написан бред, но падать не будем
-            TestSmartParser("SmartParser\\dnko-2014.docx", "prod");
+            TestSmartParser("dnko-2014.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void ZagranApp2016()
         {
-            TestSmartParser("SmartParser\\ZagranApp2016.doc", "prod");
+            // Column shift
+            TestSmartParser("ZagranApp2016.doc", "prod");
         }
 
         [TestMethod]
-        [TestCategory("xlsx")]
+        [TestCategory("doc")]
         public void BadColumnns()
         {
-            TestSmartParser("SmartParser\\BadColumns.doc", "prod");
+            TestSmartParser("BadColumns.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinKult2012()
         {
-            TestSmartParser("SmartParser\\MinKult2012.docx", "prod");
+            TestSmartParser("MinKult2012.docx", "prod");
         }
 
         [TestMethod]
@@ -419,7 +426,7 @@ namespace RegressionTesting
         public void MinKult2011()
         {
             //error in vehicle column
-            TestSmartParser("SmartParser\\MinKult2011.doc", "prod", true);
+            TestSmartParser("MinKult2011.doc", "prod", true);
         }
 
         [TestMethod]
@@ -427,89 +434,90 @@ namespace RegressionTesting
         public void MinSelhoz2015()
         {
             // повтор Header внутри таблицы
-            TestSmartParser("SmartParser\\MinSelhoz2015.xlsx", "prod");
+            TestSmartParser("MinSelhoz2015.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void Fsin2011()
         {
-            TestSmartParser("SmartParser\\Fsin2011.doc", "prod");
+            TestSmartParser("Fsin2011.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinEkonom2014()
         {
-            TestSmartParser("SmartParser\\MinEkonom2014.docx", "prod");
+            TestSmartParser("MinEkonom2014.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void MinProm2013()
         {
-            TestSmartParser("SmartParser\\MinProm2013.docx", "prod");
+            TestSmartParser("MinProm2013.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void MinSelhoz2013()
         {
-            TestSmartParser("SmartParser\\MinSelhoz2013.xlsx", "prod");
+            TestSmartParser("MinSelhoz2013.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("docx")]
         public void ZabSud2017()
         {
-            TestSmartParser("SmartParser\\ZabSud2017.docx", "prod");
+            TestSmartParser("ZabSud2017.docx", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void Mchs2010()
         {
-            TestSmartParser("SmartParser\\Mchs2010.doc", "prod");
+            TestSmartParser("Mchs2010.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("xls")]
         public void MinObor2012()
         {
-            TestSmartParser("SmartParser\\MinObor2012.xls", "prod");
+            TestSmartParser("MinObor2012.xls", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void Mchs2013()
         {
-            TestSmartParser("SmartParser\\Mchs2013.doc", "prod");
+            TestSmartParser("Mchs2013.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void MinTrans2009()
         {
-            TestSmartParser("SmartParser\\MinTrans2009.doc", "prod");
+            TestSmartParser("MinTrans2009.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void MinKult2015Doc()
         {
-            TestSmartParser("SmartParser\\MinKult2015.doc", "prod");
+            TestSmartParser("MinKult2015.doc", "prod");
         }
 
         [TestMethod]
         [TestCategory("doc")]
         public void MinKult2012doc()
         {
-            TestSmartParser("SmartParser\\MinKult2012.doc", "prod");
+            TestSmartParser("MinKult2012.doc", "prod");
         }
 
         private static void SetupLog4Net()
         {
-            log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
+            log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
+            log4net.Config.XmlConfigurator.Configure(repo, new FileInfo("log4net.config"));
             Parser.Lib.Logger.SetLogFileName("Main", "excel-parser-main.log");
             Parser.Lib.Logger.SetSecondLogFileName("excel-parser-aux.log");
             Parser.Lib.Logger.SetupForTests("Main", "Second");

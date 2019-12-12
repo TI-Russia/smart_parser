@@ -287,7 +287,7 @@ namespace Smart.Parser.Lib
             foreach (var cell in cells)
             {
                 string text = cell.GetText(true);
-                Logger.Debug("column title: " + text.ReplaceEolnWithSpace().CoalesceWhitespace());
+                Logger.Debug(string.Format("column title: \"{0}\"[{1}]",text.ReplaceEolnWithSpace().CoalesceWhitespace(), cell.CellWidth));
                 DeclarationField field;
                 if (text == "")
                 {
@@ -345,7 +345,7 @@ namespace Smart.Parser.Lib
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
             FixBadColumnName02(columnOrdering);
-            columnOrdering.FinishOrderingBuilding();
+            columnOrdering.FinishOrderingBuilding(cells[0].AdditTableIndention);
         }
     }
 }

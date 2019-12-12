@@ -189,14 +189,12 @@ namespace Smart.Parser.Adapters
             }*/
             //if ()
             Aspose.Words.Document doc = new Aspose.Words.Document(filename);
-            using (MemoryStream dstStream = new MemoryStream())
-            {
-                // use libre office when aspose is not accessible
-                // "soffice --headless --convert-to docx docum.doc"
-                string docXPath = Path.GetTempFileName();
-                doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
-                return docXPath;
-            }
+            doc.RemoveMacros();
+            // use libre office when aspose is not accessible
+            // "soffice --headless --convert-to docx docum.doc"
+            string docXPath = Path.GetTempFileName();
+            doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+            return docXPath;
 #if WIN64
             DeleteLastCrashedDialog();
             Application word = new Application();

@@ -384,7 +384,8 @@ namespace Smart.Parser
                     {
                         if (AdapterFamily == "xceed" || AdapterFamily == "prod")
                         {
-                            return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                            //return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                            return OpenXmlWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                         }
                     }
                     else

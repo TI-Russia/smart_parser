@@ -38,6 +38,7 @@ namespace Smart.Parser.Adapters
         public int Col { get; set; } = -1;
 
         public int CellWidth = 0;
+        public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
     };
 
     public class DataRow : DataRowInterface
@@ -56,14 +57,22 @@ namespace Smart.Parser.Adapters
             }
             
         }
-   
+        public string DebugString()
+        {
+            string s = "";
+            foreach (var c in Cells)
+            {
+                s += string.Format("\"{0}\"[{1}], ",c.Text.Replace("\n", "\\n"),c.CellWidth);
+            }
+            return s;
+        }
         static Dictionary<DeclarationField, Cell> MapByOrderAndIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
             if (columnOrdering.MergedColumnOrder.Count != cells.Count)
             {
                 return null;
             }
-            int start = 0;
+            int start = cells[0].AdditTableIndention;
             var res = new Dictionary<DeclarationField, Cell>();
             for (int i = 0; i < cells.Count; i++)
             {
@@ -76,7 +85,10 @@ namespace Smart.Parser.Adapters
                 {
                     if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
                     {
-                        return null;
+                        if (!DataHelper.IsEmptyValue(cells[i].Text))
+                        {
+                            return null;
+                        }
                     }
                 }
                 res[columnOrdering.MergedColumnOrder[i].Field] = cells[i];
@@ -91,7 +103,8 @@ namespace Smart.Parser.Adapters
         {
             var res = new Dictionary<DeclarationField, Cell>();
             var sizes = new Dictionary<DeclarationField, int>();
-            int start = 0;
+            if (cells.Count == 0) return res;
+            int start = cells[0].AdditTableIndention;
             foreach (var c in cells)
             {
                 if (c.CellWidth >  0 )
