@@ -514,6 +514,13 @@ namespace RegressionTesting
             TestSmartParser("MinKult2012.doc", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void MinEkon2015()
+        {
+            TestSmartParser("MinEkon2015.docx", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());

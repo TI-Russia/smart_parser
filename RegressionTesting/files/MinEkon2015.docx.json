@@ -1,0 +1,328 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Абрамов Б.Г.",
+        "role": "Торговый представитель\n\n",
+        "department": "Торговые представители"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 8051966.71,
+          "size_raw": "8051966.71",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 121.40,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "121.40",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая"
+        },
+        {
+          "text": "жилой дом",
+          "square": 86.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "86.5",
+          "country_raw": "Великобритания",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "квартира",
+          "square": 66.50,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "66.50",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "машиноместо",
+          "square": 10.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "10.8",
+          "country_raw": "Россия",
+          "type_raw": "машиноместо",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "машиноместо",
+          "square": 10.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "10.7",
+          "country_raw": "Россия",
+          "type_raw": "машиноместо",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Айкин Ю.В.",
+        "role": "Торговый представитель\n",
+        "department": "Торговые представители"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 4556384.0,
+          "size_raw": "4556384.0",
+          "relative": null
+        },
+        {
+          "size": 294436.0,
+          "size_raw": "294436",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 56.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "56.1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 83.8,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "83.8",
+          "country_raw": "Абхазия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "гаражный бокс",
+          "square": 31.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "31.0",
+          "country_raw": "Россия",
+          "type_raw": "гаражный бокс",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 600.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 83.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "83.8",
+          "country_raw": "Абхазия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 36.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "36.9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой Крайслер",
+          "relative": null
+        }
+      ],
+      "person_index": 2
+    },
+    {
+      "person": {
+        "name_raw": "Артюшин К. В.",
+        "role": "Торговый представитель\n\n",
+        "department": "Торговые представители"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 4800252.24,
+          "size_raw": "4800252.24",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 118.00,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "118.00",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая"
+        },
+        {
+          "text": "квартира",
+          "square": 85.60,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "85.60",
+          "country_raw": "Республика\nБелоруссия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом, дачный",
+          "square": 36.00,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "36.00",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом, дачный",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 24.00,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "24.00",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок дачный",
+          "square": 600.00,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600.00",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок дачный",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 118.00,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "118.00",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая"
+        },
+        {
+          "text": "квартира",
+          "square": 85.60,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "85.60",
+          "country_raw": "Республика\nБелоруссия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой\nMitsibishi",
+          "relative": null
+        }
+      ],
+      "person_index": 3
+    },
+    {
+      "person": {
+        "name_raw": "Бабко А. В.",
+        "role": "Торговый представитель\n\n",
+        "department": "Торговые представители"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 5673937.00,
+          "size_raw": "5673937.00",
+          "relative": null
+        },
+        {
+          "size": 490940.00,
+          "size_raw": "490940.00",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 54.00,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "54.00",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 84.30,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "84.30",
+          "country_raw": "Армения",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "иное недвижимое имущество: офисное помещение",
+          "square": 68.00,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "68.00",
+          "country_raw": "Россия",
+          "type_raw": "иное недвижимое имущество: офисное помещение",
+          "own_type_raw": "общая долевая"
+        },
+        {
+          "text": "квартира",
+          "square": 54.00,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "54.00",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 69.30,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "69.30",
+          "country_raw": "Республика\nБелоруссия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера \nгосударственных гражданских служащих загранаппарата Минэкономразвития России и членов их семей за период \nc 01 января 2015 по 31 декабря 2015 г",
+    "year": 2015
+  }
+}

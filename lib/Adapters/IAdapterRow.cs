@@ -35,9 +35,9 @@ namespace Smart.Parser.Adapters
         }
 
         public int Row { get; set; } = -1;
-        public int Col { get; set; } = -1;
+        public int Col { get; set; } = -1; // not merged column index
 
-        public int CellWidth = 0;
+        public int CellWidth = 0; // in pixels
         public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
     };
 
@@ -74,6 +74,7 @@ namespace Smart.Parser.Adapters
             }
             int start = cells[0].AdditTableIndention;
             var res = new Dictionary<DeclarationField, Cell>();
+            int pixelErrorCount = 0;
             for (int i = 0; i < cells.Count; i++)
             {
                 int s1 = start;
@@ -83,11 +84,19 @@ namespace Smart.Parser.Adapters
                 int e2 = colInfo.ColumnPixelStart + colInfo.ColumnPixelWidth;
                 if (ColumnOrdering.PeriodIntersection(s1, e1, s2, e2) == 0)
                 {
-                    if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
+                    pixelErrorCount += 1;
+                    if (!DataHelper.IsEmptyValue(cells[i].Text)) 
                     {
-                        if (!DataHelper.IsEmptyValue(cells[i].Text))
+                        if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
                         {
+                            Logger.Debug(string.Format("cannot map column N={0} text={1}", i, cells[i].Text.Replace("\n", "\\n")));
                             return null;
+                        }
+                        else
+                        {
+                            Logger.Debug(string.Format("found semantic argument for mapping N={0} text={1} to {2}", 
+                                i, cells[i].Text.Replace("\n", "\\n"), colInfo.Field));
+                            pixelErrorCount = 0;
                         }
                     }
                 }
@@ -95,12 +104,20 @@ namespace Smart.Parser.Adapters
 
                 start = e1;
             }
+            if (pixelErrorCount >= 3)
+            {
+                return null;
+            }
             return res;
 
         }
 
         static Dictionary<DeclarationField, Cell> MapByMaxIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
+            Logger.Debug("MapByMaxIntersection");
+            // map two header cells to one data cell
+            // see dnko-2014.docx for an example
+
             var res = new Dictionary<DeclarationField, Cell>();
             var sizes = new Dictionary<DeclarationField, int>();
             if (cells.Count == 0) return res;
@@ -120,6 +137,7 @@ namespace Smart.Parser.Adapters
                     // take only fields with maximal pixel intersection
                     if (!sizes.ContainsKey(field) || sizes[field] < interSize)
                     {
+                        //Logger.Debug(string.Format("map {1} to {0}", field, c.Text.Replace("\n", "\\n")));
                         res[field] = c;
                         sizes[field] = interSize;
                     }

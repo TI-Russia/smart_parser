@@ -156,6 +156,11 @@ namespace Parser.Lib
         {
             if (cell.IsEmpty) return false;
             string text = cell.GetText(true);
+            if ((field & DeclarationField.SquareMask)>0 && DataHelper.ParseSquare(text).HasValue)
+            {
+                return true;
+            }
+
             var predictedField = ColumnPredictor.PredictByString(text);
             return (predictedField & ~DeclarationField.AllOwnTypes) == (field & ~DeclarationField.AllOwnTypes);
         }
