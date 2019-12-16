@@ -62,9 +62,42 @@ namespace MicrosoftPdf2Docx
 
         static void Main(string[] args)
         {
-            string pdf = args[0];
-            string winword = args[0] + ".docx";
-            ConvertFile(pdf, winword);
+            CMDLine.CMDLineParser parser = new CMDLine.CMDLineParser();
+            CMDLine.CMDLineParser.Option skipExistsOpt = parser.AddBoolSwitch("--skip-existing", "");
+            parser.AddHelpOption();
+            try
+            {
+                parser.Parse(args);
+            }
+            catch (Exception ex)
+            {
+                //show available options      
+                Console.Write(parser.HelpMessage());
+                Console.WriteLine();
+                Console.WriteLine("Error: " + ex.Message);
+                throw;
+            }
+            var files = parser.RemainingArgs();
+            if (files == null) {
+                Console.WriteLine("no input file");
+            } else
+            {
+                foreach (var f in files)
+                {
+                    string pdf = f.Trim(new char[] { '"' });
+                    string winword = pdf + ".docx";
+                    if (skipExistsOpt.isMatched && File.Exists(winword))
+                    {
+                        Console.WriteLine(string.Format("skip creating {0}", winword));
+                    }
+                    else
+                    {
+                        ConvertFile(pdf, winword);
+                    }
+
+                }
+            }
+
         }
     }
 }
