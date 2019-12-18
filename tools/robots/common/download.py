@@ -163,11 +163,15 @@ def download_with_cache(url, use_selenium=False):
             else:
                 with open(localfile, encoding="utf8") as f:
                     return f.read()
-    if use_selenium:
-        html = download_html_with_selenium(url)
-        info = {'Content-Type': 'text/html'}
-    else:
+    try:
         html, info = download_html_with_urllib(url)
+    except Exception as exp:
+        if use_selenium:
+            html = download_html_with_selenium(url)
+            info = {'Content-Type': 'text/html'}
+        else:
+            raise exp
+
     if len(html) == 0:
         return html
 
@@ -182,7 +186,10 @@ def download_with_cache(url, use_selenium=False):
         with open(info_file, "w", encoding="utf8") as f:
             headers_and_url = {}
             headers_and_url['input_url'] = url
-            headers_and_url['headers'] = dict(info._headers)
+            if hasattr(info, "headers"):
+                headers_and_url['headers'] = dict(info._headers)
+            else:
+                headers_and_url['headers'] = dict()
             f.write(json.dumps(headers_and_url, indent=4, ensure_ascii=False))
     if is_html_contents(info):
         return html

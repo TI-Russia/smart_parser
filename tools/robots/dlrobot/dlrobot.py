@@ -1,8 +1,6 @@
 ﻿import sys
 import os
-import re
 import json
-from bs4 import BeautifulSoup
 sys.path.append('../common')
 
 from download import download_html_with_urllib, \
@@ -10,135 +8,14 @@ from download import download_html_with_urllib, \
     find_links_with_selenium, \
     FILE_CACHE_FOLDER, \
     build_temp_local_file
-from urllib.parse import urljoin
 
-from office_list import  create_office_list, read_office_list
+from office_list import  create_office_list, read_office_list, write_offices
+from find_link import click_first_link_and_get_url, \
+    find_links_to_subpages, \
+    find_links_in_page_with_urllib
 
-class TLink:
-    def __init__(self, url='', link_text='', json_dict=None):
-        if json_dict is not None:
-            self.from_json(json_dict)
-        else:
-            self.link_url = url
-            self.link_text = link_text.strip(' \r\n\t')
+from main_anticor_div import find_anticorruption_div
 
-    def __hash__(self):
-        return self.link_url.__hash__()
-
-    def __eq__(self, other):
-        return self.link_url == other.link_url
-
-    def to_json(self):
-        return {'url': self.link_url, 'link_text': self.link_text }
-
-    def from_json(self, js):
-        self.link_url = js.get('url', '')
-        self.link_text = js.get('link_text', '')
-
-
-def make_link(main_url, href):
-    url = urljoin(main_url, href)
-    i = url.find('#')
-    if i != -1:
-        url = url[0:i]
-    return url
-
-
-def find_links_by_text(main_url, html, check_text_func):
-    soup = BeautifulSoup(html, 'html5lib')
-    links = []
-    for  l in soup.findAll('a'):
-        href = l.attrs.get('href')
-        if href is not None:
-            if  check_text_func(href, l.text):
-                url = make_link(main_url, href)
-                links.append(TLink(url, l.text))
-    return links
-
-
-def find_links_to_subpages(main_url, html):
-    soup = BeautifulSoup(html, 'html5lib')
-    links = set()
-    for  l in soup.findAll('a'):
-        href = l.attrs.get('href')
-        if href is not None:
-            url = make_link(main_url, href)
-            if url.startswith(main_url):
-                links.add( TLink(url, l.text ) )
-
-    return links
-
-#попробовать автоматизировать консультант плюс !!!
-
-def check_url(main_url, url):
-    if url == "":
-        return False
-    if url.find('redirect') != -1:
-        return False
-    return main_url.strip('/') != url.strip('/')
-
-
-def click_first_link_and_get_url(office_info, div_name, url, link_text_predicate):
-    ad = {}
-    old_ad = office_info.get(div_name, {})
-    if 'comment' in old_ad:
-        ad['comment'] = old_ad['comment']
-
-    try:
-        html = download_with_cache(url)
-        links = find_links_by_text(url, html, link_text_predicate)
-        engine = ""
-        if len(links) > 0 and check_url(url, links[0].link_url):
-            engine = "urllib"
-        elif use_selenium:
-            links = find_links_with_selenium(url, link_text_predicate)
-            if len(links) > 0 and check_url(url, links[0].link_url):
-                engine = "selenium"
-            else:
-                ad['exception'] = "no link found"
-
-        if engine != "":
-            if take_first:
-                ad['url'] = links[0].link_url
-                ad['link_text'] = links[0].link_text
-                ad['engine'] = engine
-            else:
-                ad['engine'] = engine
-                ad['links'] = [ l.to_json() for l in links ]
-
-    except Exception as err:
-        sys.stderr.write('cannot download page: ' + url + "\n")
-        ad['exception'] = str(err)
-
-    office_info[div_name] = ad
-
-
-def find_links_in_page_with_urllib(link, link_text_predicate):
-    try:
-        html = download_with_cache(link.link_url)
-        if html == "binary_data":
-            return []
-        return find_links_by_text(link.link_url, html, link_text_predicate)
-    except Exception as err:
-        sys.stderr.write('cannot download page: ' + link.link_url + "\n")
-        return []
-
-
-
-
-def check_anticorr_link_text(href, text):
-    text = text.strip().lower()
-    if text.startswith(u'противодействие'):
-        return text.find("коррупц") != -1
-    return False
-
-def find_anticorruption_div(offices):
-    for office_info in offices:
-        url = office_info['url']
-        sys.stderr.write(url + "\n")
-        click_first_link_and_get_url(office_info, 'anticorruption_div', url,  check_anticorr_link_text)
-
-    write_offices(offices)
 
 
 def check_law_link_text(href, text):
@@ -278,127 +155,6 @@ def find_decrees_doc_urls(offices):
     write_offices(offices)
 
 
-def convert_to_text(offices):
-    for office_info in offices:
-        txtfiles = []
-        for d in office_info.get('anticor_doc_urls', []):
-            link = TLink(json_dict= d)
-
-            try:
-                file_name = build_temp_local_file(link.link_url)
-                if file_name == "":
-                    continue
-                txt_file = file_name + ".txt"
-                if not os.path.exists(txt_file) or os.path.getsize(txt_file) == 0:
-                    cmd = "..\\DocConvertor\\DocConvertor\\DocConvertor\\bin\\Debug\\DocConvertor.exe {} > {}".format(
-                        file_name, txt_file
-                    )
-                    sys.stderr.write(cmd + "\n")
-                    os.system (cmd)
-                if os.path.exists(txt_file) and os.path.getsize(txt_file) > 0:
-                    txtfiles.append(txt_file)
-            except Exception as err:
-                sys.stderr.write(str(err) + "\n")
-
-        office_info['txt_files'] = txtfiles
-    write_offices(offices)
-
-
-def check_decree_content(text):
-    if text.find("К сожалению") != -1 or text.find("технические работы") != -1 or text.find(
-            "ведутся работы по наполнению") != -1:
-        return False
-    return True
-
-def cut_content(text):
-    starter_found = False
-    prikaz_found = False
-    good_lines = []
-    for line in text.split("\n"):
-        if len(line) < 100:
-            continue
-        if not prikaz_found:
-            if text.find(u"приказываю") != -1 or text.find(u"п р и к а з ы в а ю:") != -1 :
-                starter_found = True
-                good_lines = []
-                prikaz_found = True
-        if len(text) > 250:
-            starter_found = True
-        if starter_found:
-            good_lines.append (line)
-    text = " ".join(good_lines)
-    return re.sub('\s+', ' ',text)
-
-
-def delete_common_prefix(texts):
-    if len(texts) == 0:
-        return
-    commonPrefix = ""
-    for i in range(1, len(texts[0]['text'])):
-        prefix = texts[0]['text'][0:i]
-        if not prefix.endswith(' '):
-            continue
-        hasPrefixCount = 0
-        for k in texts:
-            if k['text'].startswith(prefix):
-                hasPrefixCount += 1
-        if hasPrefixCount !=  len(texts):
-            break
-        else:
-            commonPrefix = prefix
-
-    if  len(commonPrefix) > 0:
-        for k in texts:
-            if k['text'].startswith(commonPrefix):
-                k['text'] = k['text'][len(commonPrefix):]
-    return
-
-def get_decree_id(text):
-    obj = re.search(u'(?:(?:от)|(?:ОТ))\s+([0-9][0-9]\.[0-9][0-9]\.[0-9][0-9][0-9][0-9])\s*[N№]\s*([0-9]+)', text, re.UNICODE)
-    if obj:
-        return obj.group(1) + " N " + obj.group(2)
-
-    #«20» __04______2015 г.                                                                                                               № 1 / 2999
-    obj = re.search(u'([0-9][0-9]?[»«\s_]+[а-я]+[\s_]+[0-9][0-9][0-9][0-9])[\s_]+(?:г.)?[_\s]*[N№]\s+([0-9 /]+)', text, re.UNICODE)
-    if obj:
-        return obj.group(1) + " N " + obj.group(2)
-    return ""
-
-
-def create_text_corpus(offices, corpus_file_name):
-    corpus = []
-    for office_info in offices:
-        filtered_texts = []
-        text_size = 0
-        uses_ids = set()
-        for txt_file in office_info.get('txt_files', []):
-            if not os.path.exists(txt_file) or os.path.getsize(txt_file) == 0:
-                continue
-            text = ""
-            with open (txt_file, "r", encoding="utf8") as inpf:
-                text = inpf.read()
-            decree_id = get_decree_id(text)
-            if decree_id in uses_ids:
-                continue
-            if decree_id != "":
-                uses_ids.add(decree_id)
-            if check_decree_content(text):
-                text = cut_content(text)
-                text_size += len(text)
-                if len (text) > 0:
-                    filtered_texts.append ({ 'file': txt_file,
-                                         'decree_id' : decree_id,
-                                 'text': text})
-        delete_common_prefix(filtered_texts)
-        corpus.append ({
-            'office_name': office_info['name'],
-            'texts_size': text_size,
-            'filtered_texts': filtered_texts
-        })
-
-    with open(corpus_file_name, "w", encoding="utf8") as outf:
-        outf.write(json.dumps(corpus, indent=4, ensure_ascii=False))
-
 
 if __name__ == "__main__":
     global FILE_CACHE_FOLDER
@@ -412,14 +168,10 @@ if __name__ == "__main__":
         os.mkdir(FILE_CACHE_FOLDER)
     #offices = create_office_list()
     offices = read_office_list()
-    exit(1)
-    #find_anticorruption_div(offices)
+    #exit(1)
+    find_anticorruption_div(offices)
     #find_law_div(offices)
     #find_office_decrees_section(offices)
     #get_decree_pages(offices)
     #find_decrees_doc_urls(offices)
     #find_decrees_doc_urls(offices)
-    #convert_to_text(offices)
-    s = u"от 25.01.2019 №799"
-    get_decree_id(s)
-    create_text_corpus(offices, "decree_corpus.txt")
