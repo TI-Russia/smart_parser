@@ -7,13 +7,17 @@ from download import download_html_with_urllib
 def read_one_office_info (table_url):
     html, info = download_html_with_urllib(table_url)
     soup = BeautifulSoup(html, 'html5lib')
-    office_info = {};
+    office_info = {}
     for text in soup.findAll('div', {"class": "text"}):
         for table in text.findChildren('table', recursive=True):
             for row in table.findChildren('tr'):
                 if row.text.find('Web-адрес') != -1:
                     cells = list(row.findAll('td'))
-                    office_info['url'] = cells[1].text
+                    url = cells[1].text
+                    if url.find('mvd.ru'):
+                        url = "https://" + u'мвд.рф'.encode('idna').decode('latin')
+                    office_info['url'] = url
+
     return office_info
 
 

@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 
 from urllib.parse import urljoin
 from download import download_html_with_urllib, \
-    download_with_cache
+    download_with_cache, \
+    find_links_with_selenium
 
 
 class TLink:

@@ -14,4 +14,16 @@ def find_anticorruption_div(offices):
         sys.stderr.write(url + "\n")
         click_first_link_and_get_url(office_info, 'anticorruption_div', url,  check_anticorr_link_text, True)
 
+        # manual fix list
+        if url.find('fsin.su') != -1:
+            office_info["anticorruption_div"] = {
+                "url": "http://www.fsin.su/anticorrup2014/",
+                "engine": "manual"
+            }
+        if url.find('fso.gov.ru') != -1:
+            office_info["anticorruption_div"] = {
+                "url": "http://www.fso.gov.ru/korrup.html",
+                "engine": "manual"
+            }
+
     write_offices(offices)

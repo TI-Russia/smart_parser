@@ -5,6 +5,7 @@ import urllib.request
 import json
 import hashlib
 import shutil
+import re
 from urllib.parse import urlparse, quote, urlunparse
 
 # selenium staff
@@ -51,7 +52,7 @@ def find_links_with_selenium (url, check_text_func):
     return links
 
 def is_html_contents(info):
-    content_type = info.get('Content-Type')
+    content_type = info.get('Content-Type', "text")
     return content_type.startswith('text')
 
 
@@ -83,7 +84,15 @@ def download_html_with_urllib (url):
     try:
         if is_html_contents(info):
             encoding = headers.get_content_charset()
+            if encoding == None:
+                match = re.search('charset=([^"\']+)', data.decode('latin', errors="ignore"))
+                if match:
+                    encoding = match.group(1)
+                else:
+                    raise ValueError('unable to find encoding')
+
             data = data.decode(encoding, errors="ignore")
+
         return data, info
     except AttributeError:
         return (data, info)
@@ -186,7 +195,7 @@ def download_with_cache(url, use_selenium=False):
         with open(info_file, "w", encoding="utf8") as f:
             headers_and_url = {}
             headers_and_url['input_url'] = url
-            if hasattr(info, "headers"):
+            if hasattr(info, "_headers"):
                 headers_and_url['headers'] = dict(info._headers)
             else:
                 headers_and_url['headers'] = dict()
