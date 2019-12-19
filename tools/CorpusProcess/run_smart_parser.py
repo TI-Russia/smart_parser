@@ -26,8 +26,8 @@ f_handler.setFormatter(f_format)
 # Add handlers to the logger
 # logger.addHandler(f_handler)
 
-job_list_file = 'parser-job-priority-2.json'
-smart_parser = '..\\..\\src\\bin\\Release\\smart_parser.exe'
+job_list_file = 'parser-job-list.json'
+smart_parser = '../../src/bin/Release/netcoreapp3.1/smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
 client = requests.Session()
@@ -169,7 +169,7 @@ class ProcessOneFile(object):
                         continue
                     url = "/office/view-zip-file/%i/%s" % (job['id'], sub_job)
                     self.run_job(url, job['id'], sub_job)
-            if job['file'].endswith('.pdf'):
+            elif job['file'].endswith('.pdf'):
                 pass
             else:
                 self.run_job(job['file'], job['id'])
@@ -200,6 +200,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     try:
+        get_parsing_list(job_list_file)
         res = pool.map(ProcessOneFile(args, os.getpid()), get_parsing_list(job_list_file))
     except KeyboardInterrupt:
         print("stop processing...")
