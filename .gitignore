@@ -6,3 +6,9 @@ packages/*
 TestResults/*
 tools/CorpusProcess/out
 src/Smart.Parser.csproj.user
+/tools/CorpusProcess/out_small
+/tools/CorpusProcess/auth.json
+/tools/CorpusProcess/parser-job-priority-1.json
+/tools/CorpusProcess/parser-job-priority-2.json
+/tools/CorpusProcess/parser.log
+/tools/CorpusProcess/parsing.log

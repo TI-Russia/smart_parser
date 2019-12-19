@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import re
 import sys
 import os
 from datetime import datetime
@@ -26,7 +27,7 @@ f_handler.setFormatter(f_format)
 # Add handlers to the logger
 # logger.addHandler(f_handler)
 
-job_list_file = 'parser-job-priority-2.json'
+job_list_file = 'parser-job-priority-3.json'
 smart_parser = '..\\..\\src\\bin\\Release\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
@@ -34,11 +35,15 @@ client = requests.Session()
 credentials = json.load(open('auth.json'))
 client.auth = HTTPBasicAuth(credentials['username'], credentials['password'])
 
+# PARSER_TIMEOUT = 600
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
                         default=4, type=int)
+    parser.add_argument("--limit", dest='limit', help="Run smart parser only for N tasks",
+                        default=None, type=int)
     parser.add_argument("--restart", dest='restart', help="Parse all files, ignore existing JSONs",
                         default=False, type=bool)
     return parser.parse_args()
@@ -46,25 +51,28 @@ def parse_args():
 
 def download_file(file_url, filename):
     if os.path.isfile(filename):
-        return
+        return filename
     path, _ = os.path.split(filename)
     os.makedirs(path, exist_ok=True)
     result = requests.get(file_url)
+    filename = re.sub(r"[<>?:|]", "", filename)
     with open(filename, 'wb') as fd:
         fd.write(result.content)
+
+    return filename
 
 
 def get_parsing_list(filename):
     """get list of files to parse"""
 
     if not os.path.isfile(filename):
-        result = client.get(declarator_domain + '/media/dumps/%s' % filename)
+        result = client.get(declarator_domain + '/media/metrics/%s' % filename)
         with open(filename, "wb") as fp:
             fp.write(result.content)
 
     file_list = json.load(open(filename, 'r', encoding='utf8'))
 
-    logger.info("%i files listed" % len(file_list))
+    logger.info("%i jobs listed" % len(file_list))
     return file_list
 
 
@@ -134,6 +142,9 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
     except FileNotFoundError:
         data['document']['parser_log'] = "FileNotFoundError: " + sourcefile + ".log"
 
+    # if time_delta == PARSER_TIMEOUT:
+    #     data['document']['parser_log'] += "\nTimeout %i exceeded for smart_parser.exe" % PARSER_TIMEOUT
+
     if time_delta:
         data['document']['parser_time'] = time_delta
 
@@ -165,11 +176,11 @@ class ProcessOneFile(object):
             # ZIP-Archives parse in one process file by file
             if job['file'].endswith('.zip'):
                 for sub_job in job['archive_files']:
-                    if job['file'].endswith('.pdf'):
+                    if sub_job.endswith('.pdf'):
                         continue
                     url = "/office/view-zip-file/%i/%s" % (job['id'], sub_job)
                     self.run_job(url, job['id'], sub_job)
-            if job['file'].endswith('.pdf'):
+            elif job['file'].endswith('.pdf'):
                 pass
             else:
                 self.run_job(job['file'], job['id'])
@@ -186,7 +197,7 @@ class ProcessOneFile(object):
         else:
             file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
-        download_file(declarator_domain + file_url, file_path)
+        file_path = download_file(declarator_domain + file_url, file_path)
         time_delta = run_smart_parser(file_path, self.args)
         if time_delta:
             post_results(file_path, df_id, archive_file, time_delta)
