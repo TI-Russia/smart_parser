@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Smart.Parser.Adapters;
-using System.Web.Script.Serialization;
+//using System.Web.Script.Serialization;
 
 namespace Smart.Parser.Lib
 {

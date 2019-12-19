@@ -1,0 +1,956 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Ивлиев Григорий Петрович",
+        "role": "Статс-секретарь - заместитель Министра культуры Российской Федерации"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 2184797.0,
+          "size_raw": "2 184 797",
+          "relative": null
+        },
+        {
+          "size": 12815900.0,
+          "size_raw": "12 815 900",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1014.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 014,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 226.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "226,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 429.6,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "429,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 16.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "16,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 98.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "98,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 2500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "2 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (1/2 доли)",
+          "square": 2737.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "2 737,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (1/2 доли)",
+          "square": 90.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "90,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/2 доли)",
+          "square": 98.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "98,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "нежилое помещение (собственность)",
+          "square": 131.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "131,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/2 доли)",
+          "square": 98.9,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "98,9",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковые автомобили BMW-X5   ВАЗ 21113 (общая собственность)",
+          "relative": null
+        },
+        {
+          "text": "легковые автомобили BMW-X5   ВАЗ 21113 (общая собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Малаков Николай Алексеевич",
+        "role": "заместитель Министра культуры Российской Федерации"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 2492959.0,
+          "size_raw": "2 492 959",
+          "relative": null
+        },
+        {
+          "size": 528000.0,
+          "size_raw": "528 000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок (собственность)",
+          "square": 3000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "3 000,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 3100.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "3 100,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "1/2 жилого дома (собственность)",
+          "square": 23.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "23,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 86.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "86,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гараж (собственность)",
+          "square": 14.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "14,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дом (пользование)",
+          "square": 790.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "790,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гараж с мансардой (пользование)",
+          "square": 130.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "130,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 92.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "92,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1060.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1 060,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 57.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "57,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 92.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "92,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 15.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "15,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 15.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "15,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (пользование)",
+          "square": 3000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "3 000,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 86.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "86,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дом (пользование)",
+          "square": 790.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "790,0",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой автомобиль Willys Willys 1943 г.  (собственность)",
+          "relative": null
+        },
+        {
+          "text": "автомобили легковые BMW Х6 Mercedes-Benz ML 350  (собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Пирумов Григорий Ульянович",
+        "role": "заместитель Министра культуры Российской Федерации"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 87324180.0,
+          "size_raw": "87 324 180",
+          "relative": null
+        },
+        {
+          "size": 7750600.0,
+          "size_raw": "7 750 600",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 14382.0,
+          "size_raw": "14 382",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 14382.0,
+          "size_raw": "14 382",
+          "relative": "Ребенок",
+          "relative_index": 3
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1105.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 105,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1075.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 075,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1044.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 044,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 766.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "766,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 594.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "594,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/5 доли)",
+          "square": 303.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "303,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 14.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "14,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 32.88,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "32,88",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 34.56,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "34,56",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 33.24,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "33,24",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 14.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "14,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 14.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "14,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "нежилое помещение (собственность)",
+          "square": 97.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "97,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "лесной участок (пользование)",
+          "square": 1700.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 700,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 9500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "9 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 808.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "808,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 136.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "136,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 357.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "357,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 112.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "112,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 135.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "135,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/5 доли)",
+          "square": 303.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "303,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дача (собственность)",
+          "square": 123.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "123,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место (собственность)",
+          "square": 19.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "19,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "нежилое помещение (собственность)",
+          "square": 138.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "138,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "нежилое помещение (собственность)",
+          "square": 117.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "117,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "нежилое помещение (собственность)",
+          "square": 221.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "221,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "нежилое помещение (собственность)",
+          "square": 109.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "109,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (пользование)",
+          "square": 594.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "594,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/5 доли)",
+          "square": 303.8,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "303,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (пользование)",
+          "square": 594.3,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "594,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/5 доли)",
+          "square": 303.8,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "303,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (пользование)",
+          "square": 594.3,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "594,3",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобили легковые BMW-650 I Cabrio Chevrolet Express S1500 Ford Mondeo ВАЗ 2101  (собственность) Автоприцеп МЗСА 821711 (собственность) катер Cobalt (собственность) снегоход SKI-DOO Mach Z (собственность)",
+          "relative": null
+        },
+        {
+          "text": "автомобили легковые BMW Z-4 Porsche Cayenne Дизель Mazda CX-7 (собственность) мотовездеход Bombardier Quest (собственность) снегоход SKANDIC WT LC SKANDIC WT LC  (собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Демидов Иван Иванович",
+        "role": "заместитель Министра культуры Российской Федерации"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 4051631.0,
+          "size_raw": "4 051 631",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 230.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "230,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 167.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "167,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 64.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "64,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Манилова \nТатьяна Львовна",
+        "role": "заместитель директора Департамента науки и образования - начальник отдела библиотек и архивов"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 6081870.0,
+          "size_raw": "6 081 870",
+          "relative": null
+        },
+        {
+          "size": 163407.0,
+          "size_raw": "163 407",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "машино-место в гараже (собственность)",
+          "square": 13.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "13,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "машино-место в гараже (собственность)",
+          "square": 18.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "18,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/2 доли)",
+          "square": 83.6,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "83,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (пользование)",
+          "square": 1000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1 000,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (пользование)",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1500",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дача (пользование)",
+          "square": 101.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "101,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (пользование)",
+          "square": 50.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "50,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок \n(пользование)",
+          "square": 752.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "752,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (0,57 доли)",
+          "square": 1000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1 000,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "жилой дом (собственность)",
+          "square": 50.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "50,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (1/2 доли)",
+          "square": 83.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "83,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "дача (собственность)",
+          "square": 101.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "101,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок \n(пользование)",
+          "square": 752.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "752,0",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль легковой \nVolkswagen Touran (собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Аристархов Андрей Владимирович",
+        "role": "советник Министра культуры Российской Федерации"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 626628.0,
+          "size_raw": "626 628",
+          "relative": null
+        },
+        {
+          "size": 4229455.0,
+          "size_raw": "4 229 455",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок (собственность)",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "600,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 64.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "64,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 101.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "101,1",
+          "country_raw": "Латвия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 104.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "104,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельный участок (собственность)",
+          "square": 1500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1 500,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 38.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "38,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 104.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "104,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гараж (собственность)",
+          "square": 21.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "21,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 104.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "104,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 104.0,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "104,0",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 104.0,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "104,0",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль легковой Lexus IS 250  (собственность)",
+          "relative": null
+        },
+        {
+          "text": "легковой автомобиль Land Rover Range Rover (собственность)",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Рыбак Кирилл Евгеньевич",
+        "role": "советник Министра культуры Российской Федерации"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 1484341.0,
+          "size_raw": "1 484 341",
+          "relative": null
+        },
+        {
+          "size": 2250044.0,
+          "size_raw": "2 250 044",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 53.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "53,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 63.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "63,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "year": 2012
+  }
+}

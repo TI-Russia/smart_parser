@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
@@ -7,14 +8,17 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml;
+using System.Text;
 using Microsoft.Win32;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 
+#if WIN64
 using Microsoft.Office.Interop.Word;
+#endif
 using Xceed.Words.NET;
 using Parser.Lib;
-
+using System.Security.Cryptography;
 
 namespace Smart.Parser.Adapters
 {
@@ -96,6 +100,7 @@ namespace Smart.Parser.Adapters
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
 
+#if WIN64
         public static void DeleteRegistryKey(string keyName)
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
@@ -128,8 +133,69 @@ namespace Smart.Parser.Adapters
             }
             
         }
+#endif
+        private static string ToHex(byte[] bytes)
+        {
+            StringBuilder result = new StringBuilder(bytes.Length * 2);
+
+            for (int i = 0; i < bytes.Length; i++)
+                result.Append(bytes[i].ToString("x2"));
+
+            return result.ToString();
+        }
+
+        string DowloadFromConvertedStorage(string filename)
+        {
+            using (SHA256 mySHA256 = SHA256.Create())
+            {
+                string hashValue;
+                using (FileStream fileStream = File.Open(filename, FileMode.Open))
+                {
+                    hashValue = ToHex(mySHA256.ComputeHash(fileStream));
+                }
+                using (var client = new WebClient())
+                {
+                    string url = ConvertedFileStorageUrl + "?sha256=" + hashValue;
+                    string docXPath = Path.GetTempFileName();
+                    client.DownloadFile(url, docXPath);
+                    return docXPath;
+                }
+
+            }
+        }
+
+
+
         string ConvertFile2TempDocX(string filename)
         {
+            if (ConvertedFileStorageUrl != "" && filename.EndsWith("pdf"))
+            {
+                try
+                {
+                    return DowloadFromConvertedStorage(filename);
+                }
+                catch (Exception ) {
+                    // a new file try to load it into Microsoft Word
+                }
+            }
+            /* Aspose.Pdf 19 works bad with tables, do not use it, winword is better 
+            if (filename.EndsWith("pdf"))
+            {
+                Aspose.Pdf.Document pdf = new Aspose.Pdf.Document(filename);
+                string docXPath = Path.GetTempFileName();
+                Console.WriteLine(String.Format("save to {0}", docXPath));
+                pdf.Save(docXPath, Aspose.Pdf.SaveFormat.DocX);
+                return docXPath;
+            }*/
+            //if ()
+            Aspose.Words.Document doc = new Aspose.Words.Document(filename);
+            doc.RemoveMacros();
+            // use libre office when aspose is not accessible
+            // "soffice --headless --convert-to docx docum.doc"
+            string docXPath = Path.GetTempFileName();
+            doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+            return docXPath;
+#if WIN64
             DeleteLastCrashedDialog();
             Application word = new Application();
             var doc = word.Documents.OpenNoRepairDialog(
@@ -142,12 +208,16 @@ namespace Smart.Parser.Adapters
             word.ActiveDocument.Close();
             word.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
             return docXPath;
+#else
+            //return "";
+#endif
         }
+
         static Dictionary<string, double> ReadBigrams()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
             var result = new Dictionary<string, double>();
-            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.bigrams.txt"))
+            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.bigrams.txt"))
             {
                 using (var reader = new StreamReader(stream))
                 {

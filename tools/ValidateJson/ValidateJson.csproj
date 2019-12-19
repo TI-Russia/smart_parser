@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ValidateJson</RootNamespace>
     <AssemblyName>ValidateJson</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>netcoreapp3.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>

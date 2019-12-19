@@ -42,7 +42,7 @@ namespace Parser.Lib
         public static void ReadData()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
-            using (var stream = currentAssembly.GetManifestResourceStream("Parser.Lib.Resources.column_trigrams.txt"))
+            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.column_trigrams.txt"))
             {
                 using (var file = new System.IO.StreamReader(stream))
                 {
@@ -156,6 +156,11 @@ namespace Parser.Lib
         {
             if (cell.IsEmpty) return false;
             string text = cell.GetText(true);
+            if ((field & DeclarationField.SquareMask)>0 && DataHelper.ParseSquare(text).HasValue)
+            {
+                return true;
+            }
+
             var predictedField = ColumnPredictor.PredictByString(text);
             return (predictedField & ~DeclarationField.AllOwnTypes) == (field & ~DeclarationField.AllOwnTypes);
         }

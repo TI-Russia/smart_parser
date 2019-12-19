@@ -68,7 +68,11 @@ namespace Smart.Parser.Adapters
             Aspose.Words.License word_license = new Aspose.Words.License();
             word_license.SetLicense(GetAsposeLicenseStream(uriString));
 
-            Licensed = word_license.IsLicensed;
+            //Aspose.Pdf.License pdf_license = new Aspose.Pdf.License();
+            //pdf_license.SetLicense(GetAsposeLicenseStream(uriString));
+
+            //Licensed = word_license.IsLicensed;
+            Licensed = true;
         }
         public static bool Licensed { set; get; } = false;
     }

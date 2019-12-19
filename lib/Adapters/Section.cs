@@ -15,20 +15,35 @@ namespace Smart.Parser.Adapters
             {
                 return true;
             }
-            if (cellText.StartsWith("Федеральн") ||
-                cellText.StartsWith("ФКУ") ||
-                cellText.StartsWith("ФГУП") ||
+            // first words: get it from previous results:
+            // ~/media/json$ ls | xargs  jq -cr '.persons[].person.department' | awk '{print $1}' | sort | uniq -c  | sort -nr
+            // стоит перейти на более продвинутую модель на триграммах
+            if (cellText.StartsWith("ФК") ||
+                cellText.StartsWith("ФГ") ||
+                cellText.StartsWith("ГУ") ||
+                cellText.StartsWith("Федеральн") ||
+                cellText.StartsWith("федеральн") ||
                 cellText.StartsWith("ФБУ") ||
                 cellText.StartsWith("Руководство") ||
                 cellText.StartsWith("ФАУ") ||
                 cellText.StartsWith("Департамент") ||
                 cellText.StartsWith("Заместители") ||
                 cellText.StartsWith("Институт") ||
-                cellText.StartsWith("ФГБУ") ||
                 cellText.StartsWith("Государственное") ||
+                cellText.StartsWith("Главное") ||
+                cellText.StartsWith("Отдел") ||
+                cellText.StartsWith("Управлени") ||
                 cellText.StartsWith("Фонд") ||
-                cellText.StartsWith("АНО")
+                cellText.StartsWith("АНО") ||
+                cellText.StartsWith("УФСИН") ||
+                cellText.StartsWith("Центр") ||
+                cellText.StartsWith("ФСИН") ||
+                cellText.StartsWith("Министерств") ||
+                cellText.StartsWith("Лица") ||
+                cellText.StartsWith("ИК")
                 )
+
+                
             {
                 return true;
             }

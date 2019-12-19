@@ -27,7 +27,7 @@ f_handler.setFormatter(f_format)
 # Add handlers to the logger
 # logger.addHandler(f_handler)
 
-job_list_file = 'parser-job-priority-3.json'
+job_list_file = 'parser-job-priority-1.json'
 smart_parser = '..\\..\\src\\bin\\Release\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
@@ -211,6 +211,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     try:
+        get_parsing_list(job_list_file)
         res = pool.map(ProcessOneFile(args, os.getpid()), get_parsing_list(job_list_file))
     except KeyboardInterrupt:
         print("stop processing...")

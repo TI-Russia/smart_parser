@@ -18,6 +18,8 @@ namespace Smart.Parser.Adapters
         // we try to found real column number in the header, by default is 1024
         public const int MaxColumnsCount = 1024;
 
+        public static string ConvertedFileStorageUrl = "";
+
         public virtual bool IsExcel() { return false; }
         public virtual string GetDocumentPosition(int row, int col)
         {
