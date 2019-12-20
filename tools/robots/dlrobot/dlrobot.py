@@ -61,7 +61,7 @@ def go_through_pagination(offices):
         decl_div = office_info.get('declarations_div', {})
         decl_div_url = decl_div.get('url', '')
         if decl_div_url == '':
-            decl_div_url = office_info.get('anticorruption_div', {})
+            decl_div_url = office_info.get('anticorruption_div', {}).get('url', "")
         if decl_div_url == '':
             sys.stderr.write("skip url " + office_info['url'] + " (do not know the start page)\n")
 
