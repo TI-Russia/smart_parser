@@ -12,14 +12,15 @@ from download import download_html_with_urllib, \
     find_links_with_selenium, \
     FILE_CACHE_FOLDER, \
     build_temp_local_file
-from find_link import click_first_link_and_get_url, find_links_to_subpages, find_links_in_page_with_urllib
+from find_link import click_first_link_and_get_url, find_links_to_subpages, find_links_in_page_with_urllib, \
+collect_all_subpages_urls
 
 from main_anticor_div import find_anticorruption_div
 
 
 
 
-def check_law_link_text(href, text):
+def check_law_link_text(text):
     text = text.strip().lower()
     if text.find("коррупц") == -1:
         return False
@@ -48,7 +49,7 @@ def find_law_div(offices):
 
 
 
-def check_office_decree_link_text(href, text):
+def check_office_decree_link_text(text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'ведомственные'):
         return True
@@ -79,21 +80,7 @@ def get_decree_pages(offices):
         office_link = TLink(json_dict=office_info.get('office_decrees', {}))
         if office_link.link_url != "":
             main_link = office_link
-        all_links = set([main_link])
-        processed_links = set()
-        left_urls = all_links
-        while len(left_urls) > 0:
-            link = list(left_urls)[0]
-            sys.stderr.write(link.link_url + "\n")
-            try:
-                html = download_with_cache(link.link_url)
-                links = find_links_to_subpages(link.link_url, html)
-                all_links = all_links.union(links)
-            except  Exception as err:
-                sys.stderr.write("cannot process " + link.link_url + ": " + str(err) + "\n")
-                pass
-            processed_links.add(link)
-            left_urls = all_links.difference(processed_links)
+        all_links = collect_all_subpages_urls(main_link.link_url)
         office_info['decree_pages'] = list( l.to_json() for l in all_links)
 
     write_offices(offices)

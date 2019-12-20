@@ -42,7 +42,7 @@ def find_links_with_selenium (url, check_text_func):
     elements = browser.find_elements_by_xpath('//button | //a')
     links = []
     for e in elements:
-        if check_text_func('', e.text):
+        if check_text_func(e.text):
             e.click()
             time.sleep(6)
             browser.switch_to_window(browser.window_handles[-1])
