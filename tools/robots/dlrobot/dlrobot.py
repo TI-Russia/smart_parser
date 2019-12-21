@@ -3,14 +3,12 @@ import os
 import json
 sys.path.append('../common')
 
-from download import download_html_with_urllib, \
-    download_with_cache, \
-    find_links_with_selenium, \
-    FILE_CACHE_FOLDER, \
-    build_temp_local_file
+from download import  download_with_cache, \
+    FILE_CACHE_FOLDER
 
 from office_list import  create_office_list, read_office_list, write_offices
-from find_link import click_first_link_and_get_url, \
+from find_link import get_links, \
+    OFFICE_FILE_EXTENSIONS, \
     find_links_to_subpages, \
     find_links_in_page_with_urllib, \
     collect_all_subpages_urls
@@ -19,18 +17,14 @@ from main_anticor_div import find_anticorruption_div
 
 
 
-def declarations_link_text(text):
-    text = text.strip().strip('"').lower()
-    text = " ".join(text.split())
+def check_link_svedenia_o_doxodax(text):
+    text = text.strip(' \n\t\r').strip('"').lower()
+    text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
+
     if text.startswith(u'сведения о доходах'):
         return True
-    if text.startswith(u'cведения о доходах'): # transliteration
-        return True
 
-
-    if text.find("коррупц") == -1:
-        return False
-    if text.startswith(u'сведения'):
+    if text.startswith(u'сведения') and text.find("коррупц") != -1:
         return True;
     return False
 
@@ -41,17 +35,14 @@ def find_declarations_div(offices, only_missing=False):
         if existing_link.get('engine', '') == 'manual':
             sys.stderr.write("skip manual url updating " + url + "\n")
             continue
-        if existing_link.get('url') != None and only_missing:
+        if len(existing_link.get('links', [])) > 0 and only_missing:
             continue
-
-        anticor_div_url = office_info.get('anticorruption_div', {}).get('url', '')
-        if anticor_div_url == '':
-            # cannot find  declarations_div (see svr.gov.ru)
-            sys.stderr.write("try to get division from the morda "  + office_info['url'] +  " (no anticor_div_url) \n")
-            click_first_link_and_get_url(office_info, 'declarations_div', office_info['url'], declarations_link_text)
-        else:
-            sys.stderr.write(anticor_div_url + "\n")
-            click_first_link_and_get_url(office_info, 'declarations_div', anticor_div_url, declarations_link_text)
+        links = office_info.get('anticorruption_div', {}).get('links', [])
+        if len(links) == 0:
+            links =  [office_info]
+        for l in links:
+            sys.stderr.write("process " + l['url'] + "\n")
+            get_links(office_info, 'declarations_div', l['url'], check_link_svedenia_o_doxodax)
 
     write_offices(offices)
 
@@ -66,80 +57,79 @@ def go_through_pagination(offices):
             sys.stderr.write("skip url " + office_info['url'] + " (do not know the start page)\n")
 
         all_links = collect_all_subpages_urls(decl_div_url)
-        office_info['declarations_div_pages'] = list( l for l in all_links)
+        office_info['declarations_div_pages'] = list(all_links)
 
     write_offices(offices)
 
-def check_download_text(href, text):
-    if text.startswith(u'кодекс'):
-        return True
+def check_download_text(text, href=None):
+    text = text.strip(' \n\t\r').strip('"').lower()
     if text.startswith(u'скачать'):
         return True
     if text.startswith(u'загрузить'):
         return True
-    if text.startswith(u'docx'):
-        return True
-    if text.startswith(u'doc'):
-        return True
-    if text.find('.doc') != -1 or text.find('.docx') != -1 or text.find('.pdf') != -1 or  text.find('.rtf') != -1:
-        return True
-    return False
 
-def check_decree_link_text(href, text):
+    if href != None:
+        global OFFICE_FILE_EXTENSIONS
+        for e in OFFICE_FILE_EXTENSIONS:
+            if text.startswith(e[1:]):  #without "."
+                return True
+            if text.find(e) != -1:
+                return True
+            if href.lower().endswith(e):
+                return True
+        return False
+
+
+def check_declaration_link_text(href, text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'приказ'):
         return True
     if text.startswith(u'распоряжение'):
         return True
-    if check_download_text(href, text):
+    if check_download_text(text):
         return True
     return False
 
 
-def find_decrees_doc_urls(offices):
+def find_declaration_urls(offices):
     for office_info in offices:
         docs = set()
-        for link_json in office_info.get('decree_pages', []):
-            link = TLink(json_dict=link_json)
-            sys.stderr.write(link.link_url + "\n")
-            new_docs = find_links_in_page_with_urllib(link, check_decree_link_text)
+        for url in office_info.get('declarations_div_pages', []):
+            sys.stderr.write(url + "\n")
+            new_docs = find_links_in_page_with_urllib(url, check_decree_link_text)
             docs = docs.union(new_docs)
 
         additional_docs = set()
-        for link in docs:
-            sys.stderr.write("download " +  link.link_url + "\n")
+        for url in docs:
+            sys.stderr.write("download " +  url + "\n")
             try:
-                new_docs =  find_links_in_page_with_urllib(link, check_download_text)
+                new_docs =  find_links_in_page_with_urllib(url, check_download_text)
                 additional_docs = additional_docs.union(new_docs)
             except  Exception as err:
-                sys.stderr.write("cannot download " + link.link_url + ": " + str(err) + "\n")
+                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
                 pass
 
-        for link in additional_docs:
-            sys.stderr.write("download additional " + link.link_url + "\n")
+        for url in additional_docs:
+            sys.stderr.write("download additional " + url + "\n")
             try:
-                download_with_cache(link.link_url)
+                download_with_cache(url)
             except  Exception as err:
-                sys.stderr.write("cannot download " + link.link_url + ": " + str(err) + "\n")
+                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
                 pass
 
         docs = docs.union(additional_docs)
-        office_info['anticor_doc_urls'] = [x.to_json() for x in docs]
+        office_info['declarations'] = [x for x in docs]
+        break
     write_offices(offices)
 
 
 
 if __name__ == "__main__":
-    global FILE_CACHE_FOLDER
-
-    if not os.path.exists(FILE_CACHE_FOLDER):
-        os.mkdir(FILE_CACHE_FOLDER)
     #offices = create_office_list()
     offices = read_office_list()
     #find_anticorruption_div(offices, True)
-    #find_declarations_div(offices, True)
-
+    find_declarations_div(offices, True)
     go_through_pagination(offices)
 
-    #find_decrees_doc_urls(offices)
-    #find_decrees_doc_urls(offices)
+    find_declaration_urls(offices)
+    #find_declaration_urls(offices)
