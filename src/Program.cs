@@ -377,6 +377,8 @@ namespace Smart.Parser
             {
                 case ".pdf":
                 case ".html":
+                case ".xhtml":
+                case ".htm":
                 case ".doc":
                 case ".toloka_json":
                 case ".docx":

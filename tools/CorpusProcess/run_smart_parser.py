@@ -25,10 +25,10 @@ f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 f_handler.setFormatter(f_format)
 
 # Add handlers to the logger
-# logger.addHandler(f_handler)
+logger.addHandler(f_handler)
 
-job_list_file = 'parser-job-priority-1.json'
-smart_parser = '..\\..\\src\\bin\\Release\\smart_parser.exe'
+job_list_file = 'parser-job-htm-errors.json'
+smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
 client = requests.Session()
@@ -62,11 +62,13 @@ def download_file(file_url, filename):
     return filename
 
 
-def get_parsing_list(filename):
-    """get list of files to parse"""
+def get_parsing_list(filename, url=None):
+    """download and cache list of files to parse"""
 
     if not os.path.isfile(filename):
-        result = client.get(declarator_domain + '/media/metrics/%s' % filename)
+        if not url:
+            url = declarator_domain + '/media/metrics/%s' % filename
+        result = client.get(url)
         with open(filename, "wb") as fp:
             fp.write(result.content)
 
@@ -211,8 +213,8 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     try:
-        get_parsing_list(job_list_file)
-        res = pool.map(ProcessOneFile(args, os.getpid()), get_parsing_list(job_list_file))
+        job_list = get_parsing_list(job_list_file, "https://declarator.org/api/document_file/parsing_list/?error=Unknown%20file%20extension%20.htm")
+        res = pool.map(ProcessOneFile(args, os.getpid()), job_list)
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()

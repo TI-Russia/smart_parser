@@ -255,7 +255,9 @@ namespace Smart.Parser.Adapters
             string extension = Path.GetExtension(fileName);
             bool removeTempFile = false;
             if (    extension == ".html"
-                ||  extension == ".pdf"
+                ||  extension == ".htm"
+                || extension == ".xhtml"
+                || extension == ".pdf"
                 || extension == ".doc"
                 )
             {
@@ -582,7 +584,7 @@ namespace Smart.Parser.Adapters
 
             var pageMargin = docPart.Document.Descendants<PageMargin>().FirstOrDefault();
             int pageMarginDxa = 0; // letter size is ISO 216 A4 (210x297mm
-            if (pageMargin != null)
+            if (pageMargin != null && pageMargin.Left != null)
             {
                 pageMarginDxa = (int)(uint)pageMargin.Left;
             }
