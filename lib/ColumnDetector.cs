@@ -145,6 +145,11 @@ namespace Smart.Parser.Lib
             s.ColumnPixelWidth = cell.CellWidth;
             //s.ColumnPixelStart is unknown and initialized in FinishOrderingBuilding
             s.Field = field;
+            if (field == DeclarationField.DeclaredYearlyIncome)
+            {
+                string dummy = ""; 
+                ColumnDetector.GetValuesFromTitle(cell.GetText(), ref dummy, ref ordering.YearFromIncome, ref dummy);
+            }
 
             ordering.Add(s);
         }

@@ -577,15 +577,17 @@
           "square_raw": "64,6 Россия",
           "country_raw": "Россия",
           "type_raw": "квартира",
-          "own_type_raw": "общая долевая 1/2 индиви-дуальная"
+          "own_type_raw": "общая долевая 1/2"
         },
         {
           "text": "квартира",
           "square": 41.1,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "41,1 Россия",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индиви-дуальная"
         },
         {
           "text": "гараж-бокс",
