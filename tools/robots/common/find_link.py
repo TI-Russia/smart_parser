@@ -1,9 +1,11 @@
 import sys
+import os
 from bs4 import BeautifulSoup
 
 from urllib.parse import urljoin
 from download import download_html_with_urllib, \
-    download_with_cache
+    download_with_cache, \
+    find_links_with_selenium
 
 
 class TLink:
@@ -35,6 +37,41 @@ def make_link(main_url, href):
         url = url[0:i]
     return url
 
+class SomeOtherTextException(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return (repr(self.value))
+
+def find_recursive_to_bottom (element, check_text_func):
+    children = element.findChildren()
+    if len(children) == 0:
+                if len(element.text) > 0:
+                    if check_text_func(element.text):
+                        return element.text
+                    if len (element.text.strip()) > 10:
+                        raise SomeOtherTextException (element.text.strip())
+    else:
+        for child in children:
+            found_text = find_recursive_to_bottom(child, check_text_func)
+            if len(found_text) > 0:
+                return found_text
+    return ""
+
+def go_to_the_top (element, max_iterations_count, check_text_func):
+    for i  in range(max_iterations_count):
+        element = element.parent
+        if element is None:
+            return ""
+        found_text = find_recursive_to_bottom (element, check_text_func)
+        if len(found_text) > 0:
+            return found_text
+    return ""
+
+def is_office_document(href):
+    filename, file_extension = os.path.splitext(href)
+    return file_extension.lower() in {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf'}
+
 
 def find_links_by_text(main_url, html, check_text_func):
     soup = BeautifulSoup(html, 'html5lib')
@@ -42,23 +79,21 @@ def find_links_by_text(main_url, html, check_text_func):
     for  l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
-            if  check_text_func(href, l.text):
+            if  check_text_func(l.text):
                 url = make_link(main_url, href)
                 links.append(TLink(url, l.text))
-    return links
-
-
-def find_links_to_subpages(main_url, html):
-    soup = BeautifulSoup(html, 'html5lib')
-    links = set()
-    for  l in soup.findAll('a'):
-        href = l.attrs.get('href')
-        if href is not None:
-            url = make_link(main_url, href)
-            if url.startswith(main_url):
-                links.add( TLink(url, l.text ) )
+            else:
+                if is_office_document(href):
+                    try:
+                        found_text = go_to_the_top(l, 3, check_text_func)
+                        if len(found_text) > 0:
+                            url = make_link(main_url, href)
+                            links.append(TLink(url, found_text))
+                    except SomeOtherTextException as err:
+                        continue
 
     return links
+
 
 
 def check_url(main_url, url):
@@ -108,3 +143,36 @@ def find_links_in_page_with_urllib(link, link_text_predicate):
     except Exception as err:
         sys.stderr.write('cannot download page: ' + link.link_url + "\n")
         return []
+
+
+def find_links_to_subpages(main_url, html):
+    soup = BeautifulSoup(html, 'html5lib')
+    links = set()
+    for l in soup.findAll('a'):
+        href = l.attrs.get('href')
+        if href is not None:
+            url = make_link(main_url, href)
+            if url.startswith(main_url):
+                links.add( url )
+
+    return links
+
+
+def collect_all_subpages_urls(url):
+    all_links = set([url])
+    processed_links = set()
+    left_urls = all_links
+    while len(left_urls) > 0:
+        link = list(left_urls)[0]
+        if not is_office_document(link):
+            sys.stderr.write(link + "\n")
+            try:
+                html = download_with_cache(link)
+                links = find_links_to_subpages(link, html)
+                all_links = all_links.union(links)
+            except Exception as err:
+                sys.stderr.write("cannot process " + link + ": " + str(err) + "\n")
+                pass
+        processed_links.add(link)
+        left_urls = all_links.difference(processed_links)
+    return all_links
