@@ -3,29 +3,48 @@ import os
 from bs4 import BeautifulSoup
 
 from urllib.parse import urljoin
-from download import download_with_cache
+from download import download_with_cache, OFFICE_FILE_EXTENSIONS
+from selenium import webdriver
+from office_list import write_offices
 
 
-class TLink:
-    def __init__(self, url='', link_text='', json_dict=None):
-        if json_dict is not None:
-            self.from_json(json_dict)
-        else:
-            self.link_url = url
-            self.link_text = link_text.strip(' \r\n\t')
+class TLinkInfo:
+    def __init__(self, text, source=None, target=None):
+        self.Source = source
+        self.Target = target
+        self.Text = text
 
-    def __hash__(self):
-        return self.link_url.__hash__()
 
-    def __eq__(self, other):
-        return self.link_url == other.link_url
+def check_sub_page(link_info):
+    if not check_self_link(link_info):
+        return False
+    if link_info.Target is None:
+        return False
+    return link_info.Target.startswith(link_info.Source)
 
-    def to_json(self):
-        return {'url': self.link_url, 'link_text': self.link_text }
 
-    def from_json(self, js):
-        self.link_url = js.get('url', '')
-        self.link_text = js.get('link_text', '')
+
+
+def check_self_link(link_info):
+    if link_info.Target != None:
+        if len(link_info.Target) == 0:
+            return False
+        if link_info.Target.find('redirect') != -1:
+            return False
+        if link_info.Source.strip('/') == link_info.Target.strip('/'):
+            return False
+    return True
+
+
+def check_anticorr_link_text(link_info):
+    if not check_self_link(link_info):
+        return False
+
+    text = link_info.Text.strip().lower()
+    if text.startswith(u'противодействие'):
+        return text.find("коррупц") != -1
+
+    return False
 
 
 def make_link(main_url, href):
@@ -41,33 +60,34 @@ class SomeOtherTextException(Exception):
     def __str__(self):
         return (repr(self.value))
 
-def find_recursive_to_bottom (element, check_text_func):
+
+def find_recursive_to_bottom (element, check_link_func):
     children = element.findChildren()
     if len(children) == 0:
-                if len(element.text) > 0:
-                    if check_text_func(element.text):
-                        return element.text
-                    if len (element.text.strip()) > 10:
-                        raise SomeOtherTextException (element.text.strip())
+        if len(element.text) > 0:
+            if check_link_func(TLinkInfo(element.text)):
+                return element.text
+            if len (element.text.strip()) > 10:
+                raise SomeOtherTextException (element.text.strip())
     else:
         for child in children:
-            found_text = find_recursive_to_bottom(child, check_text_func)
+            found_text = find_recursive_to_bottom(child, check_link_func)
             if len(found_text) > 0:
                 return found_text
     return ""
 
-def go_to_the_top (element, max_iterations_count, check_text_func):
+
+def go_to_the_top (element, max_iterations_count, check_link_func):
     for i  in range(max_iterations_count):
         element = element.parent
         if element is None:
             return ""
-        found_text = find_recursive_to_bottom (element, check_text_func)
+        found_text = find_recursive_to_bottom (element, check_link_func)
         if len(found_text) > 0:
             return found_text
     return ""
 
 
-OFFICE_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf'}
 
 
 def is_office_document(href):
@@ -76,128 +96,142 @@ def is_office_document(href):
     return file_extension.lower() in OFFICE_FILE_EXTENSIONS
 
 
-def find_links_in_html_by_text(main_url, html, check_text_func):
+def find_links_in_html_by_text(main_url, html, check_link_func):
     soup = BeautifulSoup(html, 'html5lib')
-    links = []
+    links = {}
     for  l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
-            if  check_text_func(l.text):
-                url = make_link(main_url, href)
-                links.append(TLink(url, l.text))
+            href = make_link(main_url, href)
+            if  check_link_func( TLinkInfo(l.text, main_url, href) ):
+                links[href] = { 'text': l.text, 'engine': 'urllib' }
             else:
                 if is_office_document(href):
                     try:
-                        found_text = go_to_the_top(l, 3, check_text_func)
+                        found_text = go_to_the_top(l, 3, check_link_func)
                         if len(found_text) > 0:
-                            url = make_link(main_url, href)
-                            links.append(TLink(url, found_text))
+                            links[href] = {'text': found_text, 'engine': 'urllib'}
                     except SomeOtherTextException as err:
                         continue
 
     return links
 
 
-def find_links_with_selenium (url, check_text_func):
+def find_links_with_selenium (url, check_link_func):
     browser = webdriver.Firefox()
     browser.implicitly_wait(5)
     browser.get(url)
     time.sleep(6)
     elements = browser.find_elements_by_xpath('//button | //a')
-    links = []
+    links = dict()
     for e in elements:
-        if check_text_func(e.text):
+        if check_link_func(TLinkInfo(e.text)):
             e.click()
             time.sleep(6)
             browser.switch_to.window(browser.window_handles[-1])
             link_url = browser.current_url
-            if check_text_func(e.text, href=link_url):
-                links.append ({'url':  link_url, 'text': e.text.strip('\n\r\t ')})
+            if check_link_func(TLinkInfo(e.text, url, link_url)):
+                links[link_url] = {'text': e.text.strip('\n\r\t '), 'engine': 'selenium'}
             browser.switch_to.window(browser.window_handles[0])
     browser.quit()
     return links
 
 
 
-def check_url(main_url, url):
-    if url == "":
-        return False
-    if url.find('redirect') != -1:
-        return False
-    return main_url.strip('/') != url.strip('/')
-
-
-def get_links(office_info, div_name, url, check_text_func):
-    ad = {}
-    old_ad = office_info.get(div_name, {})
-    if 'comment' in old_ad:
-        ad['comment'] = old_ad['comment']
-
+def add_links(ad, url, check_link_func, use_selenium=True):
     try:
         html = download_with_cache(url)
-        engine = "urllib"
-        links = find_links_in_html_by_text(url, html, check_text_func)
-        good_links = [link for link in links if check_url(url, link.link_url)]
-        if len(good_links) == 0:
-            links = find_links_with_selenium(url, check_text_func)
-            engine = "selenium"
-            good_links = [link for link in links if check_url(url, link.link_url)]
-        link_set = set()
+        links = find_links_in_html_by_text(url, html, check_link_func)
+        if len(links) == 0 and use_selenium:
+            links = find_links_with_selenium(url, check_link_func)
         if 'links' not in ad:
-            ad['links'] = []
-
-        for l in good_links:
-            if l.link_url.lower() not in link_set:
-                ad['links'].append( l.to_json() )
-                link_set.add(l.link_url)
-        ad['engine'] = engine
+            ad['links'] = dict()
+        ad['links'].update(links)
 
     except Exception as err:
         sys.stderr.write('cannot download page: ' + url + "\n")
         ad['exception'] = str(err)
 
-    office_info[div_name] = ad
 
 
-def find_links_in_page_with_urllib(url, check_text_func):
+def find_links_in_page_with_urllib(url, check_link_func):
     try:
         html = download_with_cache(url)
         if html == "binary_data":
             return []
-        return find_links_in_html_by_text(url, html, check_text_func)
+        return find_links_in_html_by_text(url, html, check_link_func)
     except Exception as err:
         sys.stderr.write('cannot download page: ' + url + "\n")
         return []
 
 
-def find_links_to_subpages(main_url, html):
-    soup = BeautifulSoup(html, 'html5lib')
-    links = set()
-    for l in soup.findAll('a'):
-        href = l.attrs.get('href')
-        if href is not None:
-            url = make_link(main_url, href)
-            if url.startswith(main_url):
-                links.add( url )
+FIXLIST =  {
+    "anticorruption_div": [
+        ('fsin.su', "http://www.fsin.su/anticorrup2014/"),
+        ('fso.gov.ru',  "http://www.fso.gov.ru/korrup.html")
+    ]
+}
 
-    return links
+def find_links(office_info, source_page_collection_name, target_page_collection_name, check_link_func, use_selenium, only_missing):
+    if target_page_collection_name not in office_info:
+        office_info[target_page_collection_name] = dict()
+
+    target_collection = office_info[target_page_collection_name]
+    name = office_info['name']
+
+    if target_collection.get('engine', '') == 'manual':
+        sys.stderr.write("skip manual url updating " + name + "\n")
+        return
+
+    if len(target_collection.get('links', dict())) > 0 and only_missing:
+        sys.stderr.write("skip updating for " + name + " (already exist) \n")
+        return
+    
+    start_pages = office_info.get(source_page_collection_name, {}).get('links', {})
+
+    for url in start_pages:
+        sys.stderr.write("process " + url + "\n")
+        add_links(target_collection, url, check_link_func, use_selenium)
+
+    if len(target_collection.get('links', dict())) == 0 and len(start_pages) > 0:
+        for (s,t) in FIXLIST.get(target_page_collection_name, []):
+            if start_pages[0].find(s) != -1:
+                target_collection['links'][t] = [{"text":"", "engine":"manual"}]
+
+    if len(target_collection.get('links', dict())) == 0:
+        target_collection['links'] = dict(start_pages)
 
 
-def collect_all_subpages_urls(url):
-    all_links = set([url])
-    processed_links = set()
-    left_urls = all_links
-    while len(left_urls) > 0:
-        link = list(left_urls)[0]
-        if not is_office_document(link):
-            sys.stderr.write(link + "\n")
-            try:
-                html = download_with_cache(link)
-                links = find_links_to_subpages(link, html)
-                all_links = all_links.union(links)
-            except Exception as err:
-                sys.stderr.write("cannot process " + link + ": " + str(err) + "\n")
-                pass
-        processed_links.add(link)
-        left_urls = all_links.difference(processed_links)
-    return all_links
+    # manual fix list (sometimes they use images instead of text...)
+    if url.find('fsin.su') != -1:
+        office_info["anticorruption_div"] = [{
+            "url": "http://www.fsin.su/anticorrup2014/",
+            "engine": "manual"
+        }]
+
+    if url.find('fso.gov.ru') != -1:
+        office_info["anticorruption_div"] = [{
+            "url": "http://www.fso.gov.ru/korrup.html",
+            "engine": "manual"
+        }]
+
+
+def get_links_count (office_info, page_collection_name):
+    return len(office_info.get(page_collection_name, {}).get('links', dict()))
+
+
+def find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
+                                check_link_func, use_selenium=False, transitive=False, only_missing=True):
+    for office_info in offices:
+        while True:
+            save_count = get_links_count(office_info, target_page_collection_name)
+            find_links(office_info, source_page_collection_name, target_page_collection_name, check_link_func, use_selenium, only_missing)
+            new_count =  get_links_count(office_info, target_page_collection_name)
+            if not transitive or save_count == new_count:
+                break
+
+    write_offices(offices)
+
+def collect_subpages(offices, source_page_collection_name, target_page_collection_name):
+    find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
+                                check_sub_page, False, True, False)
