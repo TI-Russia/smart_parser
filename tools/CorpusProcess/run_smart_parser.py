@@ -13,21 +13,23 @@ import signal
 import argparse
 
 # Create a custom logger
-logger = logging.getLogger(__name__)
+def get_logger():
+    logger = logging.getLogger(__name__)
+    
+    # Create handlers
+    f_handler = logging.FileHandler('parsing.log', 'w', 'utf-8')
+    f_handler.setLevel(logging.INFO)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    
+    # Create formatter and add it to handlers
+    f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    f_handler.setFormatter(f_format)
+    
+    # Add handlers to the logger
+    logger.addHandler(f_handler)
+    return logger
+logger = get_logger()
 
-# Create handlers
-f_handler = logging.FileHandler('parsing.log', 'w', 'utf-8')
-f_handler.setLevel(logging.INFO)
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
-# Create formatter and add it to handlers
-f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-f_handler.setFormatter(f_format)
-
-# Add handlers to the logger
-logger.addHandler(f_handler)
-
-job_list_file = 'parser-job-htm-errors.json'
 smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
@@ -62,22 +64,6 @@ def download_file(file_url, filename):
     return filename
 
 
-def get_parsing_list(filename, url=None):
-    """download and cache list of files to parse"""
-
-    if not os.path.isfile(filename):
-        if not url:
-            url = declarator_domain + '/media/metrics/%s' % filename
-        result = client.get(url)
-        with open(filename, "wb") as fp:
-            fp.write(result.content)
-
-    file_list = json.load(open(filename, 'r', encoding='utf8'))
-
-    logger.info("%i jobs listed" % len(file_list))
-    return file_list
-
-
 def run_smart_parser(filepath, args):
     """start SmartParser for one file"""
     start_time = datetime.now()
@@ -90,10 +76,11 @@ def run_smart_parser(filepath, args):
             for jf in json_list:
                 os.remove(jf)
         else:
+            logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return
 
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
-        smart_parser_options = "-adapter aspose -license \"http://95.165.168.93:8088/lic.bin\""
+        smart_parser_options = "-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
     else:
         smart_parser_options = "-adapter prod"
 
@@ -175,22 +162,16 @@ class ProcessOneFile(object):
 
     def __call__(self, job):
         try:
-            # ZIP-Archives parse in one process file by file
-            if job['file'].endswith('.zip'):
-                for sub_job in job['archive_files']:
-                    if sub_job.endswith('.pdf'):
-                        continue
-                    url = "/office/view-zip-file/%i/%s" % (job['id'], sub_job)
-                    self.run_job(url, job['id'], sub_job)
-            elif job['file'].endswith('.pdf'):
-                pass
-            else:
-                self.run_job(job['file'], job['id'])
+            if not job['download_url'].endswith('.pdf'):
+                self.run_job(job)
+
         except KeyboardInterrupt:
            kill_process_windows(self.parent_pid)
 
-    def run_job(self, file_url, df_id, archive_file=None):
+    def run_job(self, job):
+        file_url, df_id, archive_file = job['download_url'], job['document_file'], job['archive_file']
         logger.info("Running job (id=%i) with URL: %s" % (df_id, file_url))
+
         url_path, filename = os.path.split(file_url)
         filename, ext = os.path.splitext(filename)
 
@@ -199,10 +180,29 @@ class ProcessOneFile(object):
         else:
             file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
-        file_path = download_file(declarator_domain + file_url, file_path)
+        file_path = download_file(file_url, file_path)
+
+        logger.info(file_path)
+
         time_delta = run_smart_parser(file_path, self.args)
-        if time_delta:
+        if time_delta is not None:
             post_results(file_path, df_id, archive_file, time_delta)
+        else:
+            logger.error("time_delta=None for %s" % file_path)
+
+
+def generate_jobs(url=None):
+    """API call return list of files to parse (paged)"""
+   
+    next_url = url
+    while next_url:
+        logger.info("GET Joblist URL: %s" % next_url)
+        result = json.loads(client.get(next_url).content.decode('utf-8'))
+        next_url = result['next']
+        file_list = result['results']
+        logger.info("%i jobs listed" % len(file_list))
+        for obj in file_list:
+            yield obj
 
 
 if __name__ == '__main__':
@@ -212,9 +212,10 @@ if __name__ == '__main__':
     original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     signal.signal(signal.SIGINT, original_sigint_handler)
 
+    jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
+
     try:
-        job_list = get_parsing_list(job_list_file, "https://declarator.org/api/document_file/parsing_list/?error=Unknown%20file%20extension%20.htm")
-        res = pool.map(ProcessOneFile(args, os.getpid()), job_list)
+        res = pool.map(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url)))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
