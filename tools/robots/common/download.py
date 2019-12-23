@@ -21,23 +21,33 @@ def is_html_contents(info):
     return content_type.startswith('text')
 
 
+HEADER_CACHE = {}
 def get_url_headers (url):
-    return requests.head(url).headers
+    global HEADER_CACHE
+    if url in  HEADER_CACHE:
+        return HEADER_CACHE[url]
+    print("get headers for " + url)
+    res =  requests.head(url).headers
+    HEADER_CACHE[url] = res
+    return res
 
 def find_simple_js_redirect(data):
     res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\']+)([\'"]?\s*;)', data)
     if res:
         url = res.group(3)
-        o = list(urlparse(url))
-        o[1] = o[1].encode('idna').decode('latin')
-        url = urlunparse(o)
         return url
     return None
 
 
+def has_cyrillic(text):
+    return bool(re.search('[Ёёа-яА-Я]', text))
+
 def download_with_urllib (url, search_for_js_redirect=True):
     o = list(urlparse(url)[:])
-    o[2] = quote(o[2])
+    if o[2].find('%') == -1:
+        o[2] = quote(o[2])
+    if has_cyrillic(o[1]):
+        o[1] = o[1].encode('idna').decode('latin')
     url = urlunparse(o)
     context = ssl._create_unverified_context()
     req = urllib.request.Request(
@@ -180,21 +190,7 @@ def download_page_collection(offices, page_collection_name):
                 sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
                 pass
 
-
-def get_file_extension_by_url(url):
-    for e in OFFICE_FILE_EXTENSIONS:
-        if url.lower().endswith(e):
-            return e
-
-    localfile = get_local_file_name_by_url(url)
-    if not os.path.exists(localfile):
-        return ".html";
-
-    info_file = localfile + ".headers"
-    with open(info_file, "r", encoding="utf8") as inf:
-        info = json.loads(inf.read())
-        content_type = info['headers'].get('Content-Type', "text")
-
+def get_extenstion_by_content_type(content_type):
     if content_type.startswith("text"):
         return ".html"
     elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
@@ -215,17 +211,42 @@ def get_file_extension_by_url(url):
         return ".html"
 
 
+def get_file_extension_by_cached_url(url):
+    for e in OFFICE_FILE_EXTENSIONS:
+        if url.lower().endswith(e):
+            return e
+
+    localfile = get_local_file_name_by_url(url)
+    if not os.path.exists(localfile):
+        return ".html";
+
+    info_file = localfile + ".headers"
+    with open(info_file, "r", encoding="utf8") as inf:
+        info = json.loads(inf.read())
+        content_type = info['headers'].get('Content-Type', "text")
+
+    return get_extenstion_by_content_type(content_type)
+
+
+def get_file_extension_by_url(url):
+    headers = get_url_headers(url)
+    ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
+    return ext
+
+
 def export_files_to_folder(offices, page_collection_name, outfolder):
     for office_info in offices:
         pages_to_download  = office_info.get(page_collection_name, dict()).get('links', dict())
         if len(pages_to_download) == 0:
             continue
         office_folder = url_to_localfilename(list(office_info['morda']['links'].keys())[0])
-        shutil.rmtree(os.path.join(outfolder, office_folder))
+        office_folder = os.path.join(outfolder, office_folder)
+        if os.path.exists(office_folder):
+            shutil.rmtree(office_folder)
         index = 0
         for url in pages_to_download:
-            extension = get_file_extension_by_url(url)
-            outpath = os.path.join(outfolder, office_folder, str(index) + extension)
+            extension = get_file_extension_by_cached_url(url)
+            outpath = os.path.join(office_folder, str(index) + extension)
             if not os.path.exists(os.path.dirname(outpath)):
                 os.makedirs(os.path.dirname(outpath))
             infile = get_local_file_name_by_url(url)

@@ -87,8 +87,6 @@ def go_to_the_top (element, max_iterations_count, check_link_func):
     return ""
 
 
-
-
 def is_office_document(href):
     global OFFICE_FILE_EXTENSIONS
     filename, file_extension = os.path.splitext(href)
@@ -101,9 +99,13 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
     for  l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
+            if href.startswith('mailto:'):
+                continue
+
             href = make_link(main_url, href)
+
             if  check_link_func( TLinkInfo(l.text, main_url, href) ):
-                links[href] = { 'text': l.text, 'engine': 'urllib', 'source':  main_url}
+                links[href] = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
             else:
                 if is_office_document(href):
                     try:
@@ -231,6 +233,6 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
 
 
 
-def collect_subpages(offices, source_page_collection_name, target_page_collection_name):
+def collect_subpages(offices, source_page_collection_name, target_page_collection_name, check_link_func):
     find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
-                                check_sub_page, False, True, False)
+                                check_link_func, False, True, False)
