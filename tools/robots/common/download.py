@@ -24,10 +24,18 @@ def is_html_contents(info):
 def get_url_headers (url):
     return requests.head(url).headers
 
+def find_simple_js_redirect(data):
+    res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\']+)([\'"]?\s*;)', data)
+    if res:
+        url = res.group(3)
+        o = list(urlparse(url))
+        o[1] = o[1].encode('idna').decode('latin')
+        url = urlunparse(o)
+        return url
+    return None
 
-def download_with_urllib (url):
-    mvd = "https://" + u'мвд.рф'.encode('idna').decode('latin')
-    url = url.replace('http://www.mvd.ru', mvd)
+
+def download_with_urllib (url, search_for_js_redirect=True):
     o = list(urlparse(url)[:])
     o[2] = quote(o[2])
     url = urlunparse(o)
@@ -48,6 +56,7 @@ def download_with_urllib (url):
         data = request.read()
         info = request.info()
         headers = request.headers
+
     try:
         if is_html_contents(info):
             print("\tencoding..")
@@ -60,9 +69,15 @@ def download_with_urllib (url):
                     raise ValueError('unable to find encoding')
 
             data = data.decode(encoding, errors="ignore")
+            if search_for_js_redirect:
+                redirect_url = find_simple_js_redirect(data)
+                if redirect_url is not None and redirect_url != url:
+                    return download_with_urllib(redirect_url, search_for_js_redirect=False)
 
     except AttributeError:
         pass
+
+
 
     return (data, info)
 
@@ -188,10 +203,17 @@ def get_file_extension_by_url(url):
         return ".doc"
     elif content_type.startswith("application/rtf"):
         return ".rtf"
+    elif content_type.startswith("application/excel"):
+        return ".xls"
+    elif content_type.startswith("application/vnd.ms-excel"):
+        return ".xls"
+    elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
+        return ".xlsx"
     elif content_type.startswith("application/pdf"):
         return ".pdf"
     else:
         return ".html"
+
 
 def export_files_to_folder(offices, page_collection_name, outfolder):
     for office_info in offices:
@@ -199,7 +221,8 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
         if len(pages_to_download) == 0:
             continue
         office_folder = url_to_localfilename(list(office_info['morda']['links'].keys())[0])
-        index  = 0
+        shutil.rmtree(os.path.join(outfolder, office_folder))
+        index = 0
         for url in pages_to_download:
             extension = get_file_extension_by_url(url)
             outpath = os.path.join(outfolder, office_folder, str(index) + extension)

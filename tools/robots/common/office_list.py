@@ -21,17 +21,17 @@ def read_one_office_info (table_url):
     return office_info
 
 
-def write_offices(offices):
-    with open("offices.txt", "w", encoding="utf8") as outf:
+def write_offices(offices, project_file):
+    with open(project_file, "w", encoding="utf8") as outf:
         outf.write(json.dumps(offices, ensure_ascii=False,indent=4))
 
 
-def read_office_list():
-    with open("offices.txt", "r", encoding="utf8") as inpf:
+def read_office_list(project_file):
+    with open(project_file, "r", encoding="utf8") as inpf:
         return json.loads(inpf.read())
 
 
-def create_office_list():
+def create_office_list(project_file):
     html, info = download_html_with_urllib("https://www.consultant.ru/document/cons_doc_LAW_65443/")
     soup = BeautifulSoup(html, 'html5lib')
     offices = []
@@ -48,5 +48,5 @@ def create_office_list():
         office_info = read_one_office_info(url)
         office_info['name'] = l.text.strip('\n ')
         offices.append(office_info)
-    write_offices(offices)
+    write_offices(offices, project_file)
     return offices

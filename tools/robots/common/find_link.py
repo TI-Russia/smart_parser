@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from download import download_with_cache, OFFICE_FILE_EXTENSIONS
 from selenium import webdriver
-from office_list import write_offices
 
 
 class TLinkInfo:
@@ -104,13 +103,13 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
         if href is not None:
             href = make_link(main_url, href)
             if  check_link_func( TLinkInfo(l.text, main_url, href) ):
-                links[href] = { 'text': l.text, 'engine': 'urllib' }
+                links[href] = { 'text': l.text, 'engine': 'urllib', 'source':  main_url}
             else:
                 if is_office_document(href):
                     try:
                         found_text = go_to_the_top(l, 3, check_link_func)
                         if len(found_text) > 0:
-                            links[href] = {'text': found_text, 'engine': 'urllib'}
+                            links[href] = {'text': found_text, 'engine': 'urllib', 'source':  main_url}
                     except SomeOtherTextException as err:
                         continue
 
@@ -131,7 +130,7 @@ def find_links_with_selenium (url, check_link_func):
             browser.switch_to.window(browser.window_handles[-1])
             link_url = browser.current_url
             if check_link_func(TLinkInfo(e.text, url, link_url)):
-                links[link_url] = {'text': e.text.strip('\n\r\t '), 'engine': 'selenium'}
+                links[link_url] = {'text': e.text.strip('\n\r\t '), 'engine': 'selenium', 'source':  main_url}
             browser.switch_to.window(browser.window_handles[0])
     browser.quit()
     return links
@@ -230,7 +229,7 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
             if not transitive or save_count == new_count:
                 break
 
-    write_offices(offices)
+
 
 def collect_subpages(offices, source_page_collection_name, target_page_collection_name):
     find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
