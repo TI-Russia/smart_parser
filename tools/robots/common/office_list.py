@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 import json
 
-from download import download_html_with_urllib
+from download import download_with_cache
 
 
 def read_one_office_info (table_url):
-    html, info = download_html_with_urllib(table_url)
+    html, info = download_with_cache(table_url)
     soup = BeautifulSoup(html, 'html5lib')
     office_info = {}
     for text in soup.findAll('div', {"class": "text"}):

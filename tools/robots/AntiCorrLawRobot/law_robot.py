@@ -9,15 +9,12 @@ from office_list import  create_office_list, read_office_list, write_offices
 
 from download import download_html_with_urllib, \
     download_with_cache, \
-    find_links_with_selenium, \
-    FILE_CACHE_FOLDER, \
-    build_temp_local_file
+    FILE_CACHE_FOLDER
+
 from find_link import click_first_link_and_get_url, find_links_to_subpages, find_links_in_page_with_urllib, \
 collect_all_subpages_urls
 
 from main_anticor_div import find_anticorruption_div
-
-
 
 
 def check_law_link_text(text):
@@ -85,7 +82,7 @@ def get_decree_pages(offices):
 
     write_offices(offices)
 
-def check_download_text(href, text):
+def check_download_text(text):
     if text.startswith(u'кодекс'):
         return True
     if text.startswith(u'скачать'):
@@ -100,13 +97,13 @@ def check_download_text(href, text):
         return True
     return False
 
-def check_decree_link_text(href, text):
+def check_decree_link_text(text):
     text = text.strip(' \n\t\r').lower()
     if text.startswith(u'приказ'):
         return True
     if text.startswith(u'распоряжение'):
         return True
-    if check_download_text(href, text):
+    if check_download_text(text):
         return True
     return False
 
@@ -114,10 +111,9 @@ def check_decree_link_text(href, text):
 def find_decrees_doc_urls(offices):
     for office_info in offices:
         docs = set()
-        for link_json in office_info.get('decree_pages', []):
-            link = TLink(json_dict=link_json)
-            sys.stderr.write(link.link_url + "\n")
-            new_docs = find_links_in_page_with_urllib(link, check_decree_link_text)
+        for url in office_info.get('decree_pages', []):
+            sys.stderr.write(url + "\n")
+            new_docs = find_links_in_page_with_urllib(url, check_decree_link_text)
             docs = docs.union(new_docs)
 
         additional_docs = set()
@@ -141,6 +137,41 @@ def find_decrees_doc_urls(offices):
         docs = docs.union(additional_docs)
         office_info['anticor_doc_urls'] = [x.to_json() for x in docs]
     write_offices(offices)
+
+def build_temp_local_file(url):
+    localfile = get_local_file_name_by_url(url)
+    if not os.path.exists(localfile):
+        return "";
+    content_type = "text"
+    info_file = localfile + ".headers"
+    with open(info_file, "r", encoding="utf8") as inf:
+        info = json.loads(inf.read())
+        content_type = info['headers'].get('Content-Type', "text")
+    dest_file = ""
+    if url.endswith('.docx'):
+        dest_file = "temp_file.docx"
+    elif url.endswith('.doc'):
+        dest_file = "temp_file.doc"
+    elif url.endswith('.pdf'):
+        dest_file = "temp_file.pdf"
+    elif url.endswith('.rtf'):
+        dest_file = "temp_file.pdf"
+    elif content_type.startswith("text"):
+        dest_file = "temp_file.html"
+    elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
+        dest_file = "temp_file.docx"
+    elif content_type.startswith("application/msword"):
+        dest_file = "temp_file.doc"
+    elif content_type.startswith("application/rtf"):
+        dest_file = "temp_file.rtf"
+    elif content_type.startswith("application/pdf"):
+        dest_file = "temp_file.pdf"
+    else:
+        return ""
+    dest_file = os.path.join(os.path.dirname(localfile), dest_file)
+    dest_file = os.path.abspath(dest_file)
+    shutil.copy(localfile, dest_file)
+    return dest_file
 
 
 def convert_to_text(offices):
@@ -277,7 +308,7 @@ if __name__ == "__main__":
         os.mkdir(FILE_CACHE_FOLDER)
     # offices = create_office_list():
     offices = read_office_list()
-    #find_anticorruption_div(offices)
+    find_anticorruption_div(offices)
     #find_law_div(offices)
     #find_office_decrees_section(offices)
     #get_decree_pages(offices)

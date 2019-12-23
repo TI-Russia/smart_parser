@@ -521,6 +521,13 @@ namespace RegressionTesting
             TestSmartParser("MinEkon2015.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("htm")]
+        public void Sudia2011()
+        {
+            TestSmartParser("Sudia2011.htm", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());

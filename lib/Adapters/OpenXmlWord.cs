@@ -5,7 +5,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 using System.Xml;
 using System.Text;
 using TI.Declarator.ParserCommon;
@@ -57,12 +56,13 @@ namespace Smart.Parser.Adapters
     class OpenXmlWordCell : Cell
     {
         public bool IsVerticallyMerged;
-        
-        public OpenXmlWordCell(TableWidthInfo tableWidth, TableCell  inputCell, int row, int column)
-        {   
+
+        public OpenXmlWordCell(TableWidthInfo tableWidth, TableCell inputCell, int row, int column)
+        {
             var cellContents = GetCellText(inputCell);
             var vmerge = inputCell.TableCellProperties.GetFirstChild<VerticalMerge>();
-            if (vmerge == null) {
+            if (vmerge == null)
+            {
                 IsVerticallyMerged = false;
             }
             else
@@ -87,20 +87,23 @@ namespace Smart.Parser.Adapters
             Text = cellContents;
             Row = row;
             Col = column;
-            if (    inputCell.TableCellProperties != null 
+            if (inputCell.TableCellProperties != null
                 && inputCell.TableCellProperties.TableCellWidth != null
                 && inputCell.TableCellProperties.TableCellWidth.Type != null
                 && inputCell.TableCellProperties.TableCellWidth.Type != TableWidthUnitValues.Auto
                 )
             {
                 CellWidth = TableWidthInfo.TryReadWidth(
-                    inputCell.TableCellProperties.TableCellWidth.Width, 
+                    inputCell.TableCellProperties.TableCellWidth.Width,
                     inputCell.TableCellProperties.TableCellWidth.Type,
                     tableWidth.TableWidthInPixels);
             }
             else
             {
-                CellWidth = tableWidth.ColumnWidths[Col];
+                if (Col < tableWidth.ColumnWidths.Count)
+                {
+                    CellWidth = tableWidth.ColumnWidths[Col];
+                }
             }
             AdditTableIndention = tableWidth.TableIndentionInPixels;
         }
@@ -117,8 +120,6 @@ namespace Smart.Parser.Adapters
 
         public static string GetCellText(OpenXmlElement inputCell)
         {
-            var dummy = inputCell.InnerText;
-            //return inputCell.InnerText;
             string s = "";
             foreach (var p in inputCell.Elements<Paragraph>())
             {
@@ -133,9 +134,9 @@ namespace Smart.Parser.Adapters
                         s += "\n";
                     }
                     else if (textOrBreak.LocalName == "br")
-                                                  /* do  not use lastRenderedPageBreak, see MinRes2011 for wrong lastRenderedPageBreak in Семенов 
-                                                  ||
-                                                        (textOrBreak.Name == w + "lastRenderedPageBreak") */
+                    /* do  not use lastRenderedPageBreak, see MinRes2011 for wrong lastRenderedPageBreak in Семенов 
+                    ||
+                          (textOrBreak.Name == w + "lastRenderedPageBreak") */
                     {
                         s += "\n";
                     }
@@ -145,9 +146,7 @@ namespace Smart.Parser.Adapters
             return s;
 
         }
-
     }
-
 
     public class OpenXmlWordAdapter : IAdapter
     {
@@ -540,13 +539,15 @@ namespace Smart.Parser.Adapters
         {
             var rows = table.Descendants<TableRow>().ToList();
             TableWidthInfo widthInfo = InitializeTableWidthInfo(table);
+            int saveRowsCount = TableRows.Count;
+            int maxCellsCount = 0;
             for (int r = 0; r < rows.Count(); ++r)
             {
                 List<OpenXmlWordCell> newRow = new List<OpenXmlWordCell>();
                 int sumspan = 0;
                 var row = rows[r];
                 int rowGridBefore = GetRowGridBefore(row);
-
+                bool isEmpty = true;
                 foreach (var rowCell in row.Elements<TableCell>() )
                 {
                     var c = new OpenXmlWordCell(widthInfo, rowCell, TableRows.Count, sumspan);
@@ -554,7 +555,13 @@ namespace Smart.Parser.Adapters
                         c.MergedColsCount += rowGridBefore;
                     newRow.Add(c);
                     sumspan += c.MergedColsCount;
+                    isEmpty = isEmpty && c.IsEmpty;
                 }
+                if (isEmpty)
+                {
+                    continue;
+                }
+                maxCellsCount = Math.Max(newRow.Count, maxCellsCount);
                 if (r == 0 && TableRows.Count > 0 && CheckMergeRow(TableRows.Last(), newRow))
                 {
                     MergeRow(TableRows.Last(), newRow);
@@ -568,6 +575,11 @@ namespace Smart.Parser.Adapters
                 {
                     break;
                 }
+            }
+            if (maxCellsCount <= 4)
+            {
+                //remove this suspicious table 
+                TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
             }
         }
         
@@ -591,23 +603,55 @@ namespace Smart.Parser.Adapters
             DocumentPageLeftMaginInPixels = TableWidthInfo.DxaToPixels(pageMarginDxa);
         }
 
+        void ProcessWordTableAndUpdateTitle(Table table, int maxRowsToProcess, int tableIndex)
+        {
+            int debugSaveRowCount = TableRows.Count;
+            if (table.Descendants<Table>().ToList().Count > 0)
+            {
+                Logger.Debug(String.Format("ignore table {0} with subtables", tableIndex));
+            }
+            else
+            {
+                ProcessWordTable(table, maxRowsToProcess);
+            }
+            if (table.InnerText.Length > 30 && TableRows.Count > debugSaveRowCount)
+            {
+                Logger.Debug(String.Format("add {0} rows from table {1} Table.innertText[0:30]='{2}...'",
+                    TableRows.Count - debugSaveRowCount,
+                    tableIndex,
+                    table.InnerText.Substring(0, 30)));
+            }
+            if (Title.Length == 0 && table.InnerText.Length > 30 && table.InnerText.ToLower().IndexOf("декабря") != -1)
+            {
+                var rows = new List<String>();
+                foreach (var r in table.Descendants<TableRow>())
+                {
+                    rows.Add(r.InnerText);
+                }
+                Title = String.Join("\n", rows);
+            }
+        }
+
         void CollectRows(WordprocessingDocument wordDocument, int maxRowsToProcess)
         {
             var docPart = wordDocument.MainDocumentPart;
             InitPageSize(wordDocument);
             var tables = docPart.Document.Descendants<Table>();
             TablesCount = tables.Count();
+            int tableIndex = 0;
             foreach (OpenXmlPart h in docPart.HeaderParts)
             {
                 foreach (var t in h.RootElement.Descendants<Table>()) {
-                    ProcessWordTable(t, maxRowsToProcess);
+                    ProcessWordTableAndUpdateTitle(t, maxRowsToProcess, tableIndex);
+                    tableIndex++;
                 }
-               
+
             }
 
             foreach (var t in tables)
             {
-                ProcessWordTable(t, maxRowsToProcess);
+                ProcessWordTableAndUpdateTitle(t, maxRowsToProcess, tableIndex);
+                tableIndex++;
             }
         }
 

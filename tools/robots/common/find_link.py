@@ -3,9 +3,7 @@ import os
 from bs4 import BeautifulSoup
 
 from urllib.parse import urljoin
-from download import download_html_with_urllib, \
-    download_with_cache, \
-    find_links_with_selenium
+from download import download_with_cache
 
 
 class TLink:
@@ -68,12 +66,17 @@ def go_to_the_top (element, max_iterations_count, check_text_func):
             return found_text
     return ""
 
+
+OFFICE_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf'}
+
+
 def is_office_document(href):
+    global OFFICE_FILE_EXTENSIONS
     filename, file_extension = os.path.splitext(href)
-    return file_extension.lower() in {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf'}
+    return file_extension.lower() in OFFICE_FILE_EXTENSIONS
 
 
-def find_links_by_text(main_url, html, check_text_func):
+def find_links_in_html_by_text(main_url, html, check_text_func):
     soup = BeautifulSoup(html, 'html5lib')
     links = []
     for  l in soup.findAll('a'):
@@ -95,6 +98,26 @@ def find_links_by_text(main_url, html, check_text_func):
     return links
 
 
+def find_links_with_selenium (url, check_text_func):
+    browser = webdriver.Firefox()
+    browser.implicitly_wait(5)
+    browser.get(url)
+    time.sleep(6)
+    elements = browser.find_elements_by_xpath('//button | //a')
+    links = []
+    for e in elements:
+        if check_text_func(e.text):
+            e.click()
+            time.sleep(6)
+            browser.switch_to.window(browser.window_handles[-1])
+            link_url = browser.current_url
+            if check_text_func(e.text, href=link_url):
+                links.append ({'url':  link_url, 'text': e.text.strip('\n\r\t ')})
+            browser.switch_to.window(browser.window_handles[0])
+    browser.quit()
+    return links
+
+
 
 def check_url(main_url, url):
     if url == "":
@@ -104,28 +127,30 @@ def check_url(main_url, url):
     return main_url.strip('/') != url.strip('/')
 
 
-def click_first_link_and_get_url(office_info, div_name, url, link_text_predicate, use_selenium=False):
+def get_links(office_info, div_name, url, check_text_func):
     ad = {}
     old_ad = office_info.get(div_name, {})
     if 'comment' in old_ad:
         ad['comment'] = old_ad['comment']
 
     try:
-        html = download_with_cache(url, use_selenium)
+        html = download_with_cache(url)
         engine = "urllib"
-        links = find_links_by_text(url, html, link_text_predicate)
-        good_links  = [link for link in links  if check_url(url, link.link_url)]
-        if  len(good_links) == 0:
-            links = find_links_with_selenium(url, link_text_predicate)
+        links = find_links_in_html_by_text(url, html, check_text_func)
+        good_links = [link for link in links if check_url(url, link.link_url)]
+        if len(good_links) == 0:
+            links = find_links_with_selenium(url, check_text_func)
             engine = "selenium"
             good_links = [link for link in links if check_url(url, link.link_url)]
-        if  len(good_links) > 0:
-            ad['url'] = good_links[0].link_url
-            ad['link_text'] = good_links[0].link_text
-            ad['engine'] = engine
-        else:
-            ad['exception'] = "no link found"
+        link_set = set()
+        if 'links' not in ad:
+            ad['links'] = []
 
+        for l in good_links:
+            if l.link_url.lower() not in link_set:
+                ad['links'].append( l.to_json() )
+                link_set.add(l.link_url)
+        ad['engine'] = engine
 
     except Exception as err:
         sys.stderr.write('cannot download page: ' + url + "\n")
@@ -134,14 +159,14 @@ def click_first_link_and_get_url(office_info, div_name, url, link_text_predicate
     office_info[div_name] = ad
 
 
-def find_links_in_page_with_urllib(link, link_text_predicate):
+def find_links_in_page_with_urllib(url, check_text_func):
     try:
-        html = download_with_cache(link.link_url)
+        html = download_with_cache(url)
         if html == "binary_data":
             return []
-        return find_links_by_text(link.link_url, html, link_text_predicate)
+        return find_links_in_html_by_text(url, html, check_text_func)
     except Exception as err:
-        sys.stderr.write('cannot download page: ' + link.link_url + "\n")
+        sys.stderr.write('cannot download page: ' + url + "\n")
         return []
 
 
