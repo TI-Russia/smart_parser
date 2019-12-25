@@ -25,9 +25,11 @@ def get_logger():
     f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     f_handler.setFormatter(f_format)
     
-    # Add handlers to the logger
-    #logger.addHandler(f_handler)
+    # # Add handlers to the logger
+    # logger.addHandler(f_handler)
     return logger
+
+
 logger = get_logger()
 
 smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
@@ -166,23 +168,21 @@ class ProcessOneFile(object):
                 self.run_job(job)
 
         except KeyboardInterrupt:
-           kill_process_windows(self.parent_pid)
+            kill_process_windows(self.parent_pid)
 
     def run_job(self, job):
         file_url, df_id, archive_file = job['download_url'], job['document_file'], job['archive_file']
         logger.info("Running job (id=%i) with URL: %s" % (df_id, file_url))
 
         url_path, filename = os.path.split(file_url)
-        filename, ext = os.path.splitext(filename)
+        _, ext = os.path.splitext(filename)
 
         if archive_file:
-            file_path = os.path.join("out", str(df_id), "%s%s" % (filename, ext))
+            file_path = os.path.join("out", str(df_id), archive_file)
         else:
             file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
         file_path = download_file(file_url, file_path)
-
-        logger.info(file_path)
 
         time_delta = run_smart_parser(file_path, self.args)
         if time_delta is not None:
