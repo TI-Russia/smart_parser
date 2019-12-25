@@ -26,7 +26,7 @@ def get_logger():
     f_handler.setFormatter(f_format)
     
     # Add handlers to the logger
-    logger.addHandler(f_handler)
+    #logger.addHandler(f_handler)
     return logger
 logger = get_logger()
 
@@ -80,7 +80,7 @@ def run_smart_parser(filepath, args):
             return
 
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
-        smart_parser_options = "-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
+        smart_parser_options = r"-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
     else:
         smart_parser_options = "-adapter prod"
 
@@ -191,14 +191,16 @@ class ProcessOneFile(object):
             logger.error("time_delta=None for %s" % file_path)
 
 
-def generate_jobs(url=None):
-    """API call return list of files to parse (paged)"""
+def generate_jobs(url=None, stop=False):
+    """API call return list of files to parse (paged now)"""
    
     next_url = url
     while next_url:
         logger.info("GET Joblist URL: %s" % next_url)
         result = json.loads(client.get(next_url).content.decode('utf-8'))
         next_url = result['next']
+        if stop:
+            next_url = None
         file_list = result['results']
         logger.info("%i jobs listed" % len(file_list))
         for obj in file_list:
@@ -213,9 +215,10 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
+    jobs_url = "https://declarator.org/api/fixed_document_file/?error=FileNotFoundError&page_size=1"
 
     try:
-        res = pool.map(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url)))
+        res = list(pool.imap(ProcessOneFile(args, os.getpid()), generate_jobs(jobs_url, stop=True), chunksize=1))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
