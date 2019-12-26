@@ -133,6 +133,10 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
     except FileNotFoundError:
         data['document']['parser_log'] = "FileNotFoundError: " + sourcefile + ".log"
 
+    data['document']['documentfile_id'] = df_id
+    if archive_file:
+        data['document']['archive_file'] = archive_file
+
     # if time_delta == PARSER_TIMEOUT:
     #     data['document']['parser_log'] += "\nTimeout %i exceeded for smart_parser.exe" % PARSER_TIMEOUT
 
@@ -175,7 +179,7 @@ class ProcessOneFile(object):
         logger.info("Running job (id=%i) with URL: %s" % (df_id, file_url))
 
         url_path, filename = os.path.split(file_url)
-        _, ext = os.path.splitext(filename)
+        filename, ext = os.path.splitext(filename)
 
         if archive_file:
             file_path = os.path.join("out", str(df_id), archive_file)
@@ -214,11 +218,11 @@ if __name__ == '__main__':
     original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     signal.signal(signal.SIGINT, original_sigint_handler)
 
-    jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
-    jobs_url = "https://declarator.org/api/fixed_document_file/?error=FileNotFoundError&page_size=1"
+    # jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
+    jobs_url = "https://declarator.org/api/fixed_document_file/?error=FileNotFoundError&page_size=1000"
 
     try:
-        res = list(pool.imap(ProcessOneFile(args, os.getpid()), generate_jobs(jobs_url, stop=True), chunksize=1))
+        res = list(pool.imap(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url, stop=False)), chunksize=1))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
