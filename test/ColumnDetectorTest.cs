@@ -84,6 +84,17 @@ namespace test
         }
 
         [TestMethod]
+        public void RealEstateColumnDetector()
+        {
+            string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "glav_44_2010.doc");
+            IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
+
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(ordering.ColumnOrder.Count, 9);
+        }
+
+
+        [TestMethod]
         public void RedundantColumnDetector()
         {
             string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "18664.docx");
