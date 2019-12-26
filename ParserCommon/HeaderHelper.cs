@@ -286,7 +286,7 @@ namespace TI.Declarator.ParserCommon
         private static bool IsAcquiredProperty(this string s)
         {
             string strLower = s.Replace(" ", "").Replace("-", "");
-            return strLower.Contains("видприобретенногоимущества");
+            return strLower.Contains("приобретенногоимущества");
         }
 
         private static bool IsMoneySources(this string s)
