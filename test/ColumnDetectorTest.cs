@@ -82,5 +82,18 @@ namespace test
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn == 10);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DataSources].BeginColumn == 11);
         }
+
+        [TestMethod]
+        public void RedundantColumnDetector()
+        {
+            string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "18664.docx");
+            IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
+
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(ordering.ColumnOrder.Count, 13);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.AcquiredProperty].BeginColumn, 11);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.MoneySources].BeginColumn, 12);
+        }
+
     }
 }

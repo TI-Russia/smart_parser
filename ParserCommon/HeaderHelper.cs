@@ -57,6 +57,10 @@ namespace TI.Declarator.ParserCommon
             if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
             if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
 
+            if (str.IsAcquiredProperty()) { return DeclarationField.AcquiredProperty; }
+            if (str.IsMoneySources()) { return DeclarationField.MoneySources; }
+
+
             if (HasSquareString(str)) { return DeclarationField.MixedRealEstateSquare; }
             if (HasCountryString(str)) { return DeclarationField.MixedRealEstateCountry; }
             return DeclarationField.None;
@@ -92,9 +96,10 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOccupation(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
-            return (clean.Contains("должность") || 
-                    s.Contains("должностей"));
+            string clean = s.Replace("-", "").Replace(" ", "").ToLower();
+            return (clean.Contains("должность") ||
+                    clean.Contains("должности") ||
+                    clean.Contains("должностей"));
         }
 
         private static bool IsDepartment(this string s)
@@ -277,5 +282,19 @@ namespace TI.Declarator.ParserCommon
         {
             return s.Contains("сведен");
         }
+
+        private static bool IsAcquiredProperty(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "");
+            return strLower.Contains("видприобретенногоимущества");
+        }
+
+        private static bool IsMoneySources(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "");
+            return strLower.Contains("источникполучениясредств");
+        }
+
+        
     }
 }
