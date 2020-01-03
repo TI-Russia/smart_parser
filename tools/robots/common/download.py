@@ -8,6 +8,7 @@ import re
 import shutil
 import requests
 from urllib.parse import urlparse, quote, urlunparse
+import hashlib
 
 import os
 from selenium import webdriver
@@ -60,9 +61,8 @@ def download_with_urllib (url, search_for_js_redirect=True):
     data = ''
     info = {}
     headers = None
-    print ("\turlopen..")
+    print ("urllib.request.urlopen ({})".format(url))
     with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        print("\treaddata...")
         data = request.read()
         info = request.info()
         headers = request.headers
@@ -193,6 +193,8 @@ def download_page_collection(offices, page_collection_name):
 def get_extenstion_by_content_type(content_type):
     if content_type.startswith("text"):
         return ".html"
+    elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
+        return ".xlsx"
     elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
         return ".docx"
     elif content_type.startswith("application/msword"):
@@ -203,8 +205,6 @@ def get_extenstion_by_content_type(content_type):
         return ".xls"
     elif content_type.startswith("application/vnd.ms-excel"):
         return ".xls"
-    elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
-        return ".xlsx"
     elif content_type.startswith("application/pdf"):
         return ".pdf"
     else:
@@ -244,6 +244,7 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
         index = 0
+        uniq_files =  set()
         for url in pages_to_download:
             extension = get_file_extension_by_cached_url(url)
             outpath = os.path.join(office_folder, str(index) + extension)
@@ -251,5 +252,12 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
                 os.makedirs(os.path.dirname(outpath))
             infile = get_local_file_name_by_url(url)
             if os.path.exists(infile):
-                shutil.copyfile(infile, outpath)
+                sha256hash = ""
+                with open(infile, "rb") as f:
+                    sha256hash = hashlib.sha256(f.read()).hexdigest();
+                if sha256hash not in uniq_files:
+                    uniq_files.add(sha256hash)
+                    shutil.copyfile(infile, outpath)
+
             index += 1
+        print ("exported {0} files to {1}".format(index, office_folder))

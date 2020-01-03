@@ -1,11 +1,12 @@
 import sys
 import os
+import time
 from bs4 import BeautifulSoup
 
 from urllib.parse import urljoin
 from download import download_with_cache, OFFICE_FILE_EXTENSIONS
 from selenium import webdriver
-
+from webdriver_manager.chrome import ChromeDriverManager
 
 class TLinkInfo:
     def __init__(self, text, source=None, target=None):
@@ -118,39 +119,48 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
     return links
 
 
-def find_links_with_selenium (url, check_link_func):
-    browser = webdriver.Firefox()
-    browser.implicitly_wait(5)
-    browser.get(url)
+def find_links_with_selenium (main_url, check_link_func):
+    driver = webdriver.Firefox()
+    driver.implicitly_wait(5)
+    driver.get(main_url)
     time.sleep(6)
-    elements = browser.find_elements_by_xpath('//button | //a')
+    elements = list(driver.find_elements_by_xpath('//button | //a'))
     links = dict()
-    for e in elements:
-        if check_link_func(TLinkInfo(e.text)):
+    for i in range(len(elements)):
+        e = elements[i]
+        link_text = e.text.strip('\n\r\t ') #initialize here, can be broken after click
+        if check_link_func(TLinkInfo(link_text)):
             e.click()
             time.sleep(6)
-            browser.switch_to.window(browser.window_handles[-1])
-            link_url = browser.current_url
-            if check_link_func(TLinkInfo(e.text, url, link_url)):
-                links[link_url] = {'text': e.text.strip('\n\r\t '), 'engine': 'selenium', 'source':  main_url}
-            browser.switch_to.window(browser.window_handles[0])
-    browser.quit()
+            link_url = driver.current_url
+            if check_link_func(TLinkInfo(link_text, main_url, link_url)):
+                links[link_url] = {'text': link_text, 'engine': 'selenium', 'source':  main_url}
+            driver.back()
+            elements = list(driver.find_elements_by_xpath('//button | //a'))
+    driver.quit()
     return links
 
 
 
-def add_links(ad, url, check_link_func, use_selenium=True):
+def add_links(ad, url, check_link_func, fallback_to_selenium=True):
+    html = ""
     try:
         html = download_with_cache(url)
+    except Exception as err:
+        sys.stderr.write('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
+        ad['exception'] = str(err)
+        return
+
+    try:
         links = find_links_in_html_by_text(url, html, check_link_func)
-        if len(links) == 0 and use_selenium:
+        if len(links) == 0 and fallback_to_selenium:
             links = find_links_with_selenium(url, check_link_func)
         if 'links' not in ad:
             ad['links'] = dict()
         ad['links'].update(links)
 
     except Exception as err:
-        sys.stderr.write('cannot download page: ' + url + "\n")
+        sys.stderr.write('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
         ad['exception'] = str(err)
 
 
@@ -173,66 +183,63 @@ FIXLIST =  {
     ]
 }
 
-def find_links(office_info, source_page_collection_name, target_page_collection_name, check_link_func, use_selenium, only_missing):
-    if target_page_collection_name not in office_info:
-        office_info[target_page_collection_name] = dict()
 
-    target_collection = office_info[target_page_collection_name]
-    name = office_info['name']
+def find_links_for_one_website(start_pages, target, check_link_func, fallback_to_selenium=False, transitive=False):
 
-    if target_collection.get('engine', '') == 'manual':
-        sys.stderr.write("skip manual url updating " + name + "\n")
-        return
+    while True:
+        save_count = len(target['links'])
 
-    if len(target_collection.get('links', dict())) > 0 and only_missing:
-        sys.stderr.write("skip updating for " + name + " (already exist) \n")
-        return
-    
-    start_pages = office_info.get(source_page_collection_name, {}).get('links', {})
+        for url in start_pages:
+            sys.stderr.write("process " + url + "\n")
+            add_links(target, url, check_link_func, fallback_to_selenium)
 
-    for url in start_pages:
-        sys.stderr.write("process " + url + "\n")
-        add_links(target_collection, url, check_link_func, use_selenium)
-
-    if len(target_collection.get('links', dict())) == 0 and len(start_pages) > 0:
-        for (s,t) in FIXLIST.get(target_page_collection_name, []):
-            if start_pages[0].find(s) != -1:
-                target_collection['links'][t] = [{"text":"", "engine":"manual"}]
-
-    if len(target_collection.get('links', dict())) == 0:
-        target_collection['links'] = dict(start_pages)
-
-
-    # manual fix list (sometimes they use images instead of text...)
-    if url.find('fsin.su') != -1:
-        office_info["anticorruption_div"] = [{
-            "url": "http://www.fsin.su/anticorrup2014/",
-            "engine": "manual"
-        }]
-
-    if url.find('fso.gov.ru') != -1:
-        office_info["anticorruption_div"] = [{
-            "url": "http://www.fso.gov.ru/korrup.html",
-            "engine": "manual"
-        }]
-
-
-def get_links_count (office_info, page_collection_name):
-    return len(office_info.get(page_collection_name, {}).get('links', dict()))
+        new_count = len(target['links'])
+        if not transitive or save_count == new_count:
+            break
 
 
 def find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
-                                check_link_func, use_selenium=False, transitive=False, only_missing=True):
+                                check_link_func, fallback_to_selenium=True, transitive=False, only_missing=True,
+                                include_source="copy_if_empty"):
     for office_info in offices:
-        while True:
-            save_count = get_links_count(office_info, target_page_collection_name)
-            find_links(office_info, source_page_collection_name, target_page_collection_name, check_link_func, use_selenium, only_missing)
-            new_count =  get_links_count(office_info, target_page_collection_name)
-            if not transitive or save_count == new_count:
-                break
+        name = office_info['name']
+        if target_page_collection_name not in office_info:
+            office_info[target_page_collection_name] = dict()
+        target = office_info[target_page_collection_name]
+        if 'links' not in target:
+            target['links'] = dict()
+
+        if target.get('engine', '') == 'manual':
+            sys.stderr.write("skip manual url updating {0}, target={1}\n".format(
+                name, target_page_collection_name))
+            continue
+        if len(target['links']) > 0 and only_missing:
+            sys.stderr.write("skip manual url updating {0}, target={1}, (already exist)\n".format(
+                name, target_page_collection_name))
+            continue
+
+        start_pages = office_info.get(source_page_collection_name, {}).get('links', dict())
+
+        if include_source == "always":
+            target['links'].update(start_pages)
+
+        find_links_for_one_website(start_pages, target,
+                                   check_link_func, fallback_to_selenium, transitive)
+
+        if include_source == "copy_if_empty" and len(target['links']) == 0:
+            target['links'].update(start_pages)
+
+        if len(target) == 0 and len(start_pages) > 0:
+            for (s,t) in FIXLIST.get(target_page_collection_name, []):
+                if start_pages[0].find(s) != -1:
+                    target[t] = [{"text":  "", "engine": "manual"}]
 
 
-
-def collect_subpages(offices, source_page_collection_name, target_page_collection_name, check_link_func):
+def collect_subpages(offices, source_page_collection_name, target_page_collection_name, check_link_func,
+                     include_source="always"):
     find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
-                                check_link_func, False, True, False)
+                                check_link_func,
+                                fallback_to_selenium=False,
+                                transitive=True,
+                                only_missing=False,
+                                include_source=include_source)

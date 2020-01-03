@@ -63,8 +63,12 @@ def check_office_document(link_info):
     if check_download_text(link_info):
         return True
     if link_info.Target is not None:
-        ext = get_file_extension_by_url(link_info.Target)
-        return ext != ".html"
+        try:
+            ext = get_file_extension_by_url(link_info.Target)
+            return ext != ".html"
+        except Exception as err:
+            sys.stderr.write('cannot query (HEAD) url={0}  exception={1}\n'.format(link_info.Target, str(err)))
+            return False
     return False
 
 def check_documents(link_info):
@@ -87,6 +91,7 @@ def parse_args():
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
     parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
     parser.add_argument("--start-from", dest='start_from', default=None)
+    parser.add_argument("--stop-after", dest='stop_after', default=None)
     return parser.parse_args()
 
 
@@ -97,16 +102,16 @@ if __name__ == "__main__":
     offices = read_office_list(args.project)
 
     steps = [
-        (find_links_for_all_websites, "sitemap", check_link_sitemap),
-        (find_links_for_all_websites, "anticorruption_div", check_anticorr_link_text),
-        (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax),
-        (collect_subpages, "declarations_div_pages", check_sub_page),
-        (find_links_for_all_websites, "declarations_div_pages2", check_documents),
-        (find_links_for_all_websites, "declarations", check_office_document),
+        (find_links_for_all_websites, "sitemap", check_link_sitemap, "always"),
+        (find_links_for_all_websites, "anticorruption_div", check_anticorr_link_text, "copy_if_empty"),
+        (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
+        (collect_subpages, "declarations_div_pages", check_sub_page, "always"),
+        (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
+        (find_links_for_all_websites, "declarations", check_office_document, "never"),
     ]
     prev_step = "morda"
     found_start_from = args.start_from is None
-    for step_function, step_name, check_link_func in steps:
+    for step_function, step_name, check_link_func, include_source in steps:
         if args.start_from is not None and step_name == args.start_from:
             found_start_from = True
 
@@ -114,11 +119,13 @@ if __name__ == "__main__":
             if args.rebuild:
                 del_old_info(offices, step_name)
             print ("=== step {0} =========".format(step_name))
-            step_function(offices, prev_step, step_name, check_link_func)
+            step_function(offices, prev_step, step_name, check_link_func, include_source=include_source)
             write_offices(offices, args.project)
+        if args.stop_after is not None and step_name == args.stop_after:
+            break
 
         prev_step = step_name
 
-
-    download_page_collection(offices, prev_step)
-    export_files_to_folder(offices, prev_step, "result")
+    if args.stop_after is None:
+        download_page_collection(offices, prev_step)
+        export_files_to_folder(offices, prev_step, "result")
