@@ -97,13 +97,19 @@ def is_office_document(href):
 def find_links_in_html_by_text(main_url, html, check_link_func):
     soup = BeautifulSoup(html, 'html5lib')
     links = {}
+    base = main_url
+    for l in soup.findAll('base'):
+        href = l.attrs.get('href')
+        if href is not None:
+            base = href
+
     for  l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
             if href.startswith('mailto:'):
                 continue
 
-            href = make_link(main_url, href)
+            href = make_link(base, href)
 
             if  check_link_func( TLinkInfo(l.text, main_url, href) ):
                 links[href] = {'text': l.text, 'engine': 'urllib', 'source':  main_url}

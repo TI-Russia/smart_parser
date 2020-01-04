@@ -9,6 +9,7 @@ import shutil
 import requests
 from urllib.parse import urlparse, quote, urlunparse
 import hashlib
+from collections import defaultdict
 
 import os
 from selenium import webdriver
@@ -23,12 +24,19 @@ def is_html_contents(info):
 
 
 HEADER_CACHE = {}
+HEADER_REQUEST_COUNT = defaultdict(int)
+
 def get_url_headers (url):
     global HEADER_CACHE
+    global HEADER_REQUEST_COUNT
     if url in  HEADER_CACHE:
         return HEADER_CACHE[url]
+    if HEADER_REQUEST_COUNT[url] > 3:
+        raise Exception("too many times to get headers that caused exceptions")
+
+    HEADER_REQUEST_COUNT[url] += 1
     print("get headers for " + url)
-    res =  requests.head(url).headers
+    res = requests.head(url).headers
     HEADER_CACHE[url] = res
     return res
 
