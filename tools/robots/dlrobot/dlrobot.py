@@ -13,7 +13,7 @@ from find_link import \
     OFFICE_FILE_EXTENSIONS, \
     check_self_link, \
     collect_subpages, \
-    check_sub_page
+    check_sub_page_or_iframe
 
 
 def check_link_sitemap(link_info):
@@ -59,6 +59,7 @@ def check_download_text(link_info):
             return True
     return False
 
+
 def check_office_document(link_info):
     if check_download_text(link_info):
         return True
@@ -71,12 +72,13 @@ def check_office_document(link_info):
             return False
     return False
 
+
 def check_documents(link_info):
     text = link_info.Text.strip(' \n\t\r').strip('"').lower()
     if text.find("сведения") == -1:
         return False
     if link_info.Target is not None:
-        return re.search('(documents)|(files)', link_info.Target.lower()) is not None
+        return re.search('(docs)||(documents)|(files)', link_info.Target.lower()) is not None
     return True
 
 
@@ -105,7 +107,7 @@ if __name__ == "__main__":
         (find_links_for_all_websites, "sitemap", check_link_sitemap, "always"),
         (find_links_for_all_websites, "anticorruption_div", check_anticorr_link_text, "copy_if_empty"),
         (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
-        (collect_subpages, "declarations_div_pages", check_sub_page, "always"),
+        (collect_subpages, "declarations_div_pages", check_sub_page_or_iframe, "always"),
         (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
         (find_links_for_all_websites, "declarations", check_office_document, "never"),
     ]
