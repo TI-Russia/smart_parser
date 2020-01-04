@@ -9,17 +9,20 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 class TLinkInfo:
-    def __init__(self, text, source=None, target=None):
+    def __init__(self, text, source=None, target=None, tagName=None):
         self.Source = source
         self.Target = target
         self.Text = text
+        self.TagName = tagName
 
 
-def check_sub_page(link_info):
+def check_sub_page_or_iframe(link_info):
     if not check_self_link(link_info):
         return False
     if link_info.Target is None:
         return False
+    if link_info.TagName is not None and link_info.TagName.lower() == "iframe":
+        return True
     return link_info.Target.startswith(link_info.Source)
 
 
@@ -111,7 +114,7 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
 
             href = make_link(base, href)
 
-            if  check_link_func( TLinkInfo(l.text, main_url, href) ):
+            if  check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
                 links[href] = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
             else:
                 if is_office_document(href):
@@ -121,6 +124,16 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
                             links[href] = {'text': found_text, 'engine': 'urllib', 'source':  main_url}
                     except SomeOtherTextException as err:
                         continue
+
+    for  l in soup.findAll('iframe'):
+        href = l.attrs.get('src')
+        if href is not None:
+            if href.startswith('mailto:'):
+                continue
+
+            href = make_link(base, href)
+            if  check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
+                links[href] = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
 
     return links
 
@@ -134,12 +147,13 @@ def find_links_with_selenium (main_url, check_link_func):
     links = dict()
     for i in range(len(elements)):
         e = elements[i]
+        tag_name = e.tag_name
         link_text = e.text.strip('\n\r\t ') #initialize here, can be broken after click
         if check_link_func(TLinkInfo(link_text)):
             e.click()
             time.sleep(6)
             link_url = driver.current_url
-            if check_link_func(TLinkInfo(link_text, main_url, link_url)):
+            if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name)):
                 links[link_url] = {'text': link_text, 'engine': 'selenium', 'source':  main_url}
             driver.back()
             elements = list(driver.find_elements_by_xpath('//button | //a'))
