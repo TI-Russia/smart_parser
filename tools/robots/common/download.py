@@ -10,13 +10,13 @@ import requests
 from urllib.parse import urlparse, quote, urlunparse
 import hashlib
 from collections import defaultdict
+import logging
 
 import os
 from selenium import webdriver
 import time
 FILE_CACHE_FOLDER="cached"
 OFFICE_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf'}
-
 
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
@@ -35,7 +35,7 @@ def get_url_headers (url):
         raise Exception("too many times to get headers that caused exceptions")
 
     HEADER_REQUEST_COUNT[url] += 1
-    print("get headers for " + url)
+    logging.debug("\tget headers for " + url)
     res = requests.head(url).headers
     HEADER_CACHE[url] = res
     return res
@@ -69,7 +69,7 @@ def download_with_urllib (url, search_for_js_redirect=True):
     data = ''
     info = {}
     headers = None
-    print ("urllib.request.urlopen ({})".format(url))
+    logging.debug("urllib.request.urlopen ({})".format(url))
     with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
         data = request.read()
         info = request.info()
@@ -77,7 +77,7 @@ def download_with_urllib (url, search_for_js_redirect=True):
 
     try:
         if is_html_contents(info):
-            print("\tencoding..")
+            logging.debug("\tencoding..")
             encoding = headers.get_content_charset()
             if encoding == None:
                 match = re.search('charset=([^"\']+)', data.decode('latin', errors="ignore"))
@@ -149,6 +149,24 @@ def url_to_localfilename (url):
     return localfile
 
 
+
+def save_download_file(filename):
+    global FILE_CACHE_FOLDER
+    download_folder = os.path.join(FILE_CACHE_FOLDER, "downloads")
+    if not os.path.exists(download_folder):
+        os.mkdir(download_folder)
+    assert (os.path.exists(filename))
+    hashcode = ""
+    with open(filename, "rb") as f:
+        hashcode = hashlib.sha256(f.read()).hexdigest()
+    extension = os.path.splitext(filename)[1]
+    save_filename = os.path.join(download_folder, hashcode + extension)
+    if os.path.exists(save_filename):
+        logging.debug("replace existing {0}".format(save_filename))
+        os.remove(save_filename)
+    os.rename(filename, save_filename)
+    return save_filename
+
 def get_local_file_name_by_url(url):
     global FILE_CACHE_FOLDER
     if not os.path.exists(FILE_CACHE_FOLDER):
@@ -193,7 +211,8 @@ def download_page_collection(offices, page_collection_name):
         pages_to_download  = office_info.get(page_collection_name, dict()).get('links', dict())
         for url in pages_to_download:
             try:
-                download_with_cache(url)
+                if 'downloaded_file' not in pages_to_download[url]:
+                    download_with_cache(url)
             except Exception as err:
                 sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
                 pass
@@ -241,6 +260,15 @@ def get_file_extension_by_url(url):
     ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
     return ext
 
+def get_all_sha256(office_info, page_collection_name):
+    pages_to_download = office_info.get(page_collection_name, dict()).get('links', dict())
+    result = set()
+    for url in pages_to_download:
+        infile = get_local_file_name_by_url(url)
+        if os.path.exists(infile):
+            with open(infile, "rb") as f:
+                result.add (hashlib.sha256(f.read()).hexdigest())
+    return result
 
 def export_files_to_folder(offices, page_collection_name, outfolder):
     for office_info in offices:
@@ -254,11 +282,17 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
         index = 0
         uniq_files =  set()
         for url in pages_to_download:
-            extension = get_file_extension_by_cached_url(url)
+            downloaded_file = pages_to_download[url].get('downloaded_file')
+            if downloaded_file is not None:
+                infile = downloaded_file
+                extension = os.path.splitext(infile)[1]
+            else:
+                extension = get_file_extension_by_cached_url(url)
+                infile = get_local_file_name_by_url(url)
+
             outpath = os.path.join(office_folder, str(index) + extension)
             if not os.path.exists(os.path.dirname(outpath)):
                 os.makedirs(os.path.dirname(outpath))
-            infile = get_local_file_name_by_url(url)
             if os.path.exists(infile):
                 sha256hash = ""
                 with open(infile, "rb") as f:
@@ -268,4 +302,4 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
                     shutil.copyfile(infile, outpath)
 
             index += 1
-        print ("exported {0} files to {1}".format(index, office_folder))
+        logging.info("exported {0} files to {1}".format(index, office_folder))
