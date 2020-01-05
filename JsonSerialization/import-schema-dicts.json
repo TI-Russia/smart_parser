@@ -634,16 +634,19 @@
                         35304
                     ], 
                     "title": "ID файла в базе Декларатора"
-                }, 
-                "year": {
-                    "$id": "/properties/document/properties/year", 
-                    "default": 0, 
-                    "type": "integer", 
-                    "examples": [
-                        2016
-                    ], 
-                    "title": "Год декларируемых доходов"
-                }, 
+                },
+              "year": {
+                "$id": "/properties/document/properties/year",
+                "default": 0,
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "examples": [
+                  2016
+                ],
+                "title": "Год декларируемых доходов"
+              }, 
                 "type": {
                     "title": "Тип декларации", 
                     "$id": "/properties/document/properties/type", 

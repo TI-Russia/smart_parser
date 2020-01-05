@@ -25,9 +25,11 @@ def get_logger():
     f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     f_handler.setFormatter(f_format)
     
-    # Add handlers to the logger
-    logger.addHandler(f_handler)
+    # # Add handlers to the logger
+    # logger.addHandler(f_handler)
     return logger
+
+
 logger = get_logger()
 
 smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
@@ -80,7 +82,7 @@ def run_smart_parser(filepath, args):
             return
 
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
-        smart_parser_options = "-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
+        smart_parser_options = r"-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
     else:
         smart_parser_options = "-adapter prod"
 
@@ -131,6 +133,10 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
     except FileNotFoundError:
         data['document']['parser_log'] = "FileNotFoundError: " + sourcefile + ".log"
 
+    data['document']['documentfile_id'] = df_id
+    if archive_file:
+        data['document']['archive_file'] = archive_file
+
     # if time_delta == PARSER_TIMEOUT:
     #     data['document']['parser_log'] += "\nTimeout %i exceeded for smart_parser.exe" % PARSER_TIMEOUT
 
@@ -166,7 +172,7 @@ class ProcessOneFile(object):
                 self.run_job(job)
 
         except KeyboardInterrupt:
-           kill_process_windows(self.parent_pid)
+            kill_process_windows(self.parent_pid)
 
     def run_job(self, job):
         file_url, df_id, archive_file = job['download_url'], job['document_file'], job['archive_file']
@@ -176,13 +182,11 @@ class ProcessOneFile(object):
         filename, ext = os.path.splitext(filename)
 
         if archive_file:
-            file_path = os.path.join("out", str(df_id), "%s%s" % (filename, ext))
+            file_path = os.path.join("out", str(df_id), archive_file)
         else:
             file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
         file_path = download_file(file_url, file_path)
-
-        logger.info(file_path)
 
         time_delta = run_smart_parser(file_path, self.args)
         if time_delta is not None:
@@ -191,14 +195,16 @@ class ProcessOneFile(object):
             logger.error("time_delta=None for %s" % file_path)
 
 
-def generate_jobs(url=None):
-    """API call return list of files to parse (paged)"""
+def generate_jobs(url=None, stop=False):
+    """API call return list of files to parse (paged now)"""
    
     next_url = url
     while next_url:
         logger.info("GET Joblist URL: %s" % next_url)
         result = json.loads(client.get(next_url).content.decode('utf-8'))
         next_url = result['next']
+        if stop:
+            next_url = None
         file_list = result['results']
         logger.info("%i jobs listed" % len(file_list))
         for obj in file_list:
@@ -212,10 +218,11 @@ if __name__ == '__main__':
     original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     signal.signal(signal.SIGINT, original_sigint_handler)
 
-    jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
+    # jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
+    jobs_url = "https://declarator.org/api/fixed_document_file/?error=FileNotFoundError&page_size=1000"
 
     try:
-        res = pool.map(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url)))
+        res = list(pool.imap(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url, stop=False)), chunksize=1))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
