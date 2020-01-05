@@ -1,9 +1,15 @@
 ﻿import sys
 import re
+import json
+import os
 import argparse
+from urllib.parse import urlparse
+import logging
+
 sys.path.append('../common')
 
-from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url
+from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url, \
+    get_all_sha256
 
 from office_list import  create_office_list, read_office_list, write_offices
 
@@ -15,6 +21,25 @@ from find_link import \
     collect_subpages, \
     check_sub_page_or_iframe
 
+def setup_logging(args):
+    root = logging.getLogger()
+    root.setLevel(logging.DEBUG)
+
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if os.path.exists(args.logfile):
+        os.remove(args.logfile)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(args.logfile)
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    root.addHandler(fh)
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    #ch.setFormatter(formatter)
+    root.addHandler(ch)
 
 def check_link_sitemap(link_info):
     if not check_self_link(link_info):
@@ -65,6 +90,8 @@ def check_office_document(link_info):
         return True
     if link_info.Target is not None:
         try:
+            if link_info.DownloadFile is not None:
+                return True
             ext = get_file_extension_by_url(link_info.Target)
             return ext != ".html"
         except Exception as err:
@@ -88,18 +115,52 @@ def del_old_info(offices, step_name):
             del (office_info[step_name])
 
 
+def strip_domain(domain):
+    if domain.startswith('www.'):
+        domain = domain[len('www.'):]
+    return domain
+
+
+class THumanFiles:
+    def __init__(self):
+        self.files = list()
+
+    def read_from_file(self, filename):
+        with open(filename, "r", encoding="utf8") as inpf:
+            self.files = json.load(inpf)
+
+    def check_all_offices(self, offices, page_collection_name):
+        for o in offices:
+            main_url = list(o['morda']['links'])[0]
+            main_domain = strip_domain(urlparse(main_url).netloc)
+            logging.debug("check_recall for {}".format(main_domain))
+            robot_sha256 = get_all_sha256(o, page_collection_name)
+            for x in self.files:
+                if len(x['domain']) > 0:
+                    domain = strip_domain(x['domain'])
+                    if domain == main_domain or main_domain.endswith(domain) or domain.endswith(main_domain):
+                        for s in x['sha256']:
+                            if s not in robot_sha256:
+                                logging.debug("{0} not found from {1}".format(s, json.dumps(x)))
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
     parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
     parser.add_argument("--start-from", dest='start_from', default=None)
     parser.add_argument("--stop-after", dest='stop_after', default=None)
+    parser.add_argument("--from-human", dest='from_human_file_name', default=None)
+    parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
     return parser.parse_args()
 
 
 
 if __name__ == "__main__":
     args = parse_args()
+    setup_logging(args)
+    human_files = THumanFiles()
+    if args.from_human_file_name is not None:
+        human_files.read_from_file(args.from_human_file_name)
     #offices = create_office_list(args.project)
     offices = read_office_list(args.project)
 
@@ -120,7 +181,7 @@ if __name__ == "__main__":
         if found_start_from:
             if args.rebuild:
                 del_old_info(offices, step_name)
-            print ("=== step {0} =========".format(step_name))
+            logging.info("=== step {0} =========".format(step_name))
             step_function(offices, prev_step, step_name, check_link_func, include_source=include_source)
             write_offices(offices, args.project)
         if args.stop_after is not None and step_name == args.stop_after:
@@ -129,5 +190,8 @@ if __name__ == "__main__":
         prev_step = step_name
 
     if args.stop_after is None:
-        download_page_collection(offices, prev_step)
-        export_files_to_folder(offices, prev_step, "result")
+        last_step = steps[-1][1]
+        download_page_collection(offices, last_step)
+        export_files_to_folder(offices, last_step, "result")
+        if args.from_human_file_name is not None:
+            human_files.check_all_offices(offices, last_step)
