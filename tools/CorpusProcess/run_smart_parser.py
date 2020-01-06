@@ -12,6 +12,10 @@ from multiprocessing import Pool
 import signal
 import argparse
 
+OUT_FOLDER = "out_minkult"
+smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
+declarator_domain = 'https://declarator.org'
+
 # Create a custom logger
 def get_logger():
     logger = logging.getLogger(__name__)
@@ -29,11 +33,7 @@ def get_logger():
     # logger.addHandler(f_handler)
     return logger
 
-
 logger = get_logger()
-
-smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
-declarator_domain = 'https://declarator.org'
 
 client = requests.Session()
 credentials = json.load(open('auth.json'))
@@ -182,9 +182,9 @@ class ProcessOneFile(object):
         filename, ext = os.path.splitext(filename)
 
         if archive_file:
-            file_path = os.path.join("out", str(df_id), archive_file)
+            file_path = os.path.join(OUT_FOLDER, str(df_id), archive_file)
         else:
-            file_path = os.path.join("out", "%i%s" % (df_id, ext))
+            file_path = os.path.join(OUT_FOLDER, "%i%s" % (df_id, ext))
 
         file_path = download_file(file_url, file_path)
 
@@ -219,7 +219,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     # jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
-    jobs_url = "https://declarator.org/api/fixed_document_file/?error=FileNotFoundError&page_size=1000"
+    jobs_url = "https://declarator.org/api/fixed_document_file/?office=579"
 
     try:
         res = list(pool.imap(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url, stop=False)), chunksize=1))

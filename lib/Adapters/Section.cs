@@ -84,7 +84,7 @@ namespace Smart.Parser.Adapters
 
             }
             rowText = rowText.Trim(' ', '\n');
-            bool manyColsAreMerged = maxMergedCols > colsCount * 0.7;
+            bool manyColsAreMerged = maxMergedCols > colsCount * 0.45;
             bool OneColumnIsLarge = maxCellWidth > 1000 || maxCellWidth >= allWidth * 0.3;
             bool hasEnoughLength = rowText.Length >= 9; // "Референты";
             bool langModel = CheckSectionLanguageModel(cellText);

@@ -247,6 +247,7 @@ namespace Smart.Parser.Adapters
         }
         static bool CanBePatronymic(string s)
         {
+            s = s.Replace("-", "");
             if (s.Length == 0) return false;
             if (!Char.IsUpper(s[0])) return false;
             return s.EndsWith("вич") || 
@@ -276,7 +277,7 @@ namespace Smart.Parser.Adapters
                 string[] result = Regex.Split(v, pattern);
                 if (result.Length < 2)
                 {
-                    string[] words = Regex.Split(v, @"\s+");
+                    string[] words = Regex.Split(v, @"[\s\n]+");
                     if (words.Length >= 3 && CanBePatronymic(words[2]))
                     {
                         PersonName = String.Join(" ", words.Take(3)).Trim();
@@ -286,7 +287,7 @@ namespace Smart.Parser.Adapters
                     else
                     {
                         throw new SmartParserException(
-                            string.Format("Cannot  parse  name+occupation value {0} at row {1}", v, GetRowIndex()));
+                            string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
                     }
                 }
                 else
