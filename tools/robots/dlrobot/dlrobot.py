@@ -21,6 +21,7 @@ from find_link import \
     collect_subpages, \
     check_sub_page_or_iframe
 
+
 def setup_logging(args):
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
@@ -58,17 +59,35 @@ def check_link_svedenia_o_doxodax(link_info):
     text = link_info.Text.strip(' \n\t\r').strip('"').lower()
     text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
 
-    if text.startswith(u'сведения о доходах'):
+    if re.search('(сведения)|(справк[аи]) о доходах', text) is not None:
         return True
 
     if text.startswith(u'сведения') and text.find("коррупц") != -1:
-        return True;
+        return True
     return False
 
+
+def check_year_or_subpage(link_info):
+    if check_sub_page_or_iframe(link_info):
+        return True
+
+    # here is a place for ML
+    if link_info.Text is not None:
+        text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+        if text.find('сведения') != -1:
+            return True
+    if link_info.Target is not None:
+        target = link_info.Target.lower()
+        if re.search('(^sved)|(sveodoh)|(do[ck]?[hx]od)|(income)', target) is not None:
+            return True
+
+    return False
 
 
 def check_download_text(link_info):
     text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+    if text.find('шаблоны') != -1:
+        return False
     if text.startswith(u'скачать'):
         return True
     if text.startswith(u'загрузить'):
@@ -149,10 +168,12 @@ class THumanFiles:
                                 found_files_count += 1
             logging.info("all human files = {}, human files found by dlrobot = {}".format(files_count, found_files_count))
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
     parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
+    parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
     parser.add_argument("--stop-after", dest='stop_after', default=None)
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
@@ -169,12 +190,15 @@ if __name__ == "__main__":
         human_files.read_from_file(args.from_human_file_name)
     #offices = create_office_list(args.project)
     offices = read_office_list(args.project)
+    if args.step is  not None:
+        args.start_from = args.step
+        args.stop_after = args.step
 
     steps = [
         (find_links_for_all_websites, "sitemap", check_link_sitemap, "always"),
         (find_links_for_all_websites, "anticorruption_div", check_anticorr_link_text, "copy_if_empty"),
         (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
-        (collect_subpages, "declarations_div_pages", check_sub_page_or_iframe, "always"),
+        (collect_subpages, "declarations_div_pages", check_year_or_subpage, "always"),
         (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
         (find_links_for_all_websites, "declarations", check_accepted_declaration_file_type, "never"),
     ]

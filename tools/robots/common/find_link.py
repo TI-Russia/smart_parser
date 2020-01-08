@@ -5,6 +5,7 @@ import logging
 from bs4 import BeautifulSoup
 import shutil
 from urllib.parse import urljoin
+import urllib
 from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url
 from content_types import  ALL_CONTENT_TYPES
@@ -19,17 +20,29 @@ class TLinkInfo:
         self.TagName = tagName
         self.DownloadFile = download_file
 
+def strip_html_url(url):
+    if url.endswith('.html'):
+        url = url[:-len('.html')]
+    if url.endswith('.htm'):
+        url = url[:-len('.htm')]
+    if url.startswith('http://'):
+        url = url[len('http://'):]
+    if url.startswith('http://'):
+        url = url[len('https://'):]
+    if url.startswith('www.'):
+        url = url[len('www.'):]
+    return url
 
 def check_sub_page_or_iframe(link_info):
     if not check_self_link(link_info):
         return False
     if link_info.Target is None:
-            return False
+        return False
     if link_info.TagName is not None and link_info.TagName.lower() == "iframe":
         return True
-    return link_info.Target.startswith(link_info.Source)
-
-
+    parent = strip_html_url(link_info.Source)
+    subpage = strip_html_url(link_info.Target)
+    return subpage.startswith(parent)
 
 
 def check_self_link(link_info):
@@ -69,37 +82,44 @@ class SomeOtherTextException(Exception):
         return (repr(self.value))
 
 
-def find_recursive_to_bottom (element, check_link_func):
+def find_recursive_to_bottom (start_element, check_link_func, element):
     children = element.findChildren()
     if len(children) == 0:
-        if len(element.text) > 0:
+        if len(element.text) > 0 and element != start_element:
             if check_link_func(TLinkInfo(element.text)):
                 return element.text
             if len (element.text.strip()) > 10:
                 raise SomeOtherTextException (element.text.strip())
     else:
         for child in children:
-            found_text = find_recursive_to_bottom(child, check_link_func)
+            found_text = find_recursive_to_bottom(start_element,check_link_func, child)
             if len(found_text) > 0:
                 return found_text
     return ""
 
 
-def go_to_the_top (element, max_iterations_count, check_link_func):
-    for i  in range(max_iterations_count):
+def check_long_near_text (start_element, upward_distance, check_link_func):
+    # go to the top
+    element = start_element
+    for i in range(upward_distance):
         element = element.parent
         if element is None:
             return ""
-        found_text = find_recursive_to_bottom (element, check_link_func)
+        # go to the bottom
+        found_text = find_recursive_to_bottom (start_element, check_link_func, element)
         if len(found_text) > 0:
             return found_text
     return ""
 
 
-def has_office_document_file_extension(href):
+def can_be_office_document(href):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
     filename, file_extension = os.path.splitext(href)
-    return file_extension.lower() in ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    if file_extension.lower() in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        return True
+    if href.find('docs.google') != -1:
+        return True
+    return False
 
 
 def get_base_url(main_url, soup):
@@ -115,11 +135,26 @@ def check_http(href):
         return False
     if href.startswith('tel:'):
         return False
+    if href.startswith('javascript:'):
+        return False
     return True
+
+
+def strip_viewer_prefix(href):
+    # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
+    google_viewer_prefix = 'https://docs.google.com/viewer?url='
+    if href.startswith(google_viewer_prefix):
+        href = href[len(google_viewer_prefix):]
+        return  urllib.parse.unquote(href)
+    else:
+        return href
+
 
 def add_link(links, href, record):
     if record['source'] != href:
+        href = strip_viewer_prefix(href)
         links[href] = record
+
         logging.debug("add link {0}".format(href))
 
 
@@ -127,7 +162,7 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
     soup = BeautifulSoup(html, 'html5lib')
     links = {}
     all_links_count = 0
-    if has_office_document_file_extension(main_url):
+    if can_be_office_document(main_url):
         return links, all_links_count
     base = get_base_url(main_url, soup)
     logging.debug("find_links_in_html_by_text function={0}".format(check_link_func))
@@ -138,19 +173,23 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
             if not check_http(href):
                 continue
             logging.debug("check link {0}".format(href))
-            href = make_link(base, href)
+            href = strip_viewer_prefix( make_link(base, href) )
             if  check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                record = {'text': l.text, 'engine': 'urllib', 'source': main_url}
+                record = {'text': l.text, 'engine': 'urllib', 'source': main_url, 'tagname':l.name}
                 add_link(links, href, record)
             else:
-                if has_office_document_file_extension(href):
+                if can_be_office_document(href):
+                    found_text = ""
                     try:
-                        found_text = go_to_the_top(l, 3, check_link_func)
-                        if len(found_text) > 0:
-                            record = {'text': found_text, 'engine': 'urllib', 'source':  main_url}
-                            add_link(links, href, record)
+                        if check_link_func(TLinkInfo(soup.title.string, main_url, href, l.name)):
+                            found_text = soup.title.string
+                        else:
+                            found_text = check_long_near_text(l, 3, check_link_func)
                     except SomeOtherTextException as err:
                         continue
+                    if len(found_text) > 0:
+                        record = {'text': found_text, 'engine': 'urllib', 'source':  main_url, 'text_proxim': True, 'tagname':l.name}
+                        add_link(links, href, record)
 
     for l in soup.findAll('iframe'):
         href = l.attrs.get('src')
@@ -161,7 +200,7 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
 
             href = make_link(base, href)
             if check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                record = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
+                record = {'text': l.text, 'engine': 'urllib', 'source':  main_url, 'tagname':l.name}
                 add_link(links, href, record)
 
     return links, all_links_count
@@ -174,6 +213,7 @@ def recreate_tmp_download_folder():
     if os.path.exists(TMP_DOWNLOAD_FOLDER):
         shutil.rmtree(TMP_DOWNLOAD_FOLDER)
     os.makedirs(TMP_DOWNLOAD_FOLDER)
+
 
 def open_selenium():
     global TMP_DOWNLOAD_FOLDER
@@ -208,9 +248,10 @@ def wait_download_finished(timeout=120):
     return None
 
 
+
 def find_links_with_selenium (main_url, check_link_func):
     links = dict()
-    if has_office_document_file_extension(main_url):
+    if can_be_office_document(main_url):
         return links
     logging.debug("find_links_with_selenium url={0}, function={1}".format(main_url, check_link_func))
     driver = open_selenium()
@@ -231,7 +272,7 @@ def find_links_with_selenium (main_url, check_link_func):
             downloaded_file = wait_download_finished(120)
             link_url = driver.current_url
             if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
-                record = {'text': link_text, 'engine': 'selenium', 'source':  main_url}
+                record = {'text': link_text, 'engine': 'selenium', 'source':  main_url, 'tagname': tag_name}
                 if downloaded_file is not None:
                     record['downloaded_file'] = downloaded_file
                     link_url = "download:" + str(i)+ ":" + link_url
@@ -262,14 +303,14 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
         # see http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g
         if len(links) == 0 and fallback_to_selenium:
             links = find_links_with_selenium(url, check_link_func)
-        if 'links' not in ad:
-            ad['links'] = dict()
-        ad['links'].update(links)
 
     except Exception as err:
         logging.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
         ad['exception'] = str(err)
 
+    if 'links' not in ad:
+        ad['links'] = dict()
+    ad['links'].update(links)
 
 
 FIXLIST =  {
@@ -317,7 +358,7 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
 
         if include_source == "always":
             target['links'].update(start_pages)
-
+        logging.info('{0}'.format(list(office_info['morda']['links'])[0]))
         find_links_for_one_website(start_pages, target,
                                    check_link_func, fallback_to_selenium, transitive)
 
@@ -328,6 +369,7 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
             for (s,t) in FIXLIST.get(target_page_collection_name, []):
                 if start_pages[0].find(s) != -1:
                     target[t] = [{"text":  "", "engine": "manual"}]
+        logging.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.get('links', []))))
 
 
 def collect_subpages(offices, source_page_collection_name, target_page_collection_name, check_link_func,

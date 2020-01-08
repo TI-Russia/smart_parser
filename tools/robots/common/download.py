@@ -50,6 +50,7 @@ def find_simple_js_redirect(data):
 def has_cyrillic(text):
     return bool(re.search('[Ёёа-яА-Я]', text))
 
+
 def download_with_urllib (url, search_for_js_redirect=True):
     o = list(urlparse(url)[:])
     if o[2].find('%') == -1:
@@ -226,6 +227,8 @@ def get_extenstion_by_content_type(content_type):
         return ".xlsx"
     elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
         return ".docx"
+    elif content_type.find("ms-word") != -1:
+        return ".doc"
     elif content_type.startswith("application/msword"):
         return ".doc"
     elif content_type.startswith("application/rtf"):
