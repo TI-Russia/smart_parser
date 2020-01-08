@@ -3,7 +3,6 @@ import sys
 import urllib.parse
 import urllib.request
 import json
-import hashlib
 import re
 import shutil
 import requests
@@ -16,8 +15,8 @@ import os
 from selenium import webdriver
 import time
 FILE_CACHE_FOLDER="cached"
-OFFICE_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf'}
-
+ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip'}
+DEFAULT_HTML_EXTENSION = ".html"
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
     return content_type.startswith('text')
@@ -88,9 +87,12 @@ def download_with_urllib (url, search_for_js_redirect=True):
 
             data = data.decode(encoding, errors="ignore")
             if search_for_js_redirect:
-                redirect_url = find_simple_js_redirect(data)
-                if redirect_url is not None and redirect_url != url:
-                    return download_with_urllib(redirect_url, search_for_js_redirect=False)
+                try:
+                    redirect_url = find_simple_js_redirect(data)
+                    if redirect_url is not None and redirect_url != url:
+                        return download_with_urllib(redirect_url, search_for_js_redirect=False)
+                except Exception:
+                    pass
 
     except AttributeError:
         pass
@@ -219,7 +221,7 @@ def download_page_collection(offices, page_collection_name):
 
 def get_extenstion_by_content_type(content_type):
     if content_type.startswith("text"):
-        return ".html"
+        return DEFAULT_HTML_EXTENSION
     elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
         return ".xlsx"
     elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
@@ -234,18 +236,20 @@ def get_extenstion_by_content_type(content_type):
         return ".xls"
     elif content_type.startswith("application/pdf"):
         return ".pdf"
+    elif content_type.startswith("application/zip"):
+        return ".zip"
     else:
-        return ".html"
+        return DEFAULT_HTML_EXTENSION
 
 
 def get_file_extension_by_cached_url(url):
-    for e in OFFICE_FILE_EXTENSIONS:
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if url.lower().endswith(e):
             return e
 
     localfile = get_local_file_name_by_url(url)
     if not os.path.exists(localfile):
-        return ".html";
+        return DEFAULT_HTML_EXTENSION
 
     info_file = localfile + ".headers"
     with open(info_file, "r", encoding="utf8") as inf:

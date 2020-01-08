@@ -16,7 +16,7 @@ from office_list import  create_office_list, read_office_list, write_offices
 from find_link import \
     find_links_for_all_websites, \
     check_anticorr_link_text, \
-    OFFICE_FILE_EXTENSIONS, \
+    ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
     collect_subpages, \
     check_sub_page_or_iframe
@@ -74,8 +74,8 @@ def check_download_text(link_info):
     if text.startswith(u'загрузить'):
         return True
 
-    global OFFICE_FILE_EXTENSIONS
-    for e in OFFICE_FILE_EXTENSIONS:
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if text.startswith(e[1:]):  #without "."
             return True
         if text.find(e) != -1:
@@ -85,7 +85,7 @@ def check_download_text(link_info):
     return False
 
 
-def check_office_document(link_info):
+def check_accepted_declaration_file_type(link_info):
     if check_download_text(link_info):
         return True
     if link_info.Target is not None:
@@ -135,13 +135,19 @@ class THumanFiles:
             main_domain = strip_domain(urlparse(main_url).netloc)
             logging.debug("check_recall for {}".format(main_domain))
             robot_sha256 = get_all_sha256(o, page_collection_name)
+            files_count = 0
+            found_files_count = 0
             for x in self.files:
                 if len(x['domain']) > 0:
                     domain = strip_domain(x['domain'])
                     if domain == main_domain or main_domain.endswith(domain) or domain.endswith(main_domain):
                         for s in x['sha256']:
+                            files_count += 1
                             if s not in robot_sha256:
                                 logging.debug("{0} not found from {1}".format(s, json.dumps(x)))
+                            else:
+                                found_files_count += 1
+            logging.info("all human files = {}, human files found by dlrobot = {}".format(files_count, found_files_count))
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -170,7 +176,7 @@ if __name__ == "__main__":
         (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
         (collect_subpages, "declarations_div_pages", check_sub_page_or_iframe, "always"),
         (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
-        (find_links_for_all_websites, "declarations", check_office_document, "never"),
+        (find_links_for_all_websites, "declarations", check_accepted_declaration_file_type, "never"),
     ]
     prev_step = "morda"
     found_start_from = args.start_from is None

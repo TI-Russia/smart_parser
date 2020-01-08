@@ -1,4 +1,3 @@
-import sys
 import os
 from pathlib import Path
 import time
@@ -6,7 +5,8 @@ import logging
 from bs4 import BeautifulSoup
 import shutil
 from urllib.parse import urljoin
-from download import download_with_cache, OFFICE_FILE_EXTENSIONS, save_download_file
+from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
+    save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url
 from content_types import  ALL_CONTENT_TYPES
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -97,9 +97,9 @@ def go_to_the_top (element, max_iterations_count, check_link_func):
 
 
 def has_office_document_file_extension(href):
-    global OFFICE_FILE_EXTENSIONS
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
     filename, file_extension = os.path.splitext(href)
-    return file_extension.lower() in OFFICE_FILE_EXTENSIONS
+    return file_extension.lower() in ACCEPTED_DECLARATION_FILE_EXTENSIONS
 
 
 def get_base_url(main_url, soup):
@@ -116,6 +116,11 @@ def check_http(href):
     if href.startswith('tel:'):
         return False
     return True
+
+def add_link(links, href, record):
+    if record['source'] != href:
+        links[href] = record
+        logging.debug("add link {0}".format(href))
 
 
 def find_links_in_html_by_text(main_url, html, check_link_func):
@@ -135,14 +140,15 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
             logging.debug("check link {0}".format(href))
             href = make_link(base, href)
             if  check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                links[href] = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
-                logging.debug("link is good")
+                record = {'text': l.text, 'engine': 'urllib', 'source': main_url}
+                add_link(links, href, record)
             else:
                 if has_office_document_file_extension(href):
                     try:
                         found_text = go_to_the_top(l, 3, check_link_func)
                         if len(found_text) > 0:
-                            links[href] = {'text': found_text, 'engine': 'urllib', 'source':  main_url}
+                            record = {'text': found_text, 'engine': 'urllib', 'source':  main_url}
+                            add_link(links, href, record)
                     except SomeOtherTextException as err:
                         continue
 
@@ -155,7 +161,8 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
 
             href = make_link(base, href)
             if check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                links[href] = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
+                record = {'text': l.text, 'engine': 'urllib', 'source':  main_url}
+                add_link(links, href, record)
 
     return links, all_links_count
 
@@ -181,6 +188,7 @@ def open_selenium():
     options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
     options.set_preference("browser.helperApps.alwaysAsk.force", False)
     return webdriver.Firefox(firefox_options=options)
+
 
 def wait_download_finished(timeout=120):
     global TMP_DOWNLOAD_FOLDER
@@ -227,7 +235,7 @@ def find_links_with_selenium (main_url, check_link_func):
                 if downloaded_file is not None:
                     record['downloaded_file'] = downloaded_file
                     link_url = "download:" + str(i)+ ":" + link_url
-                links[link_url] = record
+                add_link(links, link_url, record)
             driver.back()
             elements = list(driver.find_elements_by_xpath('//button | //a'))
     driver.quit()
@@ -242,6 +250,10 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
     except Exception as err:
         logging.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
         ad['exception'] = str(err)
+        return
+
+    if get_file_extension_by_cached_url(url) != DEFAULT_HTML_EXTENSION:
+        logging.debug("cannot get links  since it is not html: {0}".format(url))
         return
 
     try:
@@ -260,18 +272,6 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
 
 
 
-def find_links_in_page_with_urllib(url, check_link_func):
-    try:
-        html = download_with_cache(url)
-        if html == "binary_data":
-            return []
-        links, _= find_links_in_html_by_text(url, html, check_link_func)
-        return links
-    except Exception as err:
-        logging.error('cannot download page: ' + url + "\n")
-        return []
-
-
 FIXLIST =  {
     "anticorruption_div": [
         ('fsin.su', "http://www.fsin.su/anticorrup2014/"),
@@ -286,7 +286,6 @@ def find_links_for_one_website(start_pages, target, check_link_func, fallback_to
         save_count = len(target['links'])
 
         for url in start_pages:
-            logging.info("find_links_for_one_website " + url + "\n")
             add_links(target, url, check_link_func, fallback_to_selenium)
 
         new_count = len(target['links'])

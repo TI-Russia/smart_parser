@@ -1,4 +1,5 @@
-﻿import sys
+﻿# the program is broken
+import sys
 import os
 import re
 import json
@@ -11,11 +12,20 @@ from download import download_html_with_urllib, \
     download_with_cache, \
     FILE_CACHE_FOLDER
 
-from find_link import click_first_link_and_get_url, find_links_to_subpages, find_links_in_page_with_urllib, \
-collect_all_subpages_urls
+from find_link import click_first_link_and_get_url, find_links_to_subpages, collect_all_subpages_urls
 
 from main_anticor_div import find_anticorruption_div
 
+def find_links_in_page_with_urllib(url, check_link_func):
+    try:
+        html = download_with_cache(url)
+        if html == "binary_data":
+            return []
+        links, _= find_links_in_html_by_text(url, html, check_link_func)
+        return links
+    except Exception as err:
+        logging.error('cannot download page: ' + url + "\n")
+        return []
 
 def check_law_link_text(text):
     text = text.strip().lower()
