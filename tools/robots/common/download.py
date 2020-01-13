@@ -51,6 +51,14 @@ def has_cyrillic(text):
     return bool(re.search('[Ёёа-яА-Я]', text))
 
 
+def get_site_domain_wo_www(url):
+    url = "http://" + url.split("://")[-1]
+    domain = urlparse(url).netloc
+    if domain.startswith('www.'):
+        domain = domain[len('www.'):]
+    return domain
+
+
 def download_with_urllib (url, search_for_js_redirect=True):
     o = list(urlparse(url)[:])
     if o[2].find('%') == -1:
@@ -200,7 +208,7 @@ def download_with_cache(url):
 
 def download_and_cache_with_selenium (url):
     browser = webdriver.Firefox()
-    browser.minimize_window();
+    browser.minimize_window()
     browser.get(url)
     time.sleep(10)
     html = browser.page_source

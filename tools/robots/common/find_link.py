@@ -7,8 +7,9 @@ import shutil
 from urllib.parse import urljoin
 import urllib
 from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url
+    save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url, get_site_domain_wo_www
 from content_types import  ALL_CONTENT_TYPES
+from popular_sites import is_super_popular_domain
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
@@ -153,9 +154,10 @@ def strip_viewer_prefix(href):
 def add_link(links, href, record):
     if record['source'] != href:
         href = strip_viewer_prefix(href)
-        links[href] = record
-
-        logging.debug("add link {0}".format(href))
+        domain = get_site_domain_wo_www(href)
+        if not is_super_popular_domain(domain):
+            links[href] = record
+            logging.debug("add link {0}".format(href))
 
 
 def find_links_in_html_by_text(main_url, html, check_link_func):

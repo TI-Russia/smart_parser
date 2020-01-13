@@ -9,7 +9,7 @@ import logging
 sys.path.append('../common')
 
 from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url, \
-    get_all_sha256
+    get_all_sha256, get_site_domain_wo_www
 
 from office_list import  create_office_list, read_office_list, write_offices
 
@@ -134,10 +134,6 @@ def del_old_info(offices, step_name):
             del (office_info[step_name])
 
 
-def strip_domain(domain):
-    if domain.startswith('www.'):
-        domain = domain[len('www.'):]
-    return domain
 
 
 class THumanFiles:
@@ -151,14 +147,14 @@ class THumanFiles:
     def check_all_offices(self, offices, page_collection_name):
         for o in offices:
             main_url = list(o['morda']['links'])[0]
-            main_domain = strip_domain(urlparse(main_url).netloc)
+            main_domain = get_site_domain_wo_www(main_url)
             logging.debug("check_recall for {}".format(main_domain))
             robot_sha256 = get_all_sha256(o, page_collection_name)
             files_count = 0
             found_files_count = 0
             for x in self.files:
                 if len(x['domain']) > 0:
-                    domain = strip_domain(x['domain'])
+                    domain = get_site_domain_wo_www(x['domain'])
                     if domain == main_domain or main_domain.endswith(domain) or domain.endswith(main_domain):
                         for s in x['sha256']:
                             files_count += 1
