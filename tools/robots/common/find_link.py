@@ -161,7 +161,7 @@ def add_link(links, href, record):
 
 
 def find_links_in_html_by_text(main_url, html, check_link_func):
-    soup = BeautifulSoup(html, 'html5lib')
+    soup = BeautifulSoup(html, "html.parser")
     links = {}
     all_links_count = 0
     if can_be_office_document(main_url):
@@ -222,6 +222,7 @@ def open_selenium():
     recreate_tmp_download_folder()
 
     options = FirefoxOptions()
+    options.headless = True
     options.set_preference("browser.download.folderList", 2)
     options.set_preference("browser.download.manager.showWhenStarting", False)
     options.set_preference("browser.download.manager.closeWhenDone", True)
@@ -288,6 +289,7 @@ def find_links_with_selenium (main_url, check_link_func):
 
 def add_links(ad, url, check_link_func, fallback_to_selenium=True):
     html = ""
+    links = dict()
     try:
         html = download_with_cache(url)
     except Exception as err:
