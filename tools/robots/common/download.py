@@ -249,6 +249,18 @@ def get_extenstion_by_content_type(content_type):
         return ".pdf"
     elif content_type.startswith("application/zip"):
         return ".zip"
+    elif content_type.startswith("application/rss+xml"):
+        return ".xml"
+    elif content_type.startswith("application/xml"):
+        return ".xml"
+    elif content_type.startswith("application/"):
+        return ".some_application_format"
+    elif content_type.startswith("image/"):
+        return ".some_image_format"
+    elif content_type.startswith("audio/"):
+        return ".some_audio_format"
+    elif content_type.startswith("video/"):
+        return ".some_video_format"
     else:
         return DEFAULT_HTML_EXTENSION
 
@@ -295,7 +307,8 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
         index = 0
-        uniq_files =  set()
+        uniq_files = set()
+        export_files = list()
         for url in pages_to_download:
             downloaded_file = pages_to_download[url].get('downloaded_file')
             if downloaded_file is not None:
@@ -315,6 +328,8 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
                 if sha256hash not in uniq_files:
                     uniq_files.add(sha256hash)
                     shutil.copyfile(infile, outpath)
+                    export_files.append((url, outpath))
 
             index += 1
+        office_info['exported_files'] = export_files
         logging.info("exported {0} files to {1}".format(index, office_folder))

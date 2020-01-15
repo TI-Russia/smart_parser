@@ -11,7 +11,7 @@ sys.path.append('../common')
 from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url, \
     get_all_sha256, get_site_domain_wo_www
 
-from office_list import  create_office_list, read_office_list, write_offices
+from office_list import  TRobotProject
 
 from find_link import \
     find_links_for_all_websites, \
@@ -128,42 +128,6 @@ def check_documents(link_info):
     return True
 
 
-def del_old_info(offices, step_name):
-    for office_info in offices:
-        if step_name in office_info:
-            del (office_info[step_name])
-
-
-
-
-class THumanFiles:
-    def __init__(self):
-        self.files = list()
-
-    def read_from_file(self, filename):
-        with open(filename, "r", encoding="utf8") as inpf:
-            self.files = json.load(inpf)
-
-    def check_all_offices(self, offices, page_collection_name):
-        for o in offices:
-            main_url = list(o['morda']['links'])[0]
-            main_domain = get_site_domain_wo_www(main_url)
-            logging.debug("check_recall for {}".format(main_domain))
-            robot_sha256 = get_all_sha256(o, page_collection_name)
-            files_count = 0
-            found_files_count = 0
-            for x in self.files:
-                if len(x['domain']) > 0:
-                    domain = get_site_domain_wo_www(x['domain'])
-                    if domain == main_domain or main_domain.endswith(domain) or domain.endswith(main_domain):
-                        for s in x['sha256']:
-                            files_count += 1
-                            if s not in robot_sha256:
-                                logging.debug("{0} not found from {1}".format(s, json.dumps(x)))
-                            else:
-                                found_files_count += 1
-            logging.info("all human files = {}, human files found by dlrobot = {}".format(files_count, found_files_count))
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -174,21 +138,28 @@ def parse_args():
     parser.add_argument("--stop-after", dest='stop_after', default=None)
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
     parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
+    parser.add_argument("--input-url-list", dest='hypots', default=None)
     return parser.parse_args()
 
 
 
 if __name__ == "__main__":
     args = parse_args()
-    setup_logging(args)
-    human_files = THumanFiles()
-    if args.from_human_file_name is not None:
-        human_files.read_from_file(args.from_human_file_name)
-    #offices = create_office_list(args.project)
-    offices = read_office_list(args.project)
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
+    setup_logging(args)
+    project = TRobotProject(args.project)
+    if args.hypots is not None:
+        if args.start_from is not None:
+            logging.info("ignore --input-url-list since --start-from  or --step is specified")
+        else:
+            project.create_by_hypots(args.hypots)
+    else:
+        #project.create_office_list_by_consulant_ru()
+        project.read_office_list()
+
+
 
     steps = [
         (find_links_for_all_websites, "sitemap", check_link_sitemap, "always"),
@@ -196,7 +167,7 @@ if __name__ == "__main__":
         (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
         (collect_subpages, "declarations_div_pages", check_year_or_subpage, "always"),
         (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
-        (find_links_for_all_websites, "declarations", check_accepted_declaration_file_type, "never"),
+        (find_links_for_all_websites, "declarations", check_accepted_declaration_file_type, "copy_docs"),
     ]
     prev_step = "morda"
     found_start_from = args.start_from is None
@@ -206,10 +177,10 @@ if __name__ == "__main__":
 
         if found_start_from:
             if args.rebuild:
-                del_old_info(offices, step_name)
+                project.del_old_info(step_name)
             logging.info("=== step {0} =========".format(step_name))
-            step_function(offices, prev_step, step_name, check_link_func, include_source=include_source)
-            write_offices(offices, args.project)
+            step_function(project.offices, prev_step, step_name, check_link_func, include_source=include_source)
+            project.write_offices()
         if args.stop_after is not None and step_name == args.stop_after:
             break
 
@@ -217,7 +188,8 @@ if __name__ == "__main__":
 
     if args.stop_after is None:
         last_step = steps[-1][1]
-        download_page_collection(offices, last_step)
-        export_files_to_folder(offices, last_step, "result")
+        download_page_collection(project.offices, last_step)
+        export_files_to_folder(project.offices, last_step, "result")
+        project.write_offices()
         if args.from_human_file_name is not None:
-            human_files.check_all_offices(offices, last_step)
+            project.check_all_offices(last_step)

@@ -367,6 +367,13 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
         if include_source == "copy_if_empty" and len(target['links']) == 0:
             target['links'].update(start_pages)
 
+        if include_source == "copy_docs":
+            for x in start_pages:
+                if x not in target['links'] and get_file_extension_by_cached_url(x) != DEFAULT_HTML_EXTENSION:
+                    target['links'][x] = start_pages[x]
+
+            target['links'].update(start_pages)
+
         if len(target) == 0 and len(start_pages) > 0:
             for (s,t) in FIXLIST.get(target_page_collection_name, []):
                 if start_pages[0].find(s) != -1:
