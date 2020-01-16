@@ -85,10 +85,11 @@ class TRobotProject:
         self.write_offices()
 
     def check_all_offices(self, page_collection_name):
+        logger = logging.getLogger("dlrobot_logger")
         for o in self.offices:
             main_url = list(o['morda']['links'])[0]
             main_domain = get_site_domain_wo_www(main_url)
-            logging.debug("check_recall for {}".format(main_domain))
+            logger.debug("check_recall for {}".format(main_domain))
             robot_sha256 = get_all_sha256(o, page_collection_name)
             files_count = 0
             found_files_count = 0
@@ -99,10 +100,10 @@ class TRobotProject:
                         for s in x['sha256']:
                             files_count += 1
                             if s not in robot_sha256:
-                                logging.debug("{0} not found from {1}".format(s, json.dumps(x)))
+                                logger.debug("{0} not found from {1}".format(s, json.dumps(x)))
                             else:
                                 found_files_count += 1
-            logging.info(
+            logger.info(
                 "all human files = {}, human files found by dlrobot = {}".format(files_count, found_files_count))
 
     def del_old_info(self, step_name):

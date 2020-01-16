@@ -1,15 +1,13 @@
 ﻿import sys
 import re
-import json
 import os
 import argparse
-from urllib.parse import urlparse
 import logging
 
 sys.path.append('../common')
 
 from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url, \
-    get_all_sha256, get_site_domain_wo_www
+    get_all_sha256, get_site_domain_wo_www, DEFAULT_HTML_EXTENSION
 
 from office_list import  TRobotProject
 
@@ -22,9 +20,8 @@ from find_link import \
     check_sub_page_or_iframe
 
 
-def setup_logging(args):
-    root = logging.getLogger()
-    root.setLevel(logging.DEBUG)
+def setup_logging(args,  logger):
+    logger.setLevel(logging.DEBUG)
 
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -34,13 +31,12 @@ def setup_logging(args):
     fh = logging.FileHandler(args.logfile)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
-    root.addHandler(fh)
+    logger.addHandler(fh)
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
-    #ch.setFormatter(formatter)
-    root.addHandler(ch)
+    logger.addHandler(ch)
 
 def check_link_sitemap(link_info):
     if not check_self_link(link_info):
@@ -112,7 +108,7 @@ def check_accepted_declaration_file_type(link_info):
             if link_info.DownloadFile is not None:
                 return True
             ext = get_file_extension_by_url(link_info.Target)
-            return ext != ".html"
+            return ext != DEFAULT_HTML_EXTENSION
         except Exception as err:
             sys.stderr.write('cannot query (HEAD) url={0}  exception={1}\n'.format(link_info.Target, str(err)))
             return False
@@ -148,11 +144,12 @@ if __name__ == "__main__":
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
-    setup_logging(args)
+    logger = logging.getLogger("dlrobot_logger")
+    setup_logging(args, logger)
     project = TRobotProject(args.project)
     if args.hypots is not None:
         if args.start_from is not None:
-            logging.info("ignore --input-url-list since --start-from  or --step is specified")
+            logger.info("ignore --input-url-list since --start-from  or --step is specified")
         else:
             project.create_by_hypots(args.hypots)
     else:
@@ -178,7 +175,7 @@ if __name__ == "__main__":
         if found_start_from:
             if args.rebuild:
                 project.del_old_info(step_name)
-            logging.info("=== step {0} =========".format(step_name))
+            logger.info("=== step {0} =========".format(step_name))
             step_function(project.offices, prev_step, step_name, check_link_func, include_source=include_source)
             project.write_offices()
         if args.stop_after is not None and step_name == args.stop_after:
@@ -188,6 +185,7 @@ if __name__ == "__main__":
 
     if args.stop_after is None:
         last_step = steps[-1][1]
+        logger.info("=== download all declarations =========")
         download_page_collection(project.offices, last_step)
         export_files_to_folder(project.offices, last_step, "result")
         project.write_offices()

@@ -12,6 +12,7 @@ from content_types import  ALL_CONTENT_TYPES
 from popular_sites import is_super_popular_domain
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+import datetime
 
 class TLinkInfo:
     def __init__(self, text, source=None, target=None, tagName=None, download_file=None):
@@ -151,34 +152,34 @@ def strip_viewer_prefix(href):
         return href
 
 
-def add_link(links, href, record):
+def add_link(logger,  href, record, office_section):
     if record['source'] != href:
         href = strip_viewer_prefix(href)
         domain = get_site_domain_wo_www(href)
         if not is_super_popular_domain(domain):
-            links[href] = record
-            logging.debug("add link {0}".format(href))
+            office_section['links'][href] = record
+            logger.debug("add link {0}".format(href))
 
 
-def find_links_in_html_by_text(main_url, html, check_link_func):
-    soup = BeautifulSoup(html, "html.parser")
-    links = {}
-    all_links_count = 0
+def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
+
+    logger = logging.getLogger("dlrobot_logger")
     if can_be_office_document(main_url):
-        return links, all_links_count
+        return
     base = get_base_url(main_url, soup)
-    logging.debug("find_links_in_html_by_text function={0}".format(check_link_func))
+    logger.debug("find_links_in_html_by_text function={0}".format(check_link_func))
+    all_links_count = 0
     for l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
             all_links_count += 1
             if not check_http(href):
                 continue
-            logging.debug("check link {0}".format(href))
+            logger.debug("check link {0}".format(href))
             href = strip_viewer_prefix( make_link(base, href) )
             if  check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
                 record = {'text': l.text, 'engine': 'urllib', 'source': main_url, 'tagname':l.name}
-                add_link(links, href, record)
+                add_link(logger, href, record, office_section)
             else:
                 if can_be_office_document(href):
                     found_text = ""
@@ -191,7 +192,7 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
                         continue
                     if len(found_text) > 0:
                         record = {'text': found_text, 'engine': 'urllib', 'source':  main_url, 'text_proxim': True, 'tagname':l.name}
-                        add_link(links, href, record)
+                        add_link(logger, href, record, office_section)
 
     for l in soup.findAll('iframe'):
         href = l.attrs.get('src')
@@ -203,9 +204,9 @@ def find_links_in_html_by_text(main_url, html, check_link_func):
             href = make_link(base, href)
             if check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
                 record = {'text': l.text, 'engine': 'urllib', 'source':  main_url, 'tagname':l.name}
-                add_link(links, href, record)
+                add_link(logger, href, record, office_section)
+    office_section['all_links_count_found_by_urllib'] = all_links_count
 
-    return links, all_links_count
 
 
 TMP_DOWNLOAD_FOLDER = None
@@ -252,11 +253,11 @@ def wait_download_finished(timeout=120):
 
 
 
-def find_links_with_selenium (main_url, check_link_func):
-    links = dict()
+def find_links_with_selenium (main_url, check_link_func, office_section):
+    logger = logging.getLogger("dlrobot_logger")
     if can_be_office_document(main_url):
-        return links
-    logging.debug("find_links_with_selenium url={0}, function={1}".format(main_url, check_link_func))
+        return
+    logger.debug("find_links_with_selenium url={0}, function={1}".format(main_url, check_link_func))
     driver = open_selenium()
 
     driver.get(main_url)
@@ -267,7 +268,7 @@ def find_links_with_selenium (main_url, check_link_func):
         e = elements[i]
         tag_name = e.tag_name
         link_text = e.text.strip('\n\r\t ') #initialize here, can be broken after click
-        logging.debug("check link url={0}, function={1}".format(main_url, check_link_func))
+        logger.debug("check link url={0}, function={1}".format(main_url, check_link_func))
         if check_link_func(TLinkInfo(link_text)):
             recreate_tmp_download_folder()
             e.click()
@@ -279,42 +280,44 @@ def find_links_with_selenium (main_url, check_link_func):
                 if downloaded_file is not None:
                     record['downloaded_file'] = downloaded_file
                     link_url = "download:" + str(i)+ ":" + link_url
-                add_link(links, link_url, record)
+                add_link(logger, link_url, record, office_section)
             driver.back()
             elements = list(driver.find_elements_by_xpath('//button | //a'))
     driver.quit()
-    return links
 
 
 
 def add_links(ad, url, check_link_func, fallback_to_selenium=True):
     html = ""
-    links = dict()
+    if 'links' not in ad:
+        ad['links'] = dict()
+    logger = logging.getLogger("dlrobot_logger")
     try:
         html = download_with_cache(url)
     except Exception as err:
-        logging.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
+        logger.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
         ad['exception'] = str(err)
         return
 
     if get_file_extension_by_cached_url(url) != DEFAULT_HTML_EXTENSION:
-        logging.debug("cannot get links  since it is not html: {0}".format(url))
+        logger.debug("cannot get links  since it is not html: {0}".format(url))
         return
 
+
     try:
-        links, all_links_count = find_links_in_html_by_text(url, html, check_link_func)
+        soup = BeautifulSoup(html, "html.parser")
+        ad['title_by_urllib'] = str(soup.title.string).strip(" \n\t\t")
+        save_links_count = len(ad['links'])
+        find_links_in_html_by_text(url, soup, check_link_func, ad)
 
         # see http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g
-        if len(links) == 0 and fallback_to_selenium:
-            links = find_links_with_selenium(url, check_link_func)
+        if save_links_count == len(ad['links']) and fallback_to_selenium:
+            find_links_with_selenium(url, check_link_func, ad)
 
     except Exception as err:
-        logging.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
+        logger.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
         ad['exception'] = str(err)
 
-    if 'links' not in ad:
-        ad['links'] = dict()
-    ad['links'].update(links)
 
 
 FIXLIST =  {
@@ -326,7 +329,6 @@ FIXLIST =  {
 
 
 def find_links_for_one_website(start_pages, target, check_link_func, fallback_to_selenium=False, transitive=False):
-
     while True:
         save_count = len(target['links'])
 
@@ -341,6 +343,7 @@ def find_links_for_one_website(start_pages, target, check_link_func, fallback_to
 def find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
                                 check_link_func, fallback_to_selenium=True, transitive=False, only_missing=True,
                                 include_source="copy_if_empty"):
+    logger = logging.getLogger("dlrobot_logger")
     for office_info in offices:
         name = office_info['name']
         if target_page_collection_name not in office_info:
@@ -350,11 +353,11 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
             target['links'] = dict()
 
         if target.get('engine', '') == 'manual':
-            logging.info("skip manual url updating {0}, target={1}\n".format(
+            logger.info("skip manual url updating {0}, target={1}\n".format(
                 name, target_page_collection_name))
             continue
         if len(target['links']) > 0 and only_missing:
-            logging.info("skip manual url updating {0}, target={1}, (already exist)\n".format(
+            logger.info("skip manual url updating {0}, target={1}, (already exist)\n".format(
                 name, target_page_collection_name))
             continue
 
@@ -362,10 +365,11 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
 
         if include_source == "always":
             target['links'].update(start_pages)
-        logging.info('{0}'.format(list(office_info['morda']['links'])[0]))
+        logger.info('{0}'.format(list(office_info['morda']['links'])[0]))
+        start = datetime.datetime.now()
         find_links_for_one_website(start_pages, target,
                                    check_link_func, fallback_to_selenium, transitive)
-
+        target['elapsed_time'] = (datetime.datetime.now() - start).total_seconds()
         if include_source == "copy_if_empty" and len(target['links']) == 0:
             target['links'].update(start_pages)
 
@@ -380,7 +384,7 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
             for (s,t) in FIXLIST.get(target_page_collection_name, []):
                 if start_pages[0].find(s) != -1:
                     target[t] = [{"text":  "", "engine": "manual"}]
-        logging.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.get('links', []))))
+        logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.get('links', []))))
 
 
 def collect_subpages(offices, source_page_collection_name, target_page_collection_name, check_link_func,

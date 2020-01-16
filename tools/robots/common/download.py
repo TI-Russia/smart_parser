@@ -17,6 +17,8 @@ import time
 FILE_CACHE_FOLDER="cached"
 ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip'}
 DEFAULT_HTML_EXTENSION = ".html"
+
+
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
     return content_type.startswith('text')
@@ -28,16 +30,18 @@ HEADER_REQUEST_COUNT = defaultdict(int)
 def get_url_headers (url):
     global HEADER_CACHE
     global HEADER_REQUEST_COUNT
-    if url in  HEADER_CACHE:
+    if url in HEADER_CACHE:
         return HEADER_CACHE[url]
     if HEADER_REQUEST_COUNT[url] > 3:
         raise Exception("too many times to get headers that caused exceptions")
 
     HEADER_REQUEST_COUNT[url] += 1
-    logging.debug("\tget headers for " + url)
+    logger = logging.getLogger("dlrobot_logger")
+    logger.debug("\tget headers for " + url)
     res = requests.head(url).headers
     HEADER_CACHE[url] = res
     return res
+
 
 def find_simple_js_redirect(data):
     res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\']+)([\'"]?\s*;)', data)
@@ -77,7 +81,8 @@ def download_with_urllib (url, search_for_js_redirect=True):
     data = ''
     info = {}
     headers = None
-    logging.debug("urllib.request.urlopen ({})".format(url))
+    logger = logging.getLogger("dlrobot_logger")
+    logger.debug("urllib.request.urlopen ({})".format(url))
     with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
         data = request.read()
         info = request.info()
@@ -85,7 +90,7 @@ def download_with_urllib (url, search_for_js_redirect=True):
 
     try:
         if is_html_contents(info):
-            logging.debug("\tencoding..")
+            logger.debug("\tencoding..")
             encoding = headers.get_content_charset()
             if encoding == None:
                 match = re.search('charset=([^"\']+)', data.decode('latin', errors="ignore"))
@@ -105,10 +110,7 @@ def download_with_urllib (url, search_for_js_redirect=True):
 
     except AttributeError:
         pass
-
-
-
-    return (data, info)
+    return data, info
 
 
 def read_cache_file(localfile, info_file):
@@ -173,7 +175,8 @@ def save_download_file(filename):
     extension = os.path.splitext(filename)[1]
     save_filename = os.path.join(download_folder, hashcode + extension)
     if os.path.exists(save_filename):
-        logging.debug("replace existing {0}".format(save_filename))
+        logger = logging.getLogger("dlrobot_logger")
+        logger.debug("replace existing {0}".format(save_filename))
         os.remove(save_filename)
     os.rename(filename, save_filename)
     return save_filename
@@ -297,7 +300,8 @@ def get_all_sha256(office_info, page_collection_name):
                 result.add (hashlib.sha256(f.read()).hexdigest())
     return result
 
-def export_files_to_folder(offices, page_collection_name, outfolder):
+def export_files_to_folder(offices, page_collection_name, outfolder, file_extensions=ACCEPTED_DECLARATION_FILE_EXTENSIONS):
+    logger = logging.getLogger("dlrobot_logger")
     for office_info in offices:
         pages_to_download  = office_info.get(page_collection_name, dict()).get('links', dict())
         if len(pages_to_download) == 0:
@@ -321,7 +325,7 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
             outpath = os.path.join(office_folder, str(index) + extension)
             if not os.path.exists(os.path.dirname(outpath)):
                 os.makedirs(os.path.dirname(outpath))
-            if os.path.exists(infile):
+            if os.path.exists(infile) and extension in file_extensions:
                 sha256hash = ""
                 with open(infile, "rb") as f:
                     sha256hash = hashlib.sha256(f.read()).hexdigest();
@@ -329,7 +333,6 @@ def export_files_to_folder(offices, page_collection_name, outfolder):
                     uniq_files.add(sha256hash)
                     shutil.copyfile(infile, outpath)
                     export_files.append((url, outpath))
-
-            index += 1
+                    index += 1
         office_info['exported_files'] = export_files
-        logging.info("exported {0} files to {1}".format(index, office_folder))
+        logger.info("exported {0} files to {1}".format(index, office_folder))

@@ -50,7 +50,10 @@
 "rp5.ru",
 "ficbook.net",
 "gosuslugi.ru",
-"twitter.com" ]
+"twitter.com",
+"gismeteo.ru",
+"telegram.org",
+]
 
 popular_site_set = set(popular_domains)
 
