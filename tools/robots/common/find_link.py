@@ -144,25 +144,35 @@ def check_http(href):
 
 def strip_viewer_prefix(href):
     # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
-    google_viewer_prefix = 'https://docs.google.com/viewer?url='
-    if href.startswith(google_viewer_prefix):
-        href = href[len(google_viewer_prefix):]
-        return  urllib.parse.unquote(href)
-    else:
-        return href
+    viewers = ['https://docs.google.com/viewer?url=',
+                'https://docviewer.yandex.ru/?url=',
+                'https://view.officeapps.live.com/op/embed.aspx?src=',
+                'https://view.officeapps.live.com/op/view.aspx?src=']
+    for prefix in viewers:
+        if href.startswith(prefix):
+            href = href[len(prefix):]
+            return urllib.parse.unquote(href)
+    return href
 
 
-def add_link(logger,  href, record, office_section):
+def add_link(logger, href, record, office_section):
     if record['source'] != href:
         href = strip_viewer_prefix(href)
         domain = get_site_domain_wo_www(href)
         if not is_super_popular_domain(domain):
+            if 'title' not in record:
+                try:
+                    html = download_with_cache(url)
+                    if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
+                        soup = BeautifulSoup(html, "html.parser")
+                        record['title'] = soup.title.string.strip(" \n\r\t")
+                except Exception as err:
+                    pass
             office_section['links'][href] = record
             logger.debug("add link {0}".format(href))
 
 
 def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
-
     logger = logging.getLogger("dlrobot_logger")
     if can_be_office_document(main_url):
         return
@@ -178,7 +188,12 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
             logger.debug("check link {0}".format(href))
             href = strip_viewer_prefix( make_link(base, href) )
             if  check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                record = {'text': l.text, 'engine': 'urllib', 'source': main_url, 'tagname':l.name}
+                record = {
+                    'text': l.text,
+                    'engine': 'urllib',
+                    'source': main_url,
+                    'tagname': l.name,
+                }
                 add_link(logger, href, record, office_section)
             else:
                 if can_be_office_document(href):
@@ -191,7 +206,13 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
                     except SomeOtherTextException as err:
                         continue
                     if len(found_text) > 0:
-                        record = {'text': found_text, 'engine': 'urllib', 'source':  main_url, 'text_proxim': True, 'tagname':l.name}
+                        record = {
+                            'text': found_text,
+                            'engine': 'urllib',
+                            'source':  main_url,
+                            'text_proxim': True,
+                            'tagname': l.name,
+                        }
                         add_link(logger, href, record, office_section)
 
     for l in soup.findAll('iframe'):
@@ -203,9 +224,14 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
 
             href = make_link(base, href)
             if check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                record = {'text': l.text, 'engine': 'urllib', 'source':  main_url, 'tagname':l.name}
+                record = {
+                    'text': l.text,
+                    'engine': 'urllib',
+                    'source':  main_url,
+                    'tagname': l.name,
+                }
                 add_link(logger, href, record, office_section)
-    office_section['all_links_count_found_by_urllib'] = all_links_count
+
 
 
 
@@ -276,7 +302,13 @@ def find_links_with_selenium (main_url, check_link_func, office_section):
             downloaded_file = wait_download_finished(120)
             link_url = driver.current_url
             if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
-                record = {'text': link_text, 'engine': 'selenium', 'source':  main_url, 'tagname': tag_name}
+                record = {
+                    'text': link_text,
+                    'engine': 'selenium',
+                    'source':  main_url,
+                    'tagname': tag_name,
+                    'title': driver.title
+                }
                 if downloaded_file is not None:
                     record['downloaded_file'] = downloaded_file
                     link_url = "download:" + str(i)+ ":" + link_url
@@ -306,7 +338,7 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
 
     try:
         soup = BeautifulSoup(html, "html.parser")
-        ad['title_by_urllib'] = str(soup.title.string).strip(" \n\t\t")
+
         save_links_count = len(ad['links'])
         find_links_in_html_by_text(url, soup, check_link_func, ad)
 
