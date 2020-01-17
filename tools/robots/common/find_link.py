@@ -258,7 +258,6 @@ def wait_download_finished(timeout=120):
     return None
 
 
-
 def find_links_with_selenium (main_url, check_link_func, office_section):
     logger = logging.getLogger("dlrobot_logger")
     if can_be_office_document(main_url):
@@ -308,13 +307,11 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
         html = download_with_cache(url)
     except Exception as err:
         logger.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
-        ad['exception'] = str(err)
         return
 
     if get_file_extension_by_cached_url(url) != DEFAULT_HTML_EXTENSION:
         logger.debug("cannot get links  since it is not html: {0}".format(url))
         return
-
 
     try:
         soup = BeautifulSoup(html, "html.parser")
@@ -328,9 +325,6 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
 
     except Exception as err:
         logger.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
-
-
-
 
 
 def find_links_for_one_website(start_pages, target, check_link_func, fallback_to_selenium=False, transitive=False):
