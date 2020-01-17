@@ -158,12 +158,13 @@ def strip_viewer_prefix(href):
 def add_link(logger, href, record, office_section):
     if record['source'] != href:
         href = strip_viewer_prefix(href)
+        href = href.strip(" \r\n\t")
         domain = get_site_domain_wo_www(href)
-        if not is_super_popular_domain(domain):
+        if not is_super_popular_domain(domain) and href.find(' ') == -1 and href.find('\n') == -1:
             if 'title' not in record:
                 try:
-                    html = download_with_cache(url)
-                    if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
+                    html = download_with_cache(href)
+                    if get_file_extension_by_cached_url(href) == DEFAULT_HTML_EXTENSION:
                         soup = BeautifulSoup(html, "html.parser")
                         record['title'] = soup.title.string.strip(" \n\r\t")
                 except Exception as err:
@@ -409,8 +410,6 @@ def find_links_for_all_websites(offices, source_page_collection_name, target_pag
             for x in start_pages:
                 if x not in target['links'] and get_file_extension_by_cached_url(x) != DEFAULT_HTML_EXTENSION:
                     target['links'][x] = start_pages[x]
-
-            target['links'].update(start_pages)
 
         if len(target) == 0 and len(start_pages) > 0:
             for (s,t) in FIXLIST.get(target_page_collection_name, []):
