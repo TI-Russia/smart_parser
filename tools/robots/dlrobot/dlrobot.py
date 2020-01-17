@@ -194,8 +194,7 @@ def step_index_by_name(name):
             return i
     raise Exception("cannot find step {}".format(name))
 
-if __name__ == "__main__":
-    args = parse_args()
+def main(args):
     logger = logging.getLogger("dlrobot_logger")
     setup_logging(args, logger)
     project = TRobotProject(args.project, ROBOT_STEPS)
@@ -207,24 +206,28 @@ if __name__ == "__main__":
     else:
         project.read_project()
 
-    start = step_index_by_name(args.start_from) if args.start_from is not None else 0
-    end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
-    step_index = start
-    for r in ROBOT_STEPS[start:end]:
-        if args.rebuild:
-            project.del_old_info(step_index)
-        logger.info("=== step {0} =========".format(r['name']))
-        r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
-        project.write_project()
-        step_index += 1
+    if args.start_from != "last_step":
+        start = step_index_by_name(args.start_from) if args.start_from is not None else 0
+        end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
+        step_index = start
+        for r in ROBOT_STEPS[start:end]:
+            if args.rebuild:
+                project.del_old_info(step_index)
+            logger.info("=== step {0} =========".format(r['name']))
+            r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
+            project.write_project()
+            step_index += 1
 
-    if args.stop_after is None:
-        last_step = steps[-1][1]
-        logger.info("=== download all declarations =========")
-        project.download_last_step()
-        export_files_to_folder(project.offices, last_step, args.smart_parser_binary, args.result_folder)
-        project.write_project()
-        if args.from_human_file_name is not None:
-            project.check_all_offices()
-        if args.click_features_file:
-            project.write_click_features(args.click_features_file)
+    if args.stop_after is not None:
+        return
+    logger.info("=== download all declarations =========")
+    project.download_last_step()
+    export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
+    project.write_project()
+    if args.from_human_file_name is not None:
+        project.check_all_offices()
+    if args.click_features_file:
+        project.write_click_features(args.click_features_file)
+
+if __name__ == "__main__":
+    args = parse_args()
