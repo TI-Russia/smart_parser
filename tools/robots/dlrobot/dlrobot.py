@@ -168,6 +168,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
     parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
+    parser.add_argument("--skip-final-download", dest='skip_final_download', default=False, action="store_true")
     parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
     parser.add_argument("--stop-after", dest='stop_after', default=None)
@@ -221,10 +222,14 @@ def main(args):
     if args.stop_after is not None:
         if args.stop_after != "last_step":
             return
-    logger.info("=== download all declarations =========")
-    project.download_last_step()
-    export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
-    project.write_project()
+
+    if not args.skip_final_download:
+        logger.info("=== download all declarations =========")
+        project.download_last_step()
+        export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
+        project.write_export_stats()
+        project.write_project()
+
     if args.from_human_file_name is not None:
         project.check_all_offices()
     if args.click_features_file:
@@ -233,4 +238,3 @@ def main(args):
 if __name__ == "__main__":
     args = parse_args()
     main(args)
-    
