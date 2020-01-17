@@ -54,6 +54,7 @@ namespace Smart.Parser
             CMDLineParser.Option outputOpt = parser.AddStringParameter("-o", "use file for output", false);
             CMDLineParser.Option licenseOpt = parser.AddStringParameter("-license", "", false);
             CMDLineParser.Option mainLogOpt = parser.AddStringParameter("-log", "", false);
+            CMDLineParser.Option skipLoggingOpt = parser.AddBoolSwitch("-skip-logging", "");
             CMDLineParser.Option verboseOpt = parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
@@ -109,7 +110,7 @@ namespace Smart.Parser
             {
                 logFileName = Path.GetFullPath(mainLogOpt.Value.ToString());
             }
-            Logger.Setup(logFileName);
+            Logger.Setup(logFileName, skipLoggingOpt.isMatched);
             if (outputOpt.isMatched)
             {
                 OutFile = outputOpt.Value.ToString();
