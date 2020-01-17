@@ -135,7 +135,13 @@ def parse_args():
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
     parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
     parser.add_argument("--input-url-list", dest='hypots', default=None)
-    return parser.parse_args()
+    parser.add_argument("--smart-parser-binary",
+                        dest='smart_parser_binary',
+                        default="C:\\tmp\\smart_parser\\smart_parser\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe")
+    parser.add_argument("--result-folder", dest='result_folder', default="result")
+    args = parser.parse_args()
+    assert os.path.exists(args.smart_parser_binary)
+    return args
 
 
 
@@ -155,7 +161,6 @@ if __name__ == "__main__":
     else:
         #project.create_office_list_by_consulant_ru()
         project.read_office_list()
-
 
 
     steps = [
@@ -187,7 +192,7 @@ if __name__ == "__main__":
         last_step = steps[-1][1]
         logger.info("=== download all declarations =========")
         download_page_collection(project.offices, last_step)
-        export_files_to_folder(project.offices, last_step, "result")
+        export_files_to_folder(project.offices, last_step, args.smart_parser_binary, args.result_folder)
         project.write_offices()
         if args.from_human_file_name is not None:
             project.check_all_offices(last_step)

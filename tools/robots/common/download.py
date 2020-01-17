@@ -300,7 +300,26 @@ def get_all_sha256(office_info, page_collection_name):
                 result.add (hashlib.sha256(f.read()).hexdigest())
     return result
 
-def export_files_to_folder(offices, page_collection_name, outfolder, file_extensions=ACCEPTED_DECLARATION_FILE_EXTENSIONS):
+
+def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
+    if smart_parser_binary == "none":
+        return -1
+    if inputfile.endswith("pdf"):
+        return -1
+    logger = logging.getLogger("dlrobot_logger")
+    cmd = "{} -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary, inputfile)
+    logger.debug(cmd)
+    os.system(cmd)
+    json_file = inputfile + ".json"
+    people_count = -1
+    if os.path.exists(json_file):
+        with open(json_file, "r", encoding="utf8") as inpf:
+            smart_parser_json = json.load(inpf)
+            people_count = len(smart_parser_json.get("persons", []))
+        os.remove(json_file)
+    return people_count
+
+def export_files_to_folder(offices, page_collection_name, smart_parser_binary, outfolder, file_extensions=ACCEPTED_DECLARATION_FILE_EXTENSIONS):
     logger = logging.getLogger("dlrobot_logger")
     for office_info in offices:
         pages_to_download  = office_info.get(page_collection_name, dict()).get('links', dict())
@@ -332,7 +351,12 @@ def export_files_to_folder(offices, page_collection_name, outfolder, file_extens
                 if sha256hash not in uniq_files:
                     uniq_files.add(sha256hash)
                     shutil.copyfile(infile, outpath)
-                    export_files.append((url, outpath))
+                    export_record = {
+                            "url":  url,
+                            "outpath": outpath,
+                            "people_count": get_people_count_from_smart_parser(smart_parser_binary, outpath)
+                    }
+                    export_files.append(export_record)
                     index += 1
         office_info['exported_files'] = export_files
         logger.info("exported {0} files to {1}".format(index, office_folder))
