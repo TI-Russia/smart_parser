@@ -2,6 +2,8 @@ import hashlib
 import logging
 import json
 import datetime
+import shutil
+import os
 from bs4 import BeautifulSoup
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url
@@ -99,7 +101,10 @@ class TRobotWebSite:
 
 class TRobotProject:
     def __init__(self, filename, robot_steps):
-        self.project_file = filename
+        #filename = filename.replace('/', os.sep)
+        self.project_file = filename + ".clicks"
+        if not os.path.exists(self.project_file):
+            shutil.copy2(filename, self.project_file)
         self.offices = list()
         self.human_files = list()
         self.names = [r['name'] for r in robot_steps]
@@ -173,10 +178,26 @@ class TRobotProject:
             office_info.robot_steps[step_index].found_links = dict()
 
     @staticmethod
-    def get_path_to_root(office_info, url):
-        last_step = len(office_info.robot_steps) - 1
-        path = []
-        for i in range(last_step, 0, step=-1):
+    def find_downloaded_file(office_info, export_record):
+        for i, step in enumerate(office_info.robot_steps):
+            for d in step.downloaded_files:
+                if d['downloaded_file'] == export_record['infile']:
+                    return i, d
+
+
+    @staticmethod
+    def get_path_to_root(office_info, export_record):
+        if export_record['url'] == '':
+            step_no, d_record = find_downloaded_file(office_info, export_record)
+            last_step = step_no - 1
+            path = [d_record]
+            url = d_record['source']
+        else:
+            last_step = len(office_info.robot_steps) - 1
+            path = []
+            url = export_record['url']
+
+        for i in range(last_step, 0, -1):
             parent = office_info.robot_steps[i].found_links.get(url)
             assert parent is not None
             url = parent['source']
@@ -184,17 +205,21 @@ class TRobotProject:
                 path.append(parent)
             else:
                 if path[-1]['source'] == url:
-                    path[-1] =  parent
+                    path[-1] = parent
                 else:
                     path.append(parent)
         return path
 
     def write_click_features(self, filename):
+        self.logger.info("create {}".format(filename))
         result = []
         for o in self.offices:
-            for url in o.robot_steps[-1].found_links:
-                path = self.get_path_to_root(o, url)
-                result.append(path)
+            for export_record in o.exported_files:
+                path = self.get_path_to_root(o, export_record)
+                result.append({
+                    'people_count': export_record['people_count'],
+                    'path': path
+                })
         with open(filename, "w", encoding="utf8") as outf:
             json.dump(result, outf, ensure_ascii=False, indent=4)
 
@@ -261,3 +286,11 @@ class TRobotProject:
                                     transitive=True,
                                     only_missing=False,
                                     include_source=include_source)
+
+    def write_export_stats(self):
+        result = list()
+        for o in self.offices:
+            for export_record in o.exported_files:
+                result.append( (export_record['infile'],  export_record['people_count']))
+        with open (self.project_file + ".stats", "w", encoding="utf8") as outf:
+            json.dump(result, outf, indent=4)

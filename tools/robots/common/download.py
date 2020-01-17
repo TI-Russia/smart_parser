@@ -327,6 +327,7 @@ def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extensi
             export_record = {
                 "url": url,
                 "outpath": outpath,
+                "infile": infile,
                 "people_count": get_people_count_from_smart_parser(smart_parser_binary, outpath)
             }
             return export_record
