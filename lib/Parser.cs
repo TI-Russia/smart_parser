@@ -161,7 +161,7 @@ namespace Smart.Parser.Lib
         }
 
         public Declaration Parse(ColumnOrdering columnOrdering, bool updateTrigrams, int? documentfile_id)
-         {
+        {
             FirstPassStartTime = DateTime.Now;
 
             Declaration declaration =  InitializeDeclaration(columnOrdering, documentfile_id);
@@ -243,8 +243,8 @@ namespace Smart.Parser.Lib
             }
 
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
-
-            ParsePersonalProperties(declaration);
+            if (!ColumnOrdering.SearchForFioColumnOnly)
+                ParsePersonalProperties(declaration);
 
             return declaration;
         }

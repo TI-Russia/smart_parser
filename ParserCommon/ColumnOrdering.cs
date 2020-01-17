@@ -23,6 +23,7 @@ namespace TI.Declarator.ParserCommon
         public List<TColumnInfo> MergedColumnOrder = new List<TColumnInfo>();
         public bool ManyTablesInDocument = false;
         public int? YearFromIncome = null;
+        public static bool SearchForFioColumnOnly = false;
 
         public bool ContainsField(DeclarationField field)
         {

@@ -316,6 +316,12 @@ namespace Smart.Parser.Lib
                     ColumnPredictor.PredictForPrecisionCheck(adapter, cell, field);
                 }
                 AddColumn(columnOrdering, field, cell);
+                if (ColumnOrdering.SearchForFioColumnOnly)
+                    if  (field == DeclarationField.NameAndOccupationOrRelativeType ||
+                         field == DeclarationField.NameOrRelativeType)
+                    {
+                        break;
+                    }
             }
         }
 

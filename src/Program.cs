@@ -22,6 +22,7 @@ namespace Smart.Parser
         public static string OutFile = "";
         public static string AdapterFamily = "aspose";
         static bool ColumnsOnly = false;
+
         static bool CheckJson = false;
         public static int MaxRowsToProcess = -1;
         public static DeclarationField ColumnToDump = DeclarationField.None;
@@ -67,6 +68,7 @@ namespace Smart.Parser
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             CMDLineParser.Option docFileIdOpt = parser.AddIntParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
             CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8000/converted_document ", false);
+            CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
             parser.AddHelpOption();
             try
             {
@@ -163,6 +165,7 @@ namespace Smart.Parser
 
 
             ColumnsOnly = columnsOnlyOpt.isMatched;
+            ColumnOrdering.SearchForFioColumnOnly = fioOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
             BuildTrigrams = buildTrigramsOpt.isMatched;
             ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
