@@ -1,5 +1,4 @@
 import ssl
-import sys
 import urllib.parse
 import urllib.request
 import json
@@ -220,16 +219,6 @@ def download_and_cache_with_selenium (url):
     return html
 
 
-def download_page_collection(offices, page_collection_name):
-    for office_info in offices:
-        pages_to_download  = office_info.get(page_collection_name, dict()).get('links', dict())
-        for url in pages_to_download:
-            try:
-                if 'downloaded_file' not in pages_to_download[url]:
-                    download_with_cache(url)
-            except Exception as err:
-                sys.stderr.write("cannot download " + url + ": " + str(err) + "\n")
-                pass
 
 def get_extenstion_by_content_type(content_type):
     if content_type.startswith("text"):
@@ -290,16 +279,6 @@ def get_file_extension_by_url(url):
     ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
     return ext
 
-def get_all_sha256(office_info, page_collection_name):
-    pages_to_download = office_info.get(page_collection_name, dict()).get('links', dict())
-    result = set()
-    for url in pages_to_download:
-        infile = get_local_file_name_by_url(url)
-        if os.path.exists(infile):
-            with open(infile, "rb") as f:
-                result.add (hashlib.sha256(f.read()).hexdigest())
-    return result
-
 
 def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
     if smart_parser_binary == "none":
@@ -319,44 +298,52 @@ def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
         os.remove(json_file)
     return people_count
 
-def export_files_to_folder(offices, page_collection_name, smart_parser_binary, outfolder, file_extensions=ACCEPTED_DECLARATION_FILE_EXTENSIONS):
+def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extension, office_folder):
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    outpath = os.path.join(office_folder, str(index) + extension)
+    if not os.path.exists(os.path.dirname(outpath)):
+        os.makedirs(os.path.dirname(outpath))
+    if os.path.exists(infile) and extension in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        sha256hash = ""
+        with open(infile, "rb") as f:
+            sha256hash = hashlib.sha256(f.read()).hexdigest();
+        if sha256hash not in uniq_files:
+            uniq_files.add(sha256hash)
+            shutil.copyfile(infile, outpath)
+            export_record = {
+                "url": url,
+                "outpath": outpath,
+                "people_count": get_people_count_from_smart_parser(smart_parser_binary, outpath)
+            }
+            return export_record
+    return None
+
+def export_files_to_folder(offices, smart_parser_binary, outfolder):
     logger = logging.getLogger("dlrobot_logger")
     for office_info in offices:
-        pages_to_download  = office_info.get(page_collection_name, dict()).get('links', dict())
-        if len(pages_to_download) == 0:
-            continue
-        office_folder = url_to_localfilename(list(office_info['morda']['links'].keys())[0])
+        office_folder = url_to_localfilename(office_info.morda_url)
         office_folder = os.path.join(outfolder, office_folder)
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
         index = 0
         uniq_files = set()
         export_files = list()
-        for url in pages_to_download:
-            downloaded_file = pages_to_download[url].get('downloaded_file')
-            if downloaded_file is not None:
-                infile = downloaded_file
-                extension = os.path.splitext(infile)[1]
-            else:
-                extension = get_file_extension_by_cached_url(url)
-                infile = get_local_file_name_by_url(url)
 
-            outpath = os.path.join(office_folder, str(index) + extension)
-            if not os.path.exists(os.path.dirname(outpath)):
-                os.makedirs(os.path.dirname(outpath))
-            if os.path.exists(infile) and extension in file_extensions:
-                sha256hash = ""
-                with open(infile, "rb") as f:
-                    sha256hash = hashlib.sha256(f.read()).hexdigest();
-                if sha256hash not in uniq_files:
-                    uniq_files.add(sha256hash)
-                    shutil.copyfile(infile, outpath)
-                    export_record = {
-                            "url":  url,
-                            "outpath": outpath,
-                            "people_count": get_people_count_from_smart_parser(smart_parser_binary, outpath)
-                    }
-                    export_files.append(export_record)
+        for url in office_info.robot_steps[-1].found_links:
+            extension = get_file_extension_by_cached_url(url)
+            infile = get_local_file_name_by_url(url)
+            export_rec = export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder)
+            if export_rec is not None:
+                export_files.append(export_rec)
+                index += 1
+
+        for step in office_info.robot_steps:
+            for d in step.downloaded_files:
+                infile = d['downloaded_file']
+                extension = os.path.splitext(infile)[1]
+                export_rec = export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder)
+                if export_rec is not None:
+                    export_files.append(export_rec)
                     index += 1
-        office_info['exported_files'] = export_files
+        office_info.exported_files = export_files
         logger.info("exported {0} files to {1}".format(index, office_folder))

@@ -5,14 +5,11 @@ import logging
 from bs4 import BeautifulSoup
 import shutil
 from urllib.parse import urljoin
-import urllib
 from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url, get_site_domain_wo_www
 from content_types import  ALL_CONTENT_TYPES
-from popular_sites import is_super_popular_domain
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-import datetime
 
 class TLinkInfo:
     def __init__(self, text, source=None, target=None, tagName=None, download_file=None):
@@ -21,6 +18,18 @@ class TLinkInfo:
         self.Text = text
         self.TagName = tagName
         self.DownloadFile = download_file
+
+def strip_viewer_prefix(href):
+    # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
+    viewers = ['https://docs.google.com/viewer?url=',
+                'https://docviewer.yandex.ru/?url=',
+                'https://view.officeapps.live.com/op/embed.aspx?src=',
+                'https://view.officeapps.live.com/op/view.aspx?src=']
+    for prefix in viewers:
+        if href.startswith(prefix):
+            href = href[len(prefix):]
+            return urllib.parse.unquote(href)
+    return href
 
 def strip_html_url(url):
     if url.endswith('.html'):
@@ -142,36 +151,6 @@ def check_http(href):
     return True
 
 
-def strip_viewer_prefix(href):
-    # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
-    viewers = ['https://docs.google.com/viewer?url=',
-                'https://docviewer.yandex.ru/?url=',
-                'https://view.officeapps.live.com/op/embed.aspx?src=',
-                'https://view.officeapps.live.com/op/view.aspx?src=']
-    for prefix in viewers:
-        if href.startswith(prefix):
-            href = href[len(prefix):]
-            return urllib.parse.unquote(href)
-    return href
-
-
-def add_link(logger, href, record, office_section):
-    if record['source'] != href:
-        href = strip_viewer_prefix(href)
-        href = href.strip(" \r\n\t")
-        domain = get_site_domain_wo_www(href)
-        if not is_super_popular_domain(domain) and href.find(' ') == -1 and href.find('\n') == -1:
-            if 'title' not in record:
-                try:
-                    html = download_with_cache(href)
-                    if get_file_extension_by_cached_url(href) == DEFAULT_HTML_EXTENSION:
-                        soup = BeautifulSoup(html, "html.parser")
-                        record['title'] = soup.title.string.strip(" \n\r\t")
-                except Exception as err:
-                    pass
-            office_section['links'][href] = record
-            logger.debug("add link {0}".format(href))
-
 
 def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
     logger = logging.getLogger("dlrobot_logger")
@@ -195,7 +174,7 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
                     'source': main_url,
                     'tagname': l.name,
                 }
-                add_link(logger, href, record, office_section)
+                office_section.add_link(href, record)
             else:
                 if can_be_office_document(href):
                     found_text = ""
@@ -214,7 +193,7 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
                             'text_proxim': True,
                             'tagname': l.name,
                         }
-                        add_link(logger, href, record, office_section)
+                        office_section.add_link(href, record)
 
     for l in soup.findAll('iframe'):
         href = l.attrs.get('src')
@@ -231,7 +210,7 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
                     'source':  main_url,
                     'tagname': l.name,
                 }
-                add_link(logger, href, record, office_section)
+                office_section.add_link(href, record)
 
 
 
@@ -312,8 +291,10 @@ def find_links_with_selenium (main_url, check_link_func, office_section):
                 }
                 if downloaded_file is not None:
                     record['downloaded_file'] = downloaded_file
-                    link_url = "download:" + str(i)+ ":" + link_url
-                add_link(logger, link_url, record, office_section)
+                    record['element_index'] = i
+                    office_section.add_downloaded_file(record)
+                else:
+                    office_section.add_link(link_url, record)
             driver.back()
             elements = list(driver.find_elements_by_xpath('//button | //a'))
     driver.quit()
@@ -322,8 +303,6 @@ def find_links_with_selenium (main_url, check_link_func, office_section):
 
 def add_links(ad, url, check_link_func, fallback_to_selenium=True):
     html = ""
-    if 'links' not in ad:
-        ad['links'] = dict()
     logger = logging.getLogger("dlrobot_logger")
     try:
         html = download_with_cache(url)
@@ -340,89 +319,29 @@ def add_links(ad, url, check_link_func, fallback_to_selenium=True):
     try:
         soup = BeautifulSoup(html, "html.parser")
 
-        save_links_count = len(ad['links'])
+        save_links_count = len(ad.found_links)
         find_links_in_html_by_text(url, soup, check_link_func, ad)
 
         # see http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g
-        if save_links_count == len(ad['links']) and fallback_to_selenium:
+        if save_links_count == len(ad.found_links) and fallback_to_selenium:
             find_links_with_selenium(url, check_link_func, ad)
 
     except Exception as err:
         logger.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
-        ad['exception'] = str(err)
 
 
 
-FIXLIST =  {
-    "anticorruption_div": [
-        ('fsin.su', "http://www.fsin.su/anticorrup2014/"),
-        ('fso.gov.ru',  "http://www.fso.gov.ru/korrup.html")
-    ]
-}
 
 
 def find_links_for_one_website(start_pages, target, check_link_func, fallback_to_selenium=False, transitive=False):
     while True:
-        save_count = len(target['links'])
+        save_count = len(target.found_links)
 
         for url in start_pages:
             add_links(target, url, check_link_func, fallback_to_selenium)
 
-        new_count = len(target['links'])
+        new_count = len(target.found_links)
         if not transitive or save_count == new_count:
             break
 
 
-def find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
-                                check_link_func, fallback_to_selenium=True, transitive=False, only_missing=True,
-                                include_source="copy_if_empty"):
-    logger = logging.getLogger("dlrobot_logger")
-    for office_info in offices:
-        name = office_info['name']
-        if target_page_collection_name not in office_info:
-            office_info[target_page_collection_name] = dict()
-        target = office_info[target_page_collection_name]
-        if 'links' not in target:
-            target['links'] = dict()
-
-        if target.get('engine', '') == 'manual':
-            logger.info("skip manual url updating {0}, target={1}\n".format(
-                name, target_page_collection_name))
-            continue
-        if len(target['links']) > 0 and only_missing:
-            logger.info("skip manual url updating {0}, target={1}, (already exist)\n".format(
-                name, target_page_collection_name))
-            continue
-
-        start_pages = office_info.get(source_page_collection_name, {}).get('links', dict())
-
-        if include_source == "always":
-            target['links'].update(start_pages)
-        logger.info('{0}'.format(list(office_info['morda']['links'])[0]))
-        start = datetime.datetime.now()
-        find_links_for_one_website(start_pages, target,
-                                   check_link_func, fallback_to_selenium, transitive)
-        target['elapsed_time'] = (datetime.datetime.now() - start).total_seconds()
-        if include_source == "copy_if_empty" and len(target['links']) == 0:
-            target['links'].update(start_pages)
-
-        if include_source == "copy_docs":
-            for x in start_pages:
-                if x not in target['links'] and get_file_extension_by_cached_url(x) != DEFAULT_HTML_EXTENSION:
-                    target['links'][x] = start_pages[x]
-
-        if len(target) == 0 and len(start_pages) > 0:
-            for (s,t) in FIXLIST.get(target_page_collection_name, []):
-                if start_pages[0].find(s) != -1:
-                    target[t] = [{"text":  "", "engine": "manual"}]
-        logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.get('links', []))))
-
-
-def collect_subpages(offices, source_page_collection_name, target_page_collection_name, check_link_func,
-                     include_source="always"):
-    find_links_for_all_websites(offices, source_page_collection_name, target_page_collection_name,
-                                check_link_func,
-                                fallback_to_selenium=False,
-                                transitive=True,
-                                only_missing=False,
-                                include_source=include_source)

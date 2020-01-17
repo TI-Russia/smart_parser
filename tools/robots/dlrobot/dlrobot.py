@@ -6,18 +6,17 @@ import logging
 
 sys.path.append('../common')
 
-from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url, \
-    get_all_sha256, get_site_domain_wo_www, DEFAULT_HTML_EXTENSION
+from download import  export_files_to_folder, get_file_extension_by_url, \
+    get_site_domain_wo_www, DEFAULT_HTML_EXTENSION
 
 from office_list import  TRobotProject
 
 from find_link import \
-    find_links_for_all_websites, \
     check_anticorr_link_text, \
     ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
-    collect_subpages, \
     check_sub_page_or_iframe
+
 
 
 def setup_logging(args,  logger):
@@ -124,8 +123,48 @@ def check_documents(link_info):
     return True
 
 
+ROBOT_STEPS = [
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "sitemap",
+        'check_link_func': check_link_sitemap,
+        'include_sources': 'always'
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "anticorruption_div",
+        'check_link_func': check_anticorr_link_text,
+        'include_sources': "copy_if_empty"
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "declarations_div",
+        'check_link_func': check_link_svedenia_o_doxodax,
+        'include_sources': "copy_if_empty"
+    },
+    {
+        'step_function': TRobotProject.collect_subpages,
+        'name': "declarations_div_pages",
+        'check_link_func': check_year_or_subpage,
+        'include_sources': "always"
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "declarations_div_pages2",
+        'check_link_func': check_documents,
+        'include_sources': "always"
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "declarations",
+        'check_link_func': check_accepted_declaration_file_type,
+        'include_sources': "copy_docs"
+    },
+]
+
 
 def parse_args():
+    global ROBOT_STEPS
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
     parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
@@ -138,61 +177,54 @@ def parse_args():
     parser.add_argument("--smart-parser-binary",
                         dest='smart_parser_binary',
                         default="C:\\tmp\\smart_parser\\smart_parser\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe")
+    parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     args = parser.parse_args()
     assert os.path.exists(args.smart_parser_binary)
-    return args
-
-
-
-if __name__ == "__main__":
-    args = parse_args()
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
+    return args
+
+def step_index_by_name(name):
+    if name is None:
+        return -1
+    for i, r in enumerate(ROBOT_STEPS):
+        if name == r['name']:
+            return i
+    raise Exception("cannot find step {}".format(name))
+
+if __name__ == "__main__":
+    args = parse_args()
     logger = logging.getLogger("dlrobot_logger")
     setup_logging(args, logger)
-    project = TRobotProject(args.project)
+    project = TRobotProject(args.project, ROBOT_STEPS)
     if args.hypots is not None:
         if args.start_from is not None:
             logger.info("ignore --input-url-list since --start-from  or --step is specified")
         else:
             project.create_by_hypots(args.hypots)
     else:
-        #project.create_office_list_by_consulant_ru()
-        project.read_office_list()
+        project.read_project()
 
-
-    steps = [
-        (find_links_for_all_websites, "sitemap", check_link_sitemap, "always"),
-        (find_links_for_all_websites, "anticorruption_div", check_anticorr_link_text, "copy_if_empty"),
-        (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
-        (collect_subpages, "declarations_div_pages", check_year_or_subpage, "always"),
-        (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
-        (find_links_for_all_websites, "declarations", check_accepted_declaration_file_type, "copy_docs"),
-    ]
-    prev_step = "morda"
-    found_start_from = args.start_from is None
-    for step_function, step_name, check_link_func, include_source in steps:
-        if args.start_from is not None and step_name == args.start_from:
-            found_start_from = True
-
-        if found_start_from:
-            if args.rebuild:
-                project.del_old_info(step_name)
-            logger.info("=== step {0} =========".format(step_name))
-            step_function(project.offices, prev_step, step_name, check_link_func, include_source=include_source)
-            project.write_offices()
-        if args.stop_after is not None and step_name == args.stop_after:
-            break
-
-        prev_step = step_name
+    start = step_index_by_name(args.start_from) if args.start_from is not None else 0
+    end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
+    step_index = start
+    for r in ROBOT_STEPS[start:end]:
+        if args.rebuild:
+            project.del_old_info(step_index)
+        logger.info("=== step {0} =========".format(r['name']))
+        r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
+        project.write_project()
+        step_index += 1
 
     if args.stop_after is None:
         last_step = steps[-1][1]
         logger.info("=== download all declarations =========")
-        download_page_collection(project.offices, last_step)
+        project.download_last_step()
         export_files_to_folder(project.offices, last_step, args.smart_parser_binary, args.result_folder)
-        project.write_offices()
+        project.write_project()
         if args.from_human_file_name is not None:
-            project.check_all_offices(last_step)
+            project.check_all_offices()
+        if args.click_features_file:
+            project.write_click_features(args.click_features_file)
