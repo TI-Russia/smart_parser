@@ -37,7 +37,6 @@ namespace Parser.Lib
             }
             else
             {
-                Console.WriteLine("aaaaaa");
                 if (String.IsNullOrEmpty(logFileName))
                 {
                     logFileName = "smart_parser_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".log";
