@@ -279,23 +279,37 @@ def get_file_extension_by_url(url):
     ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
     return ext
 
+def process_smart_parser_json(json_file):
+    with open(json_file, "r", encoding="utf8") as inpf:
+        smart_parser_json = json.load(inpf)
+        people_count = len(smart_parser_json.get("persons", []))
+    os.remove(json_file)
+    return people_count
+
 
 def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
+    people_count = -1
     if smart_parser_binary == "none":
-        return -1
+        return people_count
     if inputfile.endswith("pdf"):
-        return -1
+        return people_count
     logger = logging.getLogger("dlrobot_logger")
-    cmd = "{} -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary, inputfile)
+    cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary, inputfile)
     logger.debug(cmd)
     os.system(cmd)
     json_file = inputfile + ".json"
-    people_count = -1
     if os.path.exists(json_file):
-        with open(json_file, "r", encoding="utf8") as inpf:
-            smart_parser_json = json.load(inpf)
-            people_count = len(smart_parser_json.get("persons", []))
-        os.remove(json_file)
+        people_count = process_smart_parser_json(json_file)
+    else:
+        sheet_index = 0
+        while True:
+            json_file = "{}_{}.json".format(inputfile, sheet_index)
+            if not os.path.exists(json_file):
+                break
+            if people_count == -1:
+                people_count = 0
+            people_count += process_smart_parser_json(json_file)
+            sheet_index += 1
     return people_count
 
 def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extension, office_folder):

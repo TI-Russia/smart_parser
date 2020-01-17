@@ -219,7 +219,8 @@ def main(args):
             step_index += 1
 
     if args.stop_after is not None:
-        return
+        if args.stop_after != "last_step":
+            return
     logger.info("=== download all declarations =========")
     project.download_last_step()
     export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
@@ -231,3 +232,5 @@ def main(args):
 
 if __name__ == "__main__":
     args = parse_args()
+    main(args)
+    
