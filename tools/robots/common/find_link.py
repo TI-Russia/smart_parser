@@ -10,6 +10,7 @@ from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, 
 from content_types import  ALL_CONTENT_TYPES
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from tempfile import TemporaryDirectory
 
 class TLinkInfo:
     def __init__(self, text, source=None, target=None, tagName=None, download_file=None):
@@ -213,58 +214,51 @@ def find_links_in_html_by_text(main_url, soup, check_link_func, office_section):
                 office_section.add_link(href, record)
 
 
+def make_folder_empty(folder):
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
-TMP_DOWNLOAD_FOLDER = None
-def recreate_tmp_download_folder():
-    global TMP_DOWNLOAD_FOLDER
-    TMP_DOWNLOAD_FOLDER = os.path.join(os.getcwd(), "tmp_download")
-    if os.path.exists(TMP_DOWNLOAD_FOLDER):
-        shutil.rmtree(TMP_DOWNLOAD_FOLDER)
-    os.makedirs(TMP_DOWNLOAD_FOLDER)
-
-
-def open_selenium():
-    global TMP_DOWNLOAD_FOLDER
-    recreate_tmp_download_folder()
-
+def open_selenium(tmp_folder):
     options = FirefoxOptions()
     options.headless = True
     options.set_preference("browser.download.folderList", 2)
     options.set_preference("browser.download.manager.showWhenStarting", False)
     options.set_preference("browser.download.manager.closeWhenDone", True)
     options.set_preference("browser.download.manager.focusWhenStarting", False)
-    options.set_preference("browser.download.dir", TMP_DOWNLOAD_FOLDER)
+    options.set_preference("browser.download.dir", tmp_folder)
     options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
     options.set_preference("browser.helperApps.alwaysAsk.force", False)
     return webdriver.Firefox(firefox_options=options)
 
 
-def wait_download_finished(timeout=120):
-    global TMP_DOWNLOAD_FOLDER
+def wait_download_finished(tmp_folder, timeout=120):
     dl_wait = True
     seconds = 0
     while dl_wait and seconds < timeout:
-        firefox_temp_file = sorted(Path(TMP_DOWNLOAD_FOLDER).glob('*.part'))
-        chrome_temp_file = sorted(Path(TMP_DOWNLOAD_FOLDER).glob('*.crdownload'))
+        firefox_temp_file = sorted(Path(tmp_folder).glob('*.part'))
+        chrome_temp_file = sorted(Path(tmp_folder).glob('*.crdownload'))
         if (len(firefox_temp_file) == 0) and \
            (len(chrome_temp_file) == 0):
-            files = os.listdir(TMP_DOWNLOAD_FOLDER)
+            files = os.listdir(tmp_folder)
             if len(files) > 0:
-                return save_download_file(os.path.join(TMP_DOWNLOAD_FOLDER, files[0]))
+                return save_download_file(os.path.join(tmp_folder, files[0]))
             return None
         time.sleep(1)
         seconds += 1
     return None
 
-
-def find_links_with_selenium (main_url, check_link_func, office_section):
+def click_all_selenium (main_url, check_link_func, tmp_folder, office_section):
     logger = logging.getLogger("dlrobot_logger")
-    if can_be_office_document(main_url):
-        return
     logger.debug("find_links_with_selenium url={0}, function={1}".format(main_url, check_link_func))
-    driver = open_selenium()
-
+    driver = open_selenium(tmp_folder)
     driver.get(main_url)
     time.sleep(6)
     elements = list(driver.find_elements_by_xpath('//button | //a'))
@@ -275,10 +269,10 @@ def find_links_with_selenium (main_url, check_link_func, office_section):
         link_text = e.text.strip('\n\r\t ') #initialize here, can be broken after click
         logger.debug("check link url={0}, function={1}".format(main_url, check_link_func))
         if check_link_func(TLinkInfo(link_text)):
-            recreate_tmp_download_folder()
+            make_folder_empty(tmp_folder)
             e.click()
             time.sleep(6)
-            downloaded_file = wait_download_finished(120)
+            downloaded_file = wait_download_finished(tmp_folder, 180)
             link_url = driver.current_url
             if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
                 record = {
@@ -298,6 +292,12 @@ def find_links_with_selenium (main_url, check_link_func, office_section):
             elements = list(driver.find_elements_by_xpath('//button | //a'))
     driver.quit()
 
+
+def find_links_with_selenium (main_url, check_link_func, office_section):
+    if can_be_office_document(main_url):
+        return
+    with TemporaryDirectory(prefix="tmp_download", dir=".") as tmp_folder:
+        click_all_selenium(main_url, check_link_func, tmp_folder, office_section)
 
 
 def add_links(ad, url, check_link_func, fallback_to_selenium=True):

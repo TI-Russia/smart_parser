@@ -3,6 +3,7 @@ import re
 import os
 import argparse
 import logging
+from tempfile import TemporaryDirectory
 
 sys.path.append('../common')
 
@@ -19,7 +20,7 @@ from find_link import \
 
 
 
-def setup_logging(args,  logger):
+def setup_logging(args,  logger, logfilename):
     logger.setLevel(logging.DEBUG)
 
     # create formatter and add it to the handlers
@@ -27,7 +28,7 @@ def setup_logging(args,  logger):
     if os.path.exists(args.logfile):
         os.remove(args.logfile)
     # create file handler which logs even debug messages
-    fh = logging.FileHandler(args.logfile)
+    fh = logging.FileHandler(logfilename)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
@@ -195,9 +196,9 @@ def step_index_by_name(name):
             return i
     raise Exception("cannot find step {}".format(name))
 
-def main(args):
+def main(args, log_file_name):
     logger = logging.getLogger("dlrobot_logger")
-    setup_logging(args, logger)
+    setup_logging(args, logger, log_file_name)
     project = TRobotProject(args.project, ROBOT_STEPS)
     if args.hypots is not None:
         if args.start_from is not None:
@@ -237,4 +238,11 @@ def main(args):
 
 if __name__ == "__main__":
     args = parse_args()
-    main(args)
+    if  args.logfile == "temp":
+        with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
+            log_file_name = os.path.join(tmp_folder, "dlrobot.log")
+            main(args, log_file_name)
+            logging.shutdown()
+    else:
+        main(args, args.logfile)
+
