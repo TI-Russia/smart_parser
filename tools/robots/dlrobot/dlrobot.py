@@ -196,18 +196,8 @@ def step_index_by_name(name):
             return i
     raise Exception("cannot find step {}".format(name))
 
-def main(args, log_file_name):
+def make_steps(args, project):
     logger = logging.getLogger("dlrobot_logger")
-    setup_logging(args, logger, log_file_name)
-    project = TRobotProject(args.project, ROBOT_STEPS)
-    if args.hypots is not None:
-        if args.start_from is not None:
-            logger.info("ignore --input-url-list since --start-from  or --step is specified")
-        else:
-            project.create_by_hypots(args.hypots)
-    else:
-        project.read_project()
-
     if args.start_from != "last_step":
         start = step_index_by_name(args.start_from) if args.start_from is not None else 0
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
@@ -231,18 +221,33 @@ def main(args, log_file_name):
         project.write_export_stats()
         project.write_project()
 
-    if args.from_human_file_name is not None:
-        project.check_all_offices()
-    if args.click_features_file:
-        project.write_click_features(args.click_features_file)
+
+def open_project(args, log_file_name):
+    logger = logging.getLogger("dlrobot_logger")
+    setup_logging(args, logger, log_file_name)
+    with TRobotProject(args.project, ROBOT_STEPS) as project:
+        if args.hypots is not None:
+            if args.start_from is not None:
+                logger.info("ignore --input-url-list since --start-from  or --step is specified")
+            else:
+                project.create_by_hypots(args.hypots)
+        else:
+            project.read_project()
+
+        make_steps(args, project)
+
+        if args.from_human_file_name is not None:
+            project.check_all_offices()
+        if args.click_features_file:
+            project.write_click_features(args.click_features_file)
 
 if __name__ == "__main__":
     args = parse_args()
     if  args.logfile == "temp":
         with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
             log_file_name = os.path.join(tmp_folder, "dlrobot.log")
-            main(args, log_file_name)
+            open_project(args, log_file_name)
             logging.shutdown()
     else:
-        main(args, args.logfile)
+        open_project(args, args.logfile)
 

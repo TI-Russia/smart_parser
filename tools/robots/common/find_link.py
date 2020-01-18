@@ -2,15 +2,11 @@ import os
 from pathlib import Path
 import time
 import logging
-from bs4 import BeautifulSoup
 import shutil
 from urllib.parse import urljoin
 from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url, get_site_domain_wo_www
-from content_types import  ALL_CONTENT_TYPES
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from tempfile import TemporaryDirectory
+
 
 class TLinkInfo:
     def __init__(self, text, source=None, target=None, tagName=None, download_file=None):
@@ -226,19 +222,6 @@ def make_folder_empty(folder):
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
-def open_selenium(tmp_folder):
-    options = FirefoxOptions()
-    options.headless = True
-    options.set_preference("browser.download.folderList", 2)
-    options.set_preference("browser.download.manager.showWhenStarting", False)
-    options.set_preference("browser.download.manager.closeWhenDone", True)
-    options.set_preference("browser.download.manager.focusWhenStarting", False)
-    options.set_preference("browser.download.dir", tmp_folder)
-    options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
-    options.set_preference("browser.helperApps.alwaysAsk.force", False)
-    return webdriver.Firefox(firefox_options=options)
-
-
 def wait_download_finished(tmp_folder, timeout=120):
     dl_wait = True
     seconds = 0
@@ -255,10 +238,10 @@ def wait_download_finished(tmp_folder, timeout=120):
         seconds += 1
     return None
 
-def click_all_selenium (main_url, check_link_func, tmp_folder, office_section):
+
+def click_all_selenium (main_url, check_link_func, driver, download_folder, office_section):
     logger = logging.getLogger("dlrobot_logger")
     logger.debug("find_links_with_selenium url={0}, function={1}".format(main_url, check_link_func))
-    driver = open_selenium(tmp_folder)
     driver.get(main_url)
     time.sleep(6)
     elements = list(driver.find_elements_by_xpath('//button | //a'))
@@ -269,10 +252,10 @@ def click_all_selenium (main_url, check_link_func, tmp_folder, office_section):
         link_text = e.text.strip('\n\r\t ') #initialize here, can be broken after click
         logger.debug("check link url={0}, function={1}".format(main_url, check_link_func))
         if check_link_func(TLinkInfo(link_text)):
-            make_folder_empty(tmp_folder)
+            make_folder_empty(download_folder)
             e.click()
             time.sleep(6)
-            downloaded_file = wait_download_finished(tmp_folder, 180)
+            downloaded_file = wait_download_finished(download_folder, 180)
             link_url = driver.current_url
             if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
                 record = {
@@ -290,52 +273,5 @@ def click_all_selenium (main_url, check_link_func, tmp_folder, office_section):
                     office_section.add_link(link_url, record)
             driver.back()
             elements = list(driver.find_elements_by_xpath('//button | //a'))
-    driver.quit()
-
-
-def find_links_with_selenium (main_url, check_link_func, office_section):
-    if can_be_office_document(main_url):
-        return
-    with TemporaryDirectory(prefix="tmp_download", dir=".") as tmp_folder:
-        click_all_selenium(main_url, check_link_func, tmp_folder, office_section)
-
-
-def add_links(ad, url, check_link_func, fallback_to_selenium=True):
-    html = ""
-    logger = logging.getLogger("dlrobot_logger")
-    try:
-        html = download_with_cache(url)
-    except Exception as err:
-        logger.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
-        return
-
-    if get_file_extension_by_cached_url(url) != DEFAULT_HTML_EXTENSION:
-        logger.debug("cannot get links  since it is not html: {0}".format(url))
-        return
-
-    try:
-        soup = BeautifulSoup(html, "html.parser")
-
-        save_links_count = len(ad.found_links)
-        find_links_in_html_by_text(url, soup, check_link_func, ad)
-
-        # see http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g
-        if save_links_count == len(ad.found_links) and fallback_to_selenium:
-            find_links_with_selenium(url, check_link_func, ad)
-
-    except Exception as err:
-        logger.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
-
-
-def find_links_for_one_website(start_pages, target, check_link_func, fallback_to_selenium=False, transitive=False):
-    while True:
-        save_count = len(target.found_links)
-
-        for url in start_pages:
-            add_links(target, url, check_link_func, fallback_to_selenium)
-
-        new_count = len(target.found_links)
-        if not transitive or save_count == new_count:
-            break
 
 
