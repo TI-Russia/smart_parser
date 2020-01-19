@@ -239,39 +239,56 @@ def wait_download_finished(tmp_folder, timeout=120):
     return None
 
 
+def click_selenium(logger, main_url, check_link_func, driver, download_folder, elem, office_section):
+    tag_name = elem.tag_name
+    link_text = elem.text.strip('\n\r\t ')  # initialize here, can be broken after click
+    make_folder_empty(download_folder)
+    window_before = driver.window_handles[0]
+    elem.click()
+    time.sleep(6)
+    if len(driver.window_handles) < 2:
+        logger.debug("cannot click, no new window is found")
+        return
+    window_after = driver.window_handles[1]
+    driver.switch_to_window(window_after)
+    downloaded_file = wait_download_finished(download_folder, 180)
+    link_url = driver.current_url
+    if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
+        record = {
+            'text': link_text,
+            'engine': 'selenium',
+            'source': main_url,
+            'tagname': tag_name,
+            'title': driver.title
+        }
+        if downloaded_file is not None:
+            record['downloaded_file'] = downloaded_file
+            record['element_index'] = i
+            office_section.add_downloaded_file(record)
+        else:
+            office_section.add_link(link_url, record)
+    driver.close()
+    driver.switch_to_window(window_before)
+
+def close_all_windows_except_one(driver):
+    while len(driver.window_handles) > 1:
+        driver.close()
+
+
 def click_all_selenium (main_url, check_link_func, driver, download_folder, office_section):
     logger = logging.getLogger("dlrobot_logger")
     logger.debug("find_links_with_selenium url={0}, function={1}".format(main_url, check_link_func))
+    close_all_windows_except_one(driver)
     driver.get(main_url)
     time.sleep(6)
     elements = list(driver.find_elements_by_xpath('//button | //a'))
 
     for i in range(len(elements)):
         e = elements[i]
-        tag_name = e.tag_name
-        link_text = e.text.strip('\n\r\t ') #initialize here, can be broken after click
+        link_text = e.text.strip('\n\r\t ')
         logger.debug("check link url={0}, function={1}".format(main_url, check_link_func))
         if check_link_func(TLinkInfo(link_text)):
-            make_folder_empty(download_folder)
-            e.click()
-            time.sleep(6)
-            downloaded_file = wait_download_finished(download_folder, 180)
-            link_url = driver.current_url
-            if check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
-                record = {
-                    'text': link_text,
-                    'engine': 'selenium',
-                    'source':  main_url,
-                    'tagname': tag_name,
-                    'title': driver.title
-                }
-                if downloaded_file is not None:
-                    record['downloaded_file'] = downloaded_file
-                    record['element_index'] = i
-                    office_section.add_downloaded_file(record)
-                else:
-                    office_section.add_link(link_url, record)
-            driver.back()
+            click_selenium(logger, main_url, check_link_func, driver, download_folder,  e, office_section)
             elements = list(driver.find_elements_by_xpath('//button | //a'))
 
 
