@@ -8,7 +8,6 @@ import tempfile
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url
 
@@ -29,22 +28,41 @@ FIXLIST =  {
 }
 
 
-
 class TRobotStep:
-    def __init__(self, init_json=None):
-        self.logger = logging.getLogger("dlrobot_logger")
-        self.found_links = dict()
-        self.downloaded_files = dict()
-        if init_json is not None:
-            self.from_json(init_json)
+    def __init__(self, step_name, init_json=None):
+        self.step_name = step_name
+        if init_json  is not None:
+            self.step_urls = set(init_json.get('step_urls', []))
+        else:
+            self.step_urls = set()
 
-    def from_json(self, r):
-        self.found_links = r['links']
-        self.downloaded_files = r.get('downloaded_files', [])
+    def to_json(self):
+        return {
+            'step_urls': list(self.step_urls)
+        }
+
+
+class TUrlInfo:
+    def __init__(self, title=None, step_name=None, init_json=None):
+        if init_json is not None:
+            self.step_name = init_json['step']
+            self.title = init_json['title']
+            self.parent_nodes = set(init_json.get('parents', list()))
+            self.linked_nodes = init_json.get('links', dict())
+            self.downloaded_files = init_json.get('downloaded_files', dict())
+        else:
+            self.step_name = step_name
+            self.title = title
+            self.parent_nodes = set()
+            self.linked_nodes = dict()
+            self.downloaded_files = list()
 
     def to_json(self):
         record = {
-            'links': self.found_links
+            'step': self.step_name,
+            'title': self.title,
+            'parents': list(self.parent_nodes),
+            'links': self.linked_nodes,
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = self.downloaded_files
@@ -54,56 +72,94 @@ class TRobotStep:
         self.downloaded_files.append(record)
 
     def add_link(self, href, record):
-        if record['source'] != href:
-            href = strip_viewer_prefix(href)
-            href = href.strip(" \r\n\t")
-            domain = get_site_domain_wo_www(href)
-            if not is_super_popular_domain(domain) and href.find(' ') == -1 and href.find('\n') == -1:
-                if 'title' not in record:
-                    try:
-                        html = download_with_cache(href)
-                        if get_file_extension_by_cached_url(href) == DEFAULT_HTML_EXTENSION:
-                            soup = BeautifulSoup(html, "html.parser")
-                            record['title'] = soup.title.string.strip(" \n\r\t")
-                    except Exception as err:
-                        pass
-                self.found_links[href] = record
-                self.logger.debug("add link {0}".format(href))
+        self.linked_nodes[href] = record
+
+
+def get_title(url):
+    try:
+        html = download_with_cache(url)
+        if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
+            soup = BeautifulSoup(html, "html.parser")
+            return soup.title.string.strip(" \n\r\t")
+    except Exception as err:
+        return ""
 
 class TRobotWebSite:
-    def __init__(self, init_json=None):
-        self.morda_url = ""
-        self.office_name = ""
-        self.robot_steps = list()
+    def __init__(self, step_names, init_json=None):
+        self.url_nodes = dict()
         self.logger = logging.getLogger("dlrobot_logger")
-        self.exported_files = []
         if init_json is not None:
-            self.from_json(init_json)
+            self.morda_url = init_json['morda_url']
+            self.office_name = init_json.get('name', '')
+            self.robot_steps = list()
+            self.exported_files = init_json.get('exported_files', [])
+            for step_no, step in enumerate(init_json.get('steps', list())):
+                self.robot_steps.append(TRobotStep(step_names[step_no], step))
+            for url, info in init_json.get('url_nodes', dict()).items():
+                self.url_nodes[url] = TUrlInfo(init_json=info)
+            if len(self.url_nodes) == 0:
+                self.url_nodes[self.morda_url] = TUrlInfo(title=get_title(self.morda_url))
+        else:
+            self.morda_url = ""
+            self.office_name = ""
+            self.robot_steps = list()
+            self.exported_files = []
+
+        for step_no in range(len(self.robot_steps), len(step_names)):
+            self.robot_steps.append(TRobotStep(step_names[step_no]))
+        assert len(self.robot_steps) == len(step_names)
+
 
     def to_json(self):
         return {
             'morda_url': self.morda_url,
             'name': self.office_name,
             'steps': [s.to_json() for s in self.robot_steps],
+            'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
             'exported_files': self.exported_files
         }
 
-    def from_json(self, r):
-        self.morda_url = r['morda_url']
-        self.office_name = r.get('name', '')
-        self.robot_steps = []
-        self.exported_files = r.get('exported_files', [])
-        for x in r.get('steps', list()):
-            self.robot_steps.append(TRobotStep(x))
-
     def get_last_step_sha256(self):
         result = set()
-        for url in self.robot_steps[-1].found_links:
+        for url in self.robot_steps[-1].step_urls:
             infile = get_local_file_name_by_url(url)
             if os.path.exists(infile):
                 with open(infile, "rb") as f:
                     result.add(hashlib.sha256(f.read()).hexdigest())
         return result
+
+    def find_parent_page_for_downloaded_file(self, export_record):
+        for url_info in self.url_nodes.value():
+            for d in url_info.downloaded_files:
+                if d['downloaded_file'] == export_record['infile']:
+                    return url_info
+
+    def get_parents(self, record):
+        url = record.get('url', '')
+        if url == '':
+            return set(self.find_parent_page_for_downloaded_file(record))
+        parents = self.url_nodes[url].parent_nodes
+        if len(parents) == 0:
+            raise Exception("cannot find parent for {}".format(url))
+        return parents
+
+
+    def get_path_to_root(self, path):
+        assert len(path) >= 1
+        if path[-1].get('url', '') == self.morda_url:
+            return True
+        parents = self.get_parents(path[-1])
+        for p in parents:
+            r = {
+                'url': p,
+            }
+            if p not in path:
+                new_path = list(path) + [r]
+                if self.get_path_to_root(new_path):
+                    path.clear()
+                    path.extend(new_path)
+                    return True
+        return False
 
 def open_selenium(tmp_folder):
     options = FirefoxOptions()
@@ -118,10 +174,43 @@ def open_selenium(tmp_folder):
     return webdriver.Firefox(firefox_options=options)
 
 
+
+class TProcessUrlTemporary:
+    def __init__(self, website, check_link_func, robot_step):
+        self.website = website
+        self.check_link_func = check_link_func
+        self.robot_step = robot_step
+
+    def add_link_wrapper(self, source, link_info):
+        href = link_info.pop('href')
+        if source == href:
+            return
+        if is_super_popular_domain(get_site_domain_wo_www(href)) or href.find(' ') != -1 or href.find('\n') != -1:
+            return
+        href = strip_viewer_prefix(href)
+        href = href.strip(" \r\n\t")
+
+        href_title = link_info.pop('title') if 'title' in link_info else get_title(href)
+
+        self.website.url_nodes[source].add_link(href, link_info)
+        self.robot_step.step_urls.add(href)
+
+        if href not in self.website.url_nodes:
+            self.website.url_nodes[href] = TUrlInfo(title=href_title, step_name=self.robot_step.step_name)
+        new_node = self.website.url_nodes[href]
+        new_node.parent_nodes.add(source)
+        self.website.logger.debug("add link {0}".format(href))
+
+    def add_downloaded_file_wrapper(self, source, record):
+        self.website.url_nodes[source].add_downloaded_file(record)
+
+
+
 class TRobotProject:
     logger = None
     selenium_driver = None
     selenium_download_folder = None
+    step_names = list()
 
     def __init__(self, filename, robot_steps):
         self.project_file = filename + ".clicks"
@@ -129,7 +218,7 @@ class TRobotProject:
             shutil.copy2(filename, self.project_file)
         self.offices = list()
         self.human_files = list()
-        self.names = [r['name'] for r in robot_steps]
+        TRobotProject.step_names = [r['name'] for r in robot_steps]
 
     def __enter__(self):
         TRobotProject.logger = logging.getLogger("dlrobot_logger")
@@ -147,7 +236,7 @@ class TRobotProject:
         with open(self.project_file, "w", encoding="utf8") as outf:
             output =  {
                 'sites': [o.to_json() for o in self.offices],
-                'step_names': self.names
+                'step_names': self.step_names
             }
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
 
@@ -156,14 +245,11 @@ class TRobotProject:
         with open(self.project_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
             if 'step_names'  in json_dict:
-                if json_dict['step_names'] != self.names:
-                    raise Exception("different step names, adjust manually or rebuild the project")
+                if json_dict['step_names'] != self.step_names:
+                    raise Exception("different step step_names, adjust manually or rebuild the project")
 
             for o in json_dict.get('sites', []):
-                site = TRobotWebSite(init_json=o)
-                for i in range(len(site.robot_steps), len(self.names)):
-                    site.robot_steps.append(TRobotStep())
-                assert len(site.robot_steps) == len(self.names)
+                site = TRobotWebSite(self.step_names, init_json=o)
                 self.offices.append(site)
 
     def read_human_files(self, filename):
@@ -208,57 +294,40 @@ class TRobotProject:
 
     def del_old_info(self, step_index):
         for office_info in self.offices:
-            office_info.robot_steps[step_index].found_links = dict()
+            office_info.robot_steps[step_index].step_urls = set()
 
-    @staticmethod
-    def find_downloaded_file(office_info, export_record):
-        for i, step in enumerate(office_info.robot_steps):
-            for d in step.downloaded_files:
-                if d['downloaded_file'] == export_record['infile']:
-                    return i, d
-
-
-    @staticmethod
-    def get_path_to_root(office_info, export_record):
-        if export_record['url'] == '':
-            step_no, d_record = find_downloaded_file(office_info, export_record)
-            last_step = step_no - 1
-            path = [d_record]
-            url = d_record['source']
-        else:
-            last_step = len(office_info.robot_steps) - 1
-            path = []
-            url = export_record['url']
-
-        for i in range(last_step, 0, -1):
-            parent = office_info.robot_steps[i].found_links.get(url)
-            assert parent is not None
-            url = parent['source']
-            if len(path) == 0:
-                path.append(parent)
-            else:
-                if path[-1]['source'] == url:
-                    path[-1] = parent
-                else:
-                    path.append(parent)
-        return path
 
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))
         result = []
-        for o in self.offices:
-            for export_record in o.exported_files:
-                path = self.get_path_to_root(o, export_record)
+        good_urls = set()
+        for office_info in self.offices:
+            for export_record in office_info.exported_files:
+                step_no = len(office_info.robot_steps)
+                path = [export_record]
+                found_root = self.get_path_to_root(office_info, step_no, [export_record])
+                assert  found_root
+                if export_record['people_count'] > 0:
+                    good_urls.update(p['url'] for p in path)
                 result.append({
                     'people_count': export_record['people_count'],
                     'path': path
                 })
+
+            for url, info in office_info.url_nodes:
+                if url not in good_urls:
+                    result.append({
+                        'people_count': 0,
+                        'created_by_step': info.step_name,
+                        'path': [{'url': url}]
+                    })
+
         with open(filename, "w", encoding="utf8") as outf:
             json.dump(result, outf, ensure_ascii=False, indent=4)
 
     def download_last_step(self):
         for office_info in self.offices:
-            pages_to_download = office_info.robot_steps[-1].found_links
+            pages_to_download = office_info.robot_steps[-1].step_urls
             for url in pages_to_download:
                 try:
                     if 'downloaded_file' not in pages_to_download[url]:
@@ -267,47 +336,6 @@ class TRobotProject:
                     self.logger.error("cannot download " + url + ": " + str(err) + "\n")
                     pass
 
-    def find_links_for_all_websites(self, step_index, check_link_func, fallback_to_selenium=True,
-                                    transitive=False, only_missing=True, include_source="copy_if_empty"):
-        global FIXLIST
-        for office_info in self.offices:
-            target = office_info.robot_steps[step_index]
-            step_name = self.names[step_index]
-            fixed_url = FIXLIST.get(get_site_domain_wo_www(office_info.morda_url), {}).get(step_name)
-            if fixed_url is not None:
-                record = {'engine':'manual', 'source': 'manual', 'text':''}
-                self.add_link(fixed_url, record, target)
-                continue
-
-            if len(target.found_links) > 0 and only_missing:
-                self.logger.info("skip manual url updating {0}, target={1}, (already exist)\n".format(
-                    office_info.office_name, target_page_collection_name))
-                continue
-
-            if step_index == 0:
-                start_pages = {office_info.morda_url:{'text':""}}
-            else:
-                start_pages = office_info.robot_steps[step_index - 1].found_links
-
-            if include_source == "always":
-                target.found_links.update(start_pages)
-            self.logger.info('{0}'.format(office_info.morda_url))
-            start = datetime.datetime.now()
-            TRobotProject.find_links_for_one_website(start_pages, target,
-                                       check_link_func, fallback_to_selenium, transitive)
-            self.logger.info("step elapsed time {} {} {}".format (
-                office_info.morda_url,
-                step_name,
-                (datetime.datetime.now() - start).total_seconds()))
-            if include_source == "copy_if_empty" and len(target.found_links) == 0:
-                target.found_links.update(start_pages)
-
-            if include_source == "copy_docs":
-                for x in start_pages:
-                    if x not in target.found_links and get_file_extension_by_cached_url(x) != DEFAULT_HTML_EXTENSION:
-                        target.found_links[x] = start_pages[x]
-
-            self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.found_links)))
 
 
     def collect_subpages(self, step_index, check_link_func, include_source="always"):
@@ -327,16 +355,16 @@ class TRobotProject:
             json.dump(result, outf, indent=4)
 
     @staticmethod
-    def find_links_with_selenium (main_url, check_link_func, office_section):
+    def find_links_with_selenium (step_info, main_url):
         if can_be_office_document(main_url):
             return
-        click_all_selenium(main_url, check_link_func,
+        click_all_selenium(step_info, main_url,
                            TRobotProject.selenium_driver,
-                           TRobotProject.selenium_download_folder, office_section)
+                           TRobotProject.selenium_download_folder   )
 
 
     @staticmethod
-    def add_links(ad, url, check_link_func, fallback_to_selenium=True):
+    def add_links(step_info, url, fallback_to_selenium=True):
         html = ""
         try:
             html = download_with_cache(url)
@@ -351,24 +379,72 @@ class TRobotProject:
         try:
             soup = BeautifulSoup(html, "html.parser")
 
-            save_links_count = len(ad.found_links)
-            find_links_in_html_by_text(url, soup, check_link_func, ad)
+            save_links_count = len(step_info.robot_step.step_urls)
+            find_links_in_html_by_text(step_info, url, soup)
 
             # see http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g
-            if save_links_count == len(ad.found_links) and fallback_to_selenium:
-                TRobotProject.find_links_with_selenium(url, check_link_func, ad)
+            if save_links_count == len(step_info.robot_step.step_urls) and fallback_to_selenium:
+                TRobotProject.find_links_with_selenium(step_info, url)
 
+        except (TypeError, NameError, IndexError,  KeyError, AttributeError) as err:
+            raise err
         except Exception as err:
-            TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}\n'.format(url, str(err)))
+            TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}'.format(url, str(err)))
 
     @staticmethod
-    def find_links_for_one_website(start_pages, target, check_link_func, fallback_to_selenium=False, transitive=False):
+    def find_links_for_one_website(step_info, start_pages, fallback_to_selenium, transitive):
         while True:
-            save_count = len(target.found_links)
+            save_count = len(step_info.robot_step.step_urls)
 
             for url in start_pages:
-                TRobotProject.add_links(target, url, check_link_func, fallback_to_selenium)
+                TRobotProject.add_links(step_info, url, fallback_to_selenium)
 
-            new_count = len(target.found_links)
+            new_count = len(step_info.robot_step.step_urls)
             if not transitive or save_count == new_count:
                 break
+
+
+    def find_links_for_all_websites(self, step_index, check_link_func, fallback_to_selenium=True,
+                                    transitive=False, only_missing=True, include_source="copy_if_empty"):
+        global FIXLIST
+        for office_info in self.offices:
+            target = office_info.robot_steps[step_index]
+            step_name = self.step_names[step_index]
+            step_info = TProcessUrlTemporary(office_info, check_link_func, target)
+
+            fixed_url = FIXLIST.get(get_site_domain_wo_www(office_info.morda_url), {}).get(step_name)
+            if fixed_url is not None:
+                link_info = {
+                    'engine': 'manual',
+                    'text': '',
+                    'href': fixed_url
+                }
+                step_info.add_link_wrapper(office_info.morda_url, link_info)
+                continue
+
+            if len(target.step_urls) > 0 and only_missing:
+                self.logger.info("skip manual url updating {0}, target={1}, (already exist)\n".format(
+                    office_info.office_name, target_page_collection_name))
+                continue
+
+            if step_index == 0:
+                start_pages = {office_info.morda_url}
+            else:
+                start_pages = office_info.robot_steps[step_index - 1].step_urls
+
+            if include_source == "always":
+                target.step_urls.update(start_pages)
+            self.logger.info('{0}'.format(office_info.morda_url))
+            start = datetime.datetime.now()
+            self.find_links_for_one_website(step_info,
+                                       start_pages,
+                                       fallback_to_selenium,
+                                       transitive)
+            self.logger.info("step elapsed time {} {} {}".format (
+                office_info.morda_url,
+                step_name,
+                (datetime.datetime.now() - start).total_seconds()))
+            if include_source == "copy_if_empty" and len(target.step_urls) == 0:
+                target.step_urls.update(start_pages)
+
+            self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))

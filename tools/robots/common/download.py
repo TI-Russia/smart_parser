@@ -344,7 +344,7 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
         uniq_files = set()
         export_files = list()
 
-        for url in office_info.robot_steps[-1].found_links:
+        for url in office_info.robot_steps[-1].step_urls:
             extension = get_file_extension_by_cached_url(url)
             infile = get_local_file_name_by_url(url)
             export_rec = export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder)
@@ -352,8 +352,8 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
                 export_files.append(export_rec)
                 index += 1
 
-        for step in office_info.robot_steps:
-            for d in step.downloaded_files:
+        for url_info in office_info.url_nodes:
+            for d in url_info.downloaded_files:
                 infile = d['downloaded_file']
                 extension = os.path.splitext(infile)[1]
                 export_rec = export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder)

@@ -159,7 +159,7 @@ ROBOT_STEPS = [
         'step_function': TRobotProject.find_links_for_all_websites,
         'name': "declarations",
         'check_link_func': check_accepted_declaration_file_type,
-        'include_sources': "copy_docs"
+        'include_sources': "never"
     },
 ]
 
