@@ -75,7 +75,7 @@ class TUrlInfo:
         self.linked_nodes[href] = record
 
 
-def get_title(url):
+def request_url_title(url):
     try:
         html = download_with_cache(url)
         if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
@@ -174,7 +174,6 @@ def open_selenium(tmp_folder):
     return webdriver.Firefox(firefox_options=options)
 
 
-
 class TProcessUrlTemporary:
     def __init__(self, website, check_link_func, robot_step):
         self.website = website
@@ -183,14 +182,18 @@ class TProcessUrlTemporary:
 
     def add_link_wrapper(self, source, link_info):
         href = link_info.pop('href')
-        if source == href:
-            return
         if is_super_popular_domain(get_site_domain_wo_www(href)) or href.find(' ') != -1 or href.find('\n') != -1:
             return
+        if href.find('print=') != -1:
+            self.website.logger.debug('skip {} since it looks like a print link, that causes a print dialog'.format(href))
+            return
+
         href = strip_viewer_prefix(href)
         href = href.strip(" \r\n\t")
+        if source == href:
+            return
 
-        href_title = link_info.pop('title') if 'title' in link_info else get_title(href)
+        href_title = link_info.pop('title') if 'title' in link_info else request_url_title(href)
 
         self.website.url_nodes[source].add_link(href, link_info)
         self.robot_step.step_urls.add(href)
@@ -314,7 +317,7 @@ class TRobotProject:
                     'path': path
                 })
 
-            for url, info in office_info.url_nodes:
+            for url, info in office_info.url_nodes.items():
                 if url not in good_urls:
                     result.append({
                         'people_count': 0,
