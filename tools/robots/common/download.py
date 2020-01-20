@@ -352,7 +352,7 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
                 export_files.append(export_rec)
                 index += 1
 
-        for url_info in office_info.url_nodes:
+        for url_info in office_info.url_nodes.values():
             for d in url_info.downloaded_files:
                 infile = d['downloaded_file']
                 extension = os.path.splitext(infile)[1]

@@ -49,7 +49,7 @@ class TUrlInfo:
             self.title = init_json['title']
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
-            self.downloaded_files = init_json.get('downloaded_files', dict())
+            self.downloaded_files = init_json.get('downloaded_files', list())
         else:
             self.step_name = step_name
             self.title = title
@@ -327,15 +327,12 @@ class TRobotProject:
 
     def download_last_step(self):
         for office_info in self.offices:
-            pages_to_download = office_info.robot_steps[-1].step_urls
-            for url in pages_to_download:
+            for url in office_info.robot_steps[-1].step_urls:
                 try:
-                    if 'downloaded_file' not in pages_to_download[url]:
-                        download_with_cache(url)
+                    download_with_cache(url)
                 except Exception as err:
                     self.logger.error("cannot download " + url + ": " + str(err) + "\n")
                     pass
-
 
 
     def collect_subpages(self, step_index, check_link_func, include_source="always"):
@@ -351,6 +348,7 @@ class TRobotProject:
         for o in self.offices:
             for export_record in o.exported_files:
                 result.append( (export_record['infile'],  export_record['people_count']))
+        result = sorted (result)
         with open (self.project_file + ".stats", "w", encoding="utf8") as outf:
             json.dump(result, outf, indent=4)
 
