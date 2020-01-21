@@ -50,12 +50,14 @@ class TUrlInfo:
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
             self.downloaded_files = init_json.get('downloaded_files', list())
+            self.people_count = init_json.get('people_count', -1)
         else:
             self.step_name = step_name
             self.title = title
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
+            self.people_count = -1
 
     def to_json(self):
         record = {
@@ -66,6 +68,8 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = self.downloaded_files
+        if self.people_count != -1:
+            record['people_count'] = self.people_count
         return record
 
     def add_downloaded_file(self, record):
@@ -153,7 +157,8 @@ class TRobotWebSite:
             r = {
                 'url': p,
             }
-            if p not in path:
+
+            if p not in {u['url'] for u in path}:
                 new_path = list(path) + [r]
                 if self.get_path_to_root(new_path):
                     path.clear()
@@ -303,26 +308,24 @@ class TRobotProject:
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))
         result = []
-        good_urls = set()
         for office_info in self.offices:
-            for export_record in office_info.exported_files:
-                step_no = len(office_info.robot_steps)
-                path = [export_record]
-                found_root = self.get_path_to_root(office_info, step_no, [export_record])
-                assert  found_root
-                if export_record['people_count'] > 0:
-                    good_urls.update(p['url'] for p in path)
-                result.append({
-                    'people_count': export_record['people_count'],
-                    'path': path
-                })
-
             for url, info in office_info.url_nodes.items():
-                if url not in good_urls:
+                if len(info.downloaded_files) > 0:
+                    for d in info.downloaded_files:
+                        path = [d]
+                        found_root = office_info.get_path_to_root(path)
+                        assert found_root
+                        result.append({
+                            'people_count': d['people_count'],
+                            'path': path
+                        })
+                elif len(info.linked_nodes) == 0:
+                    path = [{'url': url}]
+                    found_root = office_info.get_path_to_root(path)
+                    assert found_root
                     result.append({
-                        'people_count': 0,
-                        'created_by_step': info.step_name,
-                        'path': [{'url': url}]
+                        'people_count': info.people_count,
+                        'path': path
                     })
 
         with open(filename, "w", encoding="utf8") as outf:

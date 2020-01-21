@@ -168,7 +168,6 @@ def parse_args():
     global ROBOT_STEPS
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
-    parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
     parser.add_argument("--skip-final-download", dest='skip_final_download', default=False, action="store_true")
     parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
@@ -188,6 +187,7 @@ def parse_args():
         args.stop_after = args.step
     return args
 
+
 def step_index_by_name(name):
     if name is None:
         return -1
@@ -196,6 +196,7 @@ def step_index_by_name(name):
             return i
     raise Exception("cannot find step {}".format(name))
 
+
 def make_steps(args, project):
     logger = logging.getLogger("dlrobot_logger")
     if args.start_from != "last_step":
@@ -203,8 +204,6 @@ def make_steps(args, project):
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
         step_index = start
         for r in ROBOT_STEPS[start:end]:
-            if args.rebuild:
-                project.del_old_info(step_index)
             logger.info("=== step {0} =========".format(r['name']))
             r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
             project.write_project()

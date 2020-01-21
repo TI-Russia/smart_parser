@@ -3,7 +3,7 @@ from pathlib import Path
 import time
 import logging
 import shutil
-from urllib.parse import urljoin
+from urllib.parse import urljoin, unquote
 from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url, get_site_domain_wo_www
 
@@ -18,6 +18,7 @@ class TLinkInfo:
         self.TagName = tagName
         self.DownloadFile = download_file
 
+
 def strip_viewer_prefix(href):
     # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
     viewers = ['https://docs.google.com/viewer?url=',
@@ -27,8 +28,9 @@ def strip_viewer_prefix(href):
     for prefix in viewers:
         if href.startswith(prefix):
             href = href[len(prefix):]
-            return urllib.parse.unquote(href)
+            return unquote(href)
     return href
+
 
 def strip_html_url(url):
     if url.endswith('.html'):
@@ -43,6 +45,7 @@ def strip_html_url(url):
         url = url[len('www.'):]
     return url
 
+
 def check_sub_page_or_iframe(link_info):
     if not check_self_link(link_info):
         return False
@@ -56,7 +59,7 @@ def check_sub_page_or_iframe(link_info):
 
 
 def check_self_link(link_info):
-    if link_info.Target != None:
+    if link_info.Target is not None:
         if len(link_info.Target) == 0:
             return False
         if link_info.Target.find('redirect') != -1:
@@ -102,7 +105,7 @@ def find_recursive_to_bottom (start_element, check_link_func, element):
                 raise SomeOtherTextException (element.text.strip())
     else:
         for child in children:
-            found_text = find_recursive_to_bottom(start_element,check_link_func, child)
+            found_text = find_recursive_to_bottom(start_element, check_link_func, child)
             if len(found_text) > 0:
                 return found_text
     return ""
@@ -253,7 +256,6 @@ def click_selenium(step_info, main_url, driver, download_folder, element, elemen
         .key_up(Keys.CONTROL) \
         .perform()
 
-
     time.sleep(6)
     if len(driver.window_handles) < 2:
         step_info.website.logger.debug("cannot click, no new window is found")
@@ -286,7 +288,7 @@ def close_all_windows_except_one(driver):
 
 
 def click_all_selenium (step_info, main_url, driver, download_folder):
-    logger = logging.getLogger("dlrobot_logger")
+    logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={0}, function={1}".format(main_url, step_info.check_link_func))
     close_all_windows_except_one(driver)
     driver.get(main_url)

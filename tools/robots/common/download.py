@@ -312,26 +312,31 @@ def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
             sheet_index += 1
     return people_count
 
+
 def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extension, office_folder):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
     outpath = os.path.join(office_folder, str(index) + extension)
     if not os.path.exists(os.path.dirname(outpath)):
         os.makedirs(os.path.dirname(outpath))
     if os.path.exists(infile) and extension in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        sha256hash = ""
         with open(infile, "rb") as f:
-            sha256hash = hashlib.sha256(f.read()).hexdigest();
+            sha256hash = hashlib.sha256(f.read()).hexdigest()
         if sha256hash not in uniq_files:
-            uniq_files.add(sha256hash)
             shutil.copyfile(infile, outpath)
+            people_count = get_people_count_from_smart_parser(smart_parser_binary, outpath)
             export_record = {
                 "url": url,
                 "outpath": outpath,
                 "infile": infile,
-                "people_count": get_people_count_from_smart_parser(smart_parser_binary, outpath)
+                "people_count": people_count
             }
-            return export_record
-    return None
+            uniq_files[sha256hash] = export_record
+            return export_record, people_count
+        else:
+            return None, uniq_files[sha256hash]['people_count']
+
+    return None, -1
+
 
 def export_files_to_folder(offices, smart_parser_binary, outfolder):
     logger = logging.getLogger("dlrobot_logger")
@@ -341,13 +346,15 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
         index = 0
-        uniq_files = set()
+        uniq_files = dict()
         export_files = list()
-
-        for url in office_info.robot_steps[-1].step_urls:
+        last_step_urls = office_info.robot_steps[-1].step_urls
+        logger.debug("process {} urls in last step".format(len(last_step_urls)))
+        for url in last_step_urls:
             extension = get_file_extension_by_cached_url(url)
             infile = get_local_file_name_by_url(url)
-            export_rec = export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder)
+            export_rec, office_info.url_nodes[url].people_count = \
+                export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder)
             if export_rec is not None:
                 export_files.append(export_rec)
                 index += 1
@@ -356,7 +363,8 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
             for d in url_info.downloaded_files:
                 infile = d['downloaded_file']
                 extension = os.path.splitext(infile)[1]
-                export_rec = export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder)
+                export_rec, d['people_count'] = \
+                    export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder)
                 if export_rec is not None:
                     export_files.append(export_rec)
                     index += 1
