@@ -229,7 +229,7 @@ namespace Smart.Parser
             catch (Exception e)
             {
                 Logger.Error("Unknown Parsing Exception " + e.ToString());
-                //Logger.Info("Stack: " + e.StackTrace);
+                Logger.Info("Stack: " + e.StackTrace);
             }
             finally
             {
@@ -376,7 +376,7 @@ namespace Smart.Parser
 
         static IAdapter GetAdapter(string declarationFile)
         {
-            string extension = Path.GetExtension(declarationFile);
+            string extension = Path.GetExtension(declarationFile).ToLower();
             switch (extension)
             {
                 case ".pdf":
@@ -384,6 +384,7 @@ namespace Smart.Parser
                 case ".xhtml":
                 case ".htm":
                 case ".doc":
+                case ".rtf":
                 case ".toloka_json":
                 case ".docx":
                     if (AdapterFamily != "aspose")
@@ -458,7 +459,13 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseDocumentSheet(adapter, curOutFile, declarationFile);
+                    try
+                    {
+                        ParseDocumentSheet(adapter, curOutFile, declarationFile);
+                    }
+                    catch (ColumnDetectorException e) {
+                        Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)", sheetIndex));
+                    }
                 }
             }
             else

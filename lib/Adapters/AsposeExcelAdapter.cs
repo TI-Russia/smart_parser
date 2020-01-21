@@ -145,14 +145,16 @@ namespace Smart.Parser.Adapters
             //worksheet = workbook.Worksheets[0];
             int wsCount = 0;
             worksheet = null;
+            int max_rows_count = 0;
             foreach (var ws in workbook.Worksheets)
             {
                 if (ws.IsVisible && ws.Cells.Rows.Count > 0)
                 {
                     wsCount++;
-                    if (worksheet == null)
+                    if (worksheet == null || max_rows_count < ws.Cells.Rows.Count)
                     {
                         worksheet = ws;
+                        max_rows_count = ws.Cells.Rows.Count;
                     }
                 }
             }
