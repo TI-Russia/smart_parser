@@ -276,7 +276,7 @@ namespace Smart.Parser.Adapters
             using (var doc = WordprocessingDocument.Open(fileName,  false))
             {
                 FindTitleAboveTheTable(doc);
-                CollectRows(doc, maxRowsToProcess);
+                CollectRows(doc, maxRowsToProcess, extension);
                 InitUnmergedColumnsCount();
                 InitializeVerticallyMerge();
             };
@@ -634,28 +634,55 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        void CollectRows(WordprocessingDocument wordDocument, int maxRowsToProcess)
+        void CollectRows(WordprocessingDocument wordDocument, int maxRowsToProcess, string extension)
         {
             var docPart = wordDocument.MainDocumentPart;
             InitPageSize(wordDocument);
-            var tables = docPart.Document.Descendants<Table>();
+            var tables = docPart.Document.Descendants<Table>().ToList();
             TablesCount = tables.Count();
             int tableIndex = 0;
             foreach (OpenXmlPart h in docPart.HeaderParts)
             {
-                foreach (var t in h.RootElement.Descendants<Table>()) {
+                foreach (var t in h.RootElement.Descendants<Table>())
+                {
                     ProcessWordTableAndUpdateTitle(t, maxRowsToProcess, tableIndex);
                     tableIndex++;
                 }
 
             }
+            if (extension != ".htm") // это просто костыль. Нужно как-то встроить это в архитектуру.
+                tables = ExtractSubtables(tables);
 
             foreach (var t in tables)
             {
+
                 ProcessWordTableAndUpdateTitle(t, maxRowsToProcess, tableIndex);
                 tableIndex++;
             }
         }
+
+
+
+
+        private static List<Table> ExtractSubtables(List<Table> tables)
+        {
+            var tablesWithDescendants = tables.Where(x => x.Descendants<Table>().Count() > 0);
+           
+
+            foreach (var t in tablesWithDescendants)
+            {
+                var extractedTables = t.Descendants<Table>().ToList();
+                extractedTables = ExtractSubtables(extractedTables);
+                tables = tables.Concat(extractedTables).ToList();
+                foreach (var td in t.Descendants<Table>())
+                {
+                    td.Remove();
+                }
+            }
+
+            return tables;
+        }
+
 
 
         public override List<Cell> GetCells(int row, int maxColEnd = IAdapter.MaxColumnsCount)

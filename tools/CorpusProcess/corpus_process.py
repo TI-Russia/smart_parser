@@ -168,7 +168,7 @@ def report(args):
 if __name__ == '__main__':
     args = parse_args()
     if not args.extensions:
-        args.extensions = ['doc', 'docx', 'pdf', 'xls', 'xlsx']
+        args.extensions = ['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf']
 
     if args.action == 'full' or args.action == 'copy_data':
         copy_data(args)

@@ -686,6 +686,7 @@ content_types = [
 "application/zip",
 "application/vnd.handheld-entertainment+xml",
 "application/vnd.zzazz.deck+xml",
+"application/vnd.ms-word",
 ]
 
 ALL_CONTENT_TYPES = ";".join(content_types)

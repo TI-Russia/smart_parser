@@ -1,45 +1,42 @@
 ﻿import sys
 import re
-import json
 import os
 import argparse
-from urllib.parse import urlparse
 import logging
+from tempfile import TemporaryDirectory
 
 sys.path.append('../common')
 
-from download import  download_page_collection, export_files_to_folder, get_file_extension_by_url, \
-    get_all_sha256
+from download import  export_files_to_folder, get_file_extension_by_url, \
+    get_site_domain_wo_www, DEFAULT_HTML_EXTENSION
 
-from office_list import  create_office_list, read_office_list, write_offices
+from office_list import  TRobotProject
 
 from find_link import \
-    find_links_for_all_websites, \
     check_anticorr_link_text, \
-    OFFICE_FILE_EXTENSIONS, \
+    ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
-    collect_subpages, \
     check_sub_page_or_iframe
 
-def setup_logging(args):
-    root = logging.getLogger()
-    root.setLevel(logging.DEBUG)
+
+
+def setup_logging(args,  logger, logfilename):
+    logger.setLevel(logging.DEBUG)
 
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     if os.path.exists(args.logfile):
         os.remove(args.logfile)
     # create file handler which logs even debug messages
-    fh = logging.FileHandler(args.logfile)
+    fh = logging.FileHandler(logfilename)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
-    root.addHandler(fh)
+    logger.addHandler(fh)
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
-    #ch.setFormatter(formatter)
-    root.addHandler(ch)
+    logger.addHandler(ch)
 
 def check_link_sitemap(link_info):
     if not check_self_link(link_info):
@@ -58,24 +55,42 @@ def check_link_svedenia_o_doxodax(link_info):
     text = link_info.Text.strip(' \n\t\r').strip('"').lower()
     text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
 
-    if text.startswith(u'сведения о доходах'):
+    if re.search('(сведения)|(справк[аи]) о доходах', text) is not None:
         return True
 
     if text.startswith(u'сведения') and text.find("коррупц") != -1:
-        return True;
+        return True
     return False
 
+
+def check_year_or_subpage(link_info):
+    if check_sub_page_or_iframe(link_info):
+        return True
+
+    # here is a place for ML
+    if link_info.Text is not None:
+        text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+        if text.find('сведения') != -1:
+            return True
+    if link_info.Target is not None:
+        target = link_info.Target.lower()
+        if re.search('(^sved)|(sveodoh)|(do[ck]?[hx]od)|(income)', target) is not None:
+            return True
+
+    return False
 
 
 def check_download_text(link_info):
     text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+    if text.find('шаблоны') != -1:
+        return False
     if text.startswith(u'скачать'):
         return True
     if text.startswith(u'загрузить'):
         return True
 
-    global OFFICE_FILE_EXTENSIONS
-    for e in OFFICE_FILE_EXTENSIONS:
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if text.startswith(e[1:]):  #without "."
             return True
         if text.find(e) != -1:
@@ -85,7 +100,7 @@ def check_download_text(link_info):
     return False
 
 
-def check_office_document(link_info):
+def check_accepted_declaration_file_type(link_info):
     if check_download_text(link_info):
         return True
     if link_info.Target is not None:
@@ -93,7 +108,7 @@ def check_office_document(link_info):
             if link_info.DownloadFile is not None:
                 return True
             ext = get_file_extension_by_url(link_info.Target)
-            return ext != ".html"
+            return ext != DEFAULT_HTML_EXTENSION
         except Exception as err:
             sys.stderr.write('cannot query (HEAD) url={0}  exception={1}\n'.format(link_info.Target, str(err)))
             return False
@@ -109,89 +124,130 @@ def check_documents(link_info):
     return True
 
 
-def del_old_info(offices, step_name):
-    for office_info in offices:
-        if step_name in office_info:
-            del (office_info[step_name])
+ROBOT_STEPS = [
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "sitemap",
+        'check_link_func': check_link_sitemap,
+        'include_sources': 'always'
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "anticorruption_div",
+        'check_link_func': check_anticorr_link_text,
+        'include_sources': "copy_if_empty"
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "declarations_div",
+        'check_link_func': check_link_svedenia_o_doxodax,
+        'include_sources': "copy_if_empty"
+    },
+    {
+        'step_function': TRobotProject.collect_subpages,
+        'name': "declarations_div_pages",
+        'check_link_func': check_year_or_subpage,
+        'include_sources': "always"
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "declarations_div_pages2",
+        'check_link_func': check_documents,
+        'include_sources': "always"
+    },
+    {
+        'step_function': TRobotProject.find_links_for_all_websites,
+        'name': "declarations",
+        'check_link_func': check_accepted_declaration_file_type,
+        'include_sources': "copy_docs"
+    },
+]
 
-
-def strip_domain(domain):
-    if domain.startswith('www.'):
-        domain = domain[len('www.'):]
-    return domain
-
-
-class THumanFiles:
-    def __init__(self):
-        self.files = list()
-
-    def read_from_file(self, filename):
-        with open(filename, "r", encoding="utf8") as inpf:
-            self.files = json.load(inpf)
-
-    def check_all_offices(self, offices, page_collection_name):
-        for o in offices:
-            main_url = list(o['morda']['links'])[0]
-            main_domain = strip_domain(urlparse(main_url).netloc)
-            logging.debug("check_recall for {}".format(main_domain))
-            robot_sha256 = get_all_sha256(o, page_collection_name)
-            for x in self.files:
-                if len(x['domain']) > 0:
-                    domain = strip_domain(x['domain'])
-                    if domain == main_domain or main_domain.endswith(domain) or domain.endswith(main_domain):
-                        for s in x['sha256']:
-                            if s not in robot_sha256:
-                                logging.debug("{0} not found from {1}".format(s, json.dumps(x)))
 
 def parse_args():
+    global ROBOT_STEPS
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
     parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
+    parser.add_argument("--skip-final-download", dest='skip_final_download', default=False, action="store_true")
+    parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
     parser.add_argument("--stop-after", dest='stop_after', default=None)
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
     parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
-    return parser.parse_args()
+    parser.add_argument("--input-url-list", dest='hypots', default=None)
+    parser.add_argument("--smart-parser-binary",
+                        dest='smart_parser_binary',
+                        default="C:\\tmp\\smart_parser\\smart_parser\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe")
+    parser.add_argument("--click-features", dest='click_features_file', default=None)
+    parser.add_argument("--result-folder", dest='result_folder', default="result")
+    args = parser.parse_args()
+    assert os.path.exists(args.smart_parser_binary)
+    if args.step is  not None:
+        args.start_from = args.step
+        args.stop_after = args.step
+    return args
+
+def step_index_by_name(name):
+    if name is None:
+        return -1
+    for i, r in enumerate(ROBOT_STEPS):
+        if name == r['name']:
+            return i
+    raise Exception("cannot find step {}".format(name))
+
+def make_steps(args, project):
+    logger = logging.getLogger("dlrobot_logger")
+    if args.start_from != "last_step":
+        start = step_index_by_name(args.start_from) if args.start_from is not None else 0
+        end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
+        step_index = start
+        for r in ROBOT_STEPS[start:end]:
+            if args.rebuild:
+                project.del_old_info(step_index)
+            logger.info("=== step {0} =========".format(r['name']))
+            r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
+            project.write_project()
+            step_index += 1
+
+    if args.stop_after is not None:
+        if args.stop_after != "last_step":
+            return
+
+    if not args.skip_final_download:
+        logger.info("=== download all declarations =========")
+        project.download_last_step()
+        export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
+        project.write_export_stats()
+        project.write_project()
 
 
+def open_project(args, log_file_name):
+    logger = logging.getLogger("dlrobot_logger")
+    setup_logging(args, logger, log_file_name)
+    with TRobotProject(args.project, ROBOT_STEPS) as project:
+        if args.hypots is not None:
+            if args.start_from is not None:
+                logger.info("ignore --input-url-list since --start-from  or --step is specified")
+            else:
+                project.create_by_hypots(args.hypots)
+        else:
+            project.read_project()
+
+        make_steps(args, project)
+
+        if args.from_human_file_name is not None:
+            project.check_all_offices()
+        if args.click_features_file:
+            project.write_click_features(args.click_features_file)
 
 if __name__ == "__main__":
     args = parse_args()
-    setup_logging(args)
-    human_files = THumanFiles()
-    if args.from_human_file_name is not None:
-        human_files.read_from_file(args.from_human_file_name)
-    #offices = create_office_list(args.project)
-    offices = read_office_list(args.project)
+    if  args.logfile == "temp":
+        with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
+            log_file_name = os.path.join(tmp_folder, "dlrobot.log")
+            open_project(args, log_file_name)
+            logging.shutdown()
+    else:
+        open_project(args, args.logfile)
 
-    steps = [
-        (find_links_for_all_websites, "sitemap", check_link_sitemap, "always"),
-        (find_links_for_all_websites, "anticorruption_div", check_anticorr_link_text, "copy_if_empty"),
-        (find_links_for_all_websites, "declarations_div", check_link_svedenia_o_doxodax, "copy_if_empty"),
-        (collect_subpages, "declarations_div_pages", check_sub_page_or_iframe, "always"),
-        (find_links_for_all_websites, "declarations_div_pages2", check_documents, "always"),
-        (find_links_for_all_websites, "declarations", check_office_document, "never"),
-    ]
-    prev_step = "morda"
-    found_start_from = args.start_from is None
-    for step_function, step_name, check_link_func, include_source in steps:
-        if args.start_from is not None and step_name == args.start_from:
-            found_start_from = True
-
-        if found_start_from:
-            if args.rebuild:
-                del_old_info(offices, step_name)
-            logging.info("=== step {0} =========".format(step_name))
-            step_function(offices, prev_step, step_name, check_link_func, include_source=include_source)
-            write_offices(offices, args.project)
-        if args.stop_after is not None and step_name == args.stop_after:
-            break
-
-        prev_step = step_name
-
-    if args.stop_after is None:
-        last_step = steps[-1][1]
-        download_page_collection(offices, last_step)
-        export_files_to_folder(offices, last_step, "result")
-        if args.from_human_file_name is not None:
-            human_files.check_all_offices(offices, last_step)

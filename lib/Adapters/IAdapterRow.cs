@@ -314,7 +314,10 @@ namespace Smart.Parser.Adapters
             string nameOrRelativeType;
             if (this.ColumnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType))
             {
-                DivideNameAndOccupation();
+                if (!ColumnOrdering.SearchForFioColumnOnly)
+                {
+                    DivideNameAndOccupation();
+                }
             }
             else
             {
