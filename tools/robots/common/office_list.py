@@ -278,21 +278,7 @@ class TRobotProject:
         with open(filename, "r", encoding="utf8") as inpf:
             self.human_files = json.load(inpf)
 
-    def create_by_hypots(self, filename):
-        self.offices = list()
-        with open (filename, "r", encoding="utf8") as inpf:
-            for x in inpf:
-                url = x.strip()
-                if len(url) == 0:
-                    continue
-                domain = "http://" + get_site_domain_wo_www(x.strip())
-                site = TRobotWebSite()
-                site.morda_url = domain
-                self.offices.append(site)
-        self.write_project()
-
     def check_all_offices(self):
-
         for o in self.offices:
             main_url = o.morda_url
             main_domain = get_site_domain_wo_www(main_url)

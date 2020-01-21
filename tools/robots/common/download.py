@@ -5,7 +5,7 @@ import json
 import re
 import shutil
 import requests
-from urllib.parse import urlparse, quote, urlunparse
+from urllib.parse import urlparse, quote, unquote, urlunparse
 import hashlib
 from collections import defaultdict
 import logging
@@ -64,10 +64,11 @@ def get_site_domain_wo_www(url):
 
 def download_with_urllib (url, search_for_js_redirect=True):
     o = list(urlparse(url)[:])
-    if o[2].find('%') == -1:
-        o[2] = quote(o[2])
     if has_cyrillic(o[1]):
         o[1] = o[1].encode('idna').decode('latin')
+
+    o[2] = unquote(o[2])
+    o[2] = quote(o[2])
     url = urlunparse(o)
     context = ssl._create_unverified_context()
     req = urllib.request.Request(
