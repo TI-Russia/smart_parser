@@ -142,6 +142,20 @@ namespace Smart.Parser.Lib
 
         }
 
+        bool IsNumbersRow(DataRow row)
+        {
+            string s = "";
+            foreach (var c in row.Cells)
+            {
+                s += c.Text.Replace("\n", "").Replace(" ", "") + " ";
+            }
+
+            if (s.StartsWith("1 2 3 4"))
+                return true;
+
+            return false;
+        }
+
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
@@ -181,6 +195,10 @@ namespace Smart.Parser.Lib
             {
                 DataRow currRow = Adapter.GetRow(columnOrdering, row);
                 if (currRow == null || currRow.IsEmpty())
+                {
+                    continue;
+                }
+                if (IsNumbersRow(currRow))
                 {
                     continue;
                 }
@@ -346,7 +364,7 @@ namespace Smart.Parser.Lib
             }
             string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
-            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
+            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false);
 
             try
             {

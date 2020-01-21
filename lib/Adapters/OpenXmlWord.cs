@@ -209,7 +209,8 @@ namespace Smart.Parser.Adapters
             doc.RemoveMacros();
             // use libre office when aspose is not accessible
             // "soffice --headless --convert-to docx docum.doc"
-            string docXPath = Path.GetTempFileName();
+            // string docXPath = Path.GetTempFileName();
+            string docXPath = filename + ".converted.docx";
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
             return docXPath;
         }
@@ -251,13 +252,14 @@ namespace Smart.Parser.Adapters
                 return;
             }
             DocumentFile = fileName;
-            string extension = Path.GetExtension(fileName);
+            string extension = Path.GetExtension(fileName).ToLower();
             bool removeTempFile = false;
             if (    extension == ".html"
                 ||  extension == ".htm"
                 || extension == ".xhtml"
                 || extension == ".pdf"
                 || extension == ".doc"
+                || extension == ".rtf"
                 )
             {
                 try
@@ -267,7 +269,7 @@ namespace Smart.Parser.Adapters
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
                 }
-                removeTempFile = true;
+                removeTempFile = false;
             }
 
 

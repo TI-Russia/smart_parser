@@ -12,9 +12,25 @@ from multiprocessing import Pool
 import signal
 import argparse
 
-OUT_FOLDER = "out_minkult"
-smart_parser = '..\\..\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe'
+
+SMART_PARSER = '..\\..\\src\\bin\\Debug\\netcoreapp3.1\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
+                        default=4, type=int)
+    parser.add_argument("--limit", dest='limit', help="Run smart parser only for N tasks",
+                        default=None, type=int)
+    parser.add_argument("--use-cache", dest='usecache', help="Parse only new files, skip existing JSONs",
+                        default=False, type=bool)
+    parser.add_argument("--folder", dest='folder', help="Output and cache folder to store results.",
+                        default="out", type=str)
+    parser.add_argument("--joblist", dest='joblist', help="API URL with joblist.",
+                        default="https://declarator.org/api/fixed_document_file/?office=579", type=str)
+    return parser.parse_args()
+
 
 # Create a custom logger
 def get_logger():
@@ -39,23 +55,10 @@ client = requests.Session()
 credentials = json.load(open('auth.json'))
 client.auth = HTTPBasicAuth(credentials['username'], credentials['password'])
 
-# PARSER_TIMEOUT = 600
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
-                        default=4, type=int)
-    parser.add_argument("--limit", dest='limit', help="Run smart parser only for N tasks",
-                        default=None, type=int)
-    parser.add_argument("--restart", dest='restart', help="Parse all files, ignore existing JSONs",
-                        default=False, type=bool)
-    return parser.parse_args()
-
 
 def download_file(file_url, filename):
-    if os.path.isfile(filename):
-        return filename
+    #if os.path.isfile(filename):
+    #    return filename
     path, _ = os.path.split(filename)
     os.makedirs(path, exist_ok=True)
     result = requests.get(file_url)
@@ -73,7 +76,7 @@ def run_smart_parser(filepath, args):
 
     json_list = glob.glob("%s*.json" % sourcefile)
     if json_list:
-        if args.restart:
+        if not args.usecache:
             logger.info("Delete existed JSON file(s).")
             for jf in json_list:
                 os.remove(jf)
@@ -91,7 +94,7 @@ def run_smart_parser(filepath, args):
         os.remove(log)
 
     cmd = "{} {} \"{}\"".format(
-        smart_parser,
+        SMART_PARSER,
         smart_parser_options,
         filepath)
     os.system(cmd)
@@ -182,9 +185,9 @@ class ProcessOneFile(object):
         filename, ext = os.path.splitext(filename)
 
         if archive_file:
-            file_path = os.path.join(OUT_FOLDER, str(df_id), archive_file)
+            file_path = os.path.join(self.args.folder, str(df_id), archive_file)
         else:
-            file_path = os.path.join(OUT_FOLDER, "%i%s" % (df_id, ext))
+            file_path = os.path.join(self.args.folder, "%i%s" % (df_id, ext))
 
         file_path = download_file(file_url, file_path)
 
@@ -218,9 +221,9 @@ if __name__ == '__main__':
     original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     signal.signal(signal.SIGINT, original_sigint_handler)
 
-    # jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html&priority=2"
-    jobs_url = "https://declarator.org/api/fixed_document_file/?office=579"
-
+    jobs_url = args.joblist
+    # jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html"
+    
     try:
         res = list(pool.imap(ProcessOneFile(args, os.getpid()), list(generate_jobs(jobs_url, stop=False)), chunksize=1))
     except KeyboardInterrupt:

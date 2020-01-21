@@ -54,6 +54,7 @@ namespace TI.Declarator.ParserCommon
         // Поля, которые мы собираем, но пока не сохраняем в JSON
         AcquiredProperty = 101,
         MoneySources = 102,
+        Comments = 103,
     }
 
 }

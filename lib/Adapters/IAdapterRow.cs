@@ -257,7 +257,13 @@ namespace Smart.Parser.Adapters
                     s.EndsWith("тич") ||
                     s.EndsWith("мич") ||
                     s.EndsWith("ьич") ||
-                    s.EndsWith("чна");
+                    s.EndsWith("ьича") ||
+                    s.EndsWith("ьича") ||
+                    s.EndsWith("вича") ||
+                    s.EndsWith("тича") ||
+                    s.EndsWith("мича") ||
+                    s.EndsWith("чны") ||
+                    s.EndsWith("чна") ;
         }
 
         void DivideNameAndOccupation()
@@ -277,7 +283,7 @@ namespace Smart.Parser.Adapters
                 string[] result = Regex.Split(v, pattern);
                 if (result.Length < 2)
                 {
-                    string[] words = Regex.Split(v, @"[\s\n]+");
+                    string[] words = Regex.Split(v, @"[\,\s\n]+");
                     if (words.Length >= 3 && CanBePatronymic(words[2]))
                     {
                         PersonName = String.Join(" ", words.Take(3)).Trim();
