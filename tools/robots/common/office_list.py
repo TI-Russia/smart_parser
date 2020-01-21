@@ -132,39 +132,50 @@ class TRobotWebSite:
                     result.add(hashlib.sha256(f.read()).hexdigest())
         return result
 
-    def find_parent_page_for_downloaded_file(self, export_record):
-        for url_info in self.url_nodes.value():
-            for d in url_info.downloaded_files:
-                if d['downloaded_file'] == export_record['infile']:
-                    return url_info
-
     def get_parents(self, record):
-        url = record.get('url', '')
-        if url == '':
-            return set(self.find_parent_page_for_downloaded_file(record))
+        url = record['url']
         parents = self.url_nodes[url].parent_nodes
         if len(parents) == 0:
             raise Exception("cannot find parent for {}".format(url))
-        return parents
-
-
-    def get_path_to_root(self, path):
-        assert len(path) >= 1
-        if path[-1].get('url', '') == self.morda_url:
-            return True
-        parents = self.get_parents(path[-1])
         for p in parents:
-            r = {
-                'url': p,
+            yield p
+
+
+    def get_path_to_root_recursive(self, path):
+        assert len(path) >= 1
+        tail_node = path[-1]
+        url = tail_node.get('url', '')
+        if url == self.morda_url:
+            return True
+        for parent_url in self.get_parents(tail_node):
+            parent_url_info = self.url_nodes[parent_url]
+            if url != '':
+                link_info = parent_url_info.linked_nodes[url]
+            else:
+                link_info = tail_node['text']
+
+            record = {
+                'url': parent_url,
+                'step': parent_url_info.step_name,
+                'title': parent_url_info.title,
+                'anchor_text': link_info['text']
             }
 
-            if p not in {u['url'] for u in path}:
-                new_path = list(path) + [r]
-                if self.get_path_to_root(new_path):
+            if parent_url not in {u['url'] for u in path}:
+                new_path = list(path) + [record]
+                if self.get_path_to_root_recursive(new_path):
                     path.clear()
                     path.extend(new_path)
                     return True
         return False
+
+    def get_path_to_root(self, url):
+        url_info = self.url_nodes[url]
+        path = [{'url': url, 'step': url_info.step_name}]
+        found_root = self.get_path_to_root_recursive(path)
+        assert found_root
+        path.reverse()
+        return path
 
 def open_selenium(tmp_folder):
     options = FirefoxOptions()
@@ -304,29 +315,33 @@ class TRobotProject:
         for office_info in self.offices:
             office_info.robot_steps[step_index].step_urls = set()
 
-
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))
         result = []
         for office_info in self.offices:
+            downloaded_files_count =  sum(len(v.downloaded_files) for v in office_info.url_nodes.values())
+            self.logger.info("find useless nodes in {}".format(office_info.morda_url))
+            self.logger.info("all url nodes and downloaded with selenium: {}".format(
+                len(office_info.url_nodes) + downloaded_files_count))
             for url, info in office_info.url_nodes.items():
                 if len(info.downloaded_files) > 0:
                     for d in info.downloaded_files:
-                        path = [d]
-                        found_root = office_info.get_path_to_root(path)
-                        assert found_root
+                        path = office_info.get_path_to_root(url)
+                        file_info = dict(d.items())
+                        file_info['url'] = 'element_index:{}. url:{}'.format(d['element_index'], url)
+                        path.append(file_info)
                         result.append({
                             'people_count': d['people_count'],
                             'path': path
                         })
                 elif len(info.linked_nodes) == 0:
-                    path = [{'url': url}]
-                    found_root = office_info.get_path_to_root(path)
-                    assert found_root
+                    path = office_info.get_path_to_root(url)
                     result.append({
                         'people_count': info.people_count,
                         'path': path
                     })
+            useful_nodes = {p['url'] for r in result if r['people_count'] > 0 for p in r['path'] }
+            self.logger.info("useful nodes: {}".format(len(useful_nodes)))
 
         with open(filename, "w", encoding="utf8") as outf:
             json.dump(result, outf, ensure_ascii=False, indent=4)

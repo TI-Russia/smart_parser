@@ -171,7 +171,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             if  step_info.check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
                 link_info = {
                     'href': href,
-                    'text': l.text,
+                    'text': l.text.strip(" \r\n\t"),
                     'engine': 'urllib',
                     'tagname': l.name,
                 }
@@ -188,7 +188,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
                     if len(found_text) > 0:
                         link_info = {
                             'href': href,
-                            'text': found_text,
+                            'text': found_text.strip(" \r\n\t"),
                             'engine': 'urllib',
                             'text_proxim': True,
                             'tagname': l.name,
@@ -206,7 +206,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             if step_info.check_link_func( TLinkInfo(l.text, main_url, href, l.name)):
                 link_info = {
                     'href': href,
-                    'text': l.text,
+                    'text': l.text.strip(" \r\n\t"),
                     'engine': 'urllib',
                     'tagname': l.name,
                 }

@@ -187,7 +187,6 @@ def parse_args():
         args.stop_after = args.step
     return args
 
-
 def step_index_by_name(name):
     if name is None:
         return -1
@@ -196,7 +195,6 @@ def step_index_by_name(name):
             return i
     raise Exception("cannot find step {}".format(name))
 
-
 def make_steps(args, project):
     logger = logging.getLogger("dlrobot_logger")
     if args.start_from != "last_step":
@@ -204,6 +202,7 @@ def make_steps(args, project):
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
         step_index = start
         for r in ROBOT_STEPS[start:end]:
+            project.del_old_info(step_index)
             logger.info("=== step {0} =========".format(r['name']))
             r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
             project.write_project()
