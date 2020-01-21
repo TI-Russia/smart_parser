@@ -102,7 +102,7 @@ class TRobotWebSite:
             for url, info in init_json.get('url_nodes', dict()).items():
                 self.url_nodes[url] = TUrlInfo(init_json=info)
             if len(self.url_nodes) == 0:
-                self.url_nodes[self.morda_url] = TUrlInfo(title=get_title(self.morda_url))
+                self.url_nodes[self.morda_url] = TUrlInfo(title=request_url_title(self.morda_url))
         else:
             self.morda_url = ""
             self.office_name = ""
@@ -230,6 +230,8 @@ class TRobotProject:
     selenium_driver = None
     selenium_download_folder = None
     step_names = list()
+    panic_mode_url_count = 400
+    max_step_url_count = 800
 
     def __init__(self, filename, robot_steps):
         self.project_file = filename + ".clicks"
@@ -356,14 +358,6 @@ class TRobotProject:
                     pass
 
 
-    def collect_subpages(self, step_index, check_link_func, include_source="always"):
-        self.find_links_for_all_websites(step_index,
-                                    check_link_func,
-                                    fallback_to_selenium=False,
-                                    transitive=True,
-                                    only_missing=False,
-                                    include_source=include_source)
-
     def write_export_stats(self):
         result = list()
         for o in self.offices:
@@ -418,13 +412,24 @@ class TRobotProject:
             for url in start_pages:
                 TRobotProject.add_links(step_info, url, fallback_to_selenium)
 
+                found_links_count = len(step_info.robot_step.step_urls)
+                if fallback_to_selenium and found_links_count >= TRobotProject.panic_mode_url_count:
+                    fallback_to_selenium = False
+                    TRobotProject.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
+                        TRobotProject.panic_mode_url_count))
+                if found_links_count >= TRobotProject.max_step_url_count:
+                    TRobotProject.logger.error("too many links (>{}),  stop processing step {}".format(
+                        TRobotProject.max_step_url_count,
+                        step_info.robot_step.step_name))
+                    return
             new_count = len(step_info.robot_step.step_urls)
             if not transitive or save_count == new_count:
-                break
+                return
 
 
     def find_links_for_all_websites(self, step_index, check_link_func, fallback_to_selenium=True,
-                                    transitive=False, only_missing=True, include_source="copy_if_empty"):
+                                    transitive=False, only_missing=True, include_source="copy_if_empty",
+                                    do_not_copy_urls_from_steps=set()):
         global FIXLIST
         for office_info in self.offices:
             target = office_info.robot_steps[step_index]
@@ -453,7 +458,7 @@ class TRobotProject:
 
             if include_source == "always":
                 target.step_urls.update(start_pages)
-            self.logger.info('{0}'.format(office_info.morda_url))
+            self.logger.info('{0}'.format(get_site_domain_wo_www(office_info.morda_url)))
             start = datetime.datetime.now()
             self.find_links_for_one_website(step_info,
                                        start_pages,
@@ -464,6 +469,18 @@ class TRobotProject:
                 step_name,
                 (datetime.datetime.now() - start).total_seconds()))
             if include_source == "copy_if_empty" and len(target.step_urls) == 0:
-                target.step_urls.update(start_pages)
+                for url in start_pages:
+                    step_name = office_info.url_nodes[url].step_name
+                    if step_name not in do_not_copy_urls_from_steps:
+                        target.step_urls.add(url)
 
             self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))
+
+    def collect_subpages(self, step_index, check_link_func, include_source="always", do_not_copy_urls_from_steps=set()):
+        self.find_links_for_all_websites(step_index,
+                                    check_link_func,
+                                    fallback_to_selenium=False,
+                                    transitive=True,
+                                    only_missing=False,
+                                    include_source=include_source,
+                                    do_not_copy_urls_from_steps=do_not_copy_urls_from_steps)

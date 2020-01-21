@@ -141,7 +141,8 @@ ROBOT_STEPS = [
         'step_function': TRobotProject.find_links_for_all_websites,
         'name': "declarations_div",
         'check_link_func': check_link_svedenia_o_doxodax,
-        'include_sources': "copy_if_empty"
+        'include_sources': "copy_if_empty",
+        'do_not_copy_urls_from_steps': [None, 'sitemap'] # None is for morda_url
     },
     {
         'step_function': TRobotProject.collect_subpages,
@@ -204,7 +205,11 @@ def make_steps(args, project):
         for r in ROBOT_STEPS[start:end]:
             project.del_old_info(step_index)
             logger.info("=== step {0} =========".format(r['name']))
-            r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
+            r['step_function'](project,
+                               step_index,
+                               r['check_link_func'],
+                               include_source=r['include_sources'],
+                               do_not_copy_urls_from_steps=r.get('do_not_copy_urls_from_steps', list()))
             project.write_project()
             step_index += 1
 
