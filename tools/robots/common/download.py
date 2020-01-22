@@ -4,7 +4,6 @@ import urllib.request
 import json
 import re
 import shutil
-import requests
 from urllib.parse import urlparse, quote, unquote, urlunparse
 import hashlib
 from collections import defaultdict
@@ -28,6 +27,32 @@ def is_html_contents(info):
 HEADER_CACHE = {}
 HEADER_REQUEST_COUNT = defaultdict(int)
 
+
+def make_http_request(url, method):
+    o = list(urlparse(url)[:])
+    if has_cyrillic(o[1]):
+        o[1] = o[1].encode('idna').decode('latin')
+
+    o[2] = unquote(o[2])
+    o[2] = quote(o[2])
+    url = urlunparse(o)
+    context = ssl._create_unverified_context()
+    req = urllib.request.Request(
+        url,
+        data=None,
+        headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+        }
+    )
+    logger = logging.getLogger("dlrobot_logger")
+    logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
+    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
+        data = request.read()
+        info = request.info()
+        headers = request.headers
+        return info, headers, data
+
+
 def get_url_headers (url):
     global HEADER_CACHE
     global HEADER_REQUEST_COUNT
@@ -37,11 +62,9 @@ def get_url_headers (url):
         raise Exception("too many times to get headers that caused exceptions")
 
     HEADER_REQUEST_COUNT[url] += 1
-    logger = logging.getLogger("dlrobot_logger")
-    logger.debug("\tget headers for " + url)
-    res = requests.head(url).headers
-    HEADER_CACHE[url] = res
-    return res
+    _, headers, _ = make_http_request(url, "HEAD")
+    HEADER_CACHE[url] = headers
+    return headers
 
 
 def find_simple_js_redirect(data):
@@ -65,30 +88,7 @@ def get_site_domain_wo_www(url):
 
 
 def download_with_urllib (url, search_for_js_redirect=True):
-    o = list(urlparse(url)[:])
-    if has_cyrillic(o[1]):
-        o[1] = o[1].encode('idna').decode('latin')
-
-    o[2] = unquote(o[2])
-    o[2] = quote(o[2])
-    url = urlunparse(o)
-    context = ssl._create_unverified_context()
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-    data = ''
-    info = {}
-    headers = None
-    logger = logging.getLogger("dlrobot_logger")
-    logger.debug("urllib.request.urlopen ({})".format(url))
-    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        data = request.read()
-        info = request.info()
-        headers = request.headers
+    info, headers, data = make_http_request(url, "GET")
 
     try:
         if is_html_contents(info):

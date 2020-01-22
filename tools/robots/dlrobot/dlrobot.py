@@ -101,6 +101,15 @@ def check_download_text(link_info):
     return False
 
 
+def check_documents(link_info):
+    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+    if text.find("сведения") == -1:
+        return False
+    if link_info.Target is not None:
+        return re.search('(docs)||(documents)|(files)', link_info.Target.lower()) is not None
+    return True
+
+
 def check_accepted_declaration_file_type(link_info):
     if check_download_text(link_info):
         return True
@@ -115,14 +124,6 @@ def check_accepted_declaration_file_type(link_info):
             return False
     return False
 
-
-def check_documents(link_info):
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
-    if text.find("сведения") == -1:
-        return False
-    if link_info.Target is not None:
-        return re.search('(docs)||(documents)|(files)', link_info.Target.lower()) is not None
-    return True
 
 
 ROBOT_STEPS = [
@@ -191,7 +192,7 @@ def step_index_by_name(name):
     if name is None:
         return -1
     for i, r in enumerate(ROBOT_STEPS):
-        if name == r['name']:
+        if name == r['step_name']:
             return i
     raise Exception("cannot find step {}".format(name))
 
