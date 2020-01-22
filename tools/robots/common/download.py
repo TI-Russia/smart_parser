@@ -9,6 +9,7 @@ from urllib.parse import urlparse, quote, unquote, urlunparse
 import hashlib
 from collections import defaultdict
 import logging
+import zipfile
 
 import os
 from selenium import webdriver
@@ -16,7 +17,8 @@ import time
 FILE_CACHE_FOLDER = "cached"
 ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip'}
 DEFAULT_HTML_EXTENSION = ".html"
-
+DEFAULT_ZIP_EXTENSION = ".zip"
+UNKNOWN_PEOPLE_COUNT = -1
 
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
@@ -291,10 +293,10 @@ def process_smart_parser_json(json_file):
 
 
 def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
-    people_count = -1
+    people_count = UNKNOWN_PEOPLE_COUNT
     if smart_parser_binary == "none":
         return people_count
-    if inputfile.endswith("pdf"):
+    if inputfile.endswith("pdf"): # cannot process new pdf without conversion
         return people_count
     logger = logging.getLogger("dlrobot_logger")
     cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary, inputfile)
@@ -309,19 +311,60 @@ def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
             json_file = "{}_{}.json".format(inputfile, sheet_index)
             if not os.path.exists(json_file):
                 break
-            if people_count == -1:
+            if people_count == UNKNOWN_PEOPLE_COUNT:
                 people_count = 0
             people_count += process_smart_parser_json(json_file)
             sheet_index += 1
     return people_count
 
+def unzip_one_file(input_file, main_index, outfolder):
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    zip_file = zipfile.ZipFile(input_file)
+    index = 0
+    for filename in zip_file.namelist():
+        _, file_extension = os.path.splitext(filename)
+        file_extension = file_extension.lower()
+        if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+            continue
+        zip_file.extract(filename, outfolder)
+        old_file_name = os.path.join(outfolder, filename)
+        new_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, index, file_extension))
+        os.rename(old_file_name,  new_file_name)
+        yield new_file_name
+        index += 1
+    zip_file.close()
 
-def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extension, office_folder):
+
+def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extension, office_folder, export_files):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
     outpath = os.path.join(office_folder, str(index) + extension)
     if not os.path.exists(os.path.dirname(outpath)):
         os.makedirs(os.path.dirname(outpath))
-    if os.path.exists(infile) and extension in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+    if not os.path.exists(infile) or extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        return UNKNOWN_PEOPLE_COUNT
+    if extension == DEFAULT_ZIP_EXTENSION:
+        people_count_sum = UNKNOWN_PEOPLE_COUNT
+        for filename in unzip_one_file(infile, index, office_folder):
+            with open(filename, "rb") as f:
+                sha256hash = hashlib.sha256(f.read()).hexdigest()
+            if sha256hash not in uniq_files:
+                people_count = get_people_count_from_smart_parser(smart_parser_binary, filename)
+                export_record = {
+                    "url": url,
+                    "infile": infile,
+                    "people_count": people_count,
+                    "outpath": filename
+                }
+                export_files.append(export_record)
+            else:
+                people_count = uniq_files[sha256hash]['people_count']
+            if people_count > 0:
+                if people_count_sum == UNKNOWN_PEOPLE_COUNT:
+                    people_count_sum = 0
+                people_count_sum += people_count
+
+        return people_count_sum
+    else:
         with open(infile, "rb") as f:
             sha256hash = hashlib.sha256(f.read()).hexdigest()
         if sha256hash not in uniq_files:
@@ -334,11 +377,11 @@ def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extensi
                 "people_count": people_count
             }
             uniq_files[sha256hash] = export_record
-            return export_record, people_count
+            export_files.append(export_record)
+            return people_count
         else:
-            return None, uniq_files[sha256hash]['people_count']
+            return uniq_files[sha256hash]['people_count']
 
-    return None, -1
 
 
 def export_files_to_folder(offices, smart_parser_binary, outfolder):
@@ -356,20 +399,16 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
         for url in last_step_urls:
             extension = get_file_extension_by_cached_url(url)
             infile = get_local_file_name_by_url(url)
-            export_rec, office_info.url_nodes[url].people_count = \
-                export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder)
-            if export_rec is not None:
-                export_files.append(export_rec)
-                index += 1
+            office_info.url_nodes[url].people_count = \
+                export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder, export_files)
+            index += 1
 
         for url_info in office_info.url_nodes.values():
             for d in url_info.downloaded_files:
                 infile = d['downloaded_file']
                 extension = os.path.splitext(infile)[1]
-                export_rec, d['people_count'] = \
-                    export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder)
-                if export_rec is not None:
-                    export_files.append(export_rec)
-                    index += 1
+                d['people_count'] = \
+                    export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder, export_files)
+                index += 1
         office_info.exported_files = export_files
-        logger.info("exported {0} files to {1}".format(index, office_folder))
+        logger.info("exported {0} files to {1}".format(len(export_files), office_folder))

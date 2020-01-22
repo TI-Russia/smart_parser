@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
-                get_file_extension_by_cached_url
+                get_file_extension_by_cached_url, UNKNOWN_PEOPLE_COUNT
 
 from popular_sites import is_super_popular_domain
 
@@ -49,14 +49,14 @@ class TUrlInfo:
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
             self.downloaded_files = init_json.get('downloaded_files', list())
-            self.people_count = init_json.get('people_count', -1)
+            self.people_count = init_json.get('people_count', UNKNOWN_PEOPLE_COUNT)
         else:
             self.step_name = step_name
             self.title = title
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
-            self.people_count = -1
+            self.people_count = UNKNOWN_PEOPLE_COUNT
 
     def to_json(self):
         record = {
@@ -67,7 +67,7 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = self.downloaded_files
-        if self.people_count != -1:
+        if self.people_count != UNKNOWN_PEOPLE_COUNT:
             record['people_count'] = self.people_count
         return record
 
