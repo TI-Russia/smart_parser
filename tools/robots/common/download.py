@@ -14,9 +14,9 @@ import os
 from selenium import webdriver
 import time
 FILE_CACHE_FOLDER = "cached"
-ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip'}
 DEFAULT_HTML_EXTENSION = ".html"
 DEFAULT_ZIP_EXTENSION = ".zip"
+ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip', DEFAULT_HTML_EXTENSION}
 UNKNOWN_PEOPLE_COUNT = -1
 
 def is_html_contents(info):
@@ -47,7 +47,7 @@ def make_http_request(url, method):
     logger = logging.getLogger("dlrobot_logger")
     logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        data = request.read()
+        data = '' if method == "HEAD" else request.read()
         info = request.info()
         headers = request.headers
         return info, headers, data
@@ -211,18 +211,6 @@ def download_with_cache(url):
             return ""
         write_cache_file(localfile, info_file, info, data)
         return data
-
-
-def download_and_cache_with_selenium (url):
-    browser = webdriver.Firefox()
-    browser.minimize_window()
-    browser.get(url)
-    time.sleep(10)
-    html = browser.page_source
-    browser.close()
-    browser.quit()
-    return html
-
 
 
 def get_extenstion_by_content_type(content_type):

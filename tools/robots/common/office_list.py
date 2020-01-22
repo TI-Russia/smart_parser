@@ -361,10 +361,8 @@ class TRobotProject:
                            TRobotProject.selenium_driver,
                            TRobotProject.selenium_download_folder   )
 
-
     @staticmethod
-    def add_links(step_info, url, fallback_to_selenium=True):
-        html = ""
+    def get_html(url):
         try:
             html = download_with_cache(url)
         except Exception as err:
@@ -373,6 +371,14 @@ class TRobotProject:
 
         if get_file_extension_by_cached_url(url) != DEFAULT_HTML_EXTENSION:
             TRobotProject.logger.debug("cannot get links  since it is not html: {0}".format(url))
+            return
+        return html
+
+
+    @staticmethod
+    def add_links(step_info, url, fallback_to_selenium=True):
+        html = TRobotProject.get_html(url)
+        if html is None:
             return
 
         try:
@@ -432,6 +438,16 @@ class TRobotProject:
 
         site_req = "site:{} {}".format(get_site_domain_wo_www(office_info.morda_url), request)
 
+    @staticmethod
+    def check_html_sources(step_info, start_pages):
+        check_func = step_info.step_passport.get('check_html_sources')
+        assert check_func is not None
+        for url in start_pages:
+            html = TRobotProject.get_html(url)
+            if html is not None and check_func(html):
+                TRobotProject.logger.debug("add url {} by {}".format(url, check_func.__name__))
+                step_info.robot_step.step_urls.add(url)
+
     def find_links_for_one_website(self, office_info, step_passport):
         global FIXLIST
         step_name = step_passport['step_name']
@@ -476,5 +492,8 @@ class TRobotProject:
                 step_name = office_info.url_nodes[url].step_name
                 if step_name not in do_not_copy_urls_from_steps:
                     target.step_urls.add(url)
+
+        if step_passport.get('check_html_sources') is not None:
+            TRobotProject.check_html_sources(step_info, start_pages)
 
         self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))

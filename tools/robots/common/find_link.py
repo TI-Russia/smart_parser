@@ -4,8 +4,8 @@ import time
 import logging
 import shutil
 from urllib.parse import urljoin, unquote
-from download import download_with_cache, ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    save_download_file, DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url, get_site_domain_wo_www
+from download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
+    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains

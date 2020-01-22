@@ -125,6 +125,12 @@ def check_accepted_declaration_file_type(link_info):
     return False
 
 
+def check_html_can_be_declaration(html):
+    html = html.lower()
+    words = html.find('квартира') != -1 and html.find('доход')!=-1 and html.find('должность')!= -1
+    numbers = re.search('[0-9]{6}', html) != None # доход
+    return words and numbers
+
 
 ROBOT_STEPS = [
     {
@@ -160,6 +166,7 @@ ROBOT_STEPS = [
     {
         'step_name': "declarations",
         'check_link_func': check_accepted_declaration_file_type,
+        'check_html_sources': check_html_can_be_declaration,
         'include_sources': "never"
     },
 ]
