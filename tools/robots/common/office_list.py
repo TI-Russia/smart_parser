@@ -1,7 +1,6 @@
 import hashlib
 import logging
 import json
-import datetime
 import shutil
 import os
 import tempfile
@@ -17,7 +16,7 @@ from find_link import strip_viewer_prefix, click_all_selenium, can_be_office_doc
                     find_links_in_html_by_text
 
 from content_types import  ALL_CONTENT_TYPES
-
+from serp_parser import GoogleSearch
 FIXLIST =  {
     'fsin.su': {
         "anticorruption_div" : "http://www.fsin.su/anticorrup2014/"
@@ -191,10 +190,11 @@ def open_selenium(tmp_folder):
 
 
 class TProcessUrlTemporary:
-    def __init__(self, website, check_link_func, robot_step):
+    def __init__(self, website, robot_step, step_passport):
         self.website = website
-        self.check_link_func = check_link_func
+        self.check_link_func = step_passport['check_link_func']
         self.robot_step = robot_step
+        self.step_passport = step_passport
 
     def add_link_wrapper(self, source, link_info):
         href = link_info.pop('href')
@@ -239,7 +239,7 @@ class TRobotProject:
             shutil.copy2(filename, self.project_file)
         self.offices = list()
         self.human_files = list()
-        TRobotProject.step_names = [r['name'] for r in robot_steps]
+        TRobotProject.step_names = [r['step_name'] for r in robot_steps]
 
     def __enter__(self):
         TRobotProject.logger = logging.getLogger("dlrobot_logger")
@@ -391,7 +391,9 @@ class TRobotProject:
             TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}'.format(url, str(err)))
 
     @staticmethod
-    def find_links_for_one_website(step_info, start_pages, fallback_to_selenium, transitive):
+    def find_links_for_one_website_transitive(step_info, start_pages):
+        fallback_to_selenium = step_info.step_passport.get('fallback_to_selenium', True)
+        transitive = step_info.step_passport.get('transitive', False)
         while True:
             save_count = len(step_info.robot_step.step_urls)
 
@@ -412,61 +414,67 @@ class TRobotProject:
             if not transitive or save_count == new_count:
                 return
 
+    @staticmethod
+    def try_use_search_engines(step_info):
+        request = step_info.step_passport.get('search_engine_request')
+        if request is None:
+            return False
+        morda_url = step_info.website.morda_url
+        for url in GoogleSearch.site_search(get_site_domain_wo_www(morda_url), request):
+            link_info = {
+                'engine': 'google',
+                'text': request,
+                'href': url
+            }
+            step_info.add_link_wrapper(morda_url, link_info)
+            return True
+        return False
 
-    def find_links_for_all_websites(self, step_index, check_link_func, fallback_to_selenium=True,
-                                    transitive=False, only_missing=True, include_source="copy_if_empty",
-                                    do_not_copy_urls_from_steps=set()):
+        site_req = "site:{} {}".format(get_site_domain_wo_www(office_info.morda_url), request)
+
+    def find_links_for_one_website(self, office_info, step_passport):
         global FIXLIST
-        for office_info in self.offices:
-            target = office_info.robot_steps[step_index]
-            step_name = self.step_names[step_index]
-            step_info = TProcessUrlTemporary(office_info, check_link_func, target)
+        step_name = step_passport['step_name']
+        include_source = step_passport['include_sources']
+        step_index = self.step_names.index(step_name)
+        assert step_index != -1
+        office_info.robot_steps[step_index].step_urls = set()
+        only_missing = step_passport.get('only_missing', True)
+        target = office_info.robot_steps[step_index]
+        step_info = TProcessUrlTemporary(office_info, target, step_passport)
 
-            fixed_url = FIXLIST.get(get_site_domain_wo_www(office_info.morda_url), {}).get(step_name)
-            if fixed_url is not None:
-                link_info = {
-                    'engine': 'manual',
-                    'text': '',
-                    'href': fixed_url
-                }
-                step_info.add_link_wrapper(office_info.morda_url, link_info)
-                continue
+        fixed_url = FIXLIST.get(get_site_domain_wo_www(office_info.morda_url), {}).get(step_name)
+        if fixed_url is not None:
+            link_info = {
+                'engine': 'manual',
+                'text': '',
+                'href': fixed_url
+            }
+            step_info.add_link_wrapper(office_info.morda_url, link_info)
+            return
 
-            if len(target.step_urls) > 0 and only_missing:
-                self.logger.info("skip manual url updating {0}, target={1}, (already exist)\n".format(
-                    office_info.office_name, target_page_collection_name))
-                continue
+        if len(target.step_urls) > 0 and only_missing:
+            self.logger.info("skip manual url updating {}, step={}, (already exist)\n".format(
+                office_info.morda_url, step_name))
+            return
 
-            if step_index == 0:
-                start_pages = {office_info.morda_url}
-            else:
-                start_pages = office_info.robot_steps[step_index - 1].step_urls
+        if step_index == 0:
+            start_pages = {office_info.morda_url}
+        else:
+            start_pages = office_info.robot_steps[step_index - 1].step_urls
 
-            if include_source == "always":
-                target.step_urls.update(start_pages)
-            self.logger.info('{0}'.format(get_site_domain_wo_www(office_info.morda_url)))
-            start = datetime.datetime.now()
-            self.find_links_for_one_website(step_info,
-                                       start_pages,
-                                       fallback_to_selenium,
-                                       transitive)
-            self.logger.info("step elapsed time {} {} {}".format (
-                office_info.morda_url,
-                step_name,
-                (datetime.datetime.now() - start).total_seconds()))
-            if include_source == "copy_if_empty" and len(target.step_urls) == 0:
-                for url in start_pages:
-                    step_name = office_info.url_nodes[url].step_name
-                    if step_name not in do_not_copy_urls_from_steps:
-                        target.step_urls.add(url)
+        if include_source == "always":
+            target.step_urls.update(start_pages)
 
-            self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))
+        self.find_links_for_one_website_transitive(step_info, start_pages)
+        if len(target.step_urls) == 0:
+            self.try_use_search_engines(step_info)
 
-    def collect_subpages(self, step_index, check_link_func, include_source="always", do_not_copy_urls_from_steps=set()):
-        self.find_links_for_all_websites(step_index,
-                                    check_link_func,
-                                    fallback_to_selenium=False,
-                                    transitive=True,
-                                    only_missing=False,
-                                    include_source=include_source,
-                                    do_not_copy_urls_from_steps=do_not_copy_urls_from_steps)
+        if include_source == "copy_if_empty" and len(target.step_urls) == 0:
+            do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())
+            for url in start_pages:
+                step_name = office_info.url_nodes[url].step_name
+                if step_name not in do_not_copy_urls_from_steps:
+                    target.step_urls.add(url)
+
+        self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))

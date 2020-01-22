@@ -14,7 +14,7 @@ class TLinkInfo:
     def __init__(self, text, source=None, target=None, tagName=None, download_file=None):
         self.Source = source
         self.Target = target
-        self.Text = text
+        self.Text = '' if text is None else text
         self.TagName = tagName
         self.DownloadFile = download_file
 

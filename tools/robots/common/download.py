@@ -13,7 +13,7 @@ import logging
 import os
 from selenium import webdriver
 import time
-FILE_CACHE_FOLDER="cached"
+FILE_CACHE_FOLDER = "cached"
 ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip'}
 DEFAULT_HTML_EXTENSION = ".html"
 
@@ -98,6 +98,8 @@ def download_with_urllib (url, search_for_js_redirect=True):
                     encoding = match.group(1)
                 else:
                     raise ValueError('unable to find encoding')
+            if encoding.lower().startswith('cp-'):
+                encoding = 'cp' + encoding[3:]
 
             data = data.decode(encoding, errors="ignore")
             if search_for_js_redirect:

@@ -3,6 +3,7 @@ import re
 import os
 import argparse
 import logging
+import datetime
 from tempfile import TemporaryDirectory
 
 sys.path.append('../common')
@@ -126,39 +127,37 @@ def check_documents(link_info):
 
 ROBOT_STEPS = [
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "sitemap",
+        'step_name': "sitemap",
         'check_link_func': check_link_sitemap,
         'include_sources': 'always'
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "anticorruption_div",
+        'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
+        'search_engine_request': "противодействие коррупции",
         'include_sources': "copy_if_empty"
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "declarations_div",
+        'step_name': "declarations_div",
         'check_link_func': check_link_svedenia_o_doxodax,
         'include_sources': "copy_if_empty",
         'do_not_copy_urls_from_steps': [None, 'sitemap'] # None is for morda_url
     },
     {
-        'step_function': TRobotProject.collect_subpages,
-        'name': "declarations_div_pages",
+        'step_name': "declarations_div_pages",
         'check_link_func': check_year_or_subpage,
-        'include_sources': "always"
+        'include_sources': "always",
+        'transitive': True,
+        'only_missing': False,
+        'fallback_to_selenium': False
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "declarations_div_pages2",
+        'step_name': "declarations_div_pages2",
         'check_link_func': check_documents,
         'include_sources': "always"
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "declarations",
+        'step_name': "declarations",
         'check_link_func': check_accepted_declaration_file_type,
         'include_sources': "never"
     },
@@ -201,17 +200,21 @@ def make_steps(args, project):
     if args.start_from != "last_step":
         start = step_index_by_name(args.start_from) if args.start_from is not None else 0
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
-        step_index = start
-        for r in ROBOT_STEPS[start:end]:
-            project.del_old_info(step_index)
-            logger.info("=== step {0} =========".format(r['name']))
-            r['step_function'](project,
-                               step_index,
-                               r['check_link_func'],
-                               include_source=r['include_sources'],
-                               do_not_copy_urls_from_steps=r.get('do_not_copy_urls_from_steps', list()))
+        for step_passport in ROBOT_STEPS[start:end]:
+            step_name = step_passport['step_name']
+            logger.info("=== step {0} =========".format(step_name))
+            for office_info in project.offices:
+                start = datetime.datetime.now()
+                logger.info('{0}'.format(get_site_domain_wo_www(office_info.morda_url)))
+
+                project.find_links_for_one_website(office_info, step_passport)
+
+                logger.info("step elapsed time {} {} {}".format(
+                    office_info.morda_url,
+                    step_name,
+                    (datetime.datetime.now() - start).total_seconds()))
+
             project.write_project()
-            step_index += 1
 
     if args.stop_after is not None:
         if args.stop_after != "last_step":
