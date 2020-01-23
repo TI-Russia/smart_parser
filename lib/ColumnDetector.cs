@@ -294,7 +294,8 @@ namespace Smart.Parser.Lib
                 string text = cell.GetText(true);
                 Logger.Debug(string.Format("column title: \"{0}\"[{1}]",text.ReplaceEolnWithSpace().CoalesceWhitespace(), cell.CellWidth));
                 DeclarationField field;
-                if (text == "" || text.Length <= 1)
+                string clean_text = text.Replace("-", "").Trim();
+                if (text == "" || clean_text.Length <= 1)
                 {
                     field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());
