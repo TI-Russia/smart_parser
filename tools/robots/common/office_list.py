@@ -363,7 +363,10 @@ class TRobotProject:
         result = list()
         for o in self.offices:
             for export_record in o.exported_files:
-                result.append( (export_record['infile'],  export_record['people_count']))
+                result.append( (
+                    export_record['sha256'],
+                    export_record['infile'],
+                    export_record['people_count']))
         result = sorted (result)
         with open (self.project_file + ".stats", "w", encoding="utf8") as outf:
             json.dump(result, outf, indent=4)

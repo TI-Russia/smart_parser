@@ -330,6 +330,7 @@ def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extensi
                 people_count = get_people_count_from_smart_parser(smart_parser_binary, filename)
                 export_record = {
                     "url": url,
+                    "sha256": sha256hash,
                     "infile": infile,
                     "people_count": people_count,
                     "outpath": filename
@@ -351,6 +352,7 @@ def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extensi
             people_count = get_people_count_from_smart_parser(smart_parser_binary, outpath)
             export_record = {
                 "url": url,
+                "sha256": sha256hash,
                 "outpath": outpath,
                 "infile": infile,
                 "people_count": people_count
