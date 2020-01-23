@@ -252,7 +252,7 @@ namespace Smart.Parser.Lib
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
-                if (cell.CellWidth == 0 && text.Trim() =="") continue;
+                if (cell.CellWidth == 0 && text.Trim() == "") continue;
                 var underCells = FindSubcellsUnder(adapter, cell);
 
                 if (underCells.Count() <= 1 || !headerCanHaveSecondLevel)

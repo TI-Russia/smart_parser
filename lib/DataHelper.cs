@@ -113,7 +113,7 @@ namespace Smart.Parser.Lib
         {
             if (s == null) return true;
             s = s.Trim();
-            if (Regex.Match(s, @"^[\s--_]+$").Success)
+            if (Regex.Match(s, @"^[\s-_]+$").Success)
             {
                 return true;
             }
