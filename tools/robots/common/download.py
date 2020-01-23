@@ -9,23 +9,19 @@ import hashlib
 from collections import defaultdict
 import logging
 import zipfile
-
 import os
-from selenium import webdriver
-import time
+
 FILE_CACHE_FOLDER = "cached"
 DEFAULT_HTML_EXTENSION = ".html"
 DEFAULT_ZIP_EXTENSION = ".zip"
 ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip', DEFAULT_HTML_EXTENSION}
 UNKNOWN_PEOPLE_COUNT = -1
+HEADER_MEMORY_CACHE = {}
+HEADER_REQUEST_COUNT = defaultdict(int)
 
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
     return content_type.startswith('text')
-
-
-HEADER_CACHE = {}
-HEADER_REQUEST_COUNT = defaultdict(int)
 
 
 def make_http_request(url, method):
@@ -53,17 +49,16 @@ def make_http_request(url, method):
         return info, headers, data
 
 
-def get_url_headers (url):
-    global HEADER_CACHE
-    global HEADER_REQUEST_COUNT
-    if url in HEADER_CACHE:
-        return HEADER_CACHE[url]
-    if HEADER_REQUEST_COUNT[url] > 3:
+def request_url_headers (url):
+    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT
+    if url in HEADER_MEMORY_CACHE:
+        return HEADER_MEMORY_CACHE[url]
+    if HEADER_REQUEST_COUNT[url] >= 3:
         raise Exception("too many times to get headers that caused exceptions")
 
     HEADER_REQUEST_COUNT[url] += 1
     _, headers, _ = make_http_request(url, "HEAD")
-    HEADER_CACHE[url] = headers
+    HEADER_MEMORY_CACHE[url] = headers
     return headers
 
 
@@ -87,29 +82,31 @@ def get_site_domain_wo_www(url):
     return domain
 
 
+def convert_html_to_utf8(data, url_info):
+    encoding = url_info.get('charset')
+    if encoding is None:
+        match = re.search('charset=([^"\']+)', data.decode('latin', errors="ignore"))
+        if match:
+            encoding = match.group(1)
+        else:
+            raise ValueError('unable to find encoding')
+    if encoding.lower().startswith('cp-'):
+        encoding = 'cp' + encoding[3:]
+
+    return data.decode(encoding, errors="ignore")
+
+
 def download_with_urllib (url, search_for_js_redirect=True):
     info, headers, data = make_http_request(url, "GET")
 
     try:
         if is_html_contents(info):
-            logger.debug("\tencoding..")
-            encoding = headers.get_content_charset()
-            if encoding == None:
-                match = re.search('charset=([^"\']+)', data.decode('latin', errors="ignore"))
-                if match:
-                    encoding = match.group(1)
-                else:
-                    raise ValueError('unable to find encoding')
-            if encoding.lower().startswith('cp-'):
-                encoding = 'cp' + encoding[3:]
-
-            data = data.decode(encoding, errors="ignore")
             if search_for_js_redirect:
                 try:
-                    redirect_url = find_simple_js_redirect(data)
+                    redirect_url = find_simple_js_redirect(data.decode('latin', errors="ignore"))
                     if redirect_url is not None and redirect_url != url:
                         return download_with_urllib(redirect_url, search_for_js_redirect=False)
-                except Exception:
+                except Exception as err:
                     pass
 
     except AttributeError:
@@ -117,36 +114,32 @@ def download_with_urllib (url, search_for_js_redirect=True):
     return data, info
 
 
-def read_cache_file(localfile, info_file):
-    is_binary = False
+def read_cache_file(localfile):
+    with open(localfile, "rb") as f:
+        return f.read()
+
+def read_url_info_from_cache(url):
+    localfile = get_local_file_name_by_url(url)
+    if not os.path.exists(localfile):
+        return {}
+    info_file = localfile + ".headers"
     with open(info_file, "r", encoding="utf8") as inf:
-        info = json.loads(inf.read())
-        cached_headers = info['headers']
-        is_binary = not is_html_contents(cached_headers)
-    if is_binary:
-        with open(localfile, "rb") as f:
-            return f.read()
-    else:
-        with open(localfile, encoding="utf8") as f:
-            return f.read()
+        return json.loads(inf.read())
 
 
 def write_cache_file(localfile, info_file, info, data):
-    if is_html_contents(info):
-        with open(localfile, "w", encoding="utf8") as f:
-            f.write(data)
-    else:
-        with open(localfile, "wb") as f:
-            f.write(data)
+    with open(localfile, "wb") as f:
+        f.write(data)
 
     if info is not None:
         with open(info_file, "w", encoding="utf8") as f:
-            headers_and_url = dict()
+            url_info = dict()
             if hasattr(info, "_headers"):
-                headers_and_url['headers'] = dict(info._headers)
+                url_info['headers'] = dict(info._headers)
             else:
-                headers_and_url['headers'] = dict()
-            f.write(json.dumps(headers_and_url, indent=4, ensure_ascii=False))
+                url_info['headers'] = dict()
+            url_info['charset'] = info.get_content_charset()
+            f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
     return data
 
 
@@ -173,7 +166,7 @@ def save_download_file(filename):
     if not os.path.exists(download_folder):
         os.mkdir(download_folder)
     assert (os.path.exists(filename))
-    hashcode = ""
+
     with open(filename, "rb") as f:
         hashcode = hashlib.sha256(f.read()).hexdigest()
     extension = os.path.splitext(filename)[1]
@@ -184,6 +177,7 @@ def save_download_file(filename):
         os.remove(save_filename)
     os.rename(filename, save_filename)
     return save_filename
+
 
 def get_local_file_name_by_url(url):
     global FILE_CACHE_FOLDER
@@ -200,18 +194,22 @@ def get_local_file_name_by_url(url):
     return localfile
 
 
-def download_with_cache(url):
+def download_with_cache(url, convert_to_utf8=False):
     localfile = get_local_file_name_by_url(url)
     info_file = localfile + ".headers"
     if os.path.exists(localfile):
-        return read_cache_file(localfile, info_file)
+        data = read_cache_file(localfile)
     else:
         data, info = download_with_urllib(url)
         if len(data) == 0:
             return ""
         write_cache_file(localfile, info_file, info, data)
-        return data
 
+    info = read_url_info_from_cache(url) # reread in a different format
+    if convert_to_utf8:
+        return convert_html_to_utf8(data, info)
+    else:
+        return data
 
 def get_extenstion_by_content_type(content_type):
     if content_type.startswith("text"):
@@ -235,9 +233,9 @@ def get_extenstion_by_content_type(content_type):
     elif content_type.startswith("application/zip"):
         return ".zip"
     elif content_type.startswith("application/rss+xml"):
-        return ".xml"
+        return ".some_xml"
     elif content_type.startswith("application/xml"):
-        return ".xml"
+        return ".some_xml"
     elif content_type.startswith("application/"):
         return ".some_application_format"
     elif content_type.startswith("image/"):
@@ -255,22 +253,15 @@ def get_file_extension_by_cached_url(url):
         if url.lower().endswith(e):
             return e
 
-    localfile = get_local_file_name_by_url(url)
-    if not os.path.exists(localfile):
-        return DEFAULT_HTML_EXTENSION
-
-    info_file = localfile + ".headers"
-    with open(info_file, "r", encoding="utf8") as inf:
-        info = json.loads(inf.read())
-        content_type = info['headers'].get('Content-Type', "text")
-
+    content_type = read_url_info_from_cache(url).get('headers', {}).get('Content-Type', "text")
     return get_extenstion_by_content_type(content_type)
 
 
 def get_file_extension_by_url(url):
-    headers = get_url_headers(url)
+    headers = request_url_headers(url)
     ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
     return ext
+
 
 def process_smart_parser_json(json_file):
     with open(json_file, "r", encoding="utf8") as inpf:

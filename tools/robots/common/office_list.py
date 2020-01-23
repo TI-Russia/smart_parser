@@ -10,10 +10,10 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, UNKNOWN_PEOPLE_COUNT
 
-from popular_sites import is_super_popular_domain
+
 
 from find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
-                    find_links_in_html_by_text
+                    find_links_in_html_by_text, common_link_check
 
 from content_types import  ALL_CONTENT_TYPES
 from serp_parser import GoogleSearch
@@ -26,6 +26,35 @@ FIXLIST =  {
     }
 }
 
+class TSeleniumDriver:
+    def __init__(self):
+        self.the_driver = None
+        self.driver_processed_urls_count  = 0
+        self.download_folder = None
+
+    def start_executable(self):
+        options = FirefoxOptions()
+        options.headless = True
+        options.set_preference("browser.download.folderList", 2)
+        options.set_preference("browser.download.manager.showWhenStarting", False)
+        options.set_preference("browser.download.manager.closeWhenDone", True)
+        options.set_preference("browser.download.manager.focusWhenStarting", False)
+        options.set_preference("browser.download.dir", self.download_folder)
+        options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
+        options.set_preference("browser.helperApps.alwaysAsk.force", False)
+        self.the_driver = webdriver.Firefox(firefox_options=options)
+
+    def stop_executable(self):
+        if self.the_driver is not None:
+            self.the_driver.quit()
+
+    def restart_if_needed(self):
+        #to reduce memory usage
+        if self.driver_processed_urls_count > 100:
+            self.stop_executable()
+            self.start_executable()
+            self.driver_processed_urls_count = 0
+        self.driver_processed_urls_count += 1
 
 class TRobotStep:
     def __init__(self, step_name, init_json=None):
@@ -176,17 +205,7 @@ class TRobotWebSite:
         path.reverse()
         return path
 
-def open_selenium(tmp_folder):
-    options = FirefoxOptions()
-    options.headless = True
-    options.set_preference("browser.download.folderList", 2)
-    options.set_preference("browser.download.manager.showWhenStarting", False)
-    options.set_preference("browser.download.manager.closeWhenDone", True)
-    options.set_preference("browser.download.manager.focusWhenStarting", False)
-    options.set_preference("browser.download.dir", tmp_folder)
-    options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
-    options.set_preference("browser.helperApps.alwaysAsk.force", False)
-    return webdriver.Firefox(firefox_options=options)
+
 
 
 class TProcessUrlTemporary:
@@ -198,10 +217,8 @@ class TProcessUrlTemporary:
 
     def add_link_wrapper(self, source, link_info):
         href = link_info.pop('href')
-        if is_super_popular_domain(get_site_domain_wo_www(href)) or href.find(' ') != -1 or href.find('\n') != -1:
-            return
-        if href.find('print=') != -1:
-            self.website.logger.debug('skip {} since it looks like a print link, that causes a print dialog'.format(href))
+        if not common_link_check(href):
+            self.website.logger.debug('skip {} since it looks like a print link or it is an external url'.format(href))
             return
 
         href = strip_viewer_prefix(href)
@@ -227,8 +244,7 @@ class TProcessUrlTemporary:
 
 class TRobotProject:
     logger = None
-    selenium_driver = None
-    selenium_download_folder = None
+    selenium_driver = TSeleniumDriver()
     step_names = list()
     panic_mode_url_count = 400
     max_step_url_count = 800
@@ -243,14 +259,13 @@ class TRobotProject:
 
     def __enter__(self):
         TRobotProject.logger = logging.getLogger("dlrobot_logger")
-        TRobotProject.selenium_download_folder = tempfile.mkdtemp()
-        TRobotProject.selenium_driver = open_selenium(TRobotProject.selenium_download_folder)
+        TRobotProject.selenium_driver.download_folder = tempfile.mkdtemp()
+        TRobotProject.selenium_driver.start_executable()
         return self
 
     def __exit__(self, type, value, traceback):
-        if TRobotProject.selenium_driver is not None:
-            TRobotProject.selenium_driver.quit()
-        shutil.rmtree(TRobotProject.selenium_download_folder)
+        TRobotProject.selenium_driver.stop_executable()
+        shutil.rmtree(TRobotProject.selenium_driver.download_folder)
 
 
     def write_project(self):
@@ -357,14 +372,12 @@ class TRobotProject:
     def find_links_with_selenium (step_info, main_url):
         if can_be_office_document(main_url):
             return
-        click_all_selenium(step_info, main_url,
-                           TRobotProject.selenium_driver,
-                           TRobotProject.selenium_download_folder   )
+        click_all_selenium(step_info, main_url, TRobotProject.selenium_driver)
 
     @staticmethod
-    def get_html(url):
+    def get_html(url, convert_to_utf8=False):
         try:
-            html = download_with_cache(url)
+            html = download_with_cache(url, convert_to_utf8=convert_to_utf8)
         except Exception as err:
             TRobotProject.logger.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
             return
@@ -377,12 +390,12 @@ class TRobotProject:
 
     @staticmethod
     def add_links(step_info, url, fallback_to_selenium=True):
-        html = TRobotProject.get_html(url)
-        if html is None:
+        html_binary = TRobotProject.get_html(url)
+        if html_binary is None:
             return
 
         try:
-            soup = BeautifulSoup(html, "html.parser")
+            soup = BeautifulSoup(html_binary, "html.parser")
 
             save_links_count = len(step_info.robot_step.step_urls)
             find_links_in_html_by_text(step_info, url, soup)
@@ -443,7 +456,7 @@ class TRobotProject:
         check_func = step_info.step_passport.get('check_html_sources')
         assert check_func is not None
         for url in start_pages:
-            html = TRobotProject.get_html(url)
+            html = TRobotProject.get_html(url, convert_to_utf8=True)
             if html is not None and check_func(html):
                 TRobotProject.logger.debug("add url {} by {}".format(url, check_func.__name__))
                 step_info.robot_step.step_urls.add(url)

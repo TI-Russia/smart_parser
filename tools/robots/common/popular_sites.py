@@ -53,6 +53,7 @@
 "twitter.com",
 "gismeteo.ru",
 "telegram.org",
+"web.telegram.org"
 ]
 
 popular_site_set = set(popular_domains)

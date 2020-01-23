@@ -9,14 +9,15 @@ from download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from popular_sites import is_super_popular_domain
 
 class TLinkInfo:
-    def __init__(self, text, source=None, target=None, tagName=None, download_file=None):
+    def __init__(self, text, source=None, target=None, tagName=None, download_by_selenium=None):
         self.Source = source
         self.Target = target
         self.Text = '' if text is None else text
         self.TagName = tagName
-        self.DownloadFile = download_file
+        self.DownloadedBySelenium = download_by_selenium
 
 
 def strip_viewer_prefix(href):
@@ -30,6 +31,16 @@ def strip_viewer_prefix(href):
             href = href[len(prefix):]
             return unquote(href)
     return href
+
+
+def common_link_check(href):
+    if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
+        return False
+    if is_super_popular_domain(get_site_domain_wo_www(href)):
+        return False
+    if href.find('print=') != -1:
+        return False
+    return True
 
 
 def strip_html_url(url):
@@ -158,7 +169,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     if can_be_office_document(main_url):
         return
     base = get_base_url(main_url, soup)
-    logger.debug("find_links_in_html_by_text function={0}".format(step_info.check_link_func))
+    logger.debug("find_links_in_html_by_text function={0}".format(step_info.check_link_func.__name__))
     all_links_count = 0
     for l in soup.findAll('a'):
         href = l.attrs.get('href')
@@ -242,12 +253,14 @@ def wait_download_finished(tmp_folder, timeout=120):
     return None
 
 
-def click_selenium(step_info, main_url, driver, download_folder, element, element_index):
+def click_selenium(step_info, main_url, driver_holder,  element, element_index):
     tag_name = element.tag_name
     link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
-    make_folder_empty(download_folder)
+    driver = driver_holder.the_driver
+    make_folder_empty(driver_holder.download_folder)
     window_before = driver.window_handles[0]
-    #element.click()
+    #driver.execute_script('window.scrollTo(0,{});'.format(element.location['y']))
+    driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
 
     # open in a new tab, send ctrl-click
     ActionChains(driver) \
@@ -262,7 +275,7 @@ def click_selenium(step_info, main_url, driver, download_folder, element, elemen
         return
     window_after = driver.window_handles[1]
     driver.switch_to_window(window_after)
-    downloaded_file = wait_download_finished(download_folder, 180)
+    downloaded_file = wait_download_finished(driver_holder.download_folder, 180)
     link_url = driver.current_url
     if step_info.check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
         link_info = {
@@ -279,28 +292,47 @@ def click_selenium(step_info, main_url, driver, download_folder, element, elemen
             link_info['href'] = link_url
             step_info.add_link_wrapper(main_url, link_info)
     driver.close()
-    driver.switch_to_window(window_before)
+    driver.switch_to.window(window_before)
 
 
 def close_all_windows_except_one(driver):
     while len(driver.window_handles) > 1:
         driver.close()
 
+def prepare_for_logging(s):
+    s = s.translate(str.maketrans({"\n": r"\n", "\t": r"\\t", "\r": r"\r"}))
+    return s
 
-def click_all_selenium (step_info, main_url, driver, download_folder):
+
+def click_all_selenium (step_info, main_url, driver_holder):
     logger = step_info.website.logger
-    logger.debug("find_links_with_selenium url={0}, function={1}".format(main_url, step_info.check_link_func))
+    logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.check_link_func.__name__))
+    driver = driver_holder.the_driver
+    driver_holder.restart_if_needed()
     close_all_windows_except_one(driver)
     driver.get(main_url)
     time.sleep(6)
     elements = list(driver.find_elements_by_xpath('//button | //a'))
 
     for i in range(len(elements)):
-        e = elements[i]
-        link_text = e.text.strip('\n\r\t ')
-        logger.debug("check link url={0}, function={1}".format(main_url, step_info.check_link_func))
-        if step_info.check_link_func(TLinkInfo(link_text)):
-            click_selenium(step_info, main_url, driver, download_folder,  e, i)
-            elements = list(driver.find_elements_by_xpath('//button | //a'))
+        element = elements[i]
+        link_text = element.text.strip('\n\r\t ')
+        if len(link_text) > 0:
+            logger.debug("check element {} before click, text={}".format(i, prepare_for_logging(link_text)))
+            if step_info.check_link_func(TLinkInfo(link_text)):
+                if element.tag_name == "a":
+                    #no click needed just read href
+                    href = element.get_attribute("href")
+                    if step_info.check_link_func(TLinkInfo(link_text, main_url, href, element.tag_name)):
+                        link_info = {
+                            'text': link_text,
+                            'engine': 'selenium',
+                            'tagname': element.tag_name,
+                            'href': href
+                        }
+                        step_info.add_link_wrapper(main_url, link_info)
+                else:
+                    click_selenium(step_info, main_url, driver_holder,  element, i)
+                    elements = list(driver.find_elements_by_xpath('//button | //a'))
 
 
