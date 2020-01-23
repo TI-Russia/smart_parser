@@ -139,6 +139,8 @@ def check_long_near_text (start_element, upward_distance, check_link_func):
 def can_be_office_document(href):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
     filename, file_extension = os.path.splitext(href)
+    if file_extension == DEFAULT_HTML_EXTENSION:
+        return False
     if file_extension.lower() in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         return True
     if href.find('docs.google') != -1:

@@ -17,3 +17,7 @@ else
 fi
 
 date
+
+
+# prin sum
+#git diff mil.txt.clicks.stats  | grep -E '^[+-]\s+[0-9]' | gawk 'BEGIN{sum=0}{print; if ($1 == "-") {sum -= $2} else {sum += $2} print sum}' 
