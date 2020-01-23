@@ -17,19 +17,19 @@ from find_link import \
     check_anticorr_link_text, \
     ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
-    check_sub_page_or_iframe
+    check_sub_page_or_iframe, common_link_check
 
 
 
-def setup_logging(args,  logger, logfilename):
+def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
 
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(args.logfile):
-        os.remove(args.logfile)
+    if os.path.exists(logfilename):
+        os.remove(logfilename)
     # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename)
+    fh = logging.FileHandler(logfilename, encoding="utf8")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
@@ -81,7 +81,7 @@ def check_year_or_subpage(link_info):
     return False
 
 
-def check_download_text(link_info):
+def check_download_text_not_html(link_info):
     text = link_info.Text.strip(' \n\t\r').strip('"').lower()
     if text.find('шаблоны') != -1:
         return False
@@ -92,6 +92,8 @@ def check_download_text(link_info):
 
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        if e == DEFAULT_HTML_EXTENSION:
+            continue
         if text.startswith(e[1:]):  #without "."
             return True
         if text.find(e) != -1:
@@ -111,24 +113,27 @@ def check_documents(link_info):
 
 
 def check_accepted_declaration_file_type(link_info):
-    if check_download_text(link_info):
+    if check_download_text_not_html(link_info):
         return True
     if link_info.Target is not None:
         try:
-            if link_info.DownloadFile is not None:
+            if not common_link_check(link_info.Target):
+                return False # to make faster
+            if link_info.DownloadedBySelenium is not None:
                 return True
             ext = get_file_extension_by_url(link_info.Target)
-            return ext != DEFAULT_HTML_EXTENSION
+            return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
         except Exception as err:
-            sys.stderr.write('cannot query (HEAD) url={0}  exception={1}\n'.format(link_info.Target, str(err)))
+            logger = logging.getLogger("dlrobot_logger")
+            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.Target, str(err)))
             return False
     return False
 
 
 def check_html_can_be_declaration(html):
     html = html.lower()
-    words = html.find('квартира') != -1 and html.find('доход')!=-1 and html.find('должность')!= -1
-    numbers = re.search('[0-9]{6}', html) != None # доход
+    words = html.find('квартира') != -1 and html.find('доход') != -1 and html.find('должность') != -1
+    numbers = re.search('[0-9]{6}', html) is not None # доход
     return words and numbers
 
 
@@ -238,7 +243,7 @@ def make_steps(args, project):
 
 def open_project(args, log_file_name):
     logger = logging.getLogger("dlrobot_logger")
-    setup_logging(args, logger, log_file_name)
+    setup_logging(logger, log_file_name)
     with TRobotProject(args.project, ROBOT_STEPS) as project:
         if args.hypots is not None:
             if args.start_from is not None:
