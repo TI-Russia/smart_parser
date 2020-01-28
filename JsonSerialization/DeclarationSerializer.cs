@@ -133,8 +133,10 @@ namespace TI.Declarator.JsonSerialization
             var jDocumentProp = SerializeDocument(declaration);
             
             var JDeclaration = new JObject(jPersonsProp, jDocumentProp);
-            
-            Validate(JDeclaration, out comment);
+            if (!ColumnOrdering.SearchForFioColumnOnly)
+            {
+                Validate(JDeclaration, out comment);
+            }
 
             if (validate && !comment.IsNullOrWhiteSpace())
             {

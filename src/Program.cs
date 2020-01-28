@@ -22,6 +22,7 @@ namespace Smart.Parser
         public static string OutFile = "";
         public static string AdapterFamily = "aspose";
         static bool ColumnsOnly = false;
+
         static bool CheckJson = false;
         public static int MaxRowsToProcess = -1;
         public static DeclarationField ColumnToDump = DeclarationField.None;
@@ -47,13 +48,13 @@ namespace Smart.Parser
             }
         }
     
-
         static string ParseArgs(string[] args)
         {
             CMDLineParser parser = new CMDLineParser();
             CMDLineParser.Option outputOpt = parser.AddStringParameter("-o", "use file for output", false);
             CMDLineParser.Option licenseOpt = parser.AddStringParameter("-license", "", false);
             CMDLineParser.Option mainLogOpt = parser.AddStringParameter("-log", "", false);
+            CMDLineParser.Option skipLoggingOpt = parser.AddBoolSwitch("-skip-logging", "");
             CMDLineParser.Option verboseOpt = parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
@@ -67,7 +68,8 @@ namespace Smart.Parser
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             CMDLineParser.Option docFileIdOpt = parser.AddIntParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
-            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id", false);
+            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8000/converted_document ", false);
+            CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
             parser.AddHelpOption();
             try
             {
@@ -108,7 +110,7 @@ namespace Smart.Parser
             {
                 logFileName = Path.GetFullPath(mainLogOpt.Value.ToString());
             }
-            Logger.Setup(logFileName);
+            Logger.Setup(logFileName, skipLoggingOpt.isMatched);
             if (outputOpt.isMatched)
             {
                 OutFile = outputOpt.Value.ToString();
@@ -164,6 +166,7 @@ namespace Smart.Parser
 
 
             ColumnsOnly = columnsOnlyOpt.isMatched;
+            ColumnOrdering.SearchForFioColumnOnly = fioOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
             BuildTrigrams = buildTrigramsOpt.isMatched;
             ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
@@ -226,7 +229,7 @@ namespace Smart.Parser
             catch (Exception e)
             {
                 Logger.Error("Unknown Parsing Exception " + e.ToString());
-                //Logger.Info("Stack: " + e.StackTrace);
+                Logger.Info("Stack: " + e.StackTrace);
             }
             finally
             {
@@ -373,19 +376,23 @@ namespace Smart.Parser
 
         static IAdapter GetAdapter(string declarationFile)
         {
-            string extension = Path.GetExtension(declarationFile);
+            string extension = Path.GetExtension(declarationFile).ToLower();
             switch (extension)
             {
                 case ".pdf":
                 case ".html":
+                case ".xhtml":
+                case ".htm":
                 case ".doc":
+                case ".rtf":
                 case ".toloka_json":
                 case ".docx":
                     if (AdapterFamily != "aspose")
                     {
                         if (AdapterFamily == "xceed" || AdapterFamily == "prod")
                         {
-                            return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                            //return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                            return OpenXmlWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                         }
                     }
                     else
@@ -452,7 +459,13 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseDocumentSheet(adapter, curOutFile, declarationFile);
+                    try
+                    {
+                        ParseDocumentSheet(adapter, curOutFile, declarationFile);
+                    }
+                    catch (ColumnDetectorException e) {
+                        Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)", sheetIndex));
+                    }
                 }
             }
             else

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AAE590F1-46AC-438D-B4F1-120ADF4D77C0}</ProjectGuid>
+    <ProjectGuid>{329F5E89-B89B-4182-9197-61692B4026BC}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MicrosoftPdf2Docx</RootNamespace>
     <AssemblyName>MicrosoftPdf2Docx</AssemblyName>
-    <TargetFrameworkVersion>netcoreapp3.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CMDLineParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -35,9 +35,10 @@ namespace Smart.Parser.Adapters
         }
 
         public int Row { get; set; } = -1;
-        public int Col { get; set; } = -1;
+        public int Col { get; set; } = -1; // not merged column index
 
-        public int CellWidth = 0;
+        public int CellWidth = 0; // in pixels
+        public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
     };
 
     public class DataRow : DataRowInterface
@@ -56,15 +57,24 @@ namespace Smart.Parser.Adapters
             }
             
         }
-   
+        public string DebugString()
+        {
+            string s = "";
+            foreach (var c in Cells)
+            {
+                s += string.Format("\"{0}\"[{1}], ",c.Text.Replace("\n", "\\n"),c.CellWidth);
+            }
+            return s;
+        }
         static Dictionary<DeclarationField, Cell> MapByOrderAndIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
             if (columnOrdering.MergedColumnOrder.Count != cells.Count)
             {
                 return null;
             }
-            int start = 0;
+            int start = cells[0].AdditTableIndention;
             var res = new Dictionary<DeclarationField, Cell>();
+            int pixelErrorCount = 0;
             for (int i = 0; i < cells.Count; i++)
             {
                 int s1 = start;
@@ -74,14 +84,29 @@ namespace Smart.Parser.Adapters
                 int e2 = colInfo.ColumnPixelStart + colInfo.ColumnPixelWidth;
                 if (ColumnOrdering.PeriodIntersection(s1, e1, s2, e2) == 0)
                 {
-                    if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
+                    pixelErrorCount += 1;
+                    if (!DataHelper.IsEmptyValue(cells[i].Text)) 
                     {
-                        return null;
+                        if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
+                        {
+                            Logger.Debug(string.Format("cannot map column N={0} text={1}", i, cells[i].Text.Replace("\n", "\\n")));
+                            return null;
+                        }
+                        else
+                        {
+                            Logger.Debug(string.Format("found semantic argument for mapping N={0} text={1} to {2}", 
+                                i, cells[i].Text.Replace("\n", "\\n"), colInfo.Field));
+                            pixelErrorCount = 0;
+                        }
                     }
                 }
                 res[columnOrdering.MergedColumnOrder[i].Field] = cells[i];
 
                 start = e1;
+            }
+            if (pixelErrorCount >= 3)
+            {
+                return null;
             }
             return res;
 
@@ -89,9 +114,14 @@ namespace Smart.Parser.Adapters
 
         static Dictionary<DeclarationField, Cell> MapByMaxIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
+            Logger.Debug("MapByMaxIntersection");
+            // map two header cells to one data cell
+            // see dnko-2014.docx for an example
+
             var res = new Dictionary<DeclarationField, Cell>();
             var sizes = new Dictionary<DeclarationField, int>();
-            int start = 0;
+            if (cells.Count == 0) return res;
+            int start = cells[0].AdditTableIndention;
             foreach (var c in cells)
             {
                 if (c.CellWidth >  0 )
@@ -107,6 +137,7 @@ namespace Smart.Parser.Adapters
                     // take only fields with maximal pixel intersection
                     if (!sizes.ContainsKey(field) || sizes[field] < interSize)
                     {
+                        //Logger.Debug(string.Format("map {1} to {0}", field, c.Text.Replace("\n", "\\n")));
                         res[field] = c;
                         sizes[field] = interSize;
                     }
@@ -216,6 +247,7 @@ namespace Smart.Parser.Adapters
         }
         static bool CanBePatronymic(string s)
         {
+            s = s.Replace("-", "");
             if (s.Length == 0) return false;
             if (!Char.IsUpper(s[0])) return false;
             return s.EndsWith("вич") || 
@@ -225,7 +257,13 @@ namespace Smart.Parser.Adapters
                     s.EndsWith("тич") ||
                     s.EndsWith("мич") ||
                     s.EndsWith("ьич") ||
-                    s.EndsWith("чна");
+                    s.EndsWith("ьича") ||
+                    s.EndsWith("ьича") ||
+                    s.EndsWith("вича") ||
+                    s.EndsWith("тича") ||
+                    s.EndsWith("мича") ||
+                    s.EndsWith("чны") ||
+                    s.EndsWith("чна") ;
         }
 
         void DivideNameAndOccupation()
@@ -245,7 +283,7 @@ namespace Smart.Parser.Adapters
                 string[] result = Regex.Split(v, pattern);
                 if (result.Length < 2)
                 {
-                    string[] words = Regex.Split(v, @"\s+");
+                    string[] words = Regex.Split(v, @"[\,\s\n]+");
                     if (words.Length >= 3 && CanBePatronymic(words[2]))
                     {
                         PersonName = String.Join(" ", words.Take(3)).Trim();
@@ -255,7 +293,7 @@ namespace Smart.Parser.Adapters
                     else
                     {
                         throw new SmartParserException(
-                            string.Format("Cannot  parse  name+occupation value {0} at row {1}", v, GetRowIndex()));
+                            string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
                     }
                 }
                 else
@@ -276,7 +314,10 @@ namespace Smart.Parser.Adapters
             string nameOrRelativeType;
             if (this.ColumnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType))
             {
-                DivideNameAndOccupation();
+                if (!ColumnOrdering.SearchForFioColumnOnly)
+                {
+                    DivideNameAndOccupation();
+                }
             }
             else
             {

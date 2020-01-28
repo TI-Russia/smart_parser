@@ -1,1 +1,1 @@
-python run_smart_parser.py > parser.log
+python run_smart_parser.py --restart 1 > parser.log

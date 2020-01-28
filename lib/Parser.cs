@@ -45,12 +45,7 @@ namespace Smart.Parser.Lib
             };
             if (properties.Year == null)
             {
-                var firstRow = Adapter.GetRow(columnOrdering, 0);
-                var incomeHeader = firstRow.GetContents(DeclarationField.DeclaredYearlyIncome);
-                string dummy = "";
-                int? year = null;
-                ColumnDetector.GetValuesFromTitle(incomeHeader, ref dummy, ref year, ref dummy);
-                properties.Year = year;
+                properties.Year = columnOrdering.YearFromIncome;
             }
             Declaration declaration = new Declaration()
             {
@@ -147,6 +142,20 @@ namespace Smart.Parser.Lib
 
         }
 
+        bool IsNumbersRow(DataRow row)
+        {
+            string s = "";
+            foreach (var c in row.Cells)
+            {
+                s += c.Text.Replace("\n", "").Replace(" ", "") + " ";
+            }
+
+            if (s.StartsWith("1 2 3 4"))
+                return true;
+
+            return false;
+        }
+
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
@@ -166,7 +175,7 @@ namespace Smart.Parser.Lib
         }
 
         public Declaration Parse(ColumnOrdering columnOrdering, bool updateTrigrams, int? documentfile_id)
-         {
+        {
             FirstPassStartTime = DateTime.Now;
 
             Declaration declaration =  InitializeDeclaration(columnOrdering, documentfile_id);
@@ -189,6 +198,11 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
+                if (IsNumbersRow(currRow))
+                {
+                    continue;
+                }
+                Logger.Debug(currRow.DebugString());
 
                 string sectionName;
                 if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))
@@ -228,7 +242,7 @@ namespace Smart.Parser.Lib
                 borderFinder.AddInputRowToCurrentPerson(currRow);
                 if (    columnOrdering.ContainsField (DeclarationField.DeclaredYearlyIncomeThousands)) {
                     PublicServant dummy = new PublicServant();
-                    ParseIncome(currRow, dummy, declaration.MultiplyIncomeIfSpecified);
+                            ParseIncome(currRow, dummy, declaration.MultiplyIncomeIfSpecified);
                     if (dummy.DeclaredYearlyIncome != null)
                     {
                         incomes.Add(dummy.DeclaredYearlyIncome.Value);
@@ -247,8 +261,8 @@ namespace Smart.Parser.Lib
             }
 
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
-
-            ParsePersonalProperties(declaration);
+            if (!ColumnOrdering.SearchForFioColumnOnly)
+                ParsePersonalProperties(declaration);
 
             return declaration;
         }
@@ -350,7 +364,7 @@ namespace Smart.Parser.Lib
             }
             string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
-            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry);
+            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false);
 
             try
             {
@@ -577,7 +591,7 @@ namespace Smart.Parser.Lib
             return  String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
         }
 
-        static List<string> DivideByBordersOrEmptyLines(string value, List<int> borders)
+        static List<string> DivideByBordersOrEmptyLines(string value, List<int> linesWithNumbers)
         {
             var result = new List<string>();
             if (value == null)
@@ -585,26 +599,39 @@ namespace Smart.Parser.Lib
                 return result;
             }
             string[] lines = value.Split('\n');
-            Debug.Assert(borders.Count > 1);
-            int startLine = borders[0];
-            int borderIndex = 1;
-            string item = "";
+            Debug.Assert(linesWithNumbers.Count > 1);
+            int startLine = linesWithNumbers[0];
+            int numberIndex = 1;
+            string item;
             for (int i = startLine + 1; i < lines.Count(); ++i)
             {
                 item = SliceArrayAndTrim(lines, startLine, i);
                 if (item.Count() > 0) // not empty item
                 {
-                    if ((borderIndex < borders.Count && i == borders[borderIndex]) || lines[i].Trim().Count() == 0)
+                    if ((numberIndex < linesWithNumbers.Count && i == linesWithNumbers[numberIndex]) || lines[i].Trim().Count() == 0)
                     {
                         result.Add(item);
                         startLine = i;
-                        borderIndex++;
+                        numberIndex++;
                     }
                 }
-
             }
+
             item = SliceArrayAndTrim(lines, startLine, lines.Count());
             if (item.Count() > 0) result.Add(item);
+
+            if (result.Count < linesWithNumbers.Count) {
+                var notEmptyLines = new List<string>();
+                foreach (var l in lines) {
+                    if (l.Trim(' ').Length > 0) {
+                        notEmptyLines.Add(l);
+                    }
+                }
+                if (notEmptyLines.Count == linesWithNumbers.Count) {
+                    return notEmptyLines;
+                }
+            }
+    
             return result;
         }
 

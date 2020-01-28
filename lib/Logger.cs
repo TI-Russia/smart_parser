@@ -18,28 +18,34 @@ namespace Parser.Lib
     {
         private const int MaxErrorCount = 150;
         static log4net.Repository.ILoggerRepository repo = LogManager.GetRepository(Assembly.GetEntryAssembly());
-
         private static void LoadConfig()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
-            var dummy = currentAssembly.GetManifestResourceNames();
             using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.log4net.config"))
             {
                 log4net.Config.XmlConfigurator.Configure(repo, stream);
             }
         }
 
-        public static void Setup(string logFileName = "")
+        public static void Setup(string logFileName = "", bool skipLogging = false)
         {
             Errors.Clear();
-            if (String.IsNullOrEmpty(logFileName))
+            if (skipLogging)
             {
-                logFileName = "smart_parser_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".log";
+                mainLog = null;
+                secondLog = null;
             }
-            LoadConfig();
-            SetLogFileName("Main", logFileName);
-            mainLog = LogManager.GetLogger(repo.Name, "Main");
-            secondLog = LogManager.GetLogger(repo.Name, "Second");
+            else
+            {
+                if (String.IsNullOrEmpty(logFileName))
+                {
+                    logFileName = "smart_parser_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".log";
+                }
+                LoadConfig();
+                SetLogFileName("Main", logFileName);
+                mainLog = LogManager.GetLogger(repo.Name, "Main");
+                secondLog = LogManager.GetLogger(repo.Name, "Second");
+            } 
             log = mainLog;
         }
 
@@ -52,7 +58,10 @@ namespace Parser.Lib
 
         public static void SetSecondLogFileName(string logFileName)
         {
-            SetLogFileName("Second", logFileName);
+            if (secondLog != null)
+            {
+                SetLogFileName("Second", logFileName);
+            }
         }
 
         public static void SetLogFileName(string logger, string logFileName)

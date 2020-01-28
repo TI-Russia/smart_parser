@@ -64,7 +64,8 @@ namespace Smart.Parser.Lib
 
         public static RelationType ParseRelationType(string strRel, bool throwException = true)
         {
-            switch (strRel.ToLower().Replace(" ", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit())
+            string clean = strRel.ToLower().Replace(" ", "").Replace(":", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit();
+            switch (clean)
             {
                 case "супруг": return RelationType.Spouse;
                 case "супруг(супруга)": return RelationType.Spouse;
@@ -75,8 +76,10 @@ namespace Smart.Parser.Lib
                 case "супруг(а)": return RelationType.Spouse;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
+                case "несовершеннолетниедети": return RelationType.Child;
                 case "несовершеннолетнийребенок": return RelationType.Child;
                 case "несовершенолетнийребенок": return RelationType.Child;
+                case "несовершеннол.ребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
                 case "дочь.": return RelationType.Child;
                 case "дочьсупроги": return RelationType.Child;
@@ -110,7 +113,7 @@ namespace Smart.Parser.Lib
         {
             if (s == null) return true;
             s = s.Trim();
-            if (Regex.Match(s, @"^[\s--]+$").Success)
+            if (Regex.Match(s, @"^[\s-_]+$").Success)
             {
                 return true;
             }

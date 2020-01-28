@@ -18,6 +18,7 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NPOI" Version="2.4.1" />
+    <PackageReference Include="Open-XML-SDK" Version="2.9.0" />
   </ItemGroup>
 
   <ItemGroup>

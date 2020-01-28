@@ -47,7 +47,7 @@ namespace MicrosoftPdf2Docx
         }
         static void ConvertFile(string inFilename, string outFileName)
         {
-            Console.WriteLine(String.Format("{0} to {1}", inFilename, outFileName));
+            
             DeleteLastCrashedDialog();
             Application word = new Application();
             var doc = word.Documents.OpenNoRepairDialog(
@@ -55,16 +55,61 @@ namespace MicrosoftPdf2Docx
                 ReadOnly: true,
                 ConfirmConversions: false,
                 OpenAndRepair: false);
-            doc.SaveAs2(Path.GetFullPath(outFileName), WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
+            var outFilePath = Path.GetFullPath(outFileName);
+            doc.SaveAs2(outFilePath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
             word.ActiveDocument.Close();
             word.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+            long length = new System.IO.FileInfo(outFilePath).Length;
+            Console.WriteLine(String.Format("converted {0} to {1} outsize= {2}", inFilename, outFileName, length));
         }
 
         static void Main(string[] args)
         {
-            string pdf = args[0];
-            string winword = args[0] + ".docx";
-            ConvertFile(pdf, winword);
+            CMDLine.CMDLineParser parser = new CMDLine.CMDLineParser();
+            CMDLine.CMDLineParser.Option skipExistsOpt = parser.AddBoolSwitch("--skip-existing", "");
+            parser.AddHelpOption();
+            try
+            {
+                parser.Parse(args);
+            }
+            catch (Exception ex)
+            {
+                //show available options      
+                Console.Write(parser.HelpMessage());
+                Console.WriteLine();
+                Console.WriteLine("Error: " + ex.Message);
+                throw;
+            }
+            var files = parser.RemainingArgs();
+            if (files == null) {
+                Console.WriteLine("no input file");
+            } else
+            {
+                foreach (var f in files)
+                {
+                    string pdf = f.Trim(new char[] { '"' });
+                    string winword = pdf + ".docx";
+                    if (skipExistsOpt.isMatched && File.Exists(winword))
+                    {
+                        Console.WriteLine(string.Format("skip creating {0}", winword));
+                    }
+                    else
+                    {
+                        try
+                        {
+                            ConvertFile(pdf, winword);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                        }
+                    }
+
+                }
+            }
+
         }
     }
 }

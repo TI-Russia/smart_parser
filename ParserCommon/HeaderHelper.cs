@@ -52,10 +52,15 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDeclaredYearlyIncomeThousands()) { return DeclarationField.DeclaredYearlyIncomeThousands; }
             if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
+            if (str.IsComments()) { return DeclarationField.Comments; }
 
             if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
             if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
             if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
+
+            if (str.IsAcquiredProperty()) { return DeclarationField.AcquiredProperty; }
+            if (str.IsMoneySources()) { return DeclarationField.MoneySources; }
+
 
             if (HasSquareString(str)) { return DeclarationField.MixedRealEstateSquare; }
             if (HasCountryString(str)) { return DeclarationField.MixedRealEstateCountry; }
@@ -75,9 +80,10 @@ namespace TI.Declarator.ParserCommon
 
         public static bool IsName(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "").ToLower();
+            string clean = s.Replace("-", "").Replace("\n", "").Replace(" ", "").ToLower();
             return (clean.Contains("фамилия") ||
                     clean.Contains("фио") ||
+                    clean.Contains(".иф.о.") ||
                     clean.Contains("ф.и.о"));
         }
         public static bool IsNameAndOccupation(this string s)
@@ -92,9 +98,10 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOccupation(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
-            return (clean.Contains("должность") || 
-                    s.Contains("должностей"));
+            string clean = s.Replace("-", "").Replace(" ", "").ToLower();
+            return (clean.Contains("должность") ||
+                    clean.Contains("должности") ||
+                    clean.Contains("должностей"));
         }
 
         private static bool IsDepartment(this string s)
@@ -240,20 +247,23 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsVehicle(this string s)
         {
-            return ((s.Contains("транспорт") || s.Contains("т ранспорт") || s.Contains("движимое имущество")) &&
-                    (!s.Contains("источник")));
+            string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
+                    (!clean.Contains("источник")));
         }
 
         private static bool IsVehicleType(this string s)
         {
-            return ((s.Contains("транспорт") || s.Contains("движимое имущество")) &&
-                    ((s.Contains("вид") && !s.Contains("марк"))));
+            string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
+                    ((clean.Contains("вид") && !clean.Contains("марк"))));
         }
 
         private static bool IsVehicleModel(this string s)
         {
-            return ((s.Contains("транспорт") || s.Contains("движимое имущество")) &&
-                    ((s.Contains("марка") && !s.Contains("вид"))));
+            string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
+                    ((clean.Contains("марка") && !clean.Contains("вид"))));
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)
@@ -277,5 +287,24 @@ namespace TI.Declarator.ParserCommon
         {
             return s.Contains("сведен");
         }
+
+        private static bool IsComments(this string s)
+        {
+            return s.Contains("примечани");
+        }
+
+        private static bool IsAcquiredProperty(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "");
+            return strLower.Contains("приобретенногоимущества");
+        }
+
+        private static bool IsMoneySources(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "");
+            return strLower.Contains("источникполучениясредств");
+        }
+
+        
     }
 }

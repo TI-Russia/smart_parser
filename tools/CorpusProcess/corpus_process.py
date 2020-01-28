@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--smart-parser-options", dest='smart_parser_options',
-                        default="-v debug -max-rows 100 -adapter prod")
+                        default="-v debug -max-rows 100 -adapter prod -converted-storage-url  http://declarator.zapto.org:8000/converted_document")
     parser.add_argument("--toloka", dest='toloka', default=False, action="store_true")
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
                         default=4, type=int)
@@ -168,7 +168,7 @@ def report(args):
 if __name__ == '__main__':
     args = parse_args()
     if not args.extensions:
-        args.extensions = ['doc', 'docx', 'pdf', 'xls', 'xlsx']
+        args.extensions = ['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf']
 
     if args.action == 'full' or args.action == 'copy_data':
         copy_data(args)

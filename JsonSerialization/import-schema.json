@@ -650,7 +650,10 @@
         },
         "year": {
           "$id": "/properties/document/properties/year",
-          "type": "integer",
+          "type": [
+            "number",
+            "null"
+          ],
           "title": "Год декларируемых доходов",
           "default": 0,
           "examples": [

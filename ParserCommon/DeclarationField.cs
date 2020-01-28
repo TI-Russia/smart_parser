@@ -51,6 +51,10 @@ namespace TI.Declarator.ParserCommon
         StatePropertyOwnershipType = State | OwnershipTypeMask,
         StateColumnWithNaturalText = State | NaturalText,
 
+        // Поля, которые мы собираем, но пока не сохраняем в JSON
+        AcquiredProperty = 101,
+        MoneySources = 102,
+        Comments = 103,
     }
-       
+
 }

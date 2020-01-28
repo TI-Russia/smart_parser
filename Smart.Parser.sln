@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeclaratorApiClient", "Decl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Parser", "src\Smart.Parser.csproj", "{DE68DF61-B7F1-492B-9193-78E0D0F42522}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "test\Test.csproj", "{41515D53-4D5A-4A81-BCFE-30EB699302DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{41BA21A4-58BA-472B-9AED-C938EAFD1879}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{DE68DF61-B7F1-492B-9193-78E0D0F42522}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE68DF61-B7F1-492B-9193-78E0D0F42522}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE68DF61-B7F1-492B-9193-78E0D0F42522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41515D53-4D5A-4A81-BCFE-30EB699302DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41515D53-4D5A-4A81-BCFE-30EB699302DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41515D53-4D5A-4A81-BCFE-30EB699302DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41515D53-4D5A-4A81-BCFE-30EB699302DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41BA21A4-58BA-472B-9AED-C938EAFD1879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41BA21A4-58BA-472B-9AED-C938EAFD1879}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41BA21A4-58BA-472B-9AED-C938EAFD1879}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41BA21A4-58BA-472B-9AED-C938EAFD1879}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
