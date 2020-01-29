@@ -7,7 +7,6 @@ import urllib.parse
 import argparse
 import urllib.parse
 import re
-import os
 
 # Create a custom logger
 def setup_logging( logger, logfilename):
@@ -27,11 +26,6 @@ def setup_logging( logger, logfilename):
     logger.addHandler(ch)
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="print")
-    parser.add_argument("--wikidata-links", dest='wikidata_links_file')
-    return parser.parse_args()
 
 
 def send_json_request_to_ruwiki(title, api_action):
@@ -43,6 +37,20 @@ def send_json_request_to_ruwiki(title, api_action):
         url += '&'
     url += api_action
 
+    context = ssl._create_unverified_context()
+    req = urllib.request.Request(
+        url,
+        data=None,
+        headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+        }
+    )
+    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
+        return json.loads(request.read().decode('utf-8'))
+
+def send_sparql_request(sparql):
+    sparql = urllib.parse.quote(sparql)
+    url = 'https://query.wikidata.org/sparql?format=json&query=' + sparql
     context = ssl._create_unverified_context()
     req = urllib.request.Request(
         url,
@@ -92,14 +100,13 @@ def get_wikidata_item(title):
     return item
 
 
-def read_wiki_data_links(filename):
+def read_json(filename):
     with open(filename, "r", encoding="utf8") as inp:
-        for l in inp:
-            (wikidata, ruwiki, decl_person_id) = l.strip().split("\t")
-            if ruwiki == "sitelink":
-                continue
-            fio = get_title_from_wiki_link(ruwiki)
-            yield (wikidata, fio, decl_person_id)
+        return json.load(inp)
+
+def write_json(filename, records):
+    with open(filename, "w", encoding="utf8") as outf:
+        json.dump(records, outf, ensure_ascii=False, indent=4)
 
 
 def get_all_wiki_links_from_db():
@@ -107,31 +114,32 @@ def get_all_wiki_links_from_db():
     cursor = db.cursor()
     query = ("select id, wikipedia from declarations_person where wikipedia is not null and wikipedia <> '';")
     cursor.execute(query)
+    result = dict()
     for (id, wikipedia_link) in cursor:
         normalize = True if wikipedia_link.find(',') == -1 else False
         fio = get_title_from_wiki_link(wikipedia_link, normalize=normalize)
-        yield (str(id), fio)
+        result[str(id)] = fio
     cursor.close()
     db.close()
+    return result
 
 
-def compare_sets (db_links, wikidata_links):
+def compare_sets (db_links, wikidata_pages):
     ruwikis = set()
     logger = logging.getLogger("dlwikibot")
-    for wikidata, ruwiki, decl_person_id in wikidata_links:
-        ruwikis.add(ruwiki)
+    for wikidata_page in wikidata_pages:
+        ruwikis.add(wikidata_page['ruwiki_title'])
+        person_id = wikidata_page['person_id'],
         comp_res = {
-            'wikidata': wikidata,
-            'ruwiki_title_from_wikidata': ruwiki,
-            'decl_person_id':  decl_person_id
+                'decl_person_id': person_id,
+                'wikidata': {
+                    'url': wikidata_page['wikidata_url'],
+                    'ruwiki_title': wikidata_page['ruwiki_title']
+                },
+                'decl_db_reference': {}
         }
-        if decl_person_id in db_links:
-            new_link = False
-            if ruwiki != db_links[decl_person_id]:
-                comp_res['diff_link'] = True
-                comp_res['ruwiki_title_from_db'] = db_links[decl_person_id]
-        else:
-            comp_res["new_link"] = True
+        if person_id in db_links:
+            comp_res['decl_db_reference']['ruwiki_title'] = db_links[person_id]
         yield comp_res
 
     site = pywikibot.Site('ru', 'wikipedia')
@@ -139,9 +147,17 @@ def compare_sets (db_links, wikidata_links):
         if ruwiki_title not in ruwikis:
             try:
                 page = pywikibot.Page(site, ruwiki_title)
-                yield {"missing": True, "person_id": person_id, "ruwiki_title_from_db": ruwiki_title}
             except pywikibot.exceptions.Error as err:
                 logger.error("cannot find in ruwiki title \"{}\", err = {}".format(ruwiki_title, err))
+                continue
+            comp_res = {
+                'decl_person_id': person_id,
+                'wikidata': {},
+                'decl_db_reference': {
+                    "ruwiki_title": ruwiki_title
+                }
+            }
+            yield comp_res
 
 
 def print_all (diff):
@@ -161,20 +177,24 @@ def add_missing_to_wikidata (diff):
     cnt = 0
     logger = logging.getLogger("dlwikibot")
     for res_comp in diff:
-        if res_comp.get('missing', False):
-            ruwiki_title = res_comp['ruwiki_title_from_db']
-            item = get_wikidata_item(ruwiki_title)
-            item.get() #  mysterious spell,  see https://www.mediawiki.org/wiki/Manual:Pywikibot/Wikidata/ru
-            if item.claims.get("P1883") != None:
-                logger.info ("skip {}, since it has already a link to declarator".format(ruwiki_title))
-                continue
-            claim = pywikibot.Claim(repo, "P1883")
-            claim.setTarget(res_comp['person_id'])
-            logger.info("set link from {} to declarator person id = {}".format(ruwiki_title, res_comp['person_id']))
-            wikidata_bot.user_add_claim_unless_exists(item, claim.copy(), summary="add declarator.org id (P1883)")
-            cnt += 1
-            if cnt >= 3:
-                break
+        ruwiki_title = res_comp['wikidata'].get('ruwiki_title')
+        if ruwiki_title is not None: # there is a link from wikidata to ruwiki
+            continue
+        ruwiki_title = res_comp['decl_db_reference']['ruwiki_title']
+        person_id = res_comp['decl_person_id']
+        item = get_wikidata_item(ruwiki_title)
+
+        item.get() #  mysterious spell,  see https://www.mediawiki.org/wiki/Manual:Pywikibot/Wikidata/ru
+        if item.claims.get("P1883") != None:
+            logger.info ("skip {}, since it has already a link to declarator".format(ruwiki_title))
+            continue
+        claim = pywikibot.Claim(repo, "P1883")
+        claim.setTarget(person_id)
+        logger.info("set link from {} to declarator person id = {}".format(ruwiki_title, person_id))
+        wikidata_bot.user_add_claim_unless_exists(item, claim.copy(), summary="add declarator.org id (P1883)")
+        cnt += 1
+        if cnt >= 0:
+            break
 
 def get_template_regexp(wiki_template):
     vars = set()
@@ -195,7 +215,7 @@ def get_template_regexp(wiki_template):
         else:
             vars.add(v[0].upper() + v[1:])
 
-    regexp = '{{\s*' + "|".join(vars) + '\s*}}'
+    regexp = r"\{\{\s*(" + "|".join(vars) + r")\s*\}\}"
     return re.compile(regexp)
 
 
@@ -204,29 +224,63 @@ def add_missing_template_to_ruwiki (diff):
     wiki_template = 'Внешние ссылки'
     wiki_template_regexp = get_template_regexp(wiki_template)
     logger = logging.getLogger("dlwikibot")
-    start = False
     for res_comp in diff:
-        if 'missing' not in res_comp:
-            ruwiki_title = res_comp['ruwiki_title_from_wikidata']
-            if ruwiki_title == "Саввиди, Иван Игнатьевич":
-                start = True
-            if not  start:
+        ruwiki_title = res_comp['wikidata'].get('ruwiki_title')
+        if ruwiki_title is None: # there is no link from wikidata to ruwiki
+            continue
+        page = pywikibot.Page(site, ruwiki_title)
+        assert page.exists()
+        text = page.get()
+        logger.info("check {}".format(ruwiki_title))
+        search_template =  re.search(wiki_template_regexp, text)
+        if search_template is None:
+            index_categ = text.find('[[Категория:')
+            if index_categ == -1:
+                logger.info("cannot find a category in {}, skip it".format(ruwiki_title))
                 continue
-            page = pywikibot.Page(site, ruwiki_title)
-            assert page.exists()
-            text = page.get()
-            logger.info("check {}".format(ruwiki_title))
-            if re.search(wiki_template_regexp, text) is None:
-                index_categ = text.find('[[Категория:')
-                if index_categ == -1:
-                    logger.info("cannot find a category in {}, skip it".format(ruwiki_title))
-                    continue
 
-                text = text[:index_categ] + '{{' + wiki_template + '}}\n' + text[index_categ:]
-                page.text = text
-                page.save(summary="добавляю темплейт {{"+wiki_template+'}}' )
-                logger.info('inserted template {} to {}'.format(wiki_template, ruwiki_title))
-                #break
+            text = text[:index_categ] + '{{' + wiki_template + '}}\n' + text[index_categ:]
+            page.text = text
+            page.save(summary="добавляю темплейт {{"+wiki_template+'}}' )
+            logger.info('inserted template {} to {}'.format(wiki_template, ruwiki_title))
+
+
+
+def request_wikidata_pages_with_declarator_links():
+    query = """
+    SELECT ?wikidata_id ?sitelink ?person_id
+    WHERE 
+    {
+      ?wikidata_id wdt:P1883 ?person_id.
+      OPTIONAL {
+        ?sitelink schema:about ?wikidata_id;
+                schema:inLanguage "ru" ;
+                schema:isPartOf [ wikibase:wikiGroup "wikipedia" ] .
+        }
+    }
+    """
+    data = send_sparql_request(query)
+    records = list()
+    for item in data['results']['bindings']:
+        ruwiki_link = item.get('sitelink', {}).get("value")
+        if ruwiki_link is None:
+            continue
+        fio = get_title_from_wiki_link(ruwiki_link)
+        record = {
+            'wikidata_url': item['wikidata_id']["value"],
+            'person_id': item['person_id']["value"],
+            'ruwiki_title': fio
+        }
+        records.append(record)
+    return records
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--action", dest='action', help="print")
+    parser.add_argument("--wikidata-squeeze", dest='wikidata_squeeze_file')
+    parser.add_argument("--db-squeeze", dest='db_squeeze_file')
+    return parser.parse_args()
+
 
 if __name__ == '__main__':
     #title = get_title_from_wiki_link('https://ru.wikipedia.org/wiki/%D0%9F%D1%83%D1%82%D0%B8%D0%BD,_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80_%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%87')
@@ -234,22 +288,28 @@ if __name__ == '__main__':
 
     #get_wikidata_item('Абельцев, Сергей Николаевич')
     #get_wikidata_item('Крупенников, Владимир Александрович')
+    #request_wikidata_pages_with_declarator_links()
 
     args = parse_args()
     logger = logging.getLogger("dlwikibot")
     setup_logging(logger, "dlwikibot.log")
 
-    db_links = dict(get_all_wiki_links_from_db())
-    wikidata_links = read_wiki_data_links(args.wikidata_links_file)
-    diff = compare_sets(db_links, wikidata_links)
-    if args.action == "print":
-        print_all(diff)
-    elif args.action == "add_missing_to_wikidata":
-        add_missing_to_wikidata(diff)
-    elif args.action == "add_missing_to_ruwiki":
-        add_missing_template_to_ruwiki(diff)
+    if args.action == "build_wikidata_squeeze_file":
+        write_json( args.wikidata_squeeze_file, request_wikidata_pages_with_declarator_links())
+    elif args.action == "build_db_squeeze_file":
+        write_json( args.db_squeeze_file, get_all_wiki_links_from_db())
     else:
-        print ("unknown action")
+        db_links = read_json(args.db_squeeze_file)
+        wikidata_links = read_json(args.wikidata_squeeze_file)
+        diff = compare_sets(db_links, wikidata_links)
+        if args.action == "print":
+            print_all(diff)
+        elif args.action == "add_missing_to_wikidata":
+            add_missing_to_wikidata(diff)
+        elif args.action == "add_template_to_ruwiki":
+            add_missing_template_to_ruwiki(diff)
+        else:
+            print ("unknown action")
 
       
 
