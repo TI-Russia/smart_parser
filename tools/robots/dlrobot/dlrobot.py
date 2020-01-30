@@ -262,7 +262,7 @@ def open_project(args, log_file_name):
 
 if __name__ == "__main__":
     args = parse_args()
-    if  args.logfile == "temp":
+    if args.logfile == "temp":
         with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
             log_file_name = os.path.join(tmp_folder, "dlrobot.log")
             open_project(args, log_file_name)

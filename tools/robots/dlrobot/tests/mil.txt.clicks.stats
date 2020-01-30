@@ -1,117 +1,119 @@
+people_count_sum=167717
+files_count=23
 [
     [
         "08a6fa7a48f0524c422d390649bab0dfdfb564b3197521c5b29fddf76596ae36",
-        "cached\\stat.mil.ru\\files\\morf\\komissiya_2011.rtf/index.html",
+        "cached/mil.ru/files/morf/komissiya_2011.rtf/index.html",
         -1
     ],
     [
         "09719b0aa0774a0dffa5c0e9b65d5a0362ed3be3a8f1fe28eb25c105d38ebe84",
-        "cached\\mil.ru\\files\\morf\\komissiya_2012.rtf/index.html",
+        "cached/mil.ru/files/morf/komissiya_2012.rtf/index.html",
         -1
     ],
     [
         "0dddd6caff1233d692e12bac459fa992fd3b3f284a94a7e47ee766cca2496485",
-        "cached\\mil.ru\\files\\morf\\defense_income_2010-2.docx/index.html",
+        "cached/mil.ru/files/morf/defense_income_2010-2.docx/index.html",
         6565
     ],
     [
         "37b895d9d4a2267f4666c0063bf484b19c6b7bbf8f3a9e9a755dd663d81a717b",
-        "cached\\stat.mil.ru\\files\\morf\\income_2014.xlsx/index.html",
+        "cached/stat.mil.ru/files/morf/income_2014.xlsx/index.html",
         3036
     ],
     [
         "3828bf908dd7bbf80d583cc520f3103bf2ff3d80779ac1099e1111cfc9eae90a",
-        "cached\\mil.ru\\files\\morf\\income_2015.xlsx/index.html",
+        "cached/stat.mil.ru/files/morf/income_2015.xlsx/index.html",
         30739
     ],
     [
         "4cef325de18be6989d74692ba5965967ed1ae0cea7c15fa7db9ac826a9db1c81",
-        "cached\\stat.mil.ru\\files\\morf\\defense_income_2009.doc/index.html",
+        "cached/mil.ru/files/morf/defense_income_2009.doc/index.html",
         17353
     ],
     [
         "5231e1aed0e448a99e38904babe60d43174ba1e5e66ed55cdcab6b6b933185ee",
-        "cached\\stat.mil.ru\\files\\morf\\defense_income_2010-5.docx/index.html",
+        "cached/mil.ru/files/morf/defense_income_2010-5.docx/index.html",
         5980
     ],
     [
         "5fad580f57d41266e94adb5c7b3b3fb877fc7848356e1e44017ef50a185fb7ed",
-        "cached\\stat.mil.ru\\files\\morf\\defense_income_2010-6.docx/index.html",
+        "cached/mil.ru/files/morf/defense_income_2010-6.docx/index.html",
         4808
     ],
     [
         "668f8e352eb70f93a30c2088f3862197b874783b31c5a533ef1a18a4e3c0a4a0",
-        "cached\\mil.ru\\files\\morf\\income_2017.xlsx/index.html",
+        "cached/stat.mil.ru/files/morf/income_2017.xlsx/index.html",
         14562
     ],
     [
         "7daf131b58f99a12ab8aba2c0439466c41eec694e5cbb44a7bdc13d6e7dacba3",
-        "cached\\stat.mil.ru\\files\\morf\\komissiya_1_polygodie2013.rtf/index.html",
+        "cached/mil.ru/files/morf/komissiya_1_polygodie2013.rtf/index.html",
         -1
     ],
     [
         "7f4c8162f82d9b898b2bc9adb765c91c6793761de8f8b287e86df1909e6fc32f",
-        "cached\\stat.mil.ru\\files\\morf\\komissiya_2016.docx/index.html",
+        "cached/stat.mil.ru/files/morf/komissiya_2016.docx/index.html",
         -1
     ],
     [
         "878e1899398d116996e1da458ae7f007f934756a97f7673a2d45dc6036e92225",
-        "cached\\mil.ru\\files\\morf\\defense_income_2010-7.doc/index.html",
+        "cached/mil.ru/files/morf/defense_income_2010-7.doc/index.html",
         2974
     ],
     [
         "967723434e64057060fd50b28b4e0321698ee87808986119c1952b4eb04497df",
-        "cached\\mil.ru\\files\\morf\\defense_income_2010-1.docx/index.html",
+        "cached/stat.mil.ru/files/morf/defense_income_2010-1.docx/index.html",
         5988
     ],
     [
         "9ad8835492a322fd2f871637c6248c417c917b0803b5fafee73e10fe4dc889c7",
-        "cached\\mil.ru\\files\\morf\\komissiya_2017.rtf/index.html",
+        "cached/stat.mil.ru/files/morf/komissiya_2017.rtf/index.html",
         -1
     ],
     [
         "a32d630fce645d913de5f4e2da8fa4b12a53d381fd6859e671829f8136c946b0",
-        "cached\\mil.ru\\files\\morf\\defense_income_2010-3.docx/index.html",
+        "cached/stat.mil.ru/files/morf/defense_income_2010-3.docx/index.html",
         4169
     ],
     [
         "b9e96cfb6b8d0d2ea64ec666c5e19651415d452aa30f8429a55f55b395a01e4c",
-        "cached\\stat.mil.ru\\files\\morf\\income2016.xlsx/index.html",
+        "cached/stat.mil.ru/files/morf/income2016.xlsx/index.html",
         35003
     ],
     [
         "ba9b97d1089b497b6af4fa2488d3e5a189788f1f011071f76d13c5b8d6de5270",
-        "cached\\stat.mil.ru\\files\\defense_income_2011.xls/index.html",
+        "cached/mil.ru/files/defense_income_2011.xls/index.html",
         252
     ],
     [
         "c39b8a775f8db0727038da3d25b3d41bb4dad057795297885f7c1457bd5ef996",
-        "cached\\stat.mil.ru\\files\\morf\\income_2013_.xls/index.html",
+        "cached/mil.ru/files/morf/income_2013_.xls/index.html",
         582
     ],
     [
         "cfd46ac86b16d772d6ac7a87562c896b34e731cd55fcdc6127238706157111bd",
-        "cached\\recrut.mil.ru\\download\\doc\\morf\\military\\files\\svedeniya_o_deyat_3e11544fc4835ee6269459bf76a532c4/index.html",
+        "cached/recrut.mil.ru/download/doc/morf/military/files/svedeniya_o_deyat_3e11544fc4835ee6269459bf76a532c4/index.html",
         -1
     ],
     [
         "d7b9880deb51e72b53bb53499d850abd7fa8bf81b0d54188350015bde4442653",
-        "cached\\stat.mil.ru\\files\\morf\\defense_income_2010-4.docx/index.html",
+        "cached/stat.mil.ru/files/morf/defense_income_2010-4.docx/index.html",
         6572
     ],
     [
         "e61c85fbca7425d1bd2f5fdca853bb776d543a86e51fa4ad174a6aae6ba2de42",
-        "cached\\mil.ru\\files\\morf\\income_2018.xlsx/index.html",
+        "cached/mil.ru/files/morf/income_2018.xlsx/index.html",
         29116
     ],
     [
         "f6455b12b5abea960f6bb0dffad937e13691ec06400165423cbdddd421942d31",
-        "cached\\stat.mil.ru\\files\\morf\\svedeniya_o_deyatelnosti_komissii_1_polug_7155eadd830317467dbbed7a91e048b5/index.html",
+        "cached/mil.ru/files/morf/svedeniya_o_deyatelnosti_komissii_1_polugopdie_0f7184a1de02e14ef99311c2afb0b517/index.html",
         -1
     ],
     [
         "fcd809f68e155921554516a08a85db8e6395f06c43c496d18a5c47648a82ccfd",
-        "cached\\mil.ru\\files\\morf\\income_2012.xls/index.html",
+        "cached/mil.ru/files/morf/income_2012.xls/index.html",
         18
     ]
 ]

@@ -358,17 +358,22 @@ class TRobotProject:
                     self.logger.error("cannot download " + url + ": " + str(err) + "\n")
                     pass
 
-
     def write_export_stats(self):
         result = list()
+        people_count_sum = 0
         for o in self.offices:
             for export_record in o.exported_files:
+                infile = export_record['infile'].replace('\\', '/')
+                if export_record['people_count'] > 0:
+                    people_count_sum += export_record['people_count']
                 result.append( (
                     export_record['sha256'],
-                    export_record['infile'],
+                    infile,
                     export_record['people_count']))
-        result = sorted (result)
-        with open (self.project_file + ".stats", "w", encoding="utf8") as outf:
+        result = sorted(result)
+        with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
+            outf.write("people_count_sum={}\n".format(people_count_sum))
+            outf.write("files_count={}\n".format(len(result)))
             json.dump(result, outf, indent=4)
 
     @staticmethod
