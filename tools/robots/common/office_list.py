@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
-                get_file_extension_by_cached_url, UNKNOWN_PEOPLE_COUNT
+                get_file_extension_by_cached_url, UNKNOWN_PEOPLE_COUNT, ACCEPTED_DECLARATION_FILE_EXTENSIONS
 
 
 
@@ -508,6 +508,13 @@ class TRobotProject:
                 step_name = office_info.url_nodes[url].step_name
                 if step_name not in do_not_copy_urls_from_steps:
                     target.step_urls.add(url)
+
+        if include_source == "copy_missing_docs":
+            for url in start_pages:
+                if url not in target.step_urls:
+                    ext = get_file_extension_by_cached_url(url)
+                    if ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+                        target.step_urls.add(url)
 
         if step_passport.get('check_html_sources') is not None:
             TRobotProject.check_html_sources(step_info, start_pages)

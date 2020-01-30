@@ -172,7 +172,7 @@ ROBOT_STEPS = [
         'step_name': "declarations",
         'check_link_func': check_accepted_declaration_file_type,
         'check_html_sources': check_html_can_be_declaration,
-        'include_sources': "never"
+        'include_sources': "copy_missing_docs"
     },
 ]
 
