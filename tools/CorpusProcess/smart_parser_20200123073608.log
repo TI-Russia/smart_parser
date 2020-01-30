@@ -1,0 +1,7 @@
+﻿2020-01-23 07:36:10,282 *** Errors (1):
+2020-01-23 07:36:10,282 Unknown Parsing Exception Smart.Parser.Lib.ColumnDetectorException: Headers not found
+   at Smart.Parser.Lib.ColumnDetector.ProcessTitle(IAdapter adapter, ColumnOrdering columnOrdering) in C:\smart_parser\lib\ColumnDetector.cs:line 100
+   at Smart.Parser.Lib.ColumnDetector.ExamineTableBeginning(IAdapter adapter) in C:\smart_parser\lib\ColumnDetector.cs:line 239
+   at Smart.Parser.Program.ParseDocumentSheet(IAdapter adapter, String outFile, String declarationFile) in C:\smart_parser\src\Program.cs:line 532
+   at Smart.Parser.Program.ParseFile(String declarationFile, String outFile) in C:\smart_parser\src\Program.cs:line 473
+   at Smart.Parser.Program.Main(String[] args) in C:\smart_parser\src\Program.cs:line 223

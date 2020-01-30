@@ -2,7 +2,6 @@
 import re
 import sys
 import os
-import tqdm
 from datetime import datetime
 import requests
 import json
@@ -13,9 +12,30 @@ from multiprocessing import Pool
 import signal
 import argparse
 
+# Create a custom logger
+logger = logging.getLogger(__name__)
 
-SMART_PARSER = '..\\..\\src\\bin\\Debug\\netcoreapp3.1\\smart_parser.exe'
+# Create handlers
+f_handler = logging.FileHandler('parsing.log', 'w', 'utf-8')
+f_handler.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+# Create formatter and add it to handlers
+f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+f_handler.setFormatter(f_format)
+
+# Add handlers to the logger
+# logger.addHandler(f_handler)
+
+job_list_file = 'parser-job-priority-3.json'
+smart_parser = '..\\..\\src\\bin\\Release\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
+
+client = requests.Session()
+credentials = json.load(open('auth.json'))
+client.auth = HTTPBasicAuth(credentials['username'], credentials['password'])
+
+# PARSER_TIMEOUT = 600
 
 
 def parse_args():
@@ -24,42 +44,14 @@ def parse_args():
                         default=4, type=int)
     parser.add_argument("--limit", dest='limit', help="Run smart parser only for N tasks",
                         default=None, type=int)
-    parser.add_argument("--use-cache", dest='usecache', help="Parse only new files, skip existing JSONs",
+    parser.add_argument("--restart", dest='restart', help="Parse all files, ignore existing JSONs",
                         default=False, type=bool)
-    parser.add_argument("--folder", dest='folder', help="Output and cache folder to store results.",
-                        default="out", type=str)
-    parser.add_argument("--joblist", dest='joblist', help="API URL with joblist.",
-                        default="https://declarator.org/api/fixed_document_file/?office=579", type=str)
     return parser.parse_args()
 
 
-# Create a custom logger
-def get_logger():
-    logger = logging.getLogger(__name__)
-    
-    # Create handlers
-    f_handler = logging.FileHandler('parsing.log', 'w', 'utf-8')
-    f_handler.setLevel(logging.INFO)
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-    
-    # Create formatter and add it to handlers
-    f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    f_handler.setFormatter(f_format)
-    
-    # # Add handlers to the logger
-    # logger.addHandler(f_handler)
-    return logger
-
-logger = get_logger()
-
-client = requests.Session()
-credentials = json.load(open('auth.json'))
-client.auth = HTTPBasicAuth(credentials['username'], credentials['password'])
-
-
 def download_file(file_url, filename):
-    #if os.path.isfile(filename):
-    #    return filename
+    if os.path.isfile(filename):
+        return filename
     path, _ = os.path.split(filename)
     os.makedirs(path, exist_ok=True)
     result = requests.get(file_url)
@@ -70,6 +62,20 @@ def download_file(file_url, filename):
     return filename
 
 
+def get_parsing_list(filename):
+    """get list of files to parse"""
+
+    if not os.path.isfile(filename):
+        result = client.get(declarator_domain + '/media/metrics/%s' % filename)
+        with open(filename, "wb") as fp:
+            fp.write(result.content)
+
+    file_list = json.load(open(filename, 'r', encoding='utf8'))
+
+    logger.info("%i jobs listed" % len(file_list))
+    return file_list
+
+
 def run_smart_parser(filepath, args):
     """start SmartParser for one file"""
     start_time = datetime.now()
@@ -77,28 +83,27 @@ def run_smart_parser(filepath, args):
 
     json_list = glob.glob("%s*.json" % sourcefile)
     if json_list:
-        if not args.usecache:
+        if args.restart:
             logger.info("Delete existed JSON file(s).")
             for jf in json_list:
                 os.remove(jf)
         else:
-            logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return
 
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
-        smart_parser_options = r"-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
+        smart_parser_options = "-adapter aspose -license \"http://95.165.168.93:8088/lic.bin\""
     else:
-        smart_parser_options = "-adapter prod -converted-storage-url  http://declarator.zapto.org:8000/converted_document"
+        smart_parser_options = "-adapter prod"
 
     log = filepath + ".log"
     if os.path.exists(log):
         os.remove(log)
 
     cmd = "{} {} \"{}\"".format(
-        SMART_PARSER,
+        smart_parser,
         smart_parser_options,
         filepath)
-    result = os.popen(cmd).read()
+    os.system(cmd)
     return (datetime.now() - start_time).total_seconds()
 
 
@@ -137,10 +142,6 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
     except FileNotFoundError:
         data['document']['parser_log'] = "FileNotFoundError: " + sourcefile + ".log"
 
-    data['document']['documentfile_id'] = df_id
-    if archive_file:
-        data['document']['archive_file'] = archive_file
-
     # if time_delta == PARSER_TIMEOUT:
     #     data['document']['parser_log'] += "\nTimeout %i exceeded for smart_parser.exe" % PARSER_TIMEOUT
 
@@ -160,7 +161,6 @@ def post_results(sourcefile, df_id, archive_file, time_delta=None):
         logger.error(response)
         logger.error(response.text)
 
-    return len(data['persons']) > 0
 
 def kill_process_windows(pid):
     os.system("taskkill /F /T /PID " + str(pid))
@@ -173,47 +173,34 @@ class ProcessOneFile(object):
 
     def __call__(self, job):
         try:
-            return self.run_job(job)
-
+            # ZIP-Archives parse in one process file by file
+            if job['file'].endswith('.zip'):
+                for sub_job in job['archive_files']:
+                    if sub_job.endswith('.pdf'):
+                        continue
+                    url = "/office/view-zip-file/%i/%s" % (job['id'], sub_job)
+                    self.run_job(url, job['id'], sub_job)
+            elif job['file'].endswith('.pdf'):
+                pass
+            else:
+                self.run_job(job['file'], job['id'])
         except KeyboardInterrupt:
-            kill_process_windows(self.parent_pid)
+           kill_process_windows(self.parent_pid)
 
-    def run_job(self, job):
-        file_url, df_id, archive_file = job['download_url'], job['document_file'], job['archive_file']
+    def run_job(self, file_url, df_id, archive_file=None):
         logger.info("Running job (id=%i) with URL: %s" % (df_id, file_url))
-
         url_path, filename = os.path.split(file_url)
         filename, ext = os.path.splitext(filename)
 
         if archive_file:
-            file_path = os.path.join(self.args.folder, str(df_id), archive_file)
+            file_path = os.path.join("out", str(df_id), "%s%s" % (filename, ext))
         else:
-            file_path = os.path.join(self.args.folder, "%i%s" % (df_id, ext))
+            file_path = os.path.join("out", "%i%s" % (df_id, ext))
 
-        file_path = download_file(file_url, file_path)
-
+        file_path = download_file(declarator_domain + file_url, file_path)
         time_delta = run_smart_parser(file_path, self.args)
-        if time_delta is not None:
-            return post_results(file_path, df_id, archive_file, time_delta)
-        else:
-            logger.error("time_delta=None for %s" % file_path)
-            return False
-
-
-def generate_jobs(url=None, stop=False):
-    """API call return list of files to parse (paged now)"""
-   
-    next_url = url
-    while next_url:
-        logger.info("GET Joblist URL: %s" % next_url)
-        result = json.loads(client.get(next_url).content.decode('utf-8'))
-        next_url = result['next']
-        if stop:
-            next_url = None
-        file_list = result['results']
-        logger.info("%i jobs listed" % len(file_list))
-        for obj in file_list:
-            yield obj
+        if time_delta:
+            post_results(file_path, df_id, archive_file, time_delta)
 
 
 if __name__ == '__main__':
@@ -223,22 +210,10 @@ if __name__ == '__main__':
     original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     signal.signal(signal.SIGINT, original_sigint_handler)
 
-    jobs_url = args.joblist
-    # jobs_url = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html"
-    
     try:
-        joblist = list(generate_jobs(jobs_url, stop=False))
-        res = list(pool.imap(ProcessOneFile(args, os.getpid()), joblist, chunksize=1))
+        res = pool.map(ProcessOneFile(args, os.getpid()), get_parsing_list(job_list_file))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
     else:
         pool.close()
-
-    errors = len(res) - len(list(filter(bool, res)))
-    print("Total files: %i" % (len(res)))
-    print("Errors: %i" % (errors))
-    print("Success: %i" % (len(res) - errors))
-    print("Header_recall: %f" % (errors / float(len(res))))
-
-
