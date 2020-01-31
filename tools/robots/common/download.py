@@ -159,7 +159,7 @@ def url_to_localfilename (url):
     local_file = unidecode(local_file)
     local_file = local_file.replace("'", '_')
     if len(local_file) > 100:
-        local_file = local_file[0:100] + "_" + hashlib.md5(local_file.encode('utf8',  errors="ignore")).hexdigest()
+        local_file = local_file[0:100] + "_" + hashlib.md5(local_file.encode('latin',  errors="ignore")).hexdigest()
     local_file = os.path.normpath(local_file)
     return local_file
 
