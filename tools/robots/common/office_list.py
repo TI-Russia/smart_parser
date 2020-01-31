@@ -344,8 +344,11 @@ class TRobotProject:
                     export_record['people_count']))
         result = sorted(result)
         with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
-            outf.write("people_count_sum={}\n".format(people_count_sum))
-            outf.write("files_count={}\n".format(len(result)))
+            summary = {
+                "people_count_sum": people_count_sum,
+                "files_count": len(result)
+            }
+            result.insert(0, summary)
             json.dump(result, outf, indent=4)
 
     @staticmethod
@@ -439,7 +442,7 @@ class TRobotProject:
             step_info.add_link_wrapper(morda_url, link_info)
             if min_normal_count == 1:
                 break  # one  link found
-            links_count  += 1
+            links_count += 1
         TRobotProject.logger.info('found {} links using search engine'.format(links_count))
 
     @staticmethod

@@ -3,3 +3,11 @@
 3. install Firefox
 4. run "python check_selenium.py" to test selenium (firefox)
 5. site:ozerny.ru  inanchor:доходах filter=0
+
+============
+0. bagaev  
+  ушел документ с 15 примерами (три раза?)
+1. проверить mil.txt
+2. проверить тульсткий суды (там  одна и та жа страница), имееет разный сksum
+3. удалить кэш под линуксом.
+4. сделать stats json

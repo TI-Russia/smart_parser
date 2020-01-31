@@ -9,6 +9,7 @@ import hashlib
 from collections import defaultdict
 import logging
 import zipfile
+from unidecode import unidecode
 import os
 
 FILE_CACHE_FOLDER = "cached"
@@ -144,19 +145,22 @@ def write_cache_file(localfile, info_file, info, data):
 
 
 def url_to_localfilename (url):
-    localfile = url
-    if localfile.startswith('http://'):
-        localfile = localfile[7:]
-    if localfile.startswith('https://'):
-        localfile = localfile[8:]
-    localfile = localfile.replace(':', '_')
-    localfile = localfile.replace('/', '\\')
-    localfile = localfile.replace('&', '_')
-    localfile = localfile.replace('=', '_')
-    localfile = localfile.replace('?', '_')
-    if len(localfile) > 64:
-        localfile = localfile[0:64] + "_" + hashlib.md5(url.encode('utf8',  errors="ignore")).hexdigest()
-    return localfile
+    local_file = url
+    if local_file.startswith('http://'):
+        local_file = local_file[7:]
+    if local_file.startswith('https://'):
+        local_file = local_file[8:]
+    local_file = local_file.replace(':', '_')
+    if os.path.sep != '/':
+        local_file = local_file.replace('/', '\\')
+    local_file = local_file.replace('&', '_')
+    local_file = local_file.replace('=', '_')
+    local_file = local_file.replace('?', '_')
+    local_file = unidecode(local_file)
+    if len(local_file) > 64:
+        local_file = local_file[0:64] + "_" + hashlib.md5(url.encode('utf8',  errors="ignore")).hexdigest()
+    local_file = os.path.normpath(local_file)
+    return local_file
 
 
 
