@@ -1,5 +1,5 @@
-people_count_sum=167717
-files_count=23
+people_count_sum=211307
+files_count=24
 [
     [
         "08a6fa7a48f0524c422d390649bab0dfdfb564b3197521c5b29fddf76596ae36",
@@ -14,22 +14,22 @@ files_count=23
     [
         "0dddd6caff1233d692e12bac459fa992fd3b3f284a94a7e47ee766cca2496485",
         "cached/mil.ru/files/morf/defense_income_2010-2.docx/index.html",
-        6565
+        6564
     ],
     [
         "37b895d9d4a2267f4666c0063bf484b19c6b7bbf8f3a9e9a755dd663d81a717b",
-        "cached/stat.mil.ru/files/morf/income_2014.xlsx/index.html",
-        3036
+        "cached/mil.ru/files/morf/income_2014.xlsx/index.html",
+        26977
     ],
     [
         "3828bf908dd7bbf80d583cc520f3103bf2ff3d80779ac1099e1111cfc9eae90a",
-        "cached/stat.mil.ru/files/morf/income_2015.xlsx/index.html",
-        30739
+        "cached/mil.ru/files/morf/income_2015.xlsx/index.html",
+        36023
     ],
     [
         "4cef325de18be6989d74692ba5965967ed1ae0cea7c15fa7db9ac826a9db1c81",
         "cached/mil.ru/files/morf/defense_income_2009.doc/index.html",
-        17353
+        17347
     ],
     [
         "5231e1aed0e448a99e38904babe60d43174ba1e5e66ed55cdcab6b6b933185ee",
@@ -43,8 +43,8 @@ files_count=23
     ],
     [
         "668f8e352eb70f93a30c2088f3862197b874783b31c5a533ef1a18a4e3c0a4a0",
-        "cached/stat.mil.ru/files/morf/income_2017.xlsx/index.html",
-        14562
+        "cached/mil.ru/files/morf/income_2017.xlsx/index.html",
+        28213
     ],
     [
         "7daf131b58f99a12ab8aba2c0439466c41eec694e5cbb44a7bdc13d6e7dacba3",
@@ -53,7 +53,7 @@ files_count=23
     ],
     [
         "7f4c8162f82d9b898b2bc9adb765c91c6793761de8f8b287e86df1909e6fc32f",
-        "cached/stat.mil.ru/files/morf/komissiya_2016.docx/index.html",
+        "cached/mil.ru/files/morf/komissiya_2016.docx/index.html",
         -1
     ],
     [
@@ -63,22 +63,27 @@ files_count=23
     ],
     [
         "967723434e64057060fd50b28b4e0321698ee87808986119c1952b4eb04497df",
-        "cached/stat.mil.ru/files/morf/defense_income_2010-1.docx/index.html",
+        "cached/mil.ru/files/morf/defense_income_2010-1.docx/index.html",
         5988
     ],
     [
         "9ad8835492a322fd2f871637c6248c417c917b0803b5fafee73e10fe4dc889c7",
-        "cached/stat.mil.ru/files/morf/komissiya_2017.rtf/index.html",
+        "cached/mil.ru/files/morf/komissiya_2017.rtf/index.html",
         -1
     ],
     [
         "a32d630fce645d913de5f4e2da8fa4b12a53d381fd6859e671829f8136c946b0",
-        "cached/stat.mil.ru/files/morf/defense_income_2010-3.docx/index.html",
-        4169
+        "cached/mil.ru/files/morf/defense_income_2010-3.docx/index.html",
+        4165
+    ],
+    [
+        "b8098853f993470cc062c49b0489677e50c6a418f1648862393c06cfba14058c",
+        "cached/mil.ru/download/doc/morf/military/files/\u043f\u0430\u043c\u044f\u0442\u043a\u0430_\u0433\u043e\u0441\u0441\u043b\u0443\u0436\u0430\u0449\u0438\u043c_\u0441\u0432\u043e\u0434_a519a826c07cda0bdcbca89687e52473/index.html",
+        -1
     ],
     [
         "b9e96cfb6b8d0d2ea64ec666c5e19651415d452aa30f8429a55f55b395a01e4c",
-        "cached/stat.mil.ru/files/morf/income2016.xlsx/index.html",
+        "cached/mil.ru/files/morf/income2016.xlsx/index.html",
         35003
     ],
     [
@@ -89,7 +94,7 @@ files_count=23
     [
         "c39b8a775f8db0727038da3d25b3d41bb4dad057795297885f7c1457bd5ef996",
         "cached/mil.ru/files/morf/income_2013_.xls/index.html",
-        582
+        655
     ],
     [
         "cfd46ac86b16d772d6ac7a87562c896b34e731cd55fcdc6127238706157111bd",
@@ -98,13 +103,13 @@ files_count=23
     ],
     [
         "d7b9880deb51e72b53bb53499d850abd7fa8bf81b0d54188350015bde4442653",
-        "cached/stat.mil.ru/files/morf/defense_income_2010-4.docx/index.html",
+        "cached/mil.ru/files/morf/defense_income_2010-4.docx/index.html",
         6572
     ],
     [
         "e61c85fbca7425d1bd2f5fdca853bb776d543a86e51fa4ad174a6aae6ba2de42",
         "cached/mil.ru/files/morf/income_2018.xlsx/index.html",
-        29116
+        29350
     ],
     [
         "f6455b12b5abea960f6bb0dffad937e13691ec06400165423cbdddd421942d31",
@@ -114,6 +119,6 @@ files_count=23
     [
         "fcd809f68e155921554516a08a85db8e6395f06c43c496d18a5c47648a82ccfd",
         "cached/mil.ru/files/morf/income_2012.xls/index.html",
-        18
+        436
     ]
 ]
