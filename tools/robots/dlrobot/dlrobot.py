@@ -59,7 +59,14 @@ def check_link_svedenia_o_doxodax(link_info):
 
     text = normalize_anchor_text(link_info.Text)
 
-    if re.search('((сведения)|(справк[аи]))\s+о\s+доходах', text) is not None:
+    if text.find('координат'):
+        return False
+
+    if re.search('((сведения)|(справк[аи])) о доходах', text) is not None:
+        return True
+
+    #http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
+    if re.search('сведения.*20[0-9][0-9]', text) is not None:
         return True
 
     if text.startswith('сведения') and text.find("коррупц") != -1:
@@ -76,7 +83,10 @@ def check_year_or_subpage(link_info):
         text = normalize_anchor_text(link_info.Text)
         if text.find('сведения') != -1:
             return True
-        if re.match('^20[0-9][0-9](\s+ год)?', text) is not  None:
+        year_pattern = r'(20[0-9][0-9](\s+ год)?)'
+        if re.match('^' + year_pattern, text) is not None:
+            return True
+        if re.match(year_pattern + '$', text) is not None:
             return True
     if link_info.Target is not None:
         target = link_info.Target.lower()
