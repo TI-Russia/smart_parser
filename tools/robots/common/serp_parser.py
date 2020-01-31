@@ -1,4 +1,6 @@
 import urllib.request as urllib2
+import urllib
+import time
 from bs4 import BeautifulSoup
 from download import get_site_domain_wo_www
 
@@ -12,17 +14,31 @@ class GoogleSearch:
     ]
 
     @staticmethod
-    def site_search(site_url, query, language="ru"):
+    def _request_urllib(url):
         opener = urllib2.build_opener()
         opener.addheaders = GoogleSearch.DEFAULT_HEADERS
-        site_req = "site:{} {}".format(get_site_domain_wo_www(site_url), query)
-
-        url = GoogleSearch.SEARCH_URL + "?q=" + urllib2.quote(site_req) + "&hl=" + language
-        url += "&filter=0"
         response = opener.open(url)
         html = response.read().decode('utf8')
-        soup = BeautifulSoup(html, "lxml")
         response.close()
+        return html
+
+    @staticmethod
+    def _request_selenium(url, driver_holder):
+        driver_holder.navigate(url)
+        time.sleep(6)
+        return driver_holder.the_driver.page_source
+
+    @staticmethod
+    def site_search(site_url, query, selenium_holder, language="ru"):
+        site_req = "site:{} {}".format(get_site_domain_wo_www(site_url), query)
+        url = GoogleSearch.SEARCH_URL + "?q=" + urllib2.quote(site_req) + "&hl=" + language
+        url += "&filter=0"
+        try:
+            html = GoogleSearch._request_urllib(url)
+        except urllib.error.HTTPError as err:
+            html = GoogleSearch._request_selenium(url, selenium_holder)
+
+        soup = BeautifulSoup(html, "lxml")
         serp = list(soup.select(GoogleSearch.RESULT_SELECTOR))
         search_results = []
         for r in serp:

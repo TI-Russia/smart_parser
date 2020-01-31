@@ -4,18 +4,17 @@ import json
 import shutil
 import os
 import tempfile
+import urllib
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, UNKNOWN_PEOPLE_COUNT, ACCEPTED_DECLARATION_FILE_EXTENSIONS
 
-
+from selenium_driver import TSeleniumDriver
 
 from find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
                     find_links_in_html_by_text, common_link_check
 
-from content_types import  ALL_CONTENT_TYPES
+
 from serp_parser import GoogleSearch
 FIXLIST =  {
     'fsin.su': {
@@ -26,35 +25,6 @@ FIXLIST =  {
     }
 }
 
-class TSeleniumDriver:
-    def __init__(self):
-        self.the_driver = None
-        self.driver_processed_urls_count  = 0
-        self.download_folder = None
-
-    def start_executable(self):
-        options = FirefoxOptions()
-        options.headless = True
-        options.set_preference("browser.download.folderList", 2)
-        options.set_preference("browser.download.manager.showWhenStarting", False)
-        options.set_preference("browser.download.manager.closeWhenDone", True)
-        options.set_preference("browser.download.manager.focusWhenStarting", False)
-        options.set_preference("browser.download.dir", self.download_folder)
-        options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
-        options.set_preference("browser.helperApps.alwaysAsk.force", False)
-        self.the_driver = webdriver.Firefox(firefox_options=options)
-
-    def stop_executable(self):
-        if self.the_driver is not None:
-            self.the_driver.quit()
-
-    def restart_if_needed(self):
-        #to reduce memory usage
-        if self.driver_processed_urls_count > 100:
-            self.stop_executable()
-            self.start_executable()
-            self.driver_processed_urls_count = 0
-        self.driver_processed_urls_count += 1
 
 
 class TRobotStep:
@@ -454,7 +424,13 @@ class TRobotProject:
         morda_url = step_info.website.morda_url
         site = get_site_domain_wo_www(morda_url)
         links_count = 0
-        for url in GoogleSearch.site_search(site, request):
+        try:
+            serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
+        except urllib.error.HTTPError as err:
+            TRobotProject.logger.error('cannot request search engine, exception {}'.format(str(err)))
+            return
+
+        for url in serp_urls:
             link_info = {
                 'engine': 'google',
                 'text': request,

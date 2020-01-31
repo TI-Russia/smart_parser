@@ -298,9 +298,6 @@ def click_selenium(step_info, main_url, driver_holder,  element, element_index):
     driver.switch_to.window(window_before)
 
 
-def close_all_windows_except_one(driver):
-    while len(driver.window_handles) > 1:
-        driver.close()
 
 def prepare_for_logging(s):
     s = s.translate(str.maketrans({"\n": r"\n", "\t": r"\\t", "\r": r"\r"}))
@@ -311,9 +308,9 @@ def click_all_selenium (step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.check_link_func.__name__))
     driver = driver_holder.the_driver
-    driver_holder.restart_if_needed()
-    close_all_windows_except_one(driver)
-    driver.get(main_url)
+
+    driver_holder.navigate(main_url)
+
     time.sleep(6)
     elements = list(driver.find_elements_by_xpath('//button | //a'))
 
