@@ -2,3 +2,4 @@
 2. copy geckodriver to  PATH
 3. install Firefox
 4. run "python check_selenium.py" to test selenium (firefox)
+5. site:ozerny.ru  inanchor:доходах filter=0

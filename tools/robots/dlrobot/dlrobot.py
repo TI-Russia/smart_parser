@@ -39,27 +39,30 @@ def setup_logging(logger, logfilename):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
 
+def normalize_anchor_text(text):
+    if text is not None:
+        text = text.strip(' \n\t\r').strip('"').lower()
+        text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
+        return text
+    return ""
+
 def check_link_sitemap(link_info):
     if not check_self_link(link_info):
         return False
-
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
-    text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
-
-    return text.startswith(u'карта сайта')
+    text = normalize_anchor_text(link_info.Text)
+    return text.startswith('карта сайта')
 
 
 def check_link_svedenia_o_doxodax(link_info):
     if not check_self_link(link_info):
         return False
 
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
-    text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
+    text = normalize_anchor_text(link_info.Text)
 
-    if re.search('(сведения)|(справк[аи]) о доходах', text) is not None:
+    if re.search('((сведения)|(справк[аи]))\s+о\s+доходах', text) is not None:
         return True
 
-    if text.startswith(u'сведения') and text.find("коррупц") != -1:
+    if text.startswith('сведения') and text.find("коррупц") != -1:
         return True
     return False
 
@@ -70,8 +73,10 @@ def check_year_or_subpage(link_info):
 
     # here is a place for ML
     if link_info.Text is not None:
-        text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+        text = normalize_anchor_text(link_info.Text)
         if text.find('сведения') != -1:
+            return True
+        if re.match('^20[0-9][0-9](\s+ год)?', text) is not  None:
             return True
     if link_info.Target is not None:
         target = link_info.Target.lower()
@@ -82,12 +87,12 @@ def check_year_or_subpage(link_info):
 
 
 def check_download_text_not_html(link_info):
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+    text = normalize_anchor_text(link_info.Text)
     if text.find('шаблоны') != -1:
         return False
-    if text.startswith(u'скачать'):
+    if text.startswith('скачать'):
         return True
-    if text.startswith(u'загрузить'):
+    if text.startswith('загрузить'):
         return True
 
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
@@ -104,7 +109,7 @@ def check_download_text_not_html(link_info):
 
 
 def check_documents(link_info):
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+    text = normalize_anchor_text(link_info.Text)
     if text.find("сведения") == -1:
         return False
     if link_info.Target is not None:
@@ -146,14 +151,17 @@ ROBOT_STEPS = [
     {
         'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
+        'include_sources': "copy_if_empty",
         'search_engine_request': "противодействие коррупции",
-        'include_sources': "copy_if_empty"
+        'min_normal_count': 1
     },
     {
         'step_name': "declarations_div",
         'check_link_func': check_link_svedenia_o_doxodax,
         'include_sources': "copy_if_empty",
-        'do_not_copy_urls_from_steps': [None, 'sitemap'] # None is for morda_url
+        'do_not_copy_urls_from_steps': [None, 'sitemap'], # None is for morda_url
+        'search_engine_request': 'inanchor:"сведения о доходах"',
+        'min_normal_count': 5
     },
     {
         'step_name': "declarations_div_pages",
@@ -172,7 +180,9 @@ ROBOT_STEPS = [
         'step_name': "declarations",
         'check_link_func': check_accepted_declaration_file_type,
         'check_html_sources': check_html_can_be_declaration,
-        'include_sources': "copy_missing_docs"
+        'include_sources': "copy_missing_docs",
+        'search_engine_request': 'inanchor:"сведения о доходах"',
+        'min_normal_count': 3
     },
 ]
 

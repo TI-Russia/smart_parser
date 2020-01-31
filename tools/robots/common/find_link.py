@@ -171,7 +171,8 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     if can_be_office_document(main_url):
         return
     base = get_base_url(main_url, soup)
-    logger.debug("find_links_in_html_by_text function={0}".format(step_info.check_link_func.__name__))
+    logger.debug("find_links_in_html_by_text url={} function={}".format(
+        main_url, step_info.check_link_func.__name__))
     all_links_count = 0
     for l in soup.findAll('a'):
         href = l.attrs.get('href')

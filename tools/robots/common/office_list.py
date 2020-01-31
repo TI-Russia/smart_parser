@@ -56,6 +56,7 @@ class TSeleniumDriver:
             self.driver_processed_urls_count = 0
         self.driver_processed_urls_count += 1
 
+
 class TRobotStep:
     def __init__(self, step_name, init_json=None):
         self.step_name = step_name
@@ -66,6 +67,7 @@ class TRobotStep:
 
     def to_json(self):
         return {
+            'step_name': self.step_name,
             'step_urls': list(self.step_urls)
         }
 
@@ -442,22 +444,27 @@ class TRobotProject:
                 return
 
     @staticmethod
-    def try_use_search_engines(step_info):
+    def try_use_search_engine(step_info):
         request = step_info.step_passport.get('search_engine_request')
         if request is None:
-            return False
+            return
+        min_normal_count = step_info.step_passport.get('min_normal_count', 1)
+        if len(step_info.robot_step.step_urls) >= min_normal_count:
+            return
         morda_url = step_info.website.morda_url
-        for url in GoogleSearch.site_search(get_site_domain_wo_www(morda_url), request):
+        site = get_site_domain_wo_www(morda_url)
+        links_count = 0
+        for url in GoogleSearch.site_search(site, request):
             link_info = {
                 'engine': 'google',
                 'text': request,
                 'href': url
             }
             step_info.add_link_wrapper(morda_url, link_info)
-            return True
-        return False
-
-        site_req = "site:{} {}".format(get_site_domain_wo_www(office_info.morda_url), request)
+            if min_normal_count == 1:
+                break  # one  link found
+            links_count  += 1
+        TRobotProject.logger.info('found {} links using search engine'.format(links_count))
 
     @staticmethod
     def check_html_sources(step_info, start_pages):
@@ -504,8 +511,7 @@ class TRobotProject:
             target.step_urls.update(start_pages)
 
         self.find_links_for_one_website_transitive(step_info, start_pages)
-        if len(target.step_urls) == 0:
-            self.try_use_search_engines(step_info)
+        self.try_use_search_engine(step_info)
 
         if include_source == "copy_if_empty" and len(target.step_urls) == 0:
             do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())

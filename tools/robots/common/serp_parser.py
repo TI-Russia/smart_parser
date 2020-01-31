@@ -17,7 +17,9 @@ class GoogleSearch:
         opener.addheaders = GoogleSearch.DEFAULT_HEADERS
         site_req = "site:{} {}".format(get_site_domain_wo_www(site_url), query)
 
-        response = opener.open(GoogleSearch.SEARCH_URL + "?q=" + urllib2.quote(site_req) + "&hl=" + language)
+        url = GoogleSearch.SEARCH_URL + "?q=" + urllib2.quote(site_req) + "&hl=" + language
+        url += "&filter=0"
+        response = opener.open(url)
         html = response.read().decode('utf8')
         soup = BeautifulSoup(html, "lxml")
         response.close()
