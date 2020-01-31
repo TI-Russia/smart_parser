@@ -147,9 +147,9 @@ def write_cache_file(localfile, info_file, info, data):
 def url_to_localfilename (url):
     local_file = unquote(url)
     if local_file.startswith('http://'):
-        local_file = local_file[7:]
+        local_file = local_file[len('http://'):]
     if local_file.startswith('https://'):
-        local_file = local_file[8:]
+        local_file = local_file[len('https://'):]
     local_file = local_file.replace(':', '_')
     if os.path.sep != '/':
         local_file = local_file.replace('/', '\\')
@@ -157,8 +157,9 @@ def url_to_localfilename (url):
     local_file = local_file.replace('=', '_').replace(' ', '_')
     local_file = local_file.replace('?', '_')
     local_file = unidecode(local_file)
-    if len(local_file) > 64:
-        local_file = local_file[0:64] + "_" + hashlib.md5(url.encode('utf8',  errors="ignore")).hexdigest()
+    local_file = local_file.replace("'", '_')
+    if len(local_file) > 100:
+        local_file = local_file[0:100] + "_" + hashlib.md5(local_file.encode('utf8',  errors="ignore")).hexdigest()
     local_file = os.path.normpath(local_file)
     return local_file
 
