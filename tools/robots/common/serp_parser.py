@@ -30,7 +30,7 @@ RESULT_SELECTOR = ".srg .g .rc .r a"
 
 REQUEST_CACHE_FOLDER = os.path.join(FILE_CACHE_FOLDER, "search_engine_requests")
 if not os.path.exists(REQUEST_CACHE_FOLDER):
-    os.mkdir(REQUEST_CACHE_FOLDER)
+    os.makedirs(REQUEST_CACHE_FOLDER)
 
 
 class GoogleSearch:

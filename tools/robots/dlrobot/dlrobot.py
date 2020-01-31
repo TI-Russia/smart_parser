@@ -208,9 +208,12 @@ def parse_args():
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
     parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
     parser.add_argument("--input-url-list", dest='hypots', default=None)
+    smart_parser_default =  "../../../src/bin/Release/netcoreapp3.1/smart_parser"
+    if os.path.sep == "\\":
+        smart_parser_default += ".exe"
     parser.add_argument("--smart-parser-binary",
                         dest='smart_parser_binary',
-                        default="C:\\tmp\\smart_parser\\smart_parser\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe")
+                        default=os.path.normpath(smart_parser_default))
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     args = parser.parse_args()
