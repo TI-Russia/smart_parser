@@ -238,6 +238,26 @@ namespace Smart.Parser.Adapters
             return result;
         }
 
+        private String ConvertWithSoffice(string fileName)
+        {
+            String outFileName = Path.ChangeExtension(fileName, "docx");
+            if (File.Exists(outFileName))
+            {
+                File.Delete(outFileName);
+            }
+
+            var prg = "/usr/bin/soffice";    
+            var args = String.Format(" --headless  --convert-to \"docx:MS Word 2007 XML\" {0}", fileName);
+            Logger.Debug(prg + " " + args);    
+            System.Diagnostics.Process.Start(prg, args);
+            Thread.Sleep(20000); //20 seconds
+            if (!File.Exists(outFileName))
+            {
+                throw new SmartParserException(String.Format("cannot convert  {0} with soffice", fileName));
+            }
+            return outFileName;
+        }
+
         public OpenXmlWordAdapter(string fileName, int maxRowsToProcess)
         {
             NamespaceManager = new XmlNamespaceManager(new NameTable());
@@ -265,7 +285,14 @@ namespace Smart.Parser.Adapters
                 try
                 {
                     fileName = ConvertFile2TempDocX(fileName);
-                }catch (Exception) {
+                }
+                catch (System.TypeInitializationException exp)
+                {
+                    Logger.Error("Type Exception " + exp.ToString());
+                    fileName = ConvertWithSoffice(fileName);
+                }
+                catch (Exception exp) {
+                    Logger.Error(String.Format("cannot convert {0} to docx, try one more time", fileName));
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
                 }
