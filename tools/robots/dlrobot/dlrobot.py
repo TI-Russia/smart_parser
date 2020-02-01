@@ -59,13 +59,14 @@ def check_link_svedenia_o_doxodax(link_info):
 
     text = normalize_anchor_text(link_info.Text)
 
-    if text.find('координат'):
+    if text.find('координат') != -1:
         return False
 
     if re.search('((сведения)|(справк[аи])) о доходах', text) is not None:
         return True
 
     #http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
+    # "Сведения за 2018 год"
     if re.search('сведения.*20[0-9][0-9]', text) is not None:
         return True
 
