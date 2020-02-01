@@ -193,8 +193,8 @@ def add_missing_to_wikidata (diff):
         logger.info("set link from {} to declarator person id = {}".format(ruwiki_title, person_id))
         wikidata_bot.user_add_claim_unless_exists(item, claim.copy(), summary="add declarator.org id (P1883)")
         cnt += 1
-        if cnt >= 0:
-            break
+        #if cnt >= 0:
+        #    break
 
 def get_template_regexp(wiki_template):
     vars = set()
