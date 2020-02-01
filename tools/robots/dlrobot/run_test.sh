@@ -1,6 +1,6 @@
 date
 
-rm tests/*.txt.clicks.stats 
+rm tests/*.txt.clicks.stats tests/*.txt.clicks
 
 ls tests/*.txt | xargs --verbose -I '{}' -n 1 -P 5  \
    sh -c "python dlrobot.py --logfile \"\$1\".log  --project \"\$1\" "  -- {}

@@ -7,7 +7,7 @@ import os
 import random
 from unidecode import unidecode
 from bs4 import BeautifulSoup
-from download import get_site_domain_wo_www, FILE_CACHE_FOLDER
+from download import FILE_CACHE_FOLDER, get_site_domain_wo_www
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/ 58.0.3029.81 Safari/537.36",
@@ -98,8 +98,8 @@ class GoogleSearch:
         cached_results = GoogleSearch.read_cache(site_url, query)
         if len(cached_results) > 0:
             return cached_results['urls']
-        request_parts = ["site:{}".format(get_site_domain_wo_www(site_url)),
-                         query]
+        assert get_site_domain_wo_www(site_url) == site_url
+        request_parts = ["site:{}".format(site_url), query]
         random.shuffle(request_parts) # more random
         site_req = " ".join(request_parts)
         url = random.choice(SEARCH_URLS) + "?q=" + urllib2.quote(site_req) + "&hl=" + language

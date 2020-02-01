@@ -8,9 +8,10 @@ from tempfile import TemporaryDirectory
 
 sys.path.append('../common')
 
-from download import  export_files_to_folder, get_file_extension_by_url, \
-    get_site_domain_wo_www, DEFAULT_HTML_EXTENSION
+from download import  get_file_extension_by_url, \
+    DEFAULT_HTML_EXTENSION
 
+from export_files import export_files_to_folder
 from office_list import  TRobotProject
 
 from find_link import \
@@ -18,7 +19,6 @@ from find_link import \
     ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
     check_sub_page_or_iframe, common_link_check
-
 
 
 def setup_logging(logger, logfilename):
@@ -178,7 +178,6 @@ ROBOT_STEPS = [
         'check_link_func': check_year_or_subpage,
         'include_sources': "always",
         'transitive': True,
-        'only_missing': False,
         'fallback_to_selenium': False
     },
     {
@@ -241,7 +240,7 @@ def make_steps(args, project):
             logger.info("=== step {0} =========".format(step_name))
             for office_info in project.offices:
                 start = datetime.datetime.now()
-                logger.info('{0}'.format(get_site_domain_wo_www(office_info.morda_url)))
+                logger.info(office_info.get_domain_name())
 
                 project.find_links_for_one_website(office_info, step_passport)
 
@@ -259,9 +258,10 @@ def make_steps(args, project):
     if not args.skip_final_download:
         logger.info("=== download all declarations =========")
         project.download_last_step()
-        export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
-        project.write_export_stats()
-        project.write_project()
+
+    export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
+    project.write_export_stats()
+    project.write_project()
 
 
 def open_project(args, log_file_name):

@@ -7,7 +7,9 @@ import tempfile
 import urllib
 from bs4 import BeautifulSoup
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
-                get_file_extension_by_cached_url, UNKNOWN_PEOPLE_COUNT, ACCEPTED_DECLARATION_FILE_EXTENSIONS
+                get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
+
+from export_files import UNKNOWN_PEOPLE_COUNT
 
 from selenium_driver import TSeleniumDriver
 
@@ -24,7 +26,6 @@ FIXLIST =  {
         "anticorruption_div" : "http://www.fso.gov.ru/korrup.html"
     }
 }
-
 
 
 class TRobotStep:
@@ -113,6 +114,8 @@ class TRobotWebSite:
             self.robot_steps.append(TRobotStep(step_names[step_no]))
         assert len(self.robot_steps) == len(step_names)
 
+    def get_domain_name(self):
+        return get_site_domain_wo_www(self.morda_url)
 
     def to_json(self):
         return {
@@ -267,8 +270,7 @@ class TRobotProject:
 
     def check_all_offices(self):
         for o in self.offices:
-            main_url = o.morda_url
-            main_domain = get_site_domain_wo_www(main_url)
+            main_domain = o.get_domain_name()
             self.logger.debug("check_recall for {}".format(main_domain))
             robot_sha256 = o.get_last_step_sha256()
             files_count = 0
@@ -285,10 +287,6 @@ class TRobotProject:
                                 found_files_count += 1
             self.logger.info(
                 "all human files = {}, human files found by dlrobot = {}".format(files_count, found_files_count))
-
-    def del_old_info(self, step_index):
-        for office_info in self.offices:
-            office_info.robot_steps[step_index].step_urls = set()
 
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))
@@ -335,12 +333,12 @@ class TRobotProject:
         people_count_sum = 0
         for o in self.offices:
             for export_record in o.exported_files:
-                infile = export_record['infile'].replace('\\', '/')
+                infile = export_record['cached_file']
                 if export_record['people_count'] > 0:
                     people_count_sum += export_record['people_count']
                 result.append( (
                     export_record['sha256'],
-                    infile,
+                    infile.replace('\\', '/'),
                     export_record['people_count']))
         result = sorted(result)
         with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
@@ -358,27 +356,26 @@ class TRobotProject:
         click_all_selenium(step_info, main_url, TRobotProject.selenium_driver)
 
     @staticmethod
-    def get_html(url, convert_to_utf8=False):
+    def get_file_data_and_extension(url, convert_to_utf8=False):
         try:
-            html = download_with_cache(url, convert_to_utf8=convert_to_utf8)
+            html = download_with_cache(url)
+            extension = get_file_extension_by_cached_url(url)
+            if convert_to_utf8:
+                if extension == DEFAULT_HTML_EXTENSION:
+                    html = convert_html_to_utf8(url, html)
+            return html, extension
         except Exception as err:
-            TRobotProject.logger.error('cannot download page url={0} while add_links, exception={1}\n'.format(url, str(err)))
-            return
-
-        if get_file_extension_by_cached_url(url) != DEFAULT_HTML_EXTENSION:
-            TRobotProject.logger.debug("cannot get links  since it is not html: {0}".format(url))
-            return
-        return html
-
+            TRobotProject.logger.error('cannot download page url={} while add_links, exception={}'.format(url, str(err)))
+            return None, None
 
     @staticmethod
     def add_links(step_info, url, fallback_to_selenium=True):
-        html_binary = TRobotProject.get_html(url)
-        if html_binary is None:
+        file_data, extension = TRobotProject.get_file_data_and_extension(url)
+        if extension != DEFAULT_HTML_EXTENSION:
             return
 
         try:
-            soup = BeautifulSoup(html_binary, "html.parser")
+            soup = BeautifulSoup(file_data, "html.parser")
 
             save_links_count = len(step_info.robot_step.step_urls)
             find_links_in_html_by_text(step_info, url, soup)
@@ -425,7 +422,7 @@ class TRobotProject:
         if len(step_info.robot_step.step_urls) >= min_normal_count:
             return
         morda_url = step_info.website.morda_url
-        site = get_site_domain_wo_www(morda_url)
+        site = step_info.website.get_domain_name()
         links_count = 0
         try:
             serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
@@ -450,8 +447,8 @@ class TRobotProject:
         check_func = step_info.step_passport.get('check_html_sources')
         assert check_func is not None
         for url in start_pages:
-            html = TRobotProject.get_html(url, convert_to_utf8=True)
-            if html is not None and check_func(html):
+            file_data, extenstion = TRobotProject.get_file_data_and_extension(url, convert_to_utf8=True)
+            if extenstion == DEFAULT_HTML_EXTENSION and check_func(file_data):
                 TRobotProject.logger.debug("add url {} by {}".format(url, check_func.__name__))
                 step_info.robot_step.step_urls.add(url)
 
@@ -462,11 +459,11 @@ class TRobotProject:
         step_index = self.step_names.index(step_name)
         assert step_index != -1
         office_info.robot_steps[step_index].step_urls = set()
-        only_missing = step_passport.get('only_missing', True)
         target = office_info.robot_steps[step_index]
+        target.step_urls = set()
         step_info = TProcessUrlTemporary(office_info, target, step_passport)
 
-        fixed_url = FIXLIST.get(get_site_domain_wo_www(office_info.morda_url), {}).get(step_name)
+        fixed_url = FIXLIST.get(office_info.get_domain_name(), {}).get(step_name)
         if fixed_url is not None:
             link_info = {
                 'engine': 'manual',
@@ -474,11 +471,6 @@ class TRobotProject:
                 'href': fixed_url
             }
             step_info.add_link_wrapper(office_info.morda_url, link_info)
-            return
-
-        if len(target.step_urls) > 0 and only_missing:
-            self.logger.info("skip manual url updating {}, step={}, (already exist)\n".format(
-                office_info.morda_url, step_name))
             return
 
         if step_index == 0:
