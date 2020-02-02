@@ -156,12 +156,14 @@ def get_base_url(main_url, soup):
     return main_url
 
 
-def check_http(href):
+def check_href_elementary(href):
     if href.startswith('mailto:'):
         return False
     if href.startswith('tel:'):
         return False
     if href.startswith('javascript:'):
+        return False
+    if href.startswith('#'):
         return False
     return True
 
@@ -178,7 +180,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
         href = l.attrs.get('href')
         if href is not None:
             all_links_count += 1
-            if not check_http(href):
+            if not check_href_elementary(href):
                 continue
             logger.debug("check link {0}".format(href))
             href = strip_viewer_prefix( make_link(base, href) )
@@ -213,7 +215,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
         href = l.attrs.get('src')
         if href is not None:
             all_links_count += 1
-            if not check_http(href):
+            if not check_href_elementary(href):
                 continue
 
             href = make_link(base, href)

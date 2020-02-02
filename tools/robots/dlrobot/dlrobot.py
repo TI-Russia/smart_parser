@@ -110,9 +110,11 @@ def check_download_text_not_html(link_info):
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if e == DEFAULT_HTML_EXTENSION:
             continue
-        if text.startswith(e[1:]):  #without "."
-            return True
-        if text.find(e) != -1:
+        #if text.startswith(e[1:]):  #without "."
+        #    return True
+
+        # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
+        if text.find(e[1:]) != -1:
             return True
         if link_info.Target is not None and link_info.Target.lower().endswith(e):
             return True
