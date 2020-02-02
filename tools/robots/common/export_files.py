@@ -44,6 +44,11 @@ def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
                 people_count = 0
             people_count += process_smart_parser_json(json_file)
             sheet_index += 1
+
+    converted_file = inputfile + ".converted.docx"
+    if os.path.exists(converted_file):
+        os.remove(converted_file)
+
     return people_count
 
 
@@ -54,8 +59,7 @@ def unzip_one_file(input_file, main_index, outfolder):
         file_extension = file_extension.lower()
         if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             continue
-        zip_file.extract(filename, outfolder)
-        old_file_name = os.path.join(outfolder, filename)
+        old_file_name = zip_file.extract(filename, outfolder)
         new_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, index, file_extension))
         os.rename(old_file_name,  new_file_name)
         yield new_file_name

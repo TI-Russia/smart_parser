@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from content_types import  ALL_CONTENT_TYPES
 import time
+import logger
 from selenium.common.exceptions  import WebDriverException, NoSuchWindowException
 
 class TSeleniumDriver:
@@ -56,7 +57,7 @@ class TSeleniumDriver:
                 "exception during selenium navigate and get elements, exception={}, try restart".format(str(exp)))
             self.stop_executable()
             self.start_executable()
-            time.sleep(6)
+            time.sleep(10)
             return self._navigate_and_get_links(url)
 
 

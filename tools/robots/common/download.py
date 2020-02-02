@@ -207,7 +207,16 @@ def convert_html_to_utf8(url, html_data):
     return html_data.decode(encoding, errors="ignore")
 
 
-def get_extenstion_by_content_type(content_type):
+def get_extenstion_by_content_type(headers):
+    content_type = headers.get('Content-Type', "text")
+    content_disposition = headers.get('Content-Disposition')
+    if content_disposition is not None:
+        found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
+        if len(found) > 0:
+            filename = found[0].strip("\"")
+            _, file_extension = os.path.splitext(filename)
+            return file_extension
+
     if content_type.startswith("text"):
         return DEFAULT_HTML_EXTENSION
     elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
@@ -249,13 +258,13 @@ def get_file_extension_by_cached_url(url):
         if url.lower().endswith(e):
             return e
 
-    content_type = read_url_info_from_cache(url).get('headers', {}).get('Content-Type', "text")
-    return get_extenstion_by_content_type(content_type)
+    headers = read_url_info_from_cache(url).get('headers', {})
+    return get_extenstion_by_content_type(headers)
 
 
 def get_file_extension_by_url(url):
     headers = request_url_headers(url)
-    ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
+    ext = get_extenstion_by_content_type(headers)
     return ext
 
 

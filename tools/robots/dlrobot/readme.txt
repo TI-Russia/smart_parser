@@ -16,3 +16,33 @@
 ==
 1. почему скачут smart (4-5) ?
 2. суд ушел (сравниться с олдтаймером)
+===
+b/tools/robots/dlrobot/tests/minprom.txt.clicks.stats
+@@ -1,121 +1,56 @@
+ [
+     {
+-        "people_count_sum": 4376,
+-        "files_count": 23
++        "people_count_sum": 0,
++        "files_count": 10
+     },
+====
+
+--- a/tools/robots/dlrobot/tests/mos.txt.clicks.stats
++++ b/tools/robots/dlrobot/tests/mos.txt.clicks.stats
+@@ -1,231 +1,56 @@
+ [
+     {
+-        "people_count_sum": 1276,
+-        "files_count": 45
++        "people_count_sum": 0,
++        "files_count": 10
+     },
+
+===
+2020-02-02 11:54:08,284 - dlrobot_logger - DEBUG - find_links_with_selenium url=https://www.mos.ru/mka/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/ , function=check_documents
+    2020-02-02 11:54:08,296 - dlrobot_logger - ERROR - cannot download page url=https://www.mos.ru/mka/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/ while find_links, exception=Message: Tried to run command without establishing a connection
+
+
+===
+Опять вылетел mos.txt (без сообщений об ошибок)
