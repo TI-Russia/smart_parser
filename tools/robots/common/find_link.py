@@ -164,7 +164,8 @@ def check_href_elementary(href):
     if href.startswith('javascript:'):
         return False
     if href.startswith('#'):
-        return False
+        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
+            return False
     return True
 
 
@@ -309,13 +310,7 @@ def prepare_for_logging(s):
 def click_all_selenium (step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.check_link_func.__name__))
-    driver = driver_holder.the_driver
-
-    driver_holder.navigate(main_url)
-
-    time.sleep(6)
-    elements = list(driver.find_elements_by_xpath('//button | //a'))
-
+    elements = driver_holder.navigate_and_get_links(main_url)
     for i in range(len(elements)):
         element = elements[i]
         link_text = element.text.strip('\n\r\t ')
@@ -335,6 +330,6 @@ def click_all_selenium (step_info, main_url, driver_holder):
                         step_info.add_link_wrapper(main_url, link_info)
                 else:
                     click_selenium(step_info, main_url, driver_holder,  element, i)
-                    elements = list(driver.find_elements_by_xpath('//button | //a'))
+                    elements = driver_holder.get_buttons_and_links()
 
 
