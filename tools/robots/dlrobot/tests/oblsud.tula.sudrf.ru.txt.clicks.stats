@@ -1,18 +1,8 @@
 [
     {
-        "people_count_sum": 1798,
-        "files_count": 28
+        "people_count_sum": 979,
+        "files_count": 17
     },
-    [
-        "00e225ace7b7a67189a3b293124fecd40412f2d6ef0900cbebe8c1e5fac14af1",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_153#ya_map_pub/dlrobot_data",
-        125
-    ],
-    [
-        "343c8e78ba4aad2f8ff99fa122abc1149b8a9af3b966d6a1d3a89a8a766a6b56",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_31#ya_map_pub/dlrobot_data",
-        130
-    ],
     [
         "44a995fdb82d7f212893147232961fc77cdf7c32b3f6a25118450f629d9ea92b",
         "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_194/dlrobot_data",
@@ -34,29 +24,9 @@
         129
     ],
     [
-        "64f07c1e34b791aa23e8b204c753a90c6d282ef9f4c4a4111369645b7f5ab12a",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_32#ya_map_pub/dlrobot_data",
-        127
-    ],
-    [
         "665eb03b62d90e1344f05b27eb28a852354ce678c5f5942c701fef52c7844b5b",
         "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_31/dlrobot_data",
         130
-    ],
-    [
-        "68fcf3cffcaf8acf09e2a25c9a9629c35e65b8ba9075bca064887bfa9dfb8299",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_121#ya_map_pub/dlrobot_data",
-        129
-    ],
-    [
-        "698c604f3cc07a17a920ef66dcb9790a7f0539d4cc2bd38fc732026527ad235c",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_194#ya_map_pub/dlrobot_data",
-        107
-    ],
-    [
-        "704af53e97c1abc54bf262239a221382bf97fe01d50ef6f7da8a9080dc447a25",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_73#ya_map_pub/dlrobot_data",
-        31
     ],
     [
         "74747403b059842cdfae06ffdd6af1c0b7516e91f719055d26ee1d36ef17d1e0",
@@ -67,11 +37,6 @@
         "79d0564e73ab9153695227dbb32f363bc681afbc936d3e3a2f27d2de3e80d12b",
         "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_44/dlrobot_data",
         23
-    ],
-    [
-        "7d46732a19d32003a8662fa20c0231e043a22fbc3072a101e1f8c53c7415fac0",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_33#ya_map_pub/dlrobot_data",
-        5
     ],
     [
         "7f2ddfa73b65828309a1baca7cf2a1a862e87d939c257724732b1894ad3c3ce2",
@@ -109,29 +74,9 @@
         120
     ],
     [
-        "cdf79317922d10c859356c398cd9c9bb243dca2929776b6e427ba5332a723eff",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_82#ya_map_pub/dlrobot_data",
-        17
-    ],
-    [
         "d69db2e255e2745674f7deb742c4602a4f8647f0a5d503c32ef3d7a70cfc318f",
         "cached/cdep.ru/userimages/documents/vedomstvennye_akty/251_ot_27_12_2016_pril.pdf/dlrobot_data",
         -1
-    ],
-    [
-        "dd21a1a286e09db7e00ad61c38924e03cd1c0365c17946cc9a403b19aa848be8",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_195#ya_map_pub/dlrobot_data",
-        13
-    ],
-    [
-        "dde65fa852e1563f38d8e10d12a86f49dae7fd6864b77885b0f42b96a086638c",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_124#ya_map_pub/dlrobot_data",
-        18
-    ],
-    [
-        "e1f7744a4009159d12741f39845730cde95668f5cec059b81efeb05910b13e50",
-        "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_81#ya_map_pub/dlrobot_data",
-        117
     ],
     [
         "ed8797e3123dbd3ed9fa9c1f8e90d170faa7cd144098d4e1ccb55864b8b6eae9",
