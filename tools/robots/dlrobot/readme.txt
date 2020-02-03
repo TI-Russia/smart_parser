@@ -46,3 +46,15 @@ b/tools/robots/dlrobot/tests/minprom.txt.clicks.stats
 
 ===
 Опять вылетел mos.txt (без сообщений об ошибок)
+
+==
+1. Зависло на 
+/usr/lib/libreoffice/program/soffice.bin --headless --convert-to docx:MS Word 2007 XML result/adminkr.ru/89.tmp.html
+
+2. === download all declarations =========
+found 53 files, exported 27 files to result/sibay.bashkortostan.ru
+Error: source file could not be loaded
+
+3.  cannot query (HEAD) url=http://admuni.ru/2018/03/  exception=too many times to get headers that caused exceptions
+    просто включить в тесты?
+4. Do not head popular sites

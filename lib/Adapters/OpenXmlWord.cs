@@ -207,9 +207,6 @@ namespace Smart.Parser.Adapters
             }
             Aspose.Words.Document doc = new Aspose.Words.Document(filename);
             doc.RemoveMacros();
-            // use libre office when aspose is not accessible
-            // "soffice --headless --convert-to docx docum.doc"
-            // string docXPath = Path.GetTempFileName();
             string docXPath = filename + ".converted.docx";
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
             return docXPath;
@@ -245,12 +242,19 @@ namespace Smart.Parser.Adapters
             {
                 File.Delete(outFileName);
             }
+            
+            var prg = "/usr/bin/soffice";
+            var outdir = Path.GetDirectoryName(outFileName);
+            var args = String.Format(" --headless --writer   --convert-to \"docx:MS Word 2007 XML\"");
+            if (outdir != "")
+            {
+                args += " --outdir " + outdir;
+            }
 
-            var prg = "/usr/bin/soffice";    
-            var args = String.Format(" --headless  --convert-to \"docx:MS Word 2007 XML\" {0}", fileName);
+            args += " " + fileName;
             Logger.Debug(prg + " " + args);    
-            System.Diagnostics.Process.Start(prg, args);
-            Thread.Sleep(20000); //20 seconds
+            var p = System.Diagnostics.Process.Start(prg, args);
+            p.WaitForExit(3 * 60 * 1000); // 3 minutes
             if (!File.Exists(outFileName))
             {
                 throw new SmartParserException(String.Format("cannot convert  {0} with soffice", fileName));
