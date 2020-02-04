@@ -1,8 +1,13 @@
 [
     {
         "people_count_sum": 979,
-        "files_count": 15
+        "files_count": 20
     },
+    [
+        "1534e47265a6745cb62f224d6c5380b0e05116ff08c7df77c932717aaec09ffb",
+        "cached/static.kremlin.ru/media/events/files/ru/vAtfAkMArGQmM9vCLHEPccMzf0vkLXkw.doc/dlrobot_data",
+        -1
+    ],
     [
         "44a995fdb82d7f212893147232961fc77cdf7c32b3f6a25118450f629d9ea92b",
         "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_194/dlrobot_data",
@@ -44,9 +49,19 @@
         5
     ],
     [
+        "8f8aebd5793a3a879ae417541077163e204fc52e275bc85df9b042d73d395b08",
+        "cached/files.sudrf.ru/1554/anticorruption/doc20151216-103050.doc/dlrobot_data",
+        -1
+    ],
+    [
         "96529d62195ee4abac5bac8e24f7510941888741d31e0645b7311a1d128055a6",
         "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_82/dlrobot_data",
         17
+    ],
+    [
+        "985f95c1370fad846742bbc22bda8b7460e7860ec64dc5a6fbf80f93f9c3e07a",
+        "cached/static.kremlin.ru/media/events/files/ru/vfRzjXCRr7iHnhcNb3PNQFoe3B8wNqzp.doc/dlrobot_data",
+        -1
     ],
     [
         "9877d259fb3812372673cec3559ab42effb59844e51d80943922426c772f0275",
@@ -69,8 +84,18 @@
         120
     ],
     [
+        "d1300f81d6be7c047d28f5e6ecd3b3a41b9d04996fc173423be3e819639e74d5",
+        "cached/static.kremlin.ru/media/events/files/ru/PcAHVQqdSDx42yAVYYQ5Wk3TueJsAkaa.doc/dlrobot_data",
+        -1
+    ],
+    [
         "d69db2e255e2745674f7deb742c4602a4f8647f0a5d503c32ef3d7a70cfc318f",
         "cached/cdep.ru/userimages/documents/vedomstvennye_akty/251_ot_27_12_2016_pril.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "ed8797e3123dbd3ed9fa9c1f8e90d170faa7cd144098d4e1ccb55864b8b6eae9",
+        "cached/files.sudrf.ru/1554/anticorruption/doc20151216-105612.docx/dlrobot_data",
         -1
     ],
     [
