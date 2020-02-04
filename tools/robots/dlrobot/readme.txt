@@ -57,4 +57,16 @@ Error: source file could not be loaded
 
 3.  cannot query (HEAD) url=http://admuni.ru/2018/03/  exception=too many times to get headers that caused exceptions
     просто включить в тесты?
-4. Do not head popular sites
+
+5. tambov.gov.ru
+   cannot download /assets/files/komprofcor/tablica-svedeniya-ob-uchastnikah-na-1-iyulya-2019-goda.docx: [Errno 13] Permission denied: '/assets'
+    base="/"
+
+===
+C:\…arser\smart_parser\tools\robots\dlrobot>curl -I http://admuni.ru/statistics.html
+HTTP/1.1 403 Forbidden
+Server: nginx/ihead.ru
+Date: Mon, 03 Feb 2020 19:22:46 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+Keep-Alive: timeout=20

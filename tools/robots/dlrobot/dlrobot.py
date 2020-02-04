@@ -134,11 +134,17 @@ def check_accepted_declaration_file_type(link_info):
     if check_download_text_not_html(link_info):
         return True
     if link_info.Target is not None:
+        # only office documents, not html
+        if link_info.Target.find("download") != -1:
+            return True  # otherwise ddos on admuni.ru
+        if not common_link_check(link_info.Target):
+            return False  # to make faster
+        if link_info.DownloadedBySelenium is not None:
+            return True
+        if link_info.Target.endswith('html'):
+            return False
+
         try:
-            if not common_link_check(link_info.Target):
-                return False # to make faster
-            if link_info.DownloadedBySelenium is not None:
-                return True
             ext = get_file_extension_by_url(link_info.Target)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
         except Exception as err:

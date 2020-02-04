@@ -5,9 +5,11 @@ import shutil
 import os
 import tempfile
 import urllib
+import time
 from bs4 import BeautifulSoup
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
-                get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
+                get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8, \
+                get_request_rate
 
 from export_files import UNKNOWN_PEOPLE_COUNT
 
@@ -31,15 +33,19 @@ FIXLIST =  {
 class TRobotStep:
     def __init__(self, step_name, init_json=None):
         self.step_name = step_name
+        self.profiler = dict()
         if init_json  is not None:
-            self.step_urls = set(init_json.get('step_urls', []))
+            self.step_urls = set(init_json.get('step_urls', list()))
+            self.profiler = init_json.get('profiler', dict())
         else:
             self.step_urls = set()
+
 
     def to_json(self):
         return {
             'step_name': self.step_name,
-            'step_urls': list(self.step_urls)
+            'step_urls': list(self.step_urls),
+            'profiler': self.profiler
         }
 
 
@@ -462,6 +468,7 @@ class TRobotProject:
         target = office_info.robot_steps[step_index]
         target.step_urls = set()
         step_info = TProcessUrlTemporary(office_info, target, step_passport)
+        start_time = time.time()
 
         fixed_url = FIXLIST.get(office_info.get_domain_name(), {}).get(step_name)
         if fixed_url is not None:
@@ -500,5 +507,9 @@ class TRobotProject:
 
         if step_passport.get('check_html_sources') is not None:
             TRobotProject.check_html_sources(step_info, start_pages)
-
+        target.profiler = {
+            "elapsed_time":  time.time() - start_time,
+            "step_request_rate": get_request_rate(start_time),
+            "site_request_rate": get_request_rate()
+        }
         self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))

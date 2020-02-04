@@ -5,7 +5,7 @@ import logging
 import shutil
 from urllib.parse import urljoin, unquote
 from download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
+    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www, consider_request_policy
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -174,6 +174,8 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     if can_be_office_document(main_url):
         return
     base = get_base_url(main_url, soup)
+    if base.startswith('/'):
+        base = make_link(main_url, base)
     logger.debug("find_links_in_html_by_text url={} function={}".format(
         main_url, step_info.check_link_func.__name__))
     all_links_count = 0
@@ -268,6 +270,7 @@ def click_selenium(step_info, main_url, driver_holder,  element, element_index):
     #driver.execute_script('window.scrollTo(0,{});'.format(element.location['y']))
     driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
 
+    consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
     # open in a new tab, send ctrl-click
     ActionChains(driver) \
         .key_down(Keys.CONTROL) \
@@ -310,6 +313,7 @@ def prepare_for_logging(s):
 def click_all_selenium (step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.check_link_func.__name__))
+    consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
     for i in range(len(elements)):
         element = elements[i]
