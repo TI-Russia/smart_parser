@@ -84,7 +84,9 @@ def check_year_or_subpage(link_info):
         text = normalize_anchor_text(link_info.Text)
         if text.find('сведения') != -1:
             return True
-        year_pattern = r'(20[0-9][0-9](\s+ год)?)'
+        if text.find('справка о доходах') != -1:
+            return True
+        year_pattern = r'(20[0-9][0-9]( год)?)'
         if re.match('^' + year_pattern, text) is not None:
             return True
         if re.match(year_pattern + '$', text) is not None:
@@ -156,7 +158,7 @@ def check_accepted_declaration_file_type(link_info):
 
 def check_html_can_be_declaration(html):
     html = html.lower()
-    words = html.find('квартира') != -1 and html.find('доход') != -1 and html.find('должность') != -1
+    words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
     numbers = re.search('[0-9]{6}', html) is not None # доход
     return words and numbers
 

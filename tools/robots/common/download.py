@@ -12,7 +12,6 @@ import os
 import datetime
 import time
 import requests
-import random
 from lxml.html import fromstring
 
 FILE_CACHE_FOLDER = "cached"
@@ -25,7 +24,7 @@ HEADER_REQUEST_COUNT = defaultdict(int)
 ALL_HTTP_REQUEST = dict() # (url, method) -> time
 
 
-def get_request_rate(min_time = 0):
+def get_request_rate(min_time=0):
     global ALL_HTTP_REQUEST
     current_time = time.time()
     time_points = list(t for t in ALL_HTTP_REQUEST.values() if t > min_time)
@@ -36,7 +35,7 @@ def get_request_rate(min_time = 0):
     }
 
 
-def wait_until_policy_compliance(policy_name, max_policy_value)
+def wait_until_policy_compliance(policy_name, max_policy_value):
     request_rates = get_request_rate()
     sleep_sec = max_policy_value / 10
     while request_rates[policy_name] > max_policy_value:

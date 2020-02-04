@@ -10,7 +10,7 @@ class TSeleniumDriver:
         self.the_driver = None
         self.driver_processed_urls_count  = 0
         self.download_folder = None
-        self.headless = headless
+        self.headless =  headless
 
     def start_executable(self):
         options = FirefoxOptions()
