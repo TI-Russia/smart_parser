@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 191,
-        "files_count": 28
+        "files_count": 29
     },
     [
         "0037d80dc3940d12853762a93a492631f4aac5d6a0a932d5ed1347866ca1b3b9",
@@ -67,6 +67,11 @@
         "81ddfa6f4c3e6be6fda15ac157efeb43dd050d36d64f12863a839138a482d78c",
         "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
         9
+    ],
+    [
+        "8769fcda0c74e2606c0da141fbc0a1902145d7231cedf4c357c8ca6ea830cf79",
+        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
+        -1
     ],
     [
         "8ef23ef463c79baed18a059bf74d345acf553e6009801de6d159149e13c8042e",
