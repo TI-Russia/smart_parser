@@ -1,8 +1,13 @@
 [
     {
         "people_count_sum": 1633,
-        "files_count": 109
+        "files_count": 140
     },
+    [
+        "01215cc51d98649a63774f772c66eb4d413181e14588353eeccc7a3b13762c1f",
+        "cached/oren-rshn.ru/index.php_do_download_id_246_area_static_viewonline_1/dlrobot_data",
+        -1
+    ],
     [
         "02ff3752862643006e70b88b99c205bf7a72ce4135ca147a7752bab428d14010",
         "cached/oren-rshn.ru/Doc/dohodi/2015/fitzem2015.doc/dlrobot_data",
@@ -64,6 +69,11 @@
         14
     ],
     [
+        "18ee4d1fe6801ca6e3884510583360da4bfcd25b4f9d0438abebb6e9b553bf0d",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/dismissal.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "1ccfe7777f69331860eafe62aa51b383c23a4d785cb267f732c0c4de4380a347",
         "cached/oren-rshn.ru/Doc/dohodi/2014/Semena.doc/dlrobot_data",
         6
@@ -119,6 +129,16 @@
         14
     ],
     [
+        "305587642da5c2af20f9efe08f65e243c46cd5e8f387f636f5819a96f3259fd8",
+        "cached/oren-rshn.ru/Doc/PoprimeneniyuFederal_nogozakona.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "30cfee65cf3ba0c89cdaa462373e0bdb259498855f5625aa758b49348cab52d7",
+        "cached/oren-rshn.ru/Doc/anticor/manuals1_3.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "32f01bd335ddddb8ebd4c61f3a09150e15fd4aca81d01dfcf04d8cd21cf58925",
         "cached/oren-rshn.ru/Doc/dohodi/2010/Semena.doc/dlrobot_data",
         6
@@ -139,6 +159,16 @@
         12
     ],
     [
+        "33b0183012092421ca2b3647d928ca742b9771d2b8c2cb382b5758368e2738c9",
+        "cached/oren-rshn.ru/Doc/komment_fz-273.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "399f4da5f6f49c56416a9cacf900415464cf091309b72c01e4a669abd7d48d4a",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals4_1.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "3b3656d6b46f4adebe5c562a0a2b82678d5c807b20f33fdff4202a0aae93ef78",
         "cached/oren-rshn.ru/Doc/dohodi/2010/Himikati.doc/dlrobot_data",
         10
@@ -147,6 +177,11 @@
         "3b5e9fc70fd76e2bcdb2072e3c53638bc77ff61a63d7b9d35967b89426961780",
         "cached/oren-rshn.ru/Doc/dohodi/Sol-Ileck.doc/dlrobot_data",
         6
+    ],
+    [
+        "456a0d91f8ce065fcf143a7f3fe2e1066fbf59dbd783633154bb8c60a98616cd",
+        "cached/oren-rshn.ru/Doc/anticor/manuals1_1.pdf/dlrobot_data",
+        -1
     ],
     [
         "471e13e745ace0641fc55da4cd9112b60ac81dd59cbdd9ea6eb8f79f5db4fa12",
@@ -214,8 +249,23 @@
         20
     ],
     [
+        "5e8a89c712f5eeba9d91089eb6678a6f6ace015122d21cda1e738a9a60c8cf0f",
+        "cached/fsvps.ru/fsvps/download/attachment/144180/Prikaz_Rossel'khoznadzora_473.DOCX/dlrobot_data",
+        -1
+    ],
+    [
+        "5f08598afc6262cb0e6034ac6aac0c393e81ca0de9b1c3eac25bdbbbed196c69",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals2_1.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "6478ef410e9665ea05df615bd90db6e7b0219fd617ca4002f7ba4fd807a423c7",
         "cached/oren-rshn.ru/Doc/dohodi/2011/Buzuluk.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "67167568a65c44e79b5534ef8cec597ce6571afa69a22c6d504db32013523424",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals3_1.pdf/dlrobot_data",
         -1
     ],
     [
@@ -239,13 +289,43 @@
         5
     ],
     [
+        "6a10f29d584880feaf19846f682ce3cce38da94697e0867a65288455dd8e7f21",
+        "cached/oren-rshn.ru/Doc/anticor/manuals1_4.PDF/dlrobot_data",
+        -1
+    ],
+    [
+        "6adbd316cfaf9fb13c1ee79fa50274fad763a4f0e5d62e18d2a9852dd34165e7",
+        "cached/pravo.gov.ru/proxy/ips/_savertf__nd_102129667_intelsearch_____18__2009_._N_557__page_all/dlrobot_data",
+        -1
+    ],
+    [
+        "6c56e4c19ee7f7327b5c7235ef340564849fc09b6cc6fe92ef308f45b550c864",
+        "cached/oren-rshn.ru/index.php_do_download_id_252_area_static/dlrobot_data",
+        -1
+    ],
+    [
         "6e95058c39d839996bc4356ff26875e18f1f7b4c0382f18471227a1c998fc52a",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Buzuluk1.doc/dlrobot_data",
         5
     ],
     [
+        "6f34600445859802387fe9b702771951674a26cdfcae948f2bf4574ac9b959b5",
+        "cached/oren-rshn.ru/index.php_do_download_id_253_area_static/dlrobot_data",
+        -1
+    ],
+    [
+        "6fa25d7897cdad6ced640a9633040924907fc7b6ee2bede47bc5a47d089a7ecb",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals4_2.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "6fd4fa103b0e874a582af6f65853528161a61a8ec6adced78144803e8c75655e",
         "cached/oren-rshn.ru/Doc/dohodi/2009/Buzuluk.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "702f73a6af6bd4ecd6f170ebb9cef66fb7f71367de37d73950cde7201c9fd97a",
+        "cached/www.fsvps.ru/fsvps/download/attachment/144188/Prikaz_Rossel'khoznadzora_240.PDF/dlrobot_data",
         -1
     ],
     [
@@ -289,6 +369,11 @@
         14
     ],
     [
+        "8093bf39c97ef251a3dad60a40be31dca29bff764515ba57e49c6a56e8552efd",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals3_2.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "847a23cf4b69b2937d400b785c2af8614bb1b01445fa6f32ca9bccb0b0faa2c0",
         "cached/oren-rshn.ru/Doc/dohodi/2014/Sol-Ileck.doc/dlrobot_data",
         5
@@ -302,6 +387,21 @@
         "8c17ad5428720173be85744303426388e7b8bdfb361283eb0087f79f8e9e7abc",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Zemla1.doc/dlrobot_data",
         14
+    ],
+    [
+        "8cb298f5b8930760050e0f9f6c1fb7d62ead40793f99e57630f3f4428e658a83",
+        "cached/www.fsvps.ru/fsvps/download/attachment/144189/Prikaz_Rossel'khoznadzora_240.DOCX/dlrobot_data",
+        -1
+    ],
+    [
+        "8de2fa2218411fcbbcbe620b76b044ce3c5fd8ca5a4c71469320333db6e96632",
+        "cached/oren-rshn.ru/Doc/anticor/manuals1_2.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "8e2aa50d6b7805ea137b81f1be593e8730b8c7936473960bb091e0adcedb1aaa",
+        "cached/fsvps.ru/fsvps/download/attachment/144179/Prikaz_Rossel'khoznadzora_473.PDF/dlrobot_data",
+        -1
     ],
     [
         "8f9b182a55b7ff346208221c94c0b01b6379f6bff00829db09f0d30c067aaea9",
@@ -334,6 +434,11 @@
         19
     ],
     [
+        "9877cfe8b343c8666d70526304a8b123a6777d5bf3bd6b5de2d67541dcbfc003",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals2_3.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "99800dd33332187489e6465313070741452d63b7d85a90eafa5bafe05f3b59df",
         "cached/oren-rshn.ru/Doc/dohodi/2011/Vetnadzor.doc/dlrobot_data",
         18
@@ -364,6 +469,11 @@
         18
     ],
     [
+        "aa363e03eae020fbc56ecb6e858f7b2b11a2dcd12da106201d63cbd1e9655bc3",
+        "cached/oren-rshn.ru/Doc/Obzorrekomendatsiyponedopushcheniyu.doc/dlrobot_data",
+        -1
+    ],
+    [
         "aafe057153760c5e1a1cb198ade1899eb89067c24b145b80ce59f55f988a4ac0",
         "cached/oren-rshn.ru/Doc/dohodi/2010/Zemla.doc/dlrobot_data",
         9
@@ -377,6 +487,11 @@
         "aec1d8e7a6d10a7430d77c76b953db482e0e046aea72f34c5c893a66285d7381",
         "cached/oren-rshn.ru/Doc/dohodi/2009/Zemla.doc/dlrobot_data",
         10
+    ],
+    [
+        "afd0d653367d46dacbc4c04b6ab1a417ce0ee5beafaf78e329cba6d0071d94a3",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals3_3.pdf/dlrobot_data",
+        -1
     ],
     [
         "b0a9417498ac9afe7d0b2dad5c7bb8e9f5dc3933a56d397b59bc5e12d19138aa",
@@ -414,6 +529,11 @@
         4
     ],
     [
+        "b6a26472f97c56b1dc8a6f79f85f0d24c6456f9a236e5bf40422314e05a2bec0",
+        "cached/oren-rshn.ru/index.php_do_download_id_291_area_static_viewonline_1/dlrobot_data",
+        -1
+    ],
+    [
         "ba95d19d876817091a2d4e16ed3af074566d87495c5817b89d3df7f3904f078e",
         "cached/oren-rshn.ru/Doc/dohodi/2009/Orsk.doc/dlrobot_data",
         15
@@ -449,6 +569,11 @@
         30
     ],
     [
+        "c5ea25a22db1e04133ab2de86d57abd9584d6dafa077091d9cf1d2e0da9d1483",
+        "cached/fsvps.ru/fsvps/download/attachment/144152/prikaz_Rossel'khoznadzora_870.PDF/dlrobot_data",
+        -1
+    ],
+    [
         "cbf2973adc09538e486e8656cc2a4fd7be969262b8cb7c18bad0b925a169d7d5",
         "cached/oren-rshn.ru/Doc/dohodi/2014/Granica.doc/dlrobot_data",
         14
@@ -462,6 +587,16 @@
         "cc843de600ca69b7243a4d63a9e3ed6fce242d00d76f8e3632324e57b1f80760",
         "cached/oren-rshn.ru/Doc/dohodi/2011/Zemla.doc/dlrobot_data",
         21
+    ],
+    [
+        "ce67eb2fccccc8e2ce926058e0ca7caa1ab8e93b7c9f037e28ee46f47f0daf5b",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals2_4.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "ce753fa00339f74363a766fc384ff367d357fdf391496e1880362bba06c88cc0",
+        "cached/oren-rshn.ru/index.php_do_download_id_251_area_static/dlrobot_data",
+        -1
     ],
     [
         "cf5caca3e16c70289276a0015f98d55913047232bda832b936f479d1ea3fd766",
@@ -482,6 +617,11 @@
         "d85f343099499f31a49ce8827c0a2865678105d0d5faca8c33c9e9af619e8b63",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Buzuluk.doc/dlrobot_data",
         13
+    ],
+    [
+        "df89afc870f8111e00b0f26d394be777f8d98f7b269167da15c1fab28be9a96a",
+        "cached/fsvps.ru/fsvps-docs/ru/corruption/manuals2_2.pdf/dlrobot_data",
+        -1
     ],
     [
         "e3052dde4d54eb49c32c5aa8db64f4390573b03a396983efaf7281d5d329ffdf",
@@ -519,6 +659,11 @@
         20
     ],
     [
+        "ed4b00b1417670644f2bfc37074c88f97ebf77948094a5cad39e17ee59d23ce6",
+        "cached/oren-rshn.ru/index.php_do_download_id_245_area_static_viewonline_1/dlrobot_data",
+        -1
+    ],
+    [
         "efd494ffdad4b9b215f50018286a1cf733c1be4f7f97c3c20dc0f81a3a57d1e3",
         "cached/oren-rshn.ru/Doc/dohodi/2017/karanzem2017.doc/dlrobot_data",
         57
@@ -527,6 +672,11 @@
         "f16fc4f668ed4defd8bc9660abd0b3aa0d1eefcf6a43526d1aee484b01bff153",
         "cached/oren-rshn.ru/Doc/dohodi/2009/Granica.doc/dlrobot_data",
         45
+    ],
+    [
+        "f5b655749dd0b17c448dcbf08ced79fa6d1fb45e471239c177def0277954887f",
+        "cached/fsvps.ru/fsvps/download/attachment/144153/prikaz_Rossel'khoznadzora_870.DOCX/dlrobot_data",
+        -1
     ],
     [
         "f5ed76b38a0a66bd426c65a8e059fa6c7f879ac82ef3b04a0bbd91eaefe05d22",
@@ -542,6 +692,11 @@
         "fb1de47c4f788725d85028abe8c028a590f86fc65da048411ac8a9b0c245b8a3",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Novosergievka.doc/dlrobot_data",
         9
+    ],
+    [
+        "fee19da92f650be24bd1ece49f59f1d4e834e1cf06bd23688300f60f77483dee",
+        "cached/www.oren-rshn.ru/Doc/comissia.pdf/dlrobot_data",
+        -1
     ],
     [
         "ffda925653d4b450cb097c056900b07fa513f540cbb9e47a087949137d88b17c",

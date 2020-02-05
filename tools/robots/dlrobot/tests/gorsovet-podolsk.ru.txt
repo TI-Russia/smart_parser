@@ -1,0 +1,7 @@
+{
+    "sites": [
+        {
+            "morda_url": "http://gorsovet-podolsk.ru"
+        }
+    ]
+}

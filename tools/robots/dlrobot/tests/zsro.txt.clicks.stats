@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 411,
-        "files_count": 255
+        "files_count": 286
     },
     [
         "0049016a2ed57eb58ca05de5dfde40fe0e09cc967d8e285112bbf8f79a208bf6",
@@ -104,6 +104,11 @@
         1
     ],
     [
+        "0fb85da88d6c1b86f93d04899b935e3c4b7c04fe056e5893ec28dfe0dc56226d",
+        "cached/www.zsro.ru/upload/iblock/25a/79FZ_01052019.docx/dlrobot_data",
+        -1
+    ],
+    [
         "1096cb17784b8b677f813237de5223107ee9d5ead2e1389e704ab21545ecf902",
         "cached/www.zsro.ru/upload/iblock/0bc/KosinovSA_dekr2014.xlsx/dlrobot_data",
         2
@@ -177,6 +182,11 @@
         "22d70d9ea9182472ece8580003656662e1682ec0cd2dff3c6a67ad173ac07a04",
         "cached/www.zsro.ru/upload/iblock/039/SteniakinaEP_dekr2013.xlsx/dlrobot_data",
         1
+    ],
+    [
+        "2753f14f1d605fb97d7cf98bc7642c13737a44e3d1e28bc2a6a2f796a7950403",
+        "cached/www.zsro.ru/upload/files/download/172FZ_ob_antikorrup.doc/dlrobot_data",
+        -1
     ],
     [
         "27c2d6ade61eddf995ecd65c18b449b8615cef53384f1847e3374577d7eece1b",
@@ -309,6 +319,11 @@
         2
     ],
     [
+        "4407d00de414075212f69048c8130726c5c73c676ab3218de4777ab95eff30bf",
+        "cached/www.zsro.ru/upload/iblock/e24/Ukaz_471_09102017.doc/dlrobot_data",
+        -1
+    ],
+    [
         "44549ef4f686278107939eee60a42f89085ee02dc2d893dece987cb86c293a2e",
         "cached/www.zsro.ru/upload/iblock/ddb/Deklarat_2018_GelasMV.xls/dlrobot_data",
         2
@@ -352,6 +367,11 @@
         "4d703d4ccf9f129bc126825a8f04e5bc63bd2c6c16797d5914112e5dd251ed37",
         "cached/www.zsro.ru/upload/iblock/f5c/ShamshuraVA_dekr2016.xlsx/dlrobot_data",
         2
+    ],
+    [
+        "4e4713bdbc255002ded4d8cb33ce0ae95155f8e4992e6bf1bc2465c34318a8b2",
+        "cached/www.zsro.ru/upload/files/download/Obl_uvedoml_diff_job.doc/dlrobot_data",
+        -1
     ],
     [
         "4f7d2081359a6ab222cd8c28a85631053db1951720c6b6946e1b80a1fe83f3ac",
@@ -449,6 +469,11 @@
         1
     ],
     [
+        "64eeca6f4a557132bb47ac08e06e45a77a1e2b50d48b7832d868f136c57f982d",
+        "cached/www.zsro.ru/upload/iblock/0f5/pamatka_dlya_gs.doc/dlrobot_data",
+        -1
+    ],
+    [
         "650210f0650400378a7c6e6a0c5366229a2ff3a6db6ed4e728dac17bb2b1b11c",
         "cached/www.zsro.ru/upload/iblock/dd7/Deklarat_2018_LutikovRA.xls/dlrobot_data",
         2
@@ -484,6 +509,11 @@
         3
     ],
     [
+        "6a4192e5a346d22e17331179e9e048c75236907b41d183402549a24e0f8a022a",
+        "cached/zsro.ru/upload/files/download/instrukt_PO_Spravki_BK.docx/dlrobot_data",
+        -1
+    ],
+    [
         "6ad584e13388266ef4b6dda29b7591a5c447a8bbde80c2ff5d88562614735b28",
         "cached/www.zsro.ru/upload/iblock/985/HarchenkoAV_dekr2013.xlsx/dlrobot_data",
         2
@@ -514,6 +544,11 @@
         1
     ],
     [
+        "6f1b18da2bd48278959aa53b9a0cbc010b332db06ddb003bc2fce06df6edbe10",
+        "cached/www.zsro.ru/upload/iblock/74b/FZ274_25122008.doc/dlrobot_data",
+        -1
+    ],
+    [
         "70e12428cca283fba4f5e780e31c1d01e6e627f39990fd74e03bdb4804786a5a",
         "cached/www.zsro.ru/upload/iblock/544/dekration_dubograi2015.doc/dlrobot_data",
         1
@@ -522,6 +557,16 @@
         "7189e506f54c2536bdf9f2e4ef851e7839bc4b36fe1cd31fc2547534c861945b",
         "cached/www.zsro.ru/upload/iblock/d39/BelaevNF_dekr2014.xlsx/dlrobot_data",
         2
+    ],
+    [
+        "7272ca504a46c23b17d8fd6f2860e58dc99188dba292402cfe337773a7d40b86",
+        "cached/www.zsro.ru/upload/files/download/Uvedoml_o_pol_podarka.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "72f852a734a22c387ac802360548310ab6c9b1dc6a7bea2e24f5d918d569c1fe",
+        "cached/www.zsro.ru/upload/iblock/c64/Ukaz_560_23062014.doc/dlrobot_data",
+        -1
     ],
     [
         "73bbf9bb5de999078028a9a73695af10dd89e7c89a310cd1ea948a8986c5cf47",
@@ -549,6 +594,16 @@
         2
     ],
     [
+        "75ac6f2d58be0b8f9db2ac6c6a297bb7c12c42092941edce1b0dc56d85fc3d57",
+        "cached/www.zsro.ru/upload/iblock/a54/Post_Pravit_220_new.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "769b3519a24b6ea0ca07ecd2aa332e3d6cddfeab181552a76e94d7c01f9acc43",
+        "cached/www.zsro.ru/upload/files/download/metod_rekoment_zapoln_za2017.docx/dlrobot_data",
+        -1
+    ],
+    [
         "770d9c7f4eb8b5ad166890b57b67f843f74be2731cbf25863267c7f4795a2a24",
         "cached/www.zsro.ru/upload/iblock/b99/dekration_Kartashev2017.docx/dlrobot_data",
         1
@@ -569,6 +624,11 @@
         1
     ],
     [
+        "7b6111847fdce38582af0df655b683297d233a78435d8a783e16745bc5a59108",
+        "cached/www.zsro.ru/upload/iblock/11a/273fz_25_12_2008new.docx/dlrobot_data",
+        -1
+    ],
+    [
         "7c22edb7f7c4fff15158df21e14a986d8dfd362ffdaa556c8789b5ea078eb86e",
         "cached/www.zsro.ru/upload/iblock/199/BatajevAA_dekr2017.xls/dlrobot_data",
         3
@@ -587,6 +647,11 @@
         "7d6e68f55d3085413d1be7cf7dc6e65291193e24ce1e4ac7d184a578e0b5d48d",
         "cached/www.zsro.ru/upload/iblock/e26/SurmalianAA_dekr2017.xls/dlrobot_data",
         2
+    ],
+    [
+        "7d7ae919ad3589388582e643db0b0aa4d0394d4c7e0a150098ced6fc462864bb",
+        "cached/www.zsro.ru/upload/iblock/8b9/97FZ_04052011.doc/dlrobot_data",
+        -1
     ],
     [
         "7dcca445d53954f183ebbad5d7d8bbd36bb67d36dba3b24235c24d905088287c",
@@ -627,6 +692,11 @@
         "86f60beaad0a6f7eac3eb549e4515c6f7f3643cf370136a56b5309a1d4a17458",
         "cached/www.zsro.ru/upload/iblock/9b7/dekration_Penedjik2016.docx/dlrobot_data",
         1
+    ],
+    [
+        "88a391fdb087e4224d6ab78f285234931fd641d725c595666842b85db788bccf",
+        "cached/www.zsro.ru/upload/iblock/ec9/79fz_27_07_2004new.docx/dlrobot_data",
+        -1
     ],
     [
         "88f5d073250a702c917bb848e4c487f903a1339cc0ecae1c5a010dff6698e43f",
@@ -714,6 +784,26 @@
         2
     ],
     [
+        "9b73436257bf49a01d9398deb01a32551abc2e17a7c2460b40401f3c60eb6c52",
+        "cached/www.zsro.ru/upload/iblock/2e8/280fz_25122008.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "9c7b78d6779346b06327594405eaf5082532e393149324d0a4519c5d5e434708",
+        "cached/zsro.ru/upload/files/download/Opisanie_PO_spravki_BK.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "9d2d07db23a742578203f7c337b6aae657e45444c3985ad39c5773eb8258f396",
+        "cached/www.zsro.ru/upload/iblock/931/Ukaz_Prezid_RF815.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "9e1b69dbebeebb99694cc89145d84a3745af945a4168dd0bd6ddd186fc5a5d0c",
+        "cached/www.zsro.ru/upload/iblock/9e7/pismo_mintrud_ot180713_18-2102-4038.doc/dlrobot_data",
+        -1
+    ],
+    [
         "9e2d863113469d8a6b8dc8153bcf039f576c7ccda52352d3e255b37dc4bea6fa",
         "cached/www.zsro.ru/upload/iblock/0cd/MihalevSA_dekr2014.xlsx/dlrobot_data",
         2
@@ -749,6 +839,11 @@
         1
     ],
     [
+        "a26c1b4a57d3170d40a31fa2c913712efacaff5678becc88f38bc22ed221cb2e",
+        "cached/www.zsro.ru/upload/files/download/Forma_konflikt_interesov2018.docx/dlrobot_data",
+        -1
+    ],
+    [
         "a2e20f692b8c1e66bbaf646e3f3d25fb3a4edcba59c5ca0f796832aca31dea56",
         "cached/www.zsro.ru/upload/iblock/27a/BelaevNF_dekr2017.xls/dlrobot_data",
         2
@@ -762,6 +857,11 @@
         "a38158f013fe385267874f9ea2c2264cf5324e0d69f9ccfd88ca17d73339c99f",
         "cached/www.zsro.ru/upload/iblock/665/dekration_IvanovAA2015.doc/dlrobot_data",
         1
+    ],
+    [
+        "a68c7c2e2d07a2bccb04fa82a7fdfe58428d357338c95736078c504c7a42dee1",
+        "cached/www.zsro.ru/upload/iblock/e25/Ukaz_PR_RF1066_21092019.docx/dlrobot_data",
+        -1
     ],
     [
         "a6b4e2f96f741909fe9c85add505a8cec36c60f9c1f07dae66d2500d75da093d",
@@ -844,6 +944,11 @@
         1
     ],
     [
+        "b390a8777ff36457d59f12fde6ead7dda8520fa68bdbc39bef429a83c72d9526",
+        "cached/www.zsro.ru/upload/iblock/18f/Post_pravit_96_26022010.doc/dlrobot_data",
+        -1
+    ],
+    [
         "b4981b3ac968225bdcefae4c5aaf025a1a81fd05817f98d906f885f1d0a840b1",
         "cached/www.zsro.ru/upload/iblock/c62/LutikovRA_dekr2017.xls/dlrobot_data",
         2
@@ -864,9 +969,19 @@
         1
     ],
     [
+        "b73c9aae80cad4320ecd1a0f662113ebdecaee42aafed637d0818f63b688ae5f",
+        "cached/www.zsro.ru/upload/iblock/b75/Ukaz_558_18052009.doc/dlrobot_data",
+        -1
+    ],
+    [
         "b84a324c29ce619d6b4a33d9b3bbc573e43e06f04b759a963308851b6a4cfcfc",
         "cached/www.zsro.ru/upload/iblock/022/dekration_Harkovets2015.doc/dlrobot_data",
         1
+    ],
+    [
+        "b871435c95097c70fc828f855b0a71745b40c7fc1f423baec1dc81fdbd9dd7fa",
+        "cached/zsro.ru/bitrix/redirect.php_event1_news_out_event2_/upload/iblock/af7/Post_Pravit_RO_40_09.11.2016_._c9c49e1e2e985de14ad8acf82d3331ec/dlrobot_data",
+        -1
     ],
     [
         "b88987363c8c573fd234c9be4be8435b6a8c983389c50216aef741ec333812e5",
@@ -892,6 +1007,11 @@
         "bd00860a9be060e2cf1daa206b51d356ab36a3229d0b80d092a503ba16ddd484",
         "cached/www.zsro.ru/upload/iblock/e8e/dekration_Harkovets2016.docx/dlrobot_data",
         1
+    ],
+    [
+        "bd01e8861f18af23fe1cdbb75e12ed3937268230b35f130f140178aa7c42e195",
+        "cached/www.zsro.ru/upload/iblock/273/895206141.pdf/dlrobot_data",
+        -1
     ],
     [
         "bd0a27c16feb7544bc3a5d692338a900a2f15c5a2b18425af969a0e472c5e161",
@@ -969,6 +1089,11 @@
         1
     ],
     [
+        "c3acda453e15e40835563119d9c36f8f83b62b37fcd8b69c7eaaf46b810e67c9",
+        "cached/www.zsro.ru/upload/files/download/Uvedoml_o_fakt_sklonen.doc/dlrobot_data",
+        -1
+    ],
+    [
         "c47d37b802fa74cea8dacd7323636d35c099a53cdd451fd19e70e1e3bcc7a428",
         "cached/www.zsro.ru/upload/iblock/e19/dekration_Gordeev2015.doc/dlrobot_data",
         1
@@ -1014,6 +1139,16 @@
         2
     ],
     [
+        "c8969ef2116b7f50dc18f86da6f8ad4ba24932eb7e5d7dc0297db5b64deb600f",
+        "cached/www.zsro.ru/upload/files/download/postZSRO771_antikorr.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "c8fec410aad15da14ee190e071cbfecfd7592c86e4677710e6cf32664da70c1f",
+        "cached/www.zsro.ru/upload/iblock/bb4/0001201806300002.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "c919385384a8087be274970b451686d828943401aecd441a77d05c8a9d9c82e1",
         "cached/www.zsro.ru/upload/iblock/22d/Deklar_2018_IarochenkoSA.xls/dlrobot_data",
         2
@@ -1037,6 +1172,11 @@
         "cc78817af9d73733972331cf467a272537eaee9f4d948bc881d1b1bf35149011",
         "cached/www.zsro.ru/upload/iblock/f1c/MihalevAA_dekr2015.xlsx/dlrobot_data",
         1
+    ],
+    [
+        "cdf07dc8c70322ebad4e8ca61c15f284b3f3d506df3ca50e1e43637d3c51fe6b",
+        "cached/www.zsro.ru/upload/iblock/107/Ukaz_885_12082002.doc/dlrobot_data",
+        -1
     ],
     [
         "ce6c0f68443d15836dcd1165ea97f0bcc6b1845e026c4be559b46d580e057f57",
@@ -1069,9 +1209,19 @@
         1
     ],
     [
+        "d4a45d86855ace98524c34b7afa3f9640b4871aefa0ec1c76789794e6c5762fb",
+        "cached/www.zsro.ru/upload/iblock/2da/plan_protiv_korr2018-2020.docx/dlrobot_data",
+        -1
+    ],
+    [
         "d5909a50efa46dd9dc37bd6b20667b68ceba59cf46f4578c8b5696a5c17a6b4e",
         "cached/www.zsro.ru/upload/iblock/b06/dekration_IvanovAA2014.doc/dlrobot_data",
         1
+    ],
+    [
+        "d68ed465ed75b1ed2dd6997cc123b0b730ff2a5401ccf3b68df9849b4fa23c79",
+        "cached/www.zsro.ru/upload/iblock/8b1/kodeks_etiki2016.doc/dlrobot_data",
+        -1
     ],
     [
         "d6e39fbf39d2b35cf779910256afed0493f3969c87e6a6f18b97173dbc9a239a",
@@ -1242,6 +1392,11 @@
         "fa6ffa650abbc54c8629a2ce924ebcc0aeb2a2040eae8eafd7f34dbcd85fe4b8",
         "cached/www.zsro.ru/upload/iblock/24c/dekration_Evdokimov2016.docx/dlrobot_data",
         1
+    ],
+    [
+        "fa763eb9af1e1b59ccd74c88ad81404ed7178901a2c8a5c35b3cb35aa40cee22",
+        "cached/www.zsro.ru/upload/files/download/polojenie_o_komissii07082019.doc/dlrobot_data",
+        -1
     ],
     [
         "fb115124d9d4eac6bc0e521b6f43b70fc7435919da074d99529017088345dcf3",

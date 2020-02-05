@@ -1,7 +1,7 @@
 [
     {
-        "people_count_sum": 218,
-        "files_count": 18
+        "people_count_sum": 213,
+        "files_count": 21
     },
     [
         "05a01005cabc50e55692ba23e4d2489dbf8b111d0d321fd785bfcccd5c4879a6",
@@ -9,9 +9,9 @@
         14
     ],
     [
-        "0c1a5fcacb4e189bd54c93a7a4717fb0549bad09dcb3156f1002c50812d57809",
-        "cached/volgograd.izbirkom.ru/edg2017/obldum2017/oik15/kand_dohod_oik15.doc/dlrobot_data",
-        5
+        "159dfcf7021021ddfcb7d342ffa06f45238c82c2c597b0871e7e8f02fc91ccec",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/zakon/Post.Gubernatora_VO_339__v_red.__a59f086c30f8457e6bb8b3cd4205fe70/dlrobot_data",
+        -1
     ],
     [
         "27ed46f623c4ad1ad61fd5172b3adba5ab0ba2fa0791f9d4a41f739eb685160a",
@@ -39,13 +39,18 @@
         9
     ],
     [
+        "59c524950dd01fe250d63f021edaf7b282695ef93ef421ccc03b610ca99689e8",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/Ukaz_Prezidenta_No. _460_ot_23.06.14___0bdeab7562261ee14bce9b49e69d1a3d/dlrobot_data",
+        -1
+    ],
+    [
         "5c309497690e41196bbd0862e0d720ee32c6d72c204238a758390c544c6fce7b",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_pred_tik_2018.doc/dlrobot_data",
         42
     ],
     [
-        "5c72d106fa3334416a5902bd10b64523c2593c7637a24261b0ef59d5e2c7d6d9",
-        "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.p_1f32c11e6abc2a2246196f7ca15c0aa6/dlrobot_data",
+        "6401c242c93c941fc1f9d60631c2b85ff12619610cd0aebeda6555bc3569678b",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php/dlrobot_data",
         -1
     ],
     [
@@ -69,6 +74,11 @@
         13
     ],
     [
+        "c08f819f3beb9b3ea945739e0baf39c0396c6b2af87da839048bc97720a684e7",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/Post.Gubernatora_ot_30.05.17_No. _306__2258911acad67b8c9b263b3ccebd9acc/dlrobot_data",
+        -1
+    ],
+    [
         "cdd8d509a12a4d975f3336b731214ebbbed4eaea6d8364f173a500fff2168a10",
         "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2012_tablitsa.doc/dlrobot_data",
         10
@@ -77,6 +87,11 @@
         "d2af073ca81124f526f89ea738aaaf934b4df44e216d0ab46a2543e1860e1ba5",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2016.doc/dlrobot_data",
         9
+    ],
+    [
+        "e48dec3fccf9d78556128a8cc828fdc5ec0500278adb22a7f584f01809e8b0f5",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/METODIChESKIE_REKOMENDATsII_zapolnenie_a2bf834b3022437b78bb45d15d9cfdcb/dlrobot_data",
+        -1
     ],
     [
         "e4c739d25ff2767aac6df86304e4043f04ec57f0b1e934cddbf6bd4cc37212f9",

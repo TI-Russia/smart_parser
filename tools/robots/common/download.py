@@ -222,13 +222,10 @@ def _url_to_cached_folder (url):
         local_path = local_path[len('http://'):]
     if local_path.startswith('https://'):
         local_path = local_path[len('https://'):]
-    local_path = local_path.replace(':', '_')
     local_path = local_path.replace('\\', '/') # must be the same to calc hashlib.md5, change it after hashlib.md5
-    local_path = local_path.replace('&', '_')
-    local_path = local_path.replace('=', '_').replace(' ', '_')
-    local_path = local_path.replace('?', '_')
+    local_path = re.sub("[:&=?'\"+<>()*| ]", '_', local_path)
     local_path = unidecode(local_path)
-    local_path = local_path.replace("'", '_')
+    local_path = local_path.strip("/") #https:////files.sudrf.ru/1060/user/Prikaz_o_naznachenii_otvetstvennogo.pdf
     if len(local_path) > 100:
         local_path = local_path[0:100] + "_" + hashlib.md5(local_path.encode('latin',  errors="ignore")).hexdigest()
     local_path = os.path.normpath(local_path)

@@ -39,6 +39,7 @@ def setup_logging(logger, logfilename):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
 
+
 def normalize_anchor_text(text):
     if text is not None:
         text = text.strip(' \n\t\r').strip('"').lower()
@@ -61,6 +62,11 @@ def check_link_svedenia_o_doxodax(link_info):
 
     if text.find('координат') != -1:
         return False
+    if text.find('заседании') != -1:
+        return False
+    if text.find('приказ') != -1:
+        return False
+
 
     if re.search('((сведения)|(справк[аи])) о доходах', text) is not None:
         return True
@@ -99,30 +105,6 @@ def check_year_or_subpage(link_info):
     return False
 
 
-def check_download_text_not_html(link_info):
-    text = normalize_anchor_text(link_info.Text)
-    if text.find('шаблоны') != -1:
-        return False
-    if text.startswith('скачать'):
-        return True
-    if text.startswith('загрузить'):
-        return True
-
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        if e == DEFAULT_HTML_EXTENSION:
-            continue
-        #if text.startswith(e[1:]):  #without "."
-        #    return True
-
-        # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
-        if text.find(e[1:]) != -1:
-            return True
-        if link_info.Target is not None and link_info.Target.lower().endswith(e):
-            return True
-    return False
-
-
 def check_documents(link_info):
     text = normalize_anchor_text(link_info.Text)
     if text.find("сведения") == -1:
@@ -132,27 +114,71 @@ def check_documents(link_info):
     return True
 
 
-def check_accepted_declaration_file_type(link_info):
-    if check_download_text_not_html(link_info):
+def declaration_step_anchor_text(anchor_text):
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    anchor_text = normalize_anchor_text(anchor_text)
+    if anchor_text.find('шаблоны') != -1:
+        return False
+    if anchor_text.find('решение') != -1:
+        return False
+    if anchor_text.find('постановление') != -1:
+        return False
+    if anchor_text.find('доклад') != -1:
+        return False
+    if anchor_text.find('протокол') != -1:
+        return False
+    if anchor_text.startswith('план'):
+        return False
+    if anchor_text.startswith('скачать'):
         return True
-    if link_info.Target is not None:
-        # only office documents, not html
-        if link_info.Target.find("download") != -1:
-            return True  # otherwise ddos on admuni.ru
-        if not common_link_check(link_info.Target):
-            return False  # to make faster
-        if link_info.DownloadedBySelenium is not None:
-            return True
-        if link_info.Target.endswith('html'):
-            return False
+    if anchor_text.startswith('загрузить'):
+        return True
 
-        try:
-            ext = get_file_extension_by_url(link_info.Target)
-            return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except Exception as err:
-            logger = logging.getLogger("dlrobot_logger")
-            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.Target, str(err)))
-            return False
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        if e == DEFAULT_HTML_EXTENSION:
+            continue
+        # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
+        if anchor_text.find(e[1:]) != -1:
+            return True
+    return None # undef
+
+
+def declaration_step_url(target_url):
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+
+    if target_url.find("download") != -1:
+        return True  # otherwise ddos on admuni.ru
+    if not common_link_check(target_url):
+        return False  # to make faster
+
+    # only office documents, not html, html must be checked by check_html_can_be_declaration
+    if target_url.endswith('html'):
+        return False
+
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        if e != DEFAULT_HTML_EXTENSION:
+            if target_url.lower().endswith(e):
+                return True
+    try:
+        ext = get_file_extension_by_url(target_url)
+        return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    except Exception as err:
+        logger = logging.getLogger("dlrobot_logger")
+        logger.error('cannot query (HEAD) url={}  exception={}\n'.format(target_url, str(err)))
+        return False
+
+
+def declaration_step(link_info):
+    checked_by_text = declaration_step_anchor_text(link_info.Text)
+    if checked_by_text is not None:
+        return checked_by_text
+
+    if link_info.DownloadedBySelenium is not None:
+        return True
+
+    if link_info.Target is not None:
+        if declaration_step_url(link_info.Target):
+            return True
     return False
 
 
@@ -181,7 +207,7 @@ ROBOT_STEPS = [
         'check_link_func': check_link_svedenia_o_doxodax,
         'include_sources': "copy_if_empty",
         'do_not_copy_urls_from_steps': [None, 'sitemap'], # None is for morda_url
-        'search_engine_request': 'inanchor:"сведения о доходах"',
+        'search_engine_request': '"сведения о доходах"',
         'min_normal_count': 5
     },
     {
@@ -198,10 +224,10 @@ ROBOT_STEPS = [
     },
     {
         'step_name': "declarations",
-        'check_link_func': check_accepted_declaration_file_type,
+        'check_link_func': declaration_step,
         'check_html_sources': check_html_can_be_declaration,
         'include_sources': "copy_missing_docs",
-        'search_engine_request': 'inanchor:"сведения о доходах"',
+        'search_engine_request': '"сведения о доходах"',
         'min_normal_count': 3
     },
 ]
@@ -233,6 +259,7 @@ def parse_args():
         args.stop_after = args.step
     return args
 
+
 def step_index_by_name(name):
     if name is None:
         return -1
@@ -240,6 +267,7 @@ def step_index_by_name(name):
         if name == r['step_name']:
             return i
     raise Exception("cannot find step {}".format(name))
+
 
 def make_steps(args, project):
     logger = logging.getLogger("dlrobot_logger")
@@ -293,6 +321,7 @@ def open_project(args, log_file_name):
             project.check_all_offices()
         if args.click_features_file:
             project.write_click_features(args.click_features_file)
+
 
 if __name__ == "__main__":
     args = parse_args()

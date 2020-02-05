@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 281,
-        "files_count": 12
+        "files_count": 14
     },
     [
         "009b6de141bda44f2adbe4fa6b5298e46f4dc8b8a1bf86098f891de252653f0a",
@@ -44,6 +44,11 @@
         0
     ],
     [
+        "a92e5e6325e7a6210a992e7849d0aa69d55fbf459a9a78db638993f53c3ae47a",
+        "cached/files.sudrf.ru/991/anticorruption/doc20170428-073124.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "b89444003243bbae3ab59e85ce881a7292b55d673652d684e074a731239f514b",
         "cached/files.sudrf.ru/991/anticorruption/doc20180606-025054.xlsx/dlrobot_data",
         101
@@ -62,5 +67,10 @@
         "c71d05b6ea91ac78dc8818cb6049b0921d1ba3421d83916bcb12a8e3594bb864",
         "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data",
         92
+    ],
+    [
+        "d012a03de45207a7479df7f1488e66f982ac313cb1a8af7e985d77dd822170b6",
+        "cached/files.sudrf.ru/991/anticorruption/doc20170214-023259.doc/dlrobot_data",
+        -1
     ]
 ]

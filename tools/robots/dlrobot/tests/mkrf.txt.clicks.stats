@@ -9,6 +9,11 @@
         197
     ],
     [
+        "0df52643267cc2b5418f163e9407dfd6a36cc0f740a144251913a714115ce279",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_d5a8e5881d172f80ffc5a23c59c81695/dlrobot_data",
+        12
+    ],
+    [
         "17c12271e9356a02762f698a31fd4464a0d6351da73ea815d889f803f409e216",
         "cached/www.mkrf.ru/upload/iblock/806/806f91ab44935b307242d458ddf7bd1c.docx/dlrobot_data",
         1
@@ -19,8 +24,8 @@
         193
     ],
     [
-        "26bc719927df95ff0107542705b600c030dc1d34cda2dd8f942a89ca1e3a6102",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_5f68e69d27e134160d91807c929ed0c0/dlrobot_data",
+        "21805ff83467f803695156f055e823614a80b394c9afe87107edd4e5c7717658",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_e3cda386bfee7076a1667cb285badfe2/dlrobot_data",
         2
     ],
     [
@@ -34,24 +39,9 @@
         205
     ],
     [
-        "2a088f470083e16d8eea94231c31363b1767503a22bacf909f5abfb92669ff7f",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_ad4f3ad4e1eb1971a0a386a11df722f1/dlrobot_data",
-        12
-    ],
-    [
         "2ad86455b69f94fbe2b42c4c1c4f27b9823bf8ffb46edb0363243a9e3144ccf9",
         "cached/www.mkrf.ru/upload/iblock/55e/55e6c234d83a0fa2d596825784379063.docx/dlrobot_data",
         167
-    ],
-    [
-        "30c45058ac0a337adba216a8438c45085b203da1b4d950a558c86c0594b72a9f",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_0f8f72d3fe0f28893f2c598da1045666/dlrobot_data",
-        2
-    ],
-    [
-        "34d6b20b274cd360d35cd51c63ff2af3793f1a8e3ed38b3b425752769669f400",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_b1b4ce21571ac5f8dd5bd4c4aad916a2/dlrobot_data",
-        0
     ],
     [
         "3a0767657ea2092a084bb0b73dd048483949f39c49d632420857d8635557a53c",
@@ -67,6 +57,11 @@
         "4924e95f355946ead7ffaacce813410c45eac2845247ca02e8caa53d856723fd",
         "cached/www.mkrf.ru/upload/iblock/d14/d147220d6f82b12a34e2896cb3c40c31.docx/dlrobot_data",
         2
+    ],
+    [
+        "4c5d77f3bcd7e6bfb2248380f7bc48d72177bad30c5df5bcbe95681e71423b6c",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_dbd6508b0201402d55270f33bafdba76/dlrobot_data",
+        11
     ],
     [
         "4e2fdd801c7e9567474046923163965cde29e2457dccf26cdd94d1803962ef35",
@@ -119,14 +114,14 @@
         4
     ],
     [
-        "75b51b3a0a876fda0ceea410a973e1f2d8db0324d2c25f0a09c1b6084414eafa",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_6e608f0fe5a0eb4f4307f9aa52c4a32f/dlrobot_data",
-        1
-    ],
-    [
         "7acaa2a047c16fea12366403f1ce5a4be69b60d0e59eb5dd4ea18ca5ada11e83",
         "cached/www.mkrf.ru/upload/iblock/247/247899428cbb0fe1fb1c3b4287429faa.docx/dlrobot_data",
         193
+    ],
+    [
+        "7b16b8d4848d4dcf756794c57be740a57a7f3c06ac9eae02200f87248538f835",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_674595793c73a1a9ed4e062a729f84a6/dlrobot_data",
+        1
     ],
     [
         "7ced4be419fbf9641aff08654c402a7eafaa814db822d035d3291b387914487d",
@@ -137,11 +132,6 @@
         "7edf1cfbbfc38326eae4526987b90dde80b87d9b3743e958ed45e22029ae5f0b",
         "cached/www.mkrf.ru/upload/iblock/b11/b1108c9a8fdbc7f0ffac0ebabe20ac57.docx/dlrobot_data",
         20
-    ],
-    [
-        "87231b66fb781e771e5c0b64dd9eb7118a2863378c8ac2181ad4d56a54bfed14",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_93938b18d93bb3de9fc5ff5244fe453c/dlrobot_data",
-        0
     ],
     [
         "8a35bfbd3fb9b16b62c20549832fcd6b9dc7554d9d1ceb9e35762426c0896c38",
@@ -169,14 +159,24 @@
         0
     ],
     [
+        "a6326a1139f9aed670ff74de959f4320c0c8c7fe7dae03bf6716e3b0b3836543",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_060e323d171a45e5e4b2ad95fd89e632/dlrobot_data",
+        0
+    ],
+    [
         "acc58e54adc971e2ae7403cdb047f9eba30133c2b13fdc8ec977d79e21a3a688",
         "cached/www.mkrf.ru/upload/iblock/408/40835220ef350c46ab9eea8a86fc2953.docx/dlrobot_data",
         206
     ],
     [
-        "b5c5ee4bf20c0bdcc7875ccc053b2c994fa550f24737c0942e7f8dbb48d9e485",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_c0093fcc037bfa67f4bf9432b62545d8/dlrobot_data",
-        11
+        "bc18543325c659c2d80596f6633d8a108de48b079147f132c35c071fac1eccab",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_ad73c191fb4619717c905e2e61f18a3b/dlrobot_data",
+        18
+    ],
+    [
+        "bcf1148c0ed091a654944e644e6888e9446742f5bfe10dd4d796522be886cbfc",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_527339a090ba749dfe18aad186ff5b42/dlrobot_data",
+        2
     ],
     [
         "bd301e0c8529830b6a93bf344902a515102cb624036e6e6b3b9c3e3144a463f3",
@@ -207,11 +207,6 @@
         "d1fc63b562e7981daf882150c982ee40be0f8c6b0cb97b95e4521054a54a10f6",
         "cached/www.mkrf.ru/upload/iblock/d5a/d5a1ee95e8bbdafb28e8149afc8f59d6.docx/dlrobot_data",
         1
-    ],
-    [
-        "d5401d0c29b2d8732bae41084cafa61cf996ca642a3475a17e0191244970a217",
-        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_072dea4779883240436f4ae736540f2d/dlrobot_data",
-        18
     ],
     [
         "db376e36ea3f921b7bbae5308d8c799cb0c753fa56a2cb5aa5fb8666ba7a79e9",
@@ -257,6 +252,11 @@
         "f31daa4501df702e46ad198d9e207182030ae59818ad125d4d6eb3c601563313",
         "cached/www.mkrf.ru/upload/iblock/c43/c4387b50a372c6fc64e22367f6f71dd5.docx/dlrobot_data",
         193
+    ],
+    [
+        "f48f1ffc50ebe4255bee9bce1bbe63fd4f66b626801062a6c66298db0f2ad98b",
+        "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_3d11f24cee40ec4258fc07b8fb372c54/dlrobot_data",
+        0
     ],
     [
         "ffb9dcba5d2c0b20957b7922973c959d55cba00363436c48f14b4ae8993e42a8",

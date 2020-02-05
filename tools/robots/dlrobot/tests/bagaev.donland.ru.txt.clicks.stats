@@ -1,12 +1,37 @@
 [
     {
-        "people_count_sum": 224,
-        "files_count": 18
+        "people_count_sum": 240,
+        "files_count": 143
     },
+    [
+        "007ef1f46e108688080b4d9db78b7195c94626f76f77217c226938889856232d",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/protokol2pomz.doc/dlrobot_data",
+        -1
+    ],
     [
         "0148f7aec84518ce298ff1b5e77befe558bd6dd34022686f15c195a6fd1fe6ca",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_god._30b75300b471f0dd8be677f9d573a1ff/dlrobot_data",
         29
+    ],
+    [
+        "01624ce5c791a03d472646b859611870ede9e49e23e3defeb710bfe43aa61aec",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0603.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "02a2155741ceb17ac0a56d105d78e00af37c4e03a87447f3017e184b07f7f0c5",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04013R01378.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "030ef4b843b9c5263d037c470710c3340118aa80312cf0a8b31724c6b0136ee1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/informatsiia_po_otsenke_kachestva_MU_za_20_6dbdb86758906616170537814c216a00/dlrobot_data",
+        -1
+    ],
+    [
+        "06a497a9bdcb5450d3ed41c64f5cb20143d2835d51e4aa99a6bb9fefe826cb66",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/protokol3pomz.doc/dlrobot_data",
+        -1
     ],
     [
         "0831fcb74c462dd742c7ea8e78cc6cfcee3c51f560017814d3d6a8faab78f649",
@@ -14,14 +39,74 @@
         7
     ],
     [
+        "0a8ded2109dbb15cf3c4323237027eb54ce7e05ea04d16d47a3455346de9df7c",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04018R0291.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "0f8900662f9ce9e540a3755af41c0bf9379d8e396f55f6afc0f5403437879cb0",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04015R0294.doc/dlrobot_data",
+        -1
+    ],
+    [
         "180a2bf9b9bff4e1f12845b1c5650546d6419b940f4654d60b5a4a6b2f4ce2bf",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_dlia_saita_za_2017_god.do_95a7fe035a22e6082f048091f1d3a480/dlrobot_data",
         30
     ],
     [
+        "1c2f35e6b21e027603f7feb23bc3348d81a09a47c28e82d90eb71a6d2996c9d7",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/protokol2pomz.doc/dlrobot_data",
+        -1
+    ],
+    [
         "1e77ec9e07ff5d19f2885a5df0d5c61e3eaf8b3a5b41a53830982dd0747ee53c",
-        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_eee7e1c8020d47b024baae205dc9ebf5/dlrobot_data",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal'nykh_sluzhashc_4ecfd15cbb472a33c6b5896fce0721ce/dlrobot_data",
         31
+    ],
+    [
+        "2088b7c7f3c69cb8493d6b5f301e5926c56e260461aa9e260d48b59d30149441",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/u560_090518.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "212912c7df81ef4ba3ebead74d9df589561f67e6c33fbfc9f92c5489c3d23a0a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04020R0019.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "23ab1f16230ee2fce240c9b0a44cfd0d68ece171ec7411ac39a779549080405f",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0298.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "23cbe95699cdba6534725a50d1514f4eeeaa1339318fcb75a3dea1f8531041f5",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/informatsiiaobotsenkekachestvapredostavleniiamu_5b523af615cd4b1b01a6c6f19f5e4f28/dlrobot_data",
+        -1
+    ],
+    [
+        "2ae4a743043e18a332dcf32e54c6387375fac1344673e51d7d7a3ab5569a060d",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0260.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "2d57332c1be6e9ed81a9773ae164c8b895e3082854cb826e5fed481820f7732f",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04015P0536.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "2f6d6c3e990c7821099571450342f9965fc4f30e7d3181e7490f85ad98f76d17",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/polozhobuszn.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "30feacf311747de6d68b9daa80997b3f4bcc5a0c52a28a65190138308d801848",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/doklad/antikorupz/7_post195_090306.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "31eb7e119c6aa958373b57f21fc7665f7691c51321adb6aa6808e4d7eea82867",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_veteranov.doc/dlrobot_data",
+        -1
     ],
     [
         "32ae8f1bd545a6c007dfff9f78f731083f2e5c6af49e7e25fca8a229bbb91832",
@@ -29,9 +114,34 @@
         4
     ],
     [
+        "33e921748d647a623b0f5266707676cc47ccf815af55e3061e2c227488a31102",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_veteranov_truda_R_8478efe6234e7973d79226c633cd58e1/dlrobot_data",
+        -1
+    ],
+    [
         "3a3fe112f093d18c0190646f5f6f8ae1626c2ce00f146af25d81d5865553fe1a",
         "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2017__756b3dc510e2a6d8908685e8aa00b735/dlrobot_data",
         15
+    ],
+    [
+        "407ad60651b12597f45ffeb1290498a806a9cea4e306614f1f0d39c6d406a338",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/protokol1pomz.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "4161d8e4c7496a67cf26d81d56e82c6286871a7f12fa39d40ad9651216016fa5",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/menedzhment_TsSO_310119.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "4424b9f88315def7a4f13604a3618143768b51d722e41a3f49e1bb14a653db57",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2017_g_616c04aeeae8108d1bc94bdb7d41ac80/dlrobot_data",
+        5
+    ],
+    [
+        "4556b69186a8bcdafa3f7867c991db49493efd8efc68cf46cae2a4fc2c02505a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_za_2016_god.docx/dlrobot_data",
+        5
     ],
     [
         "46f28d3dc846612d67de96813825543752ef1b0a6784ac648590d6cd5b2d5552",
@@ -39,9 +149,79 @@
         -1
     ],
     [
+        "48aacc065249b3d0ce15947a3cf9f2ef87cd36e05de0bc44688011cba6d197da",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/04013p01003.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "4a35644845dcf584da2ee58c4f4949b250a17308a8aa1f69ce2033f5ca890868",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_48366333aa2c375ad62201e177c65b47/dlrobot_data",
+        5
+    ],
+    [
+        "4dc058d670cde97b38212aaeb98c9eeebb2abc707d169959b806e3de31add24f",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04013R01398.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "509237749390d71dfafd73b8a577eb6e5352a535ec15618dc2a844a930ffb699",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/menedzhment_TsSO_310119.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "5179e5c934577dd9ded309ec7d6fedfa17087db0f99d5e029944c676b0df54ed",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/prikaz_110416.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "542aba10ad5665f901cdbb9b2ba23fdd4321c61d81bbf5d6fca94626414f7f94",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/normakt/postanovleniya/2015/12/04015P1122.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "5b3cf03f20b082cdb4422cb51f2101ef4c52afc235efade61c0b222f92807c5e",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/1_polugodie_2017_Pril._2-6__2_.xlsx/dlrobot_data",
+        -1
+    ],
+    [
+        "5b9fca8b5578c180e7c4d5902533d2ba1543d61f91f528e192345df3820ea0ed",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04010R01283.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "60ad08408890f9b187ee0ad9026d9c628140f9178d972b3946e989a943cc5963",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04014r0007.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "61f1a12704332f584044e63762dae33b1619288b1654b5fc3ecf25962a7ff208",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0641.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "61f3756696989b9aaa29c6cd4209e211bbf74bcb1699d5b7ddf6ae0b476d9d76",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0342.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "62ad8d8a9d844fc9423533743f32170ea02ba7da8d7e8a3c9a422db5ac72b824",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0263.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "64313796645e0fe4a4366494604a6c3df52b630f084412469c6ab450cbfc9c84",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0815.doc/dlrobot_data",
+        -1
+    ],
+    [
         "647704695f24789ff2d7bad57cf8917486fefd10a4df3aae4a24c43683865fd2",
         "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/svedeniiaodokhodakhiraskhodakh.doc/dlrobot_data",
         3
+    ],
+    [
+        "648cd5771a80d199a267338c5a50c6bd7b960666eb1a8c9a97d8eb86c4f25173",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Doklad_GRBS_za_2014.docx/dlrobot_data",
+        -1
     ],
     [
         "659379778f16defab2c817ed680f11ff80a38eb99d1a6f7d51371d6f1aee7151",
@@ -54,9 +234,54 @@
         29
     ],
     [
+        "6957804ca187fedbe217d80820765d4385f34ebeadc0a6062f03cca8ecda8187",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_2_po_za_1kv.2017.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "69ff78735883a6b85bbc1d57971804602daf2d594fa9cfbc93b25f4b4b9b718b",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_1_po_MZ_za_2016.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "6c749542f37b384eea4de76793b6d00b785fd4fdf831067e9343c5e1fc5de5fe",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Protokol_4_po_MZ.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "7142c0befc0be8a824a623d7ef261d01069e309ba15258274f2e24626faa4231",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_1_po_MZ_za_2015_god.doc/dlrobot_data",
+        -1
+    ],
+    [
         "7418b89e8a85bf297c0d538d8133dced080d4861c409e89174f3073066de4582",
         "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/15.05.2017doc.docx/dlrobot_data",
         3
+    ],
+    [
+        "7a8c7a7dbb5643ff221797abf1309be89280e77c2cbe67ac44f65fc3dac662ba",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_22082018_1.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "7b260f2ab6c65a82305957d5d9377d9c19aa7567adf1326242de3c8f968eed1a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/dokladgrbs.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "7c3b561e1b790144382fcc3436d6e26ac5ac5c380384a798ce3f8e3296209880",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_110418_3.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "7cdad8bc935f69a953b0c33f71580e2490c61b729b80da1e77b0104a1263d95e",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/ob'iavleniegaz.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "7d02a9743d00ee754d4278c934acf460c072a632358d8c3e4d6e297b0bc677a4",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_3_po_MZ.docx/dlrobot_data",
+        -1
     ],
     [
         "7dda683575e5f4b34eb3189d31c579cb377298529871c6bb03662459b4940f93",
@@ -64,9 +289,164 @@
         15
     ],
     [
+        "7de2d1ae3e0873496ff7366536184b34941feb0f4953395e19976ddc60d7929c",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0714.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "7f9b5058ebb69885a546b0ffe4bfff1ab053cc5b4e4f6ed34b0dfc0920dd9585",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_22082018_2.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "7fd62fcc3af3eee672ade00795624b604594c7ae4ba950dada45dd01bff39328",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04017P0965.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "808648138603f0e1de7eaee108763a34cf61ceeb17b5ee4dcb06b0d397abc3f1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_zashchite_grazhdan,_podvergs_65e3b1261651cfbdeb7905382f80a120/dlrobot_data",
+        -1
+    ],
+    [
+        "828bfd29245d9c0bd04adfa1c811f428008f7d008652f238da3871a66efa1742",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/dokladgrbs.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "87ac53bbb315f818d99a2d7edc5650418b52fda0faa43440eb1e39500fc2e9e9",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0262.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "88c689eac79fa64512f2026979c88282ea00d9a98c55c6e806dfee0f7f6cd202",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/1_polugodie_2017_Pril._1__1_.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "899a503e7cea839bdf2b571ebedf03fb9507699de34f1e9058cba2c21f20bfe6",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_rabotaiushchikh_i_871aa853802736268e875a5d1b7c97a7/dlrobot_data",
+        -1
+    ],
+    [
+        "8c99df726740f6bef4145a1df523e792d56bf5ecb36d301b280dda3b5d6f4d2f",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04013r0285.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "8dd8b89b15ee06940cf944826ae082fc90da001753ad2ceedbc706fa23c16cc4",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04017P0406.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "8e51bede8b80117d7ba438e663ab39eec7c05b19dfb9f061ea035d72444c28c2",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Prot_240119.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "8fc1daa81988277d396db6b17a08f3188d63891687ccd980a681af24b930ccc7",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04017P0155.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "910c4c969b1971181e9a6debd90d852e3415c9076c4d7e87354bdd49c7840d4a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04017R0220.doc/dlrobot_data",
+        0
+    ],
+    [
+        "91a6181b4f3945924ce77a9fa326f77f4349e1741f74378ad1975f06e2f57407",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/informatsiia.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "9365e80fcec3d2d471a928f50f08d6df0cbc07ce6c987441290cc8e2a27ba225",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/u815_080519.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "93a2ea312efa1e665c4af5c6e4bde86cd28cb05cf61cd98d56a9ec87a1647417",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Informatsiia__ob_otsenke_kachestva_predost_8c53f36c7be264c88869f2ec4e89e2c5/dlrobot_data",
+        -1
+    ],
+    [
         "9497a608a954bc74623a99fcae23d92e5f161b433a0c4fc42dd885ed9fbd9b77",
         "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2015god.doc/dlrobot_data",
         3
+    ],
+    [
+        "9502d0f5840919930262bcbd83cc20128343cdd6f4628b1cf18ec584295d5f85",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_detstva_v_Rostovs_eabc02d601551dfc4ef529b86868240e/dlrobot_data",
+        -1
+    ],
+    [
+        "957c352a5e385076d333868ddefbbe5dbe1d391851af6f9b6b65d9c246011c64",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04013P0502.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "95bf356e097cd45a2b3f5bfb2e4aae18bc596ac01c0ae971ceb1bea4a8bdb316",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_2_po_MZ_za_1_kv.2015.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "98807409c123499e408703d0e55675a625675ecf485172fc9d5ecfa1ca9dd83d",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04013R01463.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "99be6b049de819791c070952a5c3b22c4729a2b9d931f199870e93278fb87bb6",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/protokolNo. 1.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "9d654da08b18f0531263e8c7d74e01c7d47de65943b5fe3c2e144d18f9a0d5b6",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04010r0470.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "9ef1681a036767f7aef8fcea695c811e01bfb81a147d2f2bfa867a92ca233f6a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04017P0057.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a0715cd4a227e52e466b7aba040d2386f6707dae590c55dd4be47484d916bec1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0505.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a0c3755668f7ae93b534238ad127055cd1cce587d1b5a7d3ea53588315d21057",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/5_fkz_081225.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a238936f932cd2294bf3ef66fd9178b4b9aae771156804af0a9b02bb7c0a672a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04019P0849.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a4259115dc4b4135574800cd877bfd5104207f113f867657c512d0838cf1842a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0068.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a64a2bfe4da886b36a3c562141b2b030f58c80712ffbd6b956c09c5ababd7eb2",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0398.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a6f2ab7fd41f4601f6c7e7f27d610b0615b53240487a2fa9239f067c92fbf7f0",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_zashchite_invalidov_v_RF.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "a7b58b29f18aefb8c6c8c3843e3e1e6d726c677b817d69ae14abdc5a3f78325d",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_201017_1.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "a84b7b962e824191c9beea62ea177d5e7332980bea6a9e6a6b350bc49ca7e9fd",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_22082018_3.docx/dlrobot_data",
+        -1
     ],
     [
         "afa68e4f208bbafb5aa4160c904028b29f3de7c1a0b1e52e377fee727c9edbb9",
@@ -74,9 +454,59 @@
         26
     ],
     [
+        "b381035c589e5f1bce29227819ac95ea1462b8169421a8fb0b019e4d6de4d546",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_truzhenikov_tyla._5b5a8cc6c92cb28980fea6b619213e72/dlrobot_data",
+        -1
+    ],
+    [
+        "b637883a589eac9ae14dbf611e2a22710cddd64986eb77113987bdc6a4b0371b",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_4_po_MZ.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "b83feb8c659b5fc4ee405e40c822c985e63e01abfa4f5834cbeb079c1fb16c51",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04019P0198.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "b8c5692f60d1e2296b50630a9d0d7fad33501c21ebeaaec07d12fd424de81b3c",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/274_fz_081225.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "baf59807823a51521e89d278fae169da06a4bb0a8f2b3f290cca7592606be32b",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/u558_090518.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "bb7cc199e9b7c9db7f82af671b62b348deabf4240bb819d104ffefafd4d62233",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/protokol2pomzuszn.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "bba0ca3181dce2ddb2d7d7d70a8be8e4d15d175bf25cdec05be9b2f90d7f35bf",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/muz/uszn/dokladgrbs.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "be3d409b147fc77197740a1390df527f481029bcbfd656df851ae264b15a037a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol_2_za_2_kv_2017_po_MZ.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "bf50971f27f290ade9238bc6cceab2526a5ce66de62f7f8e26b9ec63dd6725d6",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Rezul'taty_po_menedzhmentu.zip/dlrobot_data",
+        -1
+    ],
+    [
         "c2756bc23a6771aeb88a6bb74b33a598dfef895f56330fb973f35b7a8d2725fb",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2017_go_99b626288f5b1299e654f7af5db596a5/dlrobot_data",
         5
+    ],
+    [
+        "c694eaa257efb585098197a7396295e708ec4ce9bc0a8c624fd0ee773d2546db",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04013R0234.doc/dlrobot_data",
+        -1
     ],
     [
         "c8ead4a1ce86b3fce95b5a3a1bbf93ac2c91a0e730dcafd20364102a3fe35a38",
@@ -84,13 +514,208 @@
         5
     ],
     [
+        "c8ef671db358b40f3b44e471fc09967495dfbd1503cf3231dbee29ea007d99ff",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/muz/uszn/protokol1pomz.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "c90dccadadcac2fe938d1fccac76ff77884bc9103edecf7bd63c9d0314620fa9",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_veteranov_truda.d_ffdcc452cc1d55266db42fc41f12617a/dlrobot_data",
+        -1
+    ],
+    [
+        "c9bfbb0d0d0243d12f1bc43d9d3d4eb72c36bd029e0b108282548df10c3713f7",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Rezul'taty_po_menedzhmentu.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "ca3ca2e9777cac6d6228b54b60d7ee360c3c5d99995e05faf36ebac4a32aceb3",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04018P1256.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "cd490766c6483a121437408d9ae93ac9eef31fdef48765635a065d774d6a7966",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/u821_100701.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "ce847ee418a5c67e04bb2f9c9176bbd9909c1d75a33e6b70830c8488f5871640",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Protokol_3_po_MZ_za_1_polugod.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "cfb03b14aa23ccf01241197934f0bdd87c90811f699da1a02097f8de4622c32c",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/04012r01392.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "d083c81fe512a0d53008380dce3498003d35aaa006b3ba609749c1418ac773bd",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0604.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "d16c010e5e8698175c920be43e9a4300d4e5b68d4dcf6d4c1e32219962b75e14",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/protokol3pomzza1polugodie2014.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "d1e7b29381206dd569a48d069d393cb26c3d836c724a43fbc9f82156b09b0714",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/prikazNo. 40-odot04.09.2013.doc/dlrobot_data",
+        -1
+    ],
+    [
         "d3384583a0ab00dca181ba779999b8978a53a8fc63ebce9048ab6fb0c8e4f837",
         "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2017god.doc/dlrobot_data",
         3
     ],
     [
+        "da35ce95b41188a05b4c67976218e539d52a978fa90106d684148e578d27eeff",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0673.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "da61d7469dd62c38e6f3840f8efefbbf7648219b486124bbcddd5f78a331c357",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/280_fz_081225.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "dae600895140a2885d867a226044852fc68dc64f53c2c468c0c48d4c8bfaa282",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Proekt_prikaza_po_normativnym_zatratam.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "dea5e3593166eceb41eedcde5cc81582df71c3f3c60676019c42dafbfaea7e00",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/Normativ/normativ_rf/273_fz_081225.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "df0b3472598a199a88472699e03fd7f83e883972af5ef6500b0305c719b2c034",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0149.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "dfe7218e8fb2cfe5bec63cccab18aadf736876ee2222e57570147960d69e7bfc",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04017P0941.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "e295115743a0d0f36f9e1ee0e8e147c3d7311dea2d0a2a4f70d3f497271ea1e2",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04019P0264.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "e2a8f9658094b5750cfe6229138e16366dd2a6cde58f29568c33f0bbbae26cf6",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015P0605.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "e36ed8e10a13bb0c3149d055e8295c7d2199dd24cddc44482b859f54cf3bc2ff",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04016P0155.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "e3e53c23682d134cddbea3970702c0aebf44a6936cb31df4dea202d713e1befe",
+        "cached/www.donland.ru/Data/Sites/1/media/administration/doklad/antikorupz/8_post196_090306.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "e4a15ddb08d48e613875c60b038869338ef7a549e49ea24e2dae55be4bd177a9",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Protokol__za_5_kv_po_MZ_za_2017god.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "e6f9dd645ba232178b9e0d809d5cb09937359b910c99635932ffe573017c8a76",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Protokol_2_po_MZ_za_1_kv_2016.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "e89694033bcf75edfeed78eec366d23d6851992aa779f36598aa1836f70a0a25",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04015P0590.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "e929276d7ef34018b4e65ed49292fc9f168c78cf842f49b31d01de94345341a9",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Protokol_1_po_MZ_za_2014.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "ee35238d094ac2c1a21b2cf5288d346b357057f6ec837ed56d9e299dc7b161ba",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/post600_red275_140423.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "ee35a5608eabd252c09aa2f7179ab9efccf1c9b9346528ce9cfae9ebcaa8647e",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_201017_3.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "ef42e8c2612a86043050e0833f07965361acf7ef8dc5058c73b345e3aa5fc54a",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04019P0850.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "f0af8fb6f426e12277b54b4d0f765706b805aab0c5f2944b2a9b878e8b1aa2e2",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_110418_2.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "f1b120486df6ed46d8cbb2144add0d2be3e283641f6b3a970c8fd1b1e8de1441",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/O_sotsial'noi_podderzhke_grazhdan,_postrad_5e3d0a6371f597fd26cf57b0387b2eaa/dlrobot_data",
+        -1
+    ],
+    [
         "f2090493af179c3f287e377a45d3df3f9248af4f0f2b253164bdc2728decad9f",
         "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2016__303263d53b33fb87fa1c452313a891f3/dlrobot_data",
         15
+    ],
+    [
+        "f2c863204f5142cae92066d363bb776a7cef981049b3804d165630122741efa3",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Informatsiia__ob_otsenke_kachestva_predost_6a78d08077910aced9d32e10d8af23da/dlrobot_data",
+        -1
+    ],
+    [
+        "f2fbb1cc00ca50331c7188b362d970474a28f61fdc8e0fb1e95c12c6748c9417",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/04015R0095.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "f3e19e68da281b4f0c26846641268f669be37861e433878e0dd601c0f89c4de5",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_110418_1.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "f416ff8fceb67072d5ca9d219b4051b7b9eb6ae696c9bfadccbbc1d582100b19",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/protokolNo. 2.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "f43dec89d42870ca29ec64a2804e4e101fb83aee73df59ead19ac723de98affb",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Protokol_4_po_MZ.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "f49e662a33f2ad8c661ca0aab0397d2b67bcc6ca4b73b44ce64be5db4e32f3ac",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04010r00148.doc/dlrobot_data",
+        -1
+    ],
+    [
+        "f5828f25ea556e19eb6129236cbf26674d6d459ed261ad84650b6d2c4da3f400",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/socsfera/otdelkul'tury/Svedeniia_o_dokhodakh_za_2016_a461a5fef7ec8cd6a7c3127c2f49b9c3/dlrobot_data",
+        1
+    ],
+    [
+        "f5eb7880e266c73cea020073e614c57c144d88c95f44ea356f52643b0afa132e",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04020P0043.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "fb978fc848cccf1f27f84202cacd8f2f8a07385e64208f1e03d6a9ceef153116",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_201017_2.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "fc05c73064102867c77940e31c1c44e02a1408a97f9f8c2c2a2fbc4883731327",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/npa_corrupz/04016P0264.doc/dlrobot_data",
+        -1
     ]
 ]

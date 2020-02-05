@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 2032,
-        "files_count": 39
+        "files_count": 41
     },
     [
         "08877a0bb58f6958fdbaf200afeb0afbf2f512b0cd76e6debb897123106400b9",
@@ -114,6 +114,11 @@
         199
     ],
     [
+        "a55f42bb1ee268212c43cbd9ed9ab9ed9082a620314211d99b27c89f7fc614f5",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income3.pdf/dlrobot_data",
+        -1
+    ],
+    [
         "a5bdb915cb370fab55500cfce3f417e06193be6631f1b673d9f8ef286c58b954",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2015.doc/dlrobot_data",
         13
@@ -167,6 +172,11 @@
         "d3691fff9a2a93f5aa4dbd7bf26600b267a75b0ef00feaebbaf4df8dca702590",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2014.doc/dlrobot_data",
         8
+    ],
+    [
+        "d611a0ffc38e82c584768aa864c1a9af63999b82ba8c8efbb67d2368db93c191",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/pamyatka_site.doc/dlrobot_data",
+        0
     ],
     [
         "e0be0974e52f325a86d0d9ec284bb4ad45e4608a7d0c049858269d47f8eef860",

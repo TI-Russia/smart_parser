@@ -163,6 +163,8 @@ def check_href_elementary(href):
         return False
     if href.startswith('javascript:'):
         return False
+    if href.startswith('consultantplus:'):
+        return False
     if href.startswith('#'):
         if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
             return False
@@ -204,7 +206,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
                             found_text = check_long_near_text(l, 3, step_info.check_link_func)
                     except SomeOtherTextException as err:
                         continue
-                    if len(found_text) > 0:
+                    if found_text is not None and len(found_text) > 0:
                         link_info = {
                             'href': href,
                             'text': found_text.strip(" \r\n\t"),
