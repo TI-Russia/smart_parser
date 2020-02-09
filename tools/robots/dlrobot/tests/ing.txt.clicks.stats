@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 91,
-        "files_count": 18
+        "files_count": 17
     },
     [
         "22f66550ede2ceb1056ed4f99454f3c25bfd21b16662a9ee372d98fda76b66dc",
@@ -72,11 +72,6 @@
         "d6a531d7f472e8c39a0bfc7bdb77115c7d7af83244026c85a236226006a489c4",
         "cached/voronovskoe.ru/sites/default/files/2016/05/__11108.doc/dlrobot_data",
         2
-    ],
-    [
-        "dbb7428f939e18d52af707b917a90384b86378054b68fa01c8738ef8aade2b7f",
-        "cached/www.voronovskoe.ru/sites/default/files/2014/07/__53345.doc/dlrobot_data",
-        -1
     ],
     [
         "ebce03f3f94b2be4d04da0a04c84b3d90dfa133cbd600bb6c9efa35a8fe6771f",

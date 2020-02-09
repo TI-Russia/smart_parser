@@ -67,6 +67,12 @@ class GoogleSearch:
     def read_cache(site_url,  query):
         filename = GoogleSearch.get_cached_file_name(site_url,  query)
         try:
+            if os.path.exists(filename):
+                create_time = os.path.getmtime(filename)
+                if time.time() - create_time > 24 * 3600:  # file is older than one day
+                    os.unlink(filename)
+                    return dict()
+
             with open(filename, "r", encoding="utf8") as inp:
                 cached_results = json.load(inp)
                 if len(cached_results) > 0:

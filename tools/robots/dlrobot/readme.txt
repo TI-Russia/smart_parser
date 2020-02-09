@@ -76,3 +76,10 @@ Keep-Alive: timeout=20
 -rw-rw-r-- 1 sokirko sokirko      71 Feb  3 01:24 pfrf.ru.txt.clicks.stats
 -rw-rw-r-- 1 sokirko sokirko      71 Feb  3 01:25 service.nalog.ru.txt.clicks.stats
 -rw-rw-r-- 1 sokirko sokirko      71 Feb  3 01:44 svost.gosnadzor.ru.txt.clicks.stats
+
+===
+1. Запустить тесты
+2.  запустил all.b/bruhoveckaya.ru.txt.log
+   Возникате 503 через 40 минут (dlrobot.log.ddos4)
+3. Мид сломался? Изучить mid.log
+

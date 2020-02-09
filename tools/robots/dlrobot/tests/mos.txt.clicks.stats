@@ -1,7 +1,7 @@
 [
     {
-        "people_count_sum": 1617,
-        "files_count": 56
+        "people_count_sum": 1731,
+        "files_count": 57
     },
     [
         "0308c25991262ec912d7fd65efd479ffcb70ce3d214a87cb56fa426709d21ac3",
@@ -169,11 +169,6 @@
         40
     ],
     [
-        "86b020e602e50207c63a020b705cb20aee2597927d96ae2d8486ba315f767271",
-        "cached/www.mos.ru/upload/documents/files/8724/mka_income_2013.pdf/dlrobot_data",
-        -1
-    ],
-    [
         "8dd4902f48f5c7ebe70609c6bd056f48e442d2e318ccd62a12071aedc200e45a",
         "cached/www.mos.ru/upload/documents/oiv/rasporyazhenie_ot_31032014_64_16_46_14.pdf/dlrobot_data",
         -1
@@ -194,6 +189,11 @@
         2
     ],
     [
+        "9e906f16e67f9012da100b8bd4acc336d84749fb2a6490927d1934a90d21592a",
+        "cached/www.mos.ru/upload/documents/files/83/15forma_na_sayt_gbu.xls/dlrobot_data",
+        2
+    ],
+    [
         "a75813d3d5e1fe1c0230a8a4cf698353e1b3874b789ac63ff0c888754b8e25c6",
         "cached/www.mos.ru/upload/documents/oiv/svedenija_o_dohodah_rashodah_ob_imushhestve_i_objazatelstvah_imushhe_df233120a333afaff222540211cb9f04/dlrobot_data",
         74
@@ -202,6 +202,11 @@
         "ab0a10f71ccd0fdedf6a967a80ca6a17c32b2c3541d40a97bb566b4652e274ab",
         "cached/www.mos.ru/upload/documents/oiv/2011_208_.pdf/dlrobot_data",
         -1
+    ],
+    [
+        "af709a19adbe7f9dbc81807798367f6a7dbdde2723f399713eabada3ae37d2aa",
+        "cached/www.mos.ru/upload/documents/oiv/svedenija_o_dohodah_ob_imushhestve_i_objazatelstvah_imushhestvennogo_ea8b0fd01ed696b6926b122fc4fdd415/dlrobot_data",
+        112
     ],
     [
         "bd9e88fc4f14a85b805283160952ee119dd139061f621b4a04f2e080b6f1bce0",

@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 14,
-        "files_count": 224
+        "files_count": 225
     },
     [
         "00af516ae8d9cb9b98eff3f8d3ebae70072d528df429b9f0405a053d7aa0a7d2",
@@ -76,11 +76,6 @@
     [
         "12a5ad3ab488458ef422d4a5d42b694bd3d60f3b68516b10da794ad73af28de3",
         "cached/www.spbogdo.ru/file/download/459/dlrobot_data",
-        -1
-    ],
-    [
-        "13645179a25255c9be330721d492e629fad3b34783550c90e496eb98ef7c061c",
-        "cached/www.spbogdo.ru/file/download/605/dlrobot_data",
         -1
     ],
     [
@@ -236,11 +231,6 @@
     [
         "393afece7a699f460859794a5b877a5afed83944c582bd20214bbab9a12ae86d",
         "cached/www.spbogdo.ru/file/download/418/dlrobot_data",
-        -1
-    ],
-    [
-        "396d512d3e1b3cf3226afb7bea7aa0ec677cba3ab3f9f8a3ae2f12ab060467c6",
-        "cached/www.spbogdo.ru/file/download/582/dlrobot_data",
         -1
     ],
     [
@@ -459,6 +449,11 @@
         -1
     ],
     [
+        "6588222c3d86be0e59acc4c4e45b74ac8750ec773337ecbfb6982dd454c9e1a1",
+        "cached/www.spbogdo.ru/file/download/158/dlrobot_data",
+        -1
+    ],
+    [
         "673172f49926139e9f6aa6293a6c0aaf7b071082199f31482eb2f21ef7d72341",
         "cached/www.spbogdo.ru/file/download/131/dlrobot_data",
         -1
@@ -531,6 +526,11 @@
     [
         "7b187229d655d0d6730771e83a51be49d9f4853d4885b7968591cbb617f53e43",
         "cached/www.spbogdo.ru/file/download/255/dlrobot_data",
+        -1
+    ],
+    [
+        "7b3e2a8606d2cd8f1eef3892769633860da6b345ed4b4ea31168bb762d55e8c7",
+        "cached/www.spbogdo.ru/file/download/157/dlrobot_data",
         -1
     ],
     [
@@ -681,6 +681,11 @@
     [
         "9e710c00af06db8bc04e37889d88956b53c0f23bd717680d71480aeef402cce9",
         "cached/spbogdo.ru/file/download/601/dlrobot_data",
+        -1
+    ],
+    [
+        "9edc8519c43ecb669bbbe557fb03b217f2af858d4181f44f6d00a529bb129c85",
+        "cached/www.spbogdo.ru/file/download/304/dlrobot_data",
         -1
     ],
     [
@@ -1019,11 +1024,6 @@
         -1
     ],
     [
-        "e7c16b5212efd73a79456d7dd44f8e385c64380a9a22f4892aea1bf0657c633e",
-        "cached/www.spbogdo.ru/file/download/581/dlrobot_data",
-        -1
-    ],
-    [
         "e86dc3c17331eda2a773ea3b68eca2f365fe0e44415612284998f2e223284f4f",
         "cached/www.spbogdo.ru/file/download/351/dlrobot_data",
         -1
@@ -1111,6 +1111,11 @@
     [
         "f849fe403e9feff3e1f40d46e6b2cd115c23f35a91e4aa634139ae1231cd21ee",
         "cached/www.spbogdo.ru/file/download/153/dlrobot_data",
+        -1
+    ],
+    [
+        "fb7f828839d65cde0969a7f7eeb48822e5df4addc7e38cffa269e899c27ff3fb",
+        "cached/www.spbogdo.ru/file/download/305/dlrobot_data",
         -1
     ],
     [

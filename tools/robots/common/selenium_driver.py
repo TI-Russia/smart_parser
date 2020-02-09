@@ -1,16 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from content_types import  ALL_CONTENT_TYPES
-import time
 import logging
 from selenium.common.exceptions  import WebDriverException, NoSuchWindowException
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import os
+import shutil
+from pathlib import Path
+import time
+
+
+def make_folder_empty(folder):
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+
 
 class TSeleniumDriver:
-    def __init__(self, headless=True):
+    def __init__(self, headless=True, download_folder=None):
         self.the_driver = None
         self.driver_processed_urls_count  = 0
-        self.download_folder = None
-        self.headless =  headless
+        self.download_folder = download_folder
+        self.headless = headless
+        self.last_downloaded_file = None
+        self.window_before_click = None
 
     def start_executable(self):
         options = FirefoxOptions()
@@ -28,6 +48,7 @@ class TSeleniumDriver:
     def stop_executable(self):
         if self.the_driver is not None:
             self.the_driver.quit()
+
 
     def navigate(self, url):
         #to reduce memory usage
@@ -60,4 +81,44 @@ class TSeleniumDriver:
             time.sleep(10)
             return self._navigate_and_get_links(url)
 
+    def wait_download_finished(self, timeout=120):
+        dl_wait = True
+        seconds = 0
+        while dl_wait and seconds < timeout:
+            firefox_temp_file = sorted(Path(self.download_folder).glob('*.part'))
+            chrome_temp_file = sorted(Path(self.download_folder).glob('*.crdownload'))
+            if (len(firefox_temp_file) == 0) and \
+                    (len(chrome_temp_file) == 0):
+                files = os.listdir(self.download_folder)
+                if len(files) > 0:
+                    return save_download_file(os.path.join(self.download_folder, files[0]))
+                return None
+            time.sleep(1)
+            seconds += 1
+        return None
 
+    def click_element(self, element):
+        make_folder_empty(self.download_folder)
+        self.window_before_click = self.the_driver.window_handles[0]
+        self.the_driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
+        time.sleep(1)
+        # open in a new tab, send ctrl-click
+        ActionChains(self.the_driver) \
+            .key_down(Keys.CONTROL) \
+            .click(element) \
+            .key_up(Keys.CONTROL) \
+            .perform()
+
+        time.sleep(6)
+        if len(self.the_driver.window_handles) < 2:
+            logger = logging.getLogger("dlrobot_logger")
+            logger.debug("cannot click, no new window is found")
+            return
+        window_after = self.the_driver.window_handles[1]
+        self.the_driver.switch_to_window(window_after)
+        self.last_downloaded_file = self.wait_download_finished(180)
+
+    def close_window_tab(self):
+        self.the_driver.close()
+        assert self.window_before_click  is not None
+        self.the_driver.switch_to.window(self.window_before_click)

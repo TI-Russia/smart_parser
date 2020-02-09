@@ -1,57 +1,16 @@
-import ssl
-import urllib.parse
-import urllib.request
 import json
 import re
-from urllib.parse import urlparse, quote, unquote, urlunparse
+from urllib.parse import urlparse, unquote
 import hashlib
-from collections import defaultdict
 import logging
 from unidecode import unidecode
 import os
-import datetime
-import time
-import requests
-from lxml.html import fromstring
+from http_request import make_http_request, request_url_headers
 
 FILE_CACHE_FOLDER = "cached"
 DEFAULT_HTML_EXTENSION = ".html"
 DEFAULT_ZIP_EXTENSION = ".zip"
 ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip', DEFAULT_HTML_EXTENSION}
-
-HEADER_MEMORY_CACHE = dict()
-HEADER_REQUEST_COUNT = defaultdict(int)
-ALL_HTTP_REQUEST = dict() # (url, method) -> time
-
-
-def get_request_rate(min_time=0):
-    global ALL_HTTP_REQUEST
-    current_time = time.time()
-    time_points = list(t for t in ALL_HTTP_REQUEST.values() if t > min_time)
-    return {
-        "request_rate_1_min": sum( 1 for t in time_points if (current_time - t) < 60),
-        "request_rate_10_min": sum(1 for t in time_points if (current_time - t) < 60 * 10),
-        "request_count": len(time_points)
-    }
-
-
-def wait_until_policy_compliance(policy_name, max_policy_value):
-    request_rates = get_request_rate()
-    sleep_sec = max_policy_value / 10
-    while request_rates[policy_name] > max_policy_value:
-        logger = logging.getLogger("dlrobot_logger")
-        logger.debug("wait {} seconds to comply {} (max value={})".format(sleep_sec, policy_name, max_policy_value))
-        time.sleep(sleep_sec)
-        request_rates = get_request_rate()
-
-
-def consider_request_policy(url, method):
-    global ALL_HTTP_REQUEST
-    if len(ALL_HTTP_REQUEST) > 80:
-        wait_until_policy_compliance("request_rate_1_min", 50)
-        wait_until_policy_compliance("request_rate_10_min", 300)
-
-    ALL_HTTP_REQUEST[(url, method)] = time.time()
 
 
 def is_html_contents(info):
@@ -59,83 +18,12 @@ def is_html_contents(info):
     return content_type.startswith('text')
 
 
-def make_http_request(url, method):
-
-    consider_request_policy(url, method)
-
-    o = list(urlparse(url)[:])
-    if has_cyrillic(o[1]):
-        o[1] = o[1].encode('idna').decode('latin')
-
-    o[2] = unquote(o[2])
-    o[2] = quote(o[2])
-    url = urlunparse(o)
-    context = ssl._create_unverified_context()
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-    logger = logging.getLogger("dlrobot_logger")
-    logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
-    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        data = '' if method == "HEAD" else request.read()
-        info = request.info()
-        headers = request.headers
-        return info, headers, data
-
-
-def get_proxies():
-    url = 'https://free-proxy-list.net/'
-    response = requests.get(url)
-    parser = fromstring(response.text)
-    proxies = set()
-    for i in parser.xpath('//tbody/tr')[:10]:
-        #if i.xpath('.//td[7][contains(text(),"yes")]'):
-            proxy = ":".join([i.xpath('.//td[1]/text()')[0], i.xpath('.//td[2]/text()')[0]])
-            proxies.add(proxy)
-    return list(proxies)
-
-LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
-PROXIES = get_proxies()
-
-def request_url_headers (url):
-    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME, PROXIES
-    if url in HEADER_MEMORY_CACHE:
-        return HEADER_MEMORY_CACHE[url]
-    if HEADER_REQUEST_COUNT[url] >= 3:
-        raise Exception("too many times to get headers that caused exceptions")
-
-    #os.environ['HTTP_PROXY'] = random.choice(PROXIES)
-    #os.environ['HTTPS_PROXY'] = random.choice(PROXIES)
-    #proxy = random.choice(PROXIES)
-
-    # do not ddos sites
-    elapsed_time = datetime.datetime.now() - LAST_HEAD_REQUEST_TIME
-    if elapsed_time.total_seconds() < 1:
-        time.sleep(1)
-    LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
-
-
-    HEADER_REQUEST_COUNT[url] += 1
-    _, headers, _ = make_http_request(url, "HEAD")
-    #headers = requests.head(url, proxies={"http": proxy, "https": proxy})
-    HEADER_MEMORY_CACHE[url] = headers
-    return headers
-
-
 def find_simple_js_redirect(data):
     res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\']+)([\'"]?\s*;)', data)
     if res:
         url = res.group(3)
         return url
-    return None
-
-
-def has_cyrillic(text):
-    return bool(re.search('[Ёёа-яА-Я]', text))
+    return Non
 
 
 def get_site_domain_wo_www(url):
@@ -144,8 +32,6 @@ def get_site_domain_wo_www(url):
     if domain.startswith('www.'):
         domain = domain[len('www.'):]
     return domain
-
-
 
 
 def download_with_urllib (url, search_for_js_redirect=True):
@@ -166,8 +52,8 @@ def download_with_urllib (url, search_for_js_redirect=True):
     return data, info
 
 
-def read_cache_file(localfile):
-    with open(localfile, "rb") as f:
+def read_cache_file(local_file):
+    with open(local_file, "rb") as f:
         return f.read()
 
 
@@ -223,8 +109,8 @@ def _url_to_cached_folder (url):
     if local_path.startswith('https://'):
         local_path = local_path[len('https://'):]
     local_path = local_path.replace('\\', '/') # must be the same to calc hashlib.md5, change it after hashlib.md5
-    local_path = re.sub("[:&=?'\"+<>()*| ]", '_', local_path)
     local_path = unidecode(local_path)
+    local_path = re.sub("[:&=?'\"+<>()*| ]", '_', local_path)
     local_path = local_path.strip("/") #https:////files.sudrf.ru/1060/user/Prikaz_o_naznachenii_otvetstvennogo.pdf
     if len(local_path) > 100:
         local_path = local_path[0:100] + "_" + hashlib.md5(local_path.encode('latin',  errors="ignore")).hexdigest()

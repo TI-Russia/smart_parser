@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 211313,
-        "files_count": 43
+        "files_count": 44
     },
     [
         "08a6fa7a48f0524c422d390649bab0dfdfb564b3197521c5b29fddf76596ae36",
@@ -156,6 +156,11 @@
     [
         "a5d7ef23cec7e7c1b1fbdd024d296dc0a321d1cd7b9fcb96c9089e1838e64057",
         "cached/mil.ru/files/morf/military/files/Formy_k_telegramme_173-OS-27766.xlsx/dlrobot_data",
+        -1
+    ],
+    [
+        "b8098853f993470cc062c49b0489677e50c6a418f1648862393c06cfba14058c",
+        "cached/mil.ru/download/doc/morf/military/files/pamiatka_gossluzhashchim_svod.pdf_contentdisposition_attachm_c3a6e1e9cf31277186fcb56c02d2e088/dlrobot_data",
         -1
     ],
     [

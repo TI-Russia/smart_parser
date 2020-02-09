@@ -81,13 +81,15 @@ def check_link_svedenia_o_doxodax(link_info):
     return False
 
 
-def check_year_or_subpage(link_info):
+def declarations_div_pages_step(link_info):
     if check_sub_page_or_iframe(link_info):
         return True
 
     # here is a place for ML
     if link_info.Text is not None:
         text = normalize_anchor_text(link_info.Text)
+        if text.find('должностях') != -1:
+            return False
         if text.find('сведения') != -1:
             return True
         if text.find('справка о доходах') != -1:
@@ -212,7 +214,7 @@ ROBOT_STEPS = [
     },
     {
         'step_name': "declarations_div_pages",
-        'check_link_func': check_year_or_subpage,
+        'check_link_func': declarations_div_pages_step,
         'include_sources': "always",
         'transitive': True,
         'fallback_to_selenium': False

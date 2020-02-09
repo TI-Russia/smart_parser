@@ -8,8 +8,9 @@ import urllib
 import time
 from bs4 import BeautifulSoup
 from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
-                get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8, \
-                get_request_rate
+                get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
+
+from http_request import get_request_rate
 
 from export_files import UNKNOWN_PEOPLE_COUNT
 
@@ -20,6 +21,8 @@ from find_link import strip_viewer_prefix, click_all_selenium, can_be_office_doc
 
 
 from serp_parser import GoogleSearch
+from collections import defaultdict
+
 FIXLIST =  {
     'fsin.su': {
         "anticorruption_div" : "http://www.fsin.su/anticorrup2014/"
@@ -28,6 +31,23 @@ FIXLIST =  {
         "anticorruption_div" : "http://www.fso.gov.ru/korrup.html"
     }
 }
+
+
+class TUrlMirror:
+    def __init__(self, url):
+        self.input_url  = url
+        self.protocol_prefix = ''
+        self.www_prefix = ''
+        for prefix in ['http://', 'https://']:
+            if url.startswith(prefix):
+                url = url[len(prefix):]
+                self.protocol_prefix = prefix
+                break
+        for prefix in ['www']:
+            if url.startswith(prefix):
+                url = url[len(prefix):]
+                self.www_prefix = prefix
+        self.normalized_url = url
 
 
 class TRobotStep:
@@ -40,6 +60,15 @@ class TRobotStep:
         else:
             self.step_urls = set()
 
+    def delete_url_mirrors(self):
+        mirrors = defaultdict(list)
+        for u in self.step_urls:
+            m = TUrlMirror(u)
+            mirrors[m.normalized_url].append(m)
+        self.step_urls = set()
+        for urls in mirrors.values():
+            urls = sorted(urls, key=(lambda x: len(x.input_url)))
+            self.step_urls.add(urls[-1].input_url)  # get the longest url
 
     def to_json(self):
         return {
@@ -458,6 +487,8 @@ class TRobotProject:
                 TRobotProject.logger.debug("add url {} by {}".format(url, check_func.__name__))
                 step_info.robot_step.step_urls.add(url)
 
+
+
     def find_links_for_one_website(self, office_info, step_passport):
         global FIXLIST
         step_name = step_passport['step_name']
@@ -512,4 +543,5 @@ class TRobotProject:
             "step_request_rate": get_request_rate(start_time),
             "site_request_rate": get_request_rate()
         }
+        target.delete_url_mirrors()
         self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))
