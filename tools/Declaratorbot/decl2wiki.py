@@ -7,6 +7,7 @@ import urllib.parse
 import argparse
 import urllib.parse
 import re
+import time
 
 # Create a custom logger
 def setup_logging( logger, logfilename):
@@ -219,11 +220,12 @@ def get_template_regexp(wiki_template):
     return re.compile(regexp)
 
 
-def add_missing_template_to_ruwiki (diff):
+def add_missing_template_to_ruwiki (diff, sleep_after_insert, max_insert_count):
     site = pywikibot.Site('ru', 'wikipedia')
     wiki_template = 'Внешние ссылки'
     wiki_template_regexp = get_template_regexp(wiki_template)
     logger = logging.getLogger("dlwikibot")
+    insert_count = 0
     for res_comp in diff:
         ruwiki_title = res_comp['wikidata'].get('ruwiki_title')
         if ruwiki_title is None: # there is no link from wikidata to ruwiki
@@ -239,11 +241,15 @@ def add_missing_template_to_ruwiki (diff):
                 logger.info("cannot find a category in {}, skip it".format(ruwiki_title))
                 continue
 
-            text = text[:index_categ] + '{{' + wiki_template + '}}\n' + text[index_categ:]
+            text = text[:index_categ] + '{{' + wiki_template + '}}\n\n' + text[index_categ:]
             page.text = text
             page.save(summary="добавляю темплейт {{"+wiki_template+'}}' )
             logger.info('inserted template {} to {}'.format(wiki_template, ruwiki_title))
-
+            insert_count += 1
+            if insert_count >= max_insert_count:
+                break
+            logger.info('sleep  {} seconds'.format(sleep_after_insert))
+            time.sleep(sleep_after_insert)
 
 
 def request_wikidata_pages_with_declarator_links():
@@ -279,6 +285,8 @@ def parse_args():
     parser.add_argument("--action", dest='action', help="print")
     parser.add_argument("--wikidata-squeeze", dest='wikidata_squeeze_file')
     parser.add_argument("--db-squeeze", dest='db_squeeze_file')
+    parser.add_argument("--sleep-after-insert", dest="sleep_after_insert", type=int, default=60)
+    parser.add_argument("--max-insert-count", dest="max_insert_count", type=int, default=20)
     return parser.parse_args()
 
 
@@ -307,7 +315,7 @@ if __name__ == '__main__':
         elif args.action == "add_missing_to_wikidata":
             add_missing_to_wikidata(diff)
         elif args.action == "add_template_to_ruwiki":
-            add_missing_template_to_ruwiki(diff)
+            add_missing_template_to_ruwiki(diff, args.sleep_after_insert, args.max_insert_count)
         else:
             print ("unknown action")
 
