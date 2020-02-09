@@ -1,8 +1,13 @@
 [
     {
         "people_count_sum": 278,
-        "files_count": 7
+        "files_count": 13
     },
+    [
+        "0d6ce159cd4c2b673b6437d4e121339c81b6544867cdb6dc6c1c014911f49839",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption/dlrobot_data",
+        -1
+    ],
     [
         "17f2b4e23da4efdc56990fc400fcc9d38ac7d21114849e7041d757b7d6ef08a1",
         "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_41/dlrobot_data",
@@ -19,13 +24,23 @@
         44
     ],
     [
+        "53f0e636c031c39e85c9bf5a5b0b23edba0a1f84955d54f03c14a012e483544f",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_vacance_id_75/dlrobot_data",
+        -1
+    ],
+    [
         "83c6437c1390fd91c17932fe4cfaab8321f25c7b5229aed904d3ca4fb8aef5ce",
         "cached/files.sudrf.ru/1060/user/Dlya_sayta/doc20151215-152119.doc/dlrobot_data",
         -1
     ],
     [
-        "9cb46e09641005164337662f1bc81e396916e3f1cc859a8dfb44aa980b2b4af9",
-        "cached/files.sudrf.ru/1060/user/Prikaz_o_naznachenii_otvetstvennogo.pdf/dlrobot_data",
+        "8853f1584e258e5dccaa8d35c330f8e47a5d6aae59c9406fd5bd8962060a6726",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_vacance_id_73/dlrobot_data",
+        -1
+    ],
+    [
+        "a4f12e32a5456d8fdfe44a29d30956f2c46acd82f895c905c645a7cfe4278b43",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_38/dlrobot_data",
         -1
     ],
     [
@@ -37,5 +52,20 @@
         "ae64f3050c97effdb41779ad57448de3b52c1547f03598c5c930b373524f076c",
         "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_13/dlrobot_data",
         52
+    ],
+    [
+        "c17a476008f7c905578d00facc4c7b4aab0cdf750567bb69da365a6301a364a2",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_40/dlrobot_data",
+        -1
+    ],
+    [
+        "c6ed5539b65d049cc22e2c407c2b4e9ac5f540218d00cce5699a4a4cde1a0d2b",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_rid_1/dlrobot_data",
+        -1
+    ],
+    [
+        "e27c462d905ead42697233d601943343921bf7b207dcdbff0aa9020aba0f1e7c",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_rid_11/dlrobot_data",
+        -1
     ]
 ]
