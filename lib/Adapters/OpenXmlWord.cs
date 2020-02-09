@@ -255,6 +255,8 @@ namespace Smart.Parser.Adapters
             Logger.Debug(prg + " " + args);    
             var p = System.Diagnostics.Process.Start(prg, args);
             p.WaitForExit(3 * 60 * 1000); // 3 minutes
+            try { p.Kill(true); } catch (InvalidOperationException) { }
+            p.Dispose();
             if (!File.Exists(outFileName))
             {
                 throw new SmartParserException(String.Format("cannot convert  {0} with soffice", fileName));
