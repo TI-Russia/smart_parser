@@ -1,11 +1,16 @@
 [
     {
-        "people_count_sum": 1858,
-        "files_count": 66
+        "people_count_sum": 1617,
+        "files_count": 56
     },
     [
         "0308c25991262ec912d7fd65efd479ffcb70ce3d214a87cb56fa426709d21ac3",
         "cached/www.mos.ru/upload/documents/files/642/Svedeniyav2012gody.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "0a40492f413afced3299ddec9870370d0f8aa54c28d71bfbbeb9aa94234ace1f",
+        "cached/www.mos.ru/upload/documents/files/9921/SZP-2017.xlsx/dlrobot_data",
         -1
     ],
     [
@@ -19,9 +24,9 @@
         -1
     ],
     [
-        "100db8c4094fa976978fb3d19883b8e18749fe891e635b38240040b8e74222b5",
-        "cached/www.mos.ru/upload/documents/files/1922/svedeniya_o_dokhodakh_gbu_2017_god.xlsx/dlrobot_data",
-        2
+        "110b796502d35cd3b9fd24b9149f095b8e0d8c029374ab4cc4fc6d36b05e0356",
+        "cached/www.mos.ru/upload/documents/files/5603/Svedeniyaodohodahrashodahobimyshestveiobyazatelstvahimyshestv_6514893c9264bc61ea1e7de0e7cea667/dlrobot_data",
+        3
     ],
     [
         "126c996ed5398418a81f2d297137b9622728d6b32aa1eeb86afffd0ffb64830e",
@@ -29,19 +34,24 @@
         99
     ],
     [
+        "135311fb582dbd626960dabfd44c619c3b632aa4ddb5c779b7ea497cc8aaaf5d",
+        "cached/www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_gbu_depir.xls/dlrobot_data",
+        3
+    ],
+    [
         "18f8e42e2f0d8b6194cf95b0c7473b03fef2aea9078418b2134ec16e7b545cc7",
         "cached/www.mos.ru/upload/documents/files/3855/18Formanasaitgby.xls/dlrobot_data",
         2
     ],
     [
-        "20f1b37c312d7bffb8a3802f3a01a2148ba368ab65d01676e3aa673d07c78f5a",
-        "cached/www.mos.ru/upload/documents/oiv/cvedeniya-o-dokhodakh-gbu-2014-god.xlsx/dlrobot_data",
-        2
+        "214172ab44ee1e79f181914d1674de9f370898017656a6eef60aaadb05728839",
+        "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2015_gbu_depir.xls/dlrobot_data",
+        3
     ],
     [
-        "218c257f04848d062f0c858942a15fb76e433e0bb8bf1ab3ea83137edfc6183e",
-        "cached/www.mos.ru/upload/documents/oiv/cvedeniya_o_dokhodakh_df_2015_god.xlsx/dlrobot_data",
-        78
+        "238bd90c7226495ef56d42f9cafce71adebd6168c29add8f603f337d561344eb",
+        "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2016_depir.xls/dlrobot_data",
+        59
     ],
     [
         "2441d7d9335a98903a9ae1d483ebbf9d9dcb55f35de95b8216f69f961e287ae3",
@@ -64,19 +74,9 @@
         2
     ],
     [
-        "29c6088db3d3c3027155d7322e760d051db3ceebc80f721fbcac8532c210c3e0",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_df_2016_god.xlsx/dlrobot_data",
-        81
-    ],
-    [
         "2b889e5217d4b11033ecc3180ad71832f3628d528310ecd3e42a60c9979c31a3",
         "cached/www.mos.ru/upload/documents/oiv/2014__317_.pdf/dlrobot_data",
         -1
-    ],
-    [
-        "2f9c4ec6088029a465e2e5dec6a7ecb724c1863b40285e41ee88d75f92dbabc5",
-        "cached/www.mos.ru/upload/documents/files/686/SvedeniyaodohodahGYs01012017po31122017.xlsx/dlrobot_data",
-        3
     ],
     [
         "326ed841c9d73e377afe12bfc5133e06171ed713229caba8b7d424b782fade85",
@@ -99,24 +99,14 @@
         16
     ],
     [
-        "3f07f0105dc8ecc9d72420859aea738b2a35a77b92fb9ddca753ec095ddb36cd",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gu_s_01012013_po_31122013.pdf/dlrobot_data",
-        -1
-    ],
-    [
         "3f88a6afb7d8b361a004684fd8c59342ad0198826d75d9678cf5641bf06db3c8",
         "cached/www.mos.ru/upload/documents/oiv/2012_304_.pdf/dlrobot_data",
         -1
     ],
     [
-        "4326dc1195dde08988d27331022dca07a04b3dd9d60a835d590cca8b2a3bc67f",
-        "cached/www.mos.ru/upload/documents/files/1922/svedeniya_o_dokhodakh_df_2017_god.xlsx/dlrobot_data",
-        84
-    ],
-    [
-        "4cf529745d28e4403e61a76140b377468372a16747f3de9dffc61a9ca617a2fe",
-        "cached/www.mos.ru/upload/documents/oiv/1svedeniya_o_dokhodakh_rukovoditeley_gu_s_01012016_po_31122016_na_sa_1e6dc578721e62e1b74c16f9b9a8937d/dlrobot_data",
-        2
+        "4e5d8f98ee88dfb520aea0485e712f15f3d67f400d1e0da41e0e3850901ca863",
+        "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2014_depir.xls/dlrobot_data",
+        33
     ],
     [
         "510d19b6351235d8664a714eaab0b3a1275302101ddde34e25d553e7f406990e",
@@ -134,9 +124,19 @@
         -1
     ],
     [
-        "59569d798612162d9ea067d35d757e6bf33a484a530c6f3786658a7cd128f14c",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gu_s_01012015_po_31122015.pdf/dlrobot_data",
+        "5d9dd5bb975298eac81703dc696c2cdbf453869fb11da5d76acea8b5587584be",
+        "cached/www.mos.ru/upload/documents/files/4375/svedeniya_o_dokhodakh_za_2014_god.pdf/dlrobot_data",
         -1
+    ],
+    [
+        "62560ef71724d70e6ab6f8f5e116b5126c264b8d4f2be349bb1ac8a18960fb6b",
+        "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2014_gbu_depir.xls/dlrobot_data",
+        4
+    ],
+    [
+        "655a7b43937d2624b2448890928c4f13d6e433513fbd7e252fb9d0f48028febd",
+        "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2016_gbu_depir.xls/dlrobot_data",
+        3
     ],
     [
         "6a0556a133a246d2630fd6547bddf3fa3765e6a7d25b2bf734ee4b2d29609b9d",
@@ -149,14 +149,14 @@
         37
     ],
     [
+        "7630439dc9b308b531461953925708e4ac9e65b86a1786f456473705041f2a92",
+        "cached/www.mos.ru/upload/documents/files/204/dokhody_dlya_smi_2017_gbu_depir.xls/dlrobot_data",
+        3
+    ],
+    [
         "7acc1024d418c53d215476b7f1786df45a38897ab6bce4c05a3fe6d6b71aaaca",
         "cached/www.mos.ru/upload/documents/files/5737/2018Svedenija_o_dohodah_ob_imushhestve_i_objazatelstvah_imush_4175aeaa2231816b3ea7ca65cab170a7/dlrobot_data",
         100
-    ],
-    [
-        "7f670b3ff6d9fdc259c3c08fa96973ce520dd3afee192ceb4427445cbf1c60a0",
-        "cached/www.mos.ru/upload/documents/oiv/2svedeniya_o_dokhodakh_raskhodakh_ggs_ds_za_period_s_1_yanvarya_2016_b5c977401f094a09226c66c70a265858/dlrobot_data",
-        54
     ],
     [
         "846e7e8b63d7516ee6204c3bfc93a584827a986acbe2a497cfea6fc90884df41",
@@ -164,24 +164,19 @@
         57
     ],
     [
+        "8534c8d4cf12114e2c47554d2768d1383cb3b0533671a37c9f866479bc4da102",
+        "cached/www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_1_.xls/dlrobot_data",
+        40
+    ],
+    [
         "86b020e602e50207c63a020b705cb20aee2597927d96ae2d8486ba315f767271",
         "cached/www.mos.ru/upload/documents/files/8724/mka_income_2013.pdf/dlrobot_data",
         -1
     ],
     [
-        "916aa0da16b923ddb353af0af9f644c87a8f3d8542cc964fbe6592a2d46b308c",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gu_s_01012014_po_31122014.pdf/dlrobot_data",
+        "8dd4902f48f5c7ebe70609c6bd056f48e442d2e318ccd62a12071aedc200e45a",
+        "cached/www.mos.ru/upload/documents/oiv/rasporyazhenie_ot_31032014_64_16_46_14.pdf/dlrobot_data",
         -1
-    ],
-    [
-        "92814977a2b7f1d7c309d745dba555bc38c24cfa06a0c892e796a9ce04111dcd",
-        "cached/www.mos.ru/upload/documents/files/1022/SvedeniyaodohodahDSs01012017po31122017.xlsx/dlrobot_data",
-        53
-    ],
-    [
-        "985d91d85d12493d17684f8863cda93f112993273c9f578c300f026e6522f9e2",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dohodah_df_2013.xls/dlrobot_data",
-        72
     ],
     [
         "99ea0ab72e1cfa240a8dfa9b9401ff3005cd1331f5ba11d8b9535ed153bc2236",
@@ -189,19 +184,14 @@
         55
     ],
     [
+        "9aaf096928bcfe3bc40c9c08e10f95a5538f57180858e9954592164cc7f7f6ff",
+        "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2015_depir.xls/dlrobot_data",
+        38
+    ],
+    [
         "9e2f0542f474e57137a9c30380328c24aee9583094129fa96a7c2253174bde26",
         "cached/www.mos.ru/upload/documents/files/578/11svedeniya_o_dokhodakh_raskhodakh_ob_imushchestve_i_obyazatel_c22dc7eb4e00f93ad321650b5c3bd3f6/dlrobot_data",
         2
-    ],
-    [
-        "9e906f16e67f9012da100b8bd4acc336d84749fb2a6490927d1934a90d21592a",
-        "cached/www.mos.ru/upload/documents/files/83/15forma_na_sayt_gbu.xls/dlrobot_data",
-        2
-    ],
-    [
-        "a66f579151304e26ec276f7dcf0b7f82beac663ea88e75886e0b9a1e60db1f25",
-        "cached/www.mos.ru/upload/documents/files/6058/svedeniya_o_dohodah_DF_za_2018.pdf/dlrobot_data",
-        -1
     ],
     [
         "a75813d3d5e1fe1c0230a8a4cf698353e1b3874b789ac63ff0c888754b8e25c6",
@@ -209,34 +199,24 @@
         74
     ],
     [
-        "a9b8ce58801d84895e5efb5ae798c4a33d9ce661636fb96f57b76f31e5f3c0fd",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gbu_2015_god.xlsx/dlrobot_data",
-        2
-    ],
-    [
         "ab0a10f71ccd0fdedf6a967a80ca6a17c32b2c3541d40a97bb566b4652e274ab",
         "cached/www.mos.ru/upload/documents/oiv/2011_208_.pdf/dlrobot_data",
         -1
     ],
     [
-        "af709a19adbe7f9dbc81807798367f6a7dbdde2723f399713eabada3ae37d2aa",
-        "cached/www.mos.ru/upload/documents/oiv/svedenija_o_dohodah_ob_imushhestve_i_objazatelstvah_imushhestvennogo_ea8b0fd01ed696b6926b122fc4fdd415/dlrobot_data",
-        112
-    ],
-    [
-        "bb2bcf45d46174bf557035fbaa238a4090c0c072d249b224e73545bb16fe2294",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_ds_s_01012013_po_31122013.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "bbbe33d6db0a23bd231c1b6935585c02053d1c436b35a092852a1ba2fd1fbf57",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya-o-dokhodakh-df-2014-god.xlsx/dlrobot_data",
-        93
-    ],
-    [
         "bd9e88fc4f14a85b805283160952ee119dd139061f621b4a04f2e080b6f1bce0",
         "cached/www.mos.ru/upload/documents/oiv/svedenija_o_dohodah_ob_imushhestve_i_objazatelstvah_imushhestvennogo_27e45e8b04d9abe916a5bd13fad9acc0/dlrobot_data",
         112
+    ],
+    [
+        "be9f038519ccdae7006423314defbbbabda080e707cb43909edb1d8b84762f2a",
+        "cached/www.mos.ru/upload/documents/files/1247/dokhody_dlya_smi_2017_depir.xls/dlrobot_data",
+        134
+    ],
+    [
+        "bf9a9d1c204552dcb7e1608b1b617d6d5c9f35cbba0c237c4ad943fcb06ba506",
+        "cached/www.mos.ru/upload/documents/files/7944/SZP_IAC_2018.xlsx/dlrobot_data",
+        -1
     ],
     [
         "bfb12134d2b91f529b76c1a41570ff285e9afbd74c6bc28b394cdaa64493b010",
@@ -259,14 +239,9 @@
         -1
     ],
     [
-        "c882334ef8c04bca09df813c7ce13176c5628c527b7b9e4455d7d9cb4005abe8",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dohodah_gbu_2013.xls/dlrobot_data",
-        -1
-    ],
-    [
-        "c94ad3610e0687db856484d42d7dc6e195c8d23e76deb3a23c3298031cb86a84",
-        "cached/www.mos.ru/upload/documents/files/5597/SvedeniyaodohodahrykovoditeleiGYs01012018po31122018.xlsx/dlrobot_data",
-        3
+        "c81f4c3ae118898431433174586a1b0b6b882fb14c64380730c9885c9929d81c",
+        "cached/www.mos.ru/upload/documents/files/7895/Svedeniyaodohodahrashodahobimyshestveiobyazatelstvahimyshestv_012a89dc1addab47b2cdeb21d22a0503/dlrobot_data",
+        130
     ],
     [
         "d0e6fa2b72822709933ff743d8206a92fa827ed2c80f264f87029a4c22ebb4c2",
@@ -277,11 +252,6 @@
         "d8f11905f3474f3416e1578ada20444a948d0b46b3f6d2b4f064dec819785993",
         "cached/www.mos.ru/upload/documents/files/8397/9svedeniya_o_dokhodakh_raskhodakh_rukovoditelya_i_grazhdanski_68f3f927bc5123dc9e6876e070a21996/dlrobot_data",
         16
-    ],
-    [
-        "de16ee006262b2e710f655ac86b804a98f1f16fc5432ab1751706c90f87b96e7",
-        "cached/www.mos.ru/upload/documents/files/5468/svedeniya_o_dohodah_GBY_za_2018.pdf/dlrobot_data",
-        -1
     ],
     [
         "dfd9711431f3a84b44f595b46b65a13b6aa9e9601e410190fe7be4d425ee68bc",
@@ -299,16 +269,6 @@
         -1
     ],
     [
-        "ea9511c2e3cf7b1441a14fe759e37155027ec436338a744c77a82794a01087d9",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_ds_s_01012014_po_31122014.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "ebf42b2b1dee8b87fddea50e0ac20fd4e75dacc6b9fceac54164adc67f2fc633",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gbu_2016_godxlsx.xlsx/dlrobot_data",
-        2
-    ],
-    [
         "eee54be556acfccfad95983938900d63b5ca000412439a68bb1d98a94f21792f",
         "cached/www.mos.ru/upload/documents/oiv/2013_402_.pdf/dlrobot_data",
         -1
@@ -316,16 +276,6 @@
     [
         "f28c77063922de6e45fca19b9ce1651b2fff5aebedbaa835ffd7ed6c608a0832",
         "cached/www.mos.ru/upload/documents/oiv/2016_925_.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "f2a12baf1610f65090f0123056b82bcee262531fb609133d0ffa6ba2974bb70e",
-        "cached/www.mos.ru/upload/documents/files/1360/SvedeniyaodohodahrashodahggsDSzaperiods1yanvarya2018po31dekab_e58feaf5702a7d4db5839f1780a5c0f2/dlrobot_data",
-        49
-    ],
-    [
-        "f38b2dc320573f5c8d9cad912eecc6469d377f7a64b6724639bc60138947c752",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_ds_s_01012015_po_31122015.pdf/dlrobot_data",
         -1
     ],
     [
