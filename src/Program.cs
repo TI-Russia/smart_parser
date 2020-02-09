@@ -170,7 +170,8 @@ namespace Smart.Parser
             CheckJson = checkJsonOpt.isMatched;
             BuildTrigrams = buildTrigramsOpt.isMatched;
             ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
-            return String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
+            var freeArgs = parser.RemainingArgs();
+            return String.Join(" ", freeArgs).Trim(new char[] { '"' });
         }
 
         public static string BuildOutFileNameByInput(string declarationFile)

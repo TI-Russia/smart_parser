@@ -1,7 +1,7 @@
 [
     {
-        "people_count_sum": 191,
-        "files_count": 28
+        "people_count_sum": 181,
+        "files_count": 39
     },
     [
         "0037d80dc3940d12853762a93a492631f4aac5d6a0a932d5ed1347866ca1b3b9",
@@ -24,6 +24,16 @@
         33
     ],
     [
+        "1632ff98ad7f1944b7e42451cff3a23dfbf5fa1efbd360daa63122efb2df1723",
+        "cached/arshush.ru/content/view/1042/dlrobot_data",
+        -1
+    ],
+    [
+        "16af5802a023b08bb1ee29c83dfef9ca06e847ebad9db85f66042d36ba77bccd",
+        "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
+        -1
+    ],
+    [
         "1d2a1e531e6c69fc985c623a27534e3aa48184125093e7a327219ed56c78663f",
         "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
         -1
@@ -44,13 +54,13 @@
         -1
     ],
     [
-        "55146357cde20e8e5f89fba1e94a189245cd3bb0eaf8f4e21bda28d83f17562d",
-        "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
+        "4163422bd8e920ee545f2eee8d6c1e70afd5cf87c48485067f83b780575f355b",
+        "cached/arshush.ru/downloads/2017/o-konkurse-zamesheniya.doc/dlrobot_data",
         -1
     ],
     [
-        "626a97064035682dc8cbf0fba1381e1b24621bb96fd388fd4521d40a3da9420a",
-        "cached/arshush.ru/content/view/1042/dlrobot_data",
+        "55146357cde20e8e5f89fba1e94a189245cd3bb0eaf8f4e21bda28d83f17562d",
+        "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
         -1
     ],
     [
@@ -59,14 +69,39 @@
         2
     ],
     [
+        "770ff1c04e95966fd8c5e3d763552e05eb344c54fa36fa2669cafde4310cc6b0",
+        "cached/arshush.ru/downloads/2017/poryadok-rassmotreniya-obrasheniy.rtf/dlrobot_data",
+        -1
+    ],
+    [
         "790f2df3c9dc16a85dd563abd57c003c2510b0cbcfa1b51b22b66cf809c6a0fa",
         "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
         -1
     ],
     [
+        "7aca40bc914cd750cbb7e72302a6ffe2b7e5133e145e6d3fabe4f6fa26528a31",
+        "cached/arshush.ru/downloads/2015/Sostav_komissiy.DOC/dlrobot_data",
+        -1
+    ],
+    [
+        "7e4d62eec12f0f236f22bbd306d7d9e435ca6e7c1bfb46be9c30620af4a059bc",
+        "cached/arshush.ru/downloads/sved_o_dohodah_2009.zip/dlrobot_data",
+        10
+    ],
+    [
         "81ddfa6f4c3e6be6fda15ac157efeb43dd050d36d64f12863a839138a482d78c",
         "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
         9
+    ],
+    [
+        "8769fcda0c74e2606c0da141fbc0a1902145d7231cedf4c357c8ca6ea830cf79",
+        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
+        -1
+    ],
+    [
+        "8ae5ee88b555375861edb0e67b6871a8f63ff399d2b926550cff5dbc36de4107",
+        "cached/arshush.ru/downloads/2016/161_,11032016_yvolnenie_ytrata_doveria.zip/dlrobot_data",
+        -1
     ],
     [
         "8ef23ef463c79baed18a059bf74d345acf553e6009801de6d159149e13c8042e",
@@ -99,8 +134,18 @@
         -1
     ],
     [
+        "ad90b96fa43e9bbfc25e8363171d58691a8e6c0b52880d2e3ded28cd69b1db54",
+        "cached/arshush.ru/downloads/2017/Doclad-2016.rar/dlrobot_data",
+        -1
+    ],
+    [
         "ae68f1de0c76057b50cb46965ce2dd71122a267c0fd2a486a248acffae9ebd07",
         "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "c9487d629c24c850f7c54ad3577e0506336d437d84d0c798aaa6b6d0ef175e86",
+        "cached/arshush.ru/downloads/2016/8-org_grafik_priema.DOC/dlrobot_data",
         -1
     ],
     [
@@ -114,13 +159,23 @@
         -1
     ],
     [
-        "d3e47de363a2f787ad9b03599437c20a9bb907d634e7ac97a9a7bf27f02abda5",
-        "cached/arshush.ru/downloads/2012/info_doxod_2011_izm.zip/dlrobot_data",
-        20
+        "de7b586810f6265aac6f8d29dcb040a5a95e334cab50f764fb2dbcd5c0396395",
+        "cached/arshush.ru/downloads/2018/doklad_2017.zip/dlrobot_data",
+        -1
     ],
     [
         "e0ca330df188024a51445f24abc043776c418be3322a4e8159e7e831c9b5e6e2",
         "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "e4e739862735e5f10e864a308965fd37ad779f3b5ac8811a96ac49ae87558276",
+        "cached/arshush.ru/downloads/2016/ruk_li_mu.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "eb2cf6a3fc48d3a18905ae550e83e1eb9b9de8e5b233d5f25972ef308645dd75",
+        "cached/arshush.ru/downloads/2017/sredn_zp_24.01.17.zip/dlrobot_data",
         -1
     ],
     [

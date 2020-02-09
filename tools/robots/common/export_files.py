@@ -44,6 +44,11 @@ def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
                 people_count = 0
             people_count += process_smart_parser_json(json_file)
             sheet_index += 1
+
+    converted_file = inputfile + ".converted.docx"
+    if os.path.exists(converted_file):
+        os.remove(converted_file)
+
     return people_count
 
 
@@ -54,8 +59,7 @@ def unzip_one_file(input_file, main_index, outfolder):
         file_extension = file_extension.lower()
         if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             continue
-        zip_file.extract(filename, outfolder)
-        old_file_name = os.path.join(outfolder, filename)
+        old_file_name = zip_file.extract(filename, outfolder)
         new_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, index, file_extension))
         os.rename(old_file_name,  new_file_name)
         yield new_file_name
@@ -140,7 +144,7 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
             extension = get_file_extension_by_cached_url(url)
             cached_file = get_local_file_name_by_url(url)
             for e in export_one_file_tmp (url, index, cached_file, extension, office_folder):
-                e['parent'] = office_info.url_nodes[url]
+                e['parent'] = office_info.url_nodes[url]  # temporal link
                 export_files.append(e)
                 index += 1
 
@@ -149,7 +153,7 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
                 cached_file = d['downloaded_file']
                 extension = os.path.splitext(cached_file)[1]
                 for e in export_one_file_tmp(url, index, cached_file, extension, office_folder):
-                    e['parent'] = d
+                    e['parent'] = d  # temporal link
                     export_files.append(e)
                     index += 1
 
@@ -167,15 +171,15 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
 
             for r in group:
                 parent = r.pop('parent')
-                # save the same people_count many times in mirror nodes to run write_click_features
+                # store the same people_count many times (all group) to all mirror nodes to run write_click_features
                 if type(parent) == dict:
                     parent["people_count"] = people_count
                 else:
                     parent.people_count = people_count
 
-                r["people_count"] = people_count
                 os.remove(r['export_path'])
 
+            first_equal_file["people_count"] = people_count
             first_equal_file['export_path'] = new_file_name.replace('\\', '/') # to compare windows and unix
 
             office_info.exported_files.append( first_equal_file )

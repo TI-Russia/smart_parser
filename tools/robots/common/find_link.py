@@ -5,7 +5,7 @@ import logging
 import shutil
 from urllib.parse import urljoin, unquote
 from download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
+    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www, consider_request_policy
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -156,13 +156,18 @@ def get_base_url(main_url, soup):
     return main_url
 
 
-def check_http(href):
+def check_href_elementary(href):
     if href.startswith('mailto:'):
         return False
     if href.startswith('tel:'):
         return False
     if href.startswith('javascript:'):
         return False
+    if href.startswith('consultantplus:'):
+        return False
+    if href.startswith('#'):
+        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
+            return False
     return True
 
 
@@ -171,6 +176,8 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     if can_be_office_document(main_url):
         return
     base = get_base_url(main_url, soup)
+    if base.startswith('/'):
+        base = make_link(main_url, base)
     logger.debug("find_links_in_html_by_text url={} function={}".format(
         main_url, step_info.check_link_func.__name__))
     all_links_count = 0
@@ -178,7 +185,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
         href = l.attrs.get('href')
         if href is not None:
             all_links_count += 1
-            if not check_http(href):
+            if not check_href_elementary(href):
                 continue
             logger.debug("check link {0}".format(href))
             href = strip_viewer_prefix( make_link(base, href) )
@@ -199,7 +206,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
                             found_text = check_long_near_text(l, 3, step_info.check_link_func)
                     except SomeOtherTextException as err:
                         continue
-                    if len(found_text) > 0:
+                    if found_text is not None and len(found_text) > 0:
                         link_info = {
                             'href': href,
                             'text': found_text.strip(" \r\n\t"),
@@ -213,7 +220,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
         href = l.attrs.get('src')
         if href is not None:
             all_links_count += 1
-            if not check_http(href):
+            if not check_href_elementary(href):
                 continue
 
             href = make_link(base, href)
@@ -265,6 +272,7 @@ def click_selenium(step_info, main_url, driver_holder,  element, element_index):
     #driver.execute_script('window.scrollTo(0,{});'.format(element.location['y']))
     driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
 
+    consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
     # open in a new tab, send ctrl-click
     ActionChains(driver) \
         .key_down(Keys.CONTROL) \
@@ -307,13 +315,8 @@ def prepare_for_logging(s):
 def click_all_selenium (step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.check_link_func.__name__))
-    driver = driver_holder.the_driver
-
-    driver_holder.navigate(main_url)
-
-    time.sleep(6)
-    elements = list(driver.find_elements_by_xpath('//button | //a'))
-
+    consider_request_policy(main_url, "GET_selenium")
+    elements = driver_holder.navigate_and_get_links(main_url)
     for i in range(len(elements)):
         element = elements[i]
         link_text = element.text.strip('\n\r\t ')
@@ -333,6 +336,6 @@ def click_all_selenium (step_info, main_url, driver_holder):
                         step_info.add_link_wrapper(main_url, link_info)
                 else:
                     click_selenium(step_info, main_url, driver_holder,  element, i)
-                    elements = list(driver.find_elements_by_xpath('//button | //a'))
+                    elements = driver_holder.get_buttons_and_links()
 
 

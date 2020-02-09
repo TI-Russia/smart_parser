@@ -6,6 +6,7 @@
 "mail.ru",
 "avito.ru",
 "ok.ru",
+"odnoklassniki.ru",
 "google.ru",
 "wikipedia.org",
 "aliexpress.com",
