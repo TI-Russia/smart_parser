@@ -8,7 +8,7 @@ import argparse
 import urllib.parse
 import re
 import time
-
+import random
 # Create a custom logger
 def setup_logging( logger, logfilename):
     logger.setLevel(logging.DEBUG)
@@ -243,7 +243,13 @@ def add_missing_template_to_ruwiki (diff, sleep_after_insert, max_insert_count):
 
             text = text[:index_categ] + '{{' + wiki_template + '}}\n\n' + text[index_categ:]
             page.text = text
-            page.save(summary="добавляю темплейт {{"+wiki_template+'}}' )
+            summaries = [  "добавляю  темплейт {{"+wiki_template+'}}',
+                           " темплейт {{"+wiki_template+'}}',
+                           " template  {{" + wiki_template + '}}',
+                           " добавление  темплейта {{" + wiki_template + '}}',
+                           " add  an external link",
+                           ]
+            page.save(summary=random.choice(summaries) )
             logger.info('inserted template {} to {}'.format(wiki_template, ruwiki_title))
             insert_count += 1
             if insert_count >= max_insert_count:
