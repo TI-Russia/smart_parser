@@ -1,5 +1,6 @@
 import os
 import logging
+import time
 from urllib.parse import urljoin, unquote
 from download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
@@ -112,7 +113,11 @@ def find_recursive_to_bottom (start_element, check_link_func, element):
                 raise SomeOtherTextException (element.text.strip())
     else:
         for child in children:
+            start_time = time.time()
             found_text = find_recursive_to_bottom(start_element, check_link_func, child)
+            if time.time() - start_time > 10:  # skip very large html
+                logging.getLogger("dlrobot_logger").error("stop  too long recursive html processing")
+                raise SomeOtherTextException("")
             if len(found_text) > 0:
                 return found_text
     return ""

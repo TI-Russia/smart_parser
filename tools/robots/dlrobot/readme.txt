@@ -83,3 +83,5 @@ Keep-Alive: timeout=20
    Возникате 503 через 40 минут (dlrobot.log.ddos4)
 3. Мид сломался? Изучить mid.log
 
+===
+Compile smart_parser on oldtimer

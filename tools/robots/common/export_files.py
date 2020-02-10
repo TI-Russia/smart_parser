@@ -164,6 +164,7 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
             group = list(group)
             first_equal_file = group[0]
             old_file_name = first_equal_file['export_path']
+            logger.debug("export url: {} cached: {}".format(first_equal_file['url'], first_equal_file['cached_file']))
             people_count = get_people_count_from_smart_parser(smart_parser_binary, old_file_name)
             extension = os.path.splitext(old_file_name)[1]
             new_file_name = os.path.join(office_folder, str(index) + extension)
