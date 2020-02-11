@@ -60,6 +60,20 @@ namespace Smart.Parser.Adapters
         public OpenXmlWordCell(TableWidthInfo tableWidth, TableCell inputCell, int row, int column)
         {
             var cellContents = GetCellText(inputCell);
+            Text = cellContents;
+            Row = row;
+            Col = column;
+            AdditTableIndention = tableWidth.TableIndentionInPixels;
+            IsMerged = false;
+            FirstMergedRow = -1; // init afterwards
+            MergedRowsCount = -1; // init afterwards
+
+            MergedColsCount = 1;
+            IsEmpty = cellContents.IsNullOrWhiteSpace();
+
+            if (inputCell.TableCellProperties is null)
+                return;
+
             var vmerge = inputCell.TableCellProperties.GetFirstChild<VerticalMerge>();
             if (vmerge == null)
             {
@@ -79,14 +93,9 @@ namespace Smart.Parser.Adapters
             }
             var gridSpan = inputCell.TableCellProperties.GetFirstChild<GridSpan>();
             IsMerged = gridSpan != null && gridSpan.Val > 1;
-            FirstMergedRow = -1; // init afterwards
-            MergedRowsCount = -1; // init afterwards
-
             MergedColsCount = (gridSpan == null) ? 1 : (int)gridSpan.Val;
             IsEmpty = cellContents.IsNullOrWhiteSpace();
-            Text = cellContents;
-            Row = row;
-            Col = column;
+            
             if (inputCell.TableCellProperties != null
                 && inputCell.TableCellProperties.TableCellWidth != null
                 && inputCell.TableCellProperties.TableCellWidth.Type != null
@@ -105,7 +114,6 @@ namespace Smart.Parser.Adapters
                     CellWidth = tableWidth.ColumnWidths[Col];
                 }
             }
-            AdditTableIndention = tableWidth.TableIndentionInPixels;
         }
         public OpenXmlWordCell(IAdapter.TJsonCell cell)
         {
@@ -576,11 +584,11 @@ namespace Smart.Parser.Adapters
                     break;
                 }
             }
-            if (maxCellsCount <= 4)
-            {
-                //remove this suspicious table 
-                TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
-            }
+            //if (maxCellsCount <= 4)
+            //{
+            //    //remove this suspicious table 
+            //    TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
+            //}
         }
         
         void InitPageSize(WordprocessingDocument wordDocument)
@@ -679,6 +687,32 @@ namespace Smart.Parser.Adapters
             }
 
             return tables;
+        }
+
+
+
+        public void ToOneTableFormat()
+        {
+            TableWidthInfo widthInfo = new TableWidthInfo();
+            widthInfo.TableWidthInPixels  =  this.DocumentPageSizeInPixels;
+            
+            OpenXmlWordCell newCell = new OpenXmlWordCell(widthInfo, new TableCell(), 0, 0);
+            newCell.Text = "Имя";
+
+            TableRows.First().Insert(0, newCell);
+            for (int i = 1; i < TableRows.Count; i += 2)
+            {
+
+                newCell = new OpenXmlWordCell(widthInfo, new TableCell(), i, 0);
+                newCell.Text = "some name";
+
+                TableRows[i].Insert(0, newCell);
+            }
+            for(int i = 2; i < TableRows.Count; i +=2)
+            {
+                TableRows.RemoveAt(i);
+            }
+            ;
         }
 
 

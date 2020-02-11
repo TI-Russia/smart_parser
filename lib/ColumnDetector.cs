@@ -24,7 +24,7 @@ namespace Smart.Parser.Lib
                 title = text;
             else
                 title += " " + text;
-
+            text = text.ToLower();
             string[] title_words = { "сведения", "обязательствах", "доход", "период" };
             bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
             if (!has_title_words)
@@ -233,13 +233,16 @@ namespace Smart.Parser.Lib
         }
 
 
+
         static public ColumnOrdering ExamineTableBeginning(IAdapter adapter)
         {
             ColumnOrdering columnOrdering = new ColumnOrdering();
             int headerStartRow = ProcessTitle(adapter, columnOrdering);
             ReadHeader(adapter, headerStartRow, columnOrdering);
             return columnOrdering;
+          
         }
+
 
         static public List<Cell> GetColumnCells(IAdapter adapter, int headerStartRow, out int headerEndRow)
         {

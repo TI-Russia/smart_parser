@@ -108,6 +108,8 @@ namespace Smart.Parser.Adapters
             public int c;
             public string t;
         }
+
+
         public class TJsonTablePortion
         {
             public string Title;
@@ -118,6 +120,9 @@ namespace Smart.Parser.Adapters
             public List<List<TJsonCell>> Section = new List<List<TJsonCell>>();
             public List<List<TJsonCell>> Data = new List<List<TJsonCell>>();
         }
+
+
+
         List<TJsonCell> GetJsonByRow(List<Cell> row)
         {
             var outputList = new List<TJsonCell>();
@@ -133,6 +138,8 @@ namespace Smart.Parser.Adapters
             }
             return outputList;
         }
+
+
         string GetHtmlByRow(List<Cell> row, int rowIndex)
         {
             string res = string.Format("<tr rowindex={0}>\n", rowIndex);
