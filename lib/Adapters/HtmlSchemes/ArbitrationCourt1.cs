@@ -35,7 +35,11 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
         public override IHtmlCollection<IElement> GetMembers(IDocument document, string name, string year)
         {
-            var tableElement = document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
+            IElement tableElement;
+            if (year != null)
+                tableElement = document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
+            else
+                throw new NotImplementedException(); // TODO
             var members = tableElement.Children;
             return members;
         }
@@ -61,7 +65,9 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         public override string GetTitle(IDocument document, string year)
         {
             string rawTitle = document.All.Where(x => x.LocalName == "title").First().TextContent;
-            rawTitle = $"Сведения об имуществе {rawTitle} на период {year}";
+            rawTitle = $"Сведения об имуществе {rawTitle}";
+            if (year != null)
+                rawTitle = $"{rawTitle}  на период {year}";
             return RemoveNewLineSymbols(rawTitle);
         }
 

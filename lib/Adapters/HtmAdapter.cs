@@ -49,6 +49,7 @@ namespace Smart.Parser.Adapters
         protected static List<IHtmlScheme> _allSchemes = new List<IHtmlScheme>()
             {
                 new ArbitrationCourt1(),
+                new ArbitrationCourt2(),
             };
 
         #endregion
@@ -74,12 +75,36 @@ namespace Smart.Parser.Adapters
             }
         }
 
+
         private void MakeWorksheets(IDocument document)
         {
-            List<int> years = _scheme.GetYears(document);
-            _worksheets = new List<WorksheetInfo>(years.Count);
             _worksheetIndex = 0;
-            foreach(var year in years)
+            List<int> years = _scheme.GetYears(document);
+            if (years.Count > 0)
+            {
+                MakeWorksheetWithYears(document, years);
+            }
+            else
+            {
+                MakeWorksheetWithouYears(document);
+
+            }
+        }
+
+
+        private void MakeWorksheetWithouYears(IDocument document)
+        {
+            _worksheets = new List<WorksheetInfo>(1);
+            var worksheet = new WorksheetInfo();
+            MakeTable(document, worksheet);
+            _worksheets.Add(worksheet);
+        }
+
+
+        private void MakeWorksheetWithYears(IDocument document, List<int> years)
+        {
+            _worksheets = new List<WorksheetInfo>(years.Count);
+            foreach (var year in years)
             {
                 var currWorksheet = new WorksheetInfo();
                 MakeTable(document, currWorksheet, year.ToString());
@@ -87,8 +112,11 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        protected  void MakeTable(IDocument document, WorksheetInfo worksheet, string year)
+
+
+        protected  void MakeTable(IDocument document, WorksheetInfo worksheet, string year = null)
         {
+            
             List<List<Cell>> table = GetTable(document, year, out var name, out var title);
             worksheet.PersonName = name;
             worksheet.Table = table;
@@ -136,18 +164,8 @@ namespace Smart.Parser.Adapters
             foreach(var memberElement in members)
             {
                 List<Cell> line = new List<Cell>();
-                //var name = memberElement.QuerySelectorAll("h2.income-member").First().Text();
                 var name = _scheme.GetMemberName(memberElement);
-                string tmpName = name.ToLower();
-                if (
-                    tmpName == "несовершеннолетние дети" ||
-                    tmpName == "несовершеннолетний ребенок" ||
-                    tmpName == "супруг" ||
-                    tmpName == "супруга"
-                    )
-                    name = $"{tmpName} {declarantName}";
                 line.Add(GetCell(name, table.Count, 0));
-                //var tableLines = ExtractLinesFromTable(memberElement.QuerySelectorAll("table").First());
                 var tableLines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
                 line.AddRange(GetRow(tableLines[1], table.Count, 1));
 
