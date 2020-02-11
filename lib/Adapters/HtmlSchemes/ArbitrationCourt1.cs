@@ -14,9 +14,9 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         {
             try
             {
-                var text = document.QuerySelectorAll("h2.income-member").First().Text();
+                var selection = document.QuerySelectorAll("div.js-income-member-data");
                 
-                return text != "";
+                return selection.Length > 0;
             }
             catch (Exception)
             {
