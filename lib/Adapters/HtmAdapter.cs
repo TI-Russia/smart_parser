@@ -13,7 +13,33 @@ using Smart.Parser.Lib.Adapters.HtmlSchemes;
 
 namespace Smart.Parser.Adapters
 {
-    
+    public class WorksheetInfo
+    {
+        private string personName;
+        private string year;
+        private string title;
+        private List<List<Cell>> table;
+
+        public WorksheetInfo()
+        {
+        }
+
+        public WorksheetInfo(string personName, string year, string title, List<List<Cell>> table)
+        {
+            PersonName = personName;
+            Year = year;
+            Title = title;
+            Table = table;
+        }
+
+        public string PersonName { get => personName; set => personName = value; }
+        public string Year { get => year; set => year = value; }
+        public string Title { get => title; set => title = value; }
+        public List<List<Cell>> Table { get => table; set => table = value; }
+
+      
+    }
+
 
     public class HtmAdapter : IAdapter
     {
@@ -28,12 +54,15 @@ namespace Smart.Parser.Adapters
         #endregion
 
         #region fields
-        protected string _personName;
-        protected string _year;
-        protected string _title;
-        protected List<List<Cell>> _table;
-        protected IHtmlScheme _scheme; 
+        protected List<WorksheetInfo> _worksheets;
+        protected int _worksheetIndex;
+        protected IHtmlScheme _scheme;
         #endregion
+
+        #region properties
+        public WorksheetInfo Worksheet { get => _worksheets[_worksheetIndex]; }
+        #endregion
+
         public HtmAdapter(string filename)
         {
             this.DocumentFile = filename;
@@ -41,30 +70,38 @@ namespace Smart.Parser.Adapters
             using (IDocument document = GetDocument(text))
             {
                 _scheme = _allSchemes.Find(x => x.CanProcess(document));
-                MakeTable(document);
+                MakeWorksheets(document);
             }
         }
 
-
-        protected  void MakeTable(IDocument document)
+        private void MakeWorksheets(IDocument document)
         {
-            List<List<Cell>> table = GetTable(document,  out var name, out var year, out var title);
-            _personName = name;
-            _table = table;
-            _year = year;
-            _title = title;
+            List<int> years = _scheme.GetYears(document);
+            _worksheets = new List<WorksheetInfo>(years.Count);
+            _worksheetIndex = 0;
+            foreach(var year in years)
+            {
+                var currWorksheet = new WorksheetInfo();
+                MakeTable(document, currWorksheet, year.ToString());
+                _worksheets.Add(currWorksheet);
+            }
+        }
+
+        protected  void MakeTable(IDocument document, WorksheetInfo worksheet, string year)
+        {
+            List<List<Cell>> table = GetTable(document, year, out var name, out var title);
+            worksheet.PersonName = name;
+            worksheet.Table = table;
+            worksheet.Year = year;
+            worksheet.Title = title;
         }
 
 
 
-        protected  List<List<Cell>> GetTable(IDocument document, out string name, out string year, out string title)
+        protected  List<List<Cell>> GetTable(IDocument document,  string year, out string name,  out string title)
         {
             name = _scheme.GetPersonName(document);
-            year = _scheme.GetYear(document);
             title = _scheme.GetTitle(document, year);
-            string yearCopy = year;
-            //var tableElement = document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == yearCopy)).First();
-            //var members = tableElement.Children;
             var members = _scheme.GetMembers(document, name, year);
 
             List<List<Cell>> table = new List<List<Cell>>();
@@ -207,19 +244,19 @@ namespace Smart.Parser.Adapters
         #region IAdapter
         public override Cell GetCell(int row, int column)
         {
-            Cell cell = _table[row][column];
+            Cell cell = Worksheet.Table[row][column];
             return cell;
         }
 
       
         public override int GetColsCount()
         {
-            return _table[1].Count;
+            return Worksheet.Table[1].Count;
         }
 
         public override int GetRowsCount()
         {
-            return _table.Count ;
+            return Worksheet.Table.Count ;
         }
 
 
@@ -250,7 +287,7 @@ namespace Smart.Parser.Adapters
 
         public override List<Cell> GetCells(int row, int maxColEnd = 1024)
         {
-            return _table[row];
+            return Worksheet.Table[row];
         }
 
         public override Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
@@ -260,12 +297,12 @@ namespace Smart.Parser.Adapters
 
         public override string GetTitleOutsideTheTable()
         {
-            return _title;
+            return Worksheet.Title;
         }
 
         public override int GetWorkSheetCount()
         {
-            return 1;
+            return _worksheets.Count;
         }
 
         public override int GetTablesCount()
@@ -275,6 +312,7 @@ namespace Smart.Parser.Adapters
 
         public override void SetCurrentWorksheet(int sheetIndex)
         {
+            _worksheetIndex = sheetIndex;
         }
 
         public override string GetWorksheetName()
@@ -284,7 +322,7 @@ namespace Smart.Parser.Adapters
 
         public override int? GetWorksheetIndex()
         {
-            return base.GetWorksheetIndex();
+            return _worksheetIndex;
         }
         #endregion
     }

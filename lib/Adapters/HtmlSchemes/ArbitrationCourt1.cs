@@ -12,7 +12,16 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
         public override bool CanProcess(IDocument document)
         {
-            return true;
+            try
+            {
+                var text = document.QuerySelectorAll("h2.income-member").First().Text();
+                
+                return text != "";
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
 
@@ -58,18 +67,23 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
 
 
-        public override string GetYear(IDocument document)
+        public override string GetMaxYear(IDocument document)
         {
+            return GetYears(document).Max().ToString();
+        }
+
+
+
+        public override List<int> GetYears(IDocument document)
+        {
+            List<int> years = new List<int>();
             var selection = document.QuerySelectorAll("li.b-income-year-item");
-            int year = int.MinValue;
             foreach (var yearElement in selection)
             {
                 int currYear = int.Parse(yearElement.TextContent);
-                if (currYear > year)
-                    year = currYear;
-
+                years.Add(currYear);
             }
-            return year.ToString();
+            return years;
         }
     }
 }

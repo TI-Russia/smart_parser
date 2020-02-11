@@ -9,7 +9,8 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
     {
         public abstract IHtmlCollection<IElement> GetMembers(IDocument document, string name, string year);
         public abstract string GetTitle(IDocument document, string year);
-        public abstract string GetYear(IDocument document);
+        public abstract string GetMaxYear(IDocument document);
+        public abstract List<int> GetYears(IDocument document);
         public abstract string GetPersonName(IDocument document);
         public abstract string GetMemberName(IElement memberElement);
         public abstract IElement GetTableFromMember(IElement memberElement);
