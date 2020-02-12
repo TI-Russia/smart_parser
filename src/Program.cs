@@ -200,8 +200,8 @@ namespace Smart.Parser
             //  "-max-rows", "100",
             //  "-adapter", "prod" ,
             //  "-converted-storage-url",  @"http://declarator.zapto.org:8000/converted_document",
-            // //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/4144_28.htm"
-            // @"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/17335_3.html"
+            // @"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/4144_28.htm"
+            // //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/17335_3.html"
             //};
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
@@ -391,10 +391,10 @@ namespace Smart.Parser
             {
                 case ".htm":
                 case ".html":
-                    if (HtmAdapter.CanProcess(declarationFile))
-                        return new HtmAdapter(declarationFile);
-                    else
-                        return GetCommonAdapter(declarationFile);
+                    //if (HtmAdapter.CanProcess(declarationFile))
+                    //    return new HtmAdapter(declarationFile);
+                    //else
+                    //    return GetCommonAdapter(declarationFile);
                 case ".pdf":
                 case ".xhtml":
                 case ".doc":

@@ -12,6 +12,10 @@ src/Smart.Parser.csproj.user
 /tools/CorpusProcess/parser-job-priority-2.json
 /tools/CorpusProcess/parser.log
 /tools/CorpusProcess/parsing.log
+<<<<<<< Updated upstream
 /tools/CorpusProcess/out_html
 /tools/CorpusProcess/out_minkult
 /src/Properties/launchSettings.json
+
+*.log
+
