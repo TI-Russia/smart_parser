@@ -34,6 +34,11 @@ namespace Smart.Parser.Adapters
             return text;
         }
 
+        public override string ToString()
+        {
+            return Text;
+        }
+
         public int Row { get; set; } = -1;
         public int Col { get; set; } = -1; // not merged column index
 
