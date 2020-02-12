@@ -170,7 +170,8 @@ namespace Smart.Parser
             CheckJson = checkJsonOpt.isMatched;
             BuildTrigrams = buildTrigramsOpt.isMatched;
             ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
-            return String.Join(" ", parser.RemainingArgs()).Trim(new char[] { '"' });
+            var freeArgs = parser.RemainingArgs();
+            return String.Join(" ", freeArgs).Trim(new char[] { '"' });
         }
 
         public static string BuildOutFileNameByInput(string declarationFile)
@@ -238,7 +239,7 @@ namespace Smart.Parser
             catch (Exception e)
             {
                 Logger.Error("Unknown Parsing Exception " + e.ToString());
-                //Logger.Info("Stack: " + e.StackTrace);
+                Logger.Info("Stack: " + e.StackTrace);
             }
             finally
             {
@@ -385,7 +386,7 @@ namespace Smart.Parser
 
         static IAdapter GetAdapter(string declarationFile)
         {
-            string extension = Path.GetExtension(declarationFile);
+            string extension = Path.GetExtension(declarationFile).ToLower();
             switch (extension)
             {
                 case ".htm":
@@ -397,6 +398,7 @@ namespace Smart.Parser
                 case ".pdf":
                 case ".xhtml":
                 case ".doc":
+                case ".rtf":
                 case ".toloka_json":
                 case ".docx":
                     return GetCommonAdapter(declarationFile);
@@ -476,7 +478,13 @@ namespace Smart.Parser
                     string curOutFile = outFile.Replace(".json", "_" + sheetIndex.ToString() + ".json");
                     Logger.Info(String.Format("Parsing worksheet {0} into file {1}", sheetIndex, curOutFile));
                     adapter.SetCurrentWorksheet(sheetIndex);
-                    ParseDocumentSheet(adapter, curOutFile, declarationFile);
+                    try
+                    {
+                        ParseDocumentSheet(adapter, curOutFile, declarationFile);
+                    }
+                    catch (ColumnDetectorException e) {
+                        Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)", sheetIndex));
+                    }
                 }
             }
             else

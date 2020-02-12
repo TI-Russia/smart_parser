@@ -215,9 +215,7 @@ namespace Smart.Parser.Adapters
             }
             Aspose.Words.Document doc = new Aspose.Words.Document(filename);
             doc.RemoveMacros();
-            // use libre office when aspose is not accessible
-            // "soffice --headless --convert-to docx docum.doc"
-            string docXPath = Path.GetTempFileName();
+            string docXPath = filename + ".converted.docx";
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
             return docXPath;
         }
@@ -245,6 +243,35 @@ namespace Smart.Parser.Adapters
             return result;
         }
 
+        private String ConvertWithSoffice(string fileName)
+        {
+            String outFileName = Path.ChangeExtension(fileName, "docx");
+            if (File.Exists(outFileName))
+            {
+                File.Delete(outFileName);
+            }
+            
+            var prg = "/usr/bin/soffice";
+            var outdir = Path.GetDirectoryName(outFileName);
+            var args = String.Format(" --headless --writer   --convert-to \"docx:MS Word 2007 XML\"");
+            if (outdir != "")
+            {
+                args += " --outdir " + outdir;
+            }
+
+            args += " " + fileName;
+            Logger.Debug(prg + " " + args);    
+            var p = System.Diagnostics.Process.Start(prg, args);
+            p.WaitForExit(3 * 60 * 1000); // 3 minutes
+            try { p.Kill(true); } catch (InvalidOperationException) { }
+            p.Dispose();
+            if (!File.Exists(outFileName))
+            {
+                throw new SmartParserException(String.Format("cannot convert  {0} with soffice", fileName));
+            }
+            return outFileName;
+        }
+
         public OpenXmlWordAdapter(string fileName, int maxRowsToProcess)
         {
             NamespaceManager = new XmlNamespaceManager(new NameTable());
@@ -259,23 +286,31 @@ namespace Smart.Parser.Adapters
                 return;
             }
             DocumentFile = fileName;
-            string extension = Path.GetExtension(fileName);
+            string extension = Path.GetExtension(fileName).ToLower();
             bool removeTempFile = false;
             if (    extension == ".html"
                 ||  extension == ".htm"
                 || extension == ".xhtml"
                 || extension == ".pdf"
                 || extension == ".doc"
+                || extension == ".rtf"
                 )
             {
                 try
                 {
                     fileName = ConvertFile2TempDocX(fileName);
-                }catch (Exception) {
+                }
+                catch (System.TypeInitializationException exp)
+                {
+                    Logger.Error("Type Exception " + exp.ToString());
+                    fileName = ConvertWithSoffice(fileName);
+                }
+                catch (Exception exp) {
+                    Logger.Error(String.Format("cannot convert {0} to docx, try one more time", fileName));
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
                 }
-                removeTempFile = true;
+                removeTempFile = false;
             }
 
 

@@ -3,32 +3,33 @@ import re
 import os
 import argparse
 import logging
+import datetime
 from tempfile import TemporaryDirectory
 
 sys.path.append('../common')
 
-from download import  export_files_to_folder, get_file_extension_by_url, \
-    get_site_domain_wo_www, DEFAULT_HTML_EXTENSION
+from download import  get_file_extension_by_url, \
+    DEFAULT_HTML_EXTENSION
 
+from export_files import export_files_to_folder
 from office_list import  TRobotProject
 
 from find_link import \
     check_anticorr_link_text, \
     ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
-    check_sub_page_or_iframe
+    check_sub_page_or_iframe, common_link_check
 
 
-
-def setup_logging(args,  logger, logfilename):
+def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
 
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(args.logfile):
-        os.remove(args.logfile)
+    if os.path.exists(logfilename):
+        os.remove(logfilename)
     # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename)
+    fh = logging.FileHandler(logfilename, encoding="utf8")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
@@ -38,39 +39,65 @@ def setup_logging(args,  logger, logfilename):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
 
+
+def normalize_anchor_text(text):
+    if text is not None:
+        text = text.strip(' \n\t\r').strip('"').lower()
+        text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
+        return text
+    return ""
+
 def check_link_sitemap(link_info):
     if not check_self_link(link_info):
         return False
-
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
-    text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
-
-    return text.startswith(u'карта сайта')
+    text = normalize_anchor_text(link_info.Text)
+    return text.startswith('карта сайта')
 
 
 def check_link_svedenia_o_doxodax(link_info):
     if not check_self_link(link_info):
         return False
 
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
-    text = " ".join(text.split()).replace("c","с").replace("e","е").replace("o","о")
+    text = normalize_anchor_text(link_info.Text)
 
-    if re.search('(сведения)|(справк[аи]) о доходах', text) is not None:
+    if text.find('координат') != -1:
+        return False
+    if text.find('заседании') != -1:
+        return False
+    if text.find('приказ') != -1:
+        return False
+
+
+    if re.search('((сведения)|(справк[аи])) о доходах', text) is not None:
         return True
 
-    if text.startswith(u'сведения') and text.find("коррупц") != -1:
+    #http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
+    # "Сведения за 2018 год"
+    if re.search('сведения.*20[0-9][0-9]', text) is not None:
+        return True
+
+    if text.startswith('сведения') and text.find("коррупц") != -1:
         return True
     return False
 
 
-def check_year_or_subpage(link_info):
+def declarations_div_pages_step(link_info):
     if check_sub_page_or_iframe(link_info):
         return True
 
     # here is a place for ML
     if link_info.Text is not None:
-        text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+        text = normalize_anchor_text(link_info.Text)
+        if text.find('должностях') != -1:
+            return False
         if text.find('сведения') != -1:
+            return True
+        if text.find('справка о доходах') != -1:
+            return True
+        year_pattern = r'(20[0-9][0-9]( год)?)'
+        if re.match('^' + year_pattern, text) is not None:
+            return True
+        if re.match(year_pattern + '$', text) is not None:
             return True
     if link_info.Target is not None:
         target = link_info.Target.lower()
@@ -80,43 +107,8 @@ def check_year_or_subpage(link_info):
     return False
 
 
-def check_download_text(link_info):
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
-    if text.find('шаблоны') != -1:
-        return False
-    if text.startswith(u'скачать'):
-        return True
-    if text.startswith(u'загрузить'):
-        return True
-
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        if text.startswith(e[1:]):  #without "."
-            return True
-        if text.find(e) != -1:
-            return True
-        if link_info.Target is not None and link_info.Target.lower().endswith(e):
-            return True
-    return False
-
-
-def check_accepted_declaration_file_type(link_info):
-    if check_download_text(link_info):
-        return True
-    if link_info.Target is not None:
-        try:
-            if link_info.DownloadFile is not None:
-                return True
-            ext = get_file_extension_by_url(link_info.Target)
-            return ext != DEFAULT_HTML_EXTENSION
-        except Exception as err:
-            sys.stderr.write('cannot query (HEAD) url={0}  exception={1}\n'.format(link_info.Target, str(err)))
-            return False
-    return False
-
-
 def check_documents(link_info):
-    text = link_info.Text.strip(' \n\t\r').strip('"').lower()
+    text = normalize_anchor_text(link_info.Text)
     if text.find("сведения") == -1:
         return False
     if link_info.Target is not None:
@@ -124,42 +116,121 @@ def check_documents(link_info):
     return True
 
 
+def declaration_step_anchor_text(anchor_text):
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    anchor_text = normalize_anchor_text(anchor_text)
+    if anchor_text.find('шаблоны') != -1:
+        return False
+    if anchor_text.find('решение') != -1:
+        return False
+    if anchor_text.find('постановление') != -1:
+        return False
+    if anchor_text.find('доклад') != -1:
+        return False
+    if anchor_text.find('протокол') != -1:
+        return False
+    if anchor_text.startswith('план'):
+        return False
+    if anchor_text.startswith('скачать'):
+        return True
+    if anchor_text.startswith('загрузить'):
+        return True
+
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        if e == DEFAULT_HTML_EXTENSION:
+            continue
+        # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
+        if anchor_text.find(e[1:]) != -1:
+            return True
+    return None # undef
+
+
+def declaration_step_url(target_url):
+    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+
+    if target_url.find("download") != -1:
+        return True  # otherwise ddos on admuni.ru
+    if not common_link_check(target_url):
+        return False  # to make faster
+
+    # only office documents, not html, html must be checked by check_html_can_be_declaration
+    if target_url.endswith('html'):
+        return False
+
+    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        if e != DEFAULT_HTML_EXTENSION:
+            if target_url.lower().endswith(e):
+                return True
+    try:
+        ext = get_file_extension_by_url(target_url)
+        return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    except Exception as err:
+        logger = logging.getLogger("dlrobot_logger")
+        logger.error('cannot query (HEAD) url={}  exception={}\n'.format(target_url, str(err)))
+        return False
+
+
+def declaration_step(link_info):
+    checked_by_text = declaration_step_anchor_text(link_info.Text)
+    if checked_by_text is not None:
+        return checked_by_text
+
+    if link_info.DownloadedBySelenium is not None:
+        return True
+
+    if link_info.Target is not None:
+        if declaration_step_url(link_info.Target):
+            return True
+    return False
+
+
+def check_html_can_be_declaration(html):
+    html = html.lower()
+    words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
+    numbers = re.search('[0-9]{6}', html) is not None # доход
+    return words and numbers
+
+
 ROBOT_STEPS = [
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "sitemap",
+        'step_name': "sitemap",
         'check_link_func': check_link_sitemap,
         'include_sources': 'always'
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "anticorruption_div",
+        'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
-        'include_sources': "copy_if_empty"
+        'include_sources': "copy_if_empty",
+        'search_engine_request': "противодействие коррупции",
+        'min_normal_count': 1
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "declarations_div",
+        'step_name': "declarations_div",
         'check_link_func': check_link_svedenia_o_doxodax,
-        'include_sources': "copy_if_empty"
+        'include_sources': "copy_if_empty",
+        'do_not_copy_urls_from_steps': [None, 'sitemap'], # None is for morda_url
+        'search_engine_request': '"сведения о доходах"',
+        'min_normal_count': 5
     },
     {
-        'step_function': TRobotProject.collect_subpages,
-        'name': "declarations_div_pages",
-        'check_link_func': check_year_or_subpage,
-        'include_sources': "always"
+        'step_name': "declarations_div_pages",
+        'check_link_func': declarations_div_pages_step,
+        'include_sources': "always",
+        'transitive': True,
+        'fallback_to_selenium': False
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "declarations_div_pages2",
+        'step_name': "declarations_div_pages2",
         'check_link_func': check_documents,
         'include_sources': "always"
     },
     {
-        'step_function': TRobotProject.find_links_for_all_websites,
-        'name': "declarations",
-        'check_link_func': check_accepted_declaration_file_type,
-        'include_sources': "copy_docs"
+        'step_name': "declarations",
+        'check_link_func': declaration_step,
+        'check_html_sources': check_html_can_be_declaration,
+        'include_sources': "copy_missing_docs",
+        'search_engine_request': '"сведения о доходах"',
+        'min_normal_count': 3
     },
 ]
 
@@ -168,7 +239,6 @@ def parse_args():
     global ROBOT_STEPS
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
-    parser.add_argument("--rebuild", dest='rebuild', default=False, action="store_true")
     parser.add_argument("--skip-final-download", dest='skip_final_download', default=False, action="store_true")
     parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
@@ -176,9 +246,12 @@ def parse_args():
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
     parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
     parser.add_argument("--input-url-list", dest='hypots', default=None)
+    smart_parser_default =  "../../../src/bin/Release/netcoreapp3.1/smart_parser"
+    if os.path.sep == "\\":
+        smart_parser_default += ".exe"
     parser.add_argument("--smart-parser-binary",
                         dest='smart_parser_binary',
-                        default="C:\\tmp\\smart_parser\\smart_parser\\src\\bin\\Release\\netcoreapp3.1\\smart_parser.exe")
+                        default=os.path.normpath(smart_parser_default))
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     args = parser.parse_args()
@@ -188,27 +261,36 @@ def parse_args():
         args.stop_after = args.step
     return args
 
+
 def step_index_by_name(name):
     if name is None:
         return -1
     for i, r in enumerate(ROBOT_STEPS):
-        if name == r['name']:
+        if name == r['step_name']:
             return i
     raise Exception("cannot find step {}".format(name))
+
 
 def make_steps(args, project):
     logger = logging.getLogger("dlrobot_logger")
     if args.start_from != "last_step":
         start = step_index_by_name(args.start_from) if args.start_from is not None else 0
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
-        step_index = start
-        for r in ROBOT_STEPS[start:end]:
-            if args.rebuild:
-                project.del_old_info(step_index)
-            logger.info("=== step {0} =========".format(r['name']))
-            r['step_function'](project, step_index, r['check_link_func'], include_source=r['include_sources'])
+        for step_passport in ROBOT_STEPS[start:end]:
+            step_name = step_passport['step_name']
+            logger.info("=== step {0} =========".format(step_name))
+            for office_info in project.offices:
+                start = datetime.datetime.now()
+                logger.info(office_info.get_domain_name())
+
+                project.find_links_for_one_website(office_info, step_passport)
+
+                logger.info("step elapsed time {} {} {}".format(
+                    office_info.morda_url,
+                    step_name,
+                    (datetime.datetime.now() - start).total_seconds()))
+
             project.write_project()
-            step_index += 1
 
     if args.stop_after is not None:
         if args.stop_after != "last_step":
@@ -217,14 +299,15 @@ def make_steps(args, project):
     if not args.skip_final_download:
         logger.info("=== download all declarations =========")
         project.download_last_step()
-        export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
-        project.write_export_stats()
-        project.write_project()
+
+    export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
+    project.write_export_stats()
+    project.write_project()
 
 
 def open_project(args, log_file_name):
     logger = logging.getLogger("dlrobot_logger")
-    setup_logging(args, logger, log_file_name)
+    setup_logging(logger, log_file_name)
     with TRobotProject(args.project, ROBOT_STEPS) as project:
         if args.hypots is not None:
             if args.start_from is not None:
@@ -241,9 +324,10 @@ def open_project(args, log_file_name):
         if args.click_features_file:
             project.write_click_features(args.click_features_file)
 
+
 if __name__ == "__main__":
     args = parse_args()
-    if  args.logfile == "temp":
+    if args.logfile == "temp":
         with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
             log_file_name = os.path.join(tmp_folder, "dlrobot.log")
             open_project(args, log_file_name)

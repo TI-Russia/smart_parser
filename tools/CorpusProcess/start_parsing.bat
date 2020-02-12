@@ -1,10 +1,1 @@
-python run_smart_parser.py > parser.log
-
-
-
-taskkill /IM "PDFREFLOW.EXE" /F
-taskkill /IM "WINWORD.EXE" /F
-
-goto loop
-
-:loop
+python run_smart_parser.py --restart 1 > parser.log
