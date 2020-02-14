@@ -123,7 +123,8 @@ namespace Smart.Parser.Lib
                 || s == "–"
                 || s == "_"
                 || s == "нет"
-                || s == "не имеет";
+                || s == "не имеет"
+                || s == "отсутствует";
         }
 
         static decimal ParseRoubles(string val, bool inThousands) {

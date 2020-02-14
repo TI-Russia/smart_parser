@@ -17,6 +17,8 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
+        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует" };
+       
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
@@ -298,7 +300,8 @@ namespace Smart.Parser.Lib
                 string text = cell.GetText(true);
                 Logger.Debug(string.Format("column title: \"{0}\"[{1}]",text.ReplaceEolnWithSpace().CoalesceWhitespace(), cell.CellWidth));
                 DeclarationField field;
-                string clean_text = text.Replace("-", "").Trim();
+                string clean_text = AbsenceMarkers.Aggregate(text, (x, y) => x.Replace(y, "")).Trim();
+                //string clean_text = text.Replace("-", "").Trim();
                 if (text == "" || clean_text.Length <= 1)
                 {
                     field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
