@@ -54,11 +54,6 @@
         42
     ],
     [
-        "6401c242c93c941fc1f9d60631c2b85ff12619610cd0aebeda6555bc3569678b",
-        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php/dlrobot_data",
-        -1
-    ],
-    [
         "84e20c6eb375c17e56491f911c2d86bf8aceaaaeb509dc642c32eb03df110f93",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc/dlrobot_data",
         3
@@ -77,6 +72,11 @@
         "b295ce1653708c9c588da2e19c3148e0d3d3bb9c9c664bea27834e51f8897c57",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2017.doc/dlrobot_data",
         13
+    ],
+    [
+        "bd105ecc71f57e0e4582043e89b2b7e06042ffebcc25f2c739628d335bb12465",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php/dlrobot_data",
+        -1
     ],
     [
         "cdd8d509a12a4d975f3336b731214ebbbed4eaea6d8364f173a500fff2168a10",

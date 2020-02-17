@@ -1,13 +1,8 @@
 [
     {
         "people_count_sum": 1157,
-        "files_count": 72
+        "files_count": 71
     },
-    [
-        "00f3ab0b420d14489c8089fc172f3e72896356a08771e4a2e9e903683bbdddb4",
-        "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
-        -1
-    ],
     [
         "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
         "cached/www.minvostokrazvitia.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx/dlrobot_data",
@@ -71,6 +66,11 @@
     [
         "2361085f6d6687c70940050e421d6ac3099a8e20b81b4b59051328820a8a82c3",
         "cached/www.minvostokrazvitia.ru/upload/iblock/883/1ogranicheniya-zaprety.-organizatsii.docx/dlrobot_data",
+        -1
+    ],
+    [
+        "2489fefa92616afcd19d8a7ebfa1973aad5f1e4231b4b5a24f7bf44c6cfd4b61",
+        "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
         -1
     ],
     [
@@ -301,11 +301,6 @@
     [
         "c9a4fa1a1443edba6b3428e57fda4413c7ddb23809ccdf6908bafe80e056b306",
         "cached/minvr.ru/upload/iblock/dea/zasedanie-komissii-23-oktyabrya-2015-g..docx/dlrobot_data",
-        -1
-    ],
-    [
-        "cf2e4e857365eff99ec82f23fce60a68b10c7acf42b0db77a7c48c29da01a418",
-        "cached/gossluzhba.gov.ru/page/index/spravki_bk/dlrobot_data",
         -1
     ],
     [

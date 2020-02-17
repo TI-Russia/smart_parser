@@ -54,15 +54,15 @@ def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
 
 def unzip_one_file(input_file, main_index, outfolder):
     zip_file = zipfile.ZipFile(input_file)
-    for index, filename in enumerate(zip_file.namelist()):
+    for archive_index, filename in enumerate(zip_file.namelist()):
         _, file_extension = os.path.splitext(filename)
         file_extension = file_extension.lower()
         if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             continue
         old_file_name = zip_file.extract(filename, outfolder)
-        new_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, index, file_extension))
+        new_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
         os.rename(old_file_name,  new_file_name)
-        yield new_file_name
+        yield archive_index, old_file_name, new_file_name
     zip_file.close()
 
 
@@ -107,13 +107,14 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
     if not os.path.exists(os.path.dirname(export_path)):
         os.makedirs(os.path.dirname(export_path))
     if extension == DEFAULT_ZIP_EXTENSION:
-        for filename in unzip_one_file(cached_file, index, office_folder):
+        for archive_index, name_in_archive, export_filename in unzip_one_file(cached_file, index, office_folder):
             yield {
                 "url": url,
-                "sha256": build_sha256(filename, os.path.splitext(filename)[1]),
+                "sha256": build_sha256(export_filename, os.path.splitext(export_filename)[1]),
                 "cached_file": cached_file,
-                "export_path": filename,
-                "archive_index": index
+                "export_path": export_filename,
+                "name_in_archive": name_in_archive,
+                "archive_index": archive_index
             }
     else:
         shutil.copyfile(cached_file, export_path)
@@ -121,13 +122,12 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
                 "url": url,
                 "sha256": build_sha256(cached_file, extension),
                 "export_path": export_path,
-                "cached_file": cached_file,
-                "archive_index": -1
+                "cached_file": cached_file
         }
 
 
 def sha256_key_and_url(r):
-    return r["sha256"], len(r["url"]), r["url"], r["archive_index"]
+    return r["sha256"], len(r["url"]), r["url"], r.get("archive_index", -1)
 
 
 def export_files_to_folder(offices, smart_parser_binary, outfolder):

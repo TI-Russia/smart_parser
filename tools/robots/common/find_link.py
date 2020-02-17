@@ -115,7 +115,7 @@ def find_recursive_to_bottom (start_element, check_link_func, element):
         for child in children:
             start_time = time.time()
             found_text = find_recursive_to_bottom(start_element, check_link_func, child)
-            if time.time() - start_time > 10:  # skip very large html
+            if time.time() - start_time > 10:  # skip very large html (duma-torzhok.ru)
                 logging.getLogger("dlrobot_logger").error("stop  too long recursive html processing")
                 raise SomeOtherTextException("")
             if len(found_text) > 0:

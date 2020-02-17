@@ -1,7 +1,7 @@
 [
     {
         "people_count_sum": 4376,
-        "files_count": 23
+        "files_count": 22
     },
     [
         "11cb463b44ec21f1b3b2321f8cc9ba55b01e7bf965ba9af9a557d37c14ee0c6e",
@@ -87,11 +87,6 @@
         "beb44144c4ea619a99cf3e09a530381f66fd126a406da12c93318be73faefdb8",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beaab5223d/actual/d2.docx/dlrobot_data",
         253
-    ],
-    [
-        "bffc51a415e173112857c547256d2d3938a4bb62f2ddde657e880112854f1d9f",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8ccbc166f37/actual/Svedeniia_o_vydannykh_dokumentakh__c54d35e931818efdbfc55e73491420d6/dlrobot_data",
-        -1
     ],
     [
         "c090c997fd27cba8d9864836252c50533382d6fb6424ea7ca7cc604a570ee21d",

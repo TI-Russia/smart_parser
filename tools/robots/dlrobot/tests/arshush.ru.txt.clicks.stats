@@ -34,11 +34,6 @@
         33
     ],
     [
-        "1632ff98ad7f1944b7e42451cff3a23dfbf5fa1efbd360daa63122efb2df1723",
-        "cached/arshush.ru/content/view/1042/dlrobot_data",
-        -1
-    ],
-    [
         "16af5802a023b08bb1ee29c83dfef9ca06e847ebad9db85f66042d36ba77bccd",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
         -1
@@ -131,6 +126,11 @@
     [
         "974265506b76204fd42855858609839df1298d0f17c927ee611d8679ee9cf7f3",
         "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
+        -1
+    ],
+    [
+        "974e5c3afc283ab4fd9aa62d8a1e857b0b267587ac9b30f7655c01029dfc1037",
+        "cached/arshush.ru/content/view/1042/dlrobot_data",
         -1
     ],
     [
