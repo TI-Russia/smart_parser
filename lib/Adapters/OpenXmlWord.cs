@@ -676,7 +676,6 @@ namespace Smart.Parser.Adapters
             var docPart = wordDocument.MainDocumentPart;
             InitPageSize(wordDocument);
             var tables = docPart.Document.Descendants<Table>().ToList();
-            TablesCount = tables.Count();
             int tableIndex = 0;
             foreach (OpenXmlPart h in docPart.HeaderParts)
             {
@@ -687,8 +686,9 @@ namespace Smart.Parser.Adapters
                 }
 
             }
-            if (extension != ".htm") // это просто костыль. Нужно как-то встроить это в архитектуру.
+            if (extension != ".htm" && extension != ".html") // это просто костыль. Нужно как-то встроить это в архитектуру.
                 tables = ExtractSubtables(tables);
+            TablesCount = tables.Count();
 
             foreach (var t in tables)
             {
@@ -696,10 +696,17 @@ namespace Smart.Parser.Adapters
                 ProcessWordTableAndUpdateTitle(t, maxRowsToProcess, tableIndex);
                 tableIndex++;
             }
+
+            DropDayOfWeekRows();
         }
 
 
 
+        private void DropDayOfWeekRows()
+        {
+            List<string> daysOfWeek = new List<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
+            TableRows = TableRows.TakeWhile(x => !x.All(y => daysOfWeek.Contains(y.Text.ToLower().Trim()))).ToList();
+        }
 
         private static List<Table> ExtractSubtables(List<Table> tables)
         {

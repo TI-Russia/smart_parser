@@ -178,6 +178,8 @@ namespace Smart.Parser.Adapters
                 return cell;
             }
             TColumnInfo colSpan;
+            if (field == DeclarationField.DeclaredYearlyIncomeThousands || field == DeclarationField.DeclaredYearlyIncome)
+                ;
             var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
             if (exactCell.Text.Trim() != "")
             {

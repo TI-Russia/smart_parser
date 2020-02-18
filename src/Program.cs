@@ -194,15 +194,16 @@ namespace Smart.Parser
 
         public static int Main(string[] args)
         {
-            //args = new string[] {
-            //  //"-license", @"lic.bin",
-            //  "-v", "debug" ,
-            //  "-max-rows", "100",
-            //  "-adapter", "prod" ,
-            //  "-converted-storage-url",  @"http://declarator.zapto.org:8000/converted_document",
-            // @"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/4144_28.htm"
-            // //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/17335_3.html"
-            //};
+            args = new string[] {
+             // "-license", @"lic.bin",
+             // "-v", "debug" ,
+             // "-max-rows", "100",
+             // "-adapter", "prod" ,
+             // "-converted-storage-url",  @"http://declarator.zapto.org:8000/converted_document",
+             //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/4144_28.htm"
+             //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/15555_1.html"
+             //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/17335_3.html"
+            };
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))
