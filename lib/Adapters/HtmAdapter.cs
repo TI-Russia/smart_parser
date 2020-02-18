@@ -50,24 +50,19 @@ namespace Smart.Parser.Adapters
         protected const string REAL_ESTATE_CAPTION = "Вид недвижимости в собственности";
         protected const string REAL_ESTATE_SQUARE = "Площадь в собственности (кв.м)";
         protected const string REAL_ESTATE_OWNERSHIP = "Вид собственности";
-
         protected static List<IHtmlScheme> _allSchemes = new List<IHtmlScheme>()
             {
                 new ArbitrationCourt1(),
                 new ArbitrationCourt2(),
             };
 
-        protected static Regex _realEstateMatcher = new Regex(@"\s*Недвижимое\s*имущество\s*\(\s*кв[\. ]*м\s*\)\s*",
-                                                                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        protected static Regex _squareMatcher = new Regex(@"\d+(.\d+)*", RegexOptions.Compiled);
-        protected static Regex _ownershipMatcher = new Regex(@"(долевая)*(индивидуальная)*\s*собственность");
+      
         #endregion
 
         #region fields
         protected List<WorksheetInfo> _worksheets;
         protected int _worksheetIndex;
         protected IHtmlScheme _scheme;
-        protected int _realEstateIndex;
         #endregion
 
         #region properties
@@ -76,13 +71,14 @@ namespace Smart.Parser.Adapters
 
         public HtmAdapter(string filename)
         {
-            _realEstateIndex = -1;
             this.DocumentFile = filename;
             var text = File.ReadAllText(filename);
             using (IDocument document = GetDocument(text))
             {
                 _scheme = _allSchemes.Find(x => x.CanProcess(document));
+                _scheme.Document = document;
                 MakeWorksheets(document);
+                _scheme.Document = null; // free
             }
         }
 
@@ -90,7 +86,7 @@ namespace Smart.Parser.Adapters
         private void MakeWorksheets(IDocument document)
         {
             _worksheetIndex = 0;
-            List<int> years = _scheme.GetYears(document);
+            List<int> years = _scheme.GetYears();
             if (years.Count > 0)
             {
                 MakeWorksheetWithYears(document, years);
@@ -139,9 +135,9 @@ namespace Smart.Parser.Adapters
 
         protected  List<List<Cell>> GetTable(IDocument document,  string year, out string name,  out string title)
         {
-            name = _scheme.GetPersonName(document);
-            title = _scheme.GetTitle(document, year);
-            var members = _scheme.GetMembers(document, name, year);
+            name = _scheme.GetPersonName();
+            title = _scheme.GetTitle( year);
+            var members = _scheme.GetMembers( name, year);
 
             List<List<Cell>> table = new List<List<Cell>>();
 
@@ -178,7 +174,8 @@ namespace Smart.Parser.Adapters
                 var name = _scheme.GetMemberName(memberElement);
                 line.Add(GetCell(name, table.Count, 0));
                 var tableLines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
-                ModifyLinesForRealEstate(tableLines);
+                //ModifyLinesForRealEstate(tableLines);
+                _scheme.ModifyLinesForAdditionalFields(tableLines);
                 line.AddRange(GetRow(tableLines[1], table.Count, 1));
 
                 table.Add(line);
@@ -193,61 +190,26 @@ namespace Smart.Parser.Adapters
             line.Add(GetCell(name, rowNum, 0));
             //var tableLines = ExtractLinesFromTable(tableElement.Children.First());
             var tableLines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
-            ModifyLinesForRealEstate(tableLines);
+            _scheme.ModifyLinesForAdditionalFields(tableLines, true);
 
             line.AddRange(GetRow(tableLines[1], rowNum, 1));
             return line;
         }
 
 
+
         protected IEnumerable<Cell> MakeHeaders( IElement memberElement, int rowNum)
         {
-            
-            //List<List<string>> lines = ExtractLinesFromTable(element.Children.First());
+
             List<List<string>> lines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
             var headerLine = lines[0];
-            var ind = headerLine.FindIndex(x=>_realEstateMatcher.IsMatch(x));
-            if (ind >= 0)
-            {
-                _realEstateIndex = ind;
-                headerLine[ind] = REAL_ESTATE_CAPTION;
-                headerLine.Insert(ind + 1, REAL_ESTATE_SQUARE);
-                headerLine.Insert(ind + 2, REAL_ESTATE_OWNERSHIP);
-
-
-            }
+            //ModifyHeaderForRealEstate(headerLine);
+            _scheme.ModifyHeaderForAdditionalFields(headerLine);
             headerLine.Insert(0, NAME_COLUMN_CAPTION);
             return GetRow(headerLine, rowNum);
         }
 
-        private  void ModifyLinesForRealEstate(List<List<string>> lines)
-        {
-            if (_realEstateIndex < 0)
-                return;
 
-            foreach (var line in lines.Skip(1))
-            {
-                var realEstateText = line[_realEstateIndex];
-                Match match = _squareMatcher.Match(realEstateText);
-                
-                line.Insert(_realEstateIndex + 1, GetMatchResult(match));
-
-                match = _ownershipMatcher.Match(realEstateText);
-                line.Insert(_realEstateIndex + 2, GetMatchResult(match));
-
-                line[_realEstateIndex] = line[_realEstateIndex].Split("(").First();
-            }
-        }
-
-        private static string GetMatchResult( Match match)
-        {
-            if (match.Success)
-            {
-               return match.Value;
-            }
-
-            return "-";
-        }
 
         protected static List<List<string>> ExtractLinesFromTable(IElement tableElement)
         {

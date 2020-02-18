@@ -256,9 +256,9 @@ namespace Smart.Parser.Lib
             }
             return str;
         }
-        static public bool ParseDocumentFileName(string filename, out int? documentfile_id, out string archive_file)
+        static public bool ParseDocumentFileName(string filename, out int? Documentfile_id, out string archive_file)
         {
-            documentfile_id = null;
+            Documentfile_id = null;
             archive_file = null;
             string filePath = Path.GetFullPath(filename);
             string dirName = new DirectoryInfo(Path.GetDirectoryName(filePath)).Name;
@@ -267,7 +267,7 @@ namespace Smart.Parser.Lib
             // dirty hack
             if (dirParseRes && (dirId > 2020 || dirId < 2000))
             {
-                documentfile_id = Int32.Parse(dirName);
+                Documentfile_id = Int32.Parse(dirName);
                 archive_file = Path.GetFileName(filename);
                 return true;
             }
@@ -275,7 +275,7 @@ namespace Smart.Parser.Lib
             {
                 int val;
                 bool res = Int32.TryParse(Path.GetFileNameWithoutExtension(filename), out val);
-                if (res) { documentfile_id = val; }
+                if (res) { Documentfile_id = val; }
                 return res;
             }
         }

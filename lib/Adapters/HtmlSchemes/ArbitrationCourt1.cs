@@ -1,15 +1,42 @@
 ﻿using AngleSharp.Dom;
+using Aspose.Cells;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 {
     class ArbitrationCourt1 : IHtmlScheme
     {
-        
+        #region consts
+        protected const string NAME_COLUMN_CAPTION = "ФИО";
+        protected const string REAL_ESTATE_CAPTION = "Вид недвижимости в собственности";
+        protected const string REAL_ESTATE_SQUARE = "Площадь в собственности (кв.м)";
+        protected const string REAL_ESTATE_OWNERSHIP = "Вид собственности";
+        protected const string COLLEGIUM_CAPTION = "Коллегия";
+        protected const string COLLEGIUM_CAPTION_NAME = "наименование организации";
 
+        #endregion
+
+
+
+        #region Regex matchers
+        protected static Regex _realEstateMatcher = new Regex(@"\s*Недвижимое\s*имущество\s*\(\s*кв[\. ]*м\s*\)\s*",
+                                                               RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        protected static Regex _squareMatcher = new Regex(@"\d+(.\d+)*", RegexOptions.Compiled);
+        protected static Regex _ownershipMatcher = new Regex(@"(долевая)*(индивидуальная)*\s*собственность");
+        #endregion
+
+        #region fields
+        protected int _realEstateColumnNum = -1;
+        protected int _collegiumColumNum = -1;
+        protected string _collegium = "";
+        #endregion
+
+
+        #region Logic
         public override bool CanProcess(IDocument document)
         {
             try
@@ -33,11 +60,11 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
 
 
-        public override IHtmlCollection<IElement> GetMembers(IDocument document, string name, string year)
+        public override IHtmlCollection<IElement> GetMembers( string name, string year)
         {
             IElement tableElement;
             if (year != null)
-                tableElement = document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
+                tableElement = Document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
             else
                 throw new NotImplementedException(); // TODO
             var members = tableElement.Children;
@@ -46,9 +73,9 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
 
 
-        public override string GetPersonName(IDocument document)
+        public override string GetPersonName()
         {
-            var selection = document.QuerySelectorAll("h2.b-card-fio");
+            var selection = Document.QuerySelectorAll("h2.b-card-fio");
             var name = selection.First().TextContent;
             return RemoveNewLineSymbols(name);
         }
@@ -62,9 +89,10 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
 
 
-        public override string GetTitle(IDocument document, string year)
+        public override string GetTitle(string year)
         {
-            string rawTitle = document.All.Where(x => x.LocalName == "title").First().TextContent;
+            
+            string rawTitle = Document.All.Where(x => x.LocalName == "title").First().TextContent;
             rawTitle = $"Сведения об имуществе {rawTitle}";
             if (year != null)
                 rawTitle = $"{rawTitle}  на период {year}";
@@ -73,17 +101,17 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
 
 
-        public override string GetMaxYear(IDocument document)
+        public override string GetMaxYear()
         {
-            return GetYears(document).Max().ToString();
+            return GetYears().Max().ToString();
         }
 
 
 
-        public override List<int> GetYears(IDocument document)
+        public override List<int> GetYears()
         {
             List<int> years = new List<int>();
-            var selection = document.QuerySelectorAll("li.b-income-year-item");
+            var selection = Document.QuerySelectorAll("li.b-income-year-item");
             foreach (var yearElement in selection)
             {
                 int currYear = int.Parse(yearElement.TextContent);
@@ -91,5 +119,111 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
             }
             return years;
         }
+
+
+
+        public override void ModifyHeaderForAdditionalFields(List<string> headerLine)
+        {
+            ModifyHeaderForRealEstate(headerLine);
+            ModifyHeaderForCollegium(headerLine);
+        }
+
+
+
+        public override void ModifyLinesForAdditionalFields(List<List<string>> tableLines, bool isMainDeclarant)
+        {
+            ModifyLinesForRealEstate(tableLines);
+            ModifyLinesForCollegium(tableLines, isMainDeclarant);
+        }
+
+
+
+        protected void ModifyHeaderForRealEstate(List<string> headerLine)
+        {
+            var ind = headerLine.FindIndex(x => _realEstateMatcher.IsMatch(x));
+            if (ind >= 0)
+            {
+                _realEstateColumnNum = ind;
+                headerLine[ind] = REAL_ESTATE_CAPTION;
+                headerLine.Insert(ind + 1, REAL_ESTATE_SQUARE);
+                headerLine.Insert(ind + 2, REAL_ESTATE_OWNERSHIP);
+
+
+            }
+        }
+
+
+
+        protected void ModifyLinesForRealEstate(List<List<string>> lines)
+        {
+            if (_realEstateColumnNum < 0)
+                return;
+
+            foreach (var line in lines.Skip(1))
+            {
+                var realEstateText = line[_realEstateColumnNum];
+                Match match = _squareMatcher.Match(realEstateText);
+
+                line.Insert(_realEstateColumnNum + 1, GetMatchResult(match));
+
+                match = _ownershipMatcher.Match(realEstateText);
+                line.Insert(_realEstateColumnNum + 2, GetMatchResult(match));
+
+                line[_realEstateColumnNum] = line[_realEstateColumnNum].Split("(").First();
+            }
+        }
+
+
+        protected  void ModifyLinesForCollegium(List<List<string>> lines, bool isMain)
+        {
+
+            if (_collegiumColumNum == -1)
+                return;
+            string value;
+            if (isMain)
+                value = _collegium;
+            else
+                value = "";
+            for(int i = 1; i < lines.Count; i += 2)
+            {
+                lines[i].Insert(_collegiumColumNum, value);
+            }
+                
+            
+
+        }
+
+
+        protected void ModifyHeaderForCollegium(List<string> headerLine)
+        {
+            var selection = Document.All.Where(x => x.LocalName == "dt" &&
+                                                      x.ClassList.Contains("b-card-info-caption") &&
+                                                      x.TextContent == COLLEGIUM_CAPTION);
+            if (selection.Count() <= 0)
+                return;
+            headerLine.Add(COLLEGIUM_CAPTION_NAME);
+            _collegiumColumNum = headerLine.Count-1;
+            var tmp = selection.First().ParentElement;
+            tmp = tmp.Children[1];
+            _collegium = tmp.TextContent;
+
+        }
+
+
+        protected static string GetMatchResult(Match match)
+        {
+            if (match.Success)
+            {
+                return match.Value;
+            }
+
+            return "-";
+        }
+
+        #endregion
+
+
+
+
     }
 }

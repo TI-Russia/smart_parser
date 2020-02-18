@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using Aspose.Cells;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +8,14 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 {
     public abstract class IHtmlScheme
     {
-        public abstract IHtmlCollection<IElement> GetMembers(IDocument document, string name, string year);
-        public abstract string GetTitle(IDocument document, string year);
-        public abstract string GetMaxYear(IDocument document);
-        public abstract List<int> GetYears(IDocument document);
-        public abstract string GetPersonName(IDocument document);
+        public  IDocument Document{ get; set; }
+
+
+        public abstract IHtmlCollection<IElement> GetMembers(string name, string year);
+        public abstract string GetTitle(string year);
+        public abstract string GetMaxYear();
+        public abstract List<int> GetYears();
+        public abstract string GetPersonName();
         public abstract string GetMemberName(IElement memberElement);
         public abstract IElement GetTableFromMember(IElement memberElement);
         public abstract bool CanProcess(IDocument document);
@@ -21,6 +25,11 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
             line = line.Replace("\n", "").Replace("\t", "");
             return line;
         }
+
+        public abstract void ModifyHeaderForAdditionalFields(List<string> headerLine);
+
+        public abstract void ModifyLinesForAdditionalFields(List<List<string>> tableLines, bool isMainDeclarant = false);
+
 
     }
 }

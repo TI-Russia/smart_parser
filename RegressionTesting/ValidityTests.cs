@@ -7,6 +7,7 @@ using System.Reflection;
 using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 using System.Text;
+using System.Collections.Generic;
 
 namespace RegressionTesting
 {
@@ -149,8 +150,30 @@ namespace RegressionTesting
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(filename);
             string outDir = Path.GetDirectoryName(Path.GetFullPath(filename));
             Smart.Parser.Program.ParseFile(filename, outFileName);
-            string expectedFile = Path.Combine(GetCanonFolder(), outFileName);
-            Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
+            List<string> outFiles = new List<string>();
+            if (File.Exists(outFileName))
+                outFiles.Add(outFileName);
+            else
+            {
+                string nameWithoutExtension = Path.GetFileNameWithoutExtension(outFileName);
+                int i = 0;
+                string fileName = $"{nameWithoutExtension}_{i}.json";
+                while(File.Exists(fileName))
+                {
+                    outFiles.Add(fileName);
+                    i++;
+                    fileName = $"{nameWithoutExtension}_{i}.json";
+                }
+                if (outFiles.Count == 0)
+                    throw new Exception($"Could not find output file");
+            }
+            List<string> expectedFileNames = outFiles.Select(x => Path.Combine(GetCanonFolder(), x)).ToList();
+            for (int i = 0; i < outFiles.Count; i++)
+            {
+                Assert.IsTrue(TestValidity(expectedFileNames[i], outFiles[i], SmartParserLogFile));
+            }
+            //    string expectedFile = Path.Combine(GetCanonFolder(), outFileName);
+            //    Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }
 
         [TestMethod]
@@ -527,6 +550,22 @@ namespace RegressionTesting
         {
             TestSmartParser("Sudia2011.htm", "prod");
         }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void ArbitrationCourt1()
+        {
+            TestSmartParser("17335_3.html", "prod");
+        }
+
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void ArbitrationCourt2()
+        {
+            TestSmartParser("4144_28.htm", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {

@@ -333,6 +333,10 @@ namespace Smart.Parser.Adapters
                 {
                     Occupation = GetDeclarationField(DeclarationField.Occupation).Text;
                 }
+                if (this.ColumnOrdering.ContainsField(DeclarationField.Department))
+                {
+                    Department = GetDeclarationField(DeclarationField.Department).Text;
+                }
                 if (!DataHelper.IsEmptyValue(nameOrRelativeType))
                 {
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))
@@ -360,7 +364,7 @@ namespace Smart.Parser.Adapters
         public string RelativeType = "";
         public string NameDocPosition = "";
         public string Occupation = "";
-
+        public string Department = null;
     }
 
 

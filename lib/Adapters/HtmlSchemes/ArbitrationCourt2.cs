@@ -24,14 +24,14 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         }
 
 
-        public override IHtmlCollection<IElement> GetMembers(IDocument document, string name, string year)
+        public override IHtmlCollection<IElement> GetMembers( string name, string year)
         {
             
             IElement tableElement;
             if (year != null)
-                tableElement = document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
+                tableElement = Document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
             else
-                tableElement = document.QuerySelectorAll("div.b-card-income-container").First();
+                tableElement = Document.QuerySelectorAll("div.b-card-income-container").First();
             var members = tableElement.Children;
             return members;
         }
