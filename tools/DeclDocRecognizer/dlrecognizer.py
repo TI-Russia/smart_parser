@@ -13,7 +13,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     with open(args.input, "r", encoding="utf8") as inpf:
-        input_text = inpf.read().replace("\n", " ").replace("\r", " ")
+        input_text = inpf.read().replace("\n", " ").replace("\r", " ").replace ('"', ' ')
     result = {
         "result": "unknown"
     }
