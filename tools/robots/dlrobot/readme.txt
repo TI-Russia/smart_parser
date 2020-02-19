@@ -6,4 +6,5 @@
  https://docs.microsoft.com/ru-ru/dotnet/core/install/linux-package-manager-ubuntu-1904
 6.  dotnet build -c Release ~/smart_parser/src
 7. pip3 install -r requirements.txt
+8. install soffice
 
