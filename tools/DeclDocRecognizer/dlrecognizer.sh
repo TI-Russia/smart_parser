@@ -1,5 +1,6 @@
 SCRIPT_FOLDER=`dirname "$0"`
 input_file=$1
+output_file=$2
 #soffice="/usr/bin/soffice"
 soffice="C:/Program Files (x86)/LibreOffice/program/soffice.exe"
 calibre_convert="C:/Program Files (x86)/Calibre2/ebook-convert.exe"
@@ -27,5 +28,5 @@ if [[ ! -f ${input_file}.txt ]]; then
     exit 1
 fi
 
-python3 $SCRIPT_FOLDER/dlrecognizer.py --input ${input_file}.txt
+python3 $SCRIPT_FOLDER/dlrecognizer.py --input ${input_file}.txt --output ${output_file}
 rm ${input_file}.txt

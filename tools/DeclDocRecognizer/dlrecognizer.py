@@ -34,5 +34,5 @@ if __name__ == "__main__":
                 result["regexp"] = r
                 result["result"] = "declaration"
                 break
-
-    print( json.dumps(result, ensure_ascii=False, indent=4) )
+    with open (args.output, "w", encoding="utf8") as outf:
+        outf.write( json.dumps(result, ensure_ascii=False, indent=4) )
