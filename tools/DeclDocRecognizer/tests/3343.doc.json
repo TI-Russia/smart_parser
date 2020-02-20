@@ -1,5 +1,33 @@
 {
     "result": "declaration",
-    "start_text": "ФИО\tДолжность\tДекларированный годовой доход государственного гражданского служащего (руб.)\tПеречень ",
-    "regexp": "(Фамилия|ФИО).*Должность.*Перечень\\s+объектов.*транспортных"
+    "person_matches": [
+        "<re.Match object; span=(372, 401), match='Григорьев Владимир Викторович'>",
+        "<re.Match object; span=(1060, 1089), match='Сеславинский Михаил Вадимович'>"
+    ],
+    "transport_word_matches": [
+        "<re.Match object; span=(209, 218), match='транспорт'>"
+    ],
+    "income_matches": [
+        "<re.Match object; span=(580, 586), match='000217'>",
+        "<re.Match object; span=(959, 965), match='614925'>",
+        "<re.Match object; span=(1100, 1106), match='465686'>",
+        "<re.Match object; span=(1229, 1235), match='155013'>"
+    ],
+    "realty_matches": [
+        "<re.Match object; span=(533, 550), match='земельный участок'>",
+        "<re.Match object; span=(560, 568), match='квартира'>",
+        "<re.Match object; span=(906, 914), match='квартира'>",
+        "<re.Match object; span=(916, 924), match='квартира'>",
+        "<re.Match object; span=(1173, 1181), match='квартира'>",
+        "<re.Match object; span=(1184, 1192), match='квартира'>",
+        "<re.Match object; span=(1341, 1358), match='земельный участок'>",
+        "<re.Match object; span=(1371, 1379), match='квартира'>",
+        "<re.Match object; span=(1381, 1389), match='квартира'>",
+        "<re.Match object; span=(1599, 1607), match='квартира'>"
+    ],
+    "header_matches": [
+        "<re.Match object; span=(0, 221), match='ФИО\\tДолжность\\tДекларированный годовой доход гос>"
+    ],
+    "header_start": 0,
+    "start_text": "ФИО\tДолжность\tДекларированный годовой доход государственного гражданского служащего (руб.)\tПеречень "
 }

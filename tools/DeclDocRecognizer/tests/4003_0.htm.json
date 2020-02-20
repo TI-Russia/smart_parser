@@ -1,5 +1,31 @@
 {
     "result": "declaration",
-    "start_text": "О суде    Новости    Организационная структура суда    Локальные акты суда    Документы президиума с",
-    "regexp": "Сведения\\s+о\\s+доходах,\\s+об\\s+имуществе\\s+и\\s+обязательствах"
+    "person_matches": [
+        "<re.Match object; span=(881, 894), match='Рыбников А.Н.'>",
+        "<re.Match object; span=(1380, 1393), match='Рыбников А.Н.'>"
+    ],
+    "auto_matches": [
+        "<re.Match object; span=(1507, 1514), match='Renault'>"
+    ],
+    "transport_word_matches": [
+        "<re.Match object; span=(1172, 1181), match='транспорт'>"
+    ],
+    "income_matches": [
+        "<re.Match object; span=(1544, 1550), match='115796'>",
+        "<re.Match object; span=(1666, 1672), match='115796'>",
+        "<re.Match object; span=(1788, 1794), match='131046'>",
+        "<re.Match object; span=(1903, 1909), match='414014'>",
+        "<re.Match object; span=(2112, 2118), match='163763'>"
+    ],
+    "realty_matches": [
+        "<re.Match object; span=(1402, 1410), match='Квартира'>",
+        "<re.Match object; span=(1428, 1436), match='Квартира'>",
+        "<re.Match object; span=(1590, 1598), match='Квартира'>"
+    ],
+    "header_matches": [
+        "<re.Match object; span=(547, 596), match='Сведения о доходах, об имуществе и обязательствах>",
+        "<re.Match object; span=(897, 947), match='Сведения  О доходах, об имуществе и обязательства>"
+    ],
+    "header_start": 547,
+    "start_text": "О суде    Новости    Организационная структура суда    Локальные акты суда    Документы президиума с"
 }
