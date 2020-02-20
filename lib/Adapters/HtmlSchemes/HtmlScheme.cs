@@ -3,12 +3,16 @@ using Aspose.Cells;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 {
     public abstract class IHtmlScheme
     {
-        public  IDocument Document{ get; set; }
+        #region const
+        protected Regex _intMatcher = new Regex(@"\d+", RegexOptions.Compiled);
+        #endregion
+        public IDocument Document{ get; set; }
 
 
         public abstract IHtmlCollection<IElement> GetMembers(string name, string year);

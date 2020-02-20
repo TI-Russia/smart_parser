@@ -42,8 +42,8 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
             try
             {
                 var selection = document.QuerySelectorAll("div.js-income-member-data");
-                
-                return selection.Length > 0;
+                string name = GetPersonName();
+                return selection.Length > 0 && !string.IsNullOrEmpty(name) ;
             }
             catch (Exception)
             {
@@ -64,7 +64,10 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         {
             IElement tableElement;
             if (year != null)
-                tableElement = Document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
+                tableElement = Document.All.Where(x => x.LocalName == "div" &&
+                                                  x.Attributes.Any(y => y.Name == "rel" &&
+                                                                   y.Value == year)
+                                                  ).First();
             else
                 throw new NotImplementedException(); // TODO
             var members = tableElement.Children;

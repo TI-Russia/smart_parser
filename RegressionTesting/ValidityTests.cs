@@ -262,6 +262,7 @@ namespace RegressionTesting
             TestSmartParser("DepEnergo2010.doc", "prod");
         }
 
+
         [TestMethod]
         [TestCategory("docx")]
         public void MinZdorov2015Full()
@@ -566,6 +567,22 @@ namespace RegressionTesting
             TestSmartParser("4144_28.htm", "prod");
         }
 
+
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void ArbitrationCourtMariEl()
+        {
+            TestSmartParser("16738_12.html", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void FederalAgencySubsoiUse2013()
+        {
+            TestSmartParser("15555_1.html", "prod");
+
+        }
 
         private static void SetupLog4Net()
         {
