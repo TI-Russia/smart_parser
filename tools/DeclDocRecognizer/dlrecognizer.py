@@ -10,63 +10,72 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def get_matches(match_object, result, name, max_count=10):
+    if match_object is None:
+        return False
+    matches = list()
+    first_offset = -1
+    for x in match_object:
+        if first_offset == -1:
+            first_offset = x.start()
+        matches.append(str(x))
+        if len(matches) >= max_count:
+            result[name] = {
+                'matches': matches,
+                "start": first_offset
+            }
+            break
+    if len(matches) == 0:
+        return False
+    result[name] = {
+        'matches': matches,
+        "start": first_offset
+    }
+    return True
 
 def find_person(input_text, result):
     regexp = "[А-Я]\w+\s+[А-Я]\w+\s+[А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))" # # Сокирко Алексей Викторович
-    matches = tuple(re.finditer(regexp, input_text))
-    if len(matches) > 0:
-        result["person_matches"] = [str(x) for x in matches]
+    if get_matches(re.finditer(regexp, input_text), result, "person"):
+        return
     else:
         regexp = "[А-Я]\w+\s+[А-Я]\.\s*[А-Я]\."   # Сокирко А.В.
-        matches = tuple(re.finditer(regexp, input_text))
-        if len(matches) > 0:
-            result["person_matches"] = [str(x) for x in matches]
+        get_matches(re.finditer(regexp, input_text), result, "person")
 
 
 def find_vehicles(input_text, result):
     regexp = r"\b(Opel|Ситроен|Мазда|Mazda|Пежо|Peageut|BMV|БМВ|Ford|Форд|Toyota|Тойота|KIA|Шевроле|Chevrolet|Suzuki|Сузуки|Mercedes|Мерседес|Renault|Рено|Мицубиси|Rover|Ровер|Нисан|Nissan)\b"
-    matches = tuple(re.finditer(regexp, input_text, re.IGNORECASE))
-    if len(matches) > 0:
-        result["auto_matches"] = [str(x) for x in matches]
+    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, "auto")
 
 
 def find_vehicles_word(input_text, result):
     regexp = "транспорт"
-    matches = tuple(re.finditer(regexp, input_text, re.IGNORECASE))
-    if len(matches) > 0:
-        result["transport_word_matches"] = [str(x) for x in matches]
+    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, "transport_word")
 
 
 def find_income(input_text, result):
     regexp = '[0-9]{6}'
-    matches = tuple(re.finditer(regexp, input_text.replace(' ', ''), re.IGNORECASE))
-    if len(matches) > 0:
-        result["income_matches"] = [str(x) for x in matches]
+    get_matches(re.finditer(regexp, input_text.replace(' ', ''), re.IGNORECASE), result, "income")
 
 
 def find_realty(input_text, result):
     regexp = "квартира|(земельный участок)|(жилое\s+помещение)|комната"
-    matches = tuple(re.finditer(regexp, input_text, re.IGNORECASE))
-    if len(matches) > 0:
-        result["realty_matches"] = [str(x) for x in matches]
+    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, "realty")
 
 
 def find_header(input_text, result):
-    header_regexps = [
-        "Сведения\s+о\sдоходах,\s+расходах",
-        "Сведения\s+об\s+имущественном\s+положении\s+и\s+доходах",
-        "Сведения\s+о\s+доходах,\s+об\s+имуществе\s+и\s+обязательствах",
-        "Сведения\s+о\s+доходах\s+федеральных\s+государственных",
-        "(Фамилия|ФИО).*Должность.*Перечень\s+объектов.*транспортных",
-        "Сведения\s+о\s+доходах.*Недвижимое\s+имущество.*Транспортное",
-        "Сведения\s*,?\s+предоставленные\sруководителями"
+    regexps = [
+        #r"Сведения\s+о\sдоходах,\s+расходах",
+        r"Сведения\s+о\sдоходах",
+        r"Сведения\s+об\s+имущественном\s+положении\s+и\s+доходах",
+        r"Сведения\s+о\s+доходах,\s+об\s+имуществе\s+и\s+обязательствах",
+        r"Сведения\s+о\s+доходах\s+федеральных\s+государственных",
+        r"(Фамилия|ФИО).{1,200}Должность.{1,200}Перечень\s+объектов.{1,200}транспортных",
+        r"Сведения\s+о\s+доходах.{1,200}Недвижимое\s+имущество.{1,200}Транспортное",
+        r"Сведения\s*,?\s+предоставленные\s+руководителями"
     ]
     input_text = input_text.strip()
-    for r in header_regexps:
-        matches = tuple(re.finditer(r, input_text, re.IGNORECASE))
-        if len(matches) > 0:
-            result["header_matches"] = [str(x) for x in matches]
-            result["header_start"] = matches[0].start()
+    for regexp in regexps:
+        if get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, "header"):
             break
 
 
@@ -87,21 +96,22 @@ if __name__ == "__main__":
         find_realty(input_text, result)
         find_header(input_text, result)
 
-        person_count = len(result.get('person_matches', list()))
-        realty_count = len(result.get('realty_matches', list()))
+        person_count = len(result.get('person', dict()).get('matches', list()))
+        realty_count = len(result.get('realty', dict()).get('matches', list()))
+        auto_count = len(result.get('auto', dict()).get('matches', list()))
         is_declaration = False
-        if result.get('auto_matches') is not None:
+        if auto_count > 0:
             is_declaration = True
-        elif result.get("header_start", 1) == 0:
+        elif result.get("header", dict()).get("start", 1) == 0:
             is_declaration = True
         elif realty_count > 5:
             is_declaration = True
-        elif person_count > 0 and result.get("header_matches") is not None:
+        elif person_count > 0 and result.get("header") is not None:
             if person_count > 2:
                 is_declaration = True
             else:
-                if result.get("transport_word_matches") is not None and result.get("income_matches") is not None:
-                    is_declaration = True
+                #if result.get("transport_word") is not None and result.get("income") is not None:
+                #    is_declaration = True
                 if realty_count > 0:
                     is_declaration = True
 
