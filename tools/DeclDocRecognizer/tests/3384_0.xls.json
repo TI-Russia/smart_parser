@@ -1,21 +1,37 @@
 {
     "result": "declaration",
-    "person_matches": [
-        "<re.Match object; span=(863, 889), match='Болталина Дарья Витальевна'>"
-    ],
-    "transport_word_matches": [
-        "<re.Match object; span=(575, 584), match='транспорт'>"
-    ],
-    "income_matches": [
-        "<re.Match object; span=(817, 823), match='918068'>"
-    ],
-    "realty_matches": [
-        "<re.Match object; span=(934, 942), match='квартира'>",
-        "<re.Match object; span=(983, 991), match='квартира'>"
-    ],
-    "header_matches": [
-        "<re.Match object; span=(0, 49), match='Сведения о доходах, об имуществе и обязательствах>"
-    ],
-    "header_start": 0,
+    "person": {
+        "matches": [
+            "<re.Match object; span=(863, 889), match='Болталина Дарья Витальевна'>"
+        ],
+        "start": 863
+    },
+    "transport_word": {
+        "matches": [
+            "<re.Match object; span=(575, 584), match='транспорт'>"
+        ],
+        "start": 575
+    },
+    "income": {
+        "matches": [
+            "<re.Match object; span=(817, 823), match='918068'>"
+        ],
+        "start": 817
+    },
+    "realty": {
+        "matches": [
+            "<re.Match object; span=(934, 942), match='квартира'>",
+            "<re.Match object; span=(950, 957), match='долевая'>",
+            "<re.Match object; span=(983, 991), match='квартира'>",
+            "<re.Match object; span=(999, 1006), match='долевая'>"
+        ],
+        "start": 934
+    },
+    "header": {
+        "matches": [
+            "<re.Match object; span=(0, 18), match='Сведения о доходах'>"
+        ],
+        "start": 0
+    },
     "start_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера федеральных государственн"
 }
