@@ -146,8 +146,12 @@ if __name__ == "__main__":
         "smart_parser_person_count":  get_smart_parser_result(args.smart_parser_binary, args.source_file)
     }
     result["start_text"] = input_text[0:100]
+    _, file_extension = os.path.splitext(args.source_file)
     if len (input_text) < 200:
-        result["description"] = "file is too short"
+        if file_extension in {".html", ".htm", ".docx", ".doc"}:
+            result["result"] = "some_other_document"  # fast empty files
+        else:
+            result["description"] = "file is too short"
     elif result['smart_parser_person_count'] > 0:
         result["result"] = "declaration"
     else:
