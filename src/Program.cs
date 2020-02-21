@@ -33,21 +33,6 @@ namespace Smart.Parser
         public static bool IgnoreDirectoryIds = false;
         public static bool BuildTrigrams = false;
         public static int? UserDocumentFileId;
-        public static void SetAsposeLicenseFromEnvironment()
-        {
-            var envVars = Environment.GetEnvironmentVariables();
-            if (envVars.Contains("ASPOSE_LIC"))
-            {
-                string path = envVars["ASPOSE_LIC"].ToString();
-                AsposeLicense.SetLicense(path);
-                if (!AsposeLicense.Licensed)
-                {
-                    throw new SmartParserException("Not valid aspose licence " + path);
-                }
-
-            }
-        }
-    
         static string ParseArgs(string[] args)
         {
             CMDLineParser parser = new CMDLineParser();
@@ -94,7 +79,7 @@ namespace Smart.Parser
             }
             else
             {
-                SetAsposeLicenseFromEnvironment();
+                Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
             }
             if (maxRowsToProcessOpt.isMatched)
             {
