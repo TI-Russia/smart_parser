@@ -302,7 +302,7 @@ namespace Smart.Parser.Adapters
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
                 }
-                removeTempFile = false;
+                removeTempFile = true;
             }
 
 
