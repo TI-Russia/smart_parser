@@ -1,96 +1,50 @@
 [
     {
-        "people_count_sum": 121,
-        "files_count": 18
+        "files_count": 9
     },
-    [
-        "086b4f6545335a38795921ebd8c7b61e84bb515986e77a8889bf6702c4dcb895",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_284/dlrobot_data",
-        -1
-    ],
     [
         "0f84483ca5cc12b4416fd64a60b0073db33d67a8c6d121324fea4962f4f883f2",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_493/dlrobot_data",
-        31
-    ],
-    [
-        "14ecd3aab8b45bec5f6b974f87e34ebed81313f4fc6c91b26917431e9d223f9f",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_492/dlrobot_data",
-        -1
-    ],
-    [
-        "22f25e0ead6821c5816fd69a5860c8935eeacc7f7334863491cc2f7118cbb06d",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_285/dlrobot_data",
-        -1
+        1
     ],
     [
         "2b7b57f42666f8afc35d47fcbaa846005bf0ee5315c81b48ffd7f71dcffabd1b",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_834/dlrobot_data",
-        34
+        1
     ],
     [
         "2d189f9623c41438f69239d1ad643fe00a41d1886a3043f55572f448f2fa7c22",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_698/dlrobot_data",
-        35
-    ],
-    [
-        "50d08dfbcab0b5230f5fb2a1067c815184793638f29cba44b4cf6a895e0b5078",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_252/dlrobot_data",
-        -1
+        1
     ],
     [
         "50d95dd42449f714aa6ccf3962ef5e19a3664c70e7866bbb9b63d841c609aa19",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_714/dlrobot_data",
-        6
-    ],
-    [
-        "5285bc4b66b8a355da61c9299b406de38596b2cf862143aeb2c09fa18e77607c",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_56/dlrobot_data",
-        -1
+        1
     ],
     [
         "563710238ccad28fffc15f30f3fabfa4b4a6dc273e8cfb67f91c6e68d11441f2",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_67/dlrobot_data",
-        -1
+        1
     ],
     [
         "799223aa5814d3e79541fe50fc7ad0bccc0c595974328e31c6d85636b2a06e3d",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_494/dlrobot_data",
-        9
+        1
     ],
     [
         "8344db6e86fd1a53bc55d73e7fb84c72aca1c543a4e0f4f6a0ffc911aec397dd",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_843/dlrobot_data",
-        6
-    ],
-    [
-        "97fbd3892265b1d6b2c7d36242c3c775d9897de30a9396bc4f914787436f257d",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_790/dlrobot_data",
-        -1
-    ],
-    [
-        "c4a02605a855114256a2b1f26320ae6ba45ea55f263b40c0e8df0f76c6b89787",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_255/dlrobot_data",
-        -1
-    ],
-    [
-        "c58ad2f0b49bc02d32458943efa1936bb41fb0cf0363b0ca9b5d08ad42dda797",
-        "cached/www.gorsovet-podolsk.ru/files/gorsovet/2012/17_3.doc/dlrobot_data",
-        -1
+        1
     ],
     [
         "dc2bde36274034c846c605c87b74017a1fe4f11e22c955019bb2ebd46643e3cd",
-        "cached/www.gorsovet-podolsk.ru/files/gorsovet/2015/resh_16_12.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "e7cb20afdbfcd482bb1ce2da0bd2044ac93f96d9184b040280b1c29a97b2d9ed",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_253/dlrobot_data",
-        -1
+        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_254/dlrobot_data",
+        1
     ],
     [
         "f7c5a21116cfc8c2c4d63222b7d7ac6a6d7a571d2e9b8b4619e730b1a779d9ff",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_62/dlrobot_data",
-        -1
+        1
     ]
 ]

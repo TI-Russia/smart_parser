@@ -10,46 +10,32 @@ import hashlib
 from download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, \
     get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION
 
-UNKNOWN_PEOPLE_COUNT = -1
+DECL_RECOGNIZER_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                    os.path.normpath("../../DeclDocRecognizer/dlrecognizer.sh"))
+if not os.path.exists(DECL_RECOGNIZER_PATH):
+    raise Exception("cannot find {} ".format(DECL_RECOGNIZER_PATH))
+
+DL_RECOGNIZER_UNKNOWN = -1
+DL_RECOGNIZER_POSITIVE = 1
+DL_RECOGNIZER_NEGATIVE = 0
 
 
-def process_smart_parser_json(json_file):
-    with open(json_file, "r", encoding="utf8") as inpf:
-        smart_parser_json = json.load(inpf)
-        people_count = len(smart_parser_json.get("persons", []))
-    os.remove(json_file)
-    return people_count
-
-
-def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
-    people_count = UNKNOWN_PEOPLE_COUNT
-    if smart_parser_binary == "none":
-        return people_count
-    if inputfile.endswith("pdf"): # cannot process new pdf without conversion
-        return people_count
+def run_decl_recognizer(inputfile):
+    global DECL_RECOGNIZER_PATH
     logger = logging.getLogger("dlrobot_logger")
-    cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary, inputfile)
+    json_file = inputfile + ".json"
+    cmd = "bash {} {} {}".format(DECL_RECOGNIZER_PATH, inputfile, json_file)
     logger.debug(cmd)
     os.system(cmd)
-    json_file = inputfile + ".json"
     if os.path.exists(json_file):
-        people_count = process_smart_parser_json(json_file)
-    else:
-        sheet_index = 0
-        while True:
-            json_file = "{}_{}.json".format(inputfile, sheet_index)
-            if not os.path.exists(json_file):
-                break
-            if people_count == UNKNOWN_PEOPLE_COUNT:
-                people_count = 0
-            people_count += process_smart_parser_json(json_file)
-            sheet_index += 1
-
-    converted_file = inputfile + ".converted.docx"
-    if os.path.exists(converted_file):
-        os.remove(converted_file)
-
-    return people_count
+        with open(json_file, "r", encoding="utf8") as inpf:
+            recognizer_result = json.load(inpf).get("result", "unknown")
+        os.remove(json_file)
+        if recognizer_result == "declaration":
+            return DL_RECOGNIZER_POSITIVE
+        elif recognizer_result == "some_other_document":
+            return DL_RECOGNIZER_NEGATIVE
+    return DL_RECOGNIZER_UNKNOWN
 
 
 def unzip_one_file(input_file, main_index, outfolder):
@@ -130,7 +116,7 @@ def sha256_key_and_url(r):
     return r["sha256"], len(r["url"]), r["url"], r.get("archive_index", -1)
 
 
-def export_files_to_folder(offices, smart_parser_binary, outfolder):
+def export_files_to_folder(offices, outfolder):
     logger = logging.getLogger("dlrobot_logger")
     for office_info in offices:
         office_folder = os.path.join(outfolder, office_info.get_domain_name())
@@ -164,8 +150,13 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
             group = list(group)
             first_equal_file = group[0]
             old_file_name = first_equal_file['export_path']
+            dl_recognizer_result = run_decl_recognizer(old_file_name)
+            if dl_recognizer_result == DL_RECOGNIZER_NEGATIVE:
+                for r in group:
+                    os.remove(r['export_path'])
+                continue
+
             logger.debug("export url: {} cached: {}".format(first_equal_file['url'], first_equal_file['cached_file']))
-            people_count = get_people_count_from_smart_parser(smart_parser_binary, old_file_name)
             extension = os.path.splitext(old_file_name)[1]
             new_file_name = os.path.join(office_folder, str(index) + extension)
             shutil.copy2(old_file_name, new_file_name) # copy and delete = rename
@@ -174,13 +165,13 @@ def export_files_to_folder(offices, smart_parser_binary, outfolder):
                 parent = r.pop('parent')
                 # store the same people_count many times (all group) to all mirror nodes to run write_click_features
                 if type(parent) == dict:
-                    parent["people_count"] = people_count
+                    parent["dl_recognizer_result"] = dl_recognizer_result
                 else:
-                    parent.people_count = people_count
+                    parent.dl_recognizer_result = dl_recognizer_result
 
                 os.remove(r['export_path'])
 
-            first_equal_file["people_count"] = people_count
+            first_equal_file["dl_recognizer_result"] = dl_recognizer_result
             first_equal_file['export_path'] = new_file_name.replace('\\', '/') # to compare windows and unix
 
             office_info.exported_files.append( first_equal_file )

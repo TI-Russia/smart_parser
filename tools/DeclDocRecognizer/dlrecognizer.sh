@@ -8,6 +8,8 @@ system=`uname -s`
 if [[ $system == CYGWIN* ]]; then
     SOFFICE_BINARY="C:/Program Files (x86)/LibreOffice/program/soffice.exe"
     CALLIBRE_CONVERT="C:/Program Files (x86)/Calibre2/ebook-convert.exe"
+    OFFICE_2_TXT=$SCRIPT_FOLDER"/../Office2Txt/bin/Release/netcoreapp3.1/Office2Txt.exe"
+
 else
     SOFFICE_BINARY=`which soffice`
     if [ $? -ne 0 ]; then
@@ -20,7 +22,7 @@ else
         echo "cannot find callibre, sudo apt install calibre"
         exit 1
     fi
-
+    OFFICE_2_TXT=$SCRIPT_FOLDER"/../Office2Txt/bin/Release/netcoreapp3.1/Office2Txt"                                                                                            
 fi
                           
 CATDOC_BINARY=`which catdoc`
@@ -46,9 +48,8 @@ else
     XLSX_2_CSV=`which xlsx2csv` 
 fi
 
-OFFICE_2_TXT=$SCRIPT_FOLDER"/../Office2Txt/bin/Release/netcoreapp3.1/Office2Txt.exe"
 if [ ! -f $OFFICE_2_TXT ]; then 
-    echo "build ../Office2Txt"
+    echo "build ../Office2Txt:\n dotnet build -c Release ../tools/Office2Txt"
     exit 1
 fi
 
@@ -68,14 +69,18 @@ elif [[ $file_extension == "xls" ]]; then
         rm $input_file.xlsx
     fi
 elif [[ $file_extension == "docx" ]]; then
+
     $OFFICE_2_TXT $input_file  ${input_file}.txt # can be  huge, soffice and callibre cannot process huge files
-elif [[ $file_extension == "pdf" || $file_extension == "docx"  || $file_extension == "html"  || $file_extension == "rtf" || $file_extension == "htm" ]]; then
-    "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null
+
+elif [[ $file_extension == "pdf" || $file_extension == "html"  || $file_extension == "rtf" || $file_extension == "htm" ]]; then
+
+    "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null 2>/dev/null
+
 elif [[ $file_extension == "doc"  ]]; then
     $CATDOC_BINARY -d utf-8 $input_file  > ${input_file}.txt
     if [ $? -ne 0 ]; then
         cp $input_file $input_file.docx
-        "$CALLIBRE_CONVERT" $input_file.docx  ${input_file}.txt >/dev/null
+        $OFFICE_2_TXT $input_file.docx  ${input_file}.txt 
         rm $input_file.docx
     fi
 else

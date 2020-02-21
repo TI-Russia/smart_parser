@@ -12,7 +12,7 @@ from download import download_with_cache, get_site_domain_wo_www, get_local_file
 
 from http_request import get_request_rate
 
-from export_files import UNKNOWN_PEOPLE_COUNT
+from export_files import DL_RECOGNIZER_UNKNOWN
 
 from selenium_driver import TSeleniumDriver
 
@@ -86,14 +86,14 @@ class TUrlInfo:
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
             self.downloaded_files = init_json.get('downloaded_files', list())
-            self.people_count = init_json.get('people_count', UNKNOWN_PEOPLE_COUNT)
+            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_UNKNOWN)
         else:
             self.step_name = step_name
             self.title = title
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
-            self.people_count = UNKNOWN_PEOPLE_COUNT
+            self.dl_recognizer_result = DL_RECOGNIZER_UNKNOWN
 
     def to_json(self):
         record = {
@@ -104,8 +104,8 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = self.downloaded_files
-        if self.people_count != UNKNOWN_PEOPLE_COUNT:
-            record['people_count'] = self.people_count
+        if self.dl_recognizer_result != DL_RECOGNIZER_UNKNOWN:
+            record['dl_recognizer_result'] = self.dl_recognizer_result
         return record
 
     def add_downloaded_file(self, record):
@@ -339,16 +339,16 @@ class TRobotProject:
                         file_info['url'] = 'element_index:{}. url:{}'.format(d['element_index'], url)
                         path.append(file_info)
                         result.append({
-                            'people_count': d['people_count'],
+                            'dl_recognizer_result': d['dl_recognizer_result'],
                             'path': path
                         })
                 elif len(info.linked_nodes) == 0:
                     path = office_info.get_path_to_root(url)
                     result.append({
-                        'people_count': info.people_count,
+                        'dl_recognizer_result': info.dl_recognizer_result,
                         'path': path
                     })
-            useful_nodes = {p['url'] for r in result if r['people_count'] > 0 for p in r['path'] }
+            useful_nodes = {p['url'] for r in result if r['dl_recognizer_result'] > 0 for p in r['path'] }
             self.logger.info("useful nodes: {}".format(len(useful_nodes)))
 
         with open(filename, "w", encoding="utf8") as outf:
@@ -365,20 +365,16 @@ class TRobotProject:
 
     def write_export_stats(self):
         result = list()
-        people_count_sum = 0
         for o in self.offices:
             for export_record in o.exported_files:
                 infile = export_record['cached_file']
-                if export_record['people_count'] > 0:
-                    people_count_sum += export_record['people_count']
                 result.append( (
                     export_record['sha256'],
                     infile.replace('\\', '/'),
-                    export_record['people_count']))
+                    export_record['dl_recognizer_result']))
         result = sorted(result)
         with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
             summary = {
-                "people_count_sum": people_count_sum,
                 "files_count": len(result)
             }
             result.insert(0, summary)
