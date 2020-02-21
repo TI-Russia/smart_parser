@@ -46,6 +46,11 @@ else
     XLSX_2_CSV=`which xlsx2csv` 
 fi
 
+OFFICE_2_TXT=$SCRIPT_FOLDER"/../Office2Txt/bin/Release/netcoreapp3.1/Office2Txt.exe"
+if [ ! -f $OFFICE_2_TXT ]; then 
+    echo "build ../Office2Txt"
+    exit 1
+fi
 
 ############### THE MAIN PROCESS ========================
 
@@ -62,6 +67,8 @@ elif [[ $file_extension == "xls" ]]; then
         python3 ${XLSX_2_CSV} -c utf-8 -d tab  ${input_file}.xlsx ${input_file}.txt
         rm $input_file.xlsx
     fi
+elif [[ $file_extension == "docx" ]]; then
+    $OFFICE_2_TXT $input_file  ${input_file}.txt # can be  huge, soffice and callibre cannot process huge files
 elif [[ $file_extension == "pdf" || $file_extension == "docx"  || $file_extension == "html"  || $file_extension == "rtf" || $file_extension == "htm" ]]; then
     "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null
 elif [[ $file_extension == "doc"  ]]; then
