@@ -94,6 +94,7 @@ if __name__ == "__main__":
     result = {
         "result": "unknown"
     }
+    result["start_text"] = input_text[0:100]
     if len (input_text) < 200:
         result["description"] = "file is too short"
     else:
@@ -125,7 +126,6 @@ if __name__ == "__main__":
                     is_declaration = True
 
         result["result"] = "declaration" if is_declaration else "some_other_document"
-        result["start_text"] = input_text[0:100]
 
     with open (args.output, "w", encoding="utf8") as outf:
         outf.write( json.dumps(result, ensure_ascii=False, indent=4) )

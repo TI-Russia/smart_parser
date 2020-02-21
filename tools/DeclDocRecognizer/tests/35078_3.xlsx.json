@@ -1,5 +1,6 @@
 {
     "result": "declaration",
+    "start_text": " ФГУП ВО   Безопасность   \t\t\t\t\t\t\t\t\t\t\t\t Сведения о доходах, расходах, об имуществе\t\t\t\t\t\t\t\t\t\t\t\t и обяз",
     "person": {
         "matches": [
             "<re.Match object; span=(706, 736), match='Мельников Константин Андреевич'>",
@@ -71,6 +72,5 @@
             "<re.Match object; span=(38, 56), match='Сведения о доходах'>"
         ],
         "start": 38
-    },
-    "start_text": " ФГУП ВО   Безопасность   \t\t\t\t\t\t\t\t\t\t\t\t Сведения о доходах, расходах, об имуществе\t\t\t\t\t\t\t\t\t\t\t\t и обяз"
+    }
 }
