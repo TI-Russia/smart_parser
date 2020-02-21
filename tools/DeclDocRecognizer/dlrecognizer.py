@@ -115,7 +115,7 @@ def get_smart_parser_result(smart_parser_binary, source_file):
     if not os.path.exists(smart_parser_binary):
         raise Exception("cannot find {}".format(smart_parser_binary))
 
-    if input_file.endswith("pdf"):  # cannot process new pdf without conversion
+    if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
 
     cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary,
