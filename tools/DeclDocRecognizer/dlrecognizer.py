@@ -1,12 +1,23 @@
 import argparse
 import json
 import re
-
+import os
 
 def parse_args():
+    smart_parser_default =  os.path.join(
+                    os.path.dirname(os.path.realpath(__file__)),
+                    "../../src/bin/Release/netcoreapp3.1/smart_parser"
+            )
+    if os.path.sep == "\\":
+        smart_parser_default += ".exe"
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", dest='input', required=True)
+    parser.add_argument("--source-file", dest='source_file', required=True)
+    parser.add_argument("--txt-file", dest='txt_file', required=True)
     parser.add_argument("--output", dest='output', default=None)
+    parser.add_argument("--smart-parser-binary",
+                        dest='smart_parser_binary',
+                        default=os.path.normpath(smart_parser_default))
     args = parser.parse_args()
     return args
 
@@ -38,14 +49,19 @@ def get_matches(match_object, result, name, max_count=10):
 def find_person(input_text, result, name):
     regexp = "[А-Я]\w+\s+[А-Я]\w+\s+[А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))" # # Сокирко Алексей Викторович
     if get_matches(re.finditer(regexp, input_text), result, name):
-        return
+        pass
     else:
         regexp = "[А-Я]\w+\s+[А-Я]\.\s*[А-Я]\."   # Сокирко А.В.
         get_matches(re.finditer(regexp, input_text), result, name)
 
 
+def find_relatives(input_text, result, name):
+    regexp = "супруга|(несовершеннолетний ребенок)|сын|дочь|(супруг\b)"
+    get_matches(re.finditer(regexp, input_text), result, name)
+
+
 def find_vehicles(input_text, result, name):
-    regexp = r"\b(Opel|Ситроен|Мазда|Mazda|Пежо|Peageut|BMV|БМВ|Ford|Форд|Toyota|Тойота|KIA|Шевроле|Chevrolet|Suzuki|Сузуки|Mercedes|Мерседес|Renault|Рено|Мицубиси|Rover|Ровер|Нисан|Nissan)\b"
+    regexp = r"\b(Opel|Ситроен|Мазда|Mazda|Пежо|Peageut|BMV|БМВ|Ford|Форд|Toyota|Тойота|KIA|ТАГАЗ|Шевроле|Chevrolet|Suzuki|Сузуки|Mercedes|Мерседес|Renault|Рено|Мицубиси|Rover|Ровер|Нисан|Nissan|Ауди|Audi)\b"
     get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 
@@ -87,26 +103,65 @@ def find_decree(input_text, result, name):
     get_matches(re.finditer(regexp, input_text.replace(' ', ''), re.IGNORECASE), result, name)
 
 
+def process_smart_parser_json(json_file):
+    with open(json_file, "r", encoding="utf8") as inpf:
+        smart_parser_json = json.load(inpf)
+        people_count = len(smart_parser_json.get("persons", []))
+    os.remove(json_file)
+    return people_count
+
+
+def get_smart_parser_result(smart_parser_binary, source_file):
+    if not os.path.exists(smart_parser_binary):
+        raise Exception("cannot find {}".format(smart_parser_binary))
+
+    if input_file.endswith("pdf"):  # cannot process new pdf without conversion
+        return 0
+
+    cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary,
+                                                                                           source_file)
+    os.system(cmd)
+
+    json_file = source_file + ".json"
+    if os.path.exists(json_file):
+        people_count = process_smart_parser_json(json_file)
+    else:
+        sheet_index = 0
+        people_count = 0
+        while True:
+            json_file = "{}_{}.json".format(source_file, sheet_index)
+            if not os.path.exists(json_file):
+                break
+            people_count += process_smart_parser_json(json_file)
+            sheet_index += 1
+    return people_count
+
+
 if __name__ == "__main__":
     args = parse_args()
-    with open(args.input, "r", encoding="utf8", errors="ignore") as inpf:
+    with open(args.txt_file, "r", encoding="utf8", errors="ignore") as inpf:
         input_text = inpf.read().replace("\n", " ").replace("\r", " ").replace ('"', ' ')
     result = {
-        "result": "unknown"
+        "result": "unknown",
+        "smart_parser_person_count":  get_smart_parser_result(args.smart_parser_binary, args.source_file)
     }
     result["start_text"] = input_text[0:100]
     if len (input_text) < 200:
         result["description"] = "file is too short"
+    elif result['smart_parser_person_count'] > 0:
+        result["result"] = "declaration"
     else:
         find_person(input_text, result, "person")
+        find_relatives(input_text, result, "relative") #not used
         find_vehicles(input_text, result, "auto")
         find_vehicles_word(input_text, result, "transport_word")
-        find_income(input_text, result, "income")
+        find_income(input_text, result, "income") #not used
         find_realty(input_text, result, "realty")
         find_header(input_text, result, "header")
         find_decree(input_text, result, "decree")
 
         person_count = len(result.get('person', dict()).get('matches', list()))
+        relative_count = len(result.get('relative', dict()).get('matches', list()))
         realty_count = len(result.get('realty', dict()).get('matches', list()))
         vehicle_count = len(result.get('auto', dict()).get('matches', list()))
         is_declaration = False

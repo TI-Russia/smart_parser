@@ -7,15 +7,20 @@ calibre_convert="C:/Program Files (x86)/Calibre2/ebook-convert.exe"
 catdoc_binary="/usr/bin/catdoc"
 xlsx2csv="C:/Python37/Scripts/xlsx2csv" 
 
+which xls2csv >/dev/null
+if  [ $? -ne 0 ]; then
+    echo "install xls2csv from http://manpages.ubuntu.com/manpages/bionic/man1/xls2csv.1.html"
+    exit 1
+fi
+
+
 file_extension=${input_file##*.}
 filename="${input_file%.*}"
-
-#echo "file extension: $file_extension"
 
 if [[ $file_extension == "xlsx" ]]; then
     python3 ${xlsx2csv} -c utf-8 -d tab  ${input_file} ${input_file}.txt
 elif [[ $file_extension == "xls" ]]; then
-    xls2csv -q 0 -c tab -d utf-8  ${input_file} > ${input_file}.txt
+    xls2csv -q 0 -c $'\t' -d utf-8  ${input_file} > ${input_file}.txt
     if [ $? -ne 0 ]; then
         cp $input_file $input_file.xlsx
         python3 ${xlsx2csv} -c utf-8 -d tab  ${input_file}.xlsx ${input_file}.txt
@@ -40,5 +45,5 @@ if [[ ! -f ${input_file}.txt ]]; then
     exit 1
 fi
 
-python3 $SCRIPT_FOLDER/dlrecognizer.py --input ${input_file}.txt --output ${output_file}
-rm ${input_file}.txt
+python3 $SCRIPT_FOLDER/dlrecognizer.py --source-file ${input_file} --txt-file ${input_file}.txt --output ${output_file}
+#rm ${input_file}.txt
