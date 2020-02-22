@@ -74,7 +74,7 @@ elif [[ $file_extension == "docx" ]]; then
 
 elif [[ $file_extension == "pdf" || $file_extension == "html"  || $file_extension == "rtf" || $file_extension == "htm" ]]; then
 
-    "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null 2>/dev/null
+    /usr/bin/timeout 30m "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null 2>/dev/null
 
 elif [[ $file_extension == "doc"  ]]; then
     $CATDOC_BINARY -d utf-8 $input_file  > ${input_file}.txt
@@ -84,7 +84,7 @@ elif [[ $file_extension == "doc"  ]]; then
         rm $input_file.docx
     fi
 else
-    "$SOFFICE_BINARY" --headless --writer  --convert-to "txt:Text (encoded):UTF8" $input_file >/dev/null
+    /usr/bin/timeout 30m "$SOFFICE_BINARY" --headless --writer  --convert-to "txt:Text (encoded):UTF8" $input_file >/dev/null
      mv ${filename}.txt ${input_file}.txt
 fi
 
