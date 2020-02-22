@@ -38,18 +38,18 @@ def run_decl_recognizer(inputfile):
     return DL_RECOGNIZER_UNKNOWN
 
 
-def unzip_one_file(input_file, main_index, outfolder):
-    zip_file = zipfile.ZipFile(input_file)
-    for archive_index, filename in enumerate(zip_file.namelist()):
-        _, file_extension = os.path.splitext(filename)
-        file_extension = file_extension.lower()
-        if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-            continue
-        old_file_name = zip_file.extract(filename, outfolder)
-        new_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
-        os.rename(old_file_name,  new_file_name)
-        yield archive_index, old_file_name, new_file_name
-    zip_file.close()
+def unzip_one_archive(input_file, main_index, outfolder):
+    with zipfile.ZipFile(input_file) as zf:
+        for archive_index, zipinfo in enumerate(zf.infolist()):
+            _, file_extension = os.path.splitext(zipinfo.filename)
+            file_extension = file_extension.lower()
+            if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+                continue
+            old_file_name = zipinfo.filename
+            zipinfo.filename = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
+            zf.extract(zipinfo)
+            yield archive_index, old_file_name, zipinfo.filename
+
 
 
 def html_to_text(html):
@@ -88,12 +88,13 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
     if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         return
     if not os.path.exists(cached_file):
-        logger.error("cannot find cached file {}, cache is broken?".format(cached_file))
+        logger.error("cannot find cached file {}, cache is broken or 404 on fetching?".format(cached_file))
         return
     if not os.path.exists(os.path.dirname(export_path)):
         os.makedirs(os.path.dirname(export_path))
     if extension == DEFAULT_ZIP_EXTENSION:
-        for archive_index, name_in_archive, export_filename in unzip_one_file(cached_file, index, office_folder):
+        for archive_index, name_in_archive, export_filename in unzip_one_archive(cached_file, index, office_folder):
+            logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
             yield {
                 "url": url,
                 "sha256": build_sha256(export_filename, os.path.splitext(export_filename)[1]),
@@ -103,6 +104,7 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
                 "archive_index": archive_index
             }
     else:
+        logger.debug("export temporal file {} to {}".format(cached_file, export_path))
         shutil.copyfile(cached_file, export_path)
         yield {
                 "url": url,
@@ -134,6 +136,7 @@ def export_files_to_folder(offices, outfolder):
                 export_files.append(e)
                 index += 1
 
+
         for url, url_info in office_info.url_nodes.items():
             for d in url_info.downloaded_files:
                 cached_file = d['downloaded_file']
@@ -143,6 +146,7 @@ def export_files_to_folder(offices, outfolder):
                     export_files.append(e)
                     index += 1
 
+
         sorted_files = sorted (export_files, key=sha256_key_and_url)
         office_info.exported_files = list()
         for _, group in groupby(sorted_files, itemgetter('sha256')):
@@ -151,6 +155,7 @@ def export_files_to_folder(offices, outfolder):
             first_equal_file = group[0]
             old_file_name = first_equal_file['export_path']
             dl_recognizer_result = run_decl_recognizer(old_file_name)
+
             if dl_recognizer_result == DL_RECOGNIZER_NEGATIVE:
                 for r in group:
                     os.remove(r['export_path'])
