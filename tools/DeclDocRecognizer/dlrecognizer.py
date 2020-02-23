@@ -61,12 +61,12 @@ def find_relatives(input_text, result, name):
 
 
 def find_vehicles(input_text, result, name):
-    regexp = r"\b(Opel|Ситроен|Мазда|Mazda|Пежо|Peageut|BMV|БМВ|Ford|Форд|Toyota|Тойота|KIA|ТАГАЗ|Шевроле|Chevrolet|Suzuki|Сузуки|Mercedes|Мерседес|Renault|Рено|Мицубиси|Rover|Ровер|Нисан|Nissan|Ауди|Audi)\b"
+    regexp = r"\b(Opel|Ситроен|Мазда|Mazda|Пежо|Peageut|BMV|БМВ|Ford|Форд|Toyota|Тойота|KIA|ТАГАЗ|Шевроле|Chevrolet|Suzuki|Сузуки|Mercedes|Мерседес|Renault|Рено|Мицубиси|Rover|Ровер|Нисан|Nissan|Ауди|Audi|Вольво)\b"
     get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 
 def find_vehicles_word(input_text, result, name):
-    regexp = "транспорт"
+    regexp = "транспорт|транспортных"
     get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 
@@ -76,9 +76,13 @@ def find_income(input_text, result, name):
 
 
 def find_realty(input_text, result, name):
-    regexp = "квартира|(земельный участок)|(жилое помещение)|комната|долевая"
+    regexp = "квартира|(земельный участок)|(жилое помещение)|комната|долевая|(з/ *участок)|(ж/ *дом)"
     get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
+
+def find_suname_word(input_text, result, name):
+    regexp = "(фамилия)|(фио)|(ф.и.о.)"
+    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 def find_header(input_text, result, name):
     regexps = [
@@ -99,7 +103,7 @@ def find_header(input_text, result, name):
 
 def find_other_document_types(input_text, result, name):
     words = list()
-    for w in ['постановление', 'решение', 'доклад', 'протокол', 'план', 'указ', 'реестр']:
+    for w in ['постановление', 'решение', 'доклад', 'протокол', 'план', 'указ', 'реестр', 'утверждена']:
         words.append('(' + " *".join(w) + ')')
     regexp = '(' + "|".join(words) + ")" + r"\b"
     get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
@@ -149,7 +153,7 @@ if __name__ == "__main__":
         input_text = input_text.replace('*', '')  #footnotes
         input_text = ' '.join(input_text.split())
     result = {
-        "result": "unknown",
+        "result": "unknown_result",
         "smart_parser_person_count":  get_smart_parser_result(args.smart_parser_binary, args.source_file)
     }
     result["start_text"] = input_text[0:500]
@@ -157,11 +161,17 @@ if __name__ == "__main__":
     _, file_extension = os.path.splitext(args.source_file)
     if len (input_text) < 200:
         if file_extension in {".html", ".htm", ".docx", ".doc", ".xls", ".xlsx"}:
-            result["result"] = "some_other_document"  # fast empty files
+            if len(input_text) == 0:
+                result["description"] = "file is too short" # jpeg in document
+            else:
+                result["result"] = "some_other_document_result"  # fast empty files, but not empty
         else:
             result["description"] = "file is too short"
-    elif result['smart_parser_person_count'] > 0:
-        result["result"] = "declaration"
+    elif re.search(r"[аоиуяю]", input_text, re.IGNORECASE) is None: # no Russian vowels
+        result["result"] = "unknown_result"
+        result["description"] = "cannot find Russian chars, may be encoding problems"
+    elif result['smart_parser_person_count'] > 0 and len(input_text) / result['smart_parser_person_count'] < 2048:
+        result["result"] = "declaration_result"
     else:
         find_person(input_text, result, "person")
         find_relatives(input_text, result, "relative") #not used
@@ -171,7 +181,7 @@ if __name__ == "__main__":
         find_realty(input_text, result, "realty")
         find_header(input_text, result, "header")
         find_other_document_types(input_text, result, "other_document_type")
-
+        find_suname_word(input_text, result, "surname_word")
         person_count = len(result.get('person', dict()).get('matches', list()))
         relative_count = len(result.get('relative', dict()).get('matches', list()))
         realty_count = len(result.get('realty', dict()).get('matches', list()))
@@ -180,6 +190,8 @@ if __name__ == "__main__":
         if result.get('other_document_type') is not None and result['other_document_type']['start'] < 400:
             pass
         elif vehicle_count > 0:
+            is_declaration = True
+        elif result.get("surname_word", dict()).get("start", 1) == 0 and len(input_text) < 2000 and person_count > 0 and realty_count > 0:
             is_declaration = True
         elif result.get("header", dict()).get("start", 1) == 0:
             is_declaration = True
@@ -192,7 +204,7 @@ if __name__ == "__main__":
                 if realty_count > 0:
                     is_declaration = True
 
-        result["result"] = "declaration" if is_declaration else "some_other_document"
+        result["result"] = "declaration_result" if is_declaration else "some_other_document_result"
 
     with open (args.output, "w", encoding="utf8") as outf:
         outf.write( json.dumps(result, ensure_ascii=False, indent=4) )

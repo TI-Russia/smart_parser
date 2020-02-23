@@ -1,0 +1,56 @@
+{
+    "result": "declaration_result",
+    "smart_parser_person_count": 1,
+    "start_text": "О суде Новости Организационная структура суда Локальные акты суда Документы президиума суда Интернет-приемная Арбитражный процесс Расписание рассмотрения дел Госпошлина Информация по банкротству Пресса о нас Государственные закупки Вопросы-ответы Телефон доверия Правовые основы Справочно поисковые системы Судебные органы Обращения по судебным делам Видеоконференц-связь Противодействие коррупции Методические материалы Нормативные правовые и иные акты в сфере противодействия коррупции Сведения о д",
+    "text_len": 2431,
+    "person": {
+        "matches": [
+            "<re.Match object; span=(808, 821), match='Рыбников А.Н.'>",
+            "<re.Match object; span=(1285, 1298), match='Рыбников А.Н.'>"
+        ],
+        "start": 808
+    },
+    "auto": {
+        "matches": [
+            "<re.Match object; span=(1400, 1407), match='Renault'>"
+        ],
+        "start": 1400
+    },
+    "transport_word": {
+        "matches": [
+            "<re.Match object; span=(1087, 1096), match='транспорт'>"
+        ],
+        "start": 1087
+    },
+    "income": {
+        "matches": [
+            "<re.Match object; span=(1544, 1550), match='115796'>",
+            "<re.Match object; span=(1666, 1672), match='115796'>",
+            "<re.Match object; span=(1788, 1794), match='131046'>",
+            "<re.Match object; span=(1903, 1909), match='414014'>",
+            "<re.Match object; span=(2112, 2118), match='163763'>"
+        ],
+        "start": 1544
+    },
+    "realty": {
+        "matches": [
+            "<re.Match object; span=(1305, 1313), match='Квартира'>",
+            "<re.Match object; span=(1330, 1338), match='Квартира'>",
+            "<re.Match object; span=(1468, 1476), match='Квартира'>"
+        ],
+        "start": 1305
+    },
+    "header": {
+        "matches": [
+            "<re.Match object; span=(488, 506), match='Сведения о доходах'>",
+            "<re.Match object; span=(822, 840), match='Сведения О доходах'>"
+        ],
+        "start": 488
+    },
+    "surname_word": {
+        "matches": [
+            "<re.Match object; span=(942, 949), match='Фамилия'>"
+        ],
+        "start": 942
+    }
+}
