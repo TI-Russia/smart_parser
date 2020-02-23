@@ -47,11 +47,11 @@ def get_matches(match_object, result, name, max_count=10):
 
 
 def find_person(input_text, result, name):
-    regexp = "[А-Я]\w+\s+[А-Я]\w+\s+[А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))" # # Сокирко Алексей Викторович
+    regexp = "[А-Я]\w+ [А-Я]\w+ [А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))" # # Сокирко Алексей Викторович
     if get_matches(re.finditer(regexp, input_text), result, name):
         pass
     else:
-        regexp = "[А-Я]\w+\s+[А-Я]\.\s*[А-Я]\."   # Сокирко А.В.
+        regexp = "[А-Я]\w+ [А-Я]\. *[А-Я]\."   # Сокирко А.В.
         get_matches(re.finditer(regexp, input_text), result, name)
 
 
@@ -76,31 +76,33 @@ def find_income(input_text, result, name):
 
 
 def find_realty(input_text, result, name):
-    regexp = "квартира|(земельный участок)|(жилое\s+помещение)|комната|долевая"
+    regexp = "квартира|(земельный участок)|(жилое помещение)|комната|долевая"
     get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 
 def find_header(input_text, result, name):
     regexps = [
-        r"Сведения\*?\s+о\s+доходах",
-        r"Сведения\*?\s+о\s+расходах",
-        r"Сведения\s+об\s+имущественном\s+положении\s+и\s+доходах",
-        r"Сведения\s+о\s+доходах,\s+об\s+имуществе\s+и\s+обязательствах",
-        r"Сведения\s+о\s+доходах\s+федеральных\s+государственных",
-        r"(Фамилия|ФИО).{1,200}Должность.{1,200}Перечень\s+объектов.{1,200}транспортных",
-        r"Сведения\s+о\s+доходах.{1,200}Недвижимое\s+имущество.{1,200}Транспортное",
-        r"Сведения\s*,?\s+предоставленные\s+руководителями",
-        r"Сведения\s+об\s+источниках\s+получения\s+средств"
+        r"Сведения о доходах",
+        r"Сведения о расходах",
+        r"Сведения об имущественном положении и доходах",
+        r"Сведения о доходах, об имуществе и обязательствах",
+        r"Сведения о доходах федеральных государственных",
+        r"(Фамилия|ФИО).{1,200}Должность.{1,200}Перечень объектов.{1,200}транспортных",
+        r"Сведения о доходах.{1,200}Недвижимое имущество.{1,200}Транспортное",
+        r"Сведения *,? предоставленные руководителями",
+        r"Сведения об источниках получения средств"
     ]
-    input_text = input_text.strip()
     for regexp in regexps:
         if get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name):
             break
 
 
-def find_decree(input_text, result, name):
-    regexp = "^(постановление|решение|доклад|протокол|план|указ)"
-    get_matches(re.finditer(regexp, input_text.replace(' ', ''), re.IGNORECASE), result, name)
+def find_other_document_types(input_text, result, name):
+    words = list()
+    for w in ['постановление', 'решение', 'доклад', 'протокол', 'план', 'указ', 'реестр']:
+        words.append('(' + " *".join(w) + ')')
+    regexp = '(' + "|".join(words) + ")" + r"\b"
+    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 
 def process_smart_parser_json(json_file):
@@ -112,13 +114,16 @@ def process_smart_parser_json(json_file):
 
 
 def get_smart_parser_result(smart_parser_binary, source_file):
+    if smart_parser_binary == "none":
+        return -1
+
     if not os.path.exists(smart_parser_binary):
         raise Exception("cannot find {}".format(smart_parser_binary))
 
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
 
-    cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary,
+    cmd = "{} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(smart_parser_binary,
                                                                                            source_file)
     os.system(cmd)
 
@@ -140,15 +145,18 @@ def get_smart_parser_result(smart_parser_binary, source_file):
 if __name__ == "__main__":
     args = parse_args()
     with open(args.txt_file, "r", encoding="utf8", errors="ignore") as inpf:
-        input_text = inpf.read().replace("\n", " ").replace("\r", " ").replace ('"', ' ')
+        input_text = inpf.read().replace("\n", " ").replace("\r", " ").replace ('"', ' ').strip("\t \n\r")
+        input_text = input_text.replace('*', '')  #footnotes
+        input_text = ' '.join(input_text.split())
     result = {
         "result": "unknown",
         "smart_parser_person_count":  get_smart_parser_result(args.smart_parser_binary, args.source_file)
     }
-    result["start_text"] = input_text[0:100]
+    result["start_text"] = input_text[0:500]
+    result["text_len"] = len(input_text)
     _, file_extension = os.path.splitext(args.source_file)
     if len (input_text) < 200:
-        if file_extension in {".html", ".htm", ".docx", ".doc"}:
+        if file_extension in {".html", ".htm", ".docx", ".doc", ".xls", ".xlsx"}:
             result["result"] = "some_other_document"  # fast empty files
         else:
             result["description"] = "file is too short"
@@ -162,14 +170,14 @@ if __name__ == "__main__":
         find_income(input_text, result, "income") #not used
         find_realty(input_text, result, "realty")
         find_header(input_text, result, "header")
-        find_decree(input_text, result, "decree")
+        find_other_document_types(input_text, result, "other_document_type")
 
         person_count = len(result.get('person', dict()).get('matches', list()))
         relative_count = len(result.get('relative', dict()).get('matches', list()))
         realty_count = len(result.get('realty', dict()).get('matches', list()))
         vehicle_count = len(result.get('auto', dict()).get('matches', list()))
         is_declaration = False
-        if result.get('decree') is not None:
+        if result.get('other_document_type') is not None and result['other_document_type']['start'] < 400:
             pass
         elif vehicle_count > 0:
             is_declaration = True
