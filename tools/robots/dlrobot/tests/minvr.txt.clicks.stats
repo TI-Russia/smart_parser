@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 30
+        "files_count": 29
     },
     [
         "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
@@ -63,6 +63,11 @@
         -1
     ],
     [
+        "5ec4ded8bbb3529ceea0161f1b23aec28f5e3bded3756a53b28a8418b2afb6de",
+        "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
+        -1
+    ],
+    [
         "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4",
         "cached/minvr.ru/upload/iblock/971/1_svedeniya_dlya_sayta_ministerstvo_2017_god-_6_.xlsx/dlrobot_data",
         1
@@ -71,11 +76,6 @@
         "7fbfe0e4a205a1f0222be3360b9d0f76c1d621dca90a2922472cde691719de07",
         "cached/www.minvostokrazvitia.ru/upload/iblock/eb0/Broshiura.pdf/dlrobot_data",
         1
-    ],
-    [
-        "80be3fe33c1190e41a4c1885eb9e9b264dce551c27b90bc1dffc4762eef05b38",
-        "cached/minvr.ru/upload/iblock/042/zasedanie_komissii_ot_18.10.2017.docx/dlrobot_data",
-        -1
     ],
     [
         "80f975e2449662a8da5a6131b1402eebb231cef06150ff873f6a8fac09ff604e",
@@ -116,11 +116,6 @@
         "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e",
         "cached/minvr.ru/upload/iblock/871/Sait_GS_na_sait.xlsx/dlrobot_data",
         1
-    ],
-    [
-        "b80e4422d02a12c351d4ab881e1241b997ea7d7c4a77be9a0c4ece3e632a11f3",
-        "cached/www.minvostokrazvitia.ru/upload/iblock/3aa/konflikt-interesov.-situatsii-i-dei_stviya.pptx/dlrobot_data",
-        -1
     ],
     [
         "c1d995e98ccf449009c37be34c312deb9f0cf284836ba274450115c107b2b9a0",
