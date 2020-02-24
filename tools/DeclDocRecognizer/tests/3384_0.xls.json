@@ -32,7 +32,8 @@
     },
     "header": {
         "matches": [
-            "<re.Match object; span=(0, 18), match='Сведения о доходах'>"
+            "<re.Match object; span=(0, 18), match='Сведения о доходах'>",
+            "<re.Match object; span=(391, 559), match='Фамилия, имя, отчество лица, замещающего соответс>"
         ],
         "start": 0
     },

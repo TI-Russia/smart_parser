@@ -43,7 +43,8 @@
     "header": {
         "matches": [
             "<re.Match object; span=(488, 506), match='Сведения о доходах'>",
-            "<re.Match object; span=(822, 840), match='Сведения О доходах'>"
+            "<re.Match object; span=(822, 840), match='Сведения О доходах'>",
+            "<re.Match object; span=(942, 1099), match='Фамилия, инициалы Должность Перечень объектов нед>"
         ],
         "start": 488
     },
