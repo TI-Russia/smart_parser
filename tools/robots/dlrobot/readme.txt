@@ -7,4 +7,6 @@
 6.  dotnet build -c Release ~/smart_parser/src
 7. pip3 install -r requirements.txt
 8. install soffice
+9. sudo apt install   unrar
+
 
