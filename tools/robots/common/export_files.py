@@ -9,12 +9,15 @@ import zipfile
 import shutil
 import hashlib
 from download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, \
-    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION
+    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, DEFAULT_RAR_EXTENSION
 
 DECL_RECOGNIZER_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                     os.path.normpath("../../DeclDocRecognizer/dlrecognizer.sh"))
 if not os.path.exists(DECL_RECOGNIZER_PATH):
     raise Exception("cannot find {} ".format(DECL_RECOGNIZER_PATH))
+
+if shutil.which('unrar') is None:
+    raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt intall unrar")
 
 DL_RECOGNIZER_UNKNOWN = -1
 DL_RECOGNIZER_POSITIVE = 1
@@ -53,6 +56,38 @@ def unzip_one_archive(input_file, main_index, outfolder):
             yield archive_index, old_file_name, zipinfo.filename
 
 
+def unrar_one_archive(input_file, main_index, outfolder):
+    logger = logging.getLogger("dlrobot_logger")
+    temp_folder = os.path.join(outfolder, "unrar_temp")
+    if os.path.exists(temp_folder):
+        shutil.rmtree(temp_folder)
+    os.mkdir(temp_folder)
+    cmd = "unrar ery {} {}".format(input_file, temp_folder)
+    logger.debug(cmd)
+    os.system(cmd)
+    for archive_index, filename in enumerate(os.listdir(temp_folder)):
+        _, file_extension = os.path.splitext(filename)
+        file_extension = file_extension.lower()
+        if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+            continue
+        normalized_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
+        try:
+            shutil.move(os.path.join(temp_folder, filename), normalized_file_name)
+            yield archive_index, filename, normalized_file_name
+        except Exception as e:
+            logger.error("cannot move file N {} (file name encoding?)".format(archive_index))
+    shutil.rmtree(temp_folder)
+
+
+def dearchive_one_archive(file_extension, input_file, main_index, outfolder):
+    if file_extension == DEFAULT_ZIP_EXTENSION:
+        func = unzip_one_archive
+    elif file_extension == DEFAULT_RAR_EXTENSION:
+        func = unrar_one_archive
+    else:
+        raise Exception("unknown archive type")
+    for x in func(input_file, main_index, outfolder):
+        yield x
 
 def html_to_text(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -94,8 +129,8 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
         return
     if not os.path.exists(os.path.dirname(export_path)):
         os.makedirs(os.path.dirname(export_path))
-    if extension == DEFAULT_ZIP_EXTENSION:
-        for archive_index, name_in_archive, export_filename in unzip_one_archive(cached_file, index, office_folder):
+    if extension == DEFAULT_ZIP_EXTENSION or extension == DEFAULT_RAR_EXTENSION:
+        for archive_index, name_in_archive, export_filename in dearchive_one_archive(extension, cached_file, index, office_folder):
             logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
             yield {
                 "url": url,
