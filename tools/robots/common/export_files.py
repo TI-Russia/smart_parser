@@ -62,7 +62,7 @@ def unrar_one_archive(input_file, main_index, outfolder):
     if os.path.exists(temp_folder):
         shutil.rmtree(temp_folder)
     os.mkdir(temp_folder)
-    cmd = "unrar ery {} {}".format(input_file, temp_folder)
+    cmd = "unrar e {} {}".format(input_file, temp_folder)
     logger.debug(cmd)
     os.system(cmd)
     for archive_index, filename in enumerate(os.listdir(temp_folder)):
