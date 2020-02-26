@@ -27,6 +27,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
                                                                RegexOptions.Compiled | RegexOptions.IgnoreCase);
         protected static Regex _squareMatcher = new Regex(@"\d+(.\d+)*", RegexOptions.Compiled);
         protected static Regex _ownershipMatcher = new Regex(@"(долевая)*(индивидуальная)*\s*собственность");
+        protected static Regex _yearMatcher = new Regex(@"\d+\s*год", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
         #region fields
@@ -41,9 +42,16 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         {
             try
             {
-                var selection = document.QuerySelectorAll("div.js-income-member-data");
-                string name = GetPersonName();
-                return selection.Length > 0 && !string.IsNullOrEmpty(name) ;
+                try { 
+                    Document = document;
+                    var selection = document.QuerySelectorAll("div.js-income-member-data");
+                    string name = GetPersonName();
+                    return selection.Length > 0 && !string.IsNullOrEmpty(name) ;
+                }
+                finally
+                {
+                    Document = null;
+                }
             }
             catch (Exception)
             {
@@ -55,12 +63,17 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
         public override string GetMemberName(IElement memberElement)
         {
-            return memberElement.QuerySelectorAll("h2.income-member").First().Text();
+            var selection = memberElement.QuerySelectorAll("h2.income-member");
+            if (selection.Length > 0)
+                return RemoveNewLineSymbols(selection.First().Text());
+
+            string name = RemoveNewLineSymbols(memberElement.PreviousSibling.PreviousSibling.TextContent);
+            return name;
         }
 
 
 
-        public override IHtmlCollection<IElement> GetMembers( string name, string year)
+        public override IEnumerable<IElement> GetMembers( string name, string year)
         {
             IElement tableElement;
             if (year != null)
@@ -70,7 +83,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
                                                   ).First();
             else
                 throw new NotImplementedException(); // TODO
-            var members = tableElement.Children;
+            var members = tableElement.Children.Where(x=>x.LocalName == "table" || x.LocalName == "div");
             return members;
         }
 
@@ -78,8 +91,17 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
         public override string GetPersonName()
         {
+            string name;
             var selection = Document.QuerySelectorAll("h2.b-card-fio");
-            var name = selection.First().TextContent;
+            if (selection.Length > 0)
+            {
+                name = selection.First().TextContent;
+            }
+            else
+            {
+                var nameEl = Document.QuerySelector("div.b-cardHeader").QuerySelector("h2");
+                name = nameEl.TextContent;
+            }
             return RemoveNewLineSymbols(name);
         }
 
@@ -87,7 +109,10 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
         public override IElement GetTableFromMember(IElement memberElement)
         {
-            return memberElement.QuerySelectorAll("table").First();
+            var selection = memberElement.QuerySelectorAll("table");
+            if (selection.Length > 0)
+                return selection.First();
+            return memberElement;
         }
 
 
@@ -115,12 +140,32 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         {
             List<int> years = new List<int>();
             var selection = Document.QuerySelectorAll("li.b-income-year-item");
-            foreach (var yearElement in selection)
+            if (selection.Length > 0)
             {
-                int currYear = int.Parse(yearElement.TextContent);
-                years.Add(currYear);
+                foreach (var yearElement in selection)
+                {
+                    int currYear = int.Parse(yearElement.TextContent);
+                    years.Add(currYear);
+                }
+
             }
-            return years;
+            else
+            {
+                selection = Document.QuerySelectorAll("table.b-cardTabs");
+                if (selection.Length == 0)
+                    return years;
+                var links = selection.First().QuerySelectorAll("span").
+                                              Where(x => x.TextContent.
+                                              Contains("год"));
+
+                years = links.Select(x => x.TextContent).
+                                          Select(x => _yearMatcher.Match(x)).
+                                          Where(x => x.Success).Select(x => x.Value).
+                                          Select(x => _intMatcher.Match(x).Value).
+                                          Select(x => int.Parse(x)).
+                                          ToList();
+            }
+                return years;
         }
 
 

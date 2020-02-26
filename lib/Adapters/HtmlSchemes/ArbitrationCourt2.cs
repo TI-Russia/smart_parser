@@ -24,7 +24,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         }
 
 
-        public override IHtmlCollection<IElement> GetMembers( string name, string year)
+        public override IEnumerable<IElement> GetMembers( string name, string year)
         {
             
             IElement tableElement;

@@ -559,6 +559,15 @@ namespace RegressionTesting
             TestSmartParser("17335_3.html", "prod");
         }
 
+        
+        [TestMethod]
+        [TestCategory("htm")]
+        public void ArbitrationCourt1TableLayout()
+        {
+            TestSmartParser("17339_24.html", "prod");
+        }
+
+
 
         [TestMethod]
         [TestCategory("htm")]

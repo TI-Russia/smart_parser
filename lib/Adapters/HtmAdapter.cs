@@ -54,7 +54,6 @@ namespace Smart.Parser.Adapters
             {
                 new ArbitrationCourt1(),
                 new ArbitrationCourt2(),
-                new ArbitrationCourtMariEl()
             };
 
       

@@ -1,0 +1,72 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Капаев Дмитрий Юрьевич",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1994000.0,
+          "size_raw": "1 994",
+          "relative": null
+        },
+        {
+          "size": 1200000.0,
+          "size_raw": "1 200",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира1)76,8; 2)46,6",
+          "square": 1.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1)76,8",
+          "country_raw": "",
+          "type_raw": "Квартира1)76,8; 2)46,6",
+          "own_type_raw": "-"
+        },
+        {
+          "text": "квартира 38,1",
+          "square": 38.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,1",
+          "country_raw": "",
+          "type_raw": "квартира 38,1",
+          "own_type_raw": "-"
+        },
+        {
+          "text": "Квартира",
+          "square": 35.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "35,7",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "-"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой автомобиль TOYOTA",
+          "relative": null
+        },
+        {
+          "text": "Легковой автомобиль HONDA CIVIC",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения об имуществе Капаев Д.Ю. | Арбитражный суд Московской области  на период 2014",
+    "year": 2014,
+    "sheet_number": 0
+  }
+}

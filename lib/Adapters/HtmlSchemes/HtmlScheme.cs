@@ -15,7 +15,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         public IDocument Document{ get; set; }
 
 
-        public abstract IHtmlCollection<IElement> GetMembers(string name, string year);
+        public abstract IEnumerable<IElement> GetMembers(string name, string year);
         public abstract string GetTitle(string year);
         public abstract string GetMaxYear();
         public abstract List<int> GetYears();
