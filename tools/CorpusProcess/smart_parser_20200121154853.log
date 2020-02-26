@@ -1,6 +1,0 @@
-﻿2020-01-21 15:48:53,855 Command line: -adapter prod -converted-storage-url http://declarator.zapto.org:8000/converted_document out\1907
-2020-01-21 15:48:54,011 *** Errors (2):
-2020-01-21 15:48:54,011 Unknown file extension 
-2020-01-21 15:48:54,011 Unknown Parsing Exception System.NullReferenceException: Object reference not set to an instance of an object.
-   at Smart.Parser.Program.ParseFile(String declarationFile, String outFile) in C:\smart_parser\src\Program.cs:line 450
-   at Smart.Parser.Program.Main(String[] args) in C:\smart_parser\src\Program.cs:line 223
