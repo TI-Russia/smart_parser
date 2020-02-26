@@ -17,7 +17,7 @@ if __name__ == "__main__":
         jsonfile = os.path.join(args.folder, x)
         with open (jsonfile, "r", encoding="utf-8") as inpf:
 
-            if json.load(inpf).get('result') == "some_other_document":
+            if json.load(inpf).get('result') == "some_other_document_result":
                 filename = jsonfile[:-len(".json")]
                 if os.path.exists(filename):
                     print("remove    file {}".format(filename))
