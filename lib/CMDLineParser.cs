@@ -99,7 +99,7 @@ namespace CMDLine
             _help = this.AddBoolSwitch("-help", "Command line help");
             _help.AddAlias("-h");
             _help.AddAlias("-?");
-            _help.AddAlias("/help");
+            _help.AddAlias("--help");
             return (_help);
         }
         /// <summary>
@@ -234,7 +234,7 @@ namespace CMDLine
         protected const string IS_NOT_A_SWITCH_MSG = "The Switch name does not start with an switch identifier '-' or '/'  or contains space!";
         protected static bool isASwitch(string arg)
         {
-            return ((arg.StartsWith("-") || arg.StartsWith("/")) & (!arg.Contains(" ")));
+            return arg.StartsWith("-")  &&  !arg.Contains(" ");
         }
 
         private void ParseOptions()
@@ -785,6 +785,7 @@ namespace CMDLine
                     }
                 }
             }
+            
         }
         /// <summary>
         /// Command line parsing Exception.

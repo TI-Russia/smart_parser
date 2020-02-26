@@ -1,21 +1,20 @@
-import ssl
-import urllib.parse
-import urllib.request
 import json
 import re
-import shutil
-import requests
-from urllib.parse import urlparse, quote, unquote, urlunparse
+from urllib.parse import urlparse, unquote
 import hashlib
-from collections import defaultdict
 import logging
-
+from unidecode import unidecode
 import os
-from selenium import webdriver
-import time
-FILE_CACHE_FOLDER="cached"
-ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip'}
+from http_request import make_http_request, request_url_headers
+
+FILE_CACHE_FOLDER = "cached"
 DEFAULT_HTML_EXTENSION = ".html"
+DEFAULT_ZIP_EXTENSION = ".zip"
+DEFAULT_RAR_EXTENSION = ".rar"
+ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf',
+                                        DEFAULT_ZIP_EXTENSION, \
+                                        DEFAULT_RAR_EXTENSION, \
+                                        DEFAULT_HTML_EXTENSION}
 
 
 def is_html_contents(info):
@@ -23,35 +22,12 @@ def is_html_contents(info):
     return content_type.startswith('text')
 
 
-HEADER_CACHE = {}
-HEADER_REQUEST_COUNT = defaultdict(int)
-
-def get_url_headers (url):
-    global HEADER_CACHE
-    global HEADER_REQUEST_COUNT
-    if url in HEADER_CACHE:
-        return HEADER_CACHE[url]
-    if HEADER_REQUEST_COUNT[url] > 3:
-        raise Exception("too many times to get headers that caused exceptions")
-
-    HEADER_REQUEST_COUNT[url] += 1
-    logger = logging.getLogger("dlrobot_logger")
-    logger.debug("\tget headers for " + url)
-    res = requests.head(url).headers
-    HEADER_CACHE[url] = res
-    return res
-
-
 def find_simple_js_redirect(data):
     res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\']+)([\'"]?\s*;)', data)
     if res:
         url = res.group(3)
         return url
-    return None
-
-
-def has_cyrillic(text):
-    return bool(re.search('[Ёёа-яА-Я]', text))
+    return Non
 
 
 def get_site_domain_wo_www(url):
@@ -63,49 +39,16 @@ def get_site_domain_wo_www(url):
 
 
 def download_with_urllib (url, search_for_js_redirect=True):
-    o = list(urlparse(url)[:])
-    if has_cyrillic(o[1]):
-        o[1] = o[1].encode('idna').decode('latin')
-
-    o[2] = unquote(o[2])
-    o[2] = quote(o[2])
-    url = urlunparse(o)
-    context = ssl._create_unverified_context()
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-    data = ''
-    info = {}
-    headers = None
-    logger = logging.getLogger("dlrobot_logger")
-    logger.debug("urllib.request.urlopen ({})".format(url))
-    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        data = request.read()
-        info = request.info()
-        headers = request.headers
+    info, headers, data = make_http_request(url, "GET")
 
     try:
         if is_html_contents(info):
-            logger.debug("\tencoding..")
-            encoding = headers.get_content_charset()
-            if encoding == None:
-                match = re.search('charset=([^"\']+)', data.decode('latin', errors="ignore"))
-                if match:
-                    encoding = match.group(1)
-                else:
-                    raise ValueError('unable to find encoding')
-
-            data = data.decode(encoding, errors="ignore")
             if search_for_js_redirect:
                 try:
-                    redirect_url = find_simple_js_redirect(data)
+                    redirect_url = find_simple_js_redirect(data.decode('latin', errors="ignore"))
                     if redirect_url is not None and redirect_url != url:
                         return download_with_urllib(redirect_url, search_for_js_redirect=False)
-                except Exception:
+                except Exception as err:
                     pass
 
     except AttributeError:
@@ -113,115 +56,120 @@ def download_with_urllib (url, search_for_js_redirect=True):
     return data, info
 
 
-def read_cache_file(localfile, info_file):
-    is_binary = False
+def read_cache_file(local_file):
+    with open(local_file, "rb") as f:
+        return f.read()
+
+
+def read_url_info_from_cache(url):
+    cached_file = get_local_file_name_by_url(url)
+    if not os.path.exists(cached_file):
+        return {}
+    info_file = cached_file + ".headers"
     with open(info_file, "r", encoding="utf8") as inf:
-        info = json.loads(inf.read())
-        cached_headers = info['headers']
-        is_binary = not is_html_contents(cached_headers)
-    if is_binary:
-        with open(localfile, "rb") as f:
-            return f.read()
-    else:
-        with open(localfile, encoding="utf8") as f:
-            return f.read()
+        return json.loads(inf.read())
 
 
 def write_cache_file(localfile, info_file, info, data):
-    if is_html_contents(info):
-        with open(localfile, "w", encoding="utf8") as f:
-            f.write(data)
-    else:
-        with open(localfile, "wb") as f:
-            f.write(data)
+    with open(localfile, "wb") as f:
+        f.write(data)
 
     if info is not None:
         with open(info_file, "w", encoding="utf8") as f:
-            headers_and_url = dict()
+            url_info = dict()
             if hasattr(info, "_headers"):
-                headers_and_url['headers'] = dict(info._headers)
+                url_info['headers'] = dict(info._headers)
             else:
-                headers_and_url['headers'] = dict()
-            f.write(json.dumps(headers_and_url, indent=4, ensure_ascii=False))
+                url_info['headers'] = dict()
+            url_info['charset'] = info.get_content_charset()
+            f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
     return data
-
-
-def url_to_localfilename (url):
-    localfile = url
-    if localfile.startswith('http://'):
-        localfile = localfile[7:]
-    if localfile.startswith('https://'):
-        localfile = localfile[8:]
-    localfile = localfile.replace(':', '_')
-    localfile = localfile.replace('/', '\\')
-    localfile = localfile.replace('&', '_')
-    localfile = localfile.replace('=', '_')
-    localfile = localfile.replace('?', '_')
-    if len(localfile) > 64:
-        localfile = localfile[0:64] + "_" + hashlib.md5(url.encode('utf8',  errors="ignore")).hexdigest()
-    return localfile
 
 
 
 def save_download_file(filename):
     global FILE_CACHE_FOLDER
+    logger = logging.getLogger("dlrobot_logger")
     download_folder = os.path.join(FILE_CACHE_FOLDER, "downloads")
     if not os.path.exists(download_folder):
-        os.mkdir(download_folder)
+        os.makedirs(download_folder)
     assert (os.path.exists(filename))
-    hashcode = ""
     with open(filename, "rb") as f:
         hashcode = hashlib.sha256(f.read()).hexdigest()
     extension = os.path.splitext(filename)[1]
     save_filename = os.path.join(download_folder, hashcode + extension)
+    logger.debug("save file {} as {}".format(filename, save_filename))
     if os.path.exists(save_filename):
-        logger = logging.getLogger("dlrobot_logger")
         logger.debug("replace existing {0}".format(save_filename))
         os.remove(save_filename)
     os.rename(filename, save_filename)
     return save_filename
 
+
+def _url_to_cached_folder (url):
+    local_path = unquote(url)
+    if local_path.startswith('http://'):
+        local_path = local_path[len('http://'):]
+    if local_path.startswith('https://'):
+        local_path = local_path[len('https://'):]
+    local_path = local_path.replace('\\', '/') # must be the same to calc hashlib.md5, change it after hashlib.md5
+    local_path = unidecode(local_path)
+    local_path = re.sub("[:&=?'\"+<>()*| ]", '_', local_path)
+    local_path = local_path.strip("/") #https:////files.sudrf.ru/1060/user/Prikaz_o_naznachenii_otvetstvennogo.pdf
+    if len(local_path) > 100:
+        local_path = local_path[0:100] + "_" + hashlib.md5(local_path.encode('latin',  errors="ignore")).hexdigest()
+    local_path = os.path.normpath(local_path)
+    return local_path
+
+
 def get_local_file_name_by_url(url):
     global FILE_CACHE_FOLDER
-    if not os.path.exists(FILE_CACHE_FOLDER):
-        os.mkdir(FILE_CACHE_FOLDER)
-
-    localfile = url_to_localfilename(url)
-
-    localfile = os.path.join(FILE_CACHE_FOLDER, localfile)
-    if not localfile.endswith('html') and not localfile.endswith('htm'):
-        localfile += "/index.html"
-    if not os.path.exists(os.path.dirname(localfile)):
-        os.makedirs(os.path.dirname(localfile))
-    return localfile
+    cached_file = os.path.join(FILE_CACHE_FOLDER, _url_to_cached_folder(url), "dlrobot_data")
+    folder = os.path.dirname(cached_file)
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    return cached_file
 
 
 def download_with_cache(url):
     localfile = get_local_file_name_by_url(url)
     info_file = localfile + ".headers"
     if os.path.exists(localfile):
-        return read_cache_file(localfile, info_file)
+        data = read_cache_file(localfile)
     else:
         data, info = download_with_urllib(url)
         if len(data) == 0:
             return ""
         write_cache_file(localfile, info_file, info, data)
-        return data
+
+    return data
 
 
-def download_and_cache_with_selenium (url):
-    browser = webdriver.Firefox()
-    browser.minimize_window()
-    browser.get(url)
-    time.sleep(10)
-    html = browser.page_source
-    browser.close()
-    browser.quit()
-    return html
+def convert_html_to_utf8(url, html_data):
+    url_info = read_url_info_from_cache(url)
+    encoding = url_info.get('charset')
+    if encoding is None:
+        match = re.search('charset=([^"\']+)', html_data.decode('latin', errors="ignore"))
+        if match:
+            encoding = match.group(1)
+        else:
+            raise ValueError('unable to find encoding')
+    if encoding.lower().startswith('cp-'):
+        encoding = 'cp' + encoding[3:]
+
+    return html_data.decode(encoding, errors="ignore")
 
 
+def get_extenstion_by_content_type(headers):
+    content_type = headers.get('Content-Type', "text")
+    content_disposition = headers.get('Content-Disposition')
+    if content_disposition is not None:
+        found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
+        if len(found) > 0:
+            filename = found[0].strip("\"")
+            _, file_extension = os.path.splitext(filename)
+            return file_extension
 
-def get_extenstion_by_content_type(content_type):
     if content_type.startswith("text"):
         return DEFAULT_HTML_EXTENSION
     elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
@@ -243,9 +191,9 @@ def get_extenstion_by_content_type(content_type):
     elif content_type.startswith("application/zip"):
         return ".zip"
     elif content_type.startswith("application/rss+xml"):
-        return ".xml"
+        return ".some_xml"
     elif content_type.startswith("application/xml"):
-        return ".xml"
+        return ".some_xml"
     elif content_type.startswith("application/"):
         return ".some_application_format"
     elif content_type.startswith("image/"):
@@ -263,111 +211,13 @@ def get_file_extension_by_cached_url(url):
         if url.lower().endswith(e):
             return e
 
-    localfile = get_local_file_name_by_url(url)
-    if not os.path.exists(localfile):
-        return DEFAULT_HTML_EXTENSION
-
-    info_file = localfile + ".headers"
-    with open(info_file, "r", encoding="utf8") as inf:
-        info = json.loads(inf.read())
-        content_type = info['headers'].get('Content-Type', "text")
-
-    return get_extenstion_by_content_type(content_type)
+    headers = read_url_info_from_cache(url).get('headers', {})
+    return get_extenstion_by_content_type(headers)
 
 
 def get_file_extension_by_url(url):
-    headers = get_url_headers(url)
-    ext = get_extenstion_by_content_type(headers.get('Content-Type', "text"))
+    headers = request_url_headers(url)
+    ext = get_extenstion_by_content_type(headers)
     return ext
 
-def process_smart_parser_json(json_file):
-    with open(json_file, "r", encoding="utf8") as inpf:
-        smart_parser_json = json.load(inpf)
-        people_count = len(smart_parser_json.get("persons", []))
-    os.remove(json_file)
-    return people_count
 
-
-def get_people_count_from_smart_parser(smart_parser_binary, inputfile):
-    people_count = -1
-    if smart_parser_binary == "none":
-        return people_count
-    if inputfile.endswith("pdf"):
-        return people_count
-    logger = logging.getLogger("dlrobot_logger")
-    cmd = "{} -skip-relative-orphan -skip-logging  -adapter prod -fio-only {}".format(smart_parser_binary, inputfile)
-    logger.debug(cmd)
-    os.system(cmd)
-    json_file = inputfile + ".json"
-    if os.path.exists(json_file):
-        people_count = process_smart_parser_json(json_file)
-    else:
-        sheet_index = 0
-        while True:
-            json_file = "{}_{}.json".format(inputfile, sheet_index)
-            if not os.path.exists(json_file):
-                break
-            if people_count == -1:
-                people_count = 0
-            people_count += process_smart_parser_json(json_file)
-            sheet_index += 1
-    return people_count
-
-
-def export_one_file(smart_parser_binary, url, uniq_files, index, infile, extension, office_folder):
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    outpath = os.path.join(office_folder, str(index) + extension)
-    if not os.path.exists(os.path.dirname(outpath)):
-        os.makedirs(os.path.dirname(outpath))
-    if os.path.exists(infile) and extension in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        with open(infile, "rb") as f:
-            sha256hash = hashlib.sha256(f.read()).hexdigest()
-        if sha256hash not in uniq_files:
-            shutil.copyfile(infile, outpath)
-            people_count = get_people_count_from_smart_parser(smart_parser_binary, outpath)
-            export_record = {
-                "url": url,
-                "outpath": outpath,
-                "infile": infile,
-                "people_count": people_count
-            }
-            uniq_files[sha256hash] = export_record
-            return export_record, people_count
-        else:
-            return None, uniq_files[sha256hash]['people_count']
-
-    return None, -1
-
-
-def export_files_to_folder(offices, smart_parser_binary, outfolder):
-    logger = logging.getLogger("dlrobot_logger")
-    for office_info in offices:
-        office_folder = url_to_localfilename(office_info.morda_url)
-        office_folder = os.path.join(outfolder, office_folder)
-        if os.path.exists(office_folder):
-            shutil.rmtree(office_folder)
-        index = 0
-        uniq_files = dict()
-        export_files = list()
-        last_step_urls = office_info.robot_steps[-1].step_urls
-        logger.debug("process {} urls in last step".format(len(last_step_urls)))
-        for url in last_step_urls:
-            extension = get_file_extension_by_cached_url(url)
-            infile = get_local_file_name_by_url(url)
-            export_rec, office_info.url_nodes[url].people_count = \
-                export_one_file (smart_parser_binary, url, uniq_files, index, infile, extension, office_folder)
-            if export_rec is not None:
-                export_files.append(export_rec)
-                index += 1
-
-        for url_info in office_info.url_nodes.values():
-            for d in url_info.downloaded_files:
-                infile = d['downloaded_file']
-                extension = os.path.splitext(infile)[1]
-                export_rec, d['people_count'] = \
-                    export_one_file(smart_parser_binary, "", uniq_files, index, infile, extension, office_folder)
-                if export_rec is not None:
-                    export_files.append(export_rec)
-                    index += 1
-        office_info.exported_files = export_files
-        logger.info("exported {0} files to {1}".format(index, office_folder))

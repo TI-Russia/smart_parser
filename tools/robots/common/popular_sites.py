@@ -6,6 +6,7 @@
 "mail.ru",
 "avito.ru",
 "ok.ru",
+"odnoklassniki.ru",
 "google.ru",
 "wikipedia.org",
 "aliexpress.com",
@@ -53,6 +54,7 @@
 "twitter.com",
 "gismeteo.ru",
 "telegram.org",
+"web.telegram.org"
 ]
 
 popular_site_set = set(popular_domains)

@@ -71,9 +71,9 @@ namespace Smart.Parser.Adapters
         {
             if (MaxRowsToProcess != -1)
             {
-                return Math.Min(MaxRowsToProcess, totalRows);
+                return Math.Min(MaxRowsToProcess, WorkSheetRows);
             }
-            return totalRows;
+            return WorkSheetRows;
         }
 
         public override int GetColsCount()
@@ -165,7 +165,7 @@ namespace Smart.Parser.Adapters
             workSheetName = worksheet.Name;
 
             worksheetCount = wsCount;
-            totalRows = worksheet.Cells.Rows.Count;
+            WorkSheetRows = worksheet.Cells.Rows.Count;
             totalColumns = worksheet.Cells.MaxColumn + 1;
 
         }
@@ -191,6 +191,7 @@ namespace Smart.Parser.Adapters
                 throw new SmartParserException("wrong  sheet index");
             }
             workSheetName = worksheet.Name;
+            WorkSheetRows = worksheet.Cells.Rows.Count;
         }
 
 
@@ -212,7 +213,7 @@ namespace Smart.Parser.Adapters
 
         private Aspose.Cells.Workbook workbook;
         private Aspose.Cells.Worksheet worksheet;
-        private int totalRows;
+        private int WorkSheetRows;
         private int totalColumns;
         private int worksheetCount;
         private string workSheetName;

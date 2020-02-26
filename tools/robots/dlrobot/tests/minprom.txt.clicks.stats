@@ -1,90 +1,155 @@
 [
+    {
+        "files_count": 30
+    },
     [
-        "cached\\downloads\\11cb463b44ec21f1b3b2321f8cc9ba55b01e7bf965ba9af9a557d37c14ee0c6e.docx",
-        11
-    ],
-    [
-        "cached\\downloads\\1f1998504891e2c71519548475876c785700173ce0e2e0044f4e3b8df8392a47.doc",
-        64
-    ],
-    [
-        "cached\\downloads\\28f05985bbb4f0fdcdfd24288f7c77c37ea4e3caf6de1a3a1355908ff2fe7faf.docx",
-        300
-    ],
-    [
-        "cached\\downloads\\46a16f947d32c47f9e12df94643c146da741f9aedcc366cc152ab327b91a4f7e.docx",
-        264
-    ],
-    [
-        "cached\\downloads\\505dce5c4d67115ca278c417ec8ac44926f1df9404971d9d683392635b0bfb95.docx",
-        10
-    ],
-    [
-        "cached\\downloads\\5ec067abafc0bffd908580a7670ce913dd665863b5bf84618c5f4e0f9cf3e124.docx",
-        13
-    ],
-    [
-        "cached\\downloads\\60e7214e30af428ed84c9c7832d4782910fae12042e339251caf2b308d07db1c.docx",
-        261
-    ],
-    [
-        "cached\\downloads\\6b2f63248865588d2dc0e5ad4d55849359c07535f141ee6c14c44d151b6aa390.docx",
-        592
-    ],
-    [
-        "cached\\downloads\\6db34430969804c2d52a7319918a4263b91fcaf6b9101ffcb7431bf944ad4b47.xlsx",
+        "088c8e54d62ebd5dcf4a9790c40f41690523905fb2f19d8b3b81c2680871f119",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5ab0c06c0bec9/actual/Obrazets_zapolneniya_spravki_obyaz_dd0d3bb34031d3e094b9febdfe4bfcfc/dlrobot_data",
         -1
     ],
     [
-        "cached\\downloads\\7b1389e5c903b6bfd5fa57f78a52d4f09c92d4df890105ae7bcdb7fb8650a096.docx",
-        249
+        "11cb463b44ec21f1b3b2321f8cc9ba55b01e7bf965ba9af9a557d37c14ee0c6e",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5afda260c9c66/actual/Rukovodstvo_Minpromtorga_Rossii_20_173cd5ce478a28ea6c7d349f3fa9acb5/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\849b92c582127e38bc00408ae0e37cbd5872826766c992289c792941c252b107.docx",
-        59
+        "1f1998504891e2c71519548475876c785700173ce0e2e0044f4e3b8df8392a47",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5afd94a11ec7e/actual/Rabotniki_organizatsii_Minpromtorg_e2f924bb3c661e5406e950b6c1d64c06/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\8949e5b5f2155ffb0cc20aac50be1ab4ed72f4dcab637dc72d5a0acb9c78eddc.docx",
-        8
+        "28f05985bbb4f0fdcdfd24288f7c77c37ea4e3caf6de1a3a1355908ff2fe7faf",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce6d14f33c04/actual/publikaciaCA.docx/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\8972965509778f9ccb44b54481e1730f722e59b4c8d9065179e782de18c9b83d.docx",
-        13
+        "2db81a5c1e1ffcad19d33950c0bd8807ccfdbd018f3c2a8762147bea65edabfe",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc73e0f4a1/actual/primer_2_1.pdf/dlrobot_data",
+        -1
     ],
     [
-        "cached\\downloads\\9452be724c75cac0414cb0a5bc43688577b9105c64863d675905f5c2cbde20e6.docx",
-        695
+        "46a16f947d32c47f9e12df94643c146da741f9aedcc366cc152ab327b91a4f7e",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beb6c4cdaa/actual/TSentralnyi_apparat.docx/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\9530c2e01e7b50037dab5ad3163b17702126f7ad26ee83938bf5db412fb2016f.doc",
-        14
+        "505dce5c4d67115ca278c417ec8ac44926f1df9404971d9d683392635b0bfb95",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bea6b53d1b/actual/Rukovodstvo_Minpromtorga_Rossii.do_908d45b62d9024800abf0c8d8057d610/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\9fa8426922e8273ed1e076dc7ba8a76ede9e07746c838c8795f5e8c9537424ff.docx",
-        57
+        "5ec067abafc0bffd908580a7670ce913dd665863b5bf84618c5f4e0f9cf3e124",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beb3d0c8c6/actual/Rukovodstvo.docx/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\beb44144c4ea619a99cf3e09a530381f66fd126a406da12c93318be73faefdb8.docx",
-        253
+        "60e7214e30af428ed84c9c7832d4782910fae12042e339251caf2b308d07db1c",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5b046211d9327/actual/TsA_Minpromtorga_Rossii_2017.docx/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\c090c997fd27cba8d9864836252c50533382d6fb6424ea7ca7cc604a570ee21d.docx",
-        594
+        "69001b556e6f9b8b432226b48577ee1c5a24a8c1d14859824c783c88afbaba90",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5ab0c18a57382/actual/Obrazets_zapolneniya_spravki_obyaz_67c07519b6afebd0b82b80f019153a81/dlrobot_data",
+        -1
     ],
     [
-        "cached\\downloads\\de69811ff4cc386c49b74abfd757aee1eae1039b0f1befb5fd62e2ca13d95f66.docx",
-        108
+        "6b2f63248865588d2dc0e5ad4d55849359c07535f141ee6c14c44d151b6aa390",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf233b4882/actual/svedeniya_o_dokhodakh_2011_Pr2-1.d_00718a3063b8e0a34251c432539f59eb/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\e63c828a3f32cb8b14d81a8ee3889b2cb9eeb89de4d9a6eaf25c2a6d8fe52f4c.doc",
-        13
+        "7538324ed054ad3b4dcf626f43cf9db593cd24ca8c8d604286f95370ba7b59cf",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf2ee0a126/actual/svedeniya_o_dokhodakh_2010_Pr1-1.d_f124a89b087108237c8f79124cea94c1/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\f2fecb14597ce7e995d9f2dfde39fa7a3ac096d817d74b7767ea752e498cd4ad.docx",
-        116
+        "7b1389e5c903b6bfd5fa57f78a52d4f09c92d4df890105ae7bcdb7fb8650a096",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bec3668ed8/actual/Svedeniya_o_dokhodakh_i_raskhodakh_7dc9a2e80337d8466efc4ca520e1fc08/dlrobot_data",
+        1
     ],
     [
-        "cached\\downloads\\fc44146a07e1a622b6aa98741e4c9eccf8f9caefb5965cac94f9ac2e456e9c54.docx",
-        59
+        "849b92c582127e38bc00408ae0e37cbd5872826766c992289c792941c252b107",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce3d65aac018/actual/rabotniki_2018_1.docx/dlrobot_data",
+        1
+    ],
+    [
+        "8949e5b5f2155ffb0cc20aac50be1ab4ed72f4dcab637dc72d5a0acb9c78eddc",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf1ff97633/actual/DEKLARATSII-1-2012_Pr4.docx/dlrobot_data",
+        1
+    ],
+    [
+        "8972965509778f9ccb44b54481e1730f722e59b4c8d9065179e782de18c9b83d",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bef6a57aec/actual/Svedeniya_o_dokhodakh-rukovodstvo._9d5489768d180eee8c5abfb0633e9ca7/dlrobot_data",
+        1
+    ],
+    [
+        "89fe0bd5904f11c983d12887aa706c8ecc70774257f653df5e0dc257f8c7f710",
+        "cached/gossluzhba.gov.ru/anticorruption/spravki_bk/dlrobot_data",
+        -1
+    ],
+    [
+        "9452be724c75cac0414cb0a5bc43688577b9105c64863d675905f5c2cbde20e6",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8befa665b3b/actual/TsA_2013_15__2_1111.docx/dlrobot_data",
+        1
+    ],
+    [
+        "9530c2e01e7b50037dab5ad3163b17702126f7ad26ee83938bf5db412fb2016f",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce29aee276c0/actual/Rukovodstvo_2018.doc/dlrobot_data",
+        1
+    ],
+    [
+        "9fa8426922e8273ed1e076dc7ba8a76ede9e07746c838c8795f5e8c9537424ff",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beaff641b9/actual/Podvedy_Minpromtorga_Rossii.docx/dlrobot_data",
+        1
+    ],
+    [
+        "a3158a6b4811f30bbe8df8f3d1bfaeee6c518de55f555cd3e7e3d0db68b75ac9",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc6d68ee0c/actual/primer_1_1.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "b7ec4315d1388a9a8ef15c1dad7960ee721e6594e68751e06efa1262ce89ef8e",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5ab0bfa5063cd/actual/Obrazets_zapolneniia_spravki_o_dok_9e517bac5b1b30de2cc0d1293a6a7b1f/dlrobot_data",
+        -1
+    ],
+    [
+        "beb44144c4ea619a99cf3e09a530381f66fd126a406da12c93318be73faefdb8",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beaab5223d/actual/d2.docx/dlrobot_data",
+        1
+    ],
+    [
+        "c090c997fd27cba8d9864836252c50533382d6fb6424ea7ca7cc604a570ee21d",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf14559c26/actual/TSA_2012.docx/dlrobot_data",
+        1
+    ],
+    [
+        "d4e8e8c150bf90e5632fd18613a2140b421fb27a3a88a4ecba3fbe17d09b5436",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc7baa378e/actual/met_rec.pdf/dlrobot_data",
+        1
+    ],
+    [
+        "de69811ff4cc386c49b74abfd757aee1eae1039b0f1befb5fd62e2ca13d95f66",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8becf11ef59/actual/Podvedy_2014.docx/dlrobot_data",
+        1
+    ],
+    [
+        "e63c828a3f32cb8b14d81a8ee3889b2cb9eeb89de4d9a6eaf25c2a6d8fe52f4c",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bebe625652/actual/svedeniya_o_dokhodakh_rukovodstvo__4399a9d736c0152f338834dfeb0984e9/dlrobot_data",
+        1
+    ],
+    [
+        "f2fecb14597ce7e995d9f2dfde39fa7a3ac096d817d74b7767ea752e498cd4ad",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf0f1c8599/actual/Podvedy_2013.docx/dlrobot_data",
+        1
+    ],
+    [
+        "f942e29d5d08847eeca407cc9221733959a05d15925bb07c2682aba67c64127f",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc77f2f98f/actual/primer_3_1.pdf/dlrobot_data",
+        -1
+    ],
+    [
+        "fc44146a07e1a622b6aa98741e4c9eccf8f9caefb5965cac94f9ac2e456e9c54",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bebb207674/actual/Podvedomstvennye_organizatsii.docx/dlrobot_data",
+        1
     ]
 ]
