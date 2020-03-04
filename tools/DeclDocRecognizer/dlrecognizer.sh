@@ -37,11 +37,13 @@ if  [ $? -ne 0 ]; then
     exit 1
 fi
 
-pip3 show xlsx2csv >/dev/null
-if  [ $? -ne 0 ]; then
-    echo "install xlsx2csv \n pip3 install xlsx2csv"
-    exit 1
-fi
+# too slow !
+#pip3 show xlsx2csv >/dev/null
+#if  [ $? -ne 0 ]; then
+#    echo "install xlsx2csv \n pip3 install xlsx2csv"
+#    exit 1
+#fi
+
 if [[ $system == CYGWIN* ]]; then
     XLSX_2_CSV="C:/Python37/Scripts/xlsx2csv"
 else
@@ -91,7 +93,7 @@ fi
 if [[ ! -f ${input_file}.txt ]]; then
     echo "cannot convert $input_file"
     #may be unknown_result?
-    echo '{"result":"some_other_document_result", "description": "cannot parse document"}' | jq  > ${output_file}
+    echo '{"result":"some_other_document_result", "description": "cannot parse document"}' | jq  . > ${output_file}
     exit 1
 fi
 
