@@ -15,6 +15,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
 using System.Security.Cryptography;
+using Smart.Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
@@ -688,8 +689,8 @@ namespace Smart.Parser.Adapters
             }
             if (extension != ".htm" && extension != ".html") // это просто костыль. Нужно как-то встроить это в архитектуру.
                 tables = ExtractSubtables(tables);
+            RemoveEmptyTables(tables);
             TablesCount = tables.Count();
-
             foreach (var t in tables)
             {
 
@@ -700,6 +701,30 @@ namespace Smart.Parser.Adapters
             DropDayOfWeekRows();
         }
 
+
+
+        private void RemoveEmptyTables(List<Table> tables)
+        {
+            tables.RemoveAll(x=> IsEmptyTable(x));
+        }
+
+
+        private bool IsEmptyTable(Table table)
+        {
+           
+            var tableLst = table.ChildElements.OfType<TableRow>().ToList();
+            if (tableLst.Count < 3)
+                return false; // header only
+            var headRowLst = tableLst[0].ChildElements.OfType<TableCell>().ToList();
+            var nameInd = headRowLst.FindIndex(x => x.InnerText.Length < 100 && x.InnerText.IsName());
+            if (nameInd == -1)
+                return false; // todo: checking for table without name field
+
+            var nameCells = tableLst.Skip(1).Select(x => x.ChildElements.OfType<TableCell>().ToList());
+            bool res = nameCells.All (x => x.Count <= nameInd || string.IsNullOrWhiteSpace(x[nameInd].InnerText));
+            return res;
+
+        }
 
 
         private void DropDayOfWeekRows()

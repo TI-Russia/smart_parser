@@ -552,6 +552,15 @@ namespace RegressionTesting
             TestSmartParser("Sudia2011.htm", "prod");
         }
 
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void EmptyTablesInHtml()
+        {
+            TestSmartParser("7007_10.html", "prod");
+        }
+
+
         [TestMethod]
         [TestCategory("htm")]
         public void ArbitrationCourt1()
