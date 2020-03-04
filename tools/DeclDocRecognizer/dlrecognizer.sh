@@ -93,7 +93,7 @@ fi
 if [[ ! -f ${input_file}.txt ]]; then
     echo "cannot convert $input_file"
     #may be unknown_result?
-    echo '{"result":"some_other_document_result", "description": "cannot parse document"}' | jq  . > ${output_file}
+    echo '{"result":"some_other_document_result", "description": "cannot parse document"}' | jq . > ${output_file}
     exit 1
 fi
 
