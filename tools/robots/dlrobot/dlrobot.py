@@ -246,16 +246,9 @@ def parse_args():
     parser.add_argument("--from-human", dest='from_human_file_name', default=None)
     parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
     parser.add_argument("--input-url-list", dest='hypots', default=None)
-    smart_parser_default =  "../../../src/bin/Release/netcoreapp3.1/smart_parser"
-    if os.path.sep == "\\":
-        smart_parser_default += ".exe"
-    parser.add_argument("--smart-parser-binary",
-                        dest='smart_parser_binary',
-                        default=os.path.normpath(smart_parser_default))
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     args = parser.parse_args()
-    assert os.path.exists(args.smart_parser_binary)
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
@@ -300,7 +293,7 @@ def make_steps(args, project):
         logger.info("=== download all declarations =========")
         project.download_last_step()
 
-    export_files_to_folder(project.offices, args.smart_parser_binary, args.result_folder)
+    export_files_to_folder(project.offices, args.result_folder)
     project.write_export_stats()
     project.write_project()
 

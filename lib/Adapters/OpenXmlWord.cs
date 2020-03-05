@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using System.Xml.Linq;
 using System.Text;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
-
+using System.IO.Compression;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -149,6 +150,68 @@ namespace Smart.Parser.Adapters
         }
     }
 
+    public static class UriFixer
+    {
+        public static void FixInvalidUri(Stream fs, Func<string, Uri> invalidUriHandler)
+        {
+            XNamespace relNs = "http://schemas.openxmlformats.org/package/2006/relationships";
+            using (ZipArchive za = new ZipArchive(fs, ZipArchiveMode.Update))
+            {
+                foreach (var entry in za.Entries.ToList())
+                {
+                    if (!entry.Name.EndsWith(".rels"))
+                        continue;
+                    bool replaceEntry = false;
+                    XDocument entryXDoc = null;
+                    using (var entryStream = entry.Open())
+                    {
+                        try
+                        {
+                            entryXDoc = XDocument.Load(entryStream);
+                            if (entryXDoc.Root != null && entryXDoc.Root.Name.Namespace == relNs)
+                            {
+                                var urisToCheck = entryXDoc
+                                    .Descendants(relNs + "Relationship")
+                                    .Where(r => r.Attribute("TargetMode") != null && (string)r.Attribute("TargetMode") == "External");
+                                foreach (var rel in urisToCheck)
+                                {
+                                    var target = (string)rel.Attribute("Target");
+                                    if (target != null)
+                                    {
+                                        try
+                                        {
+                                            Uri uri = new Uri(target);
+                                        }
+                                        catch (UriFormatException)
+                                        {
+                                            Uri newUri = invalidUriHandler(target);
+                                            rel.Attribute("Target").Value = newUri.ToString();
+                                            replaceEntry = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch (XmlException)
+                        {
+                            continue;
+                        }
+                    }
+                    if (replaceEntry)
+                    {
+                        var fullName = entry.FullName;
+                        entry.Delete();
+                        var newEntry = za.CreateEntry(fullName);
+                        using (StreamWriter writer = new StreamWriter(newEntry.Open()))
+                        using (XmlWriter xmlWriter = XmlWriter.Create(writer))
+                        {
+                            entryXDoc.WriteTo(xmlWriter);
+                        }
+                    }
+                }
+            }
+        }
+    }
     public class OpenXmlWordAdapter : IAdapter
     {
         private List<List<OpenXmlWordCell>> TableRows;
@@ -266,6 +329,21 @@ namespace Smart.Parser.Adapters
             return outFileName;
         }
 
+        private static Uri FixUri(string brokenUri)
+        {
+            return new Uri("http://broken-link/");
+        }
+        private void ProcessDoc (string fileName, string extension, int maxRowsToProcess)
+        {
+            using (var doc = WordprocessingDocument.Open(fileName, false))
+            {
+                FindTitleAboveTheTable(doc);
+                CollectRows(doc, maxRowsToProcess, extension);
+                InitUnmergedColumnsCount();
+                InitializeVerticallyMerge();
+            };
+
+        }
         public OpenXmlWordAdapter(string fileName, int maxRowsToProcess)
         {
             NamespaceManager = new XmlNamespaceManager(new NameTable());
@@ -305,17 +383,29 @@ namespace Smart.Parser.Adapters
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
                 }
-                removeTempFile = false;
+                removeTempFile = true;
             }
 
-
-            using (var doc = WordprocessingDocument.Open(fileName, false))
+            try
             {
-                FindTitleAboveTheTable(doc);
-                CollectRows(doc, maxRowsToProcess, extension);
-                InitUnmergedColumnsCount();
-                InitializeVerticallyMerge();
-            };
+                ProcessDoc(fileName, extension, maxRowsToProcess);
+            }
+            catch (OpenXmlPackageException e)
+            {
+                // http://www.ericwhite.com/blog/handling-invalid-hyperlinks-openxmlpackageexception-in-the-open-xml-sdk/
+                if (e.ToString().Contains("Invalid Hyperlink"))
+                {
+                    var newFileName = fileName + ".fixed.docx";
+                    File.Copy(fileName, newFileName);
+                    using (FileStream fs = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                    {
+                        UriFixer.FixInvalidUri(fs, brokenUri => FixUri(brokenUri));
+                    }
+                    ProcessDoc(newFileName, extension, maxRowsToProcess);
+                    File.Delete(newFileName);
+                }
+            }
+            
             if (removeTempFile)
             {
                 File.Delete(fileName);

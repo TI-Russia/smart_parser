@@ -74,6 +74,22 @@ namespace Smart.Parser.Adapters
             //Licensed = word_license.IsLicensed;
             Licensed = true;
         }
+
+        public static void SetAsposeLicenseFromEnvironment()
+        {
+            var envVars = Environment.GetEnvironmentVariables();
+            if (envVars.Contains("ASPOSE_LIC"))
+            {
+                string path = envVars["ASPOSE_LIC"].ToString();
+                AsposeLicense.SetLicense(path);
+                if (!AsposeLicense.Licensed)
+                {
+                    throw new Exception("Not valid aspose licence " + path);
+                }
+
+            }
+        }
+
         public static bool Licensed { set; get; } = false;
     }
 }
