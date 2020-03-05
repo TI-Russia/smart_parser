@@ -33,21 +33,6 @@ namespace Smart.Parser
         public static bool IgnoreDirectoryIds = false;
         public static bool BuildTrigrams = false;
         public static int? UserDocumentFileId;
-        public static void SetAsposeLicenseFromEnvironment()
-        {
-            var envVars = Environment.GetEnvironmentVariables();
-            if (envVars.Contains("ASPOSE_LIC"))
-            {
-                string path = envVars["ASPOSE_LIC"].ToString();
-                AsposeLicense.SetLicense(path);
-                if (!AsposeLicense.Licensed)
-                {
-                    throw new SmartParserException("Not valid aspose licence " + path);
-                }
-
-            }
-        }
-    
         static string ParseArgs(string[] args)
         {
             CMDLineParser parser = new CMDLineParser();
@@ -94,7 +79,7 @@ namespace Smart.Parser
             }
             else
             {
-                SetAsposeLicenseFromEnvironment();
+                Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
             }
             if (maxRowsToProcessOpt.isMatched)
             {
@@ -194,16 +179,6 @@ namespace Smart.Parser
 
         public static int Main(string[] args)
         {
-            args = new string[] {
-             // "-license", @"lic.bin",
-             // "-v", "debug" ,
-             // "-max-rows", "100",
-             // "-adapter", "prod" ,
-             // "-converted-storage-url",  @"http://declarator.zapto.org:8000/converted_document",
-             //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/4144_28.htm"
-             //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/15555_1.html"
-             //@"D:/programming/work_current/smart_parser/tools/CorpusProcess/documents/17335_3.html"
-            };
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))

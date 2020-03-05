@@ -10,7 +10,11 @@ from http_request import make_http_request, request_url_headers
 FILE_CACHE_FOLDER = "cached"
 DEFAULT_HTML_EXTENSION = ".html"
 DEFAULT_ZIP_EXTENSION = ".zip"
-ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf', '.zip', DEFAULT_HTML_EXTENSION}
+DEFAULT_RAR_EXTENSION = ".rar"
+ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf',
+                                        DEFAULT_ZIP_EXTENSION, \
+                                        DEFAULT_RAR_EXTENSION, \
+                                        DEFAULT_HTML_EXTENSION}
 
 
 def is_html_contents(info):

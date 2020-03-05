@@ -348,6 +348,9 @@ namespace Smart.Parser.Adapters
                     else
                     { 
                         PersonName = nameOrRelativeType;
+                        if (!PersonName.Contains('.') && !PersonName.Trim().Any(Char.IsWhiteSpace)) {
+                            throw new Exception("bad person name " + PersonName);
+                        }
                     }
                 }
             }
