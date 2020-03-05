@@ -79,6 +79,7 @@ namespace Smart.Parser.Lib
                 case "несовершеннолетниедети": return RelationType.Child;
                 case "несовершеннолетнийребенок": return RelationType.Child;
                 case "несовершенолетнийребенок": return RelationType.Child;
+                case "несовершеннолетниеребенок": return RelationType.Child;
                 case "несовершеннол.ребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
                 case "дочь.": return RelationType.Child;
@@ -122,7 +123,8 @@ namespace Smart.Parser.Lib
                 || s == "–"
                 || s == "_"
                 || s == "нет"
-                || s == "не имеет";
+                || s == "не имеет"
+                || s == "отсутствует";
         }
 
         static decimal ParseRoubles(string val, bool inThousands) {

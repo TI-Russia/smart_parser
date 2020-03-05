@@ -97,12 +97,14 @@ namespace Smart.Parser.Lib
                 {
                     NameRaw = row.PersonName,
                     Occupation = row.Occupation,
-                    Ordering = columnOrdering
+                    Ordering = columnOrdering,
+                    Department = row.Department
                 };
                 if (CurrentSection != null)
                 {
                     CurrentDeclarant.Department = CurrentSection.Name;
                 }
+                
                 CurrentDeclarant.Index = row.GetPersonIndex();
 
                 CurrentPerson = CurrentDeclarant;

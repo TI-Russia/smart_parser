@@ -1,0 +1,51 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Капаев Дмитрий Юрьевич",
+        "role": ""
+      },
+      "year": 2011,
+      "incomes": [
+        {
+          "size": 1314620.00,
+          "size_raw": "1 314,62",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 76.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "76,8",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "-"
+        },
+        {
+          "text": "Квартира",
+          "square": 47.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "47/100",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "-"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Легковой автомобиль TOYOTA",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения об имуществе Капаев Д.Ю. | Арбитражный суд Московской области  на период 2011",
+    "year": 2011,
+    "sheet_number": 3
+  }
+}
