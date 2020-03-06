@@ -1,0 +1,52 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Ишанова Татьяна Николаевна",
+        "role": "",
+        "department": "Судебная коллегия по рассмотрению споров, возникающих из гражданских и иных правоотношений"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 1044000.0,
+          "size_raw": "1044 тыс.руб.",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 141.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "141,6",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "-"
+        },
+        {
+          "text": "Квартира",
+          "square": 141.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "141,6",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "-"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Нисан (индивидуальная собственность)",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения об имуществе Ишанова Т.Н. | Арбитражный суд города Москвы  на период 2012",
+    "year": 2012,
+    "sheet_number": 2
+  }
+}

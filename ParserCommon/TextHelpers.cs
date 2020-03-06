@@ -41,7 +41,10 @@ namespace TI.Declarator.ParserCommon
             Match m = ExtractYearRegex.Match(str);
             if (m.Success)
             {
-                return Int32.Parse(m.Groups[0].Value);
+                var year = Int32.Parse(m.Groups[0].Value);
+                if (year > DateTime.Today.Year || year < 1980)
+                    return null;
+                return year;
             }
             else return null;
         }

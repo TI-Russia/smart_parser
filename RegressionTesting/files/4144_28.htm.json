@@ -1,0 +1,68 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Кондрат Елена Николаевна",
+        "role": "",
+        "department": "Судебная коллегия по рассмотрению споров, возникающих из гражданских и иных правоотношений"
+      },
+      "year": null,
+      "incomes": [
+        {
+          "size": 1776000.0,
+          "size_raw": "1776 тыс.руб.",
+          "relative": null
+        },
+        {
+          "size": 580000.0,
+          "size_raw": "580 тыс.руб.",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира",
+          "square": 122.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "122",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "долевая собственность"
+        },
+        {
+          "text": "Квартира",
+          "square": 122.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "122",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "долевая собственность"
+        },
+        {
+          "text": "Квартира",
+          "square": 122.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "122",
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": "долевая собственность"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mercedes Benz (индивидуальная собственность)",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения об имуществе Кондрат Е.Н. | Арбитражный суд города Москвы",
+    "year": null,
+    "sheet_number": 0
+  }
+}

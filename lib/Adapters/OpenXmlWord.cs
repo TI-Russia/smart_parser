@@ -16,6 +16,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
 using System.Security.Cryptography;
+using Smart.Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
@@ -264,7 +265,8 @@ namespace Smart.Parser.Adapters
                 {
                     return DowloadFromConvertedStorage(filename);
                 }
-                catch (Exception ) {
+                catch (Exception)
+                {
                     // a new file try to load it into Microsoft Word
                 }
             }
@@ -305,7 +307,7 @@ namespace Smart.Parser.Adapters
             {
                 File.Delete(outFileName);
             }
-            
+
             var prg = "/usr/bin/soffice";
             var outdir = Path.GetDirectoryName(outFileName);
             var args = String.Format(" --headless --writer   --convert-to \"docx:MS Word 2007 XML\"");
@@ -315,7 +317,7 @@ namespace Smart.Parser.Adapters
             }
 
             args += " " + fileName;
-            Logger.Debug(prg + " " + args);    
+            Logger.Debug(prg + " " + args);
             var p = System.Diagnostics.Process.Start(prg, args);
             p.WaitForExit(3 * 60 * 1000); // 3 minutes
             try { p.Kill(true); } catch (InvalidOperationException) { }
@@ -358,8 +360,8 @@ namespace Smart.Parser.Adapters
             DocumentFile = fileName;
             string extension = Path.GetExtension(fileName).ToLower();
             bool removeTempFile = false;
-            if (    extension == ".html"
-                ||  extension == ".htm"
+            if (extension == ".html"
+                || extension == ".htm"
                 || extension == ".xhtml"
                 || extension == ".pdf"
                 || extension == ".doc"
@@ -375,7 +377,8 @@ namespace Smart.Parser.Adapters
                     Logger.Error("Type Exception " + exp.ToString());
                     fileName = ConvertWithSoffice(fileName);
                 }
-                catch (Exception exp) {
+                catch (Exception exp)
+                {
                     Logger.Error(String.Format("cannot convert {0} to docx, try one more time", fileName));
                     Thread.Sleep(10000); //10 seconds
                     fileName = ConvertFile2TempDocX(fileName);
@@ -430,7 +433,7 @@ namespace Smart.Parser.Adapters
 
         void CopyPortion(List<List<TJsonCell>> portion, bool ignoreMergedRows)
         {
-            for (int i = 0;  i < portion.Count; i++)
+            for (int i = 0; i < portion.Count; i++)
             {
                 var r = portion[i];
                 List<OpenXmlWordCell> newRow = new List<OpenXmlWordCell>();
@@ -518,7 +521,7 @@ namespace Smart.Parser.Adapters
                 {
                     return i - 1;
                 }
-                if (i+1 == TableRows.Count)
+                if (i + 1 == TableRows.Count)
                 {
                     return i;
                 }
@@ -554,7 +557,7 @@ namespace Smart.Parser.Adapters
             {
                 token.Trim(
                     '﻿', ' ', // two different spaces
-                    '\n', '\r', 
+                    '\n', '\r',
                     ',', '!', '.', '{', '}',
                     '[', ']', '(', ')',
                     '"', '«', '»', '\'');
@@ -579,8 +582,8 @@ namespace Smart.Parser.Adapters
                     if (Bigrams.ContainsKey(key))
                     {
                         Logger.Debug(string.Format(
-                            "Join rows using mutual information on cells \"{0}\" and \"{1}\"", 
-                            row1[i].Text.ReplaceEolnWithSpace(), 
+                            "Join rows using mutual information on cells \"{0}\" and \"{1}\"",
+                            row1[i].Text.ReplaceEolnWithSpace(),
                             row2[i].Text.ReplaceEolnWithSpace()));
                         return true;
                     }
@@ -602,7 +605,8 @@ namespace Smart.Parser.Adapters
             if (TableRows.Count > 0)
             {
                 UnmergedColumnsCount = 0;
-                foreach (var c in TableRows[0]) {
+                foreach (var c in TableRows[0])
+                {
                     UnmergedColumnsCount += c.MergedColsCount;
                 }
             }
@@ -622,7 +626,8 @@ namespace Smart.Parser.Adapters
         {
             TableWidthInfo widthInfo = new TableWidthInfo();
             TableProperties tProp = table.GetFirstChild<TableProperties>();
-            if (tProp != null) {
+            if (tProp != null)
+            {
                 if (tProp.TableWidth != null)
                 {
                     widthInfo.TableWidthInPixels = TableWidthInfo.TryReadWidth(
@@ -642,7 +647,7 @@ namespace Smart.Parser.Adapters
             }
             else
             {
-                widthInfo.TableWidthInPixels  =  this.DocumentPageSizeInPixels;
+                widthInfo.TableWidthInPixels = this.DocumentPageSizeInPixels;
             }
             TableGrid tGrid = table.GetFirstChild<TableGrid>();
             if (tGrid != null)
@@ -652,7 +657,7 @@ namespace Smart.Parser.Adapters
                 {
                     widthInfo.ColumnWidths.Add(
                         TableWidthInfo.TryReadWidth(
-                            col.Width, 
+                            col.Width,
                             TableWidthUnitValues.Dxa,
                             widthInfo.TableWidthInPixels));
 
@@ -673,7 +678,7 @@ namespace Smart.Parser.Adapters
                 var row = rows[r];
                 int rowGridBefore = GetRowGridBefore(row);
                 bool isEmpty = true;
-                foreach (var rowCell in row.Elements<TableCell>() )
+                foreach (var rowCell in row.Elements<TableCell>())
                 {
                     var c = new OpenXmlWordCell(widthInfo, rowCell, TableRows.Count, sumspan);
                     if (newRow.Count == 0)
@@ -707,7 +712,7 @@ namespace Smart.Parser.Adapters
                 TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
             }
         }
-        
+
         void InitPageSize(WordprocessingDocument wordDocument)
         {
             var docPart = wordDocument.MainDocumentPart;
@@ -762,7 +767,6 @@ namespace Smart.Parser.Adapters
             var docPart = wordDocument.MainDocumentPart;
             InitPageSize(wordDocument);
             var tables = docPart.Document.Descendants<Table>().ToList();
-            TablesCount = tables.Count();
             int tableIndex = 0;
             foreach (OpenXmlPart h in docPart.HeaderParts)
             {
@@ -773,24 +777,56 @@ namespace Smart.Parser.Adapters
                 }
 
             }
-            if (extension != ".htm") // это просто костыль. Нужно как-то встроить это в архитектуру.
+            if (extension != ".htm" && extension != ".html") // это просто костыль. Нужно как-то встроить это в архитектуру.
                 tables = ExtractSubtables(tables);
-
+            RemoveEmptyTables(tables);
+            TablesCount = tables.Count();
             foreach (var t in tables)
             {
 
                 ProcessWordTableAndUpdateTitle(t, maxRowsToProcess, tableIndex);
                 tableIndex++;
             }
+
+            DropDayOfWeekRows();
         }
 
 
 
+        private void RemoveEmptyTables(List<Table> tables)
+        {
+            tables.RemoveAll(x=> IsEmptyTable(x));
+        }
+
+
+        private bool IsEmptyTable(Table table)
+        {
+           
+            var tableLst = table.ChildElements.OfType<TableRow>().ToList();
+            if (tableLst.Count < 3)
+                return false; // header only
+            var headRowLst = tableLst[0].ChildElements.OfType<TableCell>().ToList();
+            var nameInd = headRowLst.FindIndex(x => x.InnerText.Length < 100 && x.InnerText.IsName());
+            if (nameInd == -1)
+                return false; // todo: checking for table without name field
+
+            var nameCells = tableLst.Skip(1).Select(x => x.ChildElements.OfType<TableCell>().ToList());
+            bool res = nameCells.All (x => x.Count <= nameInd || string.IsNullOrWhiteSpace(x[nameInd].InnerText));
+            return res;
+
+        }
+
+
+        private void DropDayOfWeekRows()
+        {
+            List<string> daysOfWeek = new List<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
+            TableRows = TableRows.TakeWhile(x => !x.All(y => daysOfWeek.Contains(y.Text.ToLower().Trim()))).ToList();
+        }
 
         private static List<Table> ExtractSubtables(List<Table> tables)
         {
             var tablesWithDescendants = tables.Where(x => x.Descendants<Table>().Count() > 0);
-           
+
 
             foreach (var t in tablesWithDescendants)
             {
@@ -826,9 +862,9 @@ namespace Smart.Parser.Adapters
         {
             int cellNo = FindMergedCellByColumnNo(row, column);
             if (cellNo == -1) return null;
-            return  TableRows[row][cellNo];
+            return TableRows[row][cellNo];
         }
-        
+
         public override int GetRowsCount()
         {
             return TableRows.Count;
@@ -846,5 +882,3 @@ namespace Smart.Parser.Adapters
 
     }
 }
-
-
