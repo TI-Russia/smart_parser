@@ -98,7 +98,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
+          "text": "ЗАЗ-1102",
           "relative": null
         }
       ]
@@ -5561,11 +5561,6 @@
         {
           "text": "Opel",
           "relative": null
-        },
-        {
-          "text": "Россия",
-          "relative": "Ребенок",
-          "relative_index": 1
         }
       ]
     },
@@ -12879,7 +12874,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
+          "text": "ВАЗ \n\n\nNissan \n\n\nКМЗ 8136",
           "relative": null
         }
       ]
@@ -13619,7 +13614,12 @@
           "country_raw": "Россия"
         }
       ],
-      "vehicles": []
+      "vehicles": [
+        {
+          "text": "Россия",
+          "relative": null
+        }
+      ]
     },
     {
       "person": {
@@ -18865,12 +18865,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
-          "relative": "Ребенок",
-          "relative_index": 1
-        },
-        {
-          "text": "Россия",
+          "text": "Volkswagen",
           "relative": "Супруг(а)",
           "relative_index": 2
         }
@@ -21882,6 +21877,16 @@
           "text": "Mitsubishi Галант",
           "relative": "Супруг(а)",
           "relative_index": 1
+        },
+        {
+          "text": "Россия",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "text": "Россия",
+          "relative": "Ребенок",
+          "relative_index": 3
         }
       ]
     },
@@ -22616,7 +22621,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
+          "text": "Kia",
           "relative": null
         }
       ]
@@ -23279,7 +23284,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
+          "text": "Ford Fiesta",
           "relative": null
         }
       ]
@@ -26224,7 +26229,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
+          "text": "Opel Мерива",
           "relative": null
         }
       ]
@@ -26438,7 +26443,12 @@
           "type_raw": "индивидуальная \n\n\nнет"
         }
       ],
-      "vehicles": []
+      "vehicles": [
+        {
+          "text": "Россия",
+          "relative": null
+        }
+      ]
     },
     {
       "person": {
@@ -26993,7 +27003,7 @@
       ],
       "vehicles": [
         {
-          "text": "Chevrolet Ланос",
+          "text": "Россия",
           "relative": null
         }
       ]
@@ -28547,10 +28557,6 @@
         }
       ],
       "vehicles": [
-        {
-          "text": "Россия",
-          "relative": null
-        },
         {
           "text": "Toyota",
           "relative": "Супруг(а)",
