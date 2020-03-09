@@ -26,33 +26,15 @@ else
 fi
                           
 CATDOC_BINARY=`which catdoc`
-if  [ $? -ne 0 ]; then
-    echo "install catdoc \n sudo apt install catdoc"
-    exit 1
-fi
 
 XLS_2_CSV=`which xls2csv`
-if  [ $? -ne 0 ]; then
-    echo "install xls2csv from http://manpages.ubuntu.com/manpages/bionic/man1/xls2csv.1.html"
-    exit 1
-fi
-
-# too slow !
-#pip3 show xlsx2csv >/dev/null
-#if  [ $? -ne 0 ]; then
-#    echo "install xlsx2csv \n pip3 install xlsx2csv"
-#    exit 1
-#fi
 
 if [[ $system == CYGWIN* ]]; then
-    XLSX_2_CSV="C:/Python37/Scripts/xlsx2csv"
+    python_path=`where python | head -n 1`
+    python_path=`dirname $python_path`
+    XLSX_2_CSV="$python_path/Scripts/xlsx2csv"
 else
     XLSX_2_CSV=`which xlsx2csv` 
-fi
-
-if [ ! -f $OFFICE_2_TXT ]; then 
-    echo "build ../Office2Txt:\n dotnet build -c Release ../tools/Office2Txt"
-    exit 1
 fi
 
 ############### THE MAIN PROCESS ========================
