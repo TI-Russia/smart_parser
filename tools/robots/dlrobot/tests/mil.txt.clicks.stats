@@ -1,10 +1,15 @@
 [
     {
-        "files_count": 21
+        "files_count": 18
     },
     [
         "0dddd6caff1233d692e12bac459fa992fd3b3f284a94a7e47ee766cca2496485",
         "cached/mil.ru/files/morf/defense_income_2010-2.docx/dlrobot_data",
+        1
+    ],
+    [
+        "2ff1d48b62c204e7c7dd5c7870f8aec302d31b1865c69c5d2df431ac3cfeefbc",
+        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data",
         1
     ],
     [
@@ -43,16 +48,6 @@
         1
     ],
     [
-        "7f54b9a715f1e8467138aaeb3c190bc0183f23ac18b48a6cb674d57c4d24e9c4",
-        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12152880@cmsArticle/dlrobot_data",
-        1
-    ],
-    [
-        "81721b864c9de1a8e660bb2f80c7c0efc7ca326ba357c1b58db00ee3ea39f5a7",
-        "cached/mil.ru/files/morf/anti_korr_metod_pril_2.rtf/dlrobot_data",
-        1
-    ],
-    [
         "878e1899398d116996e1da458ae7f007f934756a97f7673a2d45dc6036e92225",
         "cached/mil.ru/files/morf/defense_income_2010-7.doc/dlrobot_data",
         1
@@ -60,11 +55,6 @@
     [
         "967723434e64057060fd50b28b4e0321698ee87808986119c1952b4eb04497df",
         "cached/mil.ru/files/morf/defense_income_2010-1.docx/dlrobot_data",
-        1
-    ],
-    [
-        "9b68f040e991ede5c475c44979c312d0be0b5919848afd13da437e740a68263d",
-        "cached/mil.ru/files/morf/anti_korr_metod_pril_1.rtf/dlrobot_data",
         1
     ],
     [
@@ -90,11 +80,6 @@
     [
         "d7b9880deb51e72b53bb53499d850abd7fa8bf81b0d54188350015bde4442653",
         "cached/mil.ru/files/morf/defense_income_2010-4.docx/dlrobot_data",
-        1
-    ],
-    [
-        "dda3e94a9e3dc91cf8212673bcc0ba014f87378463ef2e50bf20648c54d8b0cb",
-        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data",
         1
     ],
     [
