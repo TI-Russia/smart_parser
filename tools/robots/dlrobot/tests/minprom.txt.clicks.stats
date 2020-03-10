@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 30
+        "files_count": 25
     },
     [
         "088c8e54d62ebd5dcf4a9790c40f41690523905fb2f19d8b3b81c2680871f119",
@@ -21,11 +21,6 @@
         "28f05985bbb4f0fdcdfd24288f7c77c37ea4e3caf6de1a3a1355908ff2fe7faf",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce6d14f33c04/actual/publikaciaCA.docx/dlrobot_data",
         1
-    ],
-    [
-        "2db81a5c1e1ffcad19d33950c0bd8807ccfdbd018f3c2a8762147bea65edabfe",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc73e0f4a1/actual/primer_2_1.pdf/dlrobot_data",
-        -1
     ],
     [
         "46a16f947d32c47f9e12df94643c146da741f9aedcc366cc152ab327b91a4f7e",
@@ -83,11 +78,6 @@
         1
     ],
     [
-        "89fe0bd5904f11c983d12887aa706c8ecc70774257f653df5e0dc257f8c7f710",
-        "cached/gossluzhba.gov.ru/anticorruption/spravki_bk/dlrobot_data",
-        -1
-    ],
-    [
         "9452be724c75cac0414cb0a5bc43688577b9105c64863d675905f5c2cbde20e6",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8befa665b3b/actual/TsA_2013_15__2_1111.docx/dlrobot_data",
         1
@@ -101,11 +91,6 @@
         "9fa8426922e8273ed1e076dc7ba8a76ede9e07746c838c8795f5e8c9537424ff",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beaff641b9/actual/Podvedy_Minpromtorga_Rossii.docx/dlrobot_data",
         1
-    ],
-    [
-        "a3158a6b4811f30bbe8df8f3d1bfaeee6c518de55f555cd3e7e3d0db68b75ac9",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc6d68ee0c/actual/primer_1_1.pdf/dlrobot_data",
-        -1
     ],
     [
         "b7ec4315d1388a9a8ef15c1dad7960ee721e6594e68751e06efa1262ce89ef8e",
@@ -123,11 +108,6 @@
         1
     ],
     [
-        "d4e8e8c150bf90e5632fd18613a2140b421fb27a3a88a4ecba3fbe17d09b5436",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc7baa378e/actual/met_rec.pdf/dlrobot_data",
-        1
-    ],
-    [
         "de69811ff4cc386c49b74abfd757aee1eae1039b0f1befb5fd62e2ca13d95f66",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8becf11ef59/actual/Podvedy_2014.docx/dlrobot_data",
         1
@@ -141,11 +121,6 @@
         "f2fecb14597ce7e995d9f2dfde39fa7a3ac096d817d74b7767ea752e498cd4ad",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf0f1c8599/actual/Podvedy_2013.docx/dlrobot_data",
         1
-    ],
-    [
-        "f942e29d5d08847eeca407cc9221733959a05d15925bb07c2682aba67c64127f",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc77f2f98f/actual/primer_3_1.pdf/dlrobot_data",
-        -1
     ],
     [
         "fc44146a07e1a622b6aa98741e4c9eccf8f9caefb5965cac94f9ac2e456e9c54",
