@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 24
+        "files_count": 20
     },
     [
         "0148f7aec84518ce298ff1b5e77befe558bd6dd34022686f15c195a6fd1fe6ca",
@@ -21,11 +21,6 @@
         "1e77ec9e07ff5d19f2885a5df0d5c61e3eaf8b3a5b41a53830982dd0747ee53c",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_eee7e1c8020d47b024baae205dc9ebf5/dlrobot_data",
         1
-    ],
-    [
-        "2eb592337843c1767bc115746bdfe6568caec95daadd5cbbe3f1d9b47d09626e",
-        "cached/bagaev.donland.ru/Data/Sites/23/media/corrupz/Pamiatka.pdf/dlrobot_data",
-        -1
     ],
     [
         "32ae8f1bd545a6c007dfff9f78f731083f2e5c6af49e7e25fca8a229bbb91832",
@@ -83,11 +78,6 @@
         1
     ],
     [
-        "99be6b049de819791c070952a5c3b22c4729a2b9d931f199870e93278fb87bb6",
-        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/protokolNo._1.pdf/dlrobot_data",
-        -1
-    ],
-    [
         "afa68e4f208bbafb5aa4160c904028b29f3de7c1a0b1e52e377fee727c9edbb9",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhza2013god.doc/dlrobot_data",
         1
@@ -108,18 +98,8 @@
         1
     ],
     [
-        "ee35a5608eabd252c09aa2f7179ab9efccf1c9b9346528ce9cfae9ebcaa8647e",
-        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_201017_3.pdf/dlrobot_data",
-        -1
-    ],
-    [
         "f2090493af179c3f287e377a45d3df3f9248af4f0f2b253164bdc2728decad9f",
         "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2016__303263d53b33fb87fa1c452313a891f3/dlrobot_data",
         1
-    ],
-    [
-        "f416ff8fceb67072d5ca9d219b4051b7b9eb6ae696c9bfadccbbc1d582100b19",
-        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/protokolNo._2.pdf/dlrobot_data",
-        -1
     ]
 ]
