@@ -19,8 +19,8 @@ def parse_args():
     parser.add_argument("--db-json", dest='db_json', required=True)
     parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
-    parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pfd.ocr")
-    parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pfd.ocr.out")
+    parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
+    parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
     parser.add_argument("--microsoft-pdf-2-docx",
                         dest='microsoft_pdf_2_docx',
                         required=False,
@@ -88,7 +88,7 @@ def rebuild_json(conv_db_json, converted_files_folder, output_file):
 class TConvDatabase:
     def __init__(self, args):
         self.args = args
-        self.conv_db_json_file_name = os.path.dirname(args.db_json)
+        self.conv_db_json_file_name = args.db_json
         self.input_folder = args.input_folder
         if not os.path.exists(self.input_folder):
             os.mkdir(self.input_folder)
@@ -177,6 +177,7 @@ def check_pdf_has_text(logger, filename):
     os.system(cmd)
     return os.path.getsize("dummy.txt") > 200
 
+
 def strip_drm(logger, filename, stripped_file):
     cmd = "pdfcrack {0} > crack.info".format(filename)
     logger.debug(cmd )
@@ -229,7 +230,6 @@ def process_one_input_file(args, conv_database, some_file):
         shutil.move(input_file, os.path.join(conv_database.converted_files_folder, some_file))
 
 
-
 def move_one_ocred_file(args, conv_database, some_file):
     logger = logging.getLogger("db_conv_logger")
     assert some_file.endswith(".docx")
@@ -245,6 +245,14 @@ def move_one_ocred_file(args, conv_database, some_file):
     f2 = os.path.join(conv_database.converted_files_folder, some_file)
     logger.debug("move  {} to {}".format(f1, f2))
     shutil.move(f1, f2)
+
+def delete_file_if_exists(logger, full_path):
+    try:
+        if os.path.exists(full_path):
+            logger.error("delete {}".format(full_path))
+            os.unlink(full_path)
+    except Exception as exp:
+        logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
 
 
 def process_input_files(args, conv_database):
@@ -270,23 +278,26 @@ def process_input_files(args, conv_database):
                     os.unlink(fname)
 
         for some_file in os.listdir(args.ocr_output_folder):
+            if not some_file.endswith(".docx"):
+                continue
             for try_index in [1, 2, 3]:
+                logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
                 try:
-                    if some_file.endswith(".docx"):
-                        move_one_ocred_file(args, conv_database, some_file)
-                        updated = True
+                    move_one_ocred_file(args, conv_database, some_file)
+                    updated = True
+                    break
                 except Exception as exp:
-                    if try_index == 3:
-                        full_path = os.path.join(args.ocr_output_folder, some_file)
-                        if os.path.exists(full_path):
-                            logger.error("Exception {}, delete {}".format(exp, full_path))
-                            os.unlink(full_path)
-                    else:
-                        time.sleep(30)
+                    logger.error("Exception {}, sleep 60 seconds ...".format(exp))
+                    time.sleep(60)
+
+            delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
+
         if updated:
+            logger.info("rebuild json started, files number={}".format(len(conv_database.conv_db_json["files"])))
             rebuild_json(conv_database.conv_db_json,
                          conv_database.converted_files_folder,
                          conv_database.conv_db_json_file_name)
+            logger.info("rebuild json finished, files number={}".format(len(conv_database.conv_db_json["files"])))
 
 if __name__ == '__main__':
     assert shutil.which("qpdf") is not None # sudo apt install qpdf
