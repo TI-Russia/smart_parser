@@ -27,6 +27,7 @@ def parse_args():
                         default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
     return parser.parse_args()
 
+
 def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
 
@@ -45,24 +46,61 @@ def setup_logging(logger, logfilename):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
 
+
+def rebuild_json(conv_db_json, converted_files_folder, output_file):
+    if conv_db_json is None:
+        conv_db_json = {
+            "files": {}
+        }
+    conv_db_json["directory"] = os.path.realpath(converted_files_folder)
+
+    registered_files = set()
+    for x in conv_db_json['files'].values():
+        registered_files.add(x['input'])
+
+    for docxfile in os.listdir(conv_db_json['directory']):
+        if not docxfile.endswith(".docx"):
+            continue
+        pdf_file_basename = docxfile[:-len(".docx")]
+        if pdf_file_basename in registered_files:
+            continue
+        pdf_file = os.path.join(conv_db_json["directory"],  pdf_file_basename)
+        if not os.path.exists(pdf_file):
+            continue
+        with open(pdf_file, "rb") as f:
+            sha256hash = hashlib.sha256(f.read()).hexdigest();
+
+        if sha256hash in conv_db_json['files']:
+            if conv_db_json['files'][sha256hash]['input_file_size'] != os.path.getsize(pdf_file):
+                print("Error! Collision found on {}".format(pdf_file))  # black swan or some error
+                exit(1)
+            continue
+
+        conv_db_json['files'][sha256hash] = {
+                'input_file_size': os.path.getsize(pdf_file),
+                'converted': docxfile,
+                'input': pdf_file_basename
+        }
+    with open(output_file, "w") as outf:
+        json.dump(conv_db_json, outf, indent=4)
+
+
 class TConvDatabase:
     def __init__(self, args):
         self.args = args
-        self.db_path = os.path.dirname(args.db_json)
+        self.conv_db_json_file_name = os.path.dirname(args.db_json)
         self.input_folder = args.input_folder
         if not os.path.exists(self.input_folder):
             os.mkdir(self.input_folder)
         with open(args.db_json, "r", encoding="utf8") as inp:
-            self.convert_db_json = json.load(inp)
-        assert len(self.convert_db_json) > 0
-        for x in self.convert_db_json.values():
-            self.converted_files_folder = os.path.dirname(x["converted"])
-            break
+            self.conv_db_json = json.load(inp)
+        self.converted_files_folder = self.conv_db_json['directory']
+        assert "files" in self.conv_db_json
 
     def get_converted_file_name(self, sha256):
-        value = self.convert_db_json.get(sha256)
+        value = self.conv_db_json['files'].get(sha256)
         if value is not None:
-            return os.path.join(self.db_path, value["converted"])
+            return os.path.join(self.converted_files_folder, value["converted"])
         else:
             return None
 
@@ -77,31 +115,9 @@ class TConvDatabase:
             output_file.write(file_bytes)
         return True
 
-    def rebuild_json(self):
-        logger = logging.getLogger("db_conv_logger")
-        registered_files = set()
-        for x in self.convert_db_json.values():
-            base_file_name = os.path.basename(x['input'])
-            registered_files.add(base_file_name)
-        added_files = 0
-        for docxfile in os.listdir(self.converted_files_folder):
-            if docxfile.endswith(".docx"):
-                pdf_file = os.path.join(self.converted_files_folder,  docxfile[:-len(".docx")])
-                if os.path.basename(pdf_file) not in registered_files and os.path.exists(pdf_file):
-                    with open(pdf_file, "rb") as f:
-                        sha256hash = hashlib.sha256(f.read()).hexdigest();
-                    if sha256hash not in self.convert_db_json:
-                        self.convert_db_json[sha256hash] = {
-                            'input_filesize': os.path.getsize(pdf_file),
-                            'converted': os.path.join(self.converted_files_folder, docxfile),
-                            'input': pdf_file
-                        }
-                        added_files += 1
-        logger.debug("register {} files".format(added_files))
-        with open(self.args.db_json, "w") as outf:
-            json.dump(self.convert_db_json, outf, indent=4)
 
 CONV_DATABASE = None
+
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
@@ -123,11 +139,12 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
                 send_error("Converted file does not exist")
                 return
 
-            with open(file_path, 'rb') as fh:
-                self.send_response(200)
-                self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-                self.end_headers()
-                self.wfile.write(fh.read())  # Read the file and send the contents
+            self.send_response(200)
+            self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            self.end_headers()
+            if query_components.get("download_converted_file", True):
+                with open(file_path, 'rb') as fh:
+                    self.wfile.write(fh.read())  # Read the file and send the contents
         else:
             send_error('File not found')
 
@@ -253,17 +270,23 @@ def process_input_files(args, conv_database):
                     os.unlink(fname)
 
         for some_file in os.listdir(args.ocr_output_folder):
-            try:
-                if some_file.endswith(".docx"):
-                    move_one_ocred_file(args, conv_database, some_file)
-                    updated = True
-            except Exception as exp:
-                fname = os.path.join(args.ocr_output_folder, some_file)
-                if os.path.exists(fname):
-                    logger.error("Exception {}, delete {}".format(exp, some_file))
-                    os.unlink(fname)
+            for try_index in [1, 2, 3]:
+                try:
+                    if some_file.endswith(".docx"):
+                        move_one_ocred_file(args, conv_database, some_file)
+                        updated = True
+                except Exception as exp:
+                    if try_index == 3:
+                        full_path = os.path.join(args.ocr_output_folder, some_file)
+                        if os.path.exists(full_path):
+                            logger.error("Exception {}, delete {}".format(exp, full_path))
+                            os.unlink(full_path)
+                    else:
+                        time.sleep(30)
         if updated:
-            conv_database.rebuild_json()
+            rebuild_json(conv_database.conv_db_json,
+                         conv_database.converted_files_folder,
+                         conv_database.conv_db_json_file_name)
 
 if __name__ == '__main__':
     assert shutil.which("qpdf") is not None # sudo apt install qpdf
