@@ -201,8 +201,9 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             else:
                 if can_be_office_document(href):
                     try:
-                        if step_info.check_link_func(TLinkInfo(soup.title.string, main_url, href, l.name)):
-                            found_text = soup.title.string
+                        title = soup.title.string if soup.title is not None else ""
+                        if step_info.check_link_func(TLinkInfo(title, main_url, href, l.name)):
+                            found_text = title
                         else:
                             found_text = check_long_near_text(l, 3, step_info.check_link_func)
                     except SomeOtherTextException as err:

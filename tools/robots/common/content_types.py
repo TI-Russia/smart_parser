@@ -1,3 +1,16 @@
+DEFAULT_HTML_EXTENSION = ".html"
+DEFAULT_ZIP_EXTENSION = ".zip"
+DEFAULT_RAR_EXTENSION = ".rar"
+DEFAULT_7Z_EXTENSION = ".7z"
+DEFAULT_PDF_EXTENSION = ".pdf"
+
+ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.docx', '.xls', '.xlsx', '.rtf',
+                                        DEFAULT_PDF_EXTENSION,
+                                        DEFAULT_ZIP_EXTENSION,
+                                        DEFAULT_RAR_EXTENSION,
+                                        DEFAULT_7Z_EXTENSION,
+                                        DEFAULT_HTML_EXTENSION}
+
 content_types = [
 "application/excel",
 "application/vnd.hzn-3d-crossword",

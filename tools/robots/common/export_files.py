@@ -5,11 +5,11 @@ from itertools import groupby
 import os
 from collections import defaultdict
 import logging
-import zipfile
 import shutil
 import hashlib
-from download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, \
-    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, DEFAULT_RAR_EXTENSION
+from archives import dearchive_one_archive, is_archive_extension
+from download import ACCEPTED_DECLARATION_FILE_EXTENSIONS,  \
+    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION
 
 DECL_RECOGNIZER_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                     os.path.normpath("../../DeclDocRecognizer/dlrecognizer.sh"))
@@ -22,6 +22,7 @@ if shutil.which('unrar') is None:
 DL_RECOGNIZER_UNKNOWN = -1
 DL_RECOGNIZER_POSITIVE = 1
 DL_RECOGNIZER_NEGATIVE = 0
+
 
 def run_decl_recognizer(inputfile):
     global DECL_RECOGNIZER_PATH
@@ -43,51 +44,8 @@ def run_decl_recognizer(inputfile):
     return DL_RECOGNIZER_UNKNOWN
 
 
-def unzip_one_archive(input_file, main_index, outfolder):
-    with zipfile.ZipFile(input_file) as zf:
-        for archive_index, zipinfo in enumerate(zf.infolist()):
-            _, file_extension = os.path.splitext(zipinfo.filename)
-            file_extension = file_extension.lower()
-            if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-                continue
-            old_file_name = zipinfo.filename
-            zipinfo.filename = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
-            zf.extract(zipinfo)
-            yield archive_index, old_file_name, zipinfo.filename
 
 
-def unrar_one_archive(input_file, main_index, outfolder):
-    logger = logging.getLogger("dlrobot_logger")
-    temp_folder = os.path.join(outfolder, "unrar_temp")
-    if os.path.exists(temp_folder):
-        shutil.rmtree(temp_folder)
-    os.mkdir(temp_folder)
-    cmd = "unrar e {} {}".format(input_file, temp_folder)
-    logger.debug(cmd)
-    os.system(cmd)
-    for archive_index, filename in enumerate(os.listdir(temp_folder)):
-        _, file_extension = os.path.splitext(filename)
-        file_extension = file_extension.lower()
-        if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-            continue
-        normalized_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
-        try:
-            shutil.move(os.path.join(temp_folder, filename), normalized_file_name)
-            yield archive_index, filename, normalized_file_name
-        except Exception as e:
-            logger.error("cannot move file N {} (file name encoding?)".format(archive_index))
-    shutil.rmtree(temp_folder)
-
-
-def dearchive_one_archive(file_extension, input_file, main_index, outfolder):
-    if file_extension == DEFAULT_ZIP_EXTENSION:
-        func = unzip_one_archive
-    elif file_extension == DEFAULT_RAR_EXTENSION:
-        func = unrar_one_archive
-    else:
-        raise Exception("unknown archive type")
-    for x in func(input_file, main_index, outfolder):
-        yield x
 
 def html_to_text(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -129,7 +87,7 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
         return
     if not os.path.exists(os.path.dirname(export_path)):
         os.makedirs(os.path.dirname(export_path))
-    if extension == DEFAULT_ZIP_EXTENSION or extension == DEFAULT_RAR_EXTENSION:
+    if is_archive_extension(extension):
         for archive_index, name_in_archive, export_filename in dearchive_one_archive(extension, cached_file, index, office_folder):
             logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
             yield {
@@ -153,6 +111,7 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
 
 def sha256_key_and_url(r):
     return r["sha256"], len(r["url"]), r["url"], r.get("archive_index", -1)
+
 
 def export_last_step_docs(office_info, office_folder, export_files):
     logger = logging.getLogger("dlrobot_logger")
@@ -236,13 +195,14 @@ def export_files_to_folder(offices, outfolder):
     logger = logging.getLogger("dlrobot_logger")
     for office_info in offices:
         office_folder = os.path.join(outfolder, office_info.get_domain_name())
+        office_folder = office_folder.replace(':', '_')
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
 
         export_files = list()
         index = export_last_step_docs(office_info, office_folder, export_files)
         export_downloaded_docs(office_info, office_folder, index, export_files)
-        sorted_files = sorted (export_files, key=sha256_key_and_url)
+        sorted_files = sorted(export_files, key=sha256_key_and_url)
         recognizer_results = recognize_document_types(sorted_files)
         office_info.exported_files = reorder_export_files_and_delete_non_declarations(office_folder, recognizer_results, sorted_files)
 

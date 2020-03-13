@@ -1,4 +1,4 @@
-for test_folder in simple pdf; do
+for test_folder in simple archives pdf; do
   echo -n "test $test_folder -> "
   cd $test_folder
   [ ! -f test_log.out ] || rm test_log.out
