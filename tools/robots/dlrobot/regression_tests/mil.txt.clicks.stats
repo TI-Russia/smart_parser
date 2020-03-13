@@ -1,15 +1,10 @@
 [
     {
-        "files_count": 18
+        "files_count": 20
     },
     [
         "0dddd6caff1233d692e12bac459fa992fd3b3f284a94a7e47ee766cca2496485",
         "cached/mil.ru/files/morf/defense_income_2010-2.docx/dlrobot_data",
-        1
-    ],
-    [
-        "2ff1d48b62c204e7c7dd5c7870f8aec302d31b1865c69c5d2df431ac3cfeefbc",
-        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data",
         1
     ],
     [
@@ -48,6 +43,11 @@
         1
     ],
     [
+        "81721b864c9de1a8e660bb2f80c7c0efc7ca326ba357c1b58db00ee3ea39f5a7",
+        "cached/mil.ru/files/morf/anti_korr_metod_pril_2.rtf/dlrobot_data",
+        1
+    ],
+    [
         "878e1899398d116996e1da458ae7f007f934756a97f7673a2d45dc6036e92225",
         "cached/mil.ru/files/morf/defense_income_2010-7.doc/dlrobot_data",
         1
@@ -55,6 +55,11 @@
     [
         "967723434e64057060fd50b28b4e0321698ee87808986119c1952b4eb04497df",
         "cached/mil.ru/files/morf/defense_income_2010-1.docx/dlrobot_data",
+        1
+    ],
+    [
+        "9b68f040e991ede5c475c44979c312d0be0b5919848afd13da437e740a68263d",
+        "cached/mil.ru/files/morf/anti_korr_metod_pril_1.rtf/dlrobot_data",
         1
     ],
     [
@@ -90,6 +95,11 @@
     [
         "fcd809f68e155921554516a08a85db8e6395f06c43c496d18a5c47648a82ccfd",
         "cached/mil.ru/files/morf/income_2012.xls/dlrobot_data",
+        1
+    ],
+    [
+        "fd26e8cd262279a020427306d5ffd493bcac31d3559dce900c0442e60c07cf6a",
+        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data",
         1
     ]
 ]
