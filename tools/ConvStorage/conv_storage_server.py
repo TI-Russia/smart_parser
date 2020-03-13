@@ -10,13 +10,12 @@ import shutil
 import subprocess
 import logging
 
-
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--port", dest='port', default='8080', type=int)
-    parser.add_argument("--server-ip", dest='server_ip', default='localhost')
+    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DECLARATOR_CONV_URL")
     parser.add_argument("--logfile", dest='logfile', default='db_conv.log')
     parser.add_argument("--db-json", dest='db_json', required=True)
+    parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
     parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
     parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
@@ -84,6 +83,56 @@ def rebuild_json(conv_db_json, converted_files_folder, output_file):
     with open(output_file, "w") as outf:
         json.dump(conv_db_json, outf, indent=4)
 
+def check_pdf_has_text(logger, filename):
+    cmd = "pdftotext {0} dummy.txt 2> pdftotext.log".format(filename)
+    logger.info(cmd)
+    os.system(cmd)
+    with open("pdftotext.log", "r") as inpf:
+        log = inpf.read()
+    os.unlink("pdftotext.log")
+    if log.find("PDF file is damaged") != -1:
+        return False  # complicated_pdf in  tests
+    is_good_text = os.path.getsize("dummy.txt") > 200
+    os.unlink("dummy.txt")
+    return is_good_text
+
+
+def strip_drm(logger, filename, stripped_file):
+    cmd = "pdfcrack {0} > crack.info".format(filename)
+    logger.debug(cmd )
+    os.system(cmd)
+    password = None
+    with open("crack.info", "r") as log:
+        prefix = "found user-password: "
+        for l in log:
+            if l.startswith(prefix):
+                password = prefix[len(prefix):].strip("'")
+    os.unlink("crack.info")
+    if password is not None:
+        logger.debug("use password {0}".format(password))
+        cmd = "qpdf --password={0} --decrypt {1} {2}".format(password, filename, stripped_file)
+        logger.debug (cmd)
+        os.system(cmd)
+        return True
+    return False
+
+
+def convert_with_microsoft_word(microsoft_pdf_2_docx, filename):
+    subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10)
+    os.system("taskkill /F /IM  winword.exe")
+    os.system("taskkill /F /IM  pdfreflow.exe")
+
+
+
+
+def delete_file_if_exists(logger, full_path):
+    try:
+        if os.path.exists(full_path):
+            logger.debug("delete {}".format(full_path))
+            os.unlink(full_path)
+    except Exception as exp:
+        logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
+
 
 class TConvDatabase:
     def __init__(self, args):
@@ -96,6 +145,7 @@ class TConvDatabase:
             self.conv_db_json = json.load(inp)
         self.converted_files_folder = self.conv_db_json['directory']
         assert "files" in self.conv_db_json
+        self.logger = logging.getLogger("db_conv_logger")
 
     def get_converted_file_name(self, sha256):
         value = self.conv_db_json['files'].get(sha256)
@@ -115,6 +165,89 @@ class TConvDatabase:
             output_file.write(file_bytes)
         return True
 
+    def move_one_ocred_file(self, some_file):
+        assert some_file.endswith(".docx")
+        pdf_file = some_file[:-len(".docx")]
+        input_file = os.path.join(self.converted_files_folder, pdf_file)
+        converted_file = os.path.join(self.args.ocr_output_folder, some_file)
+        delete_file_if_exists(self.logger, os.path.join(self.args.ocr_input_folder, pdf_file))
+        if not os.path.exists(input_file):
+            self.logger.debug(
+                "cannot find the input file {}, remove converted file {} ".format(input_file, converted_file))
+            delete_file_if_exists(self.logger, converted_file)
+        else:
+            output_file = os.path.join(self.converted_files_folder, some_file)
+            logger.debug("move {} to {}".format(converted_file, output_file))
+            shutil.move(converted_file, output_file)
+
+    def process_one_input_file(self, some_file):
+        stripped_file = os.path.join(self.args.input_folder_cracked, some_file)
+        input_file = os.path.join(self.args.input_folder, some_file)
+        self.logger.debug("pwd={}".format(os.getcwd()))
+        if not strip_drm(self.logger, input_file, stripped_file):
+            shutil.copyfile(input_file, stripped_file)
+        if not self.args.enable_ocr or check_pdf_has_text(self.logger, stripped_file):
+            self.logger.info("convert {} with microsoft word".format(input_file))
+            convert_with_microsoft_word(self.args.microsoft_pdf_2_docx, stripped_file)
+            docxfile = stripped_file + ".docx"
+            if not os.path.exists(docxfile):
+                self.logger.info("cannot process {}, delete it".format(some_file))
+                os.unlink(input_file)
+                os.unlink(stripped_file)
+            else:
+                self.logger.info(
+                    "move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
+                shutil.move(docxfile, os.path.join(self.converted_files_folder, some_file + ".docx"))
+                shutil.move(input_file, os.path.join(self.converted_files_folder, some_file))
+                os.unlink(stripped_file)
+        else:
+            self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
+            shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, some_file))
+            shutil.move(input_file, os.path.join(self.converted_files_folder, some_file))
+
+    def process_input_files(self):
+        self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
+        assert os.path.exists(self.args.microsoft_pdf_2_docx)
+        if os.path.exists(self.args.input_folder_cracked):
+            shutil.rmtree(self.args.input_folder_cracked)
+        if not os.path.exists(self.args.input_folder_cracked):
+            logger.debug("mkdir {} ".format(self.args.input_folder_cracked))
+            os.mkdir(self.args.input_folder_cracked)
+        while True:
+            time.sleep(1)
+            updated = False
+            for some_file in os.listdir(self.args.input_folder):
+                try:
+                    self.process_one_input_file(some_file)
+                    updated = True
+                except Exception as exp:
+                    fname = os.path.join(self.args.input_folder, some_file)
+                    if os.path.exists(fname):
+                        logger.error("Exception {}, delete {}".format(exp, some_file))
+                        os.unlink(fname)
+
+            for some_file in os.listdir(self.args.ocr_output_folder):
+                if not some_file.endswith(".docx"):
+                    continue
+                for try_index in [1, 2, 3]:
+                    logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
+                    try:
+                        self.move_one_ocred_file(some_file)
+                        updated = True
+                        break
+                    except Exception as exp:
+                        logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
+                        time.sleep(60)
+
+                delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
+
+            if updated:
+                logger.info("rebuild json started, files number={}".format(len(self.conv_db_json["files"])))
+                rebuild_json(self.conv_db_json,
+                             self.converted_files_folder,
+                             self.conv_db_json_file_name)
+                logger.info("rebuild json finished, files number={}".format(len(self.conv_db_json["files"])))
+
 
 CONV_DATABASE = None
 
@@ -126,6 +259,12 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
 
         global CONV_DATABASE
+        CONV_DATABASE.logger.debug(self.path)
+        if self.path == "/ping":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"yes")
+            return
         query = urllib.parse.urlparse(self.path).query
         query_components = dict(qc.split("=") for qc in query.split("&"))
         sha256 = query_components.get('sha256', None)
@@ -159,6 +298,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         if len(file_extension) <= 3:
             send_error("bad file extension")
             return
+        CONV_DATABASE.logger.debug(self.path)
         file_length = int(self.headers['Content-Length'])
         file_bytes = self.rfile.read(file_length)
         if not CONV_DATABASE.save_new_file(file_bytes,  file_extension):
@@ -171,133 +311,11 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         self.wfile.write(reply_body.encode('utf-8'))
 
 
-def check_pdf_has_text(logger, filename):
-    cmd = "pdftotext {0} dummy.txt".format(filename)
-    logger.info(cmd)
-    os.system(cmd)
-    return os.path.getsize("dummy.txt") > 200
 
 
-def strip_drm(logger, filename, stripped_file):
-    cmd = "pdfcrack {0} > crack.info".format(filename)
-    logger.debug(cmd )
-    os.system(cmd)
-    password = None
-    with open("crack.info", "r") as log:
-        prefix = "found user-password: "
-        for l in log:
-            if l.startswith(prefix):
-                password = prefix[len(prefix):].strip("'");
-    if password is not  None:
-        logger.debug( "use password {0}".format(password))
-        cmd = "qpdf --password={0} --decrypt {1} {2}".format(password, filename, stripped_file)
-        logger.debug (cmd)
-        os.system(cmd)
-        return True
-    return False
 
 
-def convert_with_microsoft_word(microsoft_pdf_2_docx, filename):
-    subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10)
-    os.system("taskkill /F /IM  winword.exe")
-    os.system("taskkill /F /IM  pdfreflow.exe")
 
-
-def process_one_input_file(args, conv_database, some_file):
-    logger = logging.getLogger("db_conv_logger")
-    stripped_file = os.path.join(args.input_folder_cracked, some_file)
-    input_file = os.path.join(args.input_folder, some_file)
-    logger.debug("pwd={}".format(os.getcwd()))
-    if not strip_drm(logger, input_file, stripped_file):
-        shutil.copyfile(input_file, stripped_file)
-    if check_pdf_has_text(logger, stripped_file):
-        logger.info("convert {} with microsoft word".format(input_file))
-        convert_with_microsoft_word(args.microsoft_pdf_2_docx, stripped_file)
-        docxfile = stripped_file + ".docx"
-        if not os.path.exists(docxfile):
-            logger.info("cannot process {}, delete it".format(some_file))
-            os.unlink(input_file)
-            os.unlink(stripped_file)
-        else:
-            logger.info(
-                "move {} and {} to {}".format(input_file, docxfile, conv_database.converted_files_folder))
-            shutil.move(docxfile, os.path.join(conv_database.converted_files_folder, some_file + ".docx"))
-            shutil.move(input_file, os.path.join(conv_database.converted_files_folder, some_file))
-            os.unlink(stripped_file)
-    else:
-        logger.info("move {} to {}".format(stripped_file, args.ocr_input_folder))
-        shutil.move(stripped_file, os.path.join(args.ocr_input_folder, some_file))
-        shutil.move(input_file, os.path.join(conv_database.converted_files_folder, some_file))
-
-
-def move_one_ocred_file(args, conv_database, some_file):
-    logger = logging.getLogger("db_conv_logger")
-    assert some_file.endswith(".docx")
-    pdf_file = some_file[:-len(".docx")]
-    assert os.path.exists(os.path.join(conv_database.converted_files_folder, pdf_file))
-
-    input_ocr_file = os.path.join(args.ocr_input_folder, pdf_file)
-    assert os.path.exists( input_ocr_file )
-    logger.debug("delete {}".format(input_ocr_file))
-    os.unlink(input_ocr_file)
-
-    f1 = os.path.join(args.ocr_output_folder, some_file)
-    f2 = os.path.join(conv_database.converted_files_folder, some_file)
-    logger.debug("move  {} to {}".format(f1, f2))
-    shutil.move(f1, f2)
-
-def delete_file_if_exists(logger, full_path):
-    try:
-        if os.path.exists(full_path):
-            logger.error("delete {}".format(full_path))
-            os.unlink(full_path)
-    except Exception as exp:
-        logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
-
-
-def process_input_files(args, conv_database):
-    logger = logging.getLogger("db_conv_logger")
-    logger.debug("use {} as  microsoft word converter".format(args.microsoft_pdf_2_docx))
-    assert os.path.exists(args.microsoft_pdf_2_docx)
-    if os.path.exists(args.input_folder_cracked):
-        shutil.rmtree(args.input_folder_cracked)
-    if not os.path.exists(args.input_folder_cracked):
-        logger.debug("mkdir {} ".format(args.input_folder_cracked))
-        os.mkdir(args.input_folder_cracked)
-    while True:
-        time.sleep(1)
-        updated = False
-        for some_file in os.listdir(args.input_folder):
-            try:
-                process_one_input_file(args, conv_database, some_file)
-                updated = True
-            except Exception as exp:
-                fname = os.path.join(args.input_folder, some_file)
-                if os.path.exists(fname):
-                    logger.error("Exception {}, delete {}".format(exp, some_file))
-                    os.unlink(fname)
-
-        for some_file in os.listdir(args.ocr_output_folder):
-            if not some_file.endswith(".docx"):
-                continue
-            for try_index in [1, 2, 3]:
-                logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
-                try:
-                    move_one_ocred_file(args, conv_database, some_file)
-                    updated = True
-                    break
-                except Exception as exp:
-                    logger.error("Exception {}, sleep 60 seconds ...".format(exp))
-                    time.sleep(60)
-
-            delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
-
-        if updated:
-            logger.info("rebuild json started, files number={}".format(len(conv_database.conv_db_json["files"])))
-            rebuild_json(conv_database.conv_db_json,
-                         conv_database.converted_files_folder,
-                         conv_database.conv_db_json_file_name)
-            logger.info("rebuild json finished, files number={}".format(len(conv_database.conv_db_json["files"])))
 
 if __name__ == '__main__':
     assert shutil.which("qpdf") is not None # sudo apt install qpdf
@@ -305,6 +323,8 @@ if __name__ == '__main__':
     assert shutil.which("pdftotext") is not None #http://www.xpdfreader.com/download.html
 
     args = parse_args()
+    if args.server_address is None:
+        args.server_address = os.environ['DECLARATOR_CONV_URL']
     logger = logging.getLogger("db_conv_logger")
     setup_logging(logger, args.logfile)
     if not os.path.exists(args.ocr_input_folder):
@@ -313,9 +333,10 @@ if __name__ == '__main__':
         os.mkdir(args.ocr_output_folder)
 
     CONV_DATABASE = TConvDatabase(args)
-    _thread.start_new_thread(process_input_files, (args, CONV_DATABASE))
+    _thread.start_new_thread(TConvDatabase.process_input_files, (CONV_DATABASE,))
 
-
-    myServer = http.server.HTTPServer((args.server_ip, args.port), THttpServer)
+    host, port = args.server_address.split(":")
+    logger.debug("start server {}:{}".format(host, port))
+    myServer = http.server.HTTPServer((host, int(port)), THttpServer)
     myServer.serve_forever()
     myServer.server_close()

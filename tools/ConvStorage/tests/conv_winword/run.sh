@@ -3,15 +3,13 @@ source ../setup_tests.sh
 
 python ../../create_json.py
 
-python ../../conv_storage_server.py --server-ip 127.0.0.1 --port 8080 --db-json converted_file_storage.json \
-	--ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out &
+python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json --disable-ocr &
 conv_server_pid=$!
 disown
 
 
-sha256=`sha256sum $INPUT_FILE | awk '{print $1}'`
 
-http_code=`curl -s -w '%{http_code}' 127.0.0.1:8080 --upload-file $INPUT_FILE --output dummy.txt`
+http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL --upload-file $INPUT_FILE --output dummy.txt`
 if [ "$http_code" != "201" ]; then
   echo "cannot upload a file"
   kill $conv_server_pid >/dev/null
@@ -30,8 +28,9 @@ sleep 10 # to update json
 
 date
 
-[ ! -f a.pdf.docx ] || rm a.pdf.docx
-http_code=`curl -s -w '%{http_code}'  "127.0.0.1:8080?sha256=$sha256" --output $INPUT_FILE.docx`
+[ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
+sha256=`sha256sum $INPUT_FILE | awk '{print $1}'`
+http_code=`curl -s -w '%{http_code}'  "$DECLARATOR_CONV_URL?sha256=$sha256" --output $INPUT_FILE.docx`
 
 kill $conv_server_pid >/dev/null
 

@@ -1,4 +1,4 @@
-INPUT_FILE=good.pdf 
+INPUT_FILE=a.pdf 
 source ../setup_tests.sh
 
 python ../../create_json.py
@@ -10,20 +10,12 @@ disown
 
 
 
-http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL --upload-file bad.pdf --output dummy.txt`
+http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL --upload-file $INPUT_FILE --output dummy.txt`
 if [ "$http_code" != "201" ]; then
   echo "cannot upload a file"
   kill $conv_server_pid >/dev/null
   exit  1
 fi
-
-http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL --upload-file good.pdf --output dummy.txt`
-if [ "$http_code" != "201" ]; then
-  echo "cannot upload a file"
-  kill $conv_server_pid >/dev/null
-  exit  1
-fi
-
 
 while true; do 
     sleep 10
@@ -35,6 +27,7 @@ done
 
 sleep 10 # to update json
 
+date
 
 [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
 sha256=`sha256sum $INPUT_FILE | awk '{print $1}'`
@@ -49,6 +42,12 @@ fi
 
 if [ ! -f $INPUT_FILE.docx ]; then
   echo "cannot get converted file"
+  exit  1
+fi
+
+filesize=`stat --printf="%s" $INPUT_FILE.docx`
+if [ $filesize != 10405 ]; then
+  echo "the size of the output file must be 10405 (from Finereader)"
   exit  1
 fi
 
