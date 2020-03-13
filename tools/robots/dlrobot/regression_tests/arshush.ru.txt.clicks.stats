@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 47
+        "files_count": 46
     },
     [
         "0037d80dc3940d12853762a93a492631f4aac5d6a0a932d5ed1347866ca1b3b9",
@@ -25,11 +25,6 @@
     [
         "0ae1ded6e4dd9a0d6eaefa63f90f82915f7a53c07f42cae8b87f1b51171f12df",
         "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-        1
-    ],
-    [
-        "1167c8b5dad8481b36f118ada5b4b7607b512c16136d7d5bcc8b60bdd5421dc6",
-        "cached/arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx/dlrobot_data",
         1
     ],
     [
@@ -78,11 +73,6 @@
         1
     ],
     [
-        "5075713286ab0d3ec3d42bdb7159d429bdf65058cc289dd30decdd3144d547c0",
-        "cached/arshush.ru/content/view/1042/dlrobot_data",
-        1
-    ],
-    [
         "55146357cde20e8e5f89fba1e94a189245cd3bb0eaf8f4e21bda28d83f17562d",
         "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
         1
@@ -128,8 +118,8 @@
         1
     ],
     [
-        "8a3651ad5dc42df05b0b974ea4296412661133161bdc0bed849a99381bc40e2c",
-        "cached/arshush.ru/downloads/2014/sved_ruk_MU_2013.zip/dlrobot_data",
+        "8c92771a7accc7eb15ea5eed5c2f56836200b22fd2cada40232dd7317bc04e88",
+        "cached/arshush.ru/content/view/1042/dlrobot_data",
         1
     ],
     [
@@ -226,6 +216,11 @@
         "f1e7d67b8ed0805574df06674e5f773d203eeb262a7a22ae413ae1631e48493b",
         "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
         1
+    ],
+    [
+        "f3d73a0ef5c83899ac971b60777eaa652d695d3bbb5eead63e602643813c9387",
+        "cached/arshush.ru/downloads/2019/pamyatki_generalnoj_prokuratury_rf.7z/dlrobot_data",
+        -1
     ],
     [
         "fb80f80a7d8198074b2e2cb9411d008ae02f7dd0a7865dffb2be5950aaf6f5b9",
