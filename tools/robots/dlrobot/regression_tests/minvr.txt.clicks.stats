@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 32
+        "files_count": 24
     },
     [
         "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
@@ -20,21 +20,6 @@
     [
         "0538041f2208acaaff1f2ab6e95aca3382c866946b30ec709516f7f238cd3dbf",
         "cached/minvr.ru/upload/iblock/578/SAIT_Organizatsii.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "0c285ca521f96fba7f319e771dd8dcc68818de9b673de305f2e06634a88c3512",
-        "cached/gossluzhba.gov.ru/page/index/spravki_bk/dlrobot_data",
-        -1
-    ],
-    [
-        "0d270d851dbd66d7e9ad16fa4fb79aabffb93ce415dd6ee9c7ad00d9de32f58d",
-        "cached/minvr.ru/upload/iblock/fb4/No.__173_ot_18.09.2015_Svedeniia_na_saite_Organizatsii.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "0d7e7606caec75d3519ee53fca507c73f638400570dfa7076a62ee38667b5547",
-        "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincomemin/data_20180523t1104_structure_20180523t11_04dd27a1374d7d37a637e33758a8a37b/dlrobot_data",
         1
     ],
     [
@@ -58,11 +43,6 @@
         1
     ],
     [
-        "2d42ac91e72bb8f43cc1502a5874eb2f105a01493346b00975763fa6a457e49f",
-        "cached/minvr.ru/upload/iblock/c8e/No.__29_ot_18.02.16_Dolzhnosti_organizatsii,_na_saite.pdf/dlrobot_data",
-        -1
-    ],
-    [
         "36256f8769ada716eeb152535aa4116ab8c62472287054f4b6467af59fa50fe4",
         "cached/minvr.ru/upload/iblock/5ca/Svedeniia_Organizatsii.xlsx/dlrobot_data",
         1
@@ -73,14 +53,14 @@
         1
     ],
     [
+        "3b72b4cd7ab794a643dbfa0072de71775765384a51de1cac7da450ebdfae6377",
+        "cached/gossluzhba.gov.ru/page/index/spravki_bk/dlrobot_data",
+        -1
+    ],
+    [
         "406ee320b2916b691e803c4a69643d4998f341d4e702e41552a5366ef63277cb",
         "cached/minvr.ru/upload/iblock/b7a/svdir_ruk_org_2014.xls/dlrobot_data",
         1
-    ],
-    [
-        "45847081561cfe1910034354c016924c566906c60e36ce6f09a75739c37df42e",
-        "cached/minvr.ru/upload/iblock/0e9/No.__198_ot_13.10.15_Poriadok_predostavleniia_svedenii.pdf/dlrobot_data",
-        -1
     ],
     [
         "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4",
@@ -93,13 +73,8 @@
         1
     ],
     [
-        "80f975e2449662a8da5a6131b1402eebb231cef06150ff873f6a8fac09ff604e",
-        "cached/minvr.ru/upload/iblock/8c7/No.__100_ot_18.06.15_Spravki_Organizatsii.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "8d3ab75004780980aa3e3216e234772d7e42520e725d9bf0bb453757080dd999",
-        "cached/minvr.ru/upload/iblock/f6c/No.__155_ot_19.08.15___Konflikt_Organizatsii.pdf/dlrobot_data",
+        "7ff11f1af18b797235e3df9a21fa87ce3f33cc46f40db13f4963d35cbb547c79",
+        "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
         -1
     ],
     [
@@ -111,16 +86,6 @@
         "9cee8dc3a102ac6a2d55bb5d674915f3c5320c1bc57e925a83b9510a2b212b4b",
         "cached/minvr.ru/upload/iblock/9ce/svdir_minvr_2012.xls/dlrobot_data",
         1
-    ],
-    [
-        "a3f891071947a7537020d27bf986a761b034f73d93e8aa2be83596f6839b71d8",
-        "cached/minvr.ru/upload/iblock/2ab/No.__157_ot_19.08.2015_Zaprety._Organizatsii.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "af46639c6c45fd2e41a08a674a67c901d48c4d4f7c73d5c68224a2e0dc21f8e8",
-        "cached/minvr.ru/upload/iblock/594/Prikaz_No.__86_Organizatsii_Perechen_.pdf/dlrobot_data",
-        -1
     ],
     [
         "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e",
@@ -138,9 +103,9 @@
         1
     ],
     [
-        "ccf729fb01346dceb8594a3f2416d92c06978a6e172947b780612c4dcfbff113",
-        "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
-        -1
+        "d7736b2579843724d019b59eae6cfc32a60c672c07ae8e55676c17dac66d9286",
+        "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincomemin/data_20180523t1104_structure_20180523t11_04dd27a1374d7d37a637e33758a8a37b/dlrobot_data",
+        1
     ],
     [
         "e06885f1083bc8a8168618c7eb9734ad03d7dbaf4178e4fe352d1030dbd72580",
@@ -151,11 +116,6 @@
         "f3629633f0b3ef5f6f87d60497810c093188bc6106255a10aaa548d1001304a8",
         "cached/minvr.ru/upload/iblock/811/Sait_GS_utochnennye_dannye_na_sait.xlsx/dlrobot_data",
         1
-    ],
-    [
-        "f89438442cbf04a7695fec64720340ce018727b6a10e2b62f78cef2153a17a08",
-        "cached/minvr.ru/upload/iblock/655/Prikaz_No.__85_Organizatsii_Sait.pdf/dlrobot_data",
-        -1
     ],
     [
         "fdf7f3daa86ee3d2fe92cdb7fdbce8d3091d9b790d0b3584dc695f6a8ecc2169",
