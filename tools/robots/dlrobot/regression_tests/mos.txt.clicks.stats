@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 66
+        "files_count": 64
     },
     [
         "0308c25991262ec912d7fd65efd479ffcb70ce3d214a87cb56fa426709d21ac3",
@@ -55,7 +55,7 @@
     [
         "2441d7d9335a98903a9ae1d483ebbf9d9dcb55f35de95b8216f69f961e287ae3",
         "cached/www.mos.ru/upload/documents/oiv/2010_178_.pdf/dlrobot_data",
-        -1
+        1
     ],
     [
         "251ba16ac12450cd412809c4da4f2d0ccbb63cf5154e2126f564aa00f508a3a9",
@@ -90,11 +90,6 @@
     [
         "33cd5ca253ff30a45499cb5183bb11f74c3e0774a2d850f476614c7ffc6d84a0",
         "cached/www.mos.ru/upload/documents/oiv/11052017_svedeniya_o_dokhodakh_gin_2016.pdf/dlrobot_data",
-        1
-    ],
-    [
-        "341bd99835b4670578f6de5f58abf132b171d2e25c7dd2dadbf92479da1ce24f",
-        "cached/www.mos.ru/upload/documents/files/7014/Svedenija_o_dohodah_ob_imushhestve_i_objazatelstvah_imushestv_e0e6ada0cc3f6932a257f2fe2fe26ddf/dlrobot_data",
         1
     ],
     [
@@ -190,11 +185,6 @@
     [
         "86b020e602e50207c63a020b705cb20aee2597927d96ae2d8486ba315f767271",
         "cached/www.mos.ru/upload/documents/files/8724/mka_income_2013.pdf/dlrobot_data",
-        1
-    ],
-    [
-        "88d97fac67c83ce608f162df53249af6e72f9201ebfa1e622dfafd99df6efb09",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_2015_2.pdf/dlrobot_data",
         1
     ],
     [
