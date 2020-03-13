@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 117
+        "files_count": 110
     },
     [
         "02ff3752862643006e70b88b99c205bf7a72ce4135ca147a7752bab428d14010",
@@ -116,16 +116,6 @@
         "2eb5dfbadc10f45f31de6c998b1fddbe0df972290941ab137baa26db35c43191",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Karantin1.doc/dlrobot_data",
         1
-    ],
-    [
-        "305587642da5c2af20f9efe08f65e243c46cd5e8f387f636f5819a96f3259fd8",
-        "cached/oren-rshn.ru/Doc/PoprimeneniyuFederal_nogozakona.doc/dlrobot_data",
-        -1
-    ],
-    [
-        "30cfee65cf3ba0c89cdaa462373e0bdb259498855f5625aa758b49348cab52d7",
-        "cached/oren-rshn.ru/Doc/anticor/manuals1_3.pdf/dlrobot_data",
-        -1
     ],
     [
         "32f01bd335ddddb8ebd4c61f3a09150e15fd4aca81d01dfcf04d8cd21cf58925",
@@ -248,24 +238,9 @@
         1
     ],
     [
-        "6a10f29d584880feaf19846f682ce3cce38da94697e0867a65288455dd8e7f21",
-        "cached/oren-rshn.ru/Doc/anticor/manuals1_4.PDF/dlrobot_data",
-        -1
-    ],
-    [
-        "6c56e4c19ee7f7327b5c7235ef340564849fc09b6cc6fe92ef308f45b550c864",
-        "cached/oren-rshn.ru/index.php_do_download_id_252_area_static/dlrobot_data",
-        -1
-    ],
-    [
         "6e95058c39d839996bc4356ff26875e18f1f7b4c0382f18471227a1c998fc52a",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Buzuluk1.doc/dlrobot_data",
         1
-    ],
-    [
-        "6f34600445859802387fe9b702771951674a26cdfcae948f2bf4574ac9b959b5",
-        "cached/oren-rshn.ru/index.php_do_download_id_253_area_static/dlrobot_data",
-        -1
     ],
     [
         "6fd4fa103b0e874a582af6f65853528161a61a8ec6adced78144803e8c75655e",
@@ -388,11 +363,6 @@
         1
     ],
     [
-        "aa363e03eae020fbc56ecb6e858f7b2b11a2dcd12da106201d63cbd1e9655bc3",
-        "cached/oren-rshn.ru/Doc/Obzorrekomendatsiyponedopushcheniyu.doc/dlrobot_data",
-        -1
-    ],
-    [
         "aafe057153760c5e1a1cb198ade1899eb89067c24b145b80ce59f55f988a4ac0",
         "cached/oren-rshn.ru/Doc/dohodi/2010/Zemla.doc/dlrobot_data",
         1
@@ -493,11 +463,6 @@
         1
     ],
     [
-        "ce753fa00339f74363a766fc384ff367d357fdf391496e1880362bba06c88cc0",
-        "cached/oren-rshn.ru/index.php_do_download_id_251_area_static/dlrobot_data",
-        -1
-    ],
-    [
         "cf5caca3e16c70289276a0015f98d55913047232bda832b936f479d1ea3fd766",
         "cached/oren-rshn.ru/Doc/dohodi/2014/Admin.doc/dlrobot_data",
         1
@@ -580,7 +545,7 @@
     [
         "fee19da92f650be24bd1ece49f59f1d4e834e1cf06bd23688300f60f77483dee",
         "cached/www.oren-rshn.ru/Doc/comissia.pdf/dlrobot_data",
-        -1
+        1
     ],
     [
         "ffda925653d4b450cb097c056900b07fa513f540cbb9e47a087949137d88b17c",
