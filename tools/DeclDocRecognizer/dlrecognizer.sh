@@ -56,6 +56,21 @@ elif [[ $file_extension == "docx" ]]; then
 
     $OFFICE_2_TXT $input_file  ${input_file}.txt # can be  huge, soffice and callibre cannot process huge files
 
+elif  [[ $file_extension == "pdf" ]]; then
+    if [[ -z $DECLARATOR_CONV_URL ]]; then
+      echo "specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files"
+      exit 1
+    fi
+    normalized_path=`realpath $input_file`	
+    sha256=`sha256sum $normalized_path | awk '{print $1}'`
+    http_code=`curl --connect-timeout 30 -s -w '%{http_code}'  "$DECLARATOR_CONV_URL?sha256=$sha256" --output ${input_file}.docx`
+    if [ $http_code == "404" ] || [ ! -f ${input_file}.docx ]; then
+      /usr/bin/timeout 30m "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null 2>/dev/null
+    else
+      $OFFICE_2_TXT ${input_file}.docx ${input_file}.txt
+    fi
+    rm ${input_file}.docx
+
 elif [[ $file_extension == "pdf" || $file_extension == "html"  || $file_extension == "rtf" || $file_extension == "htm" ]]; then
 
     /usr/bin/timeout 30m "$CALLIBRE_CONVERT" $input_file  ${input_file}.txt >/dev/null 2>/dev/null
@@ -77,6 +92,11 @@ if [[ ! -f ${input_file}.txt ]]; then
     #may be unknown_result?
     echo '{"result":"some_other_document_result", "description": "cannot parse document"}' | jq . > ${output_file}
     exit 1
+fi
+
+if [[ $system == CYGWIN* ]]; then
+   # to run windows python script we need windows path
+   SCRIPT_FOLDER=`cygpath -w $SCRIPT_FOLDER`
 fi
 
 python3 $SCRIPT_FOLDER/dlrecognizer.py --source-file ${input_file} --txt-file ${input_file}.txt --output ${output_file}
