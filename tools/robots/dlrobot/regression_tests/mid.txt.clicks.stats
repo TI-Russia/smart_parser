@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 18
+        "files_count": 14
     },
     [
         "0a565c60cdcf17bb50b64c083c2dd5466c48877c5a23833fa9cf834f10dbcd9c",
@@ -8,9 +8,14 @@
         1
     ],
     [
+        "0af7cf7d5d2474838af2d9a420f5041f831bcf24fefed0598a423202aa0571d8",
+        "cached/www.mid.ru/documents/10180/3518228/24949.pdf/34e700bf-fce1-43ad-b18b-cf59b7467cd0/dlrobot_data",
+        -1
+    ],
+    [
         "16b960fbd0b8590db2759f8b0aa0c5e0dc8227c1336eb55d08ce29fcf23f0308",
         "cached/www.mid.ru/documents/10180/2543721/Metodicheskie_rekomendatsii_2016.pdf/cc22a2e3-0dcc-423a-afd8-847f_985183b4edea097bb1d891468e8a66e8/dlrobot_data",
-        -1
+        1
     ],
     [
         "2dcfbf95da924d0c30986021f50f8b6fb0f87647161721f6c0c2e7f7667016b3",
@@ -18,29 +23,9 @@
         1
     ],
     [
-        "30cfee65cf3ba0c89cdaa462373e0bdb259498855f5625aa758b49348cab52d7",
-        "cached/www.mid.ru/documents/10180/5a745922-e8a1-4b76-949f-36dd4088e71c_t_1406682895435/dlrobot_data",
-        -1
-    ],
-    [
-        "45cf6cf44f2f4aab34aaf23869ec0e3a13ede3c6ac7314dcf30dea75dc178456",
-        "cached/www.mid.ru/documents/10180/206b509c-37dc-4426-af72-36585911bc8b_t_1406682892073/dlrobot_data",
-        -1
-    ],
-    [
-        "4e62e7acfcc23cd69d5d5a72e33d1ba2963b8f913807b27e3a0d4adbccb74f16",
-        "cached/www.mid.ru/documents/10180/ce605946-3e0d-40ab-9472-222b91cb96ee_t_1406682898089/dlrobot_data",
-        -1
-    ],
-    [
-        "60cf15f25a4a730f89508947d85ae5d915453268c09971e42d74dff1e4bb0175",
-        "cached/www.mid.ru/documents/10180/6f01998f-c8f0-4d7c-95ce-c9471180977e_t_1406675379156/dlrobot_data",
-        -1
-    ],
-    [
-        "7360a5964321d0fcb607a42ca0abb7590eb584bfb8d741649eb548b0667b35fe",
-        "cached/www.mid.ru/documents/10180/db39fe0f-0b60-4e25-8bdc-abba1e3da306_t_1406682885042/dlrobot_data",
-        -1
+        "360ca74b38e10ee9b68de3a421e94f89f5ced4dfa5cd21a5f5535af4041c9c6f",
+        "cached/www.mid.ru/documents/10180/3626174/2803.pdf/fe535176-c730-402b-95bd-10b7b7c9e789/dlrobot_data",
+        1
     ],
     [
         "748d57961da906ae7676cc7f002ea35e09e99ad56d7ea7f3fc4449bdb37bd1a3",
@@ -65,7 +50,7 @@
     [
         "b910fb10243b7fe8d456651502acf0c9404c5c82fc4e5cf96ba92e1f402eb3b9",
         "cached/www.mid.ru/documents/10180/3210531/dokhody_2017.pdf/7aa26525-1f36-4cdd-827d-69b40f077eb4/dlrobot_data",
-        -1
+        1
     ],
     [
         "be89b030fd38665365914236fc1f39e3ecf9395093790460378f6fdec3f33fb5",
@@ -76,11 +61,6 @@
         "d096b1ac8607060d86c73dc5fbf8fda3cd2934f7c68e4fe8be4e797dcc23a720",
         "cached/www.mid.ru/documents/10180/2288000/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_9a06755f2c9f87b4c2c13f3938edc6da/dlrobot_data",
         1
-    ],
-    [
-        "de23eeea5fd505ec93cb6ec820184f97607c05a619d329df72bfbab73a62b41e",
-        "cached/www.mid.ru/documents/10180/af23e023-336c-44cb-9102-9a19aaa11c76_t_1406682889289/dlrobot_data",
-        -1
     ],
     [
         "f3d1fd2aededa4bb86d05bd374fa4931ef1935563c83b2674f4ff07615f119ea",
