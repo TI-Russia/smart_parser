@@ -102,10 +102,11 @@ class GoogleSearch:
 
 
     @staticmethod
-    def site_search(site_url, query, selenium_holder):
-        cached_results = GoogleSearch.read_cache(site_url, query)
-        if len(cached_results) > 0:
-            return cached_results['urls']
+    def site_search(site_url, query, selenium_holder, enable_cache=True):
+        if enable_cache:
+            cached_results = GoogleSearch.read_cache(site_url, query)
+            if len(cached_results) > 0:
+                return cached_results['urls']
         assert get_site_domain_wo_www(site_url) == site_url
         request_parts = ["site:{}".format(site_url), query]
         random.shuffle(request_parts)  # more random
@@ -118,7 +119,8 @@ class GoogleSearch:
         time.sleep(1)
         element.send_keys(Keys.RETURN)
         time.sleep(6)
-
+        if "google" in query or "google" in site_url:
+            print("Warning! we use keyword 'google' to filter results out, search would yield no results")
         site_search_results = []
         search_results_count = 0
         elements = list()
@@ -130,11 +132,14 @@ class GoogleSearch:
                 if curr_site.lower() == site_url.lower():
                     site_search_results.append(url)
                     elements.append (element)
-        if search_results_count > 0:
-            GoogleSearch.write_cache(site_url, query, site_search_results)
+
+        if enable_cache:
+            if search_results_count > 0:
+                GoogleSearch.write_cache(site_url, query, site_search_results)
 
         #click on a serp item to make google happy
-        random.choice(elements).click()
+        if len(elements) > 0:
+            random.choice(elements).click()
 
         return site_search_results
 

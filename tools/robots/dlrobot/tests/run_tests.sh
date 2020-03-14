@@ -1,6 +1,6 @@
 echo "do not run these tests if production dlrobot is executing on this workstation!"
 
-for test_folder in simple archives pdf; do
+for test_folder in selenium serp simple archives pdf; do
   echo -n "test $test_folder -> "
   cd $test_folder
   [ ! -f test_log.out ] || rm test_log.out

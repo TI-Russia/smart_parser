@@ -9,7 +9,9 @@ import os
 import shutil
 from pathlib import Path
 import time
-
+from contextlib import contextmanager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.expected_conditions import staleness_of
 
 def make_folder_empty(folder):
     for filename in os.listdir(folder):
@@ -28,6 +30,7 @@ class TSeleniumDriver:
         self.the_driver = None
         self.driver_processed_urls_count  = 0
         self.download_folder = download_folder
+        assert download_folder != "."
         self.headless = headless
         self.last_downloaded_file = None
         self.window_before_click = None
@@ -64,14 +67,22 @@ class TSeleniumDriver:
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
-    def _navigate_and_get_links(self, url):
+    def _navigate_and_get_links(self, url, timeout=6):
         self.navigate(url)
-        time.sleep(6)
-        return self.get_buttons_and_links()
-
-    def navigate_and_get_links(self, url):
+        time.sleep(timeout)
+        links = self.get_buttons_and_links()
         try:
-            return self._navigate_and_get_links(url)
+            for link in links:
+                text = link.text
+                return links
+        finally:
+            #  second timeout
+            time.sleep(timeout)
+            return self.get_buttons_and_links()
+
+    def navigate_and_get_links(self, url, timeout=6):
+        try:
+            return self._navigate_and_get_links(url, timeout)
         except (WebDriverException, NoSuchWindowException) as exp:
             logger = logging.getLogger("dlrobot_logger")
             logger.error(
@@ -79,7 +90,7 @@ class TSeleniumDriver:
             self.stop_executable()
             self.start_executable()
             time.sleep(10)
-            return self._navigate_and_get_links(url)
+            return self._navigate_and_get_links(url, timeout)
 
     def wait_download_finished(self, timeout=120):
         dl_wait = True
@@ -98,7 +109,8 @@ class TSeleniumDriver:
         return None
 
     def click_element(self, element):
-        make_folder_empty(self.download_folder)
+        if self.download_folder is not None:
+            make_folder_empty(self.download_folder)
         self.window_before_click = self.the_driver.window_handles[0]
         self.the_driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
         time.sleep(1)
@@ -116,7 +128,8 @@ class TSeleniumDriver:
             return
         window_after = self.the_driver.window_handles[1]
         self.the_driver.switch_to_window(window_after)
-        self.last_downloaded_file = self.wait_download_finished(180)
+        if self.download_folder is not None:
+            self.last_downloaded_file = self.wait_download_finished(180)
 
     def close_window_tab(self):
         self.the_driver.close()
