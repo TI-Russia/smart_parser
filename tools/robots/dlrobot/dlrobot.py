@@ -11,7 +11,7 @@ sys.path.append(os.path.join( os.path.dirname(__file__), '../common' ))
 from download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
 from export_files import export_files_to_folder
 from office_list import  TRobotProject
-from conversion_tasks import wait_doc_conversion_finished
+from conversion_tasks import wait_doc_conversion_finished, assert_declarator_conv_alive
 
 from find_link import \
     check_anticorr_link_text, \
@@ -294,6 +294,7 @@ def make_steps(args, project):
         logger.info("=== wait for all document conversion finished =========")
         wait_doc_conversion_finished()
 
+    logger.info("=== export_files_to_folder =========")
     export_files_to_folder(project.offices, args.result_folder)
     project.write_export_stats()
     project.write_project()
@@ -321,6 +322,7 @@ def open_project(args, log_file_name):
 
 if __name__ == "__main__":
     args = parse_args()
+    assert_declarator_conv_alive()
     if args.logfile == "temp":
         with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
             log_file_name = os.path.join(tmp_folder, "dlrobot.log")

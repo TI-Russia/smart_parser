@@ -15,15 +15,4 @@ python -m http.server --bind $WEB_IP --directory html $WEB_PORT &
 WEB_SERVER_PID=$!
 disown
 
-if [ -z "$DECLARATOR_CONV_URL" ]; then
-  echo "conversion db address is not set (env variable DECLARATOR_CONV_URL)"
-  exit 1
-fi
-
-ping_conv_server=`curl --connect-timeout 10 $DECLARATOR_CONV_URL/ping`
-if [ $ping_conv_server != "yes" ]; then
-  echo "conversion server at $DECLARATOR_CONV_URL is not alive"
-  exit 1
-fi
-
 [ ! -f project.txt.clicks ] || rm -rf project.txt.clicks

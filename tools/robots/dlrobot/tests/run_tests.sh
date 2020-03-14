@@ -1,3 +1,5 @@
+echo "do not run these tests if production dlrobot is executing on this workstation!"
+
 for test_folder in simple archives pdf; do
   echo -n "test $test_folder -> "
   cd $test_folder

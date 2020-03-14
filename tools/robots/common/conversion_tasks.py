@@ -1,6 +1,7 @@
 import time
 import http.client
 import logging
+import urllib
 import threading
 import hashlib
 import os
@@ -9,10 +10,20 @@ from content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 
 DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
-assert DECLARATOR_CONV_URL is not None
+
 
 def assert_declarator_conv_alive():
-    pass
+    global DECLARATOR_CONV_URL
+    if DECLARATOR_CONV_URL is None:
+        raise Exception("environment variable DECLARATOR_CONV_URL is not set")
+
+    try:
+        with urllib.request.urlopen("http://" + DECLARATOR_CONV_URL+"/ping") as response:
+            if response.read() == "yes":
+                return True
+    except Exception as exp:
+        print("cannot connect to {} (declarator conversion server)".format(DECLARATOR_CONV_URL))
+        raise
 
 def process_files_to_convert_in_another_thread(conversion_tasks):
     while True:
@@ -94,7 +105,7 @@ class TConversionTasks(object):
             self.lock.release()
         return result
 
-    def wait_conversion_tasks(self, timeout_in_seconds=60*20):
+    def wait_conversion_tasks(self, timeout_in_seconds=60*30):
         start_time = time.time()
         while len(self._sent_tasks) > 0:
             time.sleep(10)
@@ -102,7 +113,7 @@ class TConversionTasks(object):
                 if self.check_file_was_converted(sha256):
                     self._sent_tasks.remove(sha256)
             if time.time() > start_time + timeout_in_seconds:
-                self.logger.error("timeout exit, not all conversion tasks were completed")
+                self.logger.error("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
                 break
 
 CONVERSION_TASKS = None
