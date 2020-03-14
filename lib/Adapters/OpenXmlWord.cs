@@ -740,16 +740,26 @@ namespace Smart.Parser.Adapters
             {
                 Logger.Debug(String.Format("ignore table {0} with subtables", tableIndex));
             }
-            else
+            else if (table.InnerText.Length > 0 && !table.InnerText.Any(x => Char.IsUpper(x)))  {
+                Logger.Debug(String.Format("ignore table {0} that has no uppercase char", tableIndex));
+            }
+            else if (table.InnerText.Length < 30)
+            {
+                Logger.Debug(String.Format("ignore table {0}, it is too short", tableIndex));
+
+            }
+            else 
             {
                 ProcessWordTable(table, maxRowsToProcess);
             }
-            if (table.InnerText.Length > 30 && TableRows.Count > debugSaveRowCount)
+            if (TableRows.Count > debugSaveRowCount)
             {
-                Logger.Debug(String.Format("add {0} rows from table {1} Table.innertText[0:30]='{2}...'",
+                string tableText = table.InnerText.Length > 30  ? table.InnerText.Substring(0, 30) : table.InnerText;
+                Logger.Debug(String.Format("add {0} rows (TableRows.Count={1} ) from table {2} Table.innertText[0:30]='{3}'",
                     TableRows.Count - debugSaveRowCount,
+                    TableRows.Count,
                     tableIndex,
-                    table.InnerText.Substring(0, 30)));
+                    tableText));
             }
             if (Title.Length == 0 && table.InnerText.Length > 30 && table.InnerText.ToLower().IndexOf("декабря") != -1)
             {

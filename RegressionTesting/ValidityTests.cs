@@ -69,42 +69,6 @@ namespace RegressionTesting
         #endregion
             
         private const string SamplesDirectory = "regression_samples";
-        /*
-        private const string WordFilesDirectory = @"Word";
-        private const string WordLogFile = "word_files.log";
-        private const string SampleWordLogFile = "sample_word_files.log";
-
-        private string WordLogFilePath
-        {
-            get { return Path.GetFullPath(WordLogFile); }
-        }
-
-        private string SampleWordLogFilePath
-        {
-            get { return Path.GetFullPath(SampleWordLogFile); }
-        }
-        
-         все время сломан - пока отключаем
-        [TestMethod]
-        [DeploymentItem(SamplesDirectory)]
-        [DeploymentItem("import-schema.json")]
-        [DeploymentItem("import-schema-dicts.json")]
-        public void TestWordSampleFiles()
-        {
-            int nChecks = 0;
-            int nFailedChecks = 0;
-            foreach (var sampleFile in Directory.GetFiles(WordFilesDirectory, "*.json"))
-            {
-                nChecks++;
-                if (!IsSampleFileValid(sampleFile, SampleWordLogFilePath))
-                {
-                    nFailedChecks++;
-                }
-            }
-
-            Assert.AreEqual(0, nFailedChecks, $"Sample files validation test: {nFailedChecks} out of {nChecks} sample files are not valid. Validation log can be found in {SampleWordLogFilePath}");
-        }
-        */
         private const string SmartParserLogFile = "smart_parser_files.log";
 
         private string SmartParserLogFilePath
@@ -172,8 +136,6 @@ namespace RegressionTesting
             {
                 Assert.IsTrue(TestValidity(expectedFileNames[i], outFiles[i], SmartParserLogFile));
             }
-            //    string expectedFile = Path.Combine(GetCanonFolder(), outFileName);
-            //    Assert.IsTrue(TestValidity(expectedFile, outFileName, SmartParserLogFile));
         }
 
         [TestMethod]
@@ -585,6 +547,12 @@ namespace RegressionTesting
             TestSmartParser("4144_28.htm", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("htm")]
+        public void PassStrangeTables()
+        {
+            TestSmartParser("4037_9.htm", "prod");
+        }
 
 
         [TestMethod]
