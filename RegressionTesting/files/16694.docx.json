@@ -1,0 +1,76 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Корнилов А.Б.",
+        "role": "Судья  \n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1948425.0,
+          "size_raw": "1948425",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 108.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "108,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 81.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "81,0",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая совместная с супругой"
+        },
+        {
+          "text": "земельный участок",
+          "square": 598.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "598,3",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 108.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "108,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 108.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "108,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 13
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения \nо доходах, расходах, об имуществе и обязательствах имущественного  характера за период с 1 января 2014 г. по 31 декабря 2014 г. \n \n",
+    "year": 2014,
+    "documentfile_id": 16694
+  }
+}

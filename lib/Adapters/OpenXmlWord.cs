@@ -17,6 +17,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
 using System.Security.Cryptography;
 using Smart.Parser.Lib;
+using System.Text.RegularExpressions;
 
 namespace Smart.Parser.Adapters
 {
@@ -578,15 +579,35 @@ namespace Smart.Parser.Adapters
                 var tokens2 = TokenizeCellText(row2[i].Text);
                 if (tokens1.Count > 0 && tokens2.Count > 0)
                 {
-                    string key = tokens1.Last() + " " + tokens2.First();
-                    if (Bigrams.ContainsKey(key))
-                    {
-                        Logger.Debug(string.Format(
-                            "Join rows using mutual information on cells \"{0}\" and \"{1}\"",
-                            row1[i].Text.ReplaceEolnWithSpace(),
-                            row2[i].Text.ReplaceEolnWithSpace()));
-                        return true;
-                    }
+                    string lastWord = tokens1.Last();
+                    string firstWord = tokens2.First();
+                    if (lastWord.Length > 0 && firstWord.Length > 0) {
+                        string joinExplanation = "";
+                        if (Bigrams.ContainsKey(lastWord + " " + firstWord)) {
+                            joinExplanation = "frequent bigram";
+                        }
+
+                        if (     Regex.Matches(lastWord, @".*\p{Pd}$").Count > 0
+                              && Char.IsLower(firstWord[0])
+                           ) {
+                            joinExplanation = "word break regexp";
+                        }
+
+                        if (tokens1.Count  +  tokens2.Count == 3 && TextHelpers.CanBePatronymic(tokens2[tokens2.Count - 1])) {
+                            joinExplanation = "person regexp";
+                        }
+
+                        if (joinExplanation != "")
+                        {
+                            Logger.Debug(string.Format(
+                                "Join rows using {0} on cells \"{1}\" and \"{2}\"",
+                                joinExplanation,
+                                row1[i].Text.ReplaceEolnWithSpace(),
+                                row2[i].Text.ReplaceEolnWithSpace()));
+                            return true;
+
+                        }
+                     }
                 }
             }
             return false;

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 
 namespace Smart.Parser.Adapters
@@ -22,6 +24,11 @@ namespace Smart.Parser.Adapters
         public virtual string Text { set; get; } = "";
 
         public string TextAbove = null;
+
+        public Cell ShallowCopy()
+        {
+            return (Cell)this.MemberwiseClone();
+        }
 
         public virtual string GetText(bool trim = true)
         {
@@ -49,17 +56,21 @@ namespace Smart.Parser.Adapters
     public class DataRow : DataRowInterface
     {
 
+        void MapCells()
+        {
+            MappedHeader = MapByOrderAndIntersection(ColumnOrdering, Cells);
+            if (MappedHeader == null)
+            {
+                MappedHeader = MapByMaxIntersection(ColumnOrdering, Cells);
+            }
+        }
         public DataRow(IAdapter adapter, ColumnOrdering columnOrdering, int row)
         {
             this.row = row;
             this.adapter = adapter;
             this.ColumnOrdering = columnOrdering;
             Cells = adapter.GetCells(row, columnOrdering.GetMaxColumnEndIndex());
-            MappedHeader = MapByOrderAndIntersection(columnOrdering, Cells);
-            if (MappedHeader == null )
-            {
-                MappedHeader = MapByMaxIntersection(columnOrdering, Cells);
-            }
+            MapCells();
             
         }
         public string DebugString()
@@ -71,6 +82,22 @@ namespace Smart.Parser.Adapters
             }
             return s;
         }
+
+        public DataRow DeepClone()
+        {
+            DataRow other =  new DataRow(this.adapter, this.ColumnOrdering, this.row);
+            other.Cells = new List<Cell>();
+            foreach (var x in this.Cells)
+            {
+                Cell c = x.ShallowCopy();
+                c.IsEmpty = true;
+                c.Text = "";
+                other.Cells.Add(c);
+            }
+            other.MapCells();
+            return other;
+        }
+
         static Dictionary<DeclarationField, Cell> MapByOrderAndIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
         {
             if (columnOrdering.MergedColumnOrder.Count != cells.Count)
@@ -179,6 +206,7 @@ namespace Smart.Parser.Adapters
             }
             TColumnInfo colSpan;
             if (field == DeclarationField.DeclaredYearlyIncomeThousands || field == DeclarationField.DeclaredYearlyIncome)
+
                 ;
             var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
             if (exactCell.Text.Trim() != "")
@@ -252,26 +280,6 @@ namespace Smart.Parser.Adapters
                     string.Format("Wrong relative type {0} at row {1}", RelativeType, GetRowIndex()));
             }
         }
-        static bool CanBePatronymic(string s)
-        {
-            s = s.Replace("-", "");
-            if (s.Length == 0) return false;
-            if (!Char.IsUpper(s[0])) return false;
-            return s.EndsWith("вич") || 
-                    s.EndsWith("вна") ||
-                    s.EndsWith("вны") ||
-                    s.EndsWith(".") ||
-                    s.EndsWith("тич") ||
-                    s.EndsWith("мич") ||
-                    s.EndsWith("ьич") ||
-                    s.EndsWith("ьича") ||
-                    s.EndsWith("ьича") ||
-                    s.EndsWith("вича") ||
-                    s.EndsWith("тича") ||
-                    s.EndsWith("мича") ||
-                    s.EndsWith("чны") ||
-                    s.EndsWith("чна") ;
-        }
 
         void DivideNameAndOccupation()
         {
@@ -291,7 +299,7 @@ namespace Smart.Parser.Adapters
                 if (result.Length < 2)
                 {
                     string[] words = Regex.Split(v, @"[\,\s\n]+");
-                    if (words.Length >= 3 && CanBePatronymic(words[2]))
+                    if (words.Length >= 3 && TextHelpers.CanBePatronymic(words[2]))
                     {
                         PersonName = String.Join(" ", words.Take(3)).Trim();
                         Occupation = String.Join(" ", words.Skip(3)).Trim();

@@ -87,5 +87,26 @@ namespace TI.Declarator.ParserCommon
             var replRegex = new Regex(Regex.Escape(substr));
             return replRegex.Replace(str, replStr, 1);
         }
+        public static bool CanBePatronymic(string s)
+        {
+            s = s.Replace("-", "");
+            if (s.Length == 0) return false;
+            if (!Char.IsUpper(s[0])) return false;
+            return s.EndsWith("вич") ||
+                    s.EndsWith("вна") ||
+                    s.EndsWith("вны") ||
+                    s.EndsWith(".") ||
+                    s.EndsWith("тич") ||
+                    s.EndsWith("мич") ||
+                    s.EndsWith("ьич") ||
+                    s.EndsWith("ьича") ||
+                    s.EndsWith("ьича") ||
+                    s.EndsWith("вича") ||
+                    s.EndsWith("тича") ||
+                    s.EndsWith("мича") ||
+                    s.EndsWith("чны") ||
+                    s.EndsWith("чна");
+        }
+
     }
 }

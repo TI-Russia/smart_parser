@@ -372,6 +372,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("docx")]
+        public void TransposedTable()
+        {
+            TestSmartParser("30429.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
         public void HeaderInsideTable()
         {
             TestSmartParser("HeaderInsideTable.docx", "prod");
@@ -554,6 +561,12 @@ namespace RegressionTesting
             TestSmartParser("4037_9.htm", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void MergeByHyphen()
+        {
+            TestSmartParser("16694.docx", "prod");
+        }
 
         [TestMethod]
         [TestCategory("htm")]

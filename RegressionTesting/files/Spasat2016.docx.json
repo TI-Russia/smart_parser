@@ -27,18 +27,6 @@
           "own_type_by_column": "В собственности"
         },
         {
-          "text": "не имеет",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В пользовании"
-        },
-        {
-          "text": "не имеет",
-          "square": null,
-          "relative": "Супруг(а)",
-          "own_type_by_column": "В собственности"
-        },
-        {
           "text": "- земельный участок (фактическое пользование), 790 кв.м., Чехия\n- квартира (фактическое пользование) 106 кв.м., Россия",
           "square": null,
           "relative": "Супруг(а)",
@@ -79,40 +67,16 @@
           "own_type_by_column": "В собственности"
         },
         {
-          "text": "не имеет",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В пользовании"
-        },
-        {
-          "text": "не имеет",
-          "square": null,
-          "relative": "Супруг(а)",
-          "own_type_by_column": "В собственности"
-        },
-        {
           "text": "квартира (фактическое пользование) 64,7 кв.м., Россия",
           "square": null,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании"
         },
         {
-          "text": "не имеет",
-          "square": null,
-          "relative": "Ребенок",
-          "own_type_by_column": "В собственности"
-        },
-        {
           "text": "квартира (фактическое пользование) 64,7 кв.м., Россия",
           "square": null,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании"
-        },
-        {
-          "text": "не имеет",
-          "square": null,
-          "relative": "Ребенок",
-          "own_type_by_column": "В собственности"
         },
         {
           "text": "квартира (фактическое пользование) 64,7 кв.м., Россия",
@@ -207,12 +171,6 @@
           "own_type_by_column": "В собственности"
         },
         {
-          "text": "",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В пользовании"
-        },
-        {
           "text": "- земельный участок под гараж (индивидуальная), 60,0 кв. м., Россия\n- 2 комнаты в квартире (долевая ½), 43,1 кв.м., Россия\n- гараж (индивидуальная), 54,0 кв.м., Россия",
           "square": null,
           "relative": "Супруг(а)",
@@ -260,27 +218,9 @@
           "own_type_by_column": "В собственности"
         },
         {
-          "text": "не имеет",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В пользовании"
-        },
-        {
           "text": "- квартира (долевая ½ ), 74,4 кв.м., Россия\n- квартира (долевая ½ ), 30,6 кв.м., Россия",
           "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": "В собственности"
-        },
-        {
-          "text": "не имеет",
-          "square": null,
-          "relative": "Супруг(а)",
-          "own_type_by_column": "В пользовании"
-        },
-        {
-          "text": "не имеет",
-          "square": null,
-          "relative": "Ребенок",
           "own_type_by_column": "В собственности"
         },
         {

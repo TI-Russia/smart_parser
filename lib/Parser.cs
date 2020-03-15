@@ -6,9 +6,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TI.Declarator.ParserCommon;
-
 namespace Smart.Parser.Lib
 {
+
+
     public class Parser
     {
         DateTime FirstPassStartTime;
@@ -23,6 +24,7 @@ namespace Smart.Parser.Lib
             Adapter = adapter;
             FailOnRelativeOrphan = failOnRelativeOrphan;
         }
+
 
         Declaration InitializeDeclaration(ColumnOrdering columnOrdering, int? user_documentfile_id)
         {
@@ -54,7 +56,6 @@ namespace Smart.Parser.Lib
             return declaration;
         }
 
-        
 
         class TBorderFinder
         {
@@ -82,11 +83,56 @@ namespace Smart.Parser.Lib
 
                 FinishDeclarant();
             }
-            public void AddInputRowToCurrentPerson(DataRow row)
+            public void AddInputRowToCurrentPerson(ColumnOrdering columnOrdering,  DataRow row)
             {
                 if (CurrentPerson != null)
                 {
                     CurrentPerson.DateRows.Add(row);
+                    TransposeTableByRelatives(columnOrdering, row);
+                }
+            }
+
+            void CopyRelativeFieldToMainCell(DataRow row, DeclarationField relativeMask,  DeclarationField f, ref DataRow childRow)
+            {
+                if ((f & relativeMask) > 0)
+                {
+                    var value = row.GetContents(f, false);
+                    if (!DataHelper.IsEmptyValue(value))
+                    {
+                        if (childRow == null)
+                        {
+                            childRow = row.DeepClone();
+                        }
+                        f = (f & ~relativeMask) | DeclarationField.MainDeclarant;
+                        var declarantCell = childRow.GetDeclarationField(f);
+                        declarantCell.Text = value;
+                        declarantCell.IsEmpty = false;
+                    }
+                }
+
+            }
+            public void TransposeTableByRelatives(ColumnOrdering columnOrdering, DataRow row)
+            {
+                DataRow childRow = null;
+                DataRow spouseRow = null;
+                foreach (var f in columnOrdering.ColumnOrder.Keys)
+                {
+                    CopyRelativeFieldToMainCell(row, DeclarationField.DeclarantChild, f, ref childRow);
+                    CopyRelativeFieldToMainCell(row, DeclarationField.DeclarantSpouse, f, ref spouseRow);
+                }
+                if (childRow != null)
+                {
+                    childRow.RelativeType = "несовершеннолетний ребенок";
+                    CreateNewRelative(childRow);
+                    CurrentPerson.DateRows.Add(childRow);
+                    Logger.Debug("Create artificial line for a child");
+                }
+                if (spouseRow != null)
+                {
+                    spouseRow.RelativeType = "супруга";
+                    CreateNewRelative(spouseRow);
+                    CurrentPerson.DateRows.Add(spouseRow);
+                    Logger.Debug("Create artificial line for a spouse");
                 }
             }
 
@@ -112,7 +158,7 @@ namespace Smart.Parser.Lib
                 _Declaration.PublicServants.Add(CurrentDeclarant);
             }
 
-            public void CreateNewRelative(DataRow row )
+            public void CreateNewRelative(DataRow row)
             {
                 Logger.Debug("Relative {0} at row {1}", row.RelativeType, row.GetRowIndex());
                 if (CurrentDeclarant == null)
@@ -138,7 +184,6 @@ namespace Smart.Parser.Lib
                         string.Format("Wrong relative name '{0}' at row {1} ", row.RelativeType, row));
                 }
                 relative.RelationType = relationType;
-                //Logger.Debug("{0} Relative {1} Relation {2}", row, nameOrRelativeType, relationType.ToString());
                 relative.document_position = row.NameDocPosition;
             }
 
@@ -241,15 +286,15 @@ namespace Smart.Parser.Lib
                         throw new SmartParserException("No person to attach info");
                     }
                 }
-                borderFinder.AddInputRowToCurrentPerson(currRow);
+                borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
                 if (    columnOrdering.ContainsField (DeclarationField.DeclaredYearlyIncomeThousands)) {
                     PublicServant dummy = new PublicServant();
-                            ParseIncome(currRow, dummy, declaration.MultiplyIncomeIfSpecified);
+                    ParseIncome(currRow, dummy, declaration.MultiplyIncomeIfSpecified);
                     if (dummy.DeclaredYearlyIncome != null)
                     {
                         incomes.Add(dummy.DeclaredYearlyIncome.Value);
                     }
-                }
+                } 
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
             if (incomes.Count > 3) 
@@ -284,14 +329,24 @@ namespace Smart.Parser.Lib
 
         void AddRealEstateWithNaturalText (DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
+            if (!currRow.ColumnOrdering.ContainsField(fieldName))
+            {
+                fieldName = fieldName | DeclarationField.MainDeclarant;
+            }
+
             if (currRow.ColumnOrdering.ContainsField(fieldName))
             {
                 RealEstateProperty realEstateProperty = new RealEstateProperty();
-                realEstateProperty.Text = currRow.GetContents(fieldName);
-                realEstateProperty.own_type_by_column = ownTypeByColumn;
-                CheckProperty(realEstateProperty);
-                person.RealEstateProperties.Add(realEstateProperty);
+                realEstateProperty.Text = currRow.GetContents(fieldName).Trim();
+                if (!DataHelper.IsEmptyValue(realEstateProperty.Text))
+                {
+                    realEstateProperty.own_type_by_column = ownTypeByColumn;
+                    CheckProperty(realEstateProperty);
+                    person.RealEstateProperties.Add(realEstateProperty);
+                }
             }
+
+            
 
         }
         public void ParseOwnedProperty(DataRow currRow, Person person)
@@ -385,40 +440,45 @@ namespace Smart.Parser.Lib
             }
 
         }
-        bool ParseIncome(DataRow currRow, Person person, bool multiply1000)
+        bool ParseIncomeOneField(DataRow currRow, Person person, DeclarationField field, bool multiply1000ProvenByData)
         {
-            if (currRow.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
+            if (!currRow.ColumnOrdering.ContainsField(field)) return false;
+            string fieldStr = currRow.GetContents(field);
+            if (fieldStr == "") return false;
+            bool fieldInThousands = (field & DeclarationField.DeclaredYearlyIncomeThousands) > 0;
+            person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(fieldStr, fieldInThousands);
+            if (multiply1000ProvenByData)
             {
-
-                string s1 = currRow.GetContents(DeclarationField.DeclaredYearlyIncomeThousands);
-                if (s1 != "")
-                {
-                    person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s1, true);
-                    if (multiply1000)
-                    {
-                        person.DeclaredYearlyIncome *= 1000;
-                    }
-                    if (!DataHelper.IsEmptyValue(s1))
-                        person.DeclaredYearlyIncomeRaw = s1;       
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                person.DeclaredYearlyIncome *= 1000;
             }
-            string s2 = currRow.GetContents(DeclarationField.DeclaredYearlyIncome);
-            if (s2 != "")
+            if (!DataHelper.IsEmptyValue(fieldStr))
+                person.DeclaredYearlyIncomeRaw = fieldStr;
+            return true;
+        }
+        bool ParseIncome(DataRow currRow, Person person, bool multiply1000ProvenByData)
+        {
+            if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, multiply1000ProvenByData))
             {
-                person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(s2, false);
-                if (!DataHelper.IsEmptyValue(s2))
-                    person.DeclaredYearlyIncomeRaw = s2;
                 return true;
             }
+            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, false))
+            {
+                return true;
+            }
+            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, multiply1000ProvenByData))
+            {
+                return true;
+            }
+            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, false))
+            {
+                return true;
+            }
+
+            //if (currRow.ColumnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands))
             return false;
         }
 
-        public Declaration ParsePersonalProperties(Declaration declaration)
+public Declaration ParsePersonalProperties(Declaration declaration)
         {
             SecondPassStartTime = DateTime.Now;
             int count = 0;
@@ -512,6 +572,12 @@ namespace Smart.Parser.Lib
                 if (!DataHelper.IsEmptyValue(s))
                     person.Vehicles.Add(new Vehicle(s));
             }
+            else if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.DeclarantVehicle))
+            {
+                var s = r.GetContents(DeclarationField.DeclarantVehicle);
+                if (!DataHelper.IsEmptyValue(s))
+                    person.Vehicles.Add(new Vehicle(s));
+            }
             else
             {
                 var m = r.GetContents(DeclarationField.VehicleModel);
@@ -519,6 +585,7 @@ namespace Smart.Parser.Lib
                 if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
                     person.Vehicles.Add(new Vehicle(m, t));
             }
+
         }
 
         static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)

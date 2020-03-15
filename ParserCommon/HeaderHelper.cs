@@ -32,9 +32,9 @@ namespace TI.Declarator.ParserCommon
             if (str.IsDepartment()) { return DeclarationField.Department; }
 
             if (str.IsMixedRealEstateType()) { return DeclarationField.MixedRealEstateType; }
-            if (str.IsMixedRealEstateSquare()) { return DeclarationField.MixedRealEstateSquare; }
-            if (str.IsMixedRealEstateCountry()) { return DeclarationField.MixedRealEstateCountry; }
-            if (str.IsMixedRealEstateOwnershipType()) { return DeclarationField.MixedRealEstateOwnershipType; }
+            if (str.IsMixedRealEstateSquare() && !str.IsMixedRealEstateCountry()) { return DeclarationField.MixedRealEstateSquare; }
+            if (str.IsMixedRealEstateCountry() && !str.IsMixedRealEstateSquare() ) { return DeclarationField.MixedRealEstateCountry; }
+            if (str.IsMixedRealEstateOwnershipType() && !str.IsMixedRealEstateSquare()) { return DeclarationField.MixedRealEstateOwnershipType; }
 
             if (str.IsOwnedRealEstateType()) { return DeclarationField.OwnedRealEstateType; }
             if (str.IsOwnedRealEstateOwnershipType()) { return DeclarationField.OwnedRealEstateOwnershipType; }
@@ -46,13 +46,34 @@ namespace TI.Declarator.ParserCommon
             if (str.IsStatePropertyCountry()) { return DeclarationField.StatePropertyCountry; }
             if (str.IsStatePropertyOwnershipType()) { return DeclarationField.StatePropertyOwnershipType; }
 
+            if (str.HasChild() && str.IsVehicle()) { return DeclarationField.ChildVehicle; }
+            if (str.HasSpouse() && str.IsVehicle()) { return DeclarationField.SpouseVehicle; }
+            if (str.HasMainDeclarant() && str.IsVehicle()) { return DeclarationField.DeclarantVehicle; }
+
             if (str.IsVehicleType()) { return DeclarationField.VehicleType; }
             if (str.IsVehicleModel()) { return DeclarationField.VehicleModel; }
             if (str.IsVehicle()) { return DeclarationField.Vehicle; }
-            if (str.IsDeclaredYearlyIncomeThousands()) { return DeclarationField.DeclaredYearlyIncomeThousands; }
-            if (str.IsDeclaredYearlyIncome()) { return DeclarationField.DeclaredYearlyIncome; }
+            if (str.IsDeclaredYearlyIncomeThousands()) {
+                if (str.HasChild()) { return DeclarationField.ChildIncomeInThousands; }
+                if (str.HasSpouse()) { return DeclarationField.SpouseIncomeInThousands; }
+                if (str.HasMainDeclarant()) { return DeclarationField.DeclarantIncomeInThousands; }
+                return DeclarationField.DeclaredYearlyIncomeThousands; 
+            }
+
+            if (str.IsDeclaredYearlyIncome())
+            {
+                if (str.HasChild()) { return DeclarationField.ChildIncome; }
+                if (str.HasSpouse()) { return DeclarationField.SpouseIncome; }
+                if (str.HasMainDeclarant()) { return DeclarationField.DeclarantIncome; }
+                return DeclarationField.DeclaredYearlyIncome;
+            }
+
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
             if (str.IsComments()) { return DeclarationField.Comments; }
+
+            if (str.IsMixedRealEstateDeclarant()) { return DeclarationField.DeclarantMixedColumnWithNaturalText; }
+            if (str.IsMixedRealEstateSpouse()) { return DeclarationField.SpouseMixedColumnWithNaturalText; }
+            if (str.IsMixedRealEstateChild()) { return DeclarationField.ChildMixedColumnWithNaturalText; }
 
             if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
             if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
@@ -218,6 +239,33 @@ namespace TI.Declarator.ParserCommon
             return IsMixedColumn(s) && HasRealEstateTypeStr(s);
         }
 
+        private static bool HasMainDeclarant(this string s)
+        {
+            return (s.Contains("служащего") || s.Contains("служащему"))
+                && !HasChild(s) && !HasSpouse(s);
+        }
+        private static bool HasChild(this string s)
+        {
+            return s.Contains("детей") || s.Contains("детям");
+        }
+        private static bool HasSpouse(this string s)
+        {
+            return s.Contains("супруг");
+        }
+        private static bool IsMixedRealEstateDeclarant(this string s)
+        {
+            return IsMixedColumn(s) && HasRealEstateStr(s) && HasMainDeclarant(s) && !HasSpouse(s); 
+        }
+        private static bool IsMixedRealEstateChild(this string s)
+        {
+            return IsMixedColumn(s) && HasRealEstateStr(s) && HasChild(s) && !HasSpouse(s);
+        }
+
+        private static bool IsMixedRealEstateSpouse(this string s)
+        {
+            return IsMixedColumn(s) && HasRealEstateStr(s) && HasSpouse(s) && !HasChild(s);
+        }
+
         private static bool IsMixedRealEstate(this string s)
         {
             // в этой колонке нет подколонок, все записано на естественном языке
@@ -290,7 +338,8 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsComments(this string s)
         {
-            return s.Contains("примечани");
+            string lowerS = s.ToLower().Replace(" ", "").Replace("-", "");
+            return lowerS.Contains("примечани");
         }
 
         private static bool IsAcquiredProperty(this string s)

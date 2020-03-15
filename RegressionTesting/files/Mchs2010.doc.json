@@ -6,7 +6,13 @@
         "role": "Инспектор ОНД\n"
       },
       "year": 2010,
-      "incomes": [],
+      "incomes": [
+        {
+          "size": 1265983990.0,
+          "size_raw": "126598,39,90",
+          "relative": null
+        }
+      ],
       "real_estates": [],
       "vehicles": [
         {
