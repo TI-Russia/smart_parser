@@ -7,7 +7,7 @@ import tempfile
 import urllib
 import time
 from bs4 import BeautifulSoup
-from download import download_with_cache, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
+from download import read_from_cache_or_download, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
 
 from http_request import get_request_rate
@@ -117,7 +117,7 @@ class TUrlInfo:
 
 def request_url_title(url):
     try:
-        html = download_with_cache(url)
+        html = read_from_cache_or_download(url)
         if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
             soup = BeautifulSoup(html, "html.parser")
             return soup.title.string.strip(" \n\r\t")
@@ -266,6 +266,7 @@ class TRobotProject:
         self.offices = list()
         self.human_files = list()
         TRobotProject.step_names = [r['step_name'] for r in robot_steps]
+        self.enable_search_engine = True  #switched off in tests, otherwize google shows captcha
 
     def __enter__(self):
         TRobotProject.logger = logging.getLogger("dlrobot_logger")
@@ -297,6 +298,8 @@ class TRobotProject:
             for o in json_dict.get('sites', []):
                 site = TRobotWebSite(self.step_names, init_json=o)
                 self.offices.append(site)
+            if "disable_search_engine" in json_dict:
+                self.enable_search_engine = False
 
     def read_human_files(self, filename):
         self.human_files = list()
@@ -358,7 +361,7 @@ class TRobotProject:
         for office_info in self.offices:
             for url in office_info.robot_steps[-1].step_urls:
                 try:
-                    download_with_cache(url)
+                    read_from_cache_or_download(url)
                 except Exception as err:
                     self.logger.error("cannot download " + url + ": " + str(err) + "\n")
                     pass
@@ -389,7 +392,7 @@ class TRobotProject:
     @staticmethod
     def get_file_data_and_extension(url, convert_to_utf8=False):
         try:
-            html = download_with_cache(url)
+            html = read_from_cache_or_download(url)
             extension = get_file_extension_by_cached_url(url)
             if convert_to_utf8:
                 if extension == DEFAULT_HTML_EXTENSION:
@@ -452,6 +455,7 @@ class TRobotProject:
         min_normal_count = step_info.step_passport.get('min_normal_count', 1)
         if len(step_info.robot_step.step_urls) >= min_normal_count:
             return
+        TRobotProject.logger.info('search engine request: {}'.format(request))
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         links_count = 0
@@ -516,7 +520,8 @@ class TRobotProject:
             target.step_urls.update(start_pages)
 
         self.find_links_for_one_website_transitive(step_info, start_pages)
-        self.try_use_search_engine(step_info)
+        if self.enable_search_engine:
+            self.try_use_search_engine(step_info)
 
         if include_source == "copy_if_empty" and len(target.step_urls) == 0:
             do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())

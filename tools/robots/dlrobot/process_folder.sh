@@ -15,5 +15,9 @@ fi
 
 pkill firefox
 
+# too many files left after calibre convertor
+rm -rf /tmp/calibre*
+
+
 ls $1/*.txt | xargs --verbose -I '{}' -n 1 -P 4  \
    sh -c "python3 dlrobot.py --logfile \"\$1\".log  --project \"\$1\" "  -- {}

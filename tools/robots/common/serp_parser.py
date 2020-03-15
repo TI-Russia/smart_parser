@@ -8,6 +8,7 @@ import random
 from unidecode import unidecode
 from bs4 import BeautifulSoup
 from download import FILE_CACHE_FOLDER, get_site_domain_wo_www
+from selenium.webdriver.common.keys import Keys
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/ 58.0.3029.81 Safari/537.36",
@@ -19,7 +20,7 @@ USER_AGENTS = [
 SEARCH_URLS = [
     "https://google.com/search",
     "https://google.ru/search",
-    "https://google.de/search"
+    "https://google.nl/search"
 ]
 
 ACCEPT_LANGUAGES = [
@@ -99,39 +100,43 @@ class GoogleSearch:
             sys.stderr("cannot write file {}".format(filename))
             pass
 
+
     @staticmethod
-    def site_search(site_url, query, selenium_holder, language="ru"):
+    def site_search(site_url, query, selenium_holder):
         cached_results = GoogleSearch.read_cache(site_url, query)
         if len(cached_results) > 0:
             return cached_results['urls']
         assert get_site_domain_wo_www(site_url) == site_url
         request_parts = ["site:{}".format(site_url), query]
-        random.shuffle(request_parts) # more random
+        random.shuffle(request_parts)  # more random
         site_req = " ".join(request_parts)
-        url = random.choice(SEARCH_URLS) + "?q=" + urllib2.quote(site_req) + "&hl=" + language
-        url += "&filter=0"
-        try:
-            html = GoogleSearch._request_urllib(url)
-        except urllib.error.HTTPError as err:
-            html = GoogleSearch._request_selenium(url, selenium_holder)
 
-        soup = BeautifulSoup(html, "lxml")
-        serp = list(soup.select(RESULT_SELECTOR))
+        GoogleSearch._request_selenium(random.choice(SEARCH_URLS), selenium_holder)
+        time.sleep(4)
+        element = selenium_holder.the_driver.switch_to.active_element
+        element.send_keys(site_req)
+        time.sleep(1)
+        element.send_keys(Keys.RETURN)
+        time.sleep(6)
+
         site_search_results = []
         search_results_count = 0
-        for r in serp:
-            url = r["href"]
+        elements = list()
+        for element in selenium_holder.the_driver.find_elements_by_css_selector(RESULT_SELECTOR):
+            url = element.get_attribute("href")
             search_results_count += 1
             if 'google' not in url and url != '#' and url.startswith('http'):
                 curr_site = get_site_domain_wo_www(url)
                 if curr_site.lower() == site_url.lower():
                     site_search_results.append(url)
-
+                    elements.append (element)
         if search_results_count > 0:
             GoogleSearch.write_cache(site_url, query, site_search_results)
 
-        return site_search_results
+        #click on a serp item to make google happy
+        random.choice(elements).click()
 
+        return site_search_results
 
 #urls = GoogleSearch().search("site:arshush.ru противодействие коррупции")
 #for url in urls:

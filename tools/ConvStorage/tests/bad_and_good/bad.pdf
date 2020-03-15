@@ -1,0 +1,18 @@
+import os
+import argparse
+from conv_storage_server import rebuild_json
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--directory", dest='directory', default='files')
+    parser.add_argument("--output-json", dest='output_file', default="converted_file_storage.json")
+    return parser.parse_args()
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    if not os.path.exists(args.directory):
+        os.mkdir(args.directory)
+    rebuild_json(None, args.directory, args.output_file)
+

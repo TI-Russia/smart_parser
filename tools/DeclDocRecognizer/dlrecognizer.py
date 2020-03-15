@@ -92,7 +92,8 @@ def find_header(input_text, result, name):
         r"(Сведения об имущественном положении и доходах)",
         r"((Фамилия|ФИО).{1,200}Должность.{1,200}Перечень объектов.{1,200}транспортных)",
         r"(Сведения *,? предоставленные руководителями)",
-        r"(Перечень объектов недвижимого имущества ?, принадлежащих)"
+        r"(Перечень объектов недвижимого имущества ?, принадлежащих)",
+        r"(Сведения об источниках получения средств)"
     ]
 
     regexp = '(' + "|".join(regexps) + ")"
@@ -124,9 +125,12 @@ def get_smart_parser_result(smart_parser_binary, source_file):
 
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
-
-    cmd = "{} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(smart_parser_binary,
-                                                                                           source_file)
+    converted_storage_url = os.environ.get("DECLARATOR_CONV_URL")
+    assert converted_storage_url is not None
+    cmd = "{} -converted-storage-url {} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(
+        smart_parser_binary,
+        converted_storage_url,
+        source_file)
     os.system(cmd)
 
     json_file = source_file + ".json"
@@ -187,7 +191,7 @@ if __name__ == "__main__":
         is_declaration = False
         if result.get('other_document_type') is not None and result['other_document_type']['start'] < 400:
             pass
-        elif vehicle_count > 0:
+        elif vehicle_count > 0 and result.get("surname_word") is not None:
             is_declaration = True
         elif result.get("surname_word", dict()).get("start", 1) == 0 and len(input_text) < 2000 and person_count > 0 and realty_count > 0:
             is_declaration = True

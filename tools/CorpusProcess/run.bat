@@ -1,5 +1,5 @@
-set DROPBOX=C:/Users/sokirko/Dropbox/RawDeclarations/document_files
-set SMART_PARSER=../../src/bin/Release/smart_parser.exe
+set DROPBOX=D:\programming\work_current\smart_parser\sample
+set SMART_PARSER=..\..\src\bin\Release\netcoreapp3.1\smart_parser.exe
 set TMPFOLDER=documents
 set CORPUS_PROCESS=corpus_process.py
 

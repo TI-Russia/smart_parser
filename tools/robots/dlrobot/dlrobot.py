@@ -6,13 +6,12 @@ import logging
 import datetime
 from tempfile import TemporaryDirectory
 
-sys.path.append('../common')
+sys.path.append(os.path.join( os.path.dirname(__file__), '../common' ))
 
-from download import  get_file_extension_by_url, \
-    DEFAULT_HTML_EXTENSION
-
+from download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
 from export_files import export_files_to_folder
 from office_list import  TRobotProject
+from conversion_tasks import wait_doc_conversion_finished
 
 from find_link import \
     check_anticorr_link_text, \
@@ -292,6 +291,8 @@ def make_steps(args, project):
     if not args.skip_final_download:
         logger.info("=== download all declarations =========")
         project.download_last_step()
+        logger.info("=== wait for all document conversion finished =========")
+        wait_doc_conversion_finished()
 
     export_files_to_folder(project.offices, args.result_folder)
     project.write_export_stats()

@@ -1,0 +1,116 @@
+<hfTask xmlns="http://www.abbyy.com/HotFolder/Engine/TaskImpl" xmlns:sys="http://www.abbyy.com/XMLArchive/systemDataNamespace" sys:serializationVersion="0" sys:objectVersion="0" name="TestTask" startType="everyMinute" startTime="0:00:00.000 1.01.1601 UTC" daysToStart="" dayOfMonthNumber="first" status="scheduled" lastRunStartTime="7:36:00.612 12.03.2020 UTC" lastRunProcessesImagesCount="0" lastRunFinalResult="partially" dayNumber="1">
+  <engineTask xmlns="http://www.abbyy.com/HotFolder/Engine/Task" sys:objectVersion="0" checkFilesChanging="false" useProcessedImagesList="true" continueExportCounter="true" dontStoreLogWhenNothingDone="true" fileSplitMode="documentOnFile">
+    <openBatch xmlns="http://www.abbyy.com/HotFolder/Engine/OpenBatchStep" sys:objectVersion="0" needCreateNewBatch="true" batchToOpenPath="" batchToCreateFolder="C:\Users\sokirko\AppData\Local\Temp\ABBYY\FineReader\14.00\HotFolder">
+      <batchOptions xmlns="http://www.abbyy.com/FineReader/BatchOptions" sys:objectVersion="2" hasLanguageDataBase="false">
+        <ocr xmlns="http://www.abbyy.com/FineReader/OCROptions" sys:objectVersion="4" options="OCRO_DetectBarcodes,OCRO_DetectTables,OCRO_DetectPictures,OCRO_AlwaysTrustPdfText" textType="STT_Normal" hilightLevel="SBEHL_Standard" patternName="" patternMode="UPM_DontUseUserPattern">
+          <language xmlns="http://www.abbyy.com/FineReader/BatchRecognitionLanguage" sys:objectVersion="0" type="AutoDetectLanguage" languages="English,Russian"/>
+        </ocr>
+        <preprocess xmlns="http://www.abbyy.com/FineReader/ImagePreprocessOptions" sys:objectVersion="0" options="IPO_DetectOrientation,IPO_SplitDualPage,IPO_RemoveGeometricalDistortions,IPO_CorrectImageSkew,IPO_DADetectResolution,IPO_AutoStretchLowResolutionImage,IPO_AutoOwerwriteImageResolution,IPO_DownsampleColorComponents,IPO_CompressColorComponents,IPO_ReduceISONoise"/>
+        <documentSynthesis xmlns="http://www.abbyy.com/FineReader/DocumentSynthesisOptions" sys:objectVersion="1" options="DSO_DetectRunningTitles,DSO_DetectFootnotes,DSO_DetectTableOfContent,DSO_DetectLists" fonts="Aharoni,Angsana New,AngsanaUPC,Arial,Arial Black,Arial Narrow,Arial Unicode MS,Batang,Book Antiqua,Bookman Old Style,Calibri,Cambria,Candara,Century Gothic,Century Schoolbook,Comic Sans MS,Consolas,Constantia,Corbel,Cordia New,CordiaUPC,Courier New,David,Dotum,Fixed Miriam Transparent,Franklin Gothic Book,Franklin Gothic Demi,Franklin Gothic Demi Cond,Franklin Gothic Heavy,Franklin Gothic Medium,Franklin Gothic Medium Cond,FrankRuehl,Garamond,Geneva,Georgia,Gulim,Gungsuh,Impact,Lucida Sans Unicode,Malgun Gothic,Microsoft Sans Serif,MingLiU,MS Gothic,MS Mincho,MS Reference Sans Serif,Palatino Linotype,Segoe UI,SimHei,SimSun,Sylfaen,Tahoma,Times New Roman,Trebuchet MS,Verdana,Yu Gothic"/>
+        <export xmlns="http://www.abbyy.com/FineReader/ExportOptionsImpl" sys:objectVersion="0" options="">
+          <rtfOptions xmlns="http://www.abbyy.com/FineReader/RTFExportOptions" sys:objectVersion="0" options="RTFEOA_KeepTextAndBackgroundColor,RTFEOA_KeepRunningTitles,RTFEOA_UseAutoPageSizeAndMargins,RTFEOA_KeepPictures,RTFEOA_KeepLineNumbers" errorTextColor="32768" errorBackgroundColor="16777088" hyperlinksColor="13395456" paperSize="[12240, 15840]" exportPageFormat="RTFEPF_Columns" paperMargins="[1700, 1135, 850, 1135]" plainTextFont="Courier New">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </rtfOptions>
+          <xlOptions xmlns="http://www.abbyy.com/FineReader/XLExportOptions" sys:objectVersion="0" options="XLEOA_KeepRunningTitles,XLEOA_KeepPictures" fileFormat="BXLSF_DOUBLE_STREAM" pageFormat="XLEPF_FormattedText">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </xlOptions>
+          <pdfOptions xmlns="http://www.abbyy.com/FineReader/PDFExportOptions" sys:objectVersion="2" options="PDFEOA_KeepTextAndBackgroundColor,PDFEOA_WriteTaggedPdf,PDFEOA_UseMRC,PDFEOA_UseAutoPageSizeAndMargins,PDFEOA_KeepRunningTitles,PDFEOA_KeepPictures" exportMode="BPEM_ImageOnText" fontMode="BPFM_UseFontsFromIText" hyperlinksColor="13395456" paperSize="[12240, 15840]" paperMargins="[1700, 1135, 850, 1135]" outlineCreationMode="EPOCM_NoOutline" profile="Balanced" pdfaVersion="PDFAV_2b">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="300" jpegQuality="45" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+            <securitySettings xmlns="http://www.abbyy.com/FineReader/PdfSecuritySettings" sys:objectVersion="0" options="" setOwnerPassword="false" setUserPassword="false" ownerPassword="" userPassword="" isModifyContentsAllowed="true" isFillFormAllowed="true" isModifyInteractiveContentAllowed="true" isAssembleDocumentAllowed="true" allowInformationCopy="true" allowDisabilityAccess="true" rc4KeyLength="0" printSecuritySettings="PSS_HighResolution" encryptionType="ET_None" documentEncryptionType="DET_AllContent"/>
+          </pdfOptions>
+          <htmlOptions xmlns="http://www.abbyy.com/FineReader/HTMLExportOptions" sys:objectVersion="0" options="HTMLEOA_KeepRunningTitles,HTMLEOA_KeepPictures,HTMLEOA_Allow_CSS" exportPageFormat="HTMLEPF_FormattedStream" partitionMode="HTMLEPM_None">
+            <CodePageOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsCodePage" sys:objectVersion="0" encodeType="BTET_UTF8" codePageId="1252"/>
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </htmlOptions>
+          <pptOptions xmlns="http://www.abbyy.com/FineReader/PPTExportOptions" sys:objectVersion="0" options="PPTEOA_KeepRunningTitles,PPTEOA_KeepPictures">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </pptOptions>
+          <textOptions xmlns="http://www.abbyy.com/FineReader/TextExportOptions" sys:objectVersion="0" options="TXTEOA_ExportParagraphAsOneLine,TXTEOA_KeepRunningTitles">
+            <CodePageOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsCodePage" sys:objectVersion="0" encodeType="BTET_UTF8" codePageId="1252"/>
+          </textOptions>
+          <csvOptions xmlns="http://www.abbyy.com/FineReader/CSVExportOptions" sys:objectVersion="0" options="" tabSeparator="LA==">
+            <CodePageOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsCodePage" sys:objectVersion="0" encodeType="BTET_UTF8" codePageId="1252"/>
+          </csvOptions>
+          <xmlOptions xmlns="http://www.abbyy.com/FineReader/XMLExportOptions" sys:objectVersion="0" options=""/>
+          <ebookOptions xmlns="http://www.abbyy.com/FineReader/EbookExportOptions" sys:objectVersion="0" fontFormat="Plain" saveFontSize="false" embedFonts="false" options="EBOOKEOA_KeepPictures" epubVersion="2_0_1">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </ebookOptions>
+          <DjVuOptions xmlns="http://www.abbyy.com/FineReader/DjVuExportOptions" sys:objectVersion="0" mode="EDEM_ImageOnText" layerMode="EDMLM_Auto" textParticularity="ETCP_Lines">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="-1" jpegQuality="80" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </DjVuOptions>
+          <xpsOptions xmlns="http://www.abbyy.com/FineReader/XPSExportOptions" sys:objectVersion="0" mode="EDEM_ImageOnText" pageSizeMode="XPSPSM_Auto" paperSize="[0, 0]">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="-1" jpegQuality="80" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </xpsOptions>
+        </export>
+        <documentMetadata xmlns="http://www.abbyy.com/FineReader/DocumentMetadataImpl" sys:objectVersion="0">
+          <authorsInfo/>
+          <title/>
+          <subject/>
+          <keywords/>
+          <producer/>
+          <creator/>
+          <creationDate>0:00:00.000 1.01.1601 UTC</creationDate>
+        </documentMetadata>
+        <userPatterns>AAA=</userPatterns>
+        <properties>AQA=</properties>
+      </batchOptions>
+    </openBatch>
+
+    <addImages xmlns="http://www.abbyy.com/HotFolder/Engine/TaskAddEmagesStep" sys:objectVersion="0" folderType="local" folderContent="singleDocument" imageFormatMask="" folderPath="C:\tmp\smart_parser\smart_parser\tools\ConvStorage\tests\pdf.ocr" outlookFolderId="" processSubfolders="true" ftpLogin="" ftpPassword="" isAnonymousFtpLogin="true"/>
+
+    <analyzeRecognize xmlns="http://www.abbyy.com/HotFolder/Engine/ProcessDocumentStep" sys:objectVersion="0" autoAnalyzeBlocks="true" blocksFilePath="" stepMode="AnalyzeAndRecognize" recognitionOptionsSpecified="true">
+      <batchOptions xmlns="http://www.abbyy.com/FineReader/BatchOptions" sys:objectVersion="2" hasLanguageDataBase="false">
+        <ocr xmlns="http://www.abbyy.com/FineReader/OCROptions" sys:objectVersion="4" options="OCRO_DetectBarcodes,OCRO_DetectTables,OCRO_DetectPictures,OCRO_AlwaysTrustPdfText" textType="STT_Normal" hilightLevel="SBEHL_Standard" patternName="" patternMode="UPM_DontUseUserPattern">
+          <language xmlns="http://www.abbyy.com/FineReader/BatchRecognitionLanguage" sys:objectVersion="0" type="" languages="English,Russian"/>
+        </ocr>
+        <preprocess xmlns="http://www.abbyy.com/FineReader/ImagePreprocessOptions" sys:objectVersion="0" options="IPO_DetectOrientation,IPO_SplitDualPage,IPO_RemoveGeometricalDistortions,IPO_CorrectImageSkew,IPO_DADetectResolution,IPO_AutoStretchLowResolutionImage,IPO_AutoOwerwriteImageResolution,IPO_DownsampleColorComponents,IPO_CompressColorComponents,IPO_ReduceISONoise"/>
+        <documentSynthesis xmlns="http://www.abbyy.com/FineReader/DocumentSynthesisOptions" sys:objectVersion="1" options="DSO_DetectRunningTitles,DSO_DetectFootnotes,DSO_DetectTableOfContent,DSO_DetectLists" fonts="Aharoni,Angsana New,AngsanaUPC,Arial,Arial Black,Arial Narrow,Arial Unicode MS,Batang,Book Antiqua,Bookman Old Style,Calibri,Cambria,Candara,Century Gothic,Century Schoolbook,Comic Sans MS,Consolas,Constantia,Corbel,Cordia New,CordiaUPC,Courier New,David,Dotum,Fixed Miriam Transparent,Franklin Gothic Book,Franklin Gothic Demi,Franklin Gothic Demi Cond,Franklin Gothic Heavy,Franklin Gothic Medium,Franklin Gothic Medium Cond,FrankRuehl,Garamond,Geneva,Georgia,Gulim,Gungsuh,Impact,Lucida Sans Unicode,Malgun Gothic,Microsoft Sans Serif,MingLiU,MS Gothic,MS Mincho,MS Reference Sans Serif,Palatino Linotype,Segoe UI,SimHei,SimSun,Sylfaen,Tahoma,Times New Roman,Trebuchet MS,Verdana,Yu Gothic"/>
+        <userPatterns>AAA=</userPatterns>
+      </batchOptions>
+    </analyzeRecognize>
+
+    <saveStepsCollection xmlns="http://www.abbyy.com/HotFolder/Engine/SaveStepsCollection" sys:objectVersion="0">
+
+      <step xmlns="http://www.abbyy.com/HotFolder/Engine/SaveStep" sys:objectVersion="1" type="export" exportFormat="docx" savePath="C:\tmp\smart_parser\smart_parser\tools\ConvStorage\tests\pdf.ocr.out" exportName="[F].[X]" userName="" userPassword="" proxyUserName="" proxyUserPassword="" useAutoLogon="true" exportOptionsModification="PdfSearchable">
+
+        <exportOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsImpl" sys:objectVersion="0" options="">
+          <rtfOptions xmlns="http://www.abbyy.com/FineReader/RTFExportOptions" sys:objectVersion="0" options="RTFEOA_KeepTextAndBackgroundColor,RTFEOA_KeepRunningTitles,RTFEOA_UseAutoPageSizeAndMargins,RTFEOA_KeepPictures,RTFEOA_KeepLineNumbers" errorTextColor="32768" errorBackgroundColor="16777088" hyperlinksColor="13395456" paperSize="[12240, 15840]" exportPageFormat="RTFEPF_Columns" paperMargins="[1700, 1135, 850, 1135]" plainTextFont="Courier New">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </rtfOptions>
+          <xlOptions xmlns="http://www.abbyy.com/FineReader/XLExportOptions" sys:objectVersion="0" options="XLEOA_KeepRunningTitles,XLEOA_KeepPictures" fileFormat="BXLSF_DOUBLE_STREAM" pageFormat="XLEPF_FormattedText">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </xlOptions>
+          <pdfOptions xmlns="http://www.abbyy.com/FineReader/PDFExportOptions" sys:objectVersion="2" options="PDFEOA_KeepTextAndBackgroundColor,PDFEOA_WriteTaggedPdf,PDFEOA_UseMRC,PDFEOA_UseAutoPageSizeAndMargins,PDFEOA_KeepRunningTitles,PDFEOA_KeepPictures" exportMode="BPEM_ImageOnText" fontMode="BPFM_UseFontsFromIText" hyperlinksColor="13395456" paperSize="[12240, 15840]" paperMargins="[1700, 1135, 850, 1135]" outlineCreationMode="EPOCM_NoOutline" profile="Balanced" pdfaVersion="PDFAV_2b">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="300" jpegQuality="45" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+            <securitySettings xmlns="http://www.abbyy.com/FineReader/PdfSecuritySettings" sys:objectVersion="0" options="" setOwnerPassword="false" setUserPassword="false" ownerPassword="" userPassword="" isModifyContentsAllowed="true" isFillFormAllowed="true" isModifyInteractiveContentAllowed="true" isAssembleDocumentAllowed="true" allowInformationCopy="true" allowDisabilityAccess="true" rc4KeyLength="0" printSecuritySettings="PSS_HighResolution" encryptionType="ET_None" documentEncryptionType="DET_AllContent"/>
+          </pdfOptions>
+          <htmlOptions xmlns="http://www.abbyy.com/FineReader/HTMLExportOptions" sys:objectVersion="0" options="HTMLEOA_KeepRunningTitles,HTMLEOA_KeepPictures,HTMLEOA_Allow_CSS" exportPageFormat="HTMLEPF_FormattedStream" partitionMode="HTMLEPM_None">
+            <CodePageOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsCodePage" sys:objectVersion="0" encodeType="BTET_UTF8" codePageId="1252"/>
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </htmlOptions>
+          <pptOptions xmlns="http://www.abbyy.com/FineReader/PPTExportOptions" sys:objectVersion="0" options="PPTEOA_KeepRunningTitles,PPTEOA_KeepPictures">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </pptOptions>
+          <textOptions xmlns="http://www.abbyy.com/FineReader/TextExportOptions" sys:objectVersion="0" options="TXTEOA_ExportParagraphAsOneLine,TXTEOA_KeepRunningTitles">
+            <CodePageOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsCodePage" sys:objectVersion="0" encodeType="BTET_UTF8" codePageId="1252"/>
+          </textOptions>
+          <csvOptions xmlns="http://www.abbyy.com/FineReader/CSVExportOptions" sys:objectVersion="0" options="" tabSeparator="LA==">
+            <CodePageOptions xmlns="http://www.abbyy.com/FineReader/ExportOptionsCodePage" sys:objectVersion="0" encodeType="BTET_UTF8" codePageId="1252"/>
+          </csvOptions>
+          <xmlOptions xmlns="http://www.abbyy.com/FineReader/XMLExportOptions" sys:objectVersion="0" options=""/>
+          <ebookOptions xmlns="http://www.abbyy.com/FineReader/EbookExportOptions" sys:objectVersion="0" fontFormat="Plain" saveFontSize="false" embedFonts="false" options="EBOOKEOA_KeepPictures" epubVersion="2_0_1">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="150" jpegQuality="50" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </ebookOptions>
+          <DjVuOptions xmlns="http://www.abbyy.com/FineReader/DjVuExportOptions" sys:objectVersion="0" mode="EDEM_ImageOnText" layerMode="EDMLM_Auto" textParticularity="ETCP_Lines">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="-1" jpegQuality="80" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </DjVuOptions>
+          <xpsOptions xmlns="http://www.abbyy.com/FineReader/XPSExportOptions" sys:objectVersion="0" mode="EDEM_ImageOnText" pageSizeMode="XPSPSM_Auto" paperSize="[0, 0]">
+            <pictureOptions xmlns="http://www.abbyy.com/FineReader/ExportFormatPictureOptions" sys:objectVersion="0" colourControlType="PCCT_Auto" pictureResolution="-1" jpegQuality="80" allowLossQuality="true" prohibitedColorFormats="0" prohibitedGrayFormats="0" prohibitedBWFormats="0"/>
+          </xpsOptions>
+        </exportOptions>
+        <processPdfOptions xmlns="http://www.abbyy.com/PdfEngine/CreatePdfOptions" sys:objectVersion="0" options=""/>
+      </step>
+    </saveStepsCollection>
+    <postProcessing xmlns="http://www.abbyy.com/HotFolder/Engine/PostProcessingStep" sys:objectVersion="0" postProcessAction="nothing" processedFilesFolder="" outlookFolderId="" copyLogToOutputFolder="true" localeFolderPath="" needLocaleCopy="false"/>
+  </engineTask>
+</hfTask>

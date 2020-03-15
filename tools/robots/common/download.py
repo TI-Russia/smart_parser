@@ -6,15 +6,9 @@ import logging
 from unidecode import unidecode
 import os
 from http_request import make_http_request, request_url_headers
-
+from conversion_tasks import on_save_file
+from content_types import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 FILE_CACHE_FOLDER = "cached"
-DEFAULT_HTML_EXTENSION = ".html"
-DEFAULT_ZIP_EXTENSION = ".zip"
-DEFAULT_RAR_EXTENSION = ".rar"
-ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.pdf', '.docx', '.xls', '.xlsx', '.rtf',
-                                        DEFAULT_ZIP_EXTENSION, \
-                                        DEFAULT_RAR_EXTENSION, \
-                                        DEFAULT_HTML_EXTENSION}
 
 
 def is_html_contents(info):
@@ -38,7 +32,9 @@ def get_site_domain_wo_www(url):
     return domain
 
 
-def download_with_urllib (url, search_for_js_redirect=True):
+
+
+def http_get_with_urllib(url, search_for_js_redirect=True):
     info, headers, data = make_http_request(url, "GET")
 
     try:
@@ -47,7 +43,7 @@ def download_with_urllib (url, search_for_js_redirect=True):
                 try:
                     redirect_url = find_simple_js_redirect(data.decode('latin', errors="ignore"))
                     if redirect_url is not None and redirect_url != url:
-                        return download_with_urllib(redirect_url, search_for_js_redirect=False)
+                        return http_get_with_urllib(redirect_url, search_for_js_redirect=False)
                 except Exception as err:
                     pass
 
@@ -73,18 +69,18 @@ def read_url_info_from_cache(url):
 def write_cache_file(localfile, info_file, info, data):
     with open(localfile, "wb") as f:
         f.write(data)
-
-    if info is not None:
-        with open(info_file, "w", encoding="utf8") as f:
-            url_info = dict()
-            if hasattr(info, "_headers"):
-                url_info['headers'] = dict(info._headers)
-            else:
-                url_info['headers'] = dict()
-            url_info['charset'] = info.get_content_charset()
-            f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
+    assert info is not None
+    url_info = dict()
+    if hasattr(info, "_headers"):
+        url_info['headers'] = dict(info._headers)
+    else:
+        url_info['headers'] = dict()
+    url_info['charset'] = info.get_content_charset()
+    with open(info_file, "w", encoding="utf8") as f:
+        f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
+    file_extension = get_file_extension_by_content_type(url_info['headers'])
+    on_save_file(localfile, file_extension)
     return data
-
 
 
 def save_download_file(filename):
@@ -96,14 +92,15 @@ def save_download_file(filename):
     assert (os.path.exists(filename))
     with open(filename, "rb") as f:
         hashcode = hashlib.sha256(f.read()).hexdigest()
-    extension = os.path.splitext(filename)[1]
-    save_filename = os.path.join(download_folder, hashcode + extension)
-    logger.debug("save file {} as {}".format(filename, save_filename))
-    if os.path.exists(save_filename):
-        logger.debug("replace existing {0}".format(save_filename))
-        os.remove(save_filename)
-    os.rename(filename, save_filename)
-    return save_filename
+    file_extension = os.path.splitext(filename)[1]
+    saved_filename = os.path.join(download_folder, hashcode + file_extension)
+    logger.debug("save file {} as {}".format(filename, saved_filename))
+    if os.path.exists(saved_filename):
+        logger.debug("replace existing {0}".format(saved_filename))
+        os.remove(saved_filename)
+    os.rename(filename, saved_filename)
+    on_save_file(saved_filename, file_extension)
+    return saved_filename
 
 
 def _url_to_cached_folder (url):
@@ -131,16 +128,16 @@ def get_local_file_name_by_url(url):
     return cached_file
 
 
-def download_with_cache(url):
-    localfile = get_local_file_name_by_url(url)
-    info_file = localfile + ".headers"
-    if os.path.exists(localfile):
-        data = read_cache_file(localfile)
+def read_from_cache_or_download(url):
+    local_file = get_local_file_name_by_url(url)
+    info_file = local_file + ".headers"
+    if os.path.exists(local_file):
+        data = read_cache_file(local_file)
     else:
-        data, info = download_with_urllib(url)
+        data, info = http_get_with_urllib(url)
         if len(data) == 0:
             return ""
-        write_cache_file(localfile, info_file, info, data)
+        write_cache_file(local_file, info_file, info, data)
 
     return data
 
@@ -160,7 +157,7 @@ def convert_html_to_utf8(url, html_data):
     return html_data.decode(encoding, errors="ignore")
 
 
-def get_extenstion_by_content_type(headers):
+def get_file_extension_by_content_type(headers):
     content_type = headers.get('Content-Type', "text")
     content_disposition = headers.get('Content-Disposition')
     if content_disposition is not None:
@@ -212,12 +209,12 @@ def get_file_extension_by_cached_url(url):
             return e
 
     headers = read_url_info_from_cache(url).get('headers', {})
-    return get_extenstion_by_content_type(headers)
+    return get_file_extension_by_content_type(headers)
 
 
 def get_file_extension_by_url(url):
     headers = request_url_headers(url)
-    ext = get_extenstion_by_content_type(headers)
+    ext = get_file_extension_by_content_type(headers)
     return ext
 
 

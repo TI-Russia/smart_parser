@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
@@ -179,6 +180,8 @@ namespace Smart.Parser
 
         public static int Main(string[] args)
         {
+            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",");
+            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator == " ");
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))
@@ -365,28 +368,19 @@ namespace Smart.Parser
             string extension = Path.GetExtension(declarationFile).ToLower();
             switch (extension)
             {
-                case ".pdf":
-                case ".html":
-                case ".xhtml":
                 case ".htm":
+                case ".html":
+                    if (HtmAdapter.CanProcess(declarationFile))
+                        return new HtmAdapter(declarationFile);
+                    else
+                        return GetCommonAdapter(declarationFile);
+                case ".pdf":
+                case ".xhtml":
                 case ".doc":
                 case ".rtf":
                 case ".toloka_json":
                 case ".docx":
-                    if (AdapterFamily != "aspose")
-                    {
-                        if (AdapterFamily == "xceed" || AdapterFamily == "prod")
-                        {
-                            //return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
-                            return OpenXmlWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
-                        }
-                    }
-                    else
-                    if (!AsposeLicense.Licensed)
-                    {
-                        throw new Exception("doc and docx file format is not supported");
-                    }
-                    return AsposeDocAdapter.CreateAdapter(declarationFile);
+                    return GetCommonAdapter(declarationFile);
                 case ".xls":
                 case ".xlsx":
                     if (AdapterFamily == "aspose" || AdapterFamily == "prod")
@@ -415,6 +409,24 @@ namespace Smart.Parser
             }
             Logger.Error("Cannot find adapter for " + declarationFile);
             return null;
+        }
+
+        private static IAdapter GetCommonAdapter(string declarationFile)
+        {
+            if (AdapterFamily != "aspose")
+            {
+                if (AdapterFamily == "xceed" || AdapterFamily == "prod")
+                {
+                    //return XceedWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                    return OpenXmlWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
+                }
+            }
+            else
+            if (!AsposeLicense.Licensed)
+            {
+                throw new Exception("doc and docx file format is not supported");
+            }
+            return AsposeDocAdapter.CreateAdapter(declarationFile);
         }
 
         public static int ParseFile(string declarationFile, string outFile)
