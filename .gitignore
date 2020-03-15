@@ -16,3 +16,6 @@ src/Smart.Parser.csproj.user
 /tools/CorpusProcess/out_minkult
 /src/Properties/launchSettings.json
 /**/.idea
+/**/*.arbitr
+/**/.vscode
+*.log
