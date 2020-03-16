@@ -179,8 +179,9 @@ namespace Smart.Parser
 
         public static int Main(string[] args)
         {
-            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",");
-            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator == " ");
+            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",", "Set proper NumberDecimalSeparator ','");
+            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator == " ", "Set proper NumberGroupSeparator ' '");
+
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))
