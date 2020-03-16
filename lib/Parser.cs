@@ -235,7 +235,6 @@ namespace Smart.Parser.Lib
             {
                 borderFinder.CreateNewSection(rowOffset, columnOrdering.Section);
             }
-            List<Decimal> incomes = new List<Decimal>();
             
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
@@ -269,7 +268,11 @@ namespace Smart.Parser.Lib
 
                 if (updateTrigrams) ColumnPredictor.UpdateByRow(columnOrdering, currRow);
 
-                currRow.InitPersonData();
+                if (!currRow.InitPersonData())
+                {
+                    // be robust, ignore errors see 8562.pdf.docx in tests
+                    continue;
+                }
 
                 if (currRow.PersonName != String.Empty)
                 {
@@ -287,31 +290,45 @@ namespace Smart.Parser.Lib
                     }
                 }
                 borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
-                if (    columnOrdering.ContainsField (DeclarationField.DeclaredYearlyIncomeThousands)) {
-                    PublicServant dummy = new PublicServant();
-                    ParseIncome(currRow, dummy, declaration.MultiplyIncomeIfSpecified);
-                    if (dummy.DeclaredYearlyIncome != null)
-                    {
-                        incomes.Add(dummy.DeclaredYearlyIncome.Value);
-                    }
-                } 
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
-            if (incomes.Count > 3) 
-            {
-                incomes.Sort();
-                Decimal medianIncome = incomes[incomes.Count / 2];
-                if (medianIncome > 10000000)
-                {
-                    declaration.MultiplyIncomeIfSpecified = false;
-                }
-            }
 
             Logger.Info("Parsed {0} declarants", declaration.PublicServants.Count());
             if (!ColumnOrdering.SearchForFioColumnOnly)
                 ParsePersonalProperties(declaration);
 
             return declaration;
+        }
+
+        public void ForgetThousandMultiplier(Declaration declaration)
+        {
+            // the incomes are so high, that we should not multiply incomes by 1000 although the 
+            // column title specify this multiplier
+            List<Decimal> incomes = new List<Decimal>();
+            foreach (PublicServant servant in declaration.PublicServants)
+            {
+                foreach (DataRow row in servant.DateRows)
+                {
+                    if (row.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
+                    {
+                        PublicServant dummy = new PublicServant();
+                        ParseIncome(row, dummy, true);
+                        if (dummy.DeclaredYearlyIncome != null)
+                        {
+                            incomes.Add(dummy.DeclaredYearlyIncome.Value);
+                        }
+                    }
+                }
+            }
+            if (incomes.Count > 3)
+            {
+                incomes.Sort();
+                Decimal medianIncome = incomes[incomes.Count / 2];
+                if (medianIncome > 10000)
+                {
+                    declaration.IgnoreThousandMultipler = true;
+                }
+            }
         }
 
         public static void CheckProperty(RealEstateProperty prop)
@@ -440,14 +457,14 @@ namespace Smart.Parser.Lib
             }
 
         }
-        bool ParseIncomeOneField(DataRow currRow, Person person, DeclarationField field, bool multiply1000ProvenByData)
+        bool ParseIncomeOneField(DataRow currRow, Person person, DeclarationField field, bool ignoreThousandMultiplier)
         {
             if (!currRow.ColumnOrdering.ContainsField(field)) return false;
             string fieldStr = currRow.GetContents(field);
             if (fieldStr == "") return false;
             bool fieldInThousands = (field & DeclarationField.DeclaredYearlyIncomeThousands) > 0;
             person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(fieldStr, fieldInThousands);
-            if (multiply1000ProvenByData)
+            if (!ignoreThousandMultiplier)
             {
                 person.DeclaredYearlyIncome *= 1000;
             }
@@ -455,31 +472,30 @@ namespace Smart.Parser.Lib
                 person.DeclaredYearlyIncomeRaw = fieldStr;
             return true;
         }
-        bool ParseIncome(DataRow currRow, Person person, bool multiply1000ProvenByData)
+        bool ParseIncome(DataRow currRow, Person person, bool ignoreThousandMultiplier)
         {
-            if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, multiply1000ProvenByData))
+            if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, ignoreThousandMultiplier))
             {
                 return true;
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, false))
+            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, true))
             {
                 return true;
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, multiply1000ProvenByData))
+            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, ignoreThousandMultiplier))
             {
                 return true;
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, false))
+            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, true))
             {
                 return true;
             }
-
-            //if (currRow.ColumnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands))
             return false;
         }
 
-public Declaration ParsePersonalProperties(Declaration declaration)
+        public Declaration ParsePersonalProperties(Declaration declaration)
         {
+            ForgetThousandMultiplier(declaration);
             SecondPassStartTime = DateTime.Now;
             int count = 0;
             int total_count = declaration.PublicServants.Count();
@@ -541,7 +557,7 @@ public Declaration ParsePersonalProperties(Declaration declaration)
             
                         if (!foundIncomeInfo)
                         {
-                            if (ParseIncome(currRow, person, declaration.MultiplyIncomeIfSpecified))
+                            if (ParseIncome(currRow, person, declaration.IgnoreThousandMultipler))
                             {
                                 totalIncome += person.DeclaredYearlyIncome == null ? 0 : person.DeclaredYearlyIncome.Value;
                                 foundIncomeInfo = true;

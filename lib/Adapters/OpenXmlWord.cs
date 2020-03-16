@@ -593,7 +593,10 @@ namespace Smart.Parser.Adapters
                             joinExplanation = "word break regexp";
                         }
 
-                        if (tokens1.Count  +  tokens2.Count == 3 && TextHelpers.CanBePatronymic(tokens2[tokens2.Count - 1])) {
+                        if (    tokens1.Count  +  tokens2.Count == 3 
+                            && TextHelpers.CanBePatronymic(tokens2[tokens2.Count - 1])
+                            && Char.IsUpper(tokens1[0][0])
+                            ) {
                             joinExplanation = "person regexp";
                         }
 

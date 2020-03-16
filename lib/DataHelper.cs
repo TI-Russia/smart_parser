@@ -71,6 +71,7 @@ namespace Smart.Parser.Lib
                 case "супруг(супруга)": return RelationType.Spouse;
                 case "супруга(супруг)": return RelationType.Spouse;
                 case "суруга": return RelationType.Spouse;
+                case "супуга": return RelationType.Spouse;
                 case "супруга": return RelationType.Spouse;
                 case "супруга.": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
@@ -81,6 +82,7 @@ namespace Smart.Parser.Lib
                 case "несовершенолетнийребенок": return RelationType.Child;
                 case "несовершеннолетниеребенок": return RelationType.Child;
                 case "несовершеннол.ребенок": return RelationType.Child;
+                case "н/ребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
                 case "дочь.": return RelationType.Child;
                 case "дочьсупроги": return RelationType.Child;
@@ -101,6 +103,9 @@ namespace Smart.Parser.Lib
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
                 case "иждивенец": return RelationType.Child;
+                case "опекаемая": return RelationType.Child;
+                case "опекаемый": return RelationType.Child;
+
                 default:
                     if (throwException)
                     {

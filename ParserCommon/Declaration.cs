@@ -9,7 +9,8 @@ namespace TI.Declarator.ParserCommon
         public DeclarationProperties Properties { get; set; }
         public List<DeclarationSection> Sections { get; set; } = new List<DeclarationSection>();
         public List<DataRowInterface> DataRows;
-        public bool MultiplyIncomeIfSpecified = true;
+
+        public bool IgnoreThousandMultipler = false;
     }
 
     public class DeclarationSection
