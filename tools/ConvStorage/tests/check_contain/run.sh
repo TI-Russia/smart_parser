@@ -1,3 +1,5 @@
+export DECLARATOR_CONV_URL=127.0.0.1:8081
+
 python ../../create_json.py
 [ ! -d input_files ] || rm -rf input_files
 
