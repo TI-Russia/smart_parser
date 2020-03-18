@@ -5454,7 +5454,7 @@
       ],
       "real_estates": [
         {
-          "text": "квартира (общая);",
+          "text": "квартира (общая)",
           "square": 64.3,
           "relative": null,
           "own_type_by_column": null,
@@ -6018,7 +6018,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Квартира (долевая ½);",
+          "text": "Квартира\n(долевая ½)",
           "square": 51.2,
           "relative": "Супруг(а)",
           "own_type_by_column": null,

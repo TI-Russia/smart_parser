@@ -265,7 +265,7 @@ namespace Smart.Parser.Adapters
             return index;
         }
 
-        void SetRelative(string value)
+        public void SetRelative(string value)
         {
             if (DataHelper.IsEmptyValue(value))
             {

@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TI.Declarator.ParserCommon;
+using System.Drawing;
+
 namespace Smart.Parser.Lib
 {
 
@@ -83,12 +85,95 @@ namespace Smart.Parser.Lib
 
                 FinishDeclarant();
             }
+
+            //  see 8562.pdf.docx  in tests
+            //  calc string width using graphics.MeasureString methods
+            bool DivideDeclarantAndRelativesBySoftEolns(ColumnOrdering columnOrdering, DataRow row)
+            {
+                if (CurrentDeclarant.Relatives.Count() > 0)
+                {
+                    return false;
+                }
+                if (!columnOrdering.ContainsField(DeclarationField.NameOrRelativeType)) return false;
+                var nameCell = row.GetDeclarationField(DeclarationField.NameOrRelativeType) as OpenXmlWordCell;
+                if (nameCell is null) return false;
+                if (nameCell.IsEmpty) return false;
+                if (nameCell.FontSize == 0) return false; // no font info
+                List<string> lines = nameCell.GetLinesWithSoftBreaks();
+                if (lines.Count < 2) return false;
+                List<int> borders  = new List<int>() { 0 };
+
+                for (int i = 1;  i< lines.Count; ++i)
+                {
+                    if (DataHelper.ParseRelationType(lines[i], false) != RelationType.Error)
+                    {
+                        borders.Add(i);
+                    }
+                }
+                if (borders.Count == 1) return false;
+                List<DataRow> dividedLines = new List<DataRow>();
+                for (int i = 0; i < borders.Count; ++i)
+                {
+                    dividedLines.Add(row.DeepClone());
+                }
+                for (int i = 0; i < row.Cells.Count; ++i)
+                {
+                    var divided = (row.Cells[i] as OpenXmlWordCell).GetLinesWithSoftBreaks();
+                    int start = 0;
+                    for (int k = 0; k < borders.Count; ++k)
+                    {
+                        int end = (k + 1 == borders.Count) ? divided.Count : borders[k + 1];
+                        if (start < divided.Count)
+                        {
+                            string value = String.Join("\n", divided.Skip(start).Take(end - start));
+                            if (value.Length > 0)
+                            {
+                                dividedLines[k].Cells[i].Text = value;
+                                dividedLines[k].Cells[i].IsEmpty = false;
+                            }
+                        }
+                        start = end;
+                    }
+                }
+                for (int k = 0; k < borders.Count; ++k)
+                {
+                    DataRow currRow = dividedLines[k];
+                    var nameOrRelativeType = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType).Text;
+                    if (k == 0)
+                    {
+                        currRow.PersonName = nameOrRelativeType;
+                        currRow.Occupation = row.Occupation;
+                        currRow.Department = row.Department;
+
+                        InitDeclarantProperties(currRow);
+                    }
+                    else
+                    {
+                        if (!DataHelper.IsRelativeInfo(nameOrRelativeType))
+                        {
+                            Logger.Error(String.Format("cannot parse relative {0}", nameOrRelativeType.ReplaceEolnWithSpace()));
+                            return false;
+                        }
+                        else
+                        {
+                            currRow.SetRelative(nameOrRelativeType);
+                        }
+
+                        CreateNewRelative(currRow);
+                    }
+                    CurrentPerson.DateRows.Add(dividedLines[k]);
+                }
+                return true;
+            }
             public void AddInputRowToCurrentPerson(ColumnOrdering columnOrdering,  DataRow row)
             {
                 if (CurrentPerson != null)
                 {
-                    CurrentPerson.DateRows.Add(row);
-                    TransposeTableByRelatives(columnOrdering, row);
+                    if (!DivideDeclarantAndRelativesBySoftEolns(columnOrdering, row))
+                    {
+                        CurrentPerson.DateRows.Add(row);
+                        TransposeTableByRelatives(columnOrdering, row);
+                    }
                 }
             }
 
@@ -136,16 +221,19 @@ namespace Smart.Parser.Lib
                 }
             }
 
-            public void CreateNewDeclarant(ColumnOrdering columnOrdering, IAdapter adapter, DataRow row)
+            public void InitDeclarantProperties(DataRow row)
+            {
+                CurrentDeclarant.NameRaw = row.PersonName;
+                CurrentDeclarant.Occupation = row.Occupation;
+                CurrentDeclarant.Department = row.Department;
+                CurrentDeclarant.Ordering = row.ColumnOrdering;
+            }
+
+            public void CreateNewDeclarant(IAdapter adapter, DataRow row)
             {
                 Logger.Debug("Declarant {0} at row {1}", row.PersonName, row.GetRowIndex());
-                CurrentDeclarant = new PublicServant()
-                {
-                    NameRaw = row.PersonName,
-                    Occupation = row.Occupation,
-                    Ordering = columnOrdering,
-                    Department = row.Department
-                };
+                CurrentDeclarant = new PublicServant();
+                InitDeclarantProperties(row);
                 if (CurrentSection != null)
                 {
                     CurrentDeclarant.Department = CurrentSection.Name;
@@ -276,7 +364,7 @@ namespace Smart.Parser.Lib
 
                 if (currRow.PersonName != String.Empty)
                 {
-                    borderFinder.CreateNewDeclarant(columnOrdering, Adapter, currRow);
+                    borderFinder.CreateNewDeclarant(Adapter, currRow);
                 }
                 else if  (currRow.RelativeType !=  String.Empty)
                 {
@@ -683,7 +771,10 @@ namespace Smart.Parser.Lib
             {
                 return result;
             }
-            string[] lines = value.Split('\n');
+            string[] lines = value.Trim(' ', ';').Split(';');
+            if (lines.Length != linesWithNumbers.Count) {
+                lines = value.Split('\n');
+            }
             Debug.Assert(linesWithNumbers.Count > 1);
             int startLine = linesWithNumbers[0];
             int numberIndex = 1;
