@@ -1,3 +1,5 @@
+source ../setup_tests.sh
+
 python ../../create_json.py
 [ ! -d input_files ] || rm -rf input_files
 
