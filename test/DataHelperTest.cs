@@ -45,7 +45,6 @@ namespace test
         }
 
         [TestMethod]
-        [DeploymentItem(@"Test Samples\2577\6.docx")]
         public void TestParseDocumentFileName()
         {
             string file1 = @"C:\Users\user\Dropbox\RawDeclarations\Ministries\min_agr_new\2013\9037\dep_gos_slyzhbi_2013.xls";
