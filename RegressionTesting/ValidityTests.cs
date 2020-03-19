@@ -667,30 +667,11 @@ namespace RegressionTesting
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
 
-                string fcOut = RunFileCompare(expectedFile, actualFile);
-                Console.Write(fcOut);
+                //string fcOut = RunFileCompare(expectedFile, actualFile);
+                //Console.Write(fcOut);
 
                 return false;
             }
-        }
-
-        private static bool IsSampleFileValid(string expectedFile, string logFile)
-        {
-            string expectedOutput = File.ReadAllText(expectedFile);
-            string validationResult = ApiClient.ValidateParserOutput(expectedOutput);
-
-            if (validationResult != "[]")
-            {
-                string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(expectedFile) + ".json";
-                File.WriteAllText(errorsFileName, validationResult);
-                Log(logFile, $"Expected file {expectedFile} is no longer valid." +
-                    $" Please ensure it conforms to the latest schema and validation requirements.");
-                Log(logFile, $"Validation errors are listed in {Path.GetFullPath(errorsFileName)}");
-
-                return false;
-            }
-
-            return true;
         }
 
         private static void Log(string logFileName, string contents)

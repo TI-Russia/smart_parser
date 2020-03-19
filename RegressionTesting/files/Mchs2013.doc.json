@@ -13,7 +13,7 @@
           "square": 715077.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "http://www.mchs.gov.ru/document/715077",
+          "square_raw": "http://www,mchs,gov,ru/document/715077",
           "country_raw": "http://www.mchs.gov.ru/document/715077"
         },
         {
@@ -21,7 +21,7 @@
           "square": 715077.0,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "http://www.mchs.gov.ru/document/715077",
+          "square_raw": "http://www,mchs,gov,ru/document/715077",
           "country_raw": "http://www.mchs.gov.ru/document/715077",
           "type_raw": "http://www.mchs.gov.ru/document/715077"
         }

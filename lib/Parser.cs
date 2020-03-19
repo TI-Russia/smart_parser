@@ -691,6 +691,11 @@ namespace Smart.Parser.Lib
             }
 
         }
+        
+        static string NormalizeRawDecimalForTest(string s)
+        {
+            return s.Replace(".", ",");
+        }
 
         static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
         {
@@ -705,7 +710,7 @@ namespace Smart.Parser.Lib
             stateProperty.Text = statePropTypeStr;
             stateProperty.type_raw = statePropTypeStr;
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
-            stateProperty.square_raw = statePropSquareStr;
+            stateProperty.square_raw = NormalizeRawDecimalForTest(statePropSquareStr);
             stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
             stateProperty.own_type_by_column = StateString;
             CheckProperty(stateProperty);
@@ -724,7 +729,7 @@ namespace Smart.Parser.Lib
             RealEstateProperty realEstateProperty = new RealEstateProperty();
 
             realEstateProperty.square = DataHelper.ParseSquare(areaStr);
-            realEstateProperty.square_raw = areaStr;
+            realEstateProperty.square_raw = NormalizeRawDecimalForTest(areaStr);
             realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
 
             // колонка с типом недвижимости отдельно

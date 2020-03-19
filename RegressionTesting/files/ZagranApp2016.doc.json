@@ -19,7 +19,7 @@
           "square": 25.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "25.0",
+          "square_raw": "25,0",
           "country_raw": "Россия",
           "type_raw": "квартира",
           "own_type_raw": "индивидуальная"
@@ -29,7 +29,7 @@
           "square": 52.7,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "52.7",
+          "square_raw": "52,7",
           "country_raw": "Таджикистан",
           "type_raw": "квартира"
         }
@@ -62,7 +62,7 @@
           "square": 70.5,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "70.5",
+          "square_raw": "70,5",
           "country_raw": "Россия",
           "type_raw": "квартира"
         },
@@ -71,7 +71,7 @@
           "square": 58.4,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "58.4",
+          "square_raw": "58,4",
           "country_raw": "Узбекистан",
           "type_raw": "квартира"
         },
@@ -80,7 +80,7 @@
           "square": 58.6,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "58.6",
+          "square_raw": "58,6",
           "country_raw": "Россия",
           "type_raw": "квартира",
           "own_type_raw": "общая долевая\n1/2"
@@ -90,7 +90,7 @@
           "square": 58.6,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "58.6",
+          "square_raw": "58,6",
           "country_raw": "Россия",
           "type_raw": "квартира"
         },
@@ -99,7 +99,7 @@
           "square": 58.4,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "58.4",
+          "square_raw": "58,4",
           "country_raw": "Узбекистан",
           "type_raw": "квартира"
         },
@@ -108,7 +108,7 @@
           "square": 67.9,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "67.9",
+          "square_raw": "67,9",
           "country_raw": "Россия",
           "type_raw": "квартира"
         }
