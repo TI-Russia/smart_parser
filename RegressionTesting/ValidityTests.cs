@@ -15,10 +15,6 @@ namespace RegressionTesting
     /// Summary description for ValidityTests
     /// </summary>
     [TestClass]
-    [DeploymentItem(SamplesDirectory)]
-    [DeploymentItem(@"JsonSerialization\import-schema.json")]
-    [DeploymentItem(@"JsonSerialization\import-schema-dicts.json")]
-    [DeploymentItem("log4net.config")]
     public class ValidityTests
     {
         public ValidityTests()
@@ -68,7 +64,6 @@ namespace RegressionTesting
         //
         #endregion
             
-        private const string SamplesDirectory = "regression_samples";
         private const string SmartParserLogFile = "smart_parser_files.log";
 
         private string SmartParserLogFilePath
@@ -79,7 +74,12 @@ namespace RegressionTesting
         public String GetCanonFolder()
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(TestContext.TestDir));
-            return Path.Join(solution_dir, "RegressionTesting", "files");
+            if (solution_dir.EndsWith("RegressionTesting")) {
+                return Path.Join(solution_dir, "files"); // for ubuntu dotnet
+            }
+            else {
+                return Path.Join(solution_dir, "RegressionTesting", "files"); // in Windows Visual Studio
+            }
         }
 
 
