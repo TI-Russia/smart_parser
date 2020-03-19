@@ -111,7 +111,7 @@ namespace TI.Declarator.JsonSerialization
             AddNotNullProp(jDocument, "sheet_number", declaration.Properties.sheet_number);
             AddNotNullProp(jDocument, "documentfile_id", declaration.Properties.documentfile_id);
             AddNotNullProp(jDocument, "archive_file", declaration.Properties.archive_file);
-            if (declaration.MultiplyIncomeIfSpecified == false)
+            if (declaration.IgnoreThousandMultipler)
             {
                 AddNotNullProp(jDocument, "ignore_1000_multiplier", "true");
 

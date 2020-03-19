@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 
 namespace Smart.Parser.Adapters
@@ -267,7 +265,7 @@ namespace Smart.Parser.Adapters
             return index;
         }
 
-        void SetRelative(string value)
+        public void SetRelative(string value)
         {
             if (DataHelper.IsEmptyValue(value))
             {
@@ -319,7 +317,7 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        public void InitPersonData()
+        public bool InitPersonData()
         {
             if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
             {
@@ -357,11 +355,13 @@ namespace Smart.Parser.Adapters
                     { 
                         PersonName = nameOrRelativeType;
                         if (!PersonName.Contains('.') && !PersonName.Trim().Any(Char.IsWhiteSpace)) {
-                            throw new Exception("bad person name " + PersonName);
+                            Logger.Error("ignore bad person name " + PersonName);
+                            return false;
                         }
                     }
                 }
             }
+            return true;
         }
 
 

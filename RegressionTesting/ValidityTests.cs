@@ -176,6 +176,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("docx")]
+        public void SplitDeclarantAndRelatives()
+        {
+            TestSmartParser("4067_0.docx", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("xlsx")]
         public void ManyManyColumns()
         {
@@ -375,6 +382,13 @@ namespace RegressionTesting
         public void TransposedTable()
         {
             TestSmartParser("30429.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void DividePersonAndRelativesByEoln()
+        {
+            TestSmartParser("8562.pdf.docx", "prod");
         }
 
         [TestMethod]

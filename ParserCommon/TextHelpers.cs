@@ -95,7 +95,7 @@ namespace TI.Declarator.ParserCommon
             return s.EndsWith("вич") ||
                     s.EndsWith("вна") ||
                     s.EndsWith("вны") ||
-                    s.EndsWith(".") ||
+                    (s.Length <=4  && s.EndsWith(".")) || // "В." "В.П." "Вяч."
                     s.EndsWith("тич") ||
                     s.EndsWith("мич") ||
                     s.EndsWith("ьич") ||

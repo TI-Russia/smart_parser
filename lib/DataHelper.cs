@@ -64,16 +64,18 @@ namespace Smart.Parser.Lib
 
         public static RelationType ParseRelationType(string strRel, bool throwException = true)
         {
-            string clean = strRel.ToLower().Replace(" ", "").Replace(":", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit();
+            string clean = strRel.ToLower().Replace(" ", "").Replace(":", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit().ToLower();
             switch (clean)
             {
                 case "супруг": return RelationType.Spouse;
                 case "супруг(супруга)": return RelationType.Spouse;
                 case "супруга(супруг)": return RelationType.Spouse;
                 case "суруга": return RelationType.Spouse;
+                case "супуга": return RelationType.Spouse;
                 case "супруга": return RelationType.Spouse;
                 case "супруга.": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
+                case "несовершенно": return RelationType.Child;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
                 case "несовершеннолетниедети": return RelationType.Child;
@@ -81,6 +83,7 @@ namespace Smart.Parser.Lib
                 case "несовершенолетнийребенок": return RelationType.Child;
                 case "несовершеннолетниеребенок": return RelationType.Child;
                 case "несовершеннол.ребенок": return RelationType.Child;
+                case "н/ребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
                 case "дочь.": return RelationType.Child;
                 case "дочьсупроги": return RelationType.Child;
@@ -101,6 +104,9 @@ namespace Smart.Parser.Lib
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
                 case "иждивенец": return RelationType.Child;
+                case "опекаемая": return RelationType.Child;
+                case "опекаемый": return RelationType.Child;
+
                 default:
                     if (throwException)
                     {
