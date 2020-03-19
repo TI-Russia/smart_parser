@@ -557,7 +557,7 @@ namespace Smart.Parser.Lib
                 person.DeclaredYearlyIncome *= 1000;
             }
             if (!DataHelper.IsEmptyValue(fieldStr))
-                person.DeclaredYearlyIncomeRaw = fieldStr;
+                person.DeclaredYearlyIncomeRaw = NormalizeRawDecimalForTest(fieldStr);
             return true;
         }
         bool ParseIncome(DataRow currRow, Person person, bool ignoreThousandMultiplier)
