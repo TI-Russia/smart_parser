@@ -10,7 +10,7 @@
       "incomes": [
         {
           "size": 1958034.1,
-          "size_raw": "1958034.1",
+          "size_raw": "1958034,1",
           "relative": null
         }
       ],
@@ -62,18 +62,18 @@
       "incomes": [
         {
           "size": 2238301.00,
-          "size_raw": "2238301.00",
+          "size_raw": "2238301,00",
           "relative": null
         },
         {
           "size": 1465018.00,
-          "size_raw": "1465018.00\n(в т.ч. доход от продажи транспортного средства в размере 730000.00)",
+          "size_raw": "1465018,00\n(в т,ч, доход от продажи транспортного средства в размере 730000,00)",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 4245814.34,
-          "size_raw": "4245814.34",
+          "size_raw": "4245814,34",
           "relative": "Супруг(а)",
           "relative_index": 2
         }
@@ -177,12 +177,12 @@
       "incomes": [
         {
           "size": 1132994.18,
-          "size_raw": "1132994.18",
+          "size_raw": "1132994,18",
           "relative": null
         },
         {
           "size": 2076077.22,
-          "size_raw": "2076077.22",
+          "size_raw": "2076077,22",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -241,12 +241,12 @@
       "incomes": [
         {
           "size": 1162854.92,
-          "size_raw": "1162854.92",
+          "size_raw": "1162854,92",
           "relative": null
         },
         {
           "size": 1916804.20,
-          "size_raw": "1916804.20",
+          "size_raw": "1916804,20",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -301,12 +301,12 @@
       "incomes": [
         {
           "size": 1057988.01,
-          "size_raw": "1057988.01",
+          "size_raw": "1057988,01",
           "relative": null
         },
         {
           "size": 793413.25,
-          "size_raw": "793413.25",
+          "size_raw": "793413,25",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
