@@ -46,8 +46,8 @@ if [ ! -f $INPUT_FILE.docx ]; then
 fi
 
 filesize=`stat --printf="%s" $INPUT_FILE.docx`
-if [ $filesize != 10405 ]; then
-  echo "the size of the output file must be 10405 (from Finereader)"
+if [ $filesize -ge 15000 ]; then
+  echo "the size of the output file must be less than 15000 (from Finereader), winword converts it to a chinese doc"
   exit  1
 fi
 
