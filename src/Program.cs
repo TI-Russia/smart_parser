@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading.Tasks;
 using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
 using System.IO;
@@ -78,10 +77,7 @@ namespace Smart.Parser
                     throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
                 }
             }
-            else
-            {
-                Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
-            }
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             if (maxRowsToProcessOpt.isMatched)
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
@@ -179,9 +175,6 @@ namespace Smart.Parser
 
         public static int Main(string[] args)
         {
-            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",", "Set proper NumberDecimalSeparator ','");
-            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator == " ", "Set proper NumberGroupSeparator ' '");
-
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))

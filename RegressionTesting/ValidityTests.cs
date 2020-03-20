@@ -86,7 +86,7 @@ namespace RegressionTesting
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
@@ -106,7 +106,7 @@ namespace RegressionTesting
         public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
             SetupLog4Net();
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;

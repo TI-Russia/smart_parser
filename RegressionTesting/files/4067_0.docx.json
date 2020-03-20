@@ -9,12 +9,12 @@
       "incomes": [
         {
           "size": 3145740.00,
-          "size_raw": "3 145,738",
+          "size_raw": "3145,738",
           "relative": null
         },
         {
           "size": 1181680.00,
-          "size_raw": "1 181,683",
+          "size_raw": "1181,683",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -25,7 +25,7 @@
           "square": 3168.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "3 168",
+          "square_raw": "3168",
           "country_raw": "Россия"
         },
         {
@@ -73,7 +73,7 @@
           "square": 3168.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "3 168",
+          "square_raw": "3168",
           "country_raw": "Россия"
         },
         {

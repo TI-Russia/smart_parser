@@ -25,7 +25,7 @@
           "square": 42.70,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "42,70",
+          "square_raw": "42,7",
           "country_raw": "Россия"
         },
         {
@@ -33,7 +33,7 @@
           "square": 40.70,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "40,70",
+          "square_raw": "40,7",
           "country_raw": "Россия"
         },
         {
@@ -41,7 +41,7 @@
           "square": 63.10,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "63,10",
+          "square_raw": "63,1",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         },
@@ -50,7 +50,7 @@
           "square": 18.30,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "18,30",
+          "square_raw": "18,3",
           "country_raw": "Россия"
         },
         {
@@ -58,7 +58,7 @@
           "square": 130.50,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "130,50",
+          "square_raw": "130,5",
           "country_raw": "Россия"
         },
         {
@@ -66,7 +66,7 @@
           "square": 63.10,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "63,10",
+          "square_raw": "63,1",
           "country_raw": "Россия"
         },
         {
@@ -74,7 +74,7 @@
           "square": 40.70,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "40,70",
+          "square_raw": "40,7",
           "country_raw": "Россия"
         },
         {
@@ -82,7 +82,7 @@
           "square": 82.20,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "82,20",
+          "square_raw": "82,2",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         },
@@ -91,7 +91,7 @@
           "square": 82.20,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "82,20",
+          "square_raw": "82,2",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         }

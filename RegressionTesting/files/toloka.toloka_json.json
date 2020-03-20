@@ -9,12 +9,12 @@
       "incomes": [
         {
           "size": 7343945.98,
-          "size_raw": "7 343 945,98",
+          "size_raw": "7343945,98",
           "relative": null
         },
         {
           "size": 1335000.00,
-          "size_raw": "1 335 000,00",
+          "size_raw": "1335000",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -35,7 +35,7 @@
           "square": 155.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "155,50",
+          "square_raw": "155,5",
           "country_raw": "РФ",
           "type_raw": "квартира"
         },
@@ -44,7 +44,7 @@
           "square": 155.50,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "155,50",
+          "square_raw": "155,5",
           "country_raw": "РФ",
           "type_raw": "квартира"
         }
@@ -66,12 +66,12 @@
       "incomes": [
         {
           "size": 6797319.29,
-          "size_raw": "6 797 319,29",
+          "size_raw": "6797319,29",
           "relative": null
         },
         {
           "size": 819705.71,
-          "size_raw": "819 705,71",
+          "size_raw": "819705,71",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -102,7 +102,7 @@
           "square": 154.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "154,10",
+          "square_raw": "154,1",
           "country_raw": "РФ",
           "type_raw": "квартира"
         },
@@ -111,7 +111,7 @@
           "square": 154.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "154,10",
+          "square_raw": "154,1",
           "country_raw": "РФ",
           "type_raw": "квартира"
         },
@@ -120,7 +120,7 @@
           "square": 154.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "154,10",
+          "square_raw": "154,1",
           "country_raw": "РФ",
           "type_raw": "квартира"
         }
@@ -136,7 +136,7 @@
       "incomes": [
         {
           "size": 4613430.03,
-          "size_raw": "4 613 430,03",
+          "size_raw": "4613430,03",
           "relative": null
         }
       ],
@@ -146,7 +146,7 @@
           "square": 186.50,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "186,50",
+          "square_raw": "186,5",
           "country_raw": "РФ",
           "type_raw": "квартира"
         },
@@ -155,7 +155,7 @@
           "square": 23.60,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "23,60",
+          "square_raw": "23,6",
           "country_raw": "РФ",
           "type_raw": "машино-место"
         },
@@ -211,7 +211,7 @@
       "incomes": [
         {
           "size": 3358332.74,
-          "size_raw": "3 358 332,74",
+          "size_raw": "3358332,74",
           "relative": null
         }
       ],
@@ -231,7 +231,7 @@
           "square": 60.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "60,90",
+          "square_raw": "60,9",
           "country_raw": "РФ",
           "type_raw": "квартира"
         }
@@ -252,7 +252,7 @@
       "incomes": [
         {
           "size": 7250349.02,
-          "size_raw": "7 250 349,02",
+          "size_raw": "7250349,02",
           "relative": null
         }
       ],
@@ -272,7 +272,7 @@
           "square": 148.10,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "148,10",
+          "square_raw": "148,1",
           "country_raw": "РФ",
           "type_raw": "жилой дом"
         }

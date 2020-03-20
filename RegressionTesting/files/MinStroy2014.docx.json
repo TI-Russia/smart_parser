@@ -19,7 +19,7 @@
           "square": 54.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "54,0",
+          "square_raw": "54",
           "country_raw": "Российская Федерация"
         }
       ],
@@ -145,7 +145,7 @@
       "incomes": [
         {
           "size": 633414.60,
-          "size_raw": "633414,60",
+          "size_raw": "633414,6",
           "relative": null
         },
         {

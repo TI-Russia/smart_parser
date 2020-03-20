@@ -9,7 +9,7 @@
       "incomes": [
         {
           "size": 2492968.85,
-          "size_raw": "2 492 968,85",
+          "size_raw": "2492968,85",
           "relative": null
         }
       ],
@@ -19,7 +19,7 @@
           "square": 65.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "65,0",
+          "square_raw": "65",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -52,7 +52,7 @@
       "incomes": [
         {
           "size": 1424966.69,
-          "size_raw": "1 424 966,69",
+          "size_raw": "1424966,69",
           "relative": null
         }
       ],
@@ -62,7 +62,7 @@
           "square": 134.0,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "134,0",
+          "square_raw": "134",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -71,7 +71,7 @@
           "square": 1200.0,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "1200,0",
+          "square_raw": "1200",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок"
         }

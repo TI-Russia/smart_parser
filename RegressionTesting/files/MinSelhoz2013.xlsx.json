@@ -10,12 +10,12 @@
       "incomes": [
         {
           "size": 685708.64,
-          "size_raw": "685 708,64",
+          "size_raw": "685708,64",
           "relative": null
         },
         {
           "size": 235550.82,
-          "size_raw": "235 550,82",
+          "size_raw": "235550,82",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -26,7 +26,7 @@
           "square": 1600.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1600,0",
+          "square_raw": "1600",
           "country_raw": "Россия",
           "type_raw": "Приусадебный участок",
           "own_type_raw": "Индивидуальная"
@@ -36,7 +36,7 @@
           "square": 205000.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "205 000,0",
+          "square_raw": "205000",
           "country_raw": "Россия",
           "type_raw": "Производственный участок",
           "own_type_raw": "Долевая"
@@ -46,7 +46,7 @@
           "square": 84.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "84,0",
+          "square_raw": "84",
           "country_raw": "Россия",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -56,7 +56,7 @@
           "square": 205000.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "205 000,0",
+          "square_raw": "205000",
           "country_raw": "Россия",
           "type_raw": "Земельный пай",
           "own_type_raw": "Долевая"
@@ -66,7 +66,7 @@
           "square": 84.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "84,0",
+          "square_raw": "84",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         }
@@ -90,7 +90,7 @@
       "incomes": [
         {
           "size": 495563.0,
-          "size_raw": "495 563",
+          "size_raw": "495563",
           "relative": null
         }
       ],
@@ -124,12 +124,12 @@
       "incomes": [
         {
           "size": 1193946.76,
-          "size_raw": "1 193 946,76",
+          "size_raw": "1193946,76",
           "relative": null
         },
         {
           "size": 128400.00,
-          "size_raw": "128 400,00",
+          "size_raw": "128400",
           "relative": "Супруг(а)",
           "relative_index": 1
         }

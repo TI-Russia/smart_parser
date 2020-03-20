@@ -9,12 +9,12 @@
       "incomes": [
         {
           "size": 4370415.69,
-          "size_raw": "4 370 415,69",
+          "size_raw": "4370415,69",
           "relative": null
         },
         {
           "size": 172915.68,
-          "size_raw": "172 915,68",
+          "size_raw": "172915,68",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -82,12 +82,12 @@
       "incomes": [
         {
           "size": 1909512.58,
-          "size_raw": "1 909512,58",
+          "size_raw": "1909512,58",
           "relative": null
         },
         {
           "size": 6458572.34,
-          "size_raw": "6 458572,34",
+          "size_raw": "6458572,34",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -196,12 +196,12 @@
       "incomes": [
         {
           "size": 898062.0,
-          "size_raw": "898 062",
+          "size_raw": "898062",
           "relative": null
         },
         {
           "size": 260164.0,
-          "size_raw": "260 164",
+          "size_raw": "260164",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -282,7 +282,7 @@
       "incomes": [
         {
           "size": 2031913.02,
-          "size_raw": "2 031 913,02",
+          "size_raw": "2031913,02",
           "relative": null
         }
       ],
@@ -391,7 +391,7 @@
       "incomes": [
         {
           "size": 1752124.92,
-          "size_raw": "1 752124,92",
+          "size_raw": "1752124,92",
           "relative": null
         }
       ],
@@ -418,12 +418,12 @@
       "incomes": [
         {
           "size": 1065357.33,
-          "size_raw": "1 065357,33",
+          "size_raw": "1065357,33",
           "relative": null
         },
         {
           "size": 587186.58,
-          "size_raw": "587 186,58",
+          "size_raw": "587186,58",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -516,7 +516,7 @@
       "incomes": [
         {
           "size": 1540972.65,
-          "size_raw": "1 540972,65",
+          "size_raw": "1540972,65",
           "relative": null
         }
       ],
@@ -548,12 +548,12 @@
       "incomes": [
         {
           "size": 1458642.87,
-          "size_raw": "1 458 642,87",
+          "size_raw": "1458642,87",
           "relative": null
         },
         {
           "size": 1275419.46,
-          "size_raw": "1 275 419,46",
+          "size_raw": "1275419,46",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -626,12 +626,12 @@
       "incomes": [
         {
           "size": 1160170.84,
-          "size_raw": "1 160170,84",
+          "size_raw": "1160170,84",
           "relative": null
         },
         {
           "size": 308874.8,
-          "size_raw": "308 874,8",
+          "size_raw": "308874,8",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -686,12 +686,12 @@
       "incomes": [
         {
           "size": 1148116.52,
-          "size_raw": "1 148 116,52",
+          "size_raw": "1148116,52",
           "relative": null
         },
         {
           "size": 104301.67,
-          "size_raw": "104 301,67",
+          "size_raw": "104301,67",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -747,7 +747,7 @@
       "incomes": [
         {
           "size": 1381311.54,
-          "size_raw": "1 381 311,54",
+          "size_raw": "1381311,54",
           "relative": null
         }
       ],
@@ -774,7 +774,7 @@
       "incomes": [
         {
           "size": 1497618.08,
-          "size_raw": "1 497 618,08",
+          "size_raw": "1497618,08",
           "relative": null
         }
       ],
@@ -794,7 +794,7 @@
           "square": 45.0,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "45,0",
+          "square_raw": "45",
           "country_raw": "Россия",
           "type_raw": "квартира"
         },
@@ -813,7 +813,7 @@
           "square": 45.0,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "45,0",
+          "square_raw": "45",
           "country_raw": "Россия",
           "type_raw": "квартира"
         }
@@ -830,12 +830,12 @@
       "incomes": [
         {
           "size": 1272576.5,
-          "size_raw": "1 272 576,5",
+          "size_raw": "1272576,5",
           "relative": null
         },
         {
           "size": 81112.3,
-          "size_raw": "81 112,3",
+          "size_raw": "81112,3",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -937,12 +937,12 @@
       "incomes": [
         {
           "size": 1530344.98,
-          "size_raw": "1 530 344,98",
+          "size_raw": "1530344,98",
           "relative": null
         },
         {
           "size": 373174.07,
-          "size_raw": "373 174,07",
+          "size_raw": "373174,07",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
