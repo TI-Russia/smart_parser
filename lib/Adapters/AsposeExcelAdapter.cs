@@ -140,7 +140,7 @@ namespace Smart.Parser.Adapters
             MaxRowsToProcess = maxRowsToProcess;
             DocumentFile = fileName;
             workbook = new Aspose.Cells.Workbook(fileName);
-            workbook.Settings.NumberDecimalSeparator = ',';
+            workbook.Settings.NumberDecimalSeparator = ' ';
             // if there are multiple worksheets it is a problem
             // generate exception if more then one non-hidden worksheet
             //worksheet = workbook.Worksheets[0];

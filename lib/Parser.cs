@@ -694,7 +694,7 @@ namespace Smart.Parser.Lib
         
         static string NormalizeRawDecimalForTest(string s)
         {
-            return s.Replace(".", ",");
+            return s.Replace(".", ",").Replace("\u202f", " ");
         }
 
         static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
