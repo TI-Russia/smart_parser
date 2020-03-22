@@ -9,7 +9,7 @@
       "incomes": [
         {
           "size": 2236832.00,
-          "size_raw": "2236832.00",
+          "size_raw": "2236832,00",
           "relative": null
         }
       ],
@@ -19,7 +19,7 @@
           "square": 46.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "46.90",
+          "square_raw": "46,90",
           "country_raw": "Россия",
           "type_raw": "квартира",
           "own_type_raw": "индивидуальная"
@@ -29,7 +29,7 @@
           "square": 54.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Германия",
           "type_raw": "квартира"
         }

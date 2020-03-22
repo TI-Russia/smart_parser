@@ -14,7 +14,7 @@
         },
         {
           "size": 450702.60,
-          "size_raw": "450702,60",
+          "size_raw": "450702,6",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -25,7 +25,7 @@
           "square": 54.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "54,0",
+          "square_raw": "54",
           "country_raw": "Россия"
         },
         {
@@ -33,7 +33,7 @@
           "square": 42.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "42,0",
+          "square_raw": "42",
           "country_raw": "Россия"
         },
         {
@@ -41,7 +41,7 @@
           "square": 42.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "42,0",
+          "square_raw": "42",
           "country_raw": "Россия"
         }
       ],

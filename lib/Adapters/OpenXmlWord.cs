@@ -11,7 +11,6 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
-using Smart.Parser.Lib;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Xml.Linq;

@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using System.IO.Compression;
+using System.Threading;
 using System.IO;
 using System;
 using System.Linq;
@@ -126,11 +127,16 @@ namespace Smart.Parser.Adapters
                     // a new file try to load it into Microsoft Word
                 }
             }
-            Aspose.Words.Document doc = new Aspose.Words.Document(filename);
-            doc.RemoveMacros();
             string docXPath = filename + ".converted.docx";
+            var saveCulture = Thread.CurrentThread.CurrentCulture;
+            // Aspose.Words cannot work well, see 7007_10.html in regression tests
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US"); 
+            var doc = new Aspose.Words.Document(filename);
+            doc.RemoveMacros();
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+            Thread.CurrentThread.CurrentCulture = saveCulture;
             return docXPath;
+
         }
         public String ConvertWithSoffice(string fileName)
         {

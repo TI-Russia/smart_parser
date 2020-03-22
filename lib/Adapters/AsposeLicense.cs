@@ -41,7 +41,6 @@ namespace Smart.Parser.Adapters
 
         public static System.IO.Stream GetAsposeLicenseStream(string uriString)
         {
-            //Console.WriteLine(uriString);
             if (uriString.StartsWith("http"))
             {
                 var uri = new Uri(uriString);
@@ -62,17 +61,12 @@ namespace Smart.Parser.Adapters
         }
         public static void SetLicense(string uriString)
         {
-            Aspose.Cells.License cell_license = new Aspose.Cells.License();
-            cell_license.SetLicense(GetAsposeLicenseStream(uriString));
-
-            Aspose.Words.License word_license = new Aspose.Words.License();
-            word_license.SetLicense(GetAsposeLicenseStream(uriString));
-
-            //Aspose.Pdf.License pdf_license = new Aspose.Pdf.License();
-            //pdf_license.SetLicense(GetAsposeLicenseStream(uriString));
-
-            //Licensed = word_license.IsLicensed;
-            Licensed = true;
+            if (!Licensed)
+            {
+                new Aspose.Cells.License().SetLicense(GetAsposeLicenseStream(uriString));
+                new Aspose.Words.License().SetLicense(GetAsposeLicenseStream(uriString));
+                Licensed = true;
+            }
         }
 
         public static void SetAsposeLicenseFromEnvironment()

@@ -9,18 +9,18 @@
       "incomes": [
         {
           "size": 6220926.40,
-          "size_raw": "6220926.40",
+          "size_raw": "6220926,40",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -31,7 +31,7 @@
           "square": 63.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "63.10",
+          "square_raw": "63,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -41,7 +41,7 @@
           "square": 104.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "104.00",
+          "square_raw": "104,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -50,7 +50,7 @@
           "square": 104.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "104.00",
+          "square_raw": "104,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -59,7 +59,7 @@
           "square": 104.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "104.00",
+          "square_raw": "104,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -81,12 +81,12 @@
       "incomes": [
         {
           "size": 1562888.54,
-          "size_raw": "1562888.54",
+          "size_raw": "1562888,54",
           "relative": null
         },
         {
           "size": 590687.90,
-          "size_raw": "590687.90",
+          "size_raw": "590687,90",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -97,7 +97,7 @@
           "square": 63.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "63.80",
+          "square_raw": "63,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -107,7 +107,7 @@
           "square": 800.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "800.00",
+          "square_raw": "800,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -117,7 +117,7 @@
           "square": 58.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "58.30",
+          "square_raw": "58,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -127,7 +127,7 @@
           "square": 63.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "63.80",
+          "square_raw": "63,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -149,18 +149,18 @@
       "incomes": [
         {
           "size": 4343001.36,
-          "size_raw": "4343001.36",
+          "size_raw": "4343001,36",
           "relative": null
         },
         {
           "size": 453026.00,
-          "size_raw": "453026.00",
+          "size_raw": "453026,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -171,7 +171,7 @@
           "square": 147.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "147.40",
+          "square_raw": "147,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -181,7 +181,7 @@
           "square": 1500.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -191,7 +191,7 @@
           "square": 147.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "147.40",
+          "square_raw": "147,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -200,7 +200,7 @@
           "square": 178.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "178.60",
+          "square_raw": "178,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -210,7 +210,7 @@
           "square": 18.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "18.70",
+          "square_raw": "18,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Иное недвижимое имущество",
           "own_type_raw": "Индивидуальная"
@@ -220,7 +220,7 @@
           "square": 50.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "50.20",
+          "square_raw": "50,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартиры",
           "own_type_raw": "Индивидуальная"
@@ -230,7 +230,7 @@
           "square": 147.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "147.40",
+          "square_raw": "147,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -258,12 +258,12 @@
       "incomes": [
         {
           "size": 1740941.65,
-          "size_raw": "1740941.65",
+          "size_raw": "1740941,65",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         }
@@ -274,7 +274,7 @@
           "square": 38.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.10",
+          "square_raw": "38,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -284,7 +284,7 @@
           "square": 63.60,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "63.60",
+          "square_raw": "63,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -293,7 +293,7 @@
           "square": 63.60,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "63.60",
+          "square_raw": "63,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -310,24 +310,24 @@
       "incomes": [
         {
           "size": 1910020.56,
-          "size_raw": "1910020.56",
+          "size_raw": "1910020,56",
           "relative": null
         },
         {
           "size": 392883.46,
-          "size_raw": "392883.46",
+          "size_raw": "392883,46",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -338,7 +338,7 @@
           "square": 600.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -348,7 +348,7 @@
           "square": 52.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "52.60",
+          "square_raw": "52,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -358,7 +358,7 @@
           "square": 44.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "44.10",
+          "square_raw": "44,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -368,7 +368,7 @@
           "square": 600.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -378,7 +378,7 @@
           "square": 44.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.10",
+          "square_raw": "44,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -387,7 +387,7 @@
           "square": 44.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.10",
+          "square_raw": "44,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -396,7 +396,7 @@
           "square": 44.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.10",
+          "square_raw": "44,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -419,12 +419,12 @@
       "incomes": [
         {
           "size": 1888105.27,
-          "size_raw": "1888105.27",
+          "size_raw": "1888105,27",
           "relative": null
         },
         {
           "size": 14445.00,
-          "size_raw": "14445.00",
+          "size_raw": "14445,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -435,7 +435,7 @@
           "square": 100000.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "100000.00",
+          "square_raw": "100000,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный\nучасток",
           "own_type_raw": "Общая долевая (2/1107)"
@@ -445,7 +445,7 @@
           "square": 44.80,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.80",
+          "square_raw": "44,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -454,7 +454,7 @@
           "square": 19.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "19.00",
+          "square_raw": "19,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -464,7 +464,7 @@
           "square": 7622.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "7622.00",
+          "square_raw": "7622,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный\nучасток",
           "own_type_raw": "Общая совместная (совместно с жильцами 12-этажного дома)"
@@ -474,7 +474,7 @@
           "square": 44.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.80",
+          "square_raw": "44,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -483,7 +483,7 @@
           "square": 124.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "124.60",
+          "square_raw": "124,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Иное недвижимое имущество",
           "own_type_raw": "Индивидуальная"
@@ -506,12 +506,12 @@
       "incomes": [
         {
           "size": 2216707.38,
-          "size_raw": "2216707.38",
+          "size_raw": "2216707,38",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -522,7 +522,7 @@
           "square": 131.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "131.40",
+          "square_raw": "131,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -532,7 +532,7 @@
           "square": 131.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "131.40",
+          "square_raw": "131,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -542,7 +542,7 @@
           "square": 49.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "49.20",
+          "square_raw": "49,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -552,7 +552,7 @@
           "square": 42.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "42.10",
+          "square_raw": "42,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -575,24 +575,24 @@
       "incomes": [
         {
           "size": 1192923.80,
-          "size_raw": "1192923.80",
+          "size_raw": "1192923,80",
           "relative": null
         },
         {
           "size": 590026.00,
-          "size_raw": "590026.00",
+          "size_raw": "590026,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -603,7 +603,7 @@
           "square": 61.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "61.50",
+          "square_raw": "61,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -613,7 +613,7 @@
           "square": 1200.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1200.00",
+          "square_raw": "1200,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -623,7 +623,7 @@
           "square": 61.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "61.50",
+          "square_raw": "61,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -632,7 +632,7 @@
           "square": 69.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "69.50",
+          "square_raw": "69,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -641,7 +641,7 @@
           "square": 61.50,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "61.50",
+          "square_raw": "61,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -650,7 +650,7 @@
           "square": 61.50,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "61.50",
+          "square_raw": "61,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -672,7 +672,7 @@
       "incomes": [
         {
           "size": 1316338.50,
-          "size_raw": "1316338.50",
+          "size_raw": "1316338,50",
           "relative": null
         }
       ],
@@ -682,7 +682,7 @@
           "square": 53.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "53.60",
+          "square_raw": "53,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -705,24 +705,24 @@
       "incomes": [
         {
           "size": 1354281.04,
-          "size_raw": "1354281.04",
+          "size_raw": "1354281,04",
           "relative": null
         },
         {
           "size": 1692406.07,
-          "size_raw": "1692406.07",
+          "size_raw": "1692406,07",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -733,7 +733,7 @@
           "square": 38.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -743,7 +743,7 @@
           "square": 43.40,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "43.40",
+          "square_raw": "43,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -752,7 +752,7 @@
           "square": 79.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "79.00",
+          "square_raw": "79,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (1/3)"
@@ -762,7 +762,7 @@
           "square": 38.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -771,7 +771,7 @@
           "square": 38.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -780,7 +780,7 @@
           "square": 38.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -797,7 +797,7 @@
       "incomes": [
         {
           "size": 1229767.99,
-          "size_raw": "1229767.99",
+          "size_raw": "1229767,99",
           "relative": null
         }
       ],
@@ -807,7 +807,7 @@
           "square": 60.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "60.70",
+          "square_raw": "60,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -817,7 +817,7 @@
           "square": 60.10,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "60.10",
+          "square_raw": "60,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -826,7 +826,7 @@
           "square": 38.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.80",
+          "square_raw": "38,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -849,18 +849,18 @@
       "incomes": [
         {
           "size": 1589837.10,
-          "size_raw": "1589837.10",
+          "size_raw": "1589837,10",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -871,7 +871,7 @@
           "square": 54.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -881,7 +881,7 @@
           "square": 54.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -890,7 +890,7 @@
           "square": 54.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -907,24 +907,24 @@
       "incomes": [
         {
           "size": 8817547.72,
-          "size_raw": "8817547.72",
+          "size_raw": "8817547,72",
           "relative": null
         },
         {
           "size": 309187.86,
-          "size_raw": "309187.86",
+          "size_raw": "309187,86",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -935,7 +935,7 @@
           "square": 39.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "39.80",
+          "square_raw": "39,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая совместная (Вервицкая Екатерина Сергеевна)"
@@ -945,7 +945,7 @@
           "square": 39.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "39.80",
+          "square_raw": "39,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая совместная (Вервицкий Павел Миронович)"
@@ -955,7 +955,7 @@
           "square": 39.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "39.80",
+          "square_raw": "39,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -964,7 +964,7 @@
           "square": 39.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "39.80",
+          "square_raw": "39,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -986,12 +986,12 @@
       "incomes": [
         {
           "size": 2853392.87,
-          "size_raw": "2853392.87",
+          "size_raw": "2853392,87",
           "relative": null
         },
         {
           "size": 517500.00,
-          "size_raw": "517500.00",
+          "size_raw": "517500,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1002,7 +1002,7 @@
           "square": 99.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "99.00",
+          "square_raw": "99,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1012,7 +1012,7 @@
           "square": 1382.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1382.00",
+          "square_raw": "1382,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1022,7 +1022,7 @@
           "square": 99.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "99.00",
+          "square_raw": "99,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1031,7 +1031,7 @@
           "square": 1500.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1041,7 +1041,7 @@
           "square": 1500.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1051,7 +1051,7 @@
           "square": 1571.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1571.00",
+          "square_raw": "1571,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1061,7 +1061,7 @@
           "square": 1395.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1395.00",
+          "square_raw": "1395,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1071,7 +1071,7 @@
           "square": 1500.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1081,7 +1081,7 @@
           "square": 1676.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1676.00",
+          "square_raw": "1676,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1091,7 +1091,7 @@
           "square": 1379.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1379.00",
+          "square_raw": "1379,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1125,7 +1125,7 @@
       "incomes": [
         {
           "size": 1669733.63,
-          "size_raw": "1669733.63",
+          "size_raw": "1669733,63",
           "relative": null
         }
       ],
@@ -1135,7 +1135,7 @@
           "square": 41.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "41.00",
+          "square_raw": "41,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1153,7 +1153,7 @@
       "incomes": [
         {
           "size": 1224028.88,
-          "size_raw": "1224028.88",
+          "size_raw": "1224028,88",
           "relative": null
         }
       ],
@@ -1163,7 +1163,7 @@
           "square": 85.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "85.00",
+          "square_raw": "85,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1186,12 +1186,12 @@
       "incomes": [
         {
           "size": 1112703.04,
-          "size_raw": "1112703.04",
+          "size_raw": "1112703,04",
           "relative": null
         },
         {
           "size": 2819329.77,
-          "size_raw": "2819329.77",
+          "size_raw": "2819329,77",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1202,7 +1202,7 @@
           "square": 62.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "62.60",
+          "square_raw": "62,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -1212,7 +1212,7 @@
           "square": 62.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "62.60",
+          "square_raw": "62,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -1240,7 +1240,7 @@
       "incomes": [
         {
           "size": 1507080.13,
-          "size_raw": "1507080.13",
+          "size_raw": "1507080,13",
           "relative": null
         }
       ],
@@ -1250,7 +1250,7 @@
           "square": 76.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "76.80",
+          "square_raw": "76,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1268,12 +1268,12 @@
       "incomes": [
         {
           "size": 1276991.59,
-          "size_raw": "1276991.59",
+          "size_raw": "1276991,59",
           "relative": null
         },
         {
           "size": 603737.17,
-          "size_raw": "603737.17",
+          "size_raw": "603737,17",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1284,7 +1284,7 @@
           "square": 60.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "60.00",
+          "square_raw": "60,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1293,7 +1293,7 @@
           "square": 60.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "60.00",
+          "square_raw": "60,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -1315,18 +1315,18 @@
       "incomes": [
         {
           "size": 1733064.95,
-          "size_raw": "1733064.95",
+          "size_raw": "1733064,95",
           "relative": null
         },
         {
           "size": 1720125.15,
-          "size_raw": "1720125.15",
+          "size_raw": "1720125,15",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -1337,7 +1337,7 @@
           "square": 50.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "50.20",
+          "square_raw": "50,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1346,7 +1346,7 @@
           "square": 47.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "47.70",
+          "square_raw": "47,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1356,7 +1356,7 @@
           "square": 47.70,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.70",
+          "square_raw": "47,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -1378,18 +1378,18 @@
       "incomes": [
         {
           "size": 1258169.95,
-          "size_raw": "1258169.95",
+          "size_raw": "1258169,95",
           "relative": null
         },
         {
           "size": 272383.89,
-          "size_raw": "272383.89",
+          "size_raw": "272383,89",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -1400,7 +1400,7 @@
           "square": 1087.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1087.00",
+          "square_raw": "1087,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1410,7 +1410,7 @@
           "square": 30.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "30.20",
+          "square_raw": "30,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1419,7 +1419,7 @@
           "square": 45.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "45.50",
+          "square_raw": "45,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (5/29)"
@@ -1429,7 +1429,7 @@
           "square": 31.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "31.60",
+          "square_raw": "31,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -1439,7 +1439,7 @@
           "square": 45.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "45.50",
+          "square_raw": "45,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (18/29)"
@@ -1449,7 +1449,7 @@
           "square": 30.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "30.20",
+          "square_raw": "30,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1458,7 +1458,7 @@
           "square": 45.50,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "45.50",
+          "square_raw": "45,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (6/29)"
@@ -1468,7 +1468,7 @@
           "square": 30.20,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "30.20",
+          "square_raw": "30,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1477,7 +1477,7 @@
           "square": 31.60,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "31.60",
+          "square_raw": "31,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -1501,18 +1501,18 @@
       "incomes": [
         {
           "size": 2587889.11,
-          "size_raw": "2587889.11",
+          "size_raw": "2587889,11",
           "relative": null
         },
         {
           "size": 19552831.00,
-          "size_raw": "19552831.00",
+          "size_raw": "19552831,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -1523,7 +1523,7 @@
           "square": 544.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "544.60",
+          "square_raw": "544,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -1533,7 +1533,7 @@
           "square": 95.80,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "95.80",
+          "square_raw": "95,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1542,7 +1542,7 @@
           "square": 74.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "74.80",
+          "square_raw": "74,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Дача",
           "own_type_raw": "Общая долевая (1/2)"
@@ -1552,7 +1552,7 @@
           "square": 111.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "111.70",
+          "square_raw": "111,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -1562,7 +1562,7 @@
           "square": 552.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "552.0",
+          "square_raw": "552,0",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1572,7 +1572,7 @@
           "square": 117.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "117.70",
+          "square_raw": "117,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1581,7 +1581,7 @@
           "square": 725.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "725.0",
+          "square_raw": "725,0",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1591,7 +1591,7 @@
           "square": 0.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "0,00",
+          "square_raw": "0",
           "country_raw": "Российская Федерация",
           "type_raw": "Машиноместо"
         },
@@ -1600,7 +1600,7 @@
           "square": 180.3,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "180.3",
+          "square_raw": "180,3",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом",
           "own_type_raw": "Индивидуальная"
@@ -1610,7 +1610,7 @@
           "square": 53.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "53.50",
+          "square_raw": "53,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -1620,7 +1620,7 @@
           "square": 60.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "60.50",
+          "square_raw": "60,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартиры",
           "own_type_raw": "Индивидуальная"
@@ -1630,7 +1630,7 @@
           "square": 95.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "95.80",
+          "square_raw": "95,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартиры",
           "own_type_raw": "Индивидуальная"
@@ -1640,7 +1640,7 @@
           "square": 15.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "15.00",
+          "square_raw": "15,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -1650,7 +1650,7 @@
           "square": 53.50,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "53.50",
+          "square_raw": "53,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -1660,7 +1660,7 @@
           "square": 95.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "95.80",
+          "square_raw": "95,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -1683,18 +1683,18 @@
       "incomes": [
         {
           "size": 1285105.18,
-          "size_raw": "1285105.18",
+          "size_raw": "1285105,18",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -1705,7 +1705,7 @@
           "square": 51.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "51.80",
+          "square_raw": "51,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1715,7 +1715,7 @@
           "square": 36.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1724,7 +1724,7 @@
           "square": 51.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "51.80",
+          "square_raw": "51,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1733,7 +1733,7 @@
           "square": 51.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "51.80",
+          "square_raw": "51,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1742,7 +1742,7 @@
           "square": 36.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -1759,7 +1759,7 @@
       "incomes": [
         {
           "size": 2073949.53,
-          "size_raw": "2073949.53",
+          "size_raw": "2073949,53",
           "relative": null
         }
       ],
@@ -1769,7 +1769,7 @@
           "square": 30.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "30.10",
+          "square_raw": "30,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1779,7 +1779,7 @@
           "square": 81.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "81.10",
+          "square_raw": "81,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -1797,12 +1797,12 @@
       "incomes": [
         {
           "size": 1280223.62,
-          "size_raw": "1280223.62",
+          "size_raw": "1280223,62",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         }
@@ -1813,7 +1813,7 @@
           "square": 47.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.20",
+          "square_raw": "47,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1822,7 +1822,7 @@
           "square": 47.20,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.20",
+          "square_raw": "47,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -1844,12 +1844,12 @@
       "incomes": [
         {
           "size": 1135481.34,
-          "size_raw": "1135481.34",
+          "size_raw": "1135481,34",
           "relative": null
         },
         {
           "size": 1524031.18,
-          "size_raw": "1524031.18",
+          "size_raw": "1524031,18",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -1860,7 +1860,7 @@
           "square": 62.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "62.20",
+          "square_raw": "62,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (3/4)"
@@ -1870,7 +1870,7 @@
           "square": 42.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "42.20",
+          "square_raw": "42,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1879,7 +1879,7 @@
           "square": 22.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "22.70",
+          "square_raw": "22,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Гаражи",
           "own_type_raw": "Индивидуальная"
@@ -1889,7 +1889,7 @@
           "square": 42.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "42.20",
+          "square_raw": "42,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1898,7 +1898,7 @@
           "square": 62.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "62.20",
+          "square_raw": "62,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -1926,18 +1926,18 @@
       "incomes": [
         {
           "size": 1161171.96,
-          "size_raw": "1161171.96",
+          "size_raw": "1161171,96",
           "relative": null
         },
         {
           "size": 607925.40,
-          "size_raw": "607925.40",
+          "size_raw": "607925,40",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -1948,7 +1948,7 @@
           "square": 1200.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1200.00",
+          "square_raw": "1200,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -1958,7 +1958,7 @@
           "square": 53.50,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "53.50",
+          "square_raw": "53,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1967,7 +1967,7 @@
           "square": 139.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "139.20",
+          "square_raw": "139,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -1977,7 +1977,7 @@
           "square": 62.90,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "62.90",
+          "square_raw": "62,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1986,7 +1986,7 @@
           "square": 53.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "53.60",
+          "square_raw": "53,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -1995,7 +1995,7 @@
           "square": 62.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "62.90",
+          "square_raw": "62,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2004,7 +2004,7 @@
           "square": 53.50,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "53.50",
+          "square_raw": "53,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -2021,18 +2021,18 @@
       "incomes": [
         {
           "size": 1693539.44,
-          "size_raw": "1693539.44",
+          "size_raw": "1693539,44",
           "relative": null
         },
         {
           "size": 626925.54,
-          "size_raw": "626925.54",
+          "size_raw": "626925,54",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -2043,7 +2043,7 @@
           "square": 38.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.00",
+          "square_raw": "38,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2052,7 +2052,7 @@
           "square": 14.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "14.50",
+          "square_raw": "14,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -2062,7 +2062,7 @@
           "square": 36.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2071,7 +2071,7 @@
           "square": 36.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2080,7 +2080,7 @@
           "square": 38.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.00",
+          "square_raw": "38,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2089,7 +2089,7 @@
           "square": 36.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2098,7 +2098,7 @@
           "square": 38.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.00",
+          "square_raw": "38,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -2120,12 +2120,12 @@
       "incomes": [
         {
           "size": 3787072.30,
-          "size_raw": "3787072.30",
+          "size_raw": "3787072,30",
           "relative": null
         },
         {
           "size": 2503351.88,
-          "size_raw": "2503351.88",
+          "size_raw": "2503351,88",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2136,7 +2136,7 @@
           "square": 117.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "117.20",
+          "square_raw": "117,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2146,7 +2146,7 @@
           "square": 45.10,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "45.10",
+          "square_raw": "45,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2155,7 +2155,7 @@
           "square": 619.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "619.00",
+          "square_raw": "619,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2165,7 +2165,7 @@
           "square": 117.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "117.20",
+          "square_raw": "117,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2174,7 +2174,7 @@
           "square": 177.4,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "177.4",
+          "square_raw": "177,4",
           "country_raw": "Российская Федерация",
           "type_raw": "Садовый дом",
           "own_type_raw": "Индивидуальная"
@@ -2198,7 +2198,7 @@
       "incomes": [
         {
           "size": 1372518.35,
-          "size_raw": "1372518.35",
+          "size_raw": "1372518,35",
           "relative": null
         }
       ],
@@ -2208,7 +2208,7 @@
           "square": 39.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "39.40",
+          "square_raw": "39,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2226,7 +2226,7 @@
       "incomes": [
         {
           "size": 1289671.59,
-          "size_raw": "1289671.59",
+          "size_raw": "1289671,59",
           "relative": null
         }
       ],
@@ -2236,7 +2236,7 @@
           "square": 32.98,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "32.98",
+          "square_raw": "32,98",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2254,12 +2254,12 @@
       "incomes": [
         {
           "size": 1872120.01,
-          "size_raw": "1872120.01",
+          "size_raw": "1872120,01",
           "relative": null
         },
         {
           "size": 180000.00,
-          "size_raw": "180000.00",
+          "size_raw": "180000,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2270,7 +2270,7 @@
           "square": 45.60,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "45.60",
+          "square_raw": "45,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2279,7 +2279,7 @@
           "square": 993.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "993.00",
+          "square_raw": "993,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2289,7 +2289,7 @@
           "square": 120.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "120.10",
+          "square_raw": "120,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -2299,7 +2299,7 @@
           "square": 45.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "45.60",
+          "square_raw": "45,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2317,7 +2317,7 @@
       "incomes": [
         {
           "size": 1482358.33,
-          "size_raw": "1482358.33",
+          "size_raw": "1482358,33",
           "relative": null
         }
       ],
@@ -2327,7 +2327,7 @@
           "square": 38.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.30",
+          "square_raw": "38,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Иное недвижимое имущество",
           "own_type_raw": "Индивидуальная"
@@ -2337,7 +2337,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельные участки",
           "own_type_raw": "Индивидуальная"
@@ -2347,7 +2347,7 @@
           "square": 205.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "205.90",
+          "square_raw": "205,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилые дома, дачи",
           "own_type_raw": "Индивидуальная"
@@ -2357,7 +2357,7 @@
           "square": 94.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "94.40",
+          "square_raw": "94,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартиры",
           "own_type_raw": "Индивидуальная"
@@ -2380,12 +2380,12 @@
       "incomes": [
         {
           "size": 3585956.48,
-          "size_raw": "3585956.48",
+          "size_raw": "3585956,48",
           "relative": null
         },
         {
           "size": 960623.02,
-          "size_raw": "960623.02",
+          "size_raw": "960623,02",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2396,7 +2396,7 @@
           "square": 45.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "45.20",
+          "square_raw": "45,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2406,7 +2406,7 @@
           "square": 38.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "38.10",
+          "square_raw": "38,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2416,7 +2416,7 @@
           "square": 45.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "45.20",
+          "square_raw": "45,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2425,7 +2425,7 @@
           "square": 600.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2435,7 +2435,7 @@
           "square": 600.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2445,7 +2445,7 @@
           "square": 40.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "40.00",
+          "square_raw": "40,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -2455,7 +2455,7 @@
           "square": 17.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "17.20",
+          "square_raw": "17,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -2478,18 +2478,18 @@
       "incomes": [
         {
           "size": 1225583.35,
-          "size_raw": "1225583.35",
+          "size_raw": "1225583,35",
           "relative": null
         },
         {
           "size": 1119404.51,
-          "size_raw": "1119404.51",
+          "size_raw": "1119404,51",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -2500,7 +2500,7 @@
           "square": 52.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "52.70",
+          "square_raw": "52,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2510,7 +2510,7 @@
           "square": 52.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "52.70",
+          "square_raw": "52,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2519,7 +2519,7 @@
           "square": 52.70,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "52.70",
+          "square_raw": "52,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -2541,12 +2541,12 @@
       "incomes": [
         {
           "size": 2226401.06,
-          "size_raw": "2226401.06",
+          "size_raw": "2226401,06",
           "relative": null
         },
         {
           "size": 277287.49,
-          "size_raw": "277287.49",
+          "size_raw": "277287,49",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -2557,7 +2557,7 @@
           "square": 2500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "2500.00",
+          "square_raw": "2500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2567,7 +2567,7 @@
           "square": 500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "500.00",
+          "square_raw": "500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2577,7 +2577,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2587,7 +2587,7 @@
           "square": 50.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "50.40",
+          "square_raw": "50,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -2597,7 +2597,7 @@
           "square": 94.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "94.90",
+          "square_raw": "94,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2607,7 +2607,7 @@
           "square": 50.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "50.40",
+          "square_raw": "50,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -2630,18 +2630,18 @@
       "incomes": [
         {
           "size": 2150919.72,
-          "size_raw": "2150919.72",
+          "size_raw": "2150919,72",
           "relative": null
         },
         {
           "size": 1572757.30,
-          "size_raw": "1572757.30",
+          "size_raw": "1572757,30",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -2652,7 +2652,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2662,7 +2662,7 @@
           "square": 74.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "74.40",
+          "square_raw": "74,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2672,7 +2672,7 @@
           "square": 125.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "125.80",
+          "square_raw": "125,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -2682,7 +2682,7 @@
           "square": 800.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "800.00",
+          "square_raw": "800,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2692,7 +2692,7 @@
           "square": 125.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "125.80",
+          "square_raw": "125,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2701,7 +2701,7 @@
           "square": 56.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "56.60",
+          "square_raw": "56,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -2711,7 +2711,7 @@
           "square": 125.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "125.80",
+          "square_raw": "125,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -2728,7 +2728,7 @@
       "incomes": [
         {
           "size": 1280330.20,
-          "size_raw": "1280330.20",
+          "size_raw": "1280330,20",
           "relative": null
         }
       ],
@@ -2738,7 +2738,7 @@
           "square": 68.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "68.30",
+          "square_raw": "68,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2748,7 +2748,7 @@
           "square": 30.40,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "30.40",
+          "square_raw": "30,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -2765,18 +2765,18 @@
       "incomes": [
         {
           "size": 1179447.24,
-          "size_raw": "1179447.24",
+          "size_raw": "1179447,24",
           "relative": null
         },
         {
           "size": 1606784.90,
-          "size_raw": "1606784.90",
+          "size_raw": "1606784,90",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -2787,7 +2787,7 @@
           "square": 673.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "673.00",
+          "square_raw": "673,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая совместная (Лебедева Елена Александровна)"
@@ -2797,7 +2797,7 @@
           "square": 98.90,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "98.90",
+          "square_raw": "98,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2806,7 +2806,7 @@
           "square": 110.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "110.70",
+          "square_raw": "110,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая совместная (Лебедева Елена Александровна)"
@@ -2816,7 +2816,7 @@
           "square": 3000.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "3000.00",
+          "square_raw": "3000,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -2826,7 +2826,7 @@
           "square": 33.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "33.80",
+          "square_raw": "33,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -2836,7 +2836,7 @@
           "square": 42.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "42.90",
+          "square_raw": "42,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2846,7 +2846,7 @@
           "square": 673.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "673.00",
+          "square_raw": "673,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая совместная (Лебедев Егор Витальевич)"
@@ -2856,7 +2856,7 @@
           "square": 42.90,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "42.90",
+          "square_raw": "42,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2865,7 +2865,7 @@
           "square": 110.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "110.70",
+          "square_raw": "110,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая совместная (Лебедева Егор Витальевич)"
@@ -2875,7 +2875,7 @@
           "square": 42.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "42.90",
+          "square_raw": "42,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2884,7 +2884,7 @@
           "square": 98.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "98.90",
+          "square_raw": "98,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -2906,18 +2906,18 @@
       "incomes": [
         {
           "size": 1093442.25,
-          "size_raw": "1093442.25",
+          "size_raw": "1093442,25",
           "relative": null
         },
         {
           "size": 1131440.12,
-          "size_raw": "1131440.12",
+          "size_raw": "1131440,12",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -2928,7 +2928,7 @@
           "square": 64.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "64.40",
+          "square_raw": "64,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -2938,7 +2938,7 @@
           "square": 32.70,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "32.70",
+          "square_raw": "32,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -2947,7 +2947,7 @@
           "square": 76.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "76.40",
+          "square_raw": "76,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -2957,7 +2957,7 @@
           "square": 32.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "32.70",
+          "square_raw": "32,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2967,7 +2967,7 @@
           "square": 48.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "48.20",
+          "square_raw": "48,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -2977,7 +2977,7 @@
           "square": 32.70,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "32.70",
+          "square_raw": "32,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3000,7 +3000,7 @@
       "incomes": [
         {
           "size": 3445646.00,
-          "size_raw": "3445646.00",
+          "size_raw": "3445646,00",
           "relative": null
         }
       ],
@@ -3010,7 +3010,7 @@
           "square": 37.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "37.10",
+          "square_raw": "37,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3020,7 +3020,7 @@
           "square": 62.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "62.10",
+          "square_raw": "62,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -3038,18 +3038,18 @@
       "incomes": [
         {
           "size": 2426100.50,
-          "size_raw": "2426100.50",
+          "size_raw": "2426100,50",
           "relative": null
         },
         {
           "size": 828441.21,
-          "size_raw": "828441.21",
+          "size_raw": "828441,21",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -3060,7 +3060,7 @@
           "square": 74.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "74.40",
+          "square_raw": "74,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3070,7 +3070,7 @@
           "square": 43.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "43.00",
+          "square_raw": "43,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3079,7 +3079,7 @@
           "square": 74.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "74.40",
+          "square_raw": "74,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3088,7 +3088,7 @@
           "square": 74.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "74.40",
+          "square_raw": "74,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3115,18 +3115,18 @@
       "incomes": [
         {
           "size": 1163004.32,
-          "size_raw": "1163004.32",
+          "size_raw": "1163004,32",
           "relative": null
         },
         {
           "size": 1976125.00,
-          "size_raw": "1976125.00",
+          "size_raw": "1976125,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -3137,7 +3137,7 @@
           "square": 54.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "54.10",
+          "square_raw": "54,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -3147,7 +3147,7 @@
           "square": 48.60,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "48.60",
+          "square_raw": "48,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3156,7 +3156,7 @@
           "square": 48.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "48.60",
+          "square_raw": "48,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3165,7 +3165,7 @@
           "square": 48.60,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "48.60",
+          "square_raw": "48,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3192,7 +3192,7 @@
       "incomes": [
         {
           "size": 1749516.76,
-          "size_raw": "1749516.76",
+          "size_raw": "1749516,76",
           "relative": null
         }
       ],
@@ -3202,7 +3202,7 @@
           "square": 600.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3212,7 +3212,7 @@
           "square": 600.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3222,7 +3222,7 @@
           "square": 61.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "61.40",
+          "square_raw": "61,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -3232,7 +3232,7 @@
           "square": 39.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "39.40",
+          "square_raw": "39,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3242,7 +3242,7 @@
           "square": 32.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "32.10",
+          "square_raw": "32,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -3252,7 +3252,7 @@
           "square": 87.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "87.00",
+          "square_raw": "87,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -3275,18 +3275,18 @@
       "incomes": [
         {
           "size": 1216457.44,
-          "size_raw": "1216457.44",
+          "size_raw": "1216457,44",
           "relative": null
         },
         {
           "size": 1673000.00,
-          "size_raw": "1673000.00",
+          "size_raw": "1673000,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -3297,7 +3297,7 @@
           "square": 43.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "43.00",
+          "square_raw": "43,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3306,7 +3306,7 @@
           "square": 44.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.00",
+          "square_raw": "44,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3315,7 +3315,7 @@
           "square": 43.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "43.00",
+          "square_raw": "43,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3324,7 +3324,7 @@
           "square": 44.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.00",
+          "square_raw": "44,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3333,7 +3333,7 @@
           "square": 43.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "43.00",
+          "square_raw": "43,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3342,7 +3342,7 @@
           "square": 44.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "44.00",
+          "square_raw": "44,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3373,12 +3373,12 @@
       "incomes": [
         {
           "size": 2724167.77,
-          "size_raw": "2724167.77",
+          "size_raw": "2724167,77",
           "relative": null
         },
         {
           "size": 280000.00,
-          "size_raw": "280000.00",
+          "size_raw": "280000,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3389,7 +3389,7 @@
           "square": 262.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "262.00",
+          "square_raw": "262,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3399,7 +3399,7 @@
           "square": 172.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "172.90",
+          "square_raw": "172,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -3409,7 +3409,7 @@
           "square": 49.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "49.60",
+          "square_raw": "49,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -3419,7 +3419,7 @@
           "square": 49.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "49.60",
+          "square_raw": "49,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -3429,7 +3429,7 @@
           "square": 1300.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1300.00",
+          "square_raw": "1300,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3439,7 +3439,7 @@
           "square": 115.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "115.40",
+          "square_raw": "115,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -3463,36 +3463,36 @@
       "incomes": [
         {
           "size": 1761281.45,
-          "size_raw": "1761281.45",
+          "size_raw": "1761281,45",
           "relative": null
         },
         {
           "size": 1943900.00,
-          "size_raw": "1943900.00",
+          "size_raw": "1943900,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 4
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 5
         }
@@ -3503,7 +3503,7 @@
           "square": 1826.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1826.00",
+          "square_raw": "1826,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельные участки",
           "own_type_raw": "Индивидуальная"
@@ -3513,7 +3513,7 @@
           "square": 54.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3522,7 +3522,7 @@
           "square": 1812.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1812.00",
+          "square_raw": "1812,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3532,7 +3532,7 @@
           "square": 54.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3541,7 +3541,7 @@
           "square": 54.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3550,7 +3550,7 @@
           "square": 54.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3559,7 +3559,7 @@
           "square": 54.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3568,7 +3568,7 @@
           "square": 54.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.00",
+          "square_raw": "54,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3595,12 +3595,12 @@
       "incomes": [
         {
           "size": 2196260.74,
-          "size_raw": "2196260.74",
+          "size_raw": "2196260,74",
           "relative": null
         },
         {
           "size": 454434.70,
-          "size_raw": "454434.70",
+          "size_raw": "454434,70",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -3611,7 +3611,7 @@
           "square": 17.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "17.40",
+          "square_raw": "17,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -3621,7 +3621,7 @@
           "square": 600.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3631,7 +3631,7 @@
           "square": 65.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "65.30",
+          "square_raw": "65,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дачи",
           "own_type_raw": "Индивидуальная"
@@ -3641,7 +3641,7 @@
           "square": 69.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "69.30",
+          "square_raw": "69,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3651,7 +3651,7 @@
           "square": 75.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "75.10",
+          "square_raw": "75,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3661,7 +3661,7 @@
           "square": 62.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "62.80",
+          "square_raw": "62,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -3671,7 +3671,7 @@
           "square": 69.30,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "69.30",
+          "square_raw": "69,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3708,7 +3708,7 @@
           "square": 600.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "600.00",
+          "square_raw": "600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3718,7 +3718,7 @@
           "square": 602.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "602.00",
+          "square_raw": "602,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3728,7 +3728,7 @@
           "square": 42.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "42.00",
+          "square_raw": "42,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Дача",
           "own_type_raw": "Индивидуальная"
@@ -3738,7 +3738,7 @@
           "square": 51.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "51.10",
+          "square_raw": "51,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3748,7 +3748,7 @@
           "square": 61.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "61,20",
+          "square_raw": "61,2",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -3758,7 +3758,7 @@
           "square": 17.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "17,00",
+          "square_raw": "17",
           "country_raw": "Российская Федерация",
           "type_raw": "Бокс",
           "own_type_raw": "Индивидуальная"
@@ -3768,7 +3768,7 @@
           "square": 18.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "18,40",
+          "square_raw": "18,4",
           "country_raw": "Российская Федерация",
           "type_raw": "Машиноместо",
           "own_type_raw": "Индивидуальная"
@@ -3786,7 +3786,7 @@
       "incomes": [
         {
           "size": 2170081.91,
-          "size_raw": "2170081.91",
+          "size_raw": "2170081,91",
           "relative": null
         }
       ],
@@ -3796,7 +3796,7 @@
           "square": 1250.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1250.00",
+          "square_raw": "1250,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3806,7 +3806,7 @@
           "square": 34.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "34.60",
+          "square_raw": "34,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3816,7 +3816,7 @@
           "square": 45.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "45.10",
+          "square_raw": "45,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3834,12 +3834,12 @@
       "incomes": [
         {
           "size": 1266256.40,
-          "size_raw": "1266256.40",
+          "size_raw": "1266256,40",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         }
@@ -3850,7 +3850,7 @@
           "square": 52.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "52.00",
+          "square_raw": "52,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3860,7 +3860,7 @@
           "square": 52.00,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "52.00",
+          "square_raw": "52,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3877,12 +3877,12 @@
       "incomes": [
         {
           "size": 1275933.52,
-          "size_raw": "1275933.52",
+          "size_raw": "1275933,52",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         }
@@ -3893,7 +3893,7 @@
           "square": 54.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "54.40",
+          "square_raw": "54,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -3903,7 +3903,7 @@
           "square": 54.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.40",
+          "square_raw": "54,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -3920,24 +3920,24 @@
       "incomes": [
         {
           "size": 3837184.14,
-          "size_raw": "3837184.14",
+          "size_raw": "3837184,14",
           "relative": null
         },
         {
           "size": 563486.62,
-          "size_raw": "563486.62",
+          "size_raw": "563486,62",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -3948,7 +3948,7 @@
           "square": 358600.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "358600.00",
+          "square_raw": "358600,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3958,7 +3958,7 @@
           "square": 102.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "102.20",
+          "square_raw": "102,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3967,7 +3967,7 @@
           "square": 6900.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "6900.00",
+          "square_raw": "6900,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -3977,7 +3977,7 @@
           "square": 244.40,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "244.40",
+          "square_raw": "244,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -3986,7 +3986,7 @@
           "square": 235.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "235.40",
+          "square_raw": "235,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -3996,7 +3996,7 @@
           "square": 38.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -4006,7 +4006,7 @@
           "square": 90.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "90.60",
+          "square_raw": "90,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -4016,7 +4016,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4026,7 +4026,7 @@
           "square": 16.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "16.20",
+          "square_raw": "16,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -4036,7 +4036,7 @@
           "square": 1000.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1000.00",
+          "square_raw": "1000,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4046,7 +4046,7 @@
           "square": 102.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "102.20",
+          "square_raw": "102,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4055,7 +4055,7 @@
           "square": 200.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "200.00",
+          "square_raw": "200,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4065,7 +4065,7 @@
           "square": 1000.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "1000.00",
+          "square_raw": "1000,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок. Лесной"
         },
@@ -4074,7 +4074,7 @@
           "square": 0.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "0.00",
+          "square_raw": "0,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -4084,7 +4084,7 @@
           "square": 437.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "437.00",
+          "square_raw": "437,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок. Садовый"
         },
@@ -4093,7 +4093,7 @@
           "square": 244.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "244.40",
+          "square_raw": "244,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4103,7 +4103,7 @@
           "square": 235.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "235.40",
+          "square_raw": "235,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4112,7 +4112,7 @@
           "square": 90.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "90.60",
+          "square_raw": "90,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Баня"
         },
@@ -4121,7 +4121,7 @@
           "square": 38.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4130,7 +4130,7 @@
           "square": 102.20,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "102.20",
+          "square_raw": "102,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4140,7 +4140,7 @@
           "square": 244.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "244.40",
+          "square_raw": "244,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4149,7 +4149,7 @@
           "square": 235.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "235.40",
+          "square_raw": "235,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4158,7 +4158,7 @@
           "square": 90.60,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "90.60",
+          "square_raw": "90,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Баня"
         },
@@ -4167,7 +4167,7 @@
           "square": 38.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4176,7 +4176,7 @@
           "square": 102.20,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "102.20",
+          "square_raw": "102,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4186,7 +4186,7 @@
           "square": 244.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "244.40",
+          "square_raw": "244,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4195,7 +4195,7 @@
           "square": 235.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "235.40",
+          "square_raw": "235,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4204,7 +4204,7 @@
           "square": 90.60,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "90.60",
+          "square_raw": "90,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Баня"
         },
@@ -4213,7 +4213,7 @@
           "square": 38.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.40",
+          "square_raw": "38,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         }
@@ -4241,7 +4241,7 @@
       "incomes": [
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -4252,7 +4252,7 @@
           "square": 801.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "801.00",
+          "square_raw": "801,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4262,7 +4262,7 @@
           "square": 56.90,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "56.90",
+          "square_raw": "56,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4271,7 +4271,7 @@
           "square": 108.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "108.00",
+          "square_raw": "108,00",
           "country_raw": "",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -4281,7 +4281,7 @@
           "square": 56.90,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "56.90",
+          "square_raw": "56,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4290,7 +4290,7 @@
           "square": 56.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "56.90",
+          "square_raw": "56,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -4317,7 +4317,7 @@
       "incomes": [
         {
           "size": 1811033.70,
-          "size_raw": "1811033.70",
+          "size_raw": "1811033,70",
           "relative": null
         }
       ],
@@ -4327,7 +4327,7 @@
           "square": 53.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "53.00",
+          "square_raw": "53,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4337,7 +4337,7 @@
           "square": 54.80,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "54.80",
+          "square_raw": "54,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -4354,12 +4354,12 @@
       "incomes": [
         {
           "size": 4668238.01,
-          "size_raw": "4668238.01",
+          "size_raw": "4668238,01",
           "relative": null
         },
         {
           "size": 4334780.97,
-          "size_raw": "4334780.97",
+          "size_raw": "4334780,97",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4370,7 +4370,7 @@
           "square": 1250.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1250.00",
+          "square_raw": "1250,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4380,7 +4380,7 @@
           "square": 193.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "193.00",
+          "square_raw": "193,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4390,7 +4390,7 @@
           "square": 79.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "79.50",
+          "square_raw": "79,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4400,7 +4400,7 @@
           "square": 1250.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1250.00",
+          "square_raw": "1250,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4410,7 +4410,7 @@
           "square": 193.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "193.00",
+          "square_raw": "193,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4420,7 +4420,7 @@
           "square": 79.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "79.50",
+          "square_raw": "79,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4430,7 +4430,7 @@
           "square": 38.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "38.80",
+          "square_raw": "38,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4440,7 +4440,7 @@
           "square": 27.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "27.50",
+          "square_raw": "27,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -4473,7 +4473,7 @@
       "incomes": [
         {
           "size": 1272323.52,
-          "size_raw": "1272323.52",
+          "size_raw": "1272323,52",
           "relative": null
         }
       ],
@@ -4483,7 +4483,7 @@
           "square": 46.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "46.50",
+          "square_raw": "46,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4493,7 +4493,7 @@
           "square": 38.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.70",
+          "square_raw": "38,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая совместная (Петипак Галина Анатольевна)"
@@ -4516,24 +4516,24 @@
       "incomes": [
         {
           "size": 1228816.46,
-          "size_raw": "1228816.46",
+          "size_raw": "1228816,46",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -4544,7 +4544,7 @@
           "square": 53.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "53.90",
+          "square_raw": "53,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4554,7 +4554,7 @@
           "square": 63.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "63.90",
+          "square_raw": "63,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4564,7 +4564,7 @@
           "square": 697.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "697.00",
+          "square_raw": "697,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4574,7 +4574,7 @@
           "square": 1152.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1152.00",
+          "square_raw": "1152,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (1/8)"
@@ -4584,7 +4584,7 @@
           "square": 935.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "935.00",
+          "square_raw": "935,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4594,7 +4594,7 @@
           "square": 43.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "43.80",
+          "square_raw": "43,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (1/4)"
@@ -4604,7 +4604,7 @@
           "square": 72.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "72.10",
+          "square_raw": "72,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4614,7 +4614,7 @@
           "square": 1152.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "1152.10",
+          "square_raw": "1152,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4623,7 +4623,7 @@
           "square": 1152.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "1152.10",
+          "square_raw": "1152,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4632,7 +4632,7 @@
           "square": 53.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "53.90",
+          "square_raw": "53,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4641,7 +4641,7 @@
           "square": 1152.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "1152.10",
+          "square_raw": "1152,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -4650,7 +4650,7 @@
           "square": 72.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "72.10",
+          "square_raw": "72,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -4672,24 +4672,24 @@
       "incomes": [
         {
           "size": 428707.37,
-          "size_raw": "428707.37",
+          "size_raw": "428707,37",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -4700,7 +4700,7 @@
           "square": 79.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "79.90",
+          "square_raw": "79,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4710,7 +4710,7 @@
           "square": 59.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "59.00",
+          "square_raw": "59,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4719,7 +4719,7 @@
           "square": 79.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "79.90",
+          "square_raw": "79,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -4728,7 +4728,7 @@
           "square": 79.90,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "79.90",
+          "square_raw": "79,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -4751,12 +4751,12 @@
       "incomes": [
         {
           "size": 1264435.90,
-          "size_raw": "1264435.90",
+          "size_raw": "1264435,90",
           "relative": null
         },
         {
           "size": 1041091.98,
-          "size_raw": "1041091.98",
+          "size_raw": "1041091,98",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -4767,7 +4767,7 @@
           "square": 53.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "53.10",
+          "square_raw": "53,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -4777,7 +4777,7 @@
           "square": 680.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "680.00",
+          "square_raw": "680,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4787,7 +4787,7 @@
           "square": 2500.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "2500.00",
+          "square_raw": "2500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4797,7 +4797,7 @@
           "square": 46.30,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "46.30",
+          "square_raw": "46,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Садовый дом",
           "own_type_raw": "Индивидуальная"
@@ -4807,7 +4807,7 @@
           "square": 54.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "54.10",
+          "square_raw": "54,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/8)"
@@ -4817,7 +4817,7 @@
           "square": 42.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "42.80",
+          "square_raw": "42,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4845,7 +4845,7 @@
       "incomes": [
         {
           "size": 1906052.33,
-          "size_raw": "1906052.33",
+          "size_raw": "1906052,33",
           "relative": null
         }
       ],
@@ -4855,7 +4855,7 @@
           "square": 44.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "44.10",
+          "square_raw": "44,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4865,7 +4865,7 @@
           "square": 55.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "55.80",
+          "square_raw": "55,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4892,12 +4892,12 @@
       "incomes": [
         {
           "size": 1851374.70,
-          "size_raw": "1851374.70",
+          "size_raw": "1851374,70",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         }
@@ -4908,7 +4908,7 @@
           "square": 47.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "47.80",
+          "square_raw": "47,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -4918,7 +4918,7 @@
           "square": 73.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "73.10",
+          "square_raw": "73,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -4928,7 +4928,7 @@
           "square": 42.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "42.80",
+          "square_raw": "42,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -4938,7 +4938,7 @@
           "square": 73.10,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "73.10",
+          "square_raw": "73,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -4948,7 +4948,7 @@
           "square": 47.80,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.80",
+          "square_raw": "47,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -4965,7 +4965,7 @@
       "incomes": [
         {
           "size": 1245999.14,
-          "size_raw": "1245999.14",
+          "size_raw": "1245999,14",
           "relative": null
         }
       ],
@@ -4975,7 +4975,7 @@
           "square": 3339.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "3339.00",
+          "square_raw": "3339,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4985,7 +4985,7 @@
           "square": 34.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "34.00",
+          "square_raw": "34,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -4995,7 +4995,7 @@
           "square": 73.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "73.30",
+          "square_raw": "73,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5005,7 +5005,7 @@
           "square": 28.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "28.30",
+          "square_raw": "28,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -5023,18 +5023,18 @@
       "incomes": [
         {
           "size": 2217096.65,
-          "size_raw": "2217096.65",
+          "size_raw": "2217096,65",
           "relative": null
         },
         {
           "size": 1182367.55,
-          "size_raw": "1182367.55",
+          "size_raw": "1182367,55",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -5045,7 +5045,7 @@
           "square": 89.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "89.50",
+          "square_raw": "89,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дачи",
           "own_type_raw": "Индивидуальная"
@@ -5055,7 +5055,7 @@
           "square": 138.10,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "138.10",
+          "square_raw": "138,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5064,7 +5064,7 @@
           "square": 97.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "97.60",
+          "square_raw": "97,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5074,7 +5074,7 @@
           "square": 22.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "22.30",
+          "square_raw": "22,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -5084,7 +5084,7 @@
           "square": 31.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "31.10",
+          "square_raw": "31,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Иное недвижимое имущество",
           "own_type_raw": "Индивидуальная"
@@ -5094,7 +5094,7 @@
           "square": 2024.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "2024.00",
+          "square_raw": "2024,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5104,7 +5104,7 @@
           "square": 218.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "218.90",
+          "square_raw": "218,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилые дома, дачи",
           "own_type_raw": "Индивидуальная"
@@ -5114,7 +5114,7 @@
           "square": 138.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "138.10",
+          "square_raw": "138,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5124,7 +5124,7 @@
           "square": 17.30,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "17.30",
+          "square_raw": "17,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Иное недвижимое имущество",
           "own_type_raw": "Индивидуальная"
@@ -5134,7 +5134,7 @@
           "square": 138.10,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "138.10",
+          "square_raw": "138,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5157,12 +5157,12 @@
       "incomes": [
         {
           "size": 1881973.68,
-          "size_raw": "1881973.68",
+          "size_raw": "1881973,68",
           "relative": null
         },
         {
           "size": 657917.78,
-          "size_raw": "657917.78",
+          "size_raw": "657917,78",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5173,7 +5173,7 @@
           "square": 72.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "72.40",
+          "square_raw": "72,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5183,7 +5183,7 @@
           "square": 18.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "18.00",
+          "square_raw": "18,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж"
         },
@@ -5192,7 +5192,7 @@
           "square": 75.30,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "75.30",
+          "square_raw": "75,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5210,7 +5210,7 @@
       "incomes": [
         {
           "size": 1305535.96,
-          "size_raw": "1305535.96",
+          "size_raw": "1305535,96",
           "relative": null
         }
       ],
@@ -5220,7 +5220,7 @@
           "square": 56.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "56.20",
+          "square_raw": "56,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -5230,7 +5230,7 @@
           "square": 38.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.30",
+          "square_raw": "38,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (5/8)"
@@ -5248,7 +5248,7 @@
       "incomes": [
         {
           "size": 1237233.20,
-          "size_raw": "1237233.20",
+          "size_raw": "1237233,20",
           "relative": null
         }
       ],
@@ -5258,7 +5258,7 @@
           "square": 2500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "2500.00",
+          "square_raw": "2500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5268,7 +5268,7 @@
           "square": 131.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "131.20",
+          "square_raw": "131,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (1/2)"
@@ -5278,7 +5278,7 @@
           "square": 83.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "83.60",
+          "square_raw": "83,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/4)"
@@ -5301,12 +5301,12 @@
       "incomes": [
         {
           "size": 1934410.22,
-          "size_raw": "1934410.22",
+          "size_raw": "1934410,22",
           "relative": null
         },
         {
           "size": 9391716.14,
-          "size_raw": "9391716.14",
+          "size_raw": "9391716,14",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5317,7 +5317,7 @@
           "square": 1390.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1390.00",
+          "square_raw": "1390,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5327,7 +5327,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5337,7 +5337,7 @@
           "square": 60.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "60.00",
+          "square_raw": "60,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Общая долевая (2/3)"
@@ -5347,7 +5347,7 @@
           "square": 72.60,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "72.60",
+          "square_raw": "72,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -5357,7 +5357,7 @@
           "square": 41.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "41.50",
+          "square_raw": "41,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5367,7 +5367,7 @@
           "square": 72.60,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "72.60",
+          "square_raw": "72,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -5377,7 +5377,7 @@
           "square": 50.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "50.00",
+          "square_raw": "50,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5386,7 +5386,7 @@
           "square": 65.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "65.00",
+          "square_raw": "65,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5396,7 +5396,7 @@
           "square": 1200.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1200.00",
+          "square_raw": "1200,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5424,12 +5424,12 @@
       "incomes": [
         {
           "size": 1175648.66,
-          "size_raw": "1175648.66",
+          "size_raw": "1175648,66",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5440,7 +5440,7 @@
           "square": 70.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "70.00",
+          "square_raw": "70,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5449,7 +5449,7 @@
           "square": 40.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "40.80",
+          "square_raw": "40,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5459,7 +5459,7 @@
           "square": 18.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "18.00",
+          "square_raw": "18,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Гараж",
           "own_type_raw": "Индивидуальная"
@@ -5469,7 +5469,7 @@
           "square": 70.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "70.00",
+          "square_raw": "70,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5498,12 +5498,12 @@
       "incomes": [
         {
           "size": 1239849.35,
-          "size_raw": "1239849.35",
+          "size_raw": "1239849,35",
           "relative": null
         },
         {
           "size": 849630.67,
-          "size_raw": "849630.67",
+          "size_raw": "849630,67",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5514,7 +5514,7 @@
           "square": 2000.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "2000.00",
+          "square_raw": "2000,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5524,7 +5524,7 @@
           "square": 38.10,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.10",
+          "square_raw": "38,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5533,7 +5533,7 @@
           "square": 38.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "38.10",
+          "square_raw": "38,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5560,12 +5560,12 @@
       "incomes": [
         {
           "size": 380057.07,
-          "size_raw": "380057.07",
+          "size_raw": "380057,07",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 1
         }
@@ -5576,7 +5576,7 @@
           "square": 47.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "47.40",
+          "square_raw": "47,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -5586,7 +5586,7 @@
           "square": 47.40,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.40",
+          "square_raw": "47,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5608,7 +5608,7 @@
       "incomes": [
         {
           "size": 1100259.23,
-          "size_raw": "1100259.23",
+          "size_raw": "1100259,23",
           "relative": null
         }
       ],
@@ -5618,7 +5618,7 @@
           "square": 72.90,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "72.90",
+          "square_raw": "72,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5627,7 +5627,7 @@
           "square": 40.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "40.20",
+          "square_raw": "40,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5644,12 +5644,12 @@
       "incomes": [
         {
           "size": 1502613.22,
-          "size_raw": "1502613.22",
+          "size_raw": "1502613,22",
           "relative": null
         },
         {
           "size": 1234220.77,
-          "size_raw": "1234220.77",
+          "size_raw": "1234220,77",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5660,7 +5660,7 @@
           "square": 77.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "77.10",
+          "square_raw": "77,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -5670,7 +5670,7 @@
           "square": 77.10,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "77.10",
+          "square_raw": "77,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -5680,7 +5680,7 @@
           "square": 45.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "45.50",
+          "square_raw": "45,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5704,7 +5704,7 @@
       "incomes": [
         {
           "size": 1201937.69,
-          "size_raw": "1201937.69",
+          "size_raw": "1201937,69",
           "relative": null
         }
       ],
@@ -5714,7 +5714,7 @@
           "square": 53.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "53.30",
+          "square_raw": "53,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/6)"
@@ -5724,7 +5724,7 @@
           "square": 64.50,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "64.50",
+          "square_raw": "64,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5746,7 +5746,7 @@
       "incomes": [
         {
           "size": 1450079.24,
-          "size_raw": "1450079.24",
+          "size_raw": "1450079,24",
           "relative": null
         }
       ],
@@ -5756,7 +5756,7 @@
           "square": 9.50,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "9.50",
+          "square_raw": "9,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Иное недвижимое имущество",
           "own_type_raw": "Индивидуальная"
@@ -5779,12 +5779,12 @@
       "incomes": [
         {
           "size": 1881501.90,
-          "size_raw": "1881501.90",
+          "size_raw": "1881501,90",
           "relative": null
         },
         {
           "size": 1462979.67,
-          "size_raw": "1462979.67",
+          "size_raw": "1462979,67",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5795,7 +5795,7 @@
           "square": 125.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "125.00",
+          "square_raw": "125,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5804,7 +5804,7 @@
           "square": 40.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "40.00",
+          "square_raw": "40,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -5813,7 +5813,7 @@
           "square": 125.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "125.00",
+          "square_raw": "125,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5830,12 +5830,12 @@
       "incomes": [
         {
           "size": 3871139.24,
-          "size_raw": "3871139.24",
+          "size_raw": "3871139,24",
           "relative": null
         },
         {
           "size": 794426.08,
-          "size_raw": "794426.08",
+          "size_raw": "794426,08",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5846,7 +5846,7 @@
           "square": 36.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5856,7 +5856,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -5866,7 +5866,7 @@
           "square": 92.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "92.40",
+          "square_raw": "92,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дачи",
           "own_type_raw": "Индивидуальная"
@@ -5876,7 +5876,7 @@
           "square": 36.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "36.80",
+          "square_raw": "36,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5886,7 +5886,7 @@
           "square": 36.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "36.00",
+          "square_raw": "36,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5896,7 +5896,7 @@
           "square": 36.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "36.80",
+          "square_raw": "36,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -5919,7 +5919,7 @@
       "incomes": [
         {
           "size": 1745965.30,
-          "size_raw": "1745965.30",
+          "size_raw": "1745965,30",
           "relative": null
         }
       ],
@@ -5929,7 +5929,7 @@
           "square": 59.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "59.20",
+          "square_raw": "59,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5939,7 +5939,7 @@
           "square": 46.40,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "46.40",
+          "square_raw": "46,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -5957,12 +5957,12 @@
       "incomes": [
         {
           "size": 1480773.55,
-          "size_raw": "1480773.55",
+          "size_raw": "1480773,55",
           "relative": null
         },
         {
           "size": 221619.05,
-          "size_raw": "221619.05",
+          "size_raw": "221619,05",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -5973,7 +5973,7 @@
           "square": 45.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "45.80",
+          "square_raw": "45,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -5983,7 +5983,7 @@
           "square": 14.80,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "14.80",
+          "square_raw": "14,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Машиноместо"
         },
@@ -5992,7 +5992,7 @@
           "square": 44.40,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "44.40",
+          "square_raw": "44,40",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -6020,7 +6020,7 @@
         },
         {
           "size": 412912.00,
-          "size_raw": "412912,00",
+          "size_raw": "412912",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6031,7 +6031,7 @@
           "square": 33.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "33.00",
+          "square_raw": "33,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6040,7 +6040,7 @@
           "square": 33.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "33.00",
+          "square_raw": "33,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -6067,12 +6067,12 @@
       "incomes": [
         {
           "size": 1705898.08,
-          "size_raw": "1705898.08",
+          "size_raw": "1705898,08",
           "relative": null
         },
         {
           "size": 1601633.33,
-          "size_raw": "1601633.33",
+          "size_raw": "1601633,33",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -6083,7 +6083,7 @@
           "square": 565.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "565.00",
+          "square_raw": "565,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -6093,7 +6093,7 @@
           "square": 47.60,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "47.60",
+          "square_raw": "47,60",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6102,7 +6102,7 @@
           "square": 1500.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -6112,7 +6112,7 @@
           "square": 70.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "70.00",
+          "square_raw": "70,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дачи",
           "own_type_raw": "Индивидуальная"
@@ -6122,7 +6122,7 @@
           "square": 12.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "12.00",
+          "square_raw": "12,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дачи",
           "own_type_raw": "Индивидуальная"
@@ -6132,7 +6132,7 @@
           "square": 79.90,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "79.90",
+          "square_raw": "79,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -6142,7 +6142,7 @@
           "square": 1500.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "1500.00",
+          "square_raw": "1500,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -6152,7 +6152,7 @@
           "square": 64.80,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "64.80",
+          "square_raw": "64,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6161,7 +6161,7 @@
           "square": 170.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "170.00",
+          "square_raw": "170,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом, дача",
           "own_type_raw": "Индивидуальная"
@@ -6189,7 +6189,7 @@
       "incomes": [
         {
           "size": 2020160.37,
-          "size_raw": "2020160.37",
+          "size_raw": "2020160,37",
           "relative": null
         }
       ],
@@ -6199,7 +6199,7 @@
           "square": 59.70,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "59.70",
+          "square_raw": "59,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -6209,7 +6209,7 @@
           "square": 43.00,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "43.00",
+          "square_raw": "43,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -6231,18 +6231,18 @@
       "incomes": [
         {
           "size": 1269524.45,
-          "size_raw": "1269524.45",
+          "size_raw": "1269524,45",
           "relative": null
         },
         {
           "size": 355818.42,
-          "size_raw": "355818.42",
+          "size_raw": "355818,42",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         }
@@ -6253,7 +6253,7 @@
           "square": 10.50,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "10.50",
+          "square_raw": "10,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6262,7 +6262,7 @@
           "square": 85.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "85.00",
+          "square_raw": "85,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -6271,7 +6271,7 @@
           "square": 64.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "64.00",
+          "square_raw": "64,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6280,7 +6280,7 @@
           "square": 10.50,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "10.50",
+          "square_raw": "10,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6289,7 +6289,7 @@
           "square": 10.50,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "10.50",
+          "square_raw": "10,50",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -6311,24 +6311,24 @@
       "incomes": [
         {
           "size": 1297861.73,
-          "size_raw": "1297861.73",
+          "size_raw": "1297861,73",
           "relative": null
         },
         {
           "size": 4469221.70,
-          "size_raw": "4469221.70",
+          "size_raw": "4469221,70",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -6339,7 +6339,7 @@
           "square": 70.20,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "70.20",
+          "square_raw": "70,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -6349,7 +6349,7 @@
           "square": 43.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "43.10",
+          "square_raw": "43,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуальная"
@@ -6359,7 +6359,7 @@
           "square": 38.10,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "38.10",
+          "square_raw": "38,10",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -6369,7 +6369,7 @@
           "square": 159.90,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "159.90",
+          "square_raw": "159,90",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -6379,7 +6379,7 @@
           "square": 58.70,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "58.70",
+          "square_raw": "58,70",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6388,7 +6388,7 @@
           "square": 620.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "620.00",
+          "square_raw": "620,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -6398,7 +6398,7 @@
           "square": 70.20,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "70.20",
+          "square_raw": "70,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6407,7 +6407,7 @@
           "square": 70.20,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "70.20",
+          "square_raw": "70,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/2)"
@@ -6417,7 +6417,7 @@
           "square": 70.20,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "70.20",
+          "square_raw": "70,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         }
@@ -6440,24 +6440,24 @@
       "incomes": [
         {
           "size": 1293500.60,
-          "size_raw": "1293500,60",
+          "size_raw": "1293500,6",
           "relative": null
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 2
         },
         {
           "size": 0.00,
-          "size_raw": "0.00",
+          "size_raw": "0,00",
           "relative": "Ребенок",
           "relative_index": 3
         }
@@ -6468,7 +6468,7 @@
           "square": 543.00,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "543.00",
+          "square_raw": "543,00",
           "country_raw": "Российская Федерация",
           "type_raw": "Земельный участок",
           "own_type_raw": "Индивидуальная"
@@ -6478,7 +6478,7 @@
           "square": 78.20,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "78.20",
+          "square_raw": "78,20",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира"
         },
@@ -6487,7 +6487,7 @@
           "square": 266.30,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "266.30",
+          "square_raw": "266,30",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом",
           "own_type_raw": "Индивидуальная"
@@ -6497,7 +6497,7 @@
           "square": 383.80,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "383.80",
+          "square_raw": "383,80",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом",
           "own_type_raw": "Индивидуальная"
@@ -6507,7 +6507,7 @@
           "square": 51.9,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
-          "square_raw": "51.9",
+          "square_raw": "51,9",
           "country_raw": "Российская Федерация",
           "type_raw": "Квартира",
           "own_type_raw": "Общая долевая (1/3)"
@@ -6517,7 +6517,7 @@
           "square": 266.3,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "266.3",
+          "square_raw": "266,3",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -6526,7 +6526,7 @@
           "square": 266.3,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "266.3",
+          "square_raw": "266,3",
           "country_raw": "Российская Федерация",
           "type_raw": "Жилой дом"
         },
@@ -6535,7 +6535,7 @@
           "square": 38.2,
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
-          "square_raw": "38.2",
+          "square_raw": "38,2",
           "country_raw": "",
           "type_raw": "Квартира Общая долевая (1/2)",
           "own_type_raw": "Общая долевая (1/2)"

@@ -15,10 +15,6 @@ namespace RegressionTesting
     /// Summary description for ValidityTests
     /// </summary>
     [TestClass]
-    [DeploymentItem(SamplesDirectory)]
-    [DeploymentItem(@"JsonSerialization\import-schema.json")]
-    [DeploymentItem(@"JsonSerialization\import-schema-dicts.json")]
-    [DeploymentItem("log4net.config")]
     public class ValidityTests
     {
         public ValidityTests()
@@ -68,7 +64,6 @@ namespace RegressionTesting
         //
         #endregion
             
-        private const string SamplesDirectory = "regression_samples";
         private const string SmartParserLogFile = "smart_parser_files.log";
 
         private string SmartParserLogFilePath
@@ -79,14 +74,19 @@ namespace RegressionTesting
         public String GetCanonFolder()
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(TestContext.TestDir));
-            return Path.Join(solution_dir, "RegressionTesting", "files");
+            if (solution_dir.EndsWith("RegressionTesting")) {
+                return Path.Join(solution_dir, "files"); // for ubuntu dotnet
+            }
+            else {
+                return Path.Join(solution_dir, "RegressionTesting", "files"); // in Windows Visual Studio
+            }
         }
 
 
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
@@ -106,7 +106,7 @@ namespace RegressionTesting
         public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
             SetupLog4Net();
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
@@ -667,30 +667,11 @@ namespace RegressionTesting
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
 
-                string fcOut = RunFileCompare(expectedFile, actualFile);
-                Console.Write(fcOut);
+                //string fcOut = RunFileCompare(expectedFile, actualFile);
+                //Console.Write(fcOut);
 
                 return false;
             }
-        }
-
-        private static bool IsSampleFileValid(string expectedFile, string logFile)
-        {
-            string expectedOutput = File.ReadAllText(expectedFile);
-            string validationResult = ApiClient.ValidateParserOutput(expectedOutput);
-
-            if (validationResult != "[]")
-            {
-                string errorsFileName = "errors_" + Path.GetFileNameWithoutExtension(expectedFile) + ".json";
-                File.WriteAllText(errorsFileName, validationResult);
-                Log(logFile, $"Expected file {expectedFile} is no longer valid." +
-                    $" Please ensure it conforms to the latest schema and validation requirements.");
-                Log(logFile, $"Validation errors are listed in {Path.GetFullPath(errorsFileName)}");
-
-                return false;
-            }
-
-            return true;
         }
 
         private static void Log(string logFileName, string contents)

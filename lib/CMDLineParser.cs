@@ -9,8 +9,6 @@
 
 using System;
 using System.Collections;
-using System.Globalization;
-using System.Text;
 
 
 /// <summary>
@@ -50,8 +48,7 @@ namespace CMDLine
     ///     //add Alias option name
     ///     DebugOption.AddAlias("/Debug");
     /// 
-    ///     CMDLineParser.NumberOption NegNumOpt = parser.AddDoubleParameter("-NegNum", "A required negativ Number", true);
-    ///     
+   ///     
     ///     try
     ///     {
     ///         //parse 
@@ -185,38 +182,6 @@ namespace CMDLine
         public Option AddStringParameter(string name, string description, bool required)
         {
             Option opt = new Option(name, description, typeof(string), true, required);
-            AddOption(opt);
-            return (opt);
-        }
-        /// <summary>
-        /// Add a Integer parameter command line option.
-        /// </summary>
-        public NumberOption AddIntParameter(string name, string description, bool required)
-        {
-            NumberOption opt = new NumberOption(name, description, typeof(int), true, required);
-            opt.NumberStyle = NumberStyles.Integer;
-            AddOption(opt);
-            return (opt);
-        }
-        /// <summary>
-        /// Add a Double parameter command line option.
-        /// </summary>
-        public NumberOption AddDoubleParameter(string name, string description, bool required)
-        {
-            NumberOption opt = new NumberOption(name, description, typeof(double), true, required);
-            opt.NumberStyle = NumberStyles.Float;
-            AddOption(opt);
-            return (opt);
-        }
-        /// <summary>
-        /// Add a Double parameter command line option.
-        /// </summary>
-        public NumberOption AddDoubleParameter(string name, string description, bool required, NumberFormatInfo numberformat)
-        {
-            NumberOption opt = new NumberOption(name, description, typeof(double), true, required);
-            opt.NumberFormat = numberformat;
-            opt.parseDecimalSeperator = false;
-            opt.NumberStyle = NumberStyles.Float | NumberStyles.AllowThousands;
             AddOption(opt);
             return (opt);
         }
@@ -685,108 +650,6 @@ namespace CMDLine
             #endregion
         }
 
-        /// <summary>
-        /// An command line option with a Number parameter.
-        /// </summary>
-        ///<remarks>
-        /// To avoid unpredictable results on plattforms that use different 'Culture' settings 
-        /// the default is set to 'invariant Culture' and parseDecimalSeperator=true;
-        /// The number format can be changed for each CMDLineParser.NumberOption individually for
-        /// more strict parsing.
-        ///</remarks>
-        public class NumberOption : Option
-        {
-            /// <summary>
-            /// If set to true the parser tries to detect and set the Decimalseparetor ("." or ",")
-            /// automaticly. (default=true)
-            /// </summary>
-            public bool parseDecimalSeperator = true;
-
-            private NumberFormatInfo _numberformat = null;
-            private NumberStyles _numberstyle;
-
-            /// <summary>
-            /// Get or Set the NumberFormat Information for parsing the parameter 
-            /// </summary>
-            public NumberFormatInfo NumberFormat
-            {
-                get { return _numberformat; }
-                set { _numberformat = value; }
-            }
-            /// <summary>
-            /// Get or Set the NumberStyle for parsing the parameter 
-            /// </summary>
-            public NumberStyles NumberStyle
-            {
-                get { return _numberstyle; }
-                set { _numberstyle = value; }
-            }
-
-            public NumberOption(string name, string description, System.Type type, bool hasval, bool required)
-                : base(name, description, type, hasval, required)
-            {
-                //use invariant Culture as default
-                _numberformat = (new CultureInfo("", false)).NumberFormat;
-            }
-
-            public override object parseValue(string parameter)
-            {
-                // int parameter
-                if (base.Type == typeof(int))
-                {
-                    return parseIntValue(parameter);
-                }
-                // double parameter
-                if (base.Type == typeof(double))
-                {
-                    return parseDoubleValue(parameter);
-                }
-                throw new ParameterConversionException("Invalid Option Type: " + base.Type);
-            }
-            //
-            private int parseIntValue(string parameter)
-            {
-                try
-                {
-                    return (System.Int32.Parse(parameter, _numberstyle, _numberformat));
-                }
-                catch (Exception e)
-                {
-                    throw new ParameterConversionException("Invalid Int Parameter:" + parameter + " - " + e.Message);
-                }
-            }
-            //
-            private double parseDoubleValue(string parameter)
-            {
-                if (parseDecimalSeperator) SetIdentifiedDecimalSeperator(parameter);
-                try
-                {
-                    return (System.Double.Parse(parameter, _numberstyle, _numberformat));
-                }
-                catch (Exception e)
-                {
-                    throw new ParameterConversionException("Invalid Double Parameter:" + parameter + " - " + e.Message);
-                }
-            }
-            //
-            private void SetIdentifiedDecimalSeperator(string parameter)
-            {
-                if (_numberformat.NumberDecimalSeparator == "." && parameter.Contains(",") && !(parameter.Contains(".")))
-                {
-                    _numberformat.NumberDecimalSeparator = ",";
-                    if (_numberformat.NumberGroupSeparator == ",") _numberformat.NumberGroupSeparator = ".";
-                }
-                else
-                {
-                    if (_numberformat.NumberDecimalSeparator == "," && parameter.Contains(".") && !(parameter.Contains(",")))
-                    {
-                        _numberformat.NumberDecimalSeparator = ".";
-                        if (_numberformat.NumberGroupSeparator == ".") _numberformat.NumberGroupSeparator = ",";
-                    }
-                }
-            }
-            
-        }
         /// <summary>
         /// Command line parsing Exception.
         /// </summary>

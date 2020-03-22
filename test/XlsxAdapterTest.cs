@@ -11,8 +11,6 @@ namespace test
     public class XlsxAdapterTest
     {
         [TestMethod]
-        [DeploymentItem(@"JsonSerialization\import-schema.json")]
-        [DeploymentItem(@"JsonSerialization\import-schema-dicts.json")]
         public void XlsxTypeCTest()
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "c_sample.xlsx");

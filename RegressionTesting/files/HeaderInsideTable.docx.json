@@ -78,12 +78,12 @@
       "incomes": [
         {
           "size": 1681422.41,
-          "size_raw": "1 681 422,41",
+          "size_raw": "1681422,41",
           "relative": null
         },
         {
           "size": 1922874.00,
-          "size_raw": "1 922 874,00",
+          "size_raw": "1922874",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -94,7 +94,7 @@
           "square": 51.0,
           "relative": null,
           "own_type_by_column": "В пользовании",
-          "square_raw": "51,0",
+          "square_raw": "51",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         },
@@ -143,7 +143,7 @@
           "square": 51.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "51,0",
+          "square_raw": "51",
           "country_raw": "Россия",
           "type_raw": "Квартира"
         }

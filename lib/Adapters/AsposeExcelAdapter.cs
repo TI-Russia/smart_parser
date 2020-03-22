@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
 
+
 namespace Smart.Parser.Adapters
 {
 
@@ -141,6 +142,7 @@ namespace Smart.Parser.Adapters
             DocumentFile = fileName;
             workbook = new Aspose.Cells.Workbook(fileName);
             workbook.Settings.NumberDecimalSeparator = ',';
+            workbook.Settings.NumberGroupSeparator = ' ';
             // if there are multiple worksheets it is a problem
             // generate exception if more then one non-hidden worksheet
             //worksheet = workbook.Worksheets[0];

@@ -113,7 +113,7 @@
           "square": 13.1,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "13.1",
+          "square_raw": "13,1",
           "country_raw": "Россия"
         }
       ],
@@ -544,7 +544,7 @@
           "square": 67.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "67,0",
+          "square_raw": "67",
           "country_raw": "Россия"
         },
         {
@@ -552,7 +552,7 @@
           "square": 18.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "18,0",
+          "square_raw": "18",
           "country_raw": "Россия"
         }
       ],
@@ -597,7 +597,7 @@
       "incomes": [
         {
           "size": 729911.50,
-          "size_raw": "729911,50",
+          "size_raw": "729911,5",
           "relative": null
         },
         {
@@ -693,7 +693,7 @@
         },
         {
           "size": 404238.60,
-          "size_raw": "404238,60",
+          "size_raw": "404238,6",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -720,7 +720,7 @@
           "square": 24.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "24,0",
+          "square_raw": "24",
           "country_raw": "Россия"
         },
         {

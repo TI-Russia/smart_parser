@@ -33,7 +33,7 @@
           "square": 30.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "30,0",
+          "square_raw": "30",
           "country_raw": "Россия"
         },
         {
@@ -49,7 +49,7 @@
           "square": 60.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "60,0",
+          "square_raw": "60",
           "country_raw": "Россия"
         },
         {

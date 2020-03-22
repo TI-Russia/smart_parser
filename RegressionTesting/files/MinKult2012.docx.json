@@ -9,12 +9,12 @@
       "incomes": [
         {
           "size": 2489131.0,
-          "size_raw": "2 489 131",
+          "size_raw": "2489131",
           "relative": null
         },
         {
           "size": 1824450.0,
-          "size_raw": "1 824 450",
+          "size_raw": "1824450",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -25,7 +25,7 @@
           "square": 720.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "720,0",
+          "square_raw": "720",
           "country_raw": "Россия"
         },
         {
@@ -49,7 +49,7 @@
           "square": 720.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "720,0",
+          "square_raw": "720",
           "country_raw": "Россия"
         },
         {
@@ -85,7 +85,7 @@
       "incomes": [
         {
           "size": 4391602.0,
-          "size_raw": "4 391 602",
+          "size_raw": "4391602",
           "relative": null
         }
       ],
@@ -95,7 +95,7 @@
           "square": 97.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "97,0",
+          "square_raw": "97",
           "country_raw": "Россия"
         }
       ],

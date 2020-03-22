@@ -1,17 +1,17 @@
 ﻿using Parser.Lib;
 using Smart.Parser.Adapters;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TI.Declarator.ParserCommon;
-using System.Drawing;
+using System.Globalization;
 
 namespace Smart.Parser.Lib
 {
-
-
+    
     public class Parser
     {
         DateTime FirstPassStartTime;
@@ -19,14 +19,23 @@ namespace Smart.Parser.Lib
         bool FailOnRelativeOrphan;
         static readonly string OwnedString = "В собственности";
         static readonly string StateString = "В пользовании";
+        static NumberFormatInfo ParserNumberFormatInfo = new NumberFormatInfo();
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
         public Parser(IAdapter adapter, bool failOnRelativeOrphan = true)
         {
             Adapter = adapter;
             FailOnRelativeOrphan = failOnRelativeOrphan;
+            ParserNumberFormatInfo.NumberDecimalSeparator = ",";
+            
         }
+        public static void InitializeSmartParser()
+        {
+            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
 
+            var culture = new System.Globalization.CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = culture;
+        }
 
         Declaration InitializeDeclaration(ColumnOrdering columnOrdering, int? user_documentfile_id)
         {
@@ -557,7 +566,7 @@ namespace Smart.Parser.Lib
                 person.DeclaredYearlyIncome *= 1000;
             }
             if (!DataHelper.IsEmptyValue(fieldStr))
-                person.DeclaredYearlyIncomeRaw = fieldStr;
+                person.DeclaredYearlyIncomeRaw = NormalizeRawDecimalForTest(fieldStr);
             return true;
         }
         bool ParseIncome(DataRow currRow, Person person, bool ignoreThousandMultiplier)
@@ -691,6 +700,20 @@ namespace Smart.Parser.Lib
             }
 
         }
+        
+        static string NormalizeRawDecimalForTest(string s)
+        {
+            Double v;
+            if (Double.TryParse(s, out v))
+            {
+                return v.ToString(ParserNumberFormatInfo);
+            }
+            else
+            {
+                return s.Replace(".", ",").Replace("\u202f", " ");
+                //return s;
+            }
+        }
 
         static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
         {
@@ -705,7 +728,7 @@ namespace Smart.Parser.Lib
             stateProperty.Text = statePropTypeStr;
             stateProperty.type_raw = statePropTypeStr;
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
-            stateProperty.square_raw = statePropSquareStr;
+            stateProperty.square_raw = NormalizeRawDecimalForTest(statePropSquareStr);
             stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
             stateProperty.own_type_by_column = StateString;
             CheckProperty(stateProperty);
@@ -724,7 +747,7 @@ namespace Smart.Parser.Lib
             RealEstateProperty realEstateProperty = new RealEstateProperty();
 
             realEstateProperty.square = DataHelper.ParseSquare(areaStr);
-            realEstateProperty.square_raw = areaStr;
+            realEstateProperty.square_raw = NormalizeRawDecimalForTest(areaStr);
             realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
 
             // колонка с типом недвижимости отдельно

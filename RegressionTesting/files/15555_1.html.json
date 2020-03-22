@@ -9,7 +9,7 @@
       "incomes": [
         {
           "size": 4833.5,
-          "size_raw": "4 833,5",
+          "size_raw": "4833,5",
           "relative": null
         }
       ],
@@ -113,12 +113,12 @@
       "incomes": [
         {
           "size": 1758.3,
-          "size_raw": "1 758,3",
+          "size_raw": "1758,3",
           "relative": null
         },
         {
           "size": 3042.2,
-          "size_raw": "3 042,2",
+          "size_raw": "3042,2",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -197,7 +197,7 @@
       "incomes": [
         {
           "size": 1935.0,
-          "size_raw": "1 935,0",
+          "size_raw": "1935",
           "relative": null
         },
         {
@@ -275,7 +275,7 @@
       "incomes": [
         {
           "size": 10248.7,
-          "size_raw": "10 248,7",
+          "size_raw": "10248,7",
           "relative": null
         },
         {
@@ -311,7 +311,7 @@
           "square": 79.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "79,0",
+          "square_raw": "79",
           "country_raw": "Черногория",
           "type_raw": "Квартира",
           "own_type_raw": "Индивидуаль-ное"
@@ -321,7 +321,7 @@
           "square": 20.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "20,0",
+          "square_raw": "20",
           "country_raw": "РФ"
         },
         {
@@ -385,7 +385,7 @@
       "incomes": [
         {
           "size": 1279.3,
-          "size_raw": "1 279,3",
+          "size_raw": "1279,3",
           "relative": null
         }
       ],
@@ -443,7 +443,7 @@
       "incomes": [
         {
           "size": 1110.7,
-          "size_raw": "1 110,7",
+          "size_raw": "1110,7",
           "relative": null
         },
         {
@@ -522,12 +522,12 @@
       "incomes": [
         {
           "size": 2596.8,
-          "size_raw": "2 596,8",
+          "size_raw": "2596,8",
           "relative": null
         },
         {
           "size": 84.0,
-          "size_raw": "84,0",
+          "size_raw": "84",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -576,12 +576,12 @@
       "incomes": [
         {
           "size": 1117.5,
-          "size_raw": "1 117,5",
+          "size_raw": "1117,5",
           "relative": null
         },
         {
           "size": 1938.06,
-          "size_raw": "1 938,06",
+          "size_raw": "1938,06",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -675,7 +675,7 @@
       "incomes": [
         {
           "size": 1421.0,
-          "size_raw": "1 421,0",
+          "size_raw": "1421",
           "relative": null
         },
         {
