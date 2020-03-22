@@ -28,8 +28,8 @@ def parse_args():
     parser.add_argument("--output", dest='output', help="Output and cache folder to store results.",
                         default="out", type=str)
     parser.add_argument("--force-upload", dest='force_upload',
-                        help="Output and cache folder to store results.",
-                        default=False, type=bool, action="store_true")
+                        help="Force upload for degraded files.",
+                        default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
                         default="https://declarator.org/api/fixed_document_file/?office=579", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
@@ -50,6 +50,7 @@ def check_extension(filename, all_extension):
 # Create a custom logger
 def get_logger():
     logger = logging.getLogger(__name__)
+    logger.propagate = False
 
     # Create handlers
     f_handler = logging.FileHandler('parsing.log', 'w', 'utf-8')
@@ -62,7 +63,7 @@ def get_logger():
     f_handler.setFormatter(f_format)
 
     # # Add handlers to the logger
-    # logger.addHandler(f_handler)
+    logger.addHandler(f_handler)
     return logger
 
 
@@ -94,7 +95,7 @@ def run_smart_parser(filepath, args):
     json_list = glob.glob("%s*.json" % sourcefile)
     if json_list:
         if not args.usecache:
-            logger.info("Delete existed JSON file(s).")
+            # logger.info("Delete existed JSON file(s).")
             for jf in json_list:
                 os.remove(jf)
         else:
@@ -115,10 +116,10 @@ def run_smart_parser(filepath, args):
         smart_parser_options,
         filepath)
     result = os.popen(cmd).read()
-    return (datetime.now() - start_time).total_seconds()
+    return (datetime.now() - start_time).total_seconds(), result
 
 
-def post_results(sourcefile, job, time_delta=None, ):
+def post_results(sourcefile, job, time_delta=None, parser_log=None):
     df_id, archive_file = job.get('document_file', None), job.get('archive_file', None)
     filename = sourcefile[:sourcefile.rfind('.')]
 
@@ -181,24 +182,29 @@ def post_results(sourcefile, job, time_delta=None, ):
             fp.write(body)
     
     parsed = len(data['persons']) > 0
+    result = job.copy()
+    result['parser_log'] = data['document']['parser_log']
+    result['sourcefile'] = sourcefile
+    
+    if not parsed:
+        result['new_status'] = 'error'
+    else:        
+        result['new_status'] = 'ok'
 
     if df_id:
         if job['status'] == 'ok' and not parsed:
-            return 'degrade'
-                    
-        logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
-            df_id, len(data['persons']), len(json_list), data['document']['file_size']))
+            result['new_status'] = 'degrade'
+        else:                    
+            logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
+                df_id, len(data['persons']), len(json_list), data['document']['file_size']))
 
-        response = client.post(declarator_domain +
-                               '/api/jsonfile/validate/', data=body)
-        if response.status_code != requests.codes.ok:
-            logger.error(response)
-            logger.error(response.text)
+            response = client.post(declarator_domain +
+                                '/api/jsonfile/validate/', data=body)
+            if response.status_code != requests.codes.ok:
+                logger.error(response)
+                logger.error(response.text)
 
-    if not parsed:
-        return 'error'
-
-    return 'ok'
+    return result
 
 
 def kill_process_windows(pid):
@@ -237,10 +243,10 @@ class ProcessOneFile(object):
 
         file_path = download_file(file_url, file_path)
 
-        time_delta = run_smart_parser(file_path, self.args)
+        time_delta, result = run_smart_parser(file_path, self.args)
 
         if time_delta is not None:
-            return post_results(file_path, job, time_delta)
+            return post_results(file_path, job, time_delta, result)
         else:
             # this is wrong for header_recall calculation:
             # time_delta 0 for cached parsing results
@@ -272,6 +278,7 @@ def get_folder_jobs(folder, args):
             continue
         joblist.append({
             "download_url": os.path.join(folder, name),
+            "status": 'new'
         })
     return joblist
 
@@ -291,13 +298,15 @@ if __name__ == '__main__':
             joblist = list(download_jobs(joblist, stop=False))
         else:
             joblist = get_folder_jobs(joblist, args)
-            if args.limit:
-                joblist = joblist[:args.limit]
+
+        if args.limit:
+            joblist = joblist[:args.limit]
 
         logger.info("Starting %i jobs" % len(joblist))
+        results = []
+        for res in tqdm.tqdm(pool.imap_unordered(ProcessOneFile(args, os.getpid()), joblist, chunksize=1), total=len(joblist)):
+            results.append(res)
 
-        results = list(pool.imap(ProcessOneFile(
-            args, os.getpid()), joblist, chunksize=1))
     except KeyboardInterrupt:
         print("stop processing...")
         pool.terminate()
@@ -305,13 +314,26 @@ if __name__ == '__main__':
         pool.close()
 
     total = len(results)
-    ok = len(list(filter(lambda x: x == 'ok', results)))
-    degrade = len(list(filter(lambda x: x == 'degrade', results)))
+
+    ok = len(list(filter(lambda x: x['new_status'] == 'ok', results)))
+    upgraded = len(list(filter(lambda x: x['new_status'] == 'ok' and x['status'] == 'error', results)))
+    degraded_list = list(filter(lambda x: x['new_status'] == 'degrade', results))
+    degraded = len(degraded_list)
 
     print("Total files: %i" % (total))
     print("Succeed files: %i" % (ok))
     print("Errors: %i" % (total - ok))
-    print("Degraded: %i" % (degrade))
 
     print("Header_recall: %f" %
-          ((total - ok) / float(total)))
+          (float(ok) / float(total)))
+    print("Header_recall was before re-parse: %f" %
+          (float(len(list(filter(lambda x: x['status'] == 'ok', results)))) / float(total)))
+
+    print("Upgraded: %i" % (upgraded))
+    print("Degraded: %i" % (degraded))
+
+    print("Degraded list")
+    for job in degraded_list:
+        print("file: %s " % (
+            job['sourcefile'], 
+        ))
