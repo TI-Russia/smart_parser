@@ -13,7 +13,6 @@ from multiprocessing import Pool
 import signal
 import argparse
 
-
 SMART_PARSER = '..\\..\\src\\bin\\Debug\\netcoreapp3.1\\smart_parser.exe'
 declarator_domain = 'https://declarator.org'
 
@@ -28,9 +27,13 @@ def parse_args():
                         default=False, type=bool)
     parser.add_argument("--output", dest='output', help="Output and cache folder to store results.",
                         default="out", type=str)
+    parser.add_argument("--force-upload", dest='force_upload',
+                        help="Output and cache folder to store results.",
+                        default=False, type=bool, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
                         default="https://declarator.org/api/fixed_document_file/?office=579", type=str)
-    parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'], action='append',
+    parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
+                        action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
     return parser.parse_args()
 
@@ -101,7 +104,7 @@ def run_smart_parser(filepath, args):
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
         smart_parser_options = r"-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
     else:
-        smart_parser_options = "-adapter prod -converted-storage-url  http://declarator.zapto.org:8000/converted_document"
+        smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8000/converted_document"
 
     log = filepath + ".log"
     if os.path.exists(log):
@@ -137,7 +140,7 @@ def post_results(sourcefile, job, time_delta=None, ):
             for json_file in json_list:
                 file_data = json.load(open(json_file, encoding='utf8'))
                 file_year = file_data.get('document', {}).get('year')
-                
+
                 expected_year = job.get('income_year', None)
                 if file_year is not None and expected_year is not None and file_year != expected_year:
                     logger.warning("Skip wrong declaration year %i (expected %i)" % (
@@ -159,7 +162,7 @@ def post_results(sourcefile, job, time_delta=None, ):
             sourcefile + ".log", 'rb').read().decode('utf-8', errors='ignore')
     except FileNotFoundError:
         data['document']['parser_log'] = "FileNotFoundError: " + \
-            sourcefile + ".log"
+                                         sourcefile + ".log"
 
     data['document']['documentfile_id'] = df_id
     if archive_file:
@@ -176,18 +179,26 @@ def post_results(sourcefile, job, time_delta=None, ):
 
         with open(filename + ".json", "wb") as fp:
             fp.write(body)
+    
+    parsed = len(data['persons']) > 0
 
     if df_id:
+        if job['status'] == 'ok' and not parsed:
+            return 'degrade'
+                    
         logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
             df_id, len(data['persons']), len(json_list), data['document']['file_size']))
 
         response = client.post(declarator_domain +
-                            '/api/jsonfile/validate/', data=body)
+                               '/api/jsonfile/validate/', data=body)
         if response.status_code != requests.codes.ok:
             logger.error(response)
             logger.error(response.text)
 
-    return len(data['persons']) > 0
+    if not parsed:
+        return 'error'
+
+    return 'ok'
 
 
 def kill_process_windows(pid):
@@ -227,6 +238,7 @@ class ProcessOneFile(object):
         file_path = download_file(file_url, file_path)
 
         time_delta = run_smart_parser(file_path, self.args)
+
         if time_delta is not None:
             return post_results(file_path, job, time_delta)
         else:
@@ -292,9 +304,14 @@ if __name__ == '__main__':
     else:
         pool.close()
 
-    errors = len(results) - len(list(filter(bool, results)))
-    print("Total files: %i" % (len(results)))
-    print("Succeed files: %i" % (len(results) - errors))
-    print("Errors: %i" % (errors))
+    total = len(results)
+    ok = len(list(filter(lambda x: x == 'ok', results)))
+    degrade = len(list(filter(lambda x: x == 'degrade', results)))
+
+    print("Total files: %i" % (total))
+    print("Succeed files: %i" % (ok))
+    print("Errors: %i" % (total - ok))
+    print("Degraded: %i" % (degrade))
+
     print("Header_recall: %f" %
-          ((len(results) - errors) / float(len(results))))
+          ((total - ok) / float(total)))
