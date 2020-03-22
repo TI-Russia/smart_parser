@@ -667,8 +667,8 @@ namespace RegressionTesting
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
 
-                //string fcOut = RunFileCompare(expectedFile, actualFile);
-                //Console.Write(fcOut);
+                string fcOut = RunFileCompare(expectedFile, actualFile);
+                Console.Write(fcOut);
 
                 return false;
             }
