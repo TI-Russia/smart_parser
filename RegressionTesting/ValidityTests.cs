@@ -187,14 +187,14 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void ManyManyColumns()
         {
-            TestSmartParser("256_Columns.xlsx", "npoi");
+            TestSmartParser("256_Columns.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void TestExcelMinfin2016()
         {
-            TestSmartParser("minfin2016.xlsx", "npoi");
+            TestSmartParser("minfin2016.xlsx", "prod");
         }
 
         [TestMethod]
@@ -361,7 +361,9 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void Rykovodstvo2013()
         {
-            TestSmartParserMultipleOut("npoi", "9037\\rykovodstvo_2013.xlsx", "9037\\rykovodstvo_2013.xlsx_0.json", "9037\\rykovodstvo_2013.xlsx_1.json");
+            TestSmartParserMultipleOut("prod", 
+                "9037/rykovodstvo_2013.xlsx", 
+                "9037/rykovodstvo_2013.xlsx_0.json", "9037/rykovodstvo_2013.xlsx_1.json");
         }
 
         [TestMethod]
