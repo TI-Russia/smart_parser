@@ -8,6 +8,7 @@ using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 using System.Text;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace RegressionTesting
 {
@@ -667,8 +668,11 @@ namespace RegressionTesting
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
 
-                string fcOut = RunFileCompare(expectedFile, actualFile);
-                Console.Write(fcOut);
+                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    string fcOut = RunFileCompare(expectedFile, actualFile);
+                    Console.Write(fcOut);
+                }
 
                 return false;
             }
