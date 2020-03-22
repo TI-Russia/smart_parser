@@ -109,13 +109,16 @@ namespace Smart.Parser.Adapters
         }
         void InitDefaultFontInfo()
         {
-            var defaults = WordDocument.MainDocumentPart.StyleDefinitionsPart.Styles.Descendants<DocDefaults>().FirstOrDefault();
-            if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize != null)
+            if (WordDocument.MainDocumentPart.StyleDefinitionsPart != null)
             {
-                DefaultFontSize = Int32.Parse(defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize.Val);
-                if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi != null)
+                var defaults = WordDocument.MainDocumentPart.StyleDefinitionsPart.Styles.Descendants<DocDefaults>().FirstOrDefault();
+                if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize != null)
                 {
-                    DefaultFontName = defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi;
+                    DefaultFontSize = Int32.Parse(defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize.Val);
+                    if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi != null)
+                    {
+                        DefaultFontName = defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi;
+                    }
                 }
             }
 
@@ -340,7 +343,7 @@ namespace Smart.Parser.Adapters
                             len = hardLine.Length - start;
                         } else {
                             len = (int)(hardLine.Length / softLinesCount);
-                            int wordBreak = hardLine.LastIndexOf(' ', start + len);
+                            int wordBreak = (start + len >= hardLine.Length) ? hardLine.Length : hardLine.LastIndexOf(' ', start + len);
                             if (wordBreak > start)
                             {
                                 len = wordBreak - start;

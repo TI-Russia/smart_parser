@@ -13614,12 +13614,7 @@
           "country_raw": "Россия"
         }
       ],
-      "vehicles": [
-        {
-          "text": "Россия",
-          "relative": null
-        }
-      ]
+      "vehicles": []
     },
     {
       "person": {
@@ -21877,16 +21872,6 @@
           "text": "Mitsubishi Галант",
           "relative": "Супруг(а)",
           "relative_index": 1
-        },
-        {
-          "text": "Россия",
-          "relative": "Ребенок",
-          "relative_index": 2
-        },
-        {
-          "text": "Россия",
-          "relative": "Ребенок",
-          "relative_index": 3
         }
       ]
     },
@@ -23910,12 +23895,7 @@
           "type_raw": "Квартира матери"
         }
       ],
-      "vehicles": [
-        {
-          "text": "Россия",
-          "relative": null
-        }
-      ]
+      "vehicles": []
     },
     {
       "person": {
@@ -26443,12 +26423,7 @@
           "type_raw": "индивидуальная \n\n\nнет"
         }
       ],
-      "vehicles": [
-        {
-          "text": "Россия",
-          "relative": null
-        }
-      ]
+      "vehicles": []
     },
     {
       "person": {
@@ -27003,7 +26978,7 @@
       ],
       "vehicles": [
         {
-          "text": "Россия",
+          "text": "Chevrolet Ланос",
           "relative": null
         }
       ]
@@ -28566,7 +28541,7 @@
     }
   ],
   "document": {
-    "sheet_title": " HYPERLINK \"http://www.gosnadzor.ru/protivodeystvie-korruptsii/svedeniya-o-dohodah-imushchestve-i-obyazatelstvah-imushchestvennogo-haraktera-grazhdanskih-sluzhashchih-rostehnadzora/svedeniya-o-dohodah-imushchestve-i-obyazatelstvah-imushchestvennogo-haraktera-grazhdanskih-sluzhashchih-rostehnadzora-za-2010-god/\" Сведения о доходах, имуществе и обязательствах имущественного характера гражданских служащих Ростехнадзора за 2010 год\nУральское управление\n- \n",
+    "sheet_title": "Сведения о доходах, имуществе и обязательствах имущественного характера гражданских служащих Ростехнадзора за 2010 год\nУральское управление\n- \n",
     "year": 2010
   }
 }

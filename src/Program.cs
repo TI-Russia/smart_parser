@@ -20,7 +20,7 @@ namespace Smart.Parser
     public class Program
     {
         public static string OutFile = "";
-        public static string AdapterFamily = "aspose";
+        public static string AdapterFamily = "prod";
         static bool ColumnsOnly = false;
 
         static bool CheckJson = false;

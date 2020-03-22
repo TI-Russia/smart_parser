@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net;
 using Parser.Lib;
+using System.Runtime.InteropServices;
 
 namespace Smart.Parser.Adapters
 {
@@ -116,18 +117,29 @@ namespace Smart.Parser.Adapters
 
         public string ConvertFile2TempDocX(string filename)
         {
-            if (DeclaratorConversionServerUrl != "" && filename.EndsWith("pdf"))
+            if (filename.EndsWith("pdf"))
             {
-                try
+                if (DeclaratorConversionServerUrl != "")
                 {
-                    return DowloadFromConvertedStorage(filename);
-                }
-                catch (Exception)
+                    try
+                    {
+                        return DowloadFromConvertedStorage(filename);
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Debug("a new file found, try to process it in place");
+                    }
+                } 
+                else
                 {
-                    // a new file try to load it into Microsoft Word
+                    Logger.Error("no url for declarator conversion server specified!");
                 }
             }
             string docXPath = filename + ".converted.docx";
+            if (filename.EndsWith(".html"))
+            {
+                return ConvertWithSoffice(filename);
+            }
             var saveCulture = Thread.CurrentThread.CurrentCulture;
             // Aspose.Words cannot work well, see 7007_10.html in regression tests
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US"); 
@@ -144,9 +156,12 @@ namespace Smart.Parser.Adapters
             if (File.Exists(outFileName))
             {
                 File.Delete(outFileName);
+            };
+            var prg = @"C:\Program Files (x86)\LibreOffice\program\soffice.exe";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                prg = "/usr/bin/soffice";
             }
-
-            var prg = "/usr/bin/soffice";
             var outdir = Path.GetDirectoryName(outFileName);
             var args = String.Format(" --headless --writer   --convert-to \"docx:MS Word 2007 XML\"");
             if (outdir != "")

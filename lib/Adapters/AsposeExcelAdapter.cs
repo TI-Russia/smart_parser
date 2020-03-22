@@ -23,6 +23,9 @@ namespace Smart.Parser.Adapters
             // nobody wants to know how excel represents numbers inside itself
             // for "size_raw"
             Text = cell.GetStringValue(Aspose.Cells.CellValueFormatStrategy.DisplayStyle);
+            if (Text == "###") {
+                Text = cell.StringValue;
+            }
 
             IsMerged = cell.IsMerged;
             if (IsMerged)

@@ -159,22 +159,12 @@
     },
     {
       "person": {
-        "name_raw": "несовершеннолетний",
+        "name_raw": "несовершеннолетний ребенок  - нет",
         "role": " \n"
       },
       "year": null,
       "incomes": [],
       "real_estates": [
-        {
-          "text": "Жилой",
-          "square": 152.9,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "152,9",
-          "country_raw": "РФ",
-          "type_raw": "Жилой",
-          "own_type_raw": "Долевая"
-        },
         {
           "text": "Жилой дом",
           "square": 152.9,
@@ -258,7 +248,7 @@
     },
     {
       "person": {
-        "name_raw": "несовершеннолетний",
+        "name_raw": "несовершеннолетний ребенок  - нет",
         "role": " \n"
       },
       "year": null,
@@ -426,7 +416,7 @@
     },
     {
       "person": {
-        "name_raw": "несовершеннолетний",
+        "name_raw": "несовершеннолетний ребенок - нет",
         "role": " \n"
       },
       "year": null,
@@ -726,7 +716,7 @@
     },
     {
       "person": {
-        "name_raw": "несовершеннолетний",
+        "name_raw": "несовершеннолетний ребенок - нет",
         "role": " \n"
       },
       "year": null,

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "test\Test.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegressionTesting", "RegressionTesting\RegressionTesting.csproj", "{41BA21A4-58BA-472B-9AED-C938EAFD1879}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Office2Txt", "tools\Office2Txt\Office2Txt.csproj", "{FE82CDC1-CF67-4E79-971E-B769F17E0A3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Office2Txt", "tools\Office2Txt\Office2Txt.csproj", "{FE82CDC1-CF67-4E79-971E-B769F17E0A3A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}"
 EndProject
