@@ -35,6 +35,11 @@ namespace Smart.Parser.Lib
 
             var culture = new System.Globalization.CultureInfo("ru-RU");
             Thread.CurrentThread.CurrentCulture = culture;
+            var envVars = Environment.GetEnvironmentVariables();
+            if (envVars.Contains("DECLARATOR_CONV_URL"))
+            {
+                IAdapter.ConvertedFileStorageUrl = envVars["DECLARATOR_CONV_URL"].ToString();
+            }
         }
 
         Declaration InitializeDeclaration(ColumnOrdering columnOrdering, int? user_documentfile_id)

@@ -105,6 +105,10 @@ namespace Smart.Parser.Adapters
                 using (var client = new WebClient())
                 {
                     string url = DeclaratorConversionServerUrl + "?sha256=" + hashValue;
+                    if (!url.StartsWith("http://"))
+                    {
+                        url = "http://" + url;
+                    }
                     string docXPath = Path.GetTempFileName();
                     Logger.Debug(String.Format("try to download docx from {0} to {1}", url, docXPath));
                     client.DownloadFile(url, docXPath);
@@ -127,7 +131,7 @@ namespace Smart.Parser.Adapters
                     }
                     catch (Exception)
                     {
-                        Logger.Debug("a new file found, try to process it in place");
+                        Logger.Debug("the file cannot be found in conversion server db, try to process this file in place");
                     }
                 } 
                 else

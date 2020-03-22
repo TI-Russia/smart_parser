@@ -104,7 +104,7 @@ def run_smart_parser(filepath, args):
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
         smart_parser_options = r"-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
     else:
-        smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8000/converted_document"
+        smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8091"
 
     log = filepath + ".log"
     if os.path.exists(log):
