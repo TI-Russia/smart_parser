@@ -140,7 +140,7 @@ namespace Smart.Parser.Adapters
                 }
             }
             string docXPath = filename + ".converted.docx";
-            if (filename.EndsWith(".html"))
+            if (filename.EndsWith(".html") || filename.EndsWith(".htm"))
             {
                 return ConvertWithSoffice(filename);
             }

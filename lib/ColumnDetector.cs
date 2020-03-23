@@ -34,11 +34,19 @@ namespace Smart.Parser.Lib
                 return false;
 
             text = Regex.Replace(text, "8\\s+июля\\s+2013", "");
-            var matches = Regex.Matches(text, @"\b20\d\d\b");
-
-            if (matches.Count > 0)
+            
+            var decemberYearMatches = Regex.Matches(text, @"(31\s+декабря\s+)(20\d\d)(\s+года)");
+            if (decemberYearMatches.Count > 0)
             {
-                year = int.Parse(matches[0].Value);
+                year = int.Parse(decemberYearMatches[0].Groups[2].Value);
+            }
+            else
+            {
+                var commonYearMatches = Regex.Matches(text, @"\b20\d\d\b");
+                if (commonYearMatches.Count > 0)
+                {
+                    year = int.Parse(commonYearMatches[0].Value);
+                }
             }
             var minMatch = Regex.Match(text, @"Министерства(.+)Российской Федерации", RegexOptions.IgnoreCase);
             if (minMatch.Success)

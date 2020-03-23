@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Xml;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
@@ -11,7 +10,6 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
-using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Xml.Linq;
 
@@ -371,36 +369,12 @@ namespace Smart.Parser.Adapters
         private string Title;
         private int UnmergedColumnsCount;
         private static readonly string WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-        private static Dictionary<string, double> Bigrams = ReadBigrams();
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
         private DocxConverter _DocxConverter;
 
 
 
-
-        static Dictionary<string, double> ReadBigrams()
-        {
-            var currentAssembly = Assembly.GetExecutingAssembly();
-            var result = new Dictionary<string, double>();
-            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.bigrams.txt"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    while (reader.Peek() >= 0)
-                    {
-                        var line = reader.ReadLine();
-                        var parts = line.Split('\t');
-                        double mutual_information = Convert.ToDouble(parts[1]);
-                        if (mutual_information > 0)
-                        {
-                            result[parts[0]] = mutual_information;
-                        }
-                    }
-                }
-            }
-            return result;
-        }
 
         private static Uri FixUri(string brokenUri)
         {
@@ -611,77 +585,6 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        static List<string> TokenizeCellText(string text)
-        {
-            List<string> result = new List<string>();
-            foreach (var token in text.Split())
-            {
-                token.Trim(
-                    '﻿', ' ', // two different spaces
-                    '\n', '\r',
-                    ',', '!', '.', '{', '}',
-                    '[', ']', '(', ')',
-                    '"', '«', '»', '\'');
-                if (token.Count() > 0) result.Add(token);
-            }
-            return result;
-        }
-
-        static bool CheckMergeRow(List<OpenXmlWordCell> row1, List<OpenXmlWordCell> row2)
-        {
-            if (row1.Count != row2.Count)
-            {
-                return false;
-            }
-            for (int i = 0; i < row1.Count; ++i)
-            {
-                var tokens1 = TokenizeCellText(row1[i].Text);
-                var tokens2 = TokenizeCellText(row2[i].Text);
-                if (tokens1.Count > 0 && tokens2.Count > 0)
-                {
-                    string lastWord = tokens1.Last();
-                    string firstWord = tokens2.First();
-                    if (lastWord.Length > 0 && firstWord.Length > 0) {
-                        string joinExplanation = "";
-                        if (Bigrams.ContainsKey(lastWord + " " + firstWord)) {
-                            joinExplanation = "frequent bigram";
-                        }
-
-                        if (     Regex.Matches(lastWord, @".*\p{Pd}$").Count > 0
-                              && Char.IsLower(firstWord[0])
-                           ) {
-                            joinExplanation = "word break regexp";
-                        }
-
-                        if (    tokens1.Count  +  tokens2.Count == 3 
-                            && TextHelpers.CanBePatronymic(tokens2[tokens2.Count - 1])
-                            && Char.IsUpper(tokens1[0][0])
-                            ) {
-                            joinExplanation = "person regexp";
-                        }
-
-                        if (joinExplanation != "")
-                        {
-                            Logger.Debug(string.Format(
-                                "Join rows using {0} on cells \"{1}\" and \"{2}\"",
-                                joinExplanation,
-                                row1[i].Text.ReplaceEolnWithSpace(),
-                                row2[i].Text.ReplaceEolnWithSpace()));
-                            return true;
-
-                        }
-                     }
-                }
-            }
-            return false;
-        }
-        static void MergeRow(List<OpenXmlWordCell> row1, List<OpenXmlWordCell> row2)
-        {
-            for (int i = 0; i < row1.Count; ++i)
-            {
-                row1[i].Text += "\n" + row2[i].Text;
-            }
-        }
 
         void InitUnmergedColumnsCount()
         {
@@ -749,6 +652,15 @@ namespace Smart.Parser.Adapters
             }
             return widthInfo;
         }
+
+        static void MergeRow(List<OpenXmlWordCell> row1, List<OpenXmlWordCell> row2)
+        {
+            for (int i = 0; i < row1.Count; ++i)
+            {
+                row1[i].Text += "\n" + row2[i].Text;
+            }
+        }
+
         void ProcessWordTable(WordDocHolder docHolder,  Table table, int maxRowsToProcess)
         {
             var rows = table.Descendants<TableRow>().ToList();
@@ -776,7 +688,10 @@ namespace Smart.Parser.Adapters
                     continue;
                 }
                 maxCellsCount = Math.Max(newRow.Count, maxCellsCount);
-                if (r == 0 && TableRows.Count > 0 && CheckMergeRow(TableRows.Last(), newRow))
+                if (r == 0 && TableRows.Count > 0 && 
+                    BigramsHolder.CheckMergeRow(
+                        TableRows.Last().ConvertAll(x => x.Text), 
+                        newRow.ConvertAll(x => x.Text)))
                 {
                     MergeRow(TableRows.Last(), newRow);
                 }
