@@ -109,7 +109,8 @@ namespace Smart.Parser.Lib
                     return false;
                 }
                 if (!columnOrdering.ContainsField(DeclarationField.NameOrRelativeType)) return false;
-                var nameCell = row.GetDeclarationField(DeclarationField.NameOrRelativeType) as OpenXmlWordCell;
+                Cell nameCell = row.GetDeclarationField(DeclarationField.NameOrRelativeType);
+                if (!(nameCell is OpenXmlWordCell) && !(nameCell is HtmlAdapterCell)) return false;
                 if (nameCell is null) return false;
                 if (nameCell.IsEmpty) return false;
                 if (nameCell.FontSize == 0) return false; // no font info
@@ -132,7 +133,7 @@ namespace Smart.Parser.Lib
                 }
                 for (int i = 0; i < row.Cells.Count; ++i)
                 {
-                    var divided = (row.Cells[i] as OpenXmlWordCell).GetLinesWithSoftBreaks();
+                    var divided = row.Cells[i].GetLinesWithSoftBreaks();
                     int start = 0;
                     for (int k = 0; k < borders.Count; ++k)
                     {

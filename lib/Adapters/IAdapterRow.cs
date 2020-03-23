@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 
 namespace Smart.Parser.Adapters
@@ -44,11 +45,65 @@ namespace Smart.Parser.Adapters
             return Text;
         }
 
+        public List<string> GetLinesWithSoftBreaks()
+        {
+            var res = new List<string>();
+            if (IsEmpty) return res;
+            string[] hardLines = Text.Split('\n');
+            var graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
+            var stringSize = new SizeF();
+            var font = new System.Drawing.Font(FontName, FontSize / 2);
+            foreach (var hardLine in hardLines)
+            {
+                stringSize = graphics.MeasureString(hardLine, font);
+                int defaultMargin = 10; //to do calc it really
+                int softLinesCount = (int)(stringSize.Width / (CellWidth - defaultMargin)) + 1;
+                if (softLinesCount == 1)
+                {
+                    res.Add(hardLine);
+                }
+                else
+                {
+                    int start = 0;
+                    for (int k = 0; k < softLinesCount; ++k)
+                    {
+                        int len;
+                        if (k + 1 == softLinesCount)
+                        {
+                            len = hardLine.Length - start;
+                        }
+                        else
+                        {
+                            len = (int)(hardLine.Length / softLinesCount);
+                            int wordBreak = (start + len >= hardLine.Length) ? hardLine.Length : hardLine.LastIndexOf(' ', start + len);
+                            if (wordBreak > start)
+                            {
+                                len = wordBreak - start;
+                            }
+                            else
+                            {
+                                wordBreak = hardLine.IndexOf(' ', start + 1);
+                                len = (wordBreak == -1) ? hardLine.Length - start : wordBreak - start;
+                            }
+                        }
+                        res.Add(hardLine.Substring(start, len));
+                        start += len;
+                        if (start >= hardLine.Length) break;
+                    }
+                }
+            }
+            return res;
+        }
+
+
         public int Row { get; set; } = -1;
         public int Col { get; set; } = -1; // not merged column index
 
         public int CellWidth = 0; // in pixels
         public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
+        public string FontName;
+        public int FontSize;
+
     };
 
     public class DataRow : DataRowInterface

@@ -161,7 +161,7 @@ namespace Smart.Parser.Adapters
             {
                 File.Delete(outFileName);
             };
-            var prg = @"C:\Program Files (x86)\LibreOffice\program\soffice.exe";
+            var prg = @"C:\Program Files\LibreOffice\program\soffice.exe";
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 prg = "/usr/bin/soffice";

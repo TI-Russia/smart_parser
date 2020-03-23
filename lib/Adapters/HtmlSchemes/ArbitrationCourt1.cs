@@ -45,8 +45,9 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
                 try { 
                     Document = document;
                     var selection = document.QuerySelectorAll("div.js-income-member-data");
+                    if (selection.Length == 0) return false;
                     string name = GetPersonName();
-                    return selection.Length > 0 && !string.IsNullOrEmpty(name) ;
+                    return !string.IsNullOrEmpty(name) ;
                 }
                 finally
                 {
