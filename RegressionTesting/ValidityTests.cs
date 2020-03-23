@@ -546,6 +546,13 @@ namespace RegressionTesting
             TestSmartParser("7007_10.html", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlTitleInParagraph()
+        {
+            TestSmartParser("4002_0.htm", "prod");
+        }
+
 
         [TestMethod]
         [TestCategory("htm")]
@@ -579,6 +586,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlRowspansInTheMiddle()
+        {
+            TestSmartParser("4778_0.htm", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void MergeByHyphen()
         {
@@ -597,6 +611,29 @@ namespace RegressionTesting
         public void FederalAgencySubsoiUse2013()
         {
             TestSmartParser("15555_1.html", "prod");
+
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlRowSpanLastColumn()
+        {
+            TestSmartParser("15555_0.html", "prod");
+
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void BrokenHtmlTable1()
+        {
+            TestSmartParser("7007_8.html", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void win1251Html()
+        {
+            TestSmartParser("7022_0.htm", "prod");
 
         }
 
