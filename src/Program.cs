@@ -364,9 +364,14 @@ namespace Smart.Parser
                 case ".htm":
                 case ".html":
                     if (HtmAdapter.CanProcess(declarationFile))
+                    {
                         return new HtmAdapter(declarationFile);
+                    }
                     else
-                        return GetCommonAdapter(declarationFile);
+                    {
+                        return new AngleHtmlAdapter(declarationFile, MaxRowsToProcess);
+                        //return GetCommonAdapter(declarationFile);
+                    }
                 case ".pdf":
                 case ".xhtml":
                 case ".doc":
