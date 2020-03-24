@@ -265,6 +265,7 @@ namespace Smart.Parser.Adapters
                             var additCell = new HtmlAdapterCell(rowIndex, cellIndex);
                             additCell.FirstMergedRow = start;
                             additCell.MergedRowsCount = firstLine[cellIndex].MergedRowsCount - rowIndex;
+                            additCell.CellWidth = firstLine[cellIndex].CellWidth;
                             if  (cellIndex < TableRows[rowIndex].Count)
                                 TableRows[rowIndex].Insert(cellIndex, additCell);
                             else
