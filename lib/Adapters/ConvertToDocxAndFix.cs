@@ -156,6 +156,10 @@ namespace Smart.Parser.Adapters
         }
         public String ConvertWithSoffice(string fileName)
         {
+            if (fileName.ToLower().EndsWith("pdf"))
+            {
+                throw new SmartParserException("libre office cannot convert pdf");
+            }
             String outFileName = Path.ChangeExtension(fileName, "docx");
             if (File.Exists(outFileName))
             {
