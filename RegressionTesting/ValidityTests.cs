@@ -646,10 +646,10 @@ namespace RegressionTesting
             Parser.Lib.Logger.SetupForTests("Main", "Second");
         }
 
-        public static string RunFileCompare(string expectedFile, string actualFile)
+        public static string RunFileCompare(string expectedFile, string actualFile, string executeCmd = "fc.exe")
         {
             Process p = new Process();
-            p.StartInfo.FileName = "fc.exe";
+            p.StartInfo.FileName = executeCmd;
             p.StartInfo.Arguments = expectedFile + " " + actualFile;
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
@@ -707,9 +707,12 @@ namespace RegressionTesting
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
 
-                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     string fcOut = RunFileCompare(expectedFile, actualFile);
+                    Console.Write(fcOut);
+                } else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                    string fcOut = RunFileCompare(expectedFile, actualFile, "diff");
                     Console.Write(fcOut);
                 }
 
