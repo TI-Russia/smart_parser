@@ -92,4 +92,3 @@ if __name__ == '__main__':
 
     with open(args.output_json, "w") as out:
         json.dump(dlrobot_json, out, indent=4)
-            
