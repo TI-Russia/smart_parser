@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.13.0" />
-    <PackageReference Include="Aspose.Cells" Version="19.11.0" />
-    <PackageReference Include="Aspose.Words" Version="19.12.0" />
+    <PackageReference Include="Aspose.Cells" Version="20.3.0" />
+    <PackageReference Include="Aspose.Words" Version="20.3.0" />
     <PackageReference Include="colorlife.xceed.words.net.core" Version="2.1.2" />
     <PackageReference Include="CsvHelper" Version="12.2.2" />
     <PackageReference Include="log4net" Version="2.0.8" />

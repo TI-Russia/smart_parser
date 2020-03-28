@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading.Tasks;
 using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
 using System.IO;
@@ -21,7 +20,7 @@ namespace Smart.Parser
     public class Program
     {
         public static string OutFile = "";
-        public static string AdapterFamily = "aspose";
+        public static string AdapterFamily = "prod";
         static bool ColumnsOnly = false;
 
         static bool CheckJson = false;
@@ -45,7 +44,7 @@ namespace Smart.Parser
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
             CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft or prod, by default is aspose", false);
-            CMDLineParser.Option maxRowsToProcessOpt = parser.AddIntParameter("-max-rows", "max rows to process from the input file", false);
+            CMDLineParser.Option maxRowsToProcessOpt = parser.AddStringParameter("-max-rows", "max rows to process from the input file", false);
             CMDLineParser.Option dumpColumnOpt = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
             CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
             CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
@@ -53,8 +52,8 @@ namespace Smart.Parser
             CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
-            CMDLineParser.Option docFileIdOpt = parser.AddIntParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
-            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8000/converted_document ", false);
+            CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
+            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8091, the defaul value is read from env variable DECLARATOR_CONV_URL", false);
             CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
             parser.AddHelpOption();
             try
@@ -78,10 +77,7 @@ namespace Smart.Parser
                     throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
                 }
             }
-            else
-            {
-                Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
-            }
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             if (maxRowsToProcessOpt.isMatched)
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
@@ -179,9 +175,6 @@ namespace Smart.Parser
 
         public static int Main(string[] args)
         {
-            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",", "Set proper NumberDecimalSeparator ','");
-            Debug.Assert(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator == " ", "Set proper NumberGroupSeparator ' '");
-
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
             if (String.IsNullOrEmpty(declarationFile))
@@ -371,9 +364,14 @@ namespace Smart.Parser
                 case ".htm":
                 case ".html":
                     if (HtmAdapter.CanProcess(declarationFile))
+                    {
                         return new HtmAdapter(declarationFile);
+                    }
                     else
-                        return GetCommonAdapter(declarationFile);
+                    {
+                        return new AngleHtmlAdapter(declarationFile, MaxRowsToProcess);
+                        //return GetCommonAdapter(declarationFile);
+                    }
                 case ".pdf":
                 case ".xhtml":
                 case ".doc":

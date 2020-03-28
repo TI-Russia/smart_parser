@@ -10,12 +10,12 @@
       "incomes": [
         {
           "size": 1776000.0,
-          "size_raw": "1776 тыс.руб.",
+          "size_raw": "1776 тыс,руб,",
           "relative": null
         },
         {
           "size": 580000.0,
-          "size_raw": "580 тыс.руб.",
+          "size_raw": "580 тыс,руб,",
           "relative": "Супруг(а)",
           "relative_index": 1
         }

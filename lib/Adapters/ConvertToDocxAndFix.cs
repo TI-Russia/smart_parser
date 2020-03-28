@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using System.IO.Compression;
+using System.Threading;
 using System.IO;
 using System;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net;
 using Parser.Lib;
+using System.Runtime.InteropServices;
 
 namespace Smart.Parser.Adapters
 {
@@ -103,6 +105,10 @@ namespace Smart.Parser.Adapters
                 using (var client = new WebClient())
                 {
                     string url = DeclaratorConversionServerUrl + "?sha256=" + hashValue;
+                    if (!url.StartsWith("http://"))
+                    {
+                        url = "http://" + url;
+                    }
                     string docXPath = Path.GetTempFileName();
                     Logger.Debug(String.Format("try to download docx from {0} to {1}", url, docXPath));
                     client.DownloadFile(url, docXPath);
@@ -115,32 +121,55 @@ namespace Smart.Parser.Adapters
 
         public string ConvertFile2TempDocX(string filename)
         {
-            if (DeclaratorConversionServerUrl != "" && filename.EndsWith("pdf"))
+            if (filename.EndsWith("pdf"))
             {
-                try
+                if (DeclaratorConversionServerUrl != "")
                 {
-                    return DowloadFromConvertedStorage(filename);
-                }
-                catch (Exception)
+                    try
+                    {
+                        return DowloadFromConvertedStorage(filename);
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Debug("the file cannot be found in conversion server db, try to process this file in place");
+                    }
+                } 
+                else
                 {
-                    // a new file try to load it into Microsoft Word
+                    Logger.Error("no url for declarator conversion server specified!");
                 }
             }
-            Aspose.Words.Document doc = new Aspose.Words.Document(filename);
-            doc.RemoveMacros();
             string docXPath = filename + ".converted.docx";
+            if (filename.EndsWith(".html") || filename.EndsWith(".htm"))
+            {
+                return ConvertWithSoffice(filename);
+            }
+            var saveCulture = Thread.CurrentThread.CurrentCulture;
+            // Aspose.Words cannot work well, see 7007_10.html in regression tests
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US"); 
+            var doc = new Aspose.Words.Document(filename);
+            doc.RemoveMacros();
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+            Thread.CurrentThread.CurrentCulture = saveCulture;
             return docXPath;
+
         }
         public String ConvertWithSoffice(string fileName)
         {
+            if (fileName.ToLower().EndsWith("pdf"))
+            {
+                throw new SmartParserException("libre office cannot convert pdf");
+            }
             String outFileName = Path.ChangeExtension(fileName, "docx");
             if (File.Exists(outFileName))
             {
                 File.Delete(outFileName);
+            };
+            var prg = @"C:\Program Files\LibreOffice\program\soffice.exe";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                prg = "/usr/bin/soffice";
             }
-
-            var prg = "/usr/bin/soffice";
             var outdir = Path.GetDirectoryName(outFileName);
             var args = String.Format(" --headless --writer   --convert-to \"docx:MS Word 2007 XML\"");
             if (outdir != "")

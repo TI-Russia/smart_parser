@@ -1,5 +1,4 @@
-﻿[This document will eventually contain the exhaustive list of instructions, command line options and arguments for smart_parser. But not today. Bear with us]
-
+﻿===========================
 API Validation
 
 It's possible to enable additional validation of JSON output via Declarator API call. To do that:
@@ -15,3 +14,9 @@ and password to the Github repo (thus making them public knowledge).
 
 
 3. Ensure that your Internet connection is working and run smart_parser.exe with the '-api-validation' option.
+
+===========================
+Ubuntu install
+
+sudo apt-get install libreoffice
+sudo apt-get install -y libgdiplus

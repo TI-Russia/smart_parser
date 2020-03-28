@@ -29,7 +29,7 @@ namespace Smart.Parser.Adapters
         {
             return "R" + (row + 1).ToString() + "C" + (col + 1).ToString();
         }
-
+        
         
         abstract public Cell GetCell(int row, int column);
         public virtual List<Cell> GetCells(int row, int maxColEnd=MaxColumnsCount)
@@ -98,7 +98,62 @@ namespace Smart.Parser.Adapters
             }
             return true;
         }
-        
+        public int GetUnmergedColumnsCountByFirstRow()
+        {
+            if (GetRowsCount() == 0) return -1;
+            int sum = 0;
+            foreach (var c in GetCells(0))
+            {
+                sum += c.MergedColsCount;
+            }
+            return sum;
+        }
+
+        public static int FindMergedCellByColumnNo<T>(List<List<T>> tableRows, int row, int column) where T : Cell
+        {
+            List<T> r = tableRows[row];
+            int sumspan = 0;
+            for (var i = 0; i < r.Count; ++i)
+            {
+                int span = r[i].MergedColsCount;
+                if ((column >= sumspan) && (column < sumspan + span))
+                    return i;
+                sumspan += span;
+            }
+            return -1;
+        }
+        protected static List<List<T>> DropDayOfWeekRows<T>(List<List<T>> tableRows) where T : Cell
+        {
+            List<string> daysOfWeek = new List<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
+            return  tableRows.TakeWhile(x => !x.All(y => daysOfWeek.Contains(y.Text.ToLower().Trim()))).ToList();
+        }
+
+        protected static bool CheckNameColumnIsEmpty<T>(List<List<T>> tableRows, int start) where T : Cell
+        {
+            if (tableRows.Count - start < 3)
+                return false; // header only
+
+            var nameInd = tableRows[start].FindIndex(x => x.Text.Length < 100 && x.Text.IsName());
+            if (nameInd == -1) return false;
+            for (int i = start + 1; i < tableRows.Count; ++i)
+            {
+                if (nameInd < tableRows[i].Count && !tableRows[i][nameInd].IsEmpty)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        protected static void MergeRow<T>(List<T> row1, List<T> row2) where T : Cell
+        {
+            for (int i = 0; i < row1.Count; ++i)
+            {
+                row1[i].Text += "\n" + row2[i].Text;
+            }
+        }
+
+
 
         public class TJsonCell
         {

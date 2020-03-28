@@ -8,6 +8,7 @@ using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.JsonSerialization;
 using System.Text;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace RegressionTesting
 {
@@ -86,7 +87,7 @@ namespace RegressionTesting
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
@@ -106,7 +107,7 @@ namespace RegressionTesting
         public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
         {
             SetupLog4Net();
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            Smart.Parser.Lib.Parser.InitializeSmartParser();
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
@@ -186,14 +187,14 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void ManyManyColumns()
         {
-            TestSmartParser("256_Columns.xlsx", "npoi");
+            TestSmartParser("256_Columns.xlsx", "prod");
         }
 
         [TestMethod]
         [TestCategory("xlsx")]
         public void TestExcelMinfin2016()
         {
-            TestSmartParser("minfin2016.xlsx", "npoi");
+            TestSmartParser("minfin2016.xlsx", "prod");
         }
 
         [TestMethod]
@@ -360,7 +361,9 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void Rykovodstvo2013()
         {
-            TestSmartParserMultipleOut("npoi", "9037\\rykovodstvo_2013.xlsx", "9037\\rykovodstvo_2013.xlsx_0.json", "9037\\rykovodstvo_2013.xlsx_1.json");
+            TestSmartParserMultipleOut("prod", 
+                "9037/rykovodstvo_2013.xlsx", 
+                "9037/rykovodstvo_2013.xlsx_0.json", "9037/rykovodstvo_2013.xlsx_1.json");
         }
 
         [TestMethod]
@@ -543,6 +546,13 @@ namespace RegressionTesting
             TestSmartParser("7007_10.html", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlTitleInParagraph()
+        {
+            TestSmartParser("4002_0.htm", "prod");
+        }
+
 
         [TestMethod]
         [TestCategory("htm")]
@@ -576,6 +586,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlRowspansInTheMiddle()
+        {
+            TestSmartParser("4778_0.htm", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void MergeByHyphen()
         {
@@ -597,6 +614,29 @@ namespace RegressionTesting
 
         }
 
+        [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlRowSpanLastColumn()
+        {
+            TestSmartParser("15555_0.html", "prod");
+
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void BrokenHtmlTable1()
+        {
+            TestSmartParser("7007_8.html", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
+        public void win1251Html()
+        {
+            TestSmartParser("7022_0.htm", "prod");
+
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -606,10 +646,10 @@ namespace RegressionTesting
             Parser.Lib.Logger.SetupForTests("Main", "Second");
         }
 
-        public static string RunFileCompare(string expectedFile, string actualFile)
+        public static string RunFileCompare(string expectedFile, string actualFile, string executeCmd = "fc.exe")
         {
             Process p = new Process();
-            p.StartInfo.FileName = "fc.exe";
+            p.StartInfo.FileName = executeCmd;
             p.StartInfo.Arguments = expectedFile + " " + actualFile;
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardOutput = true;
@@ -667,8 +707,14 @@ namespace RegressionTesting
                     Log(logFile, $"Actual number of lines: {actualOutput.Count()}");
                 }
 
-                //string fcOut = RunFileCompare(expectedFile, actualFile);
-                //Console.Write(fcOut);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    string fcOut = RunFileCompare(expectedFile, actualFile);
+                    Console.Write(fcOut);
+                } else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                    string fcOut = RunFileCompare(expectedFile, actualFile, "diff");
+                    Console.Write(fcOut);
+                }
 
                 return false;
             }

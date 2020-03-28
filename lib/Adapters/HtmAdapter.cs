@@ -7,7 +7,6 @@ using DocumentFormat.OpenXml;
 using System.IO;
 using TI.Declarator.ParserCommon;
 using AngleSharp;
-using AngleSharp.Html.Parser;
 using AngleSharp.Dom;
 using Smart.Parser.Lib.Adapters.HtmlSchemes;
 using System.Text.RegularExpressions;
@@ -72,8 +71,7 @@ namespace Smart.Parser.Adapters
         public HtmAdapter(string filename)
         {
             this.DocumentFile = filename;
-            var text = File.ReadAllText(filename);
-            using (IDocument document = GetDocument(text))
+            using (IDocument document = AngleHtmlAdapter.GetAngleDocument(filename))
             {
                 _scheme = _allSchemes.Find(x => x.CanProcess(document));
                 _scheme.Document = document;
@@ -233,26 +231,11 @@ namespace Smart.Parser.Adapters
 
         public static bool CanProcess(string filename)
         {
-            string text = File.ReadAllText(filename);
-            var document = GetDocument(text);
+            var document = AngleHtmlAdapter.GetAngleDocument(filename);
             return _allSchemes.Any(x=>x.CanProcess(document));
             
-            //GetTitle(document, "");
-            //return title.Contains("Арбитражный суд города Москвы");
         }
 
-
-
-        protected static IDocument GetDocument(string text)
-        {
-            var config = Configuration.Default;
-
-            var context = BrowsingContext.New(config);
-            var task = context.OpenAsync(req => req.Content(text));
-            task.Wait();
-            var document = task.Result;
-            return document;
-        }
 
         protected static Cell GetCell(string text, int row, int column)
         {

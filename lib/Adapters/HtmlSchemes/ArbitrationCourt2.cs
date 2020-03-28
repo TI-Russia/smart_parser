@@ -21,7 +21,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
             {
                 return false;
             }
-        }
+            }
 
 
         public override IEnumerable<IElement> GetMembers( string name, string year)

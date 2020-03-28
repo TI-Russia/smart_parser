@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Xml;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
@@ -11,9 +10,6 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
-using Smart.Parser.Lib;
-using System.Text.RegularExpressions;
-using System.Drawing;
 using System.Xml.Linq;
 
 namespace Smart.Parser.Adapters
@@ -110,13 +106,16 @@ namespace Smart.Parser.Adapters
         }
         void InitDefaultFontInfo()
         {
-            var defaults = WordDocument.MainDocumentPart.StyleDefinitionsPart.Styles.Descendants<DocDefaults>().FirstOrDefault();
-            if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize != null)
+            if (WordDocument.MainDocumentPart.StyleDefinitionsPart != null)
             {
-                DefaultFontSize = Int32.Parse(defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize.Val);
-                if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi != null)
+                var defaults = WordDocument.MainDocumentPart.StyleDefinitionsPart.Styles.Descendants<DocDefaults>().FirstOrDefault();
+                if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize != null)
                 {
-                    DefaultFontName = defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi;
+                    DefaultFontSize = Int32.Parse(defaults.RunPropertiesDefault.RunPropertiesBaseStyle.FontSize.Val);
+                    if (defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi != null)
+                    {
+                        DefaultFontName = defaults.RunPropertiesDefault.RunPropertiesBaseStyle.RunFonts.HighAnsi;
+                    }
                 }
             }
 
@@ -166,8 +165,6 @@ namespace Smart.Parser.Adapters
     class OpenXmlWordCell : Cell
     {
         public bool IsVerticallyMerged;
-        public string FontName;
-        public int FontSize;
         public OpenXmlWordCell(WordDocHolder docHolder, TableWidthInfo tableWidth, TableCell inputCell, int row, int column)
         {
             InitTextProperties(docHolder, inputCell);
@@ -313,53 +310,6 @@ namespace Smart.Parser.Adapters
 
         }
 
-        public List<string> GetLinesWithSoftBreaks()
-        {
-            var res = new List<string>();
-            if (IsEmpty) return res;
-            string[] hardLines = Text.Split('\n');
-            var graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
-            var stringSize = new SizeF();
-            var font = new System.Drawing.Font(FontName, FontSize / 2);
-            foreach (var hardLine in hardLines)
-            {
-                stringSize = graphics.MeasureString(hardLine, font);
-                int defaultMargin = 10; //to do calc it really
-                int softLinesCount = (int)(stringSize.Width / (CellWidth- defaultMargin)) + 1;
-                if (softLinesCount == 1)
-                {
-                    res.Add(hardLine);
-                }
-                else
-                {
-                    int start = 0;
-                    for (int k = 0; k < softLinesCount; ++k)
-                    {
-                        int len;
-                        if (k + 1 == softLinesCount)
-                        {
-                            len = hardLine.Length - start;
-                        } else {
-                            len = (int)(hardLine.Length / softLinesCount);
-                            int wordBreak = hardLine.LastIndexOf(' ', start + len);
-                            if (wordBreak > start)
-                            {
-                                len = wordBreak - start;
-                            }
-                            else
-                            {
-                                wordBreak = hardLine.IndexOf(' ', start + 1);
-                                len = (wordBreak == -1) ? hardLine.Length - start : wordBreak - start;
-                            }
-                        }
-                        res.Add(hardLine.Substring(start, len));
-                        start += len;
-                        if (start >= hardLine.Length) break;
-                    }
-                }
-            }
-            return res;
-        }
     }
 
     
@@ -369,36 +319,12 @@ namespace Smart.Parser.Adapters
         private string Title;
         private int UnmergedColumnsCount;
         private static readonly string WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-        private static Dictionary<string, double> Bigrams = ReadBigrams();
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
         private DocxConverter _DocxConverter;
 
 
 
-
-        static Dictionary<string, double> ReadBigrams()
-        {
-            var currentAssembly = Assembly.GetExecutingAssembly();
-            var result = new Dictionary<string, double>();
-            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.bigrams.txt"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    while (reader.Peek() >= 0)
-                    {
-                        var line = reader.ReadLine();
-                        var parts = line.Split('\t');
-                        double mutual_information = Convert.ToDouble(parts[1]);
-                        if (mutual_information > 0)
-                        {
-                            result[parts[0]] = mutual_information;
-                        }
-                    }
-                }
-            }
-            return result;
-        }
 
         private static Uri FixUri(string brokenUri)
         {
@@ -410,7 +336,7 @@ namespace Smart.Parser.Adapters
             {
                 Title = doc.FindTitleAboveTheTable();
                 CollectRows(doc, maxRowsToProcess, extension);
-                InitUnmergedColumnsCount();
+                UnmergedColumnsCount =  GetUnmergedColumnsCountByFirstRow();
                 InitializeVerticallyMerge();
             };
 
@@ -426,7 +352,7 @@ namespace Smart.Parser.Adapters
             if (fileName.EndsWith(".toloka_json"))
             {
                 InitFromJson(fileName);
-                InitUnmergedColumnsCount();
+                UnmergedColumnsCount = GetUnmergedColumnsCountByFirstRow();
                 return;
             }
             DocumentFile = fileName;
@@ -532,25 +458,11 @@ namespace Smart.Parser.Adapters
             return Title;
         }
 
-        int FindMergedCellByColumnNo(int row, int column)
-        {
-            var r = TableRows[row];
-            int sumspan = 0;
-            for (var i = 0; i < r.Count; ++i)
-            {
-                int span = r[i].MergedColsCount;
-                if ((column >= sumspan) && (column < sumspan + span))
-                    return i;
-                sumspan += span;
-            }
-            return -1;
-        }
-
         int FindFirstBorderGoingUp(int startRow, int column)
         {
             for (int i = startRow; i > 0; --i)
             {
-                int cellNo = FindMergedCellByColumnNo(i, column);
+                int cellNo = FindMergedCellByColumnNo(TableRows, i, column);
                 if (cellNo == -1)
                 {
                     return i + 1;
@@ -571,7 +483,7 @@ namespace Smart.Parser.Adapters
         {
             for (int i = startRow; i < TableRows.Count; ++i)
             {
-                int cellNo = FindMergedCellByColumnNo(i, column);
+                int cellNo = FindMergedCellByColumnNo(TableRows, i, column);
                 if (cellNo == -1)
                 {
                     return i - 1;
@@ -609,93 +521,10 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        static List<string> TokenizeCellText(string text)
-        {
-            List<string> result = new List<string>();
-            foreach (var token in text.Split())
-            {
-                token.Trim(
-                    '﻿', ' ', // two different spaces
-                    '\n', '\r',
-                    ',', '!', '.', '{', '}',
-                    '[', ']', '(', ')',
-                    '"', '«', '»', '\'');
-                if (token.Count() > 0) result.Add(token);
-            }
-            return result;
-        }
 
-        static bool CheckMergeRow(List<OpenXmlWordCell> row1, List<OpenXmlWordCell> row2)
-        {
-            if (row1.Count != row2.Count)
-            {
-                return false;
-            }
-            for (int i = 0; i < row1.Count; ++i)
-            {
-                var tokens1 = TokenizeCellText(row1[i].Text);
-                var tokens2 = TokenizeCellText(row2[i].Text);
-                if (tokens1.Count > 0 && tokens2.Count > 0)
-                {
-                    string lastWord = tokens1.Last();
-                    string firstWord = tokens2.First();
-                    if (lastWord.Length > 0 && firstWord.Length > 0) {
-                        string joinExplanation = "";
-                        if (Bigrams.ContainsKey(lastWord + " " + firstWord)) {
-                            joinExplanation = "frequent bigram";
-                        }
-
-                        if (     Regex.Matches(lastWord, @".*\p{Pd}$").Count > 0
-                              && Char.IsLower(firstWord[0])
-                           ) {
-                            joinExplanation = "word break regexp";
-                        }
-
-                        if (    tokens1.Count  +  tokens2.Count == 3 
-                            && TextHelpers.CanBePatronymic(tokens2[tokens2.Count - 1])
-                            && Char.IsUpper(tokens1[0][0])
-                            ) {
-                            joinExplanation = "person regexp";
-                        }
-
-                        if (joinExplanation != "")
-                        {
-                            Logger.Debug(string.Format(
-                                "Join rows using {0} on cells \"{1}\" and \"{2}\"",
-                                joinExplanation,
-                                row1[i].Text.ReplaceEolnWithSpace(),
-                                row2[i].Text.ReplaceEolnWithSpace()));
-                            return true;
-
-                        }
-                     }
-                }
-            }
-            return false;
-        }
-        static void MergeRow(List<OpenXmlWordCell> row1, List<OpenXmlWordCell> row2)
-        {
-            for (int i = 0; i < row1.Count; ++i)
-            {
-                row1[i].Text += "\n" + row2[i].Text;
-            }
-        }
-
-        void InitUnmergedColumnsCount()
-        {
-            UnmergedColumnsCount = -1;
-            if (TableRows.Count > 0)
-            {
-                UnmergedColumnsCount = 0;
-                foreach (var c in TableRows[0])
-                {
-                    UnmergedColumnsCount += c.MergedColsCount;
-                }
-            }
-        }
 
         int GetRowGridBefore(TableRow row)
-        {
+        {   
             if (row.TableRowProperties != null)
                 foreach (var c in row.TableRowProperties.Descendants<GridBefore>())
                 {
@@ -747,6 +576,8 @@ namespace Smart.Parser.Adapters
             }
             return widthInfo;
         }
+
+
         void ProcessWordTable(WordDocHolder docHolder,  Table table, int maxRowsToProcess)
         {
             var rows = table.Descendants<TableRow>().ToList();
@@ -774,7 +605,10 @@ namespace Smart.Parser.Adapters
                     continue;
                 }
                 maxCellsCount = Math.Max(newRow.Count, maxCellsCount);
-                if (r == 0 && TableRows.Count > 0 && CheckMergeRow(TableRows.Last(), newRow))
+                if (r == 0 && TableRows.Count > 0 && 
+                    BigramsHolder.CheckMergeRow(
+                        TableRows.Last().ConvertAll(x => x.Text), 
+                        newRow.ConvertAll(x => x.Text)))
                 {
                     MergeRow(TableRows.Last(), newRow);
                 }
@@ -788,7 +622,8 @@ namespace Smart.Parser.Adapters
                     break;
                 }
             }
-            if (maxCellsCount <= 4)
+
+            if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(TableRows, saveRowsCount))
             {
                 //remove this suspicious table 
                 TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
@@ -850,7 +685,6 @@ namespace Smart.Parser.Adapters
             }
             if (extension != ".htm" && extension != ".html") // это просто костыль. Нужно как-то встроить это в архитектуру.
                 tables = ExtractSubtables(tables);
-            RemoveEmptyTables(tables);
             TablesCount = tables.Count();
             foreach (var t in tables)
             {
@@ -859,40 +693,9 @@ namespace Smart.Parser.Adapters
                 tableIndex++;
             }
 
-            DropDayOfWeekRows();
+            TableRows = DropDayOfWeekRows(TableRows);
         }
 
-
-
-        private void RemoveEmptyTables(List<Table> tables)
-        {
-            tables.RemoveAll(x=> IsEmptyTable(x));
-        }
-
-
-        private bool IsEmptyTable(Table table)
-        {
-           
-            var tableLst = table.ChildElements.OfType<TableRow>().ToList();
-            if (tableLst.Count < 3)
-                return false; // header only
-            var headRowLst = tableLst[0].ChildElements.OfType<TableCell>().ToList();
-            var nameInd = headRowLst.FindIndex(x => x.InnerText.Length < 100 && x.InnerText.IsName());
-            if (nameInd == -1)
-                return false; // todo: checking for table without name field
-
-            var nameCells = tableLst.Skip(1).Select(x => x.ChildElements.OfType<TableCell>().ToList());
-            bool res = nameCells.All (x => x.Count <= nameInd || string.IsNullOrWhiteSpace(x[nameInd].InnerText));
-            return res;
-
-        }
-
-
-        private void DropDayOfWeekRows()
-        {
-            List<string> daysOfWeek = new List<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
-            TableRows = TableRows.TakeWhile(x => !x.All(y => daysOfWeek.Contains(y.Text.ToLower().Trim()))).ToList();
-        }
 
         private static List<Table> ExtractSubtables(List<Table> tables)
         {
@@ -920,10 +723,6 @@ namespace Smart.Parser.Adapters
             var result = new List<Cell>();
             foreach (var r in TableRows[row])
             {
-                //if (r.Col >= maxColEnd)
-                //{
-                //    break;
-                //}
                 result.Add(r);
             }
             return result;
@@ -931,7 +730,7 @@ namespace Smart.Parser.Adapters
 
         public override Cell GetCell(int row, int column)
         {
-            int cellNo = FindMergedCellByColumnNo(row, column);
+            int cellNo = FindMergedCellByColumnNo(TableRows, row, column);
             if (cellNo == -1) return null;
             return TableRows[row][cellNo];
         }

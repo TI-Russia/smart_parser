@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TI.Declarator.ParserCommon;
 
+
 namespace Smart.Parser.Adapters
 {
 
@@ -22,6 +23,9 @@ namespace Smart.Parser.Adapters
             // nobody wants to know how excel represents numbers inside itself
             // for "size_raw"
             Text = cell.GetStringValue(Aspose.Cells.CellValueFormatStrategy.DisplayStyle);
+            if (Text == "###") {
+                Text = cell.StringValue;
+            }
 
             IsMerged = cell.IsMerged;
             if (IsMerged)
@@ -141,6 +145,7 @@ namespace Smart.Parser.Adapters
             DocumentFile = fileName;
             workbook = new Aspose.Cells.Workbook(fileName);
             workbook.Settings.NumberDecimalSeparator = ',';
+            workbook.Settings.NumberGroupSeparator = ' ';
             // if there are multiple worksheets it is a problem
             // generate exception if more then one non-hidden worksheet
             //worksheet = workbook.Worksheets[0];

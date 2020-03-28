@@ -1,0 +1,33 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Слётина М.В.",
+        "role": "\n\n\n заместитель начальника отдела\n"
+      },
+      "year": 2011,
+      "incomes": [
+        {
+          "size": 307862.0,
+          "size_raw": "307862",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность, доля 1/3)",
+          "square": 48.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "48,5",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "sheet_title": "Слетина Марина Владимировна за период с 1 января по 31 декабря 2011 года ",
+    "year": 2011
+  }
+}
