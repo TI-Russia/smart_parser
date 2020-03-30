@@ -14,6 +14,9 @@ import signal
 import argparse
 
 SMART_PARSER = '..\\..\\src\\bin\\Debug\\netcoreapp3.1\\smart_parser.exe'
+if sys.platform in ['darwin', 'linux']:
+    SMART_PARSER = 'dotnet ../../src/bin/Debug/netcoreapp3.1/smart_parser.dll'
+
 declarator_domain = 'https://declarator.org'
 
 
@@ -30,8 +33,11 @@ def parse_args():
     parser.add_argument("--force-upload", dest='force_upload',
                         help="Force upload for degraded files.",
                         default=False, action="store_true")
+    parser.add_argument("--skip-upload", dest='skip_upload',
+                        help="Skip upload for ALL files.",
+                        default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?office=579", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?priority=1", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
@@ -99,11 +105,11 @@ def run_smart_parser(filepath, args):
             for jf in json_list:
                 os.remove(jf)
         else:
-            logger.info("Skipping existed JSON file %s.json" % sourcefile)
+            # logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return
 
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
-        smart_parser_options = r"-adapter aspose -license C:\smart_parser\src\bin\Release\lic.bin"
+        smart_parser_options = r"-adapter aspose"
     else:
         smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8091"
 
@@ -144,14 +150,14 @@ def post_results(sourcefile, job, time_delta=None, parser_log=None):
 
                 expected_year = job.get('income_year', None)
                 if file_year is not None and expected_year is not None and file_year != expected_year:
-                    logger.warning("Skip wrong declaration year %i (expected %i)" % (
-                        file_year, expected_year))
+                    # logger.warning("Skip wrong declaration year %i (expected %i)" % (
+                    #     file_year, expected_year))
                     continue
                 data['persons'] += file_data['persons']
-                if data['document']:
-                    if data['document'].get('sheet_title') != file_data['document'].get('sheet_title'):
-                        logger.warning(
-                            "Document sheet title changed in one XLSX!")
+                # if data['document']:
+                #     if data['document'].get('sheet_title') != file_data['document'].get('sheet_title'):
+                #         logger.warning(
+                #             "Document sheet title changed in one XLSX!")
                 data['document'] = file_data['document']
 
     if 'sheet_number' in data['document']:
@@ -180,29 +186,30 @@ def post_results(sourcefile, job, time_delta=None, parser_log=None):
 
         with open(filename + ".json", "wb") as fp:
             fp.write(body)
-    
+
     parsed = len(data['persons']) > 0
     result = job.copy()
     result['parser_log'] = data['document']['parser_log']
     result['sourcefile'] = sourcefile
-    
+
     if not parsed:
         result['new_status'] = 'error'
-    else:        
+    else:
         result['new_status'] = 'ok'
 
     if df_id:
         if job['status'] == 'ok' and not parsed:
             result['new_status'] = 'degrade'
-        else:                    
-            logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
-                df_id, len(data['persons']), len(json_list), data['document']['file_size']))
+        else:
+            # logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
+            #     df_id, len(data['persons']), len(json_list), data['document']['file_size']))
 
             response = client.post(declarator_domain +
-                                '/api/jsonfile/validate/', data=body)
-            if response.status_code != requests.codes.ok:
-                logger.error(response)
-                logger.error(response.text)
+                                   '/api/jsonfile/validate/', data=body)
+
+            # if response.status_code != requests.codes.ok:
+            #     logger.error(response)
+            #     logger.error(response.text)
 
     return result
 
@@ -228,7 +235,8 @@ class ProcessOneFile(object):
             job.get('download_url', None),
             job.get('document_file', None),
             job.get('archive_file', None))
-        logger.info("Running job (id=%s) with URL: %s" % (df_id, file_url))
+
+        # logger.info("Running job (id=%s) with URL: %s" % (df_id, file_url))
 
         url_path, filename = os.path.split(file_url)
         filename, ext = os.path.splitext(filename)
@@ -250,7 +258,7 @@ class ProcessOneFile(object):
         else:
             # this is wrong for header_recall calculation:
             # time_delta 0 for cached parsing results
-            logger.error("time_delta=None for %s" % file_path)
+            # logger.error("time_delta=None for %s" % file_path)
             return False
 
 
@@ -291,7 +299,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     joblist = args.joblist
-    # joblist = "https://declarator.org/api/fixed_document_file/?queue=empty&filetype=html"
+    results = []
 
     try:
         if joblist.startswith('http'):
@@ -303,12 +311,12 @@ if __name__ == '__main__':
             joblist = joblist[:args.limit]
 
         logger.info("Starting %i jobs" % len(joblist))
-        results = []
-        for res in tqdm.tqdm(pool.imap_unordered(ProcessOneFile(args, os.getpid()), joblist, chunksize=1), total=len(joblist)):
+        iter_pool = pool.imap_unordered(ProcessOneFile(args, os.getpid()), joblist, chunksize=1)
+        for res in tqdm.tqdm(iter_pool, total=len(joblist)):
             results.append(res)
 
     except KeyboardInterrupt:
-        print("stop processing...")
+        logger.info("stop processing...")
         pool.terminate()
     else:
         pool.close()
@@ -320,20 +328,20 @@ if __name__ == '__main__':
     degraded_list = list(filter(lambda x: x['new_status'] == 'degrade', results))
     degraded = len(degraded_list)
 
-    print("Total files: %i" % (total))
-    print("Succeed files: %i" % (ok))
-    print("Errors: %i" % (total - ok))
+    logger.info("Total files: %i" % (total,))
+    logger.info("Succeed files: %i" % (ok,))
+    logger.info("Errors: %i" % (total - ok))
 
-    print("Header_recall: %f" %
-          (float(ok) / float(total)))
-    print("Header_recall was before re-parse: %f" %
-          (float(len(list(filter(lambda x: x['status'] == 'ok', results)))) / float(total)))
+    logger.info("Header_recall: %f" %
+                (float(ok) / float(total)))
+    logger.info("Header_recall was before re-parse: %f" %
+                (float(len(list(filter(lambda x: x['status'] == 'ok', results)))) / float(total)))
 
-    print("Upgraded: %i" % (upgraded))
-    print("Degraded: %i" % (degraded))
+    logger.info("Upgraded: %i" % (upgraded, ))
+    logger.info("Degraded: %i" % (degraded, ))
 
-    print("Degraded list")
+    logger.info("Degraded list")
     for job in degraded_list:
-        print("file: %s " % (
-            job['sourcefile'], 
+        logger.info("file: %s " % (
+            job['sourcefile'],
         ))

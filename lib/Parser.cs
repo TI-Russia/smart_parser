@@ -567,7 +567,7 @@ namespace Smart.Parser.Lib
             if (fieldStr == "") return false;
             bool fieldInThousands = (field & DeclarationField.DeclaredYearlyIncomeThousands) > 0;
             person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(fieldStr, fieldInThousands);
-            if (!ignoreThousandMultiplier)
+            if (!ignoreThousandMultiplier || fieldStr.Contains("тыс."))
             {
                 person.DeclaredYearlyIncome *= 1000;
             }
