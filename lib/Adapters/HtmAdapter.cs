@@ -139,14 +139,11 @@ namespace Smart.Parser.Adapters
 
             List<List<Cell>> table = new List<List<Cell>>();
 
-
             table.Add(MakeHeaders(members.First(), 1).ToList());
-            table.Add(GetMainMember(members.First(), name, 2));
+            ProcessMainMember(table, members.Skip(0).First(), name);
             ProcessAdditionalMembers(table, members.Skip(1), name);
             table.Insert(0, GetTitleRow(title, table));
             return table;
-
-
         }
 
         private static List<Cell> GetTitleRow(string title, List<List<Cell>> table)
@@ -168,32 +165,35 @@ namespace Smart.Parser.Adapters
             
             foreach(var memberElement in members)
             {
-                List<Cell> line = new List<Cell>();
                 var name = _scheme.GetMemberName(memberElement);
-                line.Add(GetCell(name, table.Count, 0));
                 var tableLines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
-                //ModifyLinesForRealEstate(tableLines);
                 _scheme.ModifyLinesForAdditionalFields(tableLines);
-                line.AddRange(GetRow(tableLines[1], table.Count, 1));
 
-                table.Add(line);
+                for (int i = 1; i < tableLines.Count(); i++)
+                {
+                    List<Cell> line = new List<Cell>();
+                    line.Add(GetCell(name, table.Count, 0));
+                    //ModifyLinesForRealEstate(tableLines);
+                    line.AddRange(GetRow(tableLines[i], table.Count, 1));
+                    table.Add(line);
+                }
             }
         }
 
-       
-
-        protected  List<Cell> GetMainMember(IElement memberElement, string name, int rowNum)
+        protected void ProcessMainMember(List<List<Cell>> table, IElement memberElement, string name)
         {
-            List<Cell> line = new List<Cell>();
-            line.Add(GetCell(name, rowNum, 0));
-            //var tableLines = ExtractLinesFromTable(tableElement.Children.First());
             var tableLines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
             _scheme.ModifyLinesForAdditionalFields(tableLines, true);
-
-            line.AddRange(GetRow(tableLines[1], rowNum, 1));
-            return line;
+            foreach (var tableLine in tableLines.Skip(1))
+            {
+                List<Cell> line = new List<Cell>();
+                table.Add(line);
+                if (table.Count > 2) 
+                    name = ""; 
+                line.Add(GetCell(name, table.Count, 0));
+                line.AddRange(GetRow(tableLine, table.Count, 1));
+            }
         }
-
 
 
         protected IEnumerable<Cell> MakeHeaders( IElement memberElement, int rowNum)
@@ -201,12 +201,10 @@ namespace Smart.Parser.Adapters
 
             List<List<string>> lines = ExtractLinesFromTable(_scheme.GetTableFromMember(memberElement));
             var headerLine = lines[0];
-            //ModifyHeaderForRealEstate(headerLine);
             _scheme.ModifyHeaderForAdditionalFields(headerLine);
             headerLine.Insert(0, NAME_COLUMN_CAPTION);
             return GetRow(headerLine, rowNum);
         }
-
 
 
         protected static List<List<string>> ExtractLinesFromTable(IElement tableElement)
@@ -215,14 +213,49 @@ namespace Smart.Parser.Adapters
             var linesSelection = tableElement.QuerySelectorAll("tr");
             foreach(var lineElement in linesSelection)
             {
-                List<string> line = new List<string>();
+                var splitedCellsLine = new List<List<string>>();
                 foreach(var cell in lineElement.Children)
                 {
-                    var raw = cell.TextContent;
-                    raw = raw.Replace("\n", "").Replace("\t", "");
-                    line.Add(raw);
+                    var splitted = new List<string>();
+                    var current = "";
+                    
+                    foreach (var child in cell.ChildNodes)
+                    {
+                        if (child.NodeName == "BR")  {
+                            splitted.Add(current);
+                            current = "";
+                        }
+                        else
+                        {
+                            current += child.TextContent.Replace("\n", " ").Replace("\t", "").Trim();
+                        }
+                    }
+                    splitted.Add(current);
+                    splitedCellsLine.Add(splitted);
                 }
-                lines.Add(line);
+
+                var finish = false;
+                while (!finish)
+                {
+                    finish = true;
+                    var line = new List<string>();
+                    foreach (var cellList in splitedCellsLine)
+                    {
+                        if (cellList.Any())
+                        {
+                            finish = false;
+                            var item = cellList[0];
+                            cellList.RemoveAt(0);
+                            line.Add(item);
+                        }
+                        else
+                        {
+                            line.Add("");
+                        }
+                    }
+                    if (finish) break;
+                    lines.Add(line);
+                }
             }
             return lines;
         }

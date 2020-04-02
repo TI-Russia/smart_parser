@@ -15,34 +15,28 @@
       ],
       "real_estates": [
         {
-          "text": "Квартира",
-          "square": 76.8,
+          "text": "Квартира (в собственности) 76,8 (Россия)",
+          "square": null,
           "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "76,8",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         },
         {
-          "text": "Квартира",
-          "square": 38.1,
+          "text": "Квартира (в собственности) 46,6 (Россия)",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null
+        },
+        {
+          "text": "Квартира (в собственности) 38,1 (Россия)",
+          "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": "В собственности",
-          "square_raw": "38,1",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         },
         {
-          "text": "Квартира",
-          "square": 35.7,
+          "text": "Квартира (Доля в праве собственности) 35,7 (Россия)",
+          "square": null,
           "relative": "Ребенок",
-          "own_type_by_column": "В собственности",
-          "square_raw": "35,7",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         }
       ],
       "vehicles": [

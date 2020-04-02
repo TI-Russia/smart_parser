@@ -171,24 +171,13 @@ namespace TI.Declarator.JsonSerialization
             return new JProperty("person", personProp);
         }
 
-        private static JProperty GetInstitutiondata(PublicServant servant)
-        {
-            return new JProperty("office", new JObject(
-                                            // TODO how to get department name?
-                                            new JProperty("name", "Министерство странных походок")));
-        }
-
         private static JProperty GetYear(DeclarationProperties declarationInfo)
         {
-            // TODO extract year from file name or document title
             if (declarationInfo.Year.HasValue)
             { 
                 return new JProperty("year", declarationInfo.Year.Value);
             }
             return new JProperty("year", null);
-            //{
-            //    throw new Exception("Error serializing declaration: year is missing");
-            //}
         }
 
         private static JProperty GetIncomes(PublicServant servant)

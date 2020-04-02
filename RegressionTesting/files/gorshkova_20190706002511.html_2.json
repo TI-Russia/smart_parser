@@ -22,34 +22,22 @@
       ],
       "real_estates": [
         {
-          "text": "квартира",
-          "square": 64.3,
+          "text": "квартира (пользование) 64,3 кв.м. (Россия)",
+          "square": null,
           "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "64,3",
-          "country_raw": "",
-          "type_raw": "квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         },
         {
-          "text": "гараж",
-          "square": 52.7,
+          "text": "гараж (индивидуальная) 52,7 кв.м. (Россия) квартира (пользование) 64,3 кв.м. (Россия) квартира (пользование) 64,5 кв.м. (Россия)",
+          "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": "В собственности",
-          "square_raw": "52,7",
-          "country_raw": "",
-          "type_raw": "гараж",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         },
         {
-          "text": "квартира",
-          "square": 64.3,
+          "text": "квартира (пользование) 64,3 кв.м. (Россия)",
+          "square": null,
           "relative": "Ребенок",
-          "own_type_by_column": "В собственности",
-          "square_raw": "64,3",
-          "country_raw": "",
-          "type_raw": "квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         }
       ],
       "vehicles": [
