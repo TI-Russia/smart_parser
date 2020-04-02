@@ -1,0 +1,69 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Горшкова Мария Павловна",
+        "role": "",
+        "department": "Судебная коллегия по рассмотрению споров, возникающих из гражданских и иных правоотношений"
+      },
+      "year": 2017,
+      "incomes": [
+        {
+          "size": 2345000.0,
+          "size_raw": "2345 тыс, руб,",
+          "relative": null
+        },
+        {
+          "size": 1360000.0,
+          "size_raw": "1360 тыс,руб,",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 64.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,3",
+          "country_raw": "",
+          "type_raw": "квартира",
+          "own_type_raw": "-"
+        },
+        {
+          "text": "гараж 52,7 кв.м.",
+          "square": 52.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,7",
+          "country_raw": "",
+          "type_raw": "гараж 52,7 кв.м.",
+          "own_type_raw": "-"
+        },
+        {
+          "text": "квартира",
+          "square": 64.3,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,3",
+          "country_raw": "",
+          "type_raw": "квартира",
+          "own_type_raw": "-"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Мазда СХ-5, 2017 года выпуска",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения об имуществе Горшкова М.П. | Арбитражный суд Московской области  на период 2017",
+    "year": 2017,
+    "sheet_number": 1
+  }
+}

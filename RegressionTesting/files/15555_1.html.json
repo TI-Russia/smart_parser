@@ -428,26 +428,6 @@
     },
     {
       "person": {
-        "name_raw": "супруг - нет",
-        "role": "\n\n\n \n"
-      },
-      "year": 2012,
-      "incomes": [],
-      "real_estates": [],
-      "vehicles": []
-    },
-    {
-      "person": {
-        "name_raw": "несовершеннолетний ребенок - нет",
-        "role": "\n\n\n \n"
-      },
-      "year": 2012,
-      "incomes": [],
-      "real_estates": [],
-      "vehicles": []
-    },
-    {
-      "person": {
         "name_raw": "Аксёнов С.А",
         "role": "\n\n\n Начальник Управления\n"
       },
@@ -735,16 +715,6 @@
         }
       ],
       "person_index": 9
-    },
-    {
-      "person": {
-        "name_raw": "несовершеннолетний ребенок - нет",
-        "role": "\n\n\n \n"
-      },
-      "year": 2012,
-      "incomes": [],
-      "real_estates": [],
-      "vehicles": []
     }
   ],
   "document": {

@@ -548,6 +548,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("htm")]
+        public void TestThousandsStringIncome()
+        {
+            TestSmartParser("gorshkova_20190706002511.html", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("htm")]
         public void HtmlTitleInParagraph()
         {
             TestSmartParser("4002_0.htm", "prod");
