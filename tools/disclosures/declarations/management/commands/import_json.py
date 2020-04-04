@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 from multiprocessing import Pool
-from functools import partial
+from django.db import connection
 from collections import defaultdict
 import declarations.models as models
 import pymysql
@@ -44,16 +44,16 @@ def get_smart_parser_results(input_path):
             index += 1
 
 
-def build_stable_section_id_1(fio, income, year, document_id):
+def build_stable_section_id_1(fio, income, year, office_id):
     fio = normalize_whitespace(fio).lower()
     if income is None:
         income = 0
     if year is None:
         year = 0
-    return "\t".join([fio, str(int(income)), str(year), str(document_id)])
+    return "\t".join([fio, str(int(income)), str(year), str(office_id)])
 
 
-def build_stable_section_id_2(fio, income, year, document_id):
+def build_stable_section_id_2(fio, income, year, office_id):
     fio = normalize_whitespace(fio).lower()
     if len(fio) > 0:
         fio = fio.split(" ")[0]  # only family_name
@@ -61,7 +61,7 @@ def build_stable_section_id_2(fio, income, year, document_id):
         income = 0
     if year is None:
         year = 0
-    return "\t".join([fio, str(int(income)), str(year), str(document_id)])
+    return "\t".join([fio, str(int(income)), str(year), str(office_id)])
 
 
 def init_person_info(section, section_json):
@@ -146,7 +146,7 @@ def import_one_section( income_year, document_file, section_json):
 class TDlrobotAndDeclarator:
 
     def init_file_2_documents(self):
-        db_connection = TDlrobotAndDeclarator.get_db_connection()
+        db_connection = TDlrobotAndDeclarator.get_declarator_db_connection()
         in_cursor = db_connection.cursor()
         in_cursor.execute("select id, document_id from declarations_documentfile")
         self.file_2_document = dict(x for x in in_cursor)
@@ -154,50 +154,43 @@ class TDlrobotAndDeclarator:
             self.document_2_files[document_id].add(file_id)
         db_connection.close()
 
-    def get_section_incomes(self):
-        db_connection = TDlrobotAndDeclarator.get_db_connection()
-        in_cursor = db_connection.cursor()
-        in_cursor.execute("select section_id, size from declarations_income where relative_id is null")
-        res = dict(x for x in in_cursor)
-        in_cursor.close()
-        db_connection.close()
-        return res
 
     def get_mapping_section_to_stable_id(self):
-        db_connection = TDlrobotAndDeclarator.get_db_connection()
+        db_connection = TDlrobotAndDeclarator.get_declarator_db_connection()
         in_cursor = db_connection.cursor()
         in_cursor.execute("""
                         select  s.id, 
                                 s.person_id, 
-                                s.document_id, 
+                                d.office_id, 
+                                i.size,
                                 s.original_fio, 
                                 CONCAT(p.family_name, " ", p.name, " ", p.patronymic),
                                 d.income_year
                         from declarations_section s
                         inner join declarations_person p on p.id = s.person_id
                         inner join declarations_document d on s.document_id = d.id
+                        inner join declarations_income i on i.section_id = s.id and i.relative_id is null
                         where s.person_id is not null
         """)
 
-        incomes = self.get_section_incomes()
         human_persons = dict()
         human_section_mergings_count = 0
-        for section_id, person_id, document_id, original_fio, person_fio, year in in_cursor:
+        for section_id, person_id, office_id, income, original_fio, person_fio, year in in_cursor:
             fio = original_fio
             if fio is None:
                 fio = person_fio
             assert fio is not None
-            key1 = build_stable_section_id_1(fio, incomes.get(section_id, 0), year, document_id)
+            key1 = build_stable_section_id_1(fio, income, year, office_id)
             if key1 not in human_persons:
                 human_persons[key1] = person_id
             else:
-                human_persons[key1] = None
+                human_persons[key1] = None # if key is ambigous do not use it
 
-            key2 = build_stable_section_id_2(fio, incomes.get(section_id, 0), year, document_id)
+            key2 = build_stable_section_id_2(fio, income, year, office_id)
             if key2 not in human_persons:
                 human_persons[key2] = person_id
             else:
-                human_persons[key2] = None
+                human_persons[key2] = None # if key is ambigous do not use it
             human_section_mergings_count += 1
 
         in_cursor.close()
@@ -205,55 +198,50 @@ class TDlrobotAndDeclarator:
         print("found {} sections with some person_id != null in declarator db".format(human_section_mergings_count))
         return human_persons
 
-    def _copy_human_merges(self, sha256_to_human_file, human_persons, dlrobot_db):
-        dlrobot_section_id_to_person_id = dict()
-        used_stable_ids = set()
-        for dlrobot_section_id, fio, income_year, declarant_income, source_file_sha256, document_id in dlrobot_db.iterate_all_sections():
-            if document_id is None:
-                file_id = sha256_to_human_file.get(source_file_sha256)
-                if file_id is None:
-                    continue  # a file that is not in declarator db
-                document_id = self.file_2_document.get(file_id)
-                if document_id is None:
-                    continue  # unknown cause
-
-            key1 = build_stable_section_id_1(fio, declarant_income, income_year, document_id)
-            key2 = build_stable_section_id_2(fio, declarant_income, income_year, document_id)
-            person_id = human_persons.get(key1)
-            if person_id is None:
-                person_id = human_persons.get(key2)
-
-            if person_id is not None:
-                dlrobot_section_id_to_person_id[dlrobot_section_id] = person_id
-                used_stable_ids.add(key1)
-                used_stable_ids.add(key2)
-
-
-        missing_set = set(k for k, v in human_persons.items() if v is not None) - used_stable_ids
-        print(
-            "there are {} human merged sections that were not found in dlrobot db (smart_parser parsed files with errors?)".format(
-                len(missing_set)))
-
+    def _copy_human_merges(self, human_persons):
         mergings_count = 0
-        cursor = dlrobot_db.get_new_output_cursor()
-        for id, person_id in dlrobot_section_id_to_person_id.items():
-            dlrobot_db.update_person_id(cursor, id, person_id)
-            mergings_count += 1
-        dlrobot_db.close_output_cursor_and_commit(cursor)
-        print("set human person id to {} records".format(mergings_count))
+        self.stdout.write("set person_id to sections\n")
 
-    def copy_human_section_merges(self, dlrobot_human_file_info, dlrobot_db):
-        sha256_to_human_file = dict()
-        for domain in dlrobot_human_file_info:
-            for sha256, file_info in dlrobot_human_file_info[domain].items():
-                if 'filepath' in file_info:
-                    sha256_to_human_file[sha256] = get_document_file_id(file_info)
+        with connection.cursor() as cursor:
+            #pure django is 10x times slower
+            cursor.execute(
+                """
+                    select s.id, s.income_year, s.person_name_ru, i.size, d.office_id 
+                    from {} s
+                    inner join {} d on s.document_file_id=d.id
+                    inner join {} i on s.id=i.section_id and i.relative="{}" 
+                """.format(
+                        models.Section.objects.model._meta.db_table,
+                        models.DocumentFile.objects.model._meta.db_table,
+                        models.Income.objects.model._meta.db_table,
+                        models.Relative.main_declarant_code)
+            )
+            cnt = 0
+            for section_id, income_year, fio,  declarant_income, office_id in cursor.fetchall():
+                cnt += 1
+                if (cnt % 10000) == 0:
+                    self.stdout.write(".")
+                key1 = build_stable_section_id_1(fio, declarant_income, income_year, office_id)
+                key2 = build_stable_section_id_2(fio, declarant_income, income_year, office_id)
+                person_id = human_persons.get(key1)
+                if person_id is None:
+                    person_id = human_persons.get(key2)
 
+                if person_id is not None:
+                    person = models.Person.objects.get_or_create(id=person_id)[0]
+                    section = models.Section(id=section_id)
+                    section.person = person
+                    section.save()
+                    mergings_count += 1
+
+        self.stdout.write("\nset human person id to {} records\n".format(mergings_count))
+
+    def copy_human_section_merges(self):
         human_persons = self.get_mapping_section_to_stable_id()
-        self._copy_human_merges(sha256_to_human_file, human_persons, dlrobot_db)
+        self._copy_human_merges(human_persons)
 
     @staticmethod
-    def get_db_connection():
+    def get_declarator_db_connection():
         return pymysql.connect(db="declarator", user="declarator", password="declarator",
                                                         unix_socket="/var/run/mysqld/mysqld.sock")
 
@@ -266,7 +254,6 @@ class TDlrobotAndDeclarator:
             most_freq_office = max(set(offices), key=offices.count)
             offices_to_domains[most_freq_office].append(domain)
         return offices_to_domains
-
 
     def __init__(self, args):
         self.args = args
@@ -295,7 +282,7 @@ class TDlrobotAndDeclarator:
                     yield filename, None, document_id
 
     def import_one_smart_parser_json(self, office_id, filepath, source_file_sha256, web_domain):
-        docfile = register_source_file(filepath, office_id,  source_file_sha256,  web_domain)
+        docfile = register_source_file(filepath, office_id, source_file_sha256, web_domain)
         with open(filepath, "r", encoding="utf8") as inp:
             input_json = json.load(inp)
         income_year = input_json.get('document', dict()).get('year')
@@ -334,7 +321,7 @@ class TDlrobotAndDeclarator:
                 except Exception as exp:
                     print("Error! cannot import {}: {} ".format(file_path, exp))
                     traceback.print_exc(file=sys.stdout)
-            #break
+
 
 
 def process_one_file_in_thread(declarator_db, office_id):
@@ -347,7 +334,7 @@ def process_one_file_in_thread(declarator_db, office_id):
 
 
 class Command(BaseCommand):
-    help = 'Import JSONFile or run re-validation for all JSONFiles'
+    help = 'Import dlrobot and declarator files into disclosures db'
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -355,13 +342,6 @@ class Command(BaseCommand):
         self.options = None
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--dry-run',
-            action='store_true',
-            dest='dry_run',
-            default=False,
-            help='only validate',
-        )
         parser.add_argument(
             '--process-count',
             dest='process_count',
@@ -388,4 +368,4 @@ class Command(BaseCommand):
         self.stdout.write("start importing")
         offices = list(i for i in declarator_db.office_to_domains.keys())
         pool.map(partial(process_one_file_in_thread, declarator_db), offices)
-
+        declarator_db.copy_human_section_merges()
