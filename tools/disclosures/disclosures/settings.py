@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modeltranslation',
     'declarations.apps.DeclarationsConfig',
-
 ]
 
 MIDDLEWARE = [

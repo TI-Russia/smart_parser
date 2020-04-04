@@ -1,1 +1,83 @@
-{{ section.person_name }}
+<h1>
+     {{ section.document_file.office.name }} <br/>
+     Cведения о доходах за {{ section.income_year }} год <br/>
+     {% if section.department %}
+        {{ section.department }}
+     {% endif %}
+</h1>
+
+<style>
+   td, th {
+        border: solid;
+        word-break: break-all;
+   }
+
+</style>
+
+
+<table style="border:solid; border-collapse: collapse">
+    <tr>
+       <th rowspan="2" > ФИО </th>
+       <th rowspan="2"> Должность </th>
+       <th colspan="3"> Недвижимость </th>
+       <th rowspan="2"> Транспорт </th>
+       <th rowspan="2"> Доход </th>
+    </tr>
+    <tr>
+        <th width="30%"> Тип </th>
+        <th width="10%"> Площадь </th>
+        <th width="10%"> Владение </th>
+    </tr>na
+
+    {% for relative in section.section_parts %}
+        <tr>
+            {% if relative.code == "D" %}
+                <td>{{ section.person_name }}</td>
+                <td>
+                    {% if section.position %}
+                        {{ section.position }}
+                    {% endif %}
+                </td>
+            {% else %}
+                <td>{{ relative.name }}</td>
+                <td></td>
+            {% endif %}
+
+            <td colspan="3" size="50%" style="padding: 0px;"  >
+                <table width="100%" style="border-style: hidden; border-collapse: collapse;">
+                {% for r in section.realestate_set.all %}
+                    {% if relative.code == r.relative %}
+                    {% if r.square %}
+                        <tr>
+                            <td width="60%">
+                                {{ r.type }}
+                                {% if not r.country == "RU" %}
+                                    ({{ r.country_str }})
+                                {% endif %}
+                            </td>
+                            <td width="20%">{{ r.square }}  </td>
+                            <td width="20%">{{ r.own_type_str }}  </td>
+                        </tr>
+                    {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </table>
+            </td>
+            <td>
+                {% for v in section.vehicle_set.all %}
+                    {% if relative.code == v.relative %}
+                        {{ v.name }} <br/>
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% for i in section.income_set.all %}
+                    {% if relative.code == i.relative %}
+                        {{ i.size }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>

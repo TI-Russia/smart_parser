@@ -1,8 +1,67 @@
 from django.core.management import BaseCommand
 from multiprocessing import Pool
 from functools import partial
-import .declarations.models  as models
-from .dlrobot_and_declarator import TDlrobotAndDeclarator, normalize_whitespace
+from collections import defaultdict
+import declarations.models as models
+import pymysql
+import os
+import re
+import sys
+import json
+import traceback
+from declarations.countries import get_country_code
+from django.db import transaction
+
+
+def normalize_whitespace(str):
+    str = re.sub(r'\s+', ' ', str)
+    str = str.strip()
+    return str
+
+
+def get_document_file_id(file_info):
+    file_id = os.path.splitext(os.path.basename(file_info['filepath']))[0]
+    if file_id.find('_') != -1:
+        file_id = file_id[0:file_id.find('_')]
+    return int(file_id)
+
+
+def get_smart_parser_results(input_path):
+    if not os.path.exists(input_path):
+        # todo: why ?
+        print("Error! cannot find {}, though it is in dlrobot_human.json".format(input_path))
+        return
+
+    if os.path.exists(input_path + ".json"):
+        yield input_path + ".json"
+    else:
+        index = 0
+        while True:
+            filename = input_path + "_{}.json".format(index)
+            if not os.path.exists(filename):
+                break
+            yield filename
+            index += 1
+
+
+def build_stable_section_id_1(fio, income, year, document_id):
+    fio = normalize_whitespace(fio).lower()
+    if income is None:
+        income = 0
+    if year is None:
+        year = 0
+    return "\t".join([fio, str(int(income)), str(year), str(document_id)])
+
+
+def build_stable_section_id_2(fio, income, year, document_id):
+    fio = normalize_whitespace(fio).lower()
+    if len(fio) > 0:
+        fio = fio.split(" ")[0]  # only family_name
+    if income is None:
+        income = 0
+    if year is None:
+        year = 0
+    return "\t".join([fio, str(int(income)), str(year), str(document_id)])
 
 
 def init_person_info(section, section_json):
@@ -21,110 +80,270 @@ def init_person_info(section, section_json):
     return True
 
 
-ChildRelative = models.Relative.objects.filter(name="ребенок")
-SpouseRelative = models.Relative.objects.filter(name="cупруг(а)")
-def get_relative(r):
-    name = r.get('relative')
-    if name is None or name == "":
-        return None
-    if name.lower() == "cупруг(а)":
-        return SpouseRelative
-    if name.lower() == "ребенок":
-        return ChildRelative
-    assert False
-    return None
-
-
 def create_section_incomes(section, section_json):
     for i in section_json.get('incomes', []):
-        relative = get_relative( i.get('relative') )
-        size = i.get('size', "null")
-        if isinstance(size, float):
+        size = i.get('size')
+        if isinstance(size, float) or (isinstance(size, str) and size.isdigit()):
             size = int(size)
-        if size.isdigit():
-            size = int(size)
-        i = models.Income(section=section, size=size, relative=relative)
-        i.save()
-
-def get_country(s):
-    country_str = s.get("country", s.get("country_raw"))
-    if country_str is None:
-        return None
-    try:
-        return models.Country.objects.get(name_ru=country_str)
-    except:
-        print ("unknown country: {}".format(country_str))
-        return None
-
-def get_or_create_realty_type(s):
-    realty_type_str = s.get("type", s.get("text"))
-    if realty_type_str is None:
-        return None
-    try:
-        return models.RealEstateType.objects.get_or_create(name_ru=realty_type_str, name=realty_type_str)
-    except Exception as exp:
-        print (exp)
-        return None
-
-def get_or_create_own_type(s):
-    name = s.get("own_type", s.get("own_type_by_column"))
-    if name is None:
-        return None
-    try:
-        return models.OwnType.objects.get_or_create(name_ru=name, name=name)
-    except Exception as exp:
-        print(exp)
-        return None
+        yield models.Income(section=section,
+                          size=size,
+                          relative=models.Relative.get_relative_code(i.get('relative'))
+                          )
 
 
 def create_section_real_estates(section, section_json):
     for i in section_json.get('real_estates', []):
-        i = models.RealEstate(
-                section=section,
-                type=get_or_create_realty_type(i),
-                country=get_country(i),
-                relative=get_relative(i),
-                owntype=get_or_create_own_type(i),
-                square=i.get("square"),
-                share=i.get("share_amount")
-                )
-        i.save()
-
-
-def create_section_vehicle(section, section_json):
-    for i in section_json.get('vehicles', []):
-        i = models.Vehicle(
+        own_type_str = i.get("own_type", i.get("own_type_by_column"))
+        country_str = i.get("country", i.get("country_raw"))
+        yield models.RealEstate(
             section=section,
-            name=i.get("text"),
-            relative=get_relative(i)
-        }
-        i.save()
+            type=i.get("type", i.get("text")),
+            country=get_country_code(country_str),
+            relative=models.Relative.get_relative_code(i.get('relative')),
+            owntype=models.OwnType.get_own_type_code(own_type_str),
+            square=i.get("square"),
+            share=i.get("share_amount")
+        )
 
 
-class TDisclosuresDBWrapper:
+def create_section_vehicles(section, section_json):
+    for i in section_json.get('vehicles', []):
+        text = i.get("text")
+        if text is not None:
+            yield models.Vehicle(
+                section=section,
+                name=text,
+                name_ru=text,
+                relative=models.Relative.get_relative_code( i.get('relative'))
+            )
+
+
+def register_source_file(file_path, office_id, source_file_sha256, web_domain):
+    office = models.Office(id=office_id)
+    docfile = models.DocumentFile(office=office, sha256=source_file_sha256, file_path=file_path, web_domain=web_domain)
+    docfile.save()
+    return docfile
+
+
+def import_one_section( income_year, document_file, section_json):
+    section = models.Section(
+        document_file=document_file,
+        income_year=income_year,
+    )
+    if not init_person_info(section, section_json):
+        return
+    section.save()
+    try:
+        models.Income.objects.bulk_create(create_section_incomes(section, section_json))
+        models.RealEstate.objects.bulk_create(create_section_real_estates(section, section_json))
+        models.Vehicle.objects.bulk_create(create_section_vehicles(section, section_json))
+    except Exception as exp:
+        print ("exception on {}: {}".format(section.person_name, exp))
+        traceback.print_exc(file=sys.stdout)
+        raise
+
+
+class TDlrobotAndDeclarator:
+
+    def init_file_2_documents(self):
+        db_connection = TDlrobotAndDeclarator.get_db_connection()
+        in_cursor = db_connection.cursor()
+        in_cursor.execute("select id, document_id from declarations_documentfile")
+        self.file_2_document = dict(x for x in in_cursor)
+        for file_id, document_id in self.file_2_document.items():
+            self.document_2_files[document_id].add(file_id)
+        db_connection.close()
+
+    def get_section_incomes(self):
+        db_connection = TDlrobotAndDeclarator.get_db_connection()
+        in_cursor = db_connection.cursor()
+        in_cursor.execute("select section_id, size from declarations_income where relative_id is null")
+        res = dict(x for x in in_cursor)
+        in_cursor.close()
+        db_connection.close()
+        return res
+
+    def get_mapping_section_to_stable_id(self):
+        db_connection = TDlrobotAndDeclarator.get_db_connection()
+        in_cursor = db_connection.cursor()
+        in_cursor.execute("""
+                        select  s.id, 
+                                s.person_id, 
+                                s.document_id, 
+                                s.original_fio, 
+                                CONCAT(p.family_name, " ", p.name, " ", p.patronymic),
+                                d.income_year
+                        from declarations_section s
+                        inner join declarations_person p on p.id = s.person_id
+                        inner join declarations_document d on s.document_id = d.id
+                        where s.person_id is not null
+        """)
+
+        incomes = self.get_section_incomes()
+        human_persons = dict()
+        human_section_mergings_count = 0
+        for section_id, person_id, document_id, original_fio, person_fio, year in in_cursor:
+            fio = original_fio
+            if fio is None:
+                fio = person_fio
+            assert fio is not None
+            key1 = build_stable_section_id_1(fio, incomes.get(section_id, 0), year, document_id)
+            if key1 not in human_persons:
+                human_persons[key1] = person_id
+            else:
+                human_persons[key1] = None
+
+            key2 = build_stable_section_id_2(fio, incomes.get(section_id, 0), year, document_id)
+            if key2 not in human_persons:
+                human_persons[key2] = person_id
+            else:
+                human_persons[key2] = None
+            human_section_mergings_count += 1
+
+        in_cursor.close()
+        db_connection.close()
+        print("found {} sections with some person_id != null in declarator db".format(human_section_mergings_count))
+        return human_persons
+
+    def _copy_human_merges(self, sha256_to_human_file, human_persons, dlrobot_db):
+        dlrobot_section_id_to_person_id = dict()
+        used_stable_ids = set()
+        for dlrobot_section_id, fio, income_year, declarant_income, source_file_sha256, document_id in dlrobot_db.iterate_all_sections():
+            if document_id is None:
+                file_id = sha256_to_human_file.get(source_file_sha256)
+                if file_id is None:
+                    continue  # a file that is not in declarator db
+                document_id = self.file_2_document.get(file_id)
+                if document_id is None:
+                    continue  # unknown cause
+
+            key1 = build_stable_section_id_1(fio, declarant_income, income_year, document_id)
+            key2 = build_stable_section_id_2(fio, declarant_income, income_year, document_id)
+            person_id = human_persons.get(key1)
+            if person_id is None:
+                person_id = human_persons.get(key2)
+
+            if person_id is not None:
+                dlrobot_section_id_to_person_id[dlrobot_section_id] = person_id
+                used_stable_ids.add(key1)
+                used_stable_ids.add(key2)
+
+
+        missing_set = set(k for k, v in human_persons.items() if v is not None) - used_stable_ids
+        print(
+            "there are {} human merged sections that were not found in dlrobot db (smart_parser parsed files with errors?)".format(
+                len(missing_set)))
+
+        mergings_count = 0
+        cursor = dlrobot_db.get_new_output_cursor()
+        for id, person_id in dlrobot_section_id_to_person_id.items():
+            dlrobot_db.update_person_id(cursor, id, person_id)
+            mergings_count += 1
+        dlrobot_db.close_output_cursor_and_commit(cursor)
+        print("set human person id to {} records".format(mergings_count))
+
+    def copy_human_section_merges(self, dlrobot_human_file_info, dlrobot_db):
+        sha256_to_human_file = dict()
+        for domain in dlrobot_human_file_info:
+            for sha256, file_info in dlrobot_human_file_info[domain].items():
+                if 'filepath' in file_info:
+                    sha256_to_human_file[sha256] = get_document_file_id(file_info)
+
+        human_persons = self.get_mapping_section_to_stable_id()
+        self._copy_human_merges(sha256_to_human_file, human_persons, dlrobot_db)
+
     @staticmethod
-    def register_source_file(self, file_path, office_id, source_file_sha256, web_domain):
-        office = models.Office(id=office_id)
-        docfile = models.DocumentFile(office=office, sha256=source_file_sha256, file_path=file_path, web_domain=web_domain)
-        docfile.save()
-        return docfile
+    def get_db_connection():
+        return pymysql.connect(db="declarator", user="declarator", password="declarator",
+                                                        unix_socket="/var/run/mysqld/mysqld.sock")
 
-    @staticmethod
-    def import_one_section(self,  income_year, document_file, section_json):
-        section = models.Section(document_file=document_file,
-                          income_year=income_year,
-                          )
-        if not init_person_info(section, section_json):
+    def build_office_domains(self):
+        offices_to_domains = defaultdict(list)
+        for domain in self.dlrobot_human_file_info:
+            offices = list(x['office_id'] for x in self.dlrobot_human_file_info[domain].values() if 'office_id' in x)
+            if len(offices) == 0:
+                raise Exception("no office found for domain {}".format(domain))
+            most_freq_office = max(set(offices), key=offices.count)
+            offices_to_domains[most_freq_office].append(domain)
+        return offices_to_domains
+
+
+    def __init__(self, args):
+        self.args = args
+        self.file_2_document = dict()
+        self.document_2_files = defaultdict(set)
+        self.init_file_2_documents()
+        with open(args['dlrobot_human'], "r", encoding="utf8") as inp:
+            self.dlrobot_human_file_info = json.load(inp)
+        self.office_to_domains = self.build_office_domains()
+
+    def get_human_smart_parser_json(self, failed_files):
+        documents = set()
+        for file_id in failed_files:
+            document_id = self.file_2_document.get(file_id)
+            if document_id is None:
+                print("cannot find file {}".format(file_id))
+            else:
+                documents.add(document_id)
+
+        for document_id in documents:
+            all_doc_files = self.document_2_files[document_id]
+            if len(all_doc_files & failed_files) == len(all_doc_files):
+                filename = os.path.join(self.args['smart_parser_human_json'], str(document_id) + ".json")
+                if os.path.exists(filename):
+                    print("import human file {}".format(filename))
+                    yield filename, None, document_id
+
+    def import_one_smart_parser_json(self, office_id, filepath, source_file_sha256, web_domain):
+        docfile = register_source_file(filepath, office_id,  source_file_sha256,  web_domain)
+        with open(filepath, "r", encoding="utf8") as inp:
+            input_json = json.load(inp)
+        income_year = input_json.get('document', dict()).get('year')
+        if income_year is None:
+            print ("cannot import {}, year is not defined".format(filepath))
             return
-        create_section_incomes(section, section_json)
-        create_section_real_estates(section, section_json)
-        create_section_vehicles(section, section_json)
+        income_year = int(income_year)
+        section_count = 0
+        with transaction.atomic():
+            for p in input_json['persons']:
+                import_one_section(income_year, docfile, p)
+                section_count += 1
+        print("import {} sections from {}".format(section_count, filepath))
+
+    def import_office(self, office_id):
+        for domain in self.office_to_domains[office_id]:
+            print ("office {} domain {}".format(office_id, domain))
+            jsons_to_import = list()
+
+            failed_files = set()
+            for source_file_sha256, file_info in self.dlrobot_human_file_info[domain].items():
+                input_path = os.path.join("domains", domain, file_info['dlrobot_path'])
+                smart_parser_results = list(get_smart_parser_results(input_path))
+                if len(smart_parser_results) == 0:
+                    if 'filepath' in file_info:
+                        failed_files.add(get_document_file_id (file_info))
+                else:
+                    for file_path in smart_parser_results:
+                        jsons_to_import.append( (file_path, source_file_sha256, None) )
+
+            jsons_to_import += list(self.get_human_smart_parser_json(failed_files))
+
+            for file_path, source_file_sha256, document_id in jsons_to_import:
+                try:
+                    self.import_one_smart_parser_json(office_id, file_path, source_file_sha256, domain)
+                except Exception as exp:
+                    print("Error! cannot import {}: {} ".format(file_path, exp))
+                    traceback.print_exc(file=sys.stdout)
+            #break
 
 
 def process_one_file_in_thread(declarator_db, office_id):
     from django.db import connection
     connection.connect()
-    declarator_db.import_office((office_id)
+    try:
+        declarator_db.import_office(office_id)
+    except Exception as exp:
+        print (exp)
 
 
 class Command(BaseCommand):
@@ -144,8 +363,7 @@ class Command(BaseCommand):
             help='only validate',
         )
         parser.add_argument(
-            '--process',
-            action='store_true',
+            '--process-count',
             dest='process_count',
             default=1,
             help='number of processes for import all'
@@ -168,5 +386,6 @@ class Command(BaseCommand):
         db.connections.close_all()
         pool = Pool(processes=int(options.get('process_count')))
         self.stdout.write("start importing")
-        pool.map(partial(process_one_file_in_thread, declarator_db), (i for i in declarator_db.offices_to_domains.keys()))
+        offices = list(i for i in declarator_db.office_to_domains.keys())
+        pool.map(partial(process_one_file_in_thread, declarator_db), offices)
 
