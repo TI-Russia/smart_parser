@@ -91,13 +91,12 @@ namespace Smart.Parser.Adapters
             }
             else
             {
-                MakeWorksheetWithouYears(document);
-
+                MakeWorksheetWithoutYears(document);
             }
         }
 
 
-        private void MakeWorksheetWithouYears(IDocument document)
+        private void MakeWorksheetWithoutYears(IDocument document)
         {
             _worksheets = new List<WorksheetInfo>(1);
             var worksheet = new WorksheetInfo();
@@ -224,9 +223,9 @@ namespace Smart.Parser.Adapters
                         if (child.NodeName == "BR")  {
                             splitted.Add(current);
                             current = "";
-                        }
-                        else
-                        {
+                        } else if (child.NodeName == "P") {
+                            splitted.Add(child.TextContent.Replace("\n", " ").Replace("\t", "").Trim());
+                        } else  {
                             current += child.TextContent.Replace("\n", " ").Replace("\t", "").Trim();
                         }
                     }

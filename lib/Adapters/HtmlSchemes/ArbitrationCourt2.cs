@@ -8,7 +8,6 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 {
     class ArbitrationCourt2 : ArbitrationCourt1
     {
-
         public override bool CanProcess(IDocument document)
         {
             try
@@ -21,23 +20,19 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
             {
                 return false;
             }
-            }
+        }
 
 
-        public override IEnumerable<IElement> GetMembers( string name, string year)
+        public override IEnumerable<IElement> GetMembers(string name, string year)
         {
-            
             IElement tableElement;
             if (year != null)
-                tableElement = Document.All.Where(x => x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
+                tableElement = Document.All.Where(x =>
+                    x.LocalName == "div" && x.Attributes.Any(y => y.Name == "rel" && y.Value == year)).First();
             else
                 tableElement = Document.QuerySelectorAll("div.b-card-income-container").First();
             var members = tableElement.Children;
             return members;
         }
-
-
-
-
     }
 }

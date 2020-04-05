@@ -23,7 +23,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
 
         #region Regex matchers
-        protected static Regex _realEstateMatcher = new Regex(@"\s*Недвижимое\s*имущество\s*\(\s*кв[\. ]*м\s*\)\s*",
+        protected static Regex _realEstateMatcher = new Regex(@"\s*Недвижимое\s*имущество\s*(\(\s*кв[\. ]*м\s*\)\s*)?",
                                                                RegexOptions.Compiled | RegexOptions.IgnoreCase);
         protected static Regex _squareMatcher = new Regex(@"\d+(.\d+)*", RegexOptions.Compiled);
         protected static Regex _ownershipMatcher = new Regex(@"(долевая)*(индивидуальная)*\s*собственность");
@@ -141,6 +141,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         {
             List<int> years = new List<int>();
             var selection = Document.QuerySelectorAll("li.b-income-year-item");
+            var divs = Document.QuerySelectorAll("div.js-income-member-data");
             if (selection.Length > 0)
             {
                 foreach (var yearElement in selection)
@@ -148,7 +149,13 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
                     int currYear = int.Parse(yearElement.TextContent);
                     years.Add(currYear);
                 }
-
+            } else if (divs.Length > 0)
+            {
+                foreach (var yearElement in divs)
+                {
+                    int currYear = int.Parse(yearElement.GetAttribute("rel"));
+                    years.Add(currYear);
+                }
             }
             else
             {
