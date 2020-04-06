@@ -1,6 +1,8 @@
 use disclosures_db;
-delete from declarations_income;
-delete from declarations_realestate;
-delete from declarations_vehicle;
-delete from declarations_section;
-delete from declarations_documentfile;
+SET FOREIGN_KEY_CHECKS = 0;
+truncate table declarations_income;
+truncate table declarations_realestate;
+truncate table declarations_vehicle;
+truncate table declarations_section;
+truncate table declarations_documentfile;
+SET FOREIGN_KEY_CHECKS = 1;

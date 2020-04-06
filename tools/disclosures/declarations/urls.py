@@ -1,7 +1,9 @@
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
-    path('sections/<int:pk>/', views.SectionView.as_view(), name='detail'),
+    path('section/<int:pk>/', views.SectionView.as_view(), name='detail'),
+    path('person/<int:pk>/', views.PersonView.as_view(), name='detail'),
+    path('', views.HomePageView.as_view(), name='detail'),
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
 ]

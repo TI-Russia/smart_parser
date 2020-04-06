@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import  get_language
 from .countries import  get_country_str
+#from .search import SectionElasticSearchIndex
 
 
 def get_django_language():
@@ -152,4 +153,10 @@ class Section(models.Model):
         relatives |= get_relatives(self.vehicle_set)
         result = Relative.sort_by_visual_order(list(relatives))
         return result
+
+    #def indexing(self):
+    #    obj = SectionElasticSearchIndex(meta={'id': self.id}, person_name=self.person_name)
+    #    obj.save()
+    #    return obj.to_dict(include_meta=True)
+
 

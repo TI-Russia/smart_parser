@@ -4,16 +4,17 @@
      {% if section.department %}
         {{ section.department }}
      {% endif %}
+
 </h1>
 
 <style>
    td, th {
         border: solid;
         word-break: break-all;
+        padding-left: 4px;
+        padding-right: 4px;
    }
-
 </style>
-
 
 <table style="border:solid; border-collapse: collapse">
     <tr>
@@ -27,7 +28,7 @@
         <th width="30%"> Тип </th>
         <th width="10%"> Площадь </th>
         <th width="10%"> Владение </th>
-    </tr>na
+    </tr>
 
     {% for relative in section.section_parts %}
         <tr>

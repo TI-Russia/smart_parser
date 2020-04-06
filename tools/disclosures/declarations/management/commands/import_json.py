@@ -3,6 +3,7 @@ from multiprocessing import Pool
 from django.db import connection
 from collections import defaultdict
 import declarations.models as models
+from functools import partial
 import pymysql
 import os
 import re
@@ -200,7 +201,7 @@ class TDlrobotAndDeclarator:
 
     def _copy_human_merges(self, human_persons):
         mergings_count = 0
-        self.stdout.write("set person_id to sections\n")
+        sys.stdout.write("set person_id to sections\n")
 
         with connection.cursor() as cursor:
             #pure django is 10x times slower
@@ -220,7 +221,7 @@ class TDlrobotAndDeclarator:
             for section_id, income_year, fio,  declarant_income, office_id in cursor.fetchall():
                 cnt += 1
                 if (cnt % 10000) == 0:
-                    self.stdout.write(".")
+                    sys.stdout.write(".")
                 key1 = build_stable_section_id_1(fio, declarant_income, income_year, office_id)
                 key2 = build_stable_section_id_2(fio, declarant_income, income_year, office_id)
                 person_id = human_persons.get(key1)
@@ -229,12 +230,12 @@ class TDlrobotAndDeclarator:
 
                 if person_id is not None:
                     person = models.Person.objects.get_or_create(id=person_id)[0]
-                    section = models.Section(id=section_id)
+                    section = models.Section.objects.get(id=section_id)
                     section.person = person
                     section.save()
                     mergings_count += 1
 
-        self.stdout.write("\nset human person id to {} records\n".format(mergings_count))
+        sys.stdout.write("\nset human person id to {} records\n".format(mergings_count))
 
     def copy_human_section_merges(self):
         human_persons = self.get_mapping_section_to_stable_id()
@@ -281,7 +282,8 @@ class TDlrobotAndDeclarator:
                     print("import human file {}".format(filename))
                     yield filename, None, document_id
 
-    def import_one_smart_parser_json(self, office_id, filepath, source_file_sha256, web_domain):
+    @staticmethod
+    def import_one_smart_parser_json(office_id, filepath, source_file_sha256, web_domain):
         docfile = register_source_file(filepath, office_id, source_file_sha256, web_domain)
         with open(filepath, "r", encoding="utf8") as inp:
             input_json = json.load(inp)
@@ -317,11 +319,10 @@ class TDlrobotAndDeclarator:
 
             for file_path, source_file_sha256, document_id in jsons_to_import:
                 try:
-                    self.import_one_smart_parser_json(office_id, file_path, source_file_sha256, domain)
+                    TDlrobotAndDeclarator.import_one_smart_parser_json(office_id, file_path, source_file_sha256, domain)
                 except Exception as exp:
                     print("Error! cannot import {}: {} ".format(file_path, exp))
                     traceback.print_exc(file=sys.stdout)
-
 
 
 def process_one_file_in_thread(declarator_db, office_id):
@@ -361,11 +362,13 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        declarator_db = TDlrobotAndDeclarator(options)
         from django import db
         db.connections.close_all()
+
+        declarator_db = TDlrobotAndDeclarator(options)
+
         pool = Pool(processes=int(options.get('process_count')))
         self.stdout.write("start importing")
-        offices = list(i for i in declarator_db.office_to_domains.keys())
-        pool.map(partial(process_one_file_in_thread, declarator_db), offices)
+        #offices = list(i for i in declarator_db.office_to_domains.keys())
+        #pool.map(partial(process_one_file_in_thread, declarator_db), offices)
         declarator_db.copy_human_section_merges()
