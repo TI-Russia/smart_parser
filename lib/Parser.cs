@@ -17,6 +17,7 @@ namespace Smart.Parser.Lib
         DateTime FirstPassStartTime;
         DateTime SecondPassStartTime;
         bool FailOnRelativeOrphan;
+        public static bool UseDecimalRawNormalization = false;
         static readonly string OwnedString = "В собственности";
         static readonly string StateString = "В пользовании";
         static NumberFormatInfo ParserNumberFormatInfo = new NumberFormatInfo();
@@ -709,6 +710,7 @@ namespace Smart.Parser.Lib
         
         static string NormalizeRawDecimalForTest(string s)
         {
+            if (!UseDecimalRawNormalization) return s;
             Double v;
             if (Double.TryParse(s, out v))
             {
