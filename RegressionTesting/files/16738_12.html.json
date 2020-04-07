@@ -9,20 +9,16 @@
       "incomes": [
         {
           "size": 3588557580.00,
-          "size_raw": "3 588 557,58 руб,(в том числе продажа квартиры)",
+          "size_raw": "3 588 557,58 руб, (в том числе продажа квартиры)",
           "relative": null
         }
       ],
       "real_estates": [
         {
-          "text": "Квартира",
-          "square": 61.9,
+          "text": "Квартира (Индивидуальная) - 61,9 кв.м. РФ",
+          "square": null,
           "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "61,9",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         }
       ],
       "vehicles": []

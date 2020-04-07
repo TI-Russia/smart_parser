@@ -55,6 +55,7 @@ namespace Smart.Parser
             CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
             CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8091, the defaul value is read from env variable DECLARATOR_CONV_URL", false);
             CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
+            CMDLineParser.Option useDecimalRawNormalizationOpt = parser.AddBoolSwitch("-decimal-raw-normalization", "print raw floats in Russian traditional format");
             parser.AddHelpOption();
             try
             {
@@ -143,6 +144,10 @@ namespace Smart.Parser
             if (tolokaFileNameOpt.isMatched)
             {
                 TolokaFileName = tolokaFileNameOpt.Value.ToString();
+            }
+            if (useDecimalRawNormalizationOpt.isMatched)
+            {
+                Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
             }
 
 

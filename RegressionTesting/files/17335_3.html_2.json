@@ -16,24 +16,16 @@
       ],
       "real_estates": [
         {
-          "text": "Квартира",
-          "square": 141.6,
+          "text": "Квартира (пользование) 141,6 кв.м.",
+          "square": null,
           "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "141,6",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         },
         {
-          "text": "Квартира",
-          "square": 141.6,
+          "text": "Квартира (пользование) 141,6 кв.м.",
+          "square": null,
           "relative": "Ребенок",
-          "own_type_by_column": "В собственности",
-          "square_raw": "141,6",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": "-"
+          "own_type_by_column": null
         }
       ],
       "vehicles": [

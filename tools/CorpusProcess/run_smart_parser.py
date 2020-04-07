@@ -37,16 +37,16 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?priority=1", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?document_file=70062", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
-                        help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if  this argument is absent")
+                        help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
     return parser.parse_args()
 
 
 def check_extension(filename, all_extension):
-    if all_extension is None:
-        return True
+    if not all_extension:
+        all_extension = ['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf']
     for x in all_extension:
         if filename.endswith(x):
             return True
@@ -56,7 +56,7 @@ def check_extension(filename, all_extension):
 # Create a custom logger
 def get_logger():
     logger = logging.getLogger(__name__)
-    logger.propagate = False
+    # logger.propagate = False
 
     # Create handlers
     f_handler = logging.FileHandler('parsing.log', 'w', 'utf-8')
@@ -108,6 +108,7 @@ def run_smart_parser(filepath, args):
             # logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return
 
+    # TODO aspose is not necessary here?
     if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
         smart_parser_options = r"-adapter aspose"
     else:
