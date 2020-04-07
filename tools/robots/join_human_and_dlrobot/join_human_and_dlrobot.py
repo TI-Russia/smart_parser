@@ -35,10 +35,11 @@ def process_domain(args, domain, human_json, dlrobot_json):
         sha256 = build_sha256(file_path)
         if sha256 in human_json:
             domain_info[sha256] = human_json[sha256]
+            domain_info[sha256]['intersection_status'] = "both_found"
             human_json['dlrobot_found'] = True
         else:
             domain_info[sha256] = {
-                "human_miss": True
+                'intersection_status': "only_dlrobot"
             }
             new_files_found_by_dlrobot += 1
         domain_info[sha256]['dlrobot_path'] = f
@@ -66,6 +67,8 @@ def copy_human_file(args, sha256, file_info, dlrobot_json):
             print("Error! Cannot copy {}".format(infile))
         else:
             shutil.copyfile(infile, outfile)
+        file_info['dlrobot_path'] = os.path.basename(outfile)
+        file_info['intersection_status'] = "only_human"
     dlrobot_json.get(domain, dict())[sha256] = file_info
 
 
@@ -89,6 +92,8 @@ if __name__ == '__main__':
         except Exception as exp:
             print("Error on {} : {}, keep going".format(sha256, exp))
 
+    print ("write {}".format(args.output_json))
 
     with open(args.output_json, "w") as out:
         json.dump(dlrobot_json, out, indent=4)
+            
