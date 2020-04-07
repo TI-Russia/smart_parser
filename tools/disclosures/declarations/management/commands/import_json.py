@@ -369,6 +369,6 @@ class Command(BaseCommand):
 
         pool = Pool(processes=int(options.get('process_count')))
         self.stdout.write("start importing")
-        #offices = list(i for i in declarator_db.office_to_domains.keys())
-        #pool.map(partial(process_one_file_in_thread, declarator_db), offices)
+        offices = list(i for i in declarator_db.office_to_domains.keys())
+        pool.map(partial(process_one_file_in_thread, declarator_db), offices)
         declarator_db.copy_human_section_merges()
