@@ -6,24 +6,7 @@ def normalize_whitespace(str):
     str = str.strip()
     return str
 
-def build_stable_section_id_1(fio, income, year, office_id):
-    fio = normalize_whitespace(fio).lower()
-    if income is None:
-        income = 0
-    if year is None:
-        year = 0
-    return "\t".join([fio, str(int(income)), str(year), str(office_id)])
 
-
-def build_stable_section_id_2(fio, income, year, office_id):
-    fio = normalize_whitespace(fio).lower()
-    if len(fio) > 0:
-        fio = fio.split(" ")[0]  # only family_name
-    if income is None:
-        income = 0
-    if year is None:
-        year = 0
-    return "\t".join([fio, str(int(income)), str(year), str(office_id)])
 
 
 def resolve_fullname(name, as_list=False):

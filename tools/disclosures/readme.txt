@@ -41,6 +41,7 @@ Cозданиr базы disclosures=dlrobot+declarator
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    python $DISCLOSURES_FOlDER/manage.py import_json --smart-parser-human-json-folder human_smart_parser_jsons  --dlrobot-human dlrobot_human.json  --process-count 4
+   python $DISCLOSURES_FOlDER/manage.py copy_person_id
 
 #9.  запуск сливалки
    /to do

@@ -1,19 +1,17 @@
 from django.core.management import BaseCommand
 from multiprocessing import Pool
-from django.db import connection
 from collections import defaultdict
 import declarations.models as models
-from functools import partial
 import pymysql
 import os
 import sys
+from functools import partial
 import json
-import traceback
 from declarations.serializers import TSmartParserJsonReader
 from django.db import transaction
-from .common import  build_stable_section_id_1, build_stable_section_id_2
 from declarations.dlrobot_human_common import dhjs
 from django.db import DatabaseError
+
 
 def get_document_file_id(file_info):
     file_id = os.path.splitext(os.path.basename(file_info[dhjs.filepath]))[0]
@@ -85,6 +83,7 @@ class TInputJsonFile:
         return doc_file
 
 
+
 class TDlrobotAndDeclarator:
 
     def init_file_2_documents(self):
@@ -100,93 +99,6 @@ class TDlrobotAndDeclarator:
             self.document_2_files[document_id].add(file_id)
             self.declarator_document_2_income_year[document_id] = income_year
         db_connection.close()
-
-
-    def get_mapping_section_to_stable_id(self):
-        # query to declarator db
-        db_connection = TDlrobotAndDeclarator.get_declarator_db_connection()
-        in_cursor = db_connection.cursor()
-        in_cursor.execute("""
-                        select  s.id, 
-                                s.person_id, 
-                                d.office_id, 
-                                i.size,
-                                s.original_fio, 
-                                CONCAT(p.family_name, " ", p.name, " ", p.patronymic),
-                                d.income_year
-                        from declarations_section s
-                        inner join declarations_person p on p.id = s.person_id
-                        inner join declarations_document d on s.document_id = d.id
-                        inner join declarations_income i on i.section_id = s.id and i.relative_id is null
-                        where s.person_id is not null
-        """)
-
-        human_persons = dict()
-        human_section_mergings_count = 0
-        for section_id, person_id, office_id, income, original_fio, person_fio, year in in_cursor:
-            fio = original_fio
-            if fio is None:
-                fio = person_fio
-            assert fio is not None
-            key1 = build_stable_section_id_1(fio, income, year, office_id)
-            if key1 not in human_persons:
-                human_persons[key1] = person_id
-            else:
-                human_persons[key1] = None # if key is ambigous do not use it
-
-            key2 = build_stable_section_id_2(fio, income, year, office_id)
-            if key2 not in human_persons:
-                human_persons[key2] = person_id
-            else:
-                human_persons[key2] = None # if key is ambigous do not use it
-            human_section_mergings_count += 1
-
-        in_cursor.close()
-        db_connection.close()
-        print("found {} sections with some person_id != null in declarator db".format(human_section_mergings_count))
-        return human_persons
-
-    def _copy_human_merges(self, human_persons):
-        mergings_count = 0
-        sys.stdout.write("set person_id to sections\n")
-
-        with connection.cursor() as cursor:
-            #pure django is 10x times slower
-            cursor.execute(
-                """
-                    select s.id, s.income_year, s.person_name_ru, i.size, d.office_id 
-                    from {} s
-                    inner join {} d on s.spjsonfile_id=d.id
-                    inner join {} i on s.id=i.section_id and i.relative="{}" 
-                """.format(
-                        models.Section.objects.model._meta.db_table,
-                        models.SPJsonFile.objects.model._meta.db_table,
-                        models.Income.objects.model._meta.db_table,
-                        models.Relative.main_declarant_code)
-            )
-            cnt = 0
-            for section_id, income_year, fio,  declarant_income, office_id in cursor.fetchall():
-                cnt += 1
-                if (cnt % 10000) == 0:
-                    sys.stdout.write(".")
-                key1 = build_stable_section_id_1(fio, declarant_income, income_year, office_id)
-                key2 = build_stable_section_id_2(fio, declarant_income, income_year, office_id)
-                person_id = human_persons.get(key1)
-                if person_id is None:
-                    person_id = human_persons.get(key2)
-
-                if person_id is not None:
-                    person = models.Person.objects.get_or_create(id=person_id)[0]
-                    section = models.Section.objects.get(id=section_id)
-                    section.person = person
-                    section.save()
-                    mergings_count += 1
-
-        sys.stdout.write("\nset human person id to {} records\n".format(mergings_count))
-
-    def copy_human_section_merges(self):
-        human_persons = self.get_mapping_section_to_stable_id()
-        self._copy_human_merges(human_persons)
 
     @staticmethod
     def get_declarator_db_connection():
@@ -257,7 +169,7 @@ class TDlrobotAndDeclarator:
             with transaction.atomic():
                 try:
                     json_reader = TSmartParserJsonReader(income_year, docfile, p)
-                    passport = json_reader.get_section_passport()
+                    passport = json_reader.get_passport_factory().get_passport_collection()[0]
                     if self.register_section_passport(passport):
                         json_reader.save_to_database()
                         imported_sections += 1
@@ -346,7 +258,3 @@ class Command(BaseCommand):
 
         #offices = offices[0:10]
         pool.map(partial(process_one_file_in_thread, declarator_db), offices)
-
-        from django.db import connection
-        connection.connect()
-        declarator_db.copy_human_section_merges()
