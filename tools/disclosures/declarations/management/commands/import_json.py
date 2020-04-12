@@ -6,22 +6,17 @@ import declarations.models as models
 from functools import partial
 import pymysql
 import os
-import re
 import sys
 import json
 import traceback
-from declarations.countries import get_country_code
+from declarations.serializers import TSmartParserJsonReader
 from django.db import transaction
-
-
-def normalize_whitespace(str):
-    str = re.sub(r'\s+', ' ', str)
-    str = str.strip()
-    return str
-
+from .common import  build_stable_section_id_1, build_stable_section_id_2
+from declarations.dlrobot_human_common import dhjs
+from django.db import DatabaseError
 
 def get_document_file_id(file_info):
-    file_id = os.path.splitext(os.path.basename(file_info['filepath']))[0]
+    file_id = os.path.splitext(os.path.basename(file_info[dhjs.filepath]))[0]
     if file_id.find('_') != -1:
         file_id = file_id[0:file_id.find('_')]
     return int(file_id)
@@ -45,103 +40,49 @@ def get_smart_parser_results(input_path):
             index += 1
 
 
-def build_stable_section_id_1(fio, income, year, office_id):
-    fio = normalize_whitespace(fio).lower()
-    if income is None:
-        income = 0
-    if year is None:
-        year = 0
-    return "\t".join([fio, str(int(income)), str(year), str(office_id)])
+
+class TSourceFile:
+    def __init__(self, office_id, web_domain, file_sha256, file_info, declarator_documentfile_2_document):
+        self.declarator_documentfile_id = None
+        self.declarator_document_id = None
+        if dhjs.filepath in file_info:
+            self.declarator_documentfile_id = get_document_file_id(file_info)
+            self.declarator_document_id = declarator_documentfile_2_document.get(self.declarator_documentfile_id)
+        self.intersection_status = file_info[dhjs.intersection_status]
+        self.office_id = office_id
+        self.web_domain = web_domain
+        self.file_sha256 = file_sha256
 
 
-def build_stable_section_id_2(fio, income, year, office_id):
-    fio = normalize_whitespace(fio).lower()
-    if len(fio) > 0:
-        fio = fio.split(" ")[0]  # only family_name
-    if income is None:
-        income = 0
-    if year is None:
-        year = 0
-    return "\t".join([fio, str(int(income)), str(year), str(office_id)])
+class TInputJsonFile:
+    def __init__(self, source_file, json_file_path, intersection_status=None):
+        self.source_file = source_file
+        self.json_file_path = json_file_path
+        self.intersection_status = intersection_status
+        if self.intersection_status is None:
+            self.intersection_status = source_file.intersection_status
 
+    def get_import_priority(self):
+        if self.source_file.intersection_status == dhjs.only_dlrobot:
+            return 0 # import only_dlrobot last of all
+        return 1
 
-def init_person_info(section, section_json):
-    person_info = section_json.get('person')
-    if person_info is None:
-        return False
-    fio = person_info.get('name', person_info.get('name_raw'))
-    if fio is None:
-        return False
-    section.person_name =  normalize_whitespace(fio.replace('"', ' '))
-    section.person_name_ru = section.person_name
-    section.position =  person_info.get("role")
-    section.position_ru = section.position
-    section.department =  person_info.get("department")
-    section.department_ru = section.department
-    return True
+    def register_in_database(self):
 
+        # mind that one source xlsx yields many source json files
+        #if models.DocumentFile.objects.filter(sha256=self.source_file_sha256).first() is not None:
+        #    raise TSmartParserJsonReader.SerializerException("source file with sha256={} already exists, skip importing!".format(source_file_sha256))
 
-def create_section_incomes(section, section_json):
-    for i in section_json.get('incomes', []):
-        size = i.get('size')
-        if isinstance(size, float) or (isinstance(size, str) and size.isdigit()):
-            size = int(size)
-        yield models.Income(section=section,
-                          size=size,
-                          relative=models.Relative.get_relative_code(i.get('relative'))
-                          )
-
-
-def create_section_real_estates(section, section_json):
-    for i in section_json.get('real_estates', []):
-        own_type_str = i.get("own_type", i.get("own_type_by_column"))
-        country_str = i.get("country", i.get("country_raw"))
-        yield models.RealEstate(
-            section=section,
-            type=i.get("type", i.get("text")),
-            country=get_country_code(country_str),
-            relative=models.Relative.get_relative_code(i.get('relative')),
-            owntype=models.OwnType.get_own_type_code(own_type_str),
-            square=i.get("square"),
-            share=i.get("share_amount")
-        )
-
-
-def create_section_vehicles(section, section_json):
-    for i in section_json.get('vehicles', []):
-        text = i.get("text")
-        if text is not None:
-            yield models.Vehicle(
-                section=section,
-                name=text,
-                name_ru=text,
-                relative=models.Relative.get_relative_code( i.get('relative'))
-            )
-
-
-def register_source_file(file_path, office_id, source_file_sha256, web_domain):
-    office = models.Office(id=office_id)
-    docfile = models.DocumentFile(office=office, sha256=source_file_sha256, file_path=file_path, web_domain=web_domain)
-    docfile.save()
-    return docfile
-
-
-def import_one_section( income_year, document_file, section_json):
-    section = models.Section(
-        document_file=document_file,
-        income_year=income_year,
-    )
-    if not init_person_info(section, section_json):
-        return
-    section.save()
-    try:
-        models.Income.objects.bulk_create(create_section_incomes(section, section_json))
-        models.RealEstate.objects.bulk_create(create_section_real_estates(section, section_json))
-        models.Vehicle.objects.bulk_create(create_section_vehicles(section, section_json))
-    except Exception as exp:
-        print ("exception on {}: {}".format(section.person_name, exp))
-        traceback.print_exc(file=sys.stdout)
-        raise
+        office = models.Office(id=self.source_file.office_id)
+        doc_file = models.SPJsonFile(office=office,
+                                       sha256=self.source_file.file_sha256,
+                                       file_path=self.json_file_path,
+                                       web_domain=self.source_file.web_domain,
+                                       intersection_status=self.intersection_status,
+                                       declarator_documentfile_id=self.source_file.declarator_documentfile_id,
+                                       declarator_document_id=self.source_file.declarator_document_id)
+        doc_file.save()
+        return doc_file
 
 
 class TDlrobotAndDeclarator:
@@ -149,14 +90,20 @@ class TDlrobotAndDeclarator:
     def init_file_2_documents(self):
         db_connection = TDlrobotAndDeclarator.get_declarator_db_connection()
         in_cursor = db_connection.cursor()
-        in_cursor.execute("select id, document_id from declarations_documentfile")
-        self.file_2_document = dict(x for x in in_cursor)
-        for file_id, document_id in self.file_2_document.items():
+        in_cursor.execute("""
+            select f.id, f.document_id, d.income_year 
+            from declarations_documentfile f 
+            join declarations_document d on d.id = f.document_id
+        """)
+        for file_id, document_id, income_year in in_cursor:
+            self.declarator_documentfile_2_document[file_id] = document_id
             self.document_2_files[document_id].add(file_id)
+            self.declarator_document_2_income_year[document_id] = income_year
         db_connection.close()
 
 
     def get_mapping_section_to_stable_id(self):
+        # query to declarator db
         db_connection = TDlrobotAndDeclarator.get_declarator_db_connection()
         in_cursor = db_connection.cursor()
         in_cursor.execute("""
@@ -209,11 +156,11 @@ class TDlrobotAndDeclarator:
                 """
                     select s.id, s.income_year, s.person_name_ru, i.size, d.office_id 
                     from {} s
-                    inner join {} d on s.document_file_id=d.id
+                    inner join {} d on s.spjsonfile_id=d.id
                     inner join {} i on s.id=i.section_id and i.relative="{}" 
                 """.format(
                         models.Section.objects.model._meta.db_table,
-                        models.DocumentFile.objects.model._meta.db_table,
+                        models.SPJsonFile.objects.model._meta.db_table,
                         models.Income.objects.model._meta.db_table,
                         models.Relative.main_declarant_code)
             )
@@ -249,7 +196,7 @@ class TDlrobotAndDeclarator:
     def build_office_domains(self):
         offices_to_domains = defaultdict(list)
         for domain in self.dlrobot_human_file_info:
-            offices = list(x['office_id'] for x in self.dlrobot_human_file_info[domain].values() if 'office_id' in x)
+            offices = list(x[dhjs.office_id] for x in self.dlrobot_human_file_info[domain].values() if dhjs.office_id in x)
             if len(offices) == 0:
                 raise Exception("no office found for domain {}".format(domain))
             most_freq_office = max(set(offices), key=offices.count)
@@ -258,71 +205,96 @@ class TDlrobotAndDeclarator:
 
     def __init__(self, args):
         self.args = args
-        self.file_2_document = dict()
+        self.declarator_documentfile_2_document = dict()
         self.document_2_files = defaultdict(set)
+        self.declarator_document_2_income_year = dict()
         self.init_file_2_documents()
         with open(args['dlrobot_human'], "r", encoding="utf8") as inp:
             self.dlrobot_human_file_info = json.load(inp)
         self.office_to_domains = self.build_office_domains()
+        self.all_section_passports = set()
+        if models.Section.objects.count() > 0:
+            raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
 
     def get_human_smart_parser_json(self, failed_files):
-        documents = set()
-        for file_id in failed_files:
-            document_id = self.file_2_document.get(file_id)
-            if document_id is None:
-                print("cannot find file {}".format(file_id))
-            else:
-                documents.add(document_id)
+        # aggregate documentfile to documents
+        documents = dict((source_file.declarator_document_id, source_file) for source_file in failed_files.values())
 
-        for document_id in documents:
+        for document_id, source_file in documents.items():
             all_doc_files = self.document_2_files[document_id]
-            if len(all_doc_files & failed_files) == len(all_doc_files):
+            if len(all_doc_files & set(failed_files.keys())) == len(all_doc_files):  #if we failed to import all document files
                 filename = os.path.join(self.args['smart_parser_human_json'], str(document_id) + ".json")
                 if os.path.exists(filename):
                     print("import human file {}".format(filename))
-                    yield filename, None, document_id
+                    yield TInputJsonFile(source_file, filename, dhjs.only_human)
 
-    @staticmethod
-    def import_one_smart_parser_json(office_id, filepath, source_file_sha256, web_domain):
-        docfile = register_source_file(filepath, office_id, source_file_sha256, web_domain)
+    def register_section_passport(self, passport):
+        if passport in self.all_section_passports:
+            print("skip section because a section with the same passport already exists: {}".format(passport))
+            return False
+        # we process each office in one thread, so there  is no need to use thread.locks, since office_id is a part of passport tuple
+        self.all_section_passports.add(passport)
+        return True
+
+    def import_one_smart_parser_json(self, json_file):
+        filepath = json_file.json_file_path
         with open(filepath, "r", encoding="utf8") as inp:
             input_json = json.load(inp)
         income_year = input_json.get('document', dict()).get('year')
+        if income_year is None and json_file.source_file.declarator_document_id is not None:
+            # copy declarator income year
+            income_year = self.declarator_document_2_income_year.get(json_file.source_file.declarator_document_id)
         if income_year is None:
             print ("cannot import {}, year is not defined".format(filepath))
             return
         income_year = int(income_year)
-        section_count = 0
-        with transaction.atomic():
-            for p in input_json['persons']:
-                import_one_section(income_year, docfile, p)
-                section_count += 1
-        print("import {} sections from {}".format(section_count, filepath))
+
+        docfile = json_file.register_in_database()
+        imported_sections = 0
+        section_index = 0
+        for p in input_json['persons']:
+            section_index += 1
+            with transaction.atomic():
+                try:
+                    json_reader = TSmartParserJsonReader(income_year, docfile, p)
+                    passport = json_reader.get_section_passport()
+                    if self.register_section_passport(passport):
+                        json_reader.save_to_database()
+                        imported_sections += 1
+                except (DatabaseError, TSmartParserJsonReader.SerializerException) as exp:
+                    print("Error! cannot import section N {}: {} ".format(section_index, exp))
+                    #traceback.print_exc(file=sys.stdout)
+        if imported_sections == 0:
+            print("no sections imported from {}".format(filepath))
+            docfile.delete()
+        else:
+            print("import {} sections out of {} from {}".format(imported_sections, section_index, filepath))
 
     def import_office(self, office_id):
         for domain in self.office_to_domains[office_id]:
             print ("office {} domain {}".format(office_id, domain))
             jsons_to_import = list()
 
-            failed_files = set()
+            failed_files = dict()
             for source_file_sha256, file_info in self.dlrobot_human_file_info[domain].items():
-                input_path = os.path.join("domains", domain, file_info['dlrobot_path'])
+                source_file = TSourceFile(office_id, domain, source_file_sha256, file_info, self.declarator_documentfile_2_document)
+                input_path = os.path.join("domains", domain, file_info[dhjs.dlrobot_path])
                 smart_parser_results = list(get_smart_parser_results(input_path))
                 if len(smart_parser_results) == 0:
-                    if 'filepath' in file_info:
-                        failed_files.add(get_document_file_id (file_info))
+                    if source_file.declarator_document_id is not None:
+                        failed_files[source_file.declarator_documentfile_id] = source_file
                 else:
-                    for file_path in smart_parser_results:
-                        jsons_to_import.append( (file_path, source_file_sha256, None) )
+                    for file_path in smart_parser_results:  #xlsx sheets
+                        jsons_to_import.append( TInputJsonFile(source_file, file_path) )
 
             jsons_to_import += list(self.get_human_smart_parser_json(failed_files))
-
-            for file_path, source_file_sha256, document_id in jsons_to_import:
+            jsons_to_import.sort(key=(lambda x: x.get_import_priority()), reverse=True)
+            for json_file in jsons_to_import:
                 try:
-                    TDlrobotAndDeclarator.import_one_smart_parser_json(office_id, file_path, source_file_sha256, domain)
-                except Exception as exp:
+                    self.import_one_smart_parser_json(json_file)
+                except TSmartParserJsonReader.SerializerException as exp:
                     print("Error! cannot import {}: {} ".format(file_path, exp))
-                    traceback.print_exc(file=sys.stdout)
+                    #traceback.print_exc(file=sys.stdout)
 
 
 def process_one_file_in_thread(declarator_db, office_id):
@@ -330,8 +302,9 @@ def process_one_file_in_thread(declarator_db, office_id):
     connection.connect()
     try:
         declarator_db.import_office(office_id)
-    except Exception as exp:
+    except TSmartParserJsonReader.SerializerException as exp:
         print (exp)
+        #traceback.print_exc(file=sys.stdout)
 
 
 class Command(BaseCommand):
@@ -344,7 +317,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--process-count',
+                '--process-count',
             dest='process_count',
             default=1,
             help='number of processes for import all'
@@ -370,5 +343,10 @@ class Command(BaseCommand):
         pool = Pool(processes=int(options.get('process_count')))
         self.stdout.write("start importing")
         offices = list(i for i in declarator_db.office_to_domains.keys())
+
+        #offices = offices[0:10]
         pool.map(partial(process_one_file_in_thread, declarator_db), offices)
+
+        from django.db import connection
+        connection.connect()
         declarator_db.copy_human_section_merges()

@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import  get_language
 from .countries import  get_country_str
-#from .search import SectionElasticSearchIndex
 
 
 def get_django_language():
@@ -90,12 +89,14 @@ class OwnType:
 OwnType.static_initalize()
 
 
-
-class DocumentFile(models.Model):
+class SPJsonFile(models.Model):
     office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
     sha256 = models.CharField(max_length=200)
     web_domain = models.CharField(max_length=64)
-    file_path = models.CharField(max_length=64)
+    file_path = models.CharField(max_length=128)
+    intersection_status = models.CharField(max_length=16)
+    declarator_documentfile_id = models.IntegerField(null=True)
+    declarator_document_id = models.IntegerField(null=True)
 
 
 class Person(models.Model):
@@ -138,7 +139,7 @@ def get_relatives(records):
 
 
 class Section(models.Model):
-    document_file = models.ForeignKey('declarations.DocumentFile', null=True, verbose_name="document file", on_delete=models.CASCADE)
+    spjsonfile = models.ForeignKey('declarations.spjsonfile', null=True, verbose_name="smart parser json file", on_delete=models.CASCADE)
     person = models.ForeignKey('declarations.Person', null=True, verbose_name="person id", on_delete=models.CASCADE)
     person_name = models.TextField(verbose_name='person name')
     income_year = models.IntegerField(null=True)
@@ -154,9 +155,5 @@ class Section(models.Model):
         result = Relative.sort_by_visual_order(list(relatives))
         return result
 
-    #def indexing(self):
-    #    obj = SectionElasticSearchIndex(meta={'id': self.id}, person_name=self.person_name)
-    #    obj.save()
-    #    return obj.to_dict(include_meta=True)
 
 
