@@ -70,7 +70,7 @@ DATABASES = {
         'NAME': 'disclosures_db',
         'USER': 'disclosures',
         'PASSWORD': 'disclosures',
-        'HOST': 'localhost',
+        'HOST': os.environ.get('DISCLOSURES_DB_HOST', 'localhost'),
         'PORT': '',
         'OPTIONS': {
             'charset': 'utf8mb4',
