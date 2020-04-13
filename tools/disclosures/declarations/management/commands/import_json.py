@@ -189,7 +189,8 @@ class TDlrobotAndDeclarator:
 
             failed_files = dict()
             for source_file_sha256, file_info in self.dlrobot_human_file_info[domain].items():
-                source_file = TSourceFile(office_id, domain, source_file_sha256, file_info, self.declarator_documentfile_2_document)
+                file_office_id = file_info.get(dhjs.office_id, office_id)
+                source_file = TSourceFile(file_office_id, domain, source_file_sha256, file_info, self.declarator_documentfile_2_document)
                 input_path = os.path.join("domains", domain, file_info[dhjs.dlrobot_path])
                 smart_parser_results = list(get_smart_parser_results(input_path))
                 if len(smart_parser_results) == 0:
