@@ -4,9 +4,9 @@ Cозданиr базы disclosures=dlrobot+declarator
     git declarator в ~/declarator и
     git smart_parser в ~/smart_parser
 
- export DISCLOSURES_FOlDER=~/smart_parser/tools/diclosures
- export SCRIPT_FOLDER=$DISCLOSURES_FOlDER/scripts
- export DLROBOT_FOLDER=~/declarator_hdd/declarator/DATE
+export DISCLOSURES_FOlDER=~/smart_parser/tools/diclosures
+export SCRIPT_FOLDER=$DISCLOSURES_FOlDER/scripts
+export DLROBOT_FOLDER=~/declarator_hdd/declarator/DATE
 
 #2. создание нового каталога для dlrobot и файлов слияния
     mkdir $DLROBOT_FOLDER
@@ -43,6 +43,8 @@ Cозданиr базы disclosures=dlrobot+declarator
    python $DISCLOSURES_FOlDER/manage.py import_json --smart-parser-human-json-folder human_smart_parser_jsons  --dlrobot-human dlrobot_human.json  --process-count 4
    python $DISCLOSURES_FOlDER/manage.py copy_person_id
 
-#9.  запуск сливалки
-   /to do
+#9.  запуск сливалки, 3 gb each char
+cd $DISCLOSURES_FOlDER
+export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.infoexport DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
+cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db
 

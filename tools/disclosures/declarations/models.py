@@ -176,6 +176,7 @@ class Section(models.Model):
     income_year = models.IntegerField(null=True)
     department = models.TextField(null=True)
     position = models.TextField(null=True)
+    dedupe_score = models.FloatField(blank=True, null=True, default=0.0)
 
     @property
     def section_parts(self):

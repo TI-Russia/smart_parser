@@ -83,6 +83,10 @@ class TPersonNameInfo:
                 self.name = prepareRussian(fio['name'])
                 # this regularization deletes "." from full name "Sokirko V.V." ->  "Sokirko V V"
                 self.full_name = " ".join((self.family_name, self.name, self.patronymic))
+        if len(self.patronymic) == 0:
+            self.patronymic = "_"   #dedupe failed  on empty lines
+        if len(self.name) == 0:
+            self.name = "_"   #dedupe failed  on empty lines
         self.patronymic_char = prepareRussian(self.patronymic[0]) if self.patronymic and len(self.patronymic) else ""
         self.name_char = prepareRussian(self.name[0]) if self.name and len(self.name) else ""
 
@@ -102,7 +106,7 @@ class TSectionFields:
         self.spouse_income = next((i.size for i in s.income_set.all() if i.relative == models.Relative.spouse_code), None)
         self.year = s.income_year
         self.office = unidecode(s.spjsonfile.office.name)
-        self.position = unidecode(s.position)
+        self.position = unidecode("" if s.position is None else s.position)
         self.realestates = [try_to_float(i.square) for i in s.realestate_set.all()]
         self.children_number = len([i for i in s.realestate_set.all() if (i.relative == models.Relative.child_code)])
         self.children_real_estate = sum(
