@@ -12,7 +12,38 @@ def get_django_language():
 
 class Office(models.Model):
     name = models.TextField(verbose_name='office name')
+    region_id = models.IntegerField(null=True)
+    type_id = models.IntegerField(null=True)
+    parent_id = models.IntegerField(null=True)
 
+
+class TOfficeHierarchy:
+    group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
+
+    def go_to_the_top(self, id):
+        cnt = 0
+        while True:
+            cnt += 1
+            if cnt > 5:
+                raise Exception("too deep structure, probably a cycle found ")
+            if self.offices[id].parent_id is None:
+                return id
+            parent = self.offices[self.offices[id].parent_id]
+            if parent.type_id in TOfficeHierarchy.group_types:
+                return id
+            id = parent.id
+        return id
+
+    def get_parent_office(self, office_id):
+        return self.transitive_top[int(office_id)]
+
+    def __init__(self):
+        self.offices = dict()
+        self.transitive_top = dict()
+        for o in Office.objects.all():
+            self.offices[o.id] = o
+        for office_id in self.offices:
+            self.transitive_top[office_id] = self.go_to_the_top(office_id)
 
 class Relative:
     main_declarant_code = "D"

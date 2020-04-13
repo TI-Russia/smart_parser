@@ -36,7 +36,9 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        factories = TSectionPassportFactory.get_all_passport_factories()
+        self.office_hierarchy = models.TOfficeHierarchy()
+        factories = TSectionPassportFactory.get_all_passport_factories(self.office_hierarchy)
+        #factories = TSectionPassportFactory.get_all_passport_factories()
         self.stable_key_to_sections = TSectionPassportFactory.get_all_passports_dict(factories)
 
     def log(self, msg):
@@ -65,7 +67,7 @@ class Command(BaseCommand):
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
             json_file = models.SPJsonFile(office_id=sections[0].get('office_id', -1))
-            passport_factory = TSmartParserJsonReader(year, json_file, sections[0]).get_passport_factory()
+            passport_factory = TSmartParserJsonReader(year, json_file, sections[0]).get_passport_factory(self.office_hierarchy)
             section_id, search_results = passport_factory.search_by_passports(self.stable_key_to_sections)
             if section_id is not None:
                 row[id_index] = str("section-") + str(section_id)

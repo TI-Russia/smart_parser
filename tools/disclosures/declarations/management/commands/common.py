@@ -7,8 +7,6 @@ def normalize_whitespace(str):
     return str
 
 
-
-
 def resolve_fullname(name, as_list=False):
     """
     Good fullnames (full list in test_serializers.py):

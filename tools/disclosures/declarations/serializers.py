@@ -48,7 +48,7 @@ def convert_to_int_with_nones(v):
 class TSectionPassportFactory:
     AMBIGUOUS_KEY = "AMBIGUOUS_KEY"
 
-    def __init__(self, office_id, year, person_name, sum_income,  sum_square, vehicle_count):
+    def __init__(self, office_id, year, person_name, sum_income,  sum_square, vehicle_count, office_hierarchy=None):
         sum_income = str(convert_to_int_with_nones(sum_income))
         sum_square = str(convert_to_int_with_nones(sum_square))
         vehicle_count = str(convert_to_int_with_nones(vehicle_count))
@@ -61,10 +61,16 @@ class TSectionPassportFactory:
              (office_id, year, family_name, sum_income, sum_square, vehicle_count),
              (office_id, year, person_name, sum_income)
         ]
-        self.passport_variants =  list(map((lambda x: "\t".join(x)), variants))
+        if office_hierarchy is not None:
+            parent_office_id = str(office_hierarchy.get_parent_office(office_id))
+            if parent_office_id != office_id:
+                variants.append((parent_office_id, year, person_name, sum_income, sum_square, vehicle_count))
+                variants.append((parent_office_id, year, family_name, sum_income)) #t is the most abstract passport parent office and family_name
+
+        self.passport_variants = list(map((lambda x: "\t".join(x)), variants))
 
     @staticmethod
-    def get_all_passport_factories():
+    def get_all_passport_factories(office_hierarchy=None):
         # section_id  and all 6 passport components
         # see https://stackoverflow.com/questions/2436284/mysql-sum-for-distinct-rows for arithmetics explanation
         query = """select  s.id, 
@@ -90,7 +96,8 @@ class TSectionPassportFactory:
         with connection.cursor() as cursor:
             cursor.execute(query)
             for section_id, office_id, sum_income, person_name, year, sum_square, vehicle_count in cursor.fetchall():
-                yield section_id, TSectionPassportFactory(office_id, year, person_name, sum_income, sum_square, vehicle_count)
+                yield section_id, TSectionPassportFactory(office_id, year, person_name, sum_income,
+                                                              sum_square, vehicle_count, office_hierarchy=office_hierarchy)
 
     @staticmethod
     def get_all_passports_from_declarator_with_person_id(connection):
@@ -124,14 +131,15 @@ class TSectionPassportFactory:
 
     @staticmethod
     def get_all_passports_dict(iterator):
-        stable_key_to_section = dict()
+        passport_to_id = dict()
         for (id, passport_factory) in iterator:
             for passport in passport_factory.get_passport_collection():
-                if passport not in stable_key_to_section:
-                    stable_key_to_section[passport] = id
-                else:
-                    stable_key_to_section[passport] = TSectionPassportFactory.AMBIGUOUS_KEY
-        return stable_key_to_section
+                search_result = passport_to_id.get(passport)
+                if search_result is None:
+                    passport_to_id[passport] = id
+                elif search_result != id: #ignore the same passport
+                    passport_to_id[passport] = TSectionPassportFactory.AMBIGUOUS_KEY
+        return passport_to_id
 
     def get_passport_collection(self):
         return self.passport_variants
@@ -147,7 +155,7 @@ class TSectionPassportFactory:
 
         if res == TSectionPassportFactory.AMBIGUOUS_KEY:
             res = None
-        return res, search_result
+        return res, search_results
 
 
 class TSmartParserJsonReader:
@@ -184,14 +192,15 @@ class TSmartParserJsonReader:
         self.section.department =  person_info.get("department")
         self.section.department_ru = self.section.department
 
-    def get_passport_factory(self):
+    def get_passport_factory(self, office_hierarchy):
         return TSectionPassportFactory(
                     self.section.spjsonfile.office.id,
                     self.section.income_year,
                     self.section.person_name,
                     sum(convert_to_int_with_nones(i.size) for i in self.incomes),
                     sum(convert_to_int_with_nones(r.square) for r in self.real_estates),
-                    sum(1 for v in self.vehicles))
+                    sum(1 for v in self.vehicles),
+                    office_hierarchy=office_hierarchy)
 
     def set_section(self, related_records):
         for r in related_records:
