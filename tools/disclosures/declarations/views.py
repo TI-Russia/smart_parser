@@ -3,6 +3,8 @@ from .forms import SearchForm
 from django.views import generic
 from django.db.models import Q
 from django.views.generic.edit import FormView
+from .dlrobot_human_common import dhjs
+
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -20,6 +22,28 @@ class HomePageView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm
+        return context
+
+
+class StatisticsView(generic.TemplateView):
+    template_name = "statistics/statistics.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['spjsonfile_count'] = models.SPJsonFile.objects.all().count()
+        context['spjsonfile_only_dlrobot_count'] = models.SPJsonFile.objects.filter(intersection_status=dhjs.only_dlrobot).count()
+        context['spjsonfile_only_human_count'] = models.SPJsonFile.objects.filter(intersection_status=dhjs.only_human).count()
+        context['spjsonfile_both_found_count'] = models.SPJsonFile.objects.filter(intersection_status=dhjs.both_found).count()
+
+        context['sections_count'] = models.Section.objects.all().count()
+        context['sections_count_only_dlrobot'] = models.Section.objects.filter(
+            spjsonfile__intersection_status=dhjs.only_dlrobot).count()
+        context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
+            dedupe_score__gt=0).count()
+
+
+
+        context['person_count'] = models.Person.objects.all().count()
         return context
 
 
