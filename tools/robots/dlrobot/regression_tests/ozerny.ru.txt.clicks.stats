@@ -1,21 +1,16 @@
 [
     {
-        "files_count": 58
+        "files_count": 47
     },
     [
-        "01fb677e3741c3341268deadd5adb1c5a3ffb3605291816f056535c6f4163d8c",
-        "cached/www.ozerny.ru/city/deputaty/svedeniia_o_dokhodakh_apparat_Dumy.7z/dlrobot_data",
+        "01293e3d95e7ee432148772b4f15b51878d70ea4d0bb5a9214310a32702ab0b1",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
         "06f7826c2862d184a49e3672c0aa6097b11e7771a4bf613ec37941236c1a8e20",
         "cached/ozerny.ru/ssyilki/raskr_hol_vodosn_14.zip/dlrobot_data",
         -1
-    ],
-    [
-        "096f5cb4b60f6da98ddc4e7b0995b0dd09580e28e4f821c411a1cdb57fb0fd6b",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
     ],
     [
         "0c0967367c99e422106a4d8e6dbb259a0fc9b6ee10db31a2f36b005fe21e1142",
@@ -33,16 +28,6 @@
         1
     ],
     [
-        "1529af698a4c6565f52d20cf7f2817f3db62ccf1b7d20ea7f5e3b1e7dba0708b",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "1e1f276a467e84869f7d3a2d6601400fe0a3edd4368bfc48313556c436783d24",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
         "2156dbe27c9da59b7218be75fff3814609c88e84e9017f147397ff7f15a428bb",
         "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
         1
@@ -53,13 +38,18 @@
         1
     ],
     [
+        "28d44731a6a44dc426ac8c3e9dedc2d13f18e13bddaa23bf3173a9e1ed6c7b62",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+        1
+    ],
+    [
         "295d14207ddf1e0370906825890e09f3650c7f9e5b8a904d4f7aebf0a925066c",
         "cached/www.ozerny.ru/ssyilki/Administratsiia_ZATO_Ozernyi_2017_god.pdf/dlrobot_data",
         1
     ],
     [
-        "3237d170aebfe7979f2f98606038758c331a100f8125c2bf10e14f1e9db0ccec",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "29d7762cd9dafc8784a13661ea81dac36155413d30ce30c80ff6dbcb5bb3c3b4",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -73,28 +63,13 @@
         1
     ],
     [
-        "369d67d8e2648a66ba5250120ae4b581c1e7603c823f093fa08386d6db3b8356",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "37dad415570b074d8787e7254541463c1105e6b1a7dbe553e1beb652d825ff61",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "3ab83b2b5430390619d2125352bd40bf8a8f24a261a66c6daa286ecb833184ed",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "3f2a0ea7b365935dd597e8850ab77314aa87990ac985a1be1f90df0637f7af7f",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "3d7fbad4ec1aeee3e8c2ff4bbac8a02d4603715fff1f4e79e1c6d7ba98549724",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
         "43808949a3374baf81d652f1f03eedd96eb7e28182dfc8e75dd1432f5877de32",
-        "cached/www.ozerny.ru/city/administration/Svedeniia_o_dokhodakh_i_raskhodakh_administratsii_ZATO_Oziornyi_za_80dd95f1e2b5654e5300c9f45645ae42/dlrobot_data",
+        "cached/www.ozerny.ru/kumi/2016.02.29/Svedeniia_o_dokhodakh_i_raskhodakh_administratsii_ZATO_Oziornyi_za_201_6f87c27d2b76a27b8b8848bb83a62bab/dlrobot_data",
         1
     ],
     [
@@ -103,13 +78,8 @@
         1
     ],
     [
-        "511a766d7a7e88854412043756fc07c869dd6b8cb3449d4113e94d6bf21e43f1",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "5d4f3fdb2555aa82a2ac1f9aa456df864d484e377aad8686569275f7b5e1c733",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "59759b9d7ef52c197ce647caf2fcf05ad6ff433be77e77a60ac567ce3f40297f",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -118,13 +88,8 @@
         1
     ],
     [
-        "665399d5b28f40fbc42b7eb49cb2f92001eb9768a86b09170c20dc5c43ad0fbb",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "66d942bbc914f8d3ca05e6886e04ccdcf8435f2ebdeca2794a7e6c9d2e7c5583",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "6673f52c7a98c5891dcd6817246cc6035aefea105f6b84b97aaffcbee25e31e6",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -143,8 +108,8 @@
         1
     ],
     [
-        "7923fc7478449ed939c8918a513e76ed9e6b3690c307152bf58fee704056d60d",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "77e0f7679c0216bf02c836594625dd27a6b2f697b278945c925d957edce23047",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -153,23 +118,8 @@
         1
     ],
     [
-        "83668613c5203c1022976e1c10095af27f92ea12eb50f7d4f13c1c8452ea62dd",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "85b7d7d3387b3db39c61da109257911f8da47c27e3c48abc7205652608323018",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "8bba979522f61bcca79053a2ba245d75386c2edf48b26118d20385920a7ce433",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "8c45844b3d0456d32bc33b78e90258d072542085e162e4b5c8eac98c1dc412bb",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "8c6ac31d504c33377c531476364ab5a78ce944af8fb0134c0a801acc1ca06581",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -183,18 +133,23 @@
         1
     ],
     [
+        "9218114979cfee8ee86fc01f33d22b4122e6878bead89232fbde4243adff0f2e",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+        1
+    ],
+    [
         "92b978b0e29e5f1f01d96bbb5fd684b0829a7b9bb7822d7139f049a4f668138f",
         "cached/ozerny.ru/IFNS.docx/dlrobot_data",
         1
     ],
     [
-        "a272e8de197c51a88b9c47c4374f4f88d3ba400d067acff61b81a856197a89c9",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "937a70af1df7c32e0c53e162cd873b6e2aeb181a7958be06ef7210d2ed2066a7",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
-        "a6eb997c60d21c8524408dcf854cf1f30dd5b37d694bf274c3ada821cbbb274b",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "954a24501accbe423461151c38467dd8b8a2d0b71aafb7cf6854f3a7c89181c0",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -208,8 +163,18 @@
         1
     ],
     [
+        "b43dc3f8de278bec9c024f18c5d9155b0a6cf2e4e8ab7d1fe82c4703513f6ef5",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+        1
+    ],
+    [
         "b88dfc57df188f282f121589951203c545ab49d7ac5549bc666b42439ad1a6f3",
         "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+        1
+    ],
+    [
+        "c6b3b55fb3b9d91b8c3d7411e7912f53892cc985fff8e36d45a1ab5ffc6ec347",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -218,23 +183,8 @@
         1
     ],
     [
-        "d1d964325c7847e0c1cb6fdf037bc4a8d567bfe08f162c1a25491fae21f9080b",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "d1ec1d93a890ea6a57b36e353666ce81161bdee269638708b59b6d1b69a4073f",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "d2f0f3a5acca34c53e4616b2c2a76e6dcdb84db80c7082faa54d232f34d1fc02",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
-        "d3f5e9c554026b1cb18a45dd9dd23b378c4f0c4cb0df7af991763031c002e0f5",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
+        "d3ec040434f3e0e3040c642947cee3521f80acdd709ed7ecaeb918ef36588257",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
         1
     ],
     [
@@ -258,6 +208,11 @@
         1
     ],
     [
+        "e830da3f41ef54f3a1c6895a57a5d2ace7e5bdf9c81fb521f0925e817e1c715a",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+        1
+    ],
+    [
         "e86357836ba678b420334b139cbd957aa9c6f0dffb75243327b7b0a101cda1e8",
         "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
         1
@@ -273,18 +228,8 @@
         1
     ],
     [
-        "fb410dec7d5ac1ac34df420045d5960306c14df1fb2073c2066cdc52529802d6",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
-        1
-    ],
-    [
         "fb5624293f7fa54d23724353158a46fed511f3f3215e9e09a4012a501870b4a7",
         "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
-        1
-    ],
-    [
-        "fb84d2494720eb35f22447b709d2cd94918ea3f97328c9ab14bd90fab332c56a",
-        "cached/www.ozerny.ru/ssyilki/dokhody_2016_administratsiia.rar/dlrobot_data",
         1
     ],
     [

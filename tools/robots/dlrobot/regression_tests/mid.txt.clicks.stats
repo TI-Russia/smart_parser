@@ -1,11 +1,16 @@
 [
     {
-        "files_count": 14
+        "files_count": 16
     },
     [
         "0a565c60cdcf17bb50b64c083c2dd5466c48877c5a23833fa9cf834f10dbcd9c",
         "cached/www.mid.ru/documents/10180/1569528/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_105f2c286e37a4fbaa99390bfaf5caa6/dlrobot_data",
         1
+    ],
+    [
+        "0af7cf7d5d2474838af2d9a420f5041f831bcf24fefed0598a423202aa0571d8",
+        "cached/www.mid.ru/documents/10180/3518228/24949.pdf/34e700bf-fce1-43ad-b18b-cf59b7467cd0/dlrobot_data",
+        -1
     ],
     [
         "16b960fbd0b8590db2759f8b0aa0c5e0dc8227c1336eb55d08ce29fcf23f0308",
@@ -15,6 +20,11 @@
     [
         "2dcfbf95da924d0c30986021f50f8b6fb0f87647161721f6c0c2e7f7667016b3",
         "cached/www.mid.ru/documents/10180/e4849bf7-48df-40cf-b879-8acdfafc976c_t_1412764602739/dlrobot_data",
+        1
+    ],
+    [
+        "360ca74b38e10ee9b68de3a421e94f89f5ced4dfa5cd21a5f5535af4041c9c6f",
+        "cached/www.mid.ru/documents/10180/3626174/2803.pdf/fe535176-c730-402b-95bd-10b7b7c9e789/dlrobot_data",
         1
     ],
     [

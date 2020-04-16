@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 30
+        "files_count": 31
     },
     [
         "088c8e54d62ebd5dcf4a9790c40f41690523905fb2f19d8b3b81c2680871f119",
@@ -125,6 +125,11 @@
     [
         "c090c997fd27cba8d9864836252c50533382d6fb6424ea7ca7cc604a570ee21d",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf14559c26/actual/TSA_2012.docx/dlrobot_data",
+        1
+    ],
+    [
+        "d4e8e8c150bf90e5632fd18613a2140b421fb27a3a88a4ecba3fbe17d09b5436",
+        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc7baa378e/actual/met_rec.pdf/dlrobot_data",
         1
     ],
     [

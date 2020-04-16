@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 110
+        "files_count": 113
     },
     [
         "02ff3752862643006e70b88b99c205bf7a72ce4135ca147a7752bab428d14010",
@@ -116,6 +116,11 @@
         "2eb5dfbadc10f45f31de6c998b1fddbe0df972290941ab137baa26db35c43191",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Karantin1.doc/dlrobot_data",
         1
+    ],
+    [
+        "305587642da5c2af20f9efe08f65e243c46cd5e8f387f636f5819a96f3259fd8",
+        "cached/oren-rshn.ru/Doc/PoprimeneniyuFederal_nogozakona.doc/dlrobot_data",
+        -1
     ],
     [
         "32f01bd335ddddb8ebd4c61f3a09150e15fd4aca81d01dfcf04d8cd21cf58925",
@@ -235,6 +240,11 @@
     [
         "68cfc2ed97c4a3d3752675c23da597f9bac1ef0a824f9e3b77b9ef7f47c1c9b3",
         "cached/oren-rshn.ru/Doc/dohodi/2013/Semena1.doc/dlrobot_data",
+        1
+    ],
+    [
+        "6a10f29d584880feaf19846f682ce3cce38da94697e0867a65288455dd8e7f21",
+        "cached/oren-rshn.ru/Doc/anticor/manuals1_4.PDF/dlrobot_data",
         1
     ],
     [
@@ -361,6 +371,11 @@
         "a8569b97f8f2ae33ba32f1443a039f01941aaaaffba8c31d9e27a35abdb1ce93",
         "cached/oren-rshn.ru/Doc/dohodi/2011/Sol-Ileck.doc/dlrobot_data",
         1
+    ],
+    [
+        "aa363e03eae020fbc56ecb6e858f7b2b11a2dcd12da106201d63cbd1e9655bc3",
+        "cached/oren-rshn.ru/Doc/Obzorrekomendatsiyponedopushcheniyu.doc/dlrobot_data",
+        -1
     ],
     [
         "aafe057153760c5e1a1cb198ade1899eb89067c24b145b80ce59f55f988a4ac0",
