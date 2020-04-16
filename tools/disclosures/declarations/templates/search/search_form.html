@@ -1,0 +1,10 @@
+<form action="{% url 'search_results' %}" method="get">
+    {{ form.q }}
+    <input type="submit" value="Поиск">
+    <br/>
+    {% for radio in form.search_object_type %}
+        <div>
+            {{ radio }}
+        </div>
+    {% endfor %}
+</form>

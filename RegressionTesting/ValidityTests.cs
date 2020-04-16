@@ -88,6 +88,7 @@ namespace RegressionTesting
         {
             SetupLog4Net();
             Smart.Parser.Lib.Parser.InitializeSmartParser();
+            Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
@@ -108,6 +109,7 @@ namespace RegressionTesting
         {
             SetupLog4Net();
             Smart.Parser.Lib.Parser.InitializeSmartParser();
+            Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;

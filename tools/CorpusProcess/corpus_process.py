@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--smart-parser-options", dest='smart_parser_options',
-                        default="-v debug -max-rows 100 -adapter prod -converted-storage-url  http://declarator.zapto.org:8000/converted_document")
+                        default="-v debug -max-rows 100 -decimal-raw-normalization -converted-storage-url  http://declarator.zapto.org:8091")
     parser.add_argument("--toloka", dest='toloka', default=False, action="store_true")
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
                         default=4, type=int)

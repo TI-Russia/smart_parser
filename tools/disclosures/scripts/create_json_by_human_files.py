@@ -5,6 +5,7 @@ import hashlib
 import json
 import glob
 from urllib.parse import urlparse
+from declarations.dlrobot_human_common import dhjs
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -16,7 +17,7 @@ def parse_args():
 
 
 def get_all_files(tablename):
-    db = pymysql.connect(db="declarator",user="declarator",password="declarator", unix_socket="/var/run/mysqld/mysqld.sock" )
+    db = pymysql.connect(db="declarator", user="declarator",password="declarator", unix_socket="/var/run/mysqld/mysqld.sock" )
     cursor = db.cursor()
     query = ("select f.id, f.file, f.link, d.office_id from {0} f join declarations_document d on f.document_id=d.id;".format(tablename))
     cursor.execute(query)
@@ -65,10 +66,10 @@ if __name__ == '__main__':
         if domain.startswith('www.'):
             domain = domain[len('www.'):]
         files[sha256] = {
-                'domain': domain,
-                'link': link,
-                'filepath': filepath,
-                'office_id': office_id
+                dhjs.web_domain: domain,
+                dhjs.link: link,
+                dhjs.filepath: filepath,
+                dhjs.office_id: office_id
         }
 
 

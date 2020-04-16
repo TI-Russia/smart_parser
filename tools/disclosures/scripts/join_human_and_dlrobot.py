@@ -3,6 +3,8 @@ import os
 import argparse
 import hashlib
 import json
+from declarations.dlrobot_human_common import dhjs
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -18,8 +20,10 @@ def build_sha256(filename):
         file_data = f.read()
         return hashlib.sha256(file_data).hexdigest()
 
+TMP_DLROBOT_FOUND='dlrobot_found'
 
-def process_domain(args, domain, human_json, dlrobot_json):
+def process_domain(args, domain, human_json, dlrobot_human_json):
+    global TMP_DLROBOT_FOUND
     print("process {}".format(domain))
     domain_folder = os.path.join(args.dlrobot_folder, domain)
     if not os.path.isdir(domain_folder):
@@ -35,28 +39,30 @@ def process_domain(args, domain, human_json, dlrobot_json):
         sha256 = build_sha256(file_path)
         if sha256 in human_json:
             domain_info[sha256] = human_json[sha256]
-            human_json['dlrobot_found'] = True
+            domain_info[sha256][dhjs.intersection_status] = dhjs.both_found
+            human_json[TMP_DLROBOT_FOUND] = True
         else:
             domain_info[sha256] = {
-                "human_miss": True
+                dhjs.intersection_status: dhjs.only_dlrobot
             }
             new_files_found_by_dlrobot += 1
-        domain_info[sha256]['dlrobot_path'] = f
-    dlrobot_json[domain] = domain_info
+        domain_info[sha256][dhjs.dlrobot_path] = f
+    dlrobot_human_json[domain] = domain_info
     print("files: {},  new_files_found_by_dlrobot: {}".format(files_count, new_files_found_by_dlrobot))
 
 
-def copy_human_file(args, sha256, file_info, dlrobot_json):
-    if file_info.get('dlrobot_found', False) == True:
+def copy_human_file(args, sha256, file_info, dlrobot_human_json):
+    global TMP_DLROBOT_FOUND
+    if file_info.get(TMP_DLROBOT_FOUND, False) == True:
         return
-    domain = file_info['domain']
+    domain = file_info[dhjs.web_domain]
     if domain == "":
         domain = "unknown_domain"
     folder = os.path.join(args.dlrobot_folder, domain)
     if not os.path.exists(folder):
         print("create {}".format(folder))
         os.mkdir(folder)
-    infile = file_info['filepath']
+    infile = file_info[dhjs.filepath]
     outfile = os.path.join(folder, "h" + os.path.basename(infile))
     if args.skip_existing and os.path.exists(outfile):
         print("skip copy {}, it exists".format(outfile))
@@ -66,7 +72,9 @@ def copy_human_file(args, sha256, file_info, dlrobot_json):
             print("Error! Cannot copy {}".format(infile))
         else:
             shutil.copyfile(infile, outfile)
-    dlrobot_json.get(domain, dict())[sha256] = file_info
+        file_info[dhjs.dlrobot_path] = os.path.basename(outfile)
+        file_info[dhjs.intersection_status] = dhjs.only_human
+    dlrobot_human_json.get(domain, dict())[sha256] = file_info
 
 
 if __name__ == '__main__':
@@ -75,20 +83,20 @@ if __name__ == '__main__':
     print  ("load {}".format(args.human_json))
     with open (args.human_json, "r") as inp:
         human_json = json.load(inp)
-    dlrobot_json = dict()
+    dlrobot_human_json = dict()
     for domain in os.listdir(args.dlrobot_folder):
         try:
-            process_domain(args, domain, human_json, dlrobot_json)
+            process_domain(args, domain, human_json, dlrobot_human_json)
         except Exception as exp:
             print("Error on {}: {}, keep going".format(domain, exp))
 
-
     for sha256, file_info in human_json.items():
         try:
-            copy_human_file(args, sha256, file_info, dlrobot_json)
+            copy_human_file(args, sha256, file_info, dlrobot_human_json)
         except Exception as exp:
             print("Error on {} : {}, keep going".format(sha256, exp))
 
+    print ("write {}".format(args.output_json))
 
     with open(args.output_json, "w") as out:
-        json.dump(dlrobot_json, out, indent=4)
+        json.dump(dlrobot_human_json, out, indent=4)

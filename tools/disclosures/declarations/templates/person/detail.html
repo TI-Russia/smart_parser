@@ -1,0 +1,30 @@
+<h1>Person (person_id={{ person.id }}) </h1>
+
+<style>
+   table, td, th {
+        border: solid;
+        word-break: break-all;
+        border-collapse: collapse;
+        padding-left: 4px;
+        padding-right: 4px;
+
+   }
+</style>
+
+<table>
+    <tr>
+        <th> section_id </th>
+        <th> ФИО </th>
+        <th> Год </th>
+        <th> Место работы </th>
+    </tr>
+    {% for section in person.section_set.all %}
+        <tr>
+            <td> {{ section.id }} </td>
+            <td> <a href="/section/{{ section.id }}"> {{ section.person_name }} </a> </td>
+            <td> {{ section.income_year }} </td>
+            <td> {{ section.spjsonfile.office.name }} </td>
+        </tr>
+    {% endfor %}
+</table>
+
