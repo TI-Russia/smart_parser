@@ -7,8 +7,8 @@ from collections import defaultdict
 import logging
 import shutil
 import hashlib
-from archives import dearchive_one_archive, is_archive_extension
-from download import ACCEPTED_DECLARATION_FILE_EXTENSIONS,  \
+from robots.common.archives import dearchive_one_archive, is_archive_extension
+from robots.common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS,  \
     get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION
 
 DECL_RECOGNIZER_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),

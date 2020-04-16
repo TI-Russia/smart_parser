@@ -1,13 +1,11 @@
 import urllib.request as urllib2
-import urllib
 import json
 import sys
 import time
 import os
 import random
 from unidecode import unidecode
-from bs4 import BeautifulSoup
-from download import FILE_CACHE_FOLDER, get_site_domain_wo_www
+from robots.common.download import FILE_CACHE_FOLDER, get_site_domain_wo_www
 from selenium.webdriver.common.keys import Keys
 
 USER_AGENTS = [
@@ -124,10 +122,10 @@ class GoogleSearch:
         site_search_results = []
         search_results_count = 0
         elements = list()
-        for element in selenium_holder.the_driver.find_elements_by_css_selector(RESULT_SELECTOR):
+        for element in selenium_holder.the_driver.find_elements_by_tag_name("a"):
             url = element.get_attribute("href")
             search_results_count += 1
-            if 'google' not in url and url != '#' and url.startswith('http'):
+            if url is not None and 'google' not in url and url != '#' and url.startswith('http'):
                 curr_site = get_site_domain_wo_www(url)
                 if curr_site.lower() == site_url.lower():
                     site_search_results.append(url)

@@ -5,9 +5,9 @@ import hashlib
 import logging
 from unidecode import unidecode
 import os
-from http_request import make_http_request, request_url_headers
-from conversion_tasks import on_save_file
-from content_types import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+from robots.common.http_request import make_http_request, request_url_headers
+from robots.common.conversion_tasks import on_save_file
+from robots.common.content_types import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 FILE_CACHE_FOLDER = "cached"
 
 

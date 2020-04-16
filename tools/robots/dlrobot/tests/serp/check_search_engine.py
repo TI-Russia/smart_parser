@@ -1,9 +1,8 @@
 import sys
 import random
-sys.path.append('../../../common')
 
-from serp_parser import GoogleSearch
-from selenium_driver import TSeleniumDriver
+from robots.common.serp_parser import GoogleSearch
+from robots.common.selenium_driver import TSeleniumDriver
 
 if __name__ == "__main__":
     try:
