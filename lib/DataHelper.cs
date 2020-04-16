@@ -64,16 +64,22 @@ namespace Smart.Parser.Lib
 
         public static RelationType ParseRelationType(string strRel, bool throwException = true)
         {
-            string clean = strRel.ToLower().Replace(" ", "").Replace(":", "").Replace("-", "").Replace("\n", "").Trim().RemoveStupidTranslit().ToLower();
+            string clean = strRel.ToLower()
+                .Replace(" ", "")
+                .Replace(":", "")
+                .Replace("-", "")
+                .Replace("\n", "")
+                .Replace("ё", "е")
+                .Replace(".", "").Trim().RemoveStupidTranslit().ToLower();
             switch (clean)
             {
                 case "супруг": return RelationType.Spouse;
+                case "упруга": return RelationType.Spouse;
                 case "супруг(супруга)": return RelationType.Spouse;
                 case "супруга(супруг)": return RelationType.Spouse;
                 case "суруга": return RelationType.Spouse;
                 case "супуга": return RelationType.Spouse;
                 case "супруга": return RelationType.Spouse;
-                case "супруга.": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
                 case "супругнет": return RelationType.Spouse;
                 case "несовершенно": return RelationType.Child;
@@ -83,11 +89,12 @@ namespace Smart.Parser.Lib
                 case "несовершеннолетнийребенок": return RelationType.Child;
                 case "несовершеннолетнийребенокнет": return RelationType.Child;
                 case "несовершенолетнийребенок": return RelationType.Child;
+                case "несовершеннолетнийребенок(дочь)": return RelationType.Child;
+                case "несовершеннолетнийребенок(сын)": return RelationType.Child;
                 case "несовершеннолетниеребенок": return RelationType.Child;
-                case "несовершеннол.ребенок": return RelationType.Child;
+                case "несовершеннолребенок": return RelationType.Child;
                 case "н/ребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
-                case "дочь.": return RelationType.Child;
                 case "дочьсупроги": return RelationType.Child;
                 case "дочьсупруги": return RelationType.Child;
                 case "сынсупруги": return RelationType.Child;

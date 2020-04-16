@@ -123,7 +123,7 @@ namespace Parser.Lib
         static public void Debug(string info, params object[] par)
         {
             if (log == null) return;
-            log.Debug(String.Format(info, par));
+            log.Debug(String.Format(info.Replace("{", "").Replace("}", ""), par));
         }
 
         static public void Info(string info, params object[] par)

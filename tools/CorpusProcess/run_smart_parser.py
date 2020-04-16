@@ -37,7 +37,7 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?document_file=70062", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?office=596", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -108,11 +108,7 @@ def run_smart_parser(filepath, args):
             # logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return
 
-    # TODO aspose is not necessary here?
-    if filepath.endswith('.xlsx') or filepath.endswith('.xls'):
-        smart_parser_options = r"-adapter aspose"
-    else:
-        smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8091"
+    smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8091"
 
     log = filepath + ".log"
     if os.path.exists(log):

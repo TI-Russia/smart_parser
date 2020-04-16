@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NPOI.SS.Formula.Functions;
 
 namespace Smart.Parser.Adapters
 {
@@ -86,13 +87,26 @@ namespace Smart.Parser.Adapters
             rowText = rowText.Trim(' ', '\n');
             bool manyColsAreMerged = maxMergedCols > colsCount * 0.45;
             bool OneColumnIsLarge = maxCellWidth > 1000 || maxCellWidth >= allWidth * 0.3;
-            bool hasEnoughLength = rowText.Length >= 9; // "Референты";
             bool langModel = CheckSectionLanguageModel(cellText);
-            if (!OneColumnIsLarge)
+            bool hasEnoughLength = rowText.Length >= 9; // "Референты"; но встречаются ещё "Заместители Министра"
+            bool halfCapitalLetters = rowText.Count(char.IsUpper) * 2 > rowText.Length;
+            
+            // Stop Words
+            List<string> stopWords = new List<string> {"сведения", };
+            bool hasStopWord = false;
+            foreach (var word in stopWords)
+            {
+                if (rowText.ToLower() == word) hasStopWord = true;
+            }
+            if (hasStopWord) return false;
+            
+            // "ННИИПК", "СамГМУ"  
+            if (!hasEnoughLength && !halfCapitalLetters)
             {
                 return false;
             }
-            if (!hasEnoughLength)
+            
+            if (!OneColumnIsLarge)
             {
                 return false;
             }
