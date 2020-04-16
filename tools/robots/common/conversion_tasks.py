@@ -5,8 +5,8 @@ import urllib
 import threading
 import hashlib
 import os
-from archives import dearchive_one_archive, is_archive_extension
-from content_types import DEFAULT_PDF_EXTENSION
+from robots.common.archives import dearchive_one_archive, is_archive_extension
+from robots.common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 
 DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')

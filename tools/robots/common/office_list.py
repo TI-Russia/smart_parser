@@ -7,20 +7,17 @@ import tempfile
 import urllib
 import time
 from bs4 import BeautifulSoup
-from download import read_from_cache_or_download, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
+from robots.common.download import read_from_cache_or_download, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
 
-from http_request import get_request_rate
-
-from export_files import DL_RECOGNIZER_UNKNOWN
-
-from selenium_driver import TSeleniumDriver
-
-from find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
+from robots.common.http_request import get_request_rate
+from robots.common.export_files import DL_RECOGNIZER_UNKNOWN
+from robots.common.selenium_driver import TSeleniumDriver
+from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
                     find_links_in_html_by_text, common_link_check
 
 
-from serp_parser import GoogleSearch
+from robots.common.serp_parser import GoogleSearch
 from collections import defaultdict
 
 FIXLIST =  {

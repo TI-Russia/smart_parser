@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from content_types import  ALL_CONTENT_TYPES
+from robots.common.content_types import ALL_CONTENT_TYPES
 import logging
 from selenium.common.exceptions  import WebDriverException, NoSuchWindowException
 from selenium.webdriver.common.keys import Keys

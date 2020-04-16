@@ -6,14 +6,12 @@ import logging
 import datetime
 from tempfile import TemporaryDirectory
 
-sys.path.append(os.path.join( os.path.dirname(__file__), '../common' ))
+from robots.common.download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
+from robots.common.export_files import export_files_to_folder
+from robots.common.office_list import  TRobotProject
+from robots.common.conversion_tasks import wait_doc_conversion_finished, assert_declarator_conv_alive
 
-from download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
-from export_files import export_files_to_folder
-from office_list import  TRobotProject
-from conversion_tasks import wait_doc_conversion_finished, assert_declarator_conv_alive
-
-from find_link import \
+from robots.common.find_link import \
     check_anticorr_link_text, \
     ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
     check_self_link, \
