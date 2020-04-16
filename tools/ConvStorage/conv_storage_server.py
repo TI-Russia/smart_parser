@@ -266,7 +266,15 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.wfile.write(b"yes")
             return
         query = urllib.parse.urlparse(self.path).query
-        query_components = dict(qc.split("=") for qc in query.split("&"))
+
+        query_components = dict()
+        for qc in query.split("&"):
+            items = qc.split("=")
+            if len(items) != 2:
+                send_error('bad request')
+                return
+            query_components[items[0]] = items[1]   
+
         sha256 = query_components.get('sha256', None)
         if not sha256:
             send_error('No SHA256 provided')
