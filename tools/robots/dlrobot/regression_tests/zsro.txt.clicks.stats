@@ -137,18 +137,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/95a/MihalevSA_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/95a/MihalevSA_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/95a/MihalevSA_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/95a/MihalevSA_dekr2013.xlsx/dlrobot_data",
         "sha256": "052733fc0267cd137f58f162b58e4e7dd7c3055b8923905891d6a40862435db4",
         "dl_recognizer_result": 1
     },
@@ -262,18 +262,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/ac9/ShevschenkoVI_dekr2017.xls",
+                "url": "http://zsro.ru/upload/iblock/ac9/ShevschenkoVI_dekr2017.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/ac9/ShevschenkoVI_dekr2017.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/ac9/ShevschenkoVI_dekr2017.xls/dlrobot_data",
         "sha256": "07c786c67cd364d5b9aa4f861bdb08a01c86b2607302070ee9bf951f58763bb0",
         "dl_recognizer_result": 1
     },
@@ -487,18 +487,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/5a1/dekration_Diadkova2016.docx",
+                "url": "http://zsro.ru/upload/iblock/5a1/dekration_Diadkova2016.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/5a1/dekration_Diadkova2016.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/5a1/dekration_Diadkova2016.docx/dlrobot_data",
         "sha256": "0f61ae5cbd863e71e273d82b1e096a1e9c525a4feda45df22332b7610df155cd",
         "dl_recognizer_result": 1
     },
@@ -587,18 +587,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/38c/BessonovEI_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/38c/BessonovEI_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/38c/BessonovEI_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/38c/BessonovEI_dekr2016.xlsx/dlrobot_data",
         "sha256": "19ad55c71cddce801a0923a018977d39d897e6fc91dc6ea6a27f68dbd6027c0a",
         "dl_recognizer_result": 1
     },
@@ -637,18 +637,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/3fa/CherkezovVA_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/3fa/CherkezovVA_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/3fa/CherkezovVA_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/3fa/CherkezovVA_dekr2013.xlsx/dlrobot_data",
         "sha256": "1b8b7f2f398a8c32f9c5c6a339de1e1d1390306d937187bd60d011a5c26acc3b",
         "dl_recognizer_result": 1
     },
@@ -687,18 +687,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/418/MihalevAA_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/418/MihalevAA_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/418/MihalevAA_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/418/MihalevAA_dekr2013.xlsx/dlrobot_data",
         "sha256": "1c4e522f2a04a6461ab2eef355261ba23a5f18af2f987ccda43dab0c14a90191",
         "dl_recognizer_result": 1
     },
@@ -862,18 +862,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/039/SteniakinaEP_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/039/SteniakinaEP_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/039/SteniakinaEP_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/039/SteniakinaEP_dekr2013.xlsx/dlrobot_data",
         "sha256": "22d70d9ea9182472ece8580003656662e1682ec0cd2dff3c6a67ad173ac07a04",
         "dl_recognizer_result": 1
     },
@@ -1312,18 +1312,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/96f/deklaration_2018_Suharevskiy.docx",
+                "url": "http://zsro.ru/upload/iblock/96f/deklaration_2018_Suharevskiy.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/96f/deklaration_2018_Suharevskiy.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/96f/deklaration_2018_Suharevskiy.docx/dlrobot_data",
         "sha256": "399c8178291224ec26aee5ed4e686328bd7b3088430cbfa6036e5846052ed985",
         "dl_recognizer_result": 1
     },
@@ -1437,18 +1437,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/9b2/Dronov_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/9b2/Dronov_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/9b2/Dronov_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/9b2/Dronov_dekr2016.xlsx/dlrobot_data",
         "sha256": "4106dd5884b9efb701ddb0a43b7d4eaa49b7ec16b59fefca4362c66a813f25a4",
         "dl_recognizer_result": 1
     },
@@ -1637,18 +1637,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/791/deklaration_2018_Kniazev.docx",
+                "url": "http://zsro.ru/upload/iblock/791/deklaration_2018_Kniazev.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/791/deklaration_2018_Kniazev.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/791/deklaration_2018_Kniazev.docx/dlrobot_data",
         "sha256": "4baa20355aeb1fcdc3a16ea7d445904a35add9debbcc290c3412b00e26d405db",
         "dl_recognizer_result": 1
     },
@@ -1687,18 +1687,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/546/Deklar_2018_FomenkoGP.xls",
+                "url": "http://zsro.ru/upload/iblock/546/Deklar_2018_FomenkoGP.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/546/Deklar_2018_FomenkoGP.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/546/Deklar_2018_FomenkoGP.xls/dlrobot_data",
         "sha256": "4d1f08abc19f05a56d0b058aaea4b80d857157ab02ffab9136cc232223ae897a",
         "dl_recognizer_result": 1
     },
@@ -1712,18 +1712,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/f5c/ShamshuraVA_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/f5c/ShamshuraVA_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/f5c/ShamshuraVA_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/f5c/ShamshuraVA_dekr2016.xlsx/dlrobot_data",
         "sha256": "4d703d4ccf9f129bc126825a8f04e5bc63bd2c6c16797d5914112e5dd251ed37",
         "dl_recognizer_result": 1
     },
@@ -1937,18 +1937,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/607/Deklar_2018_KoshachevAS.xls",
+                "url": "http://zsro.ru/upload/iblock/607/Deklar_2018_KoshachevAS.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/607/Deklar_2018_KoshachevAS.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/607/Deklar_2018_KoshachevAS.xls/dlrobot_data",
         "sha256": "561922e3a4df91f5aeb836f9717c0168be838c0ec368e3481b46a7002d9ce912",
         "dl_recognizer_result": 1
     },
@@ -2012,18 +2012,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2014 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/86a/BessonovEI_dekr2014.xlsx",
+                "url": "http://zsro.ru/upload/iblock/86a/BessonovEI_dekr2014.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/86a/BessonovEI_dekr2014.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/86a/BessonovEI_dekr2014.xlsx/dlrobot_data",
         "sha256": "5bc928bb39fcf2ee06e3dcece197a0cbdf76a54baba8023a02ffa58955648966",
         "dl_recognizer_result": 1
     },
@@ -2312,18 +2312,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/2e0/Deklarat_2018_SamurgachevVV.xls",
+                "url": "http://zsro.ru/upload/iblock/2e0/Deklarat_2018_SamurgachevVV.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/2e0/Deklarat_2018_SamurgachevVV.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/2e0/Deklarat_2018_SamurgachevVV.xls/dlrobot_data",
         "sha256": "68616fecbbeedf91e45b1a25d9f6fa733a4a50fc062010781dba5538ea7021f2",
         "dl_recognizer_result": 1
     },
@@ -2437,18 +2437,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/4ce/RevenkoVU_dekr2017.xls",
+                "url": "http://zsro.ru/upload/iblock/4ce/RevenkoVU_dekr2017.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/4ce/RevenkoVU_dekr2017.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/4ce/RevenkoVU_dekr2017.xls/dlrobot_data",
         "sha256": "6b8c86eb8791e857a61c707fb9547da45c05f82b514a159735f20133dbf99040",
         "dl_recognizer_result": 1
     },
@@ -2487,18 +2487,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/d4b/deklaration_2018_Pavlova.docx",
+                "url": "http://zsro.ru/upload/iblock/d4b/deklaration_2018_Pavlova.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/d4b/deklaration_2018_Pavlova.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/d4b/deklaration_2018_Pavlova.docx/dlrobot_data",
         "sha256": "6ead6ec10f072b2f2fccf9e89513b06974349e33698ce0f37d123a53e7e90128",
         "dl_recognizer_result": 1
     },
@@ -2612,18 +2612,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/025/dekration_IvanovAA2017.docx",
+                "url": "http://zsro.ru/upload/iblock/025/dekration_IvanovAA2017.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/025/dekration_IvanovAA2017.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/025/dekration_IvanovAA2017.docx/dlrobot_data",
         "sha256": "73f9e169b224f4937ecb2b90f63822b48af2efe27845510889fc431a89cfc2fa",
         "dl_recognizer_result": 1
     },
@@ -3287,18 +3287,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/2d1/deklaration_2018_Ivanov.docx",
+                "url": "http://zsro.ru/upload/iblock/2d1/deklaration_2018_Ivanov.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/2d1/deklaration_2018_Ivanov.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/2d1/deklaration_2018_Ivanov.docx/dlrobot_data",
         "sha256": "902295d117ebc3f6c3d0409726263bb5fe1c6e18ca56bc7c8b6563425f27847a",
         "dl_recognizer_result": 1
     },
@@ -3587,18 +3587,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/0c0/MihalevAA_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/0c0/MihalevAA_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/0c0/MihalevAA_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/0c0/MihalevAA_dekr2016.xlsx/dlrobot_data",
         "sha256": "9fbd867c30dc518487f53cd3dcfeefeb4df31be283ef4286ab26000713fbceda",
         "dl_recognizer_result": 1
     },
@@ -3687,18 +3687,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/27a/BelaevNF_dekr2017.xls",
+                "url": "http://zsro.ru/upload/iblock/27a/BelaevNF_dekr2017.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/27a/BelaevNF_dekr2017.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/27a/BelaevNF_dekr2017.xls/dlrobot_data",
         "sha256": "a2e20f692b8c1e66bbaf646e3f3d25fb3a4edcba59c5ca0f796832aca31dea56",
         "dl_recognizer_result": 1
     },
@@ -3962,18 +3962,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/51e/KosinovSA_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/51e/KosinovSA_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/51e/KosinovSA_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/51e/KosinovSA_dekr2013.xlsx/dlrobot_data",
         "sha256": "ab25bed8b04fcd74f98cdea0786c1c24c0071bfb838f7ffb99b5037959232495",
         "dl_recognizer_result": 1
     },
@@ -4187,18 +4187,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2015 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/274/LakuninVU_dekr2015.xlsx",
+                "url": "http://zsro.ru/upload/iblock/274/LakuninVU_dekr2015.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/274/LakuninVU_dekr2015.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/274/LakuninVU_dekr2015.xlsx/dlrobot_data",
         "sha256": "b58475cd886ce264718299aa85ad4d9f75455bf66368ad4b84e8374c31cf0a34",
         "dl_recognizer_result": 1
     },
@@ -4262,18 +4262,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2015 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/022/dekration_Harkovets2015.doc",
+                "url": "http://zsro.ru/upload/iblock/022/dekration_Harkovets2015.doc",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/022/dekration_Harkovets2015.doc/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/022/dekration_Harkovets2015.doc/dlrobot_data",
         "sha256": "b84a324c29ce619d6b4a33d9b3bbc573e43e06f04b759a963308851b6a4cfcfc",
         "dl_recognizer_result": 1
     },
@@ -4362,18 +4362,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/f4b/ShamshuraVA_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/f4b/ShamshuraVA_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/f4b/ShamshuraVA_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/f4b/ShamshuraVA_dekr2013.xlsx/dlrobot_data",
         "sha256": "bb709f9804f33143661e4def17fc0ba9226fee41a9864f76ab0c0fc17ebae108",
         "dl_recognizer_result": 1
     },
@@ -4462,18 +4462,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/7a0/GelasMV_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/7a0/GelasMV_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/7a0/GelasMV_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/7a0/GelasMV_dekr2016.xlsx/dlrobot_data",
         "sha256": "bea6066ce7cb52bae0e40bc7140ef23a2469d7db6d11122644a9747e054e3fb0",
         "dl_recognizer_result": 1
     },
@@ -4487,18 +4487,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2014 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/2a1/SteniakinaEP_dekr2014.xlsx",
+                "url": "http://zsro.ru/upload/iblock/2a1/SteniakinaEP_dekr2014.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/2a1/SteniakinaEP_dekr2014.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/2a1/SteniakinaEP_dekr2014.xlsx/dlrobot_data",
         "sha256": "bf0f0c42b401742c31b2c4f6de482b451d0a55b84ff99c3661088ec78488f8b9",
         "dl_recognizer_result": 1
     },
@@ -4612,18 +4612,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2013 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/cdd/GrebenukVD_dekr2013.xlsx",
+                "url": "http://zsro.ru/upload/iblock/cdd/GrebenukVD_dekr2013.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/cdd/GrebenukVD_dekr2013.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/cdd/GrebenukVD_dekr2013.xlsx/dlrobot_data",
         "sha256": "c06ef9a5031c3146881d15a54486374c0db37158111c11c28cef61241918c9bd",
         "dl_recognizer_result": 1
     },
@@ -4687,18 +4687,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/a7d/dekration_KolosovVA2017.docx",
+                "url": "http://zsro.ru/upload/iblock/a7d/dekration_KolosovVA2017.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/a7d/dekration_KolosovVA2017.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/a7d/dekration_KolosovVA2017.docx/dlrobot_data",
         "sha256": "c1654a06f2a8a715b9a914e62cdca22e52814c0aaa914cbe4a469c228d43b780",
         "dl_recognizer_result": 1
     },
@@ -4712,18 +4712,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/62f/LakuninVU_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/62f/LakuninVU_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/62f/LakuninVU_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/62f/LakuninVU_dekr2016.xlsx/dlrobot_data",
         "sha256": "c1d06238c3b6716c8724ba4735a4d5326bb81886874cd0e7a729959b37bf0a92",
         "dl_recognizer_result": 1
     },
@@ -4737,18 +4737,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/8ae/deklaration_2018_Michenko.docx",
+                "url": "http://zsro.ru/upload/iblock/8ae/deklaration_2018_Michenko.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/8ae/deklaration_2018_Michenko.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/8ae/deklaration_2018_Michenko.docx/dlrobot_data",
         "sha256": "c1ff50cf803c477d4a68a67b86435fe38e4d9bdd48d897e71b59781818170f94",
         "dl_recognizer_result": 1
     },
@@ -4812,18 +4812,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2016 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/5b9/HarchenkoAV_dekr2016.xlsx",
+                "url": "http://zsro.ru/upload/iblock/5b9/HarchenkoAV_dekr2016.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/5b9/HarchenkoAV_dekr2016.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/5b9/HarchenkoAV_dekr2016.xlsx/dlrobot_data",
         "sha256": "c5211c01e0c2d7cd8f2c9c54145f111d8274e47d7719a4e041b0e6fe9e9c2411",
         "dl_recognizer_result": 1
     },
@@ -5037,18 +5037,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/ac2/Deklar_2018_MihalevSA.xls",
+                "url": "http://zsro.ru/upload/iblock/ac2/Deklar_2018_MihalevSA.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/ac2/Deklar_2018_MihalevSA.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/ac2/Deklar_2018_MihalevSA.xls/dlrobot_data",
         "sha256": "c9aae7e17dcf52e05c079ebb22a216562cad6cdd1f5f6f8686b8d1aebde3a872",
         "dl_recognizer_result": 1
     },
@@ -5237,18 +5237,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2018 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/509/Deklarat_2018_GrebenukVD.xls",
+                "url": "http://zsro.ru/upload/iblock/509/Deklarat_2018_GrebenukVD.xls",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/509/Deklarat_2018_GrebenukVD.xls/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/509/Deklarat_2018_GrebenukVD.xls/dlrobot_data",
         "sha256": "d16d4fb711a3d6f026c9ed368136e7c2f8886090236ec756a5f7cd281e0c7d99",
         "dl_recognizer_result": 1
     },
@@ -5437,18 +5437,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2015 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/fb8/ShamshuraVA_dekr2015.xlsx",
+                "url": "http://zsro.ru/upload/iblock/fb8/ShamshuraVA_dekr2015.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/fb8/ShamshuraVA_dekr2015.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/fb8/ShamshuraVA_dekr2015.xlsx/dlrobot_data",
         "sha256": "daec2ec1986d6a621767995ce100650c80cf26c9cec90799fc9227460b47fab8",
         "dl_recognizer_result": 1
     },
@@ -5562,18 +5562,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2014 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/567/LakuninVU_dekr2014.xlsx",
+                "url": "http://zsro.ru/upload/iblock/567/LakuninVU_dekr2014.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/567/LakuninVU_dekr2014.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/567/LakuninVU_dekr2014.xlsx/dlrobot_data",
         "sha256": "e15f10f8fc466079971bde798bcf734ca9616af65999b955ff4551fa63f74551",
         "dl_recognizer_result": 1
     },
@@ -5737,18 +5737,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/358/dekration_Michin2017.docx",
+                "url": "http://zsro.ru/upload/iblock/358/dekration_Michin2017.docx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/358/dekration_Michin2017.docx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/358/dekration_Michin2017.docx/dlrobot_data",
         "sha256": "e6ec18ce9154eb7deafc57d100cfa65590926398a235a611b9a8544ebf256dca",
         "dl_recognizer_result": 1
     },
@@ -6187,18 +6187,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2015 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/045/GelasMV_dekr2015.xlsx",
+                "url": "http://zsro.ru/upload/iblock/045/GelasMV_dekr2015.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/045/GelasMV_dekr2015.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/045/GelasMV_dekr2015.xlsx/dlrobot_data",
         "sha256": "fbf147c1905ac4ef9dded7101571050e90ba3bcd3f82bab93976480f05a91c85",
         "dl_recognizer_result": 1
     },
@@ -6212,18 +6212,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.zsro.ru/about/anti_corruption/declaration/",
+                "url": "http://zsro.ru/about/anti_corruption/declaration/?special_version=Y",
                 "step": "declarations_div",
-                "title": "О Законодательном Собрании",
+                "title": "О Законодательном Собрании -\n                        Законодательное Собрание Ростовской области",
                 "anchor_text": "Справка о доходах за 2015 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.zsro.ru/upload/iblock/4d3/SteniakinaEP_dekr2015.xlsx",
+                "url": "http://zsro.ru/upload/iblock/4d3/SteniakinaEP_dekr2015.xlsx",
                 "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.zsro.ru/upload/iblock/4d3/SteniakinaEP_dekr2015.xlsx/dlrobot_data",
+        "cached_file": "cached/zsro.ru/upload/iblock/4d3/SteniakinaEP_dekr2015.xlsx/dlrobot_data",
         "sha256": "fc3776f3f620022c4829cdc967d511efd95c021305776c65a93789b34184c302",
         "dl_recognizer_result": 1
     },
