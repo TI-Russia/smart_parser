@@ -9,7 +9,7 @@
                 "step": null,
                 "title": "Счетная палата",
                 "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://spbogdo.ru/corrupt",
@@ -41,7 +41,7 @@
                 "step": null,
                 "title": "Счетная палата",
                 "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://spbogdo.ru/corrupt",
@@ -73,7 +73,7 @@
                 "step": null,
                 "title": "Счетная палата",
                 "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://spbogdo.ru/corrupt",
@@ -130,7 +130,7 @@
                 "step": null,
                 "title": "Счетная палата",
                 "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://spbogdo.ru/corrupt",
@@ -162,7 +162,7 @@
                 "step": null,
                 "title": "Счетная палата",
                 "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://spbogdo.ru/corrupt",
@@ -251,7 +251,7 @@
                 "step": null,
                 "title": "Счетная палата",
                 "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://spbogdo.ru/corrupt",

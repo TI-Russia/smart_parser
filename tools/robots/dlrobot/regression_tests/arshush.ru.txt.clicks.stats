@@ -966,8 +966,8 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
-                "step": "declarations_div",
+                "url": "http://arshush.ru/content/view/1068/48/",
+                "step": "declarations_div_pages",
                 "title": "",
                 "anchor_text": "Информация",
                 "engine": "urllib"

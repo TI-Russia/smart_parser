@@ -44,9 +44,9 @@
                 "engine": "google"
             },
             {
-                "url": "http://minpromtorg.gov.ru/docs/search/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2017_g_po_31_dekabrya_2017_g",
+                "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2017_g_po_31_dekabrya_2017_g",
                 "step": "declarations_div",
-                "title": "Минпромторг :: Поиск документов",
+                "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n26.15 KB, 22.05.2018",
                 "engine": "selenium"
             },

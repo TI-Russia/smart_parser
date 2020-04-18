@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 47
+        "files_count": 49
     },
     {
         "click_path": [
@@ -288,6 +288,38 @@
         ],
         "cached_file": "cached/www.mos.ru/upload/documents/files/2030/Svodza2017obshii949.xlsx/dlrobot_data",
         "sha256": "31b7c2a09340d90654fe09f8bca64553439d8856019249d6395cae77e19e7b0a",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "https://www.mos.ru",
+                "step": null,
+                "title": "Официальный сайт Мэра Москвы",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mos.ru/moskomsport/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                "step": "declarations_div",
+                "title": "Органы власти / Сайт Москвы",
+                "anchor_text": "Сведения о доходах и имуществе руководителей государственных учреждений Департамента физической культуры и спорта города Москвы за 2012 год",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mos.ru/moskomsport/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/57344220/",
+                "step": "declarations_div_pages2",
+                "title": "Органы власти / Сайт Москвы",
+                "anchor_text": "[ xlsx/ 63.7Kb ]svodnaja_tablica_za_2012_god_podvedomstvennye_.xlsx",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mos.ru/upload/documents/oiv/svodnaja_tablica_za_2012_god_podvedomstvennye_.xlsx",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mos.ru/upload/documents/oiv/svodnaja_tablica_za_2012_god_podvedomstvennye_.xlsx/dlrobot_data",
+        "sha256": "326ed841c9d73e377afe12bfc5133e06171ed713229caba8b7d424b782fade85",
         "dl_recognizer_result": 1
     },
     {
@@ -608,6 +640,38 @@
         ],
         "cached_file": "cached/www.mos.ru/upload/documents/files/4557/svedenija_o_dohodah_rashodah_ob_imushestve_i_objazatelstvah_i_3fb5112cb4da2dda28e409a71dac959c/dlrobot_data",
         "sha256": "5392574cf23b2c2c63f51deb30f40c34290817e584de5839627f81d103250e1a",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "https://www.mos.ru",
+                "step": null,
+                "title": "Официальный сайт Мэра Москвы",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mos.ru/dsmir/documents/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                "step": "declarations_div",
+                "title": "Органы власти / Сайт Москвы",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей, а также руководителей подведомственных Департаменту учреждений за период с 1 января по 31 декабря 2017 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mos.ru/dsmir/documents/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/213961220/",
+                "step": "declarations_div_pages2",
+                "title": "Органы власти / Сайт Москвы",
+                "anchor_text": "[ pdf/ 491.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей, а также руководителей подведомственных Департаменту учреждений за 2017 год",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mos.ru/upload/documents/files/1270/2017.pdf",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mos.ru/upload/documents/files/1270/2017.pdf/dlrobot_data",
+        "sha256": "56a489c3115d710825b69f8f46438280b517406cc610c7f4d7ea2814c97605d3",
         "dl_recognizer_result": 1
     },
     {

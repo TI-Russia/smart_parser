@@ -87,10 +87,10 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/formy-dokumentov-svyazannykh-s-protivodeystviem-korruptsii-dlya-zapolneniya/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
-                "title": "Формы документов, связанных с противодействием коррупции, для заполнения",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах",
                 "engine": "selenium"
             },
             {
@@ -287,7 +287,7 @@
                 "step": "declarations_div",
                 "title": "Формы документов, связанных с противодействием коррупции, для заполнения",
                 "anchor_text": "Скачать ПО «Справки БК»",
-                "engine": "selenium"
+                "engine": "urllib"
             },
             {
                 "url": "https://gossluzhba.gov.ru/page/index/spravki_bk",
