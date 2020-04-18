@@ -210,11 +210,14 @@ class TRobotWebSite:
 
 
     def get_shortest_path_to_root(self, url):
+        def get_joined_path(path):
+            return " ".join(u['url'] for u in path)
         url_info = self.url_nodes[url]
         path = [{'url': url, 'step': url_info.step_name}]
         all_paths = list()
         self.get_path_to_root_recursive(path, all_paths)
         assert len(all_paths) > 0
+        all_paths = sorted(all_paths, key=get_joined_path)
         path_lens = list(len(p) for p in all_paths)
         min_path = all_paths[path_lens.index(min(path_lens))]
         return min_path

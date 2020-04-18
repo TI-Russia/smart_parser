@@ -40,7 +40,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач,поставленных перед Минвостокразвития России, за отчетный период с 01.01.2017 по 31.12.2017",
+                "anchor_text": "Скачать XLSX (65.64 КБ)",
                 "engine": "selenium"
             },
             {
@@ -65,7 +65,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Минвостокразвития России, за отчетный период с 01.01.2016 по 31.12.2016",
+                "anchor_text": "Скачать XLSX (67.43 КБ)",
                 "engine": "selenium"
             },
             {
@@ -87,10 +87,10 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/formy-dokumentov-svyazannykh-s-protivodeystviem-korruptsii-dlya-zapolneniya/",
                 "step": "declarations_div",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах",
+                "title": "Формы документов, связанных с противодействием коррупции, для заполнения",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "selenium"
             },
             {
@@ -121,13 +121,6 @@
             {
                 "url": "http://www.minvostokrazvitia.ru/opendata/",
                 "step": "declarations_div",
-                "title": "Открытые данные",
-                "anchor_text": "Полная версия сайта",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.minvostokrazvitia.ru/opendata/?view=desktop",
-                "step": "declarations_div_pages",
                 "title": "Открытые данные",
                 "anchor_text": "Скачать PDF (7.65 МВ)",
                 "engine": "selenium"
@@ -211,7 +204,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минвостокразвития России, за отчетный период с 01.01.2018 по 31.12.2018",
+                "anchor_text": "Скачать XLSX (58.04 КБ)",
                 "engine": "selenium"
             },
             {
@@ -236,7 +229,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минвостокразвития России, за отчетный период с 01.01.2016 по 31.12.2016",
+                "anchor_text": "Скачать XLSX (19.43 КБ)",
                 "engine": "selenium"
             },
             {
@@ -261,7 +254,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные гражданскими служащими Минвостокразвития России, за отчетный период с 01.01.2018 по 31.12.2018",
+                "anchor_text": "Скачать XLSX (71.96 КБ)",
                 "engine": "selenium"
             },
             {
@@ -287,7 +280,7 @@
                 "step": "declarations_div",
                 "title": "Формы документов, связанных с противодействием коррупции, для заполнения",
                 "anchor_text": "Скачать ПО «Справки БК»",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://gossluzhba.gov.ru/page/index/spravki_bk",
@@ -311,7 +304,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций, созданных для выполнения задач, поставленных перед Минвостокразвития России, за отчетный период с 01.01.2014 по 31.12.2014",
+                "anchor_text": "Скачать XLS (36.5 КБ)",
                 "engine": "selenium"
             },
             {
@@ -336,7 +329,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Минвостокразвития России, за отчетный период с 01.01.2017 по 31.12.2017",
+                "anchor_text": "Скачать XLSX (69.5 КБ)",
                 "engine": "selenium"
             },
             {
@@ -404,7 +397,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минвостокразвития России, размещенные ранее на официальных сайтах иных государственных органов и (или) организаций за предшеству",
+                "anchor_text": "Скачать DOC (262.5 КБ)",
                 "engine": "selenium"
             },
             {
@@ -429,7 +422,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Министерства Российской Федерации по развитию Дальнего Востока, а также их супругов и несовершеннолетних детей за период с 01.01.20",
+                "anchor_text": "Скачать XLS (134.5 КБ)",
                 "engine": "selenium"
             },
             {
@@ -454,7 +447,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленных федеральными государственными гражданскими служащими Минвостокразвития России, за отчетный период с 01.01.2015 по 31.12.2015",
+                "anchor_text": "Скачать XLSX (86.66 КБ)",
                 "engine": "selenium"
             },
             {
@@ -479,7 +472,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленных федеральными государственными гражданскими служащими Министерства Российской Федерации по развитию Дальнего Востока, за период с 1 января 2014 г. по 31",
+                "anchor_text": "Скачать XLS (185 КБ)",
                 "engine": "selenium"
             },
             {
@@ -536,7 +529,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Минвостокразвития России за 2014 год",
+                "anchor_text": "Скачать XLS (185 КБ)",
                 "engine": "selenium"
             },
             {
@@ -561,7 +554,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Минвостокразвития России за 2015 год",
+                "anchor_text": "Скачать XLSX (86.75 КБ)",
                 "engine": "selenium"
             },
             {
@@ -586,7 +579,7 @@
                 "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations_div",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Министерства Российской Федерации по развитию Дальнего Востока за период с 01.01.2013 по 31.12.2013",
+                "anchor_text": "Скачать XLS (113.5 КБ)",
                 "engine": "selenium"
             },
             {

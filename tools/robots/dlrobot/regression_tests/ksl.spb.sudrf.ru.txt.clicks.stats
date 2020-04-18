@@ -66,15 +66,8 @@
                 "engine": "google"
             },
             {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=51",
-                "step": "declarations_div_pages",
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&rid=5",
-                "step": "declarations_div",
+                "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
+                "step": "sitemap",
                 "title": "Красносельский районный суд города Санкт-Петербурга",
                 "anchor_text": "Справка о доходах за 2014 год",
                 "engine": "urllib"

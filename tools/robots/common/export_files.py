@@ -155,9 +155,11 @@ def reorder_export_files_and_delete_non_declarations(office_folder, export_files
     logger = logging.getLogger("dlrobot_logger")
     exported_files = list()
     for sha256, group in groupby(sorted_files, itemgetter('sha256')):
-        group = list(group)
+        # make test results stable
+        group = sorted(group, key=(lambda x: " ".join((x['url'], x.get('anchor_text', ""), x.get('engine', ""))))
 
         # in order to be more stable take a file with the shortest path (for example without prefix www.)
+        # the files were already sorted
         path_lens = list(len(f['url']) for f in group)
         chosen_file = group[path_lens.index(min(path_lens))]
 

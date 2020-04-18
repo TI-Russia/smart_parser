@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 49
+        "files_count": 47
     },
     {
         "click_path": [
@@ -716,38 +716,6 @@
                 "engine": "google"
             },
             {
-                "url": "https://www.mos.ru/tourism/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/",
-                "step": "declarations_div",
-                "title": "Органы власти / Сайт Москвы",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственного бюджетного учреждения, подведомственного Комитету по туризму города Москвы, и членов их семей за период с 1 января по 31 декабря 2018 года",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://www.mos.ru/tourism/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/view/225849220/",
-                "step": "declarations_div_pages2",
-                "title": "Органы власти / Сайт Москвы",
-                "anchor_text": "[ xlsx/ 19.2Kb ]Скачать файл",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://www.mos.ru/upload/documents/files/9466/SvedeniyaodohodahrykovoditeleiGBYpodvedomstvennogoKomitetypotyrizmygorodaMoskviza2018g.xlsx",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.mos.ru/upload/documents/files/9466/SvedeniyaodohodahrykovoditeleiGBYpodvedomstvennogoKomitetypot_1f9787c6329f3d891e9488cdae570ef5/dlrobot_data",
-        "sha256": "6a0556a133a246d2630fd6547bddf3fa3765e6a7d25b2bf734ee4b2d29609b9d",
-        "dl_recognizer_result": 1
-    },
-    {
-        "click_path": [
-            {
-                "url": "https://www.mos.ru",
-                "step": null,
-                "title": "Официальный сайт Мэра Москвы",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
                 "url": "https://www.mos.ru/dipp/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/",
                 "step": "declarations_div",
                 "title": "Органы власти / Сайт Москвы",
@@ -1312,38 +1280,6 @@
         ],
         "cached_file": "cached/www.mos.ru/upload/documents/oiv/tinao_2015.xls/dlrobot_data",
         "sha256": "daccd6a3e454652c1e313f6b86108a3708caeec736fec6f2068c1e509d3f5d5d",
-        "dl_recognizer_result": 1
-    },
-    {
-        "click_path": [
-            {
-                "url": "https://www.mos.ru",
-                "step": null,
-                "title": "Официальный сайт Мэра Москвы",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "https://www.mos.ru/tourism/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/",
-                "step": "declarations_div",
-                "title": "Органы власти / Сайт Москвы",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Комитета по туризму города Москвы и членов их семей за период с 1 января по 31 декабря 2018 года",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://www.mos.ru/tourism/anticorruption/svedeniya-o-dokhodakh-raskhodakh-ob-imushestve-i-obyazatelstvakh-imushestvennogo-kharaktera/view/225850220/",
-                "step": "declarations_div_pages2",
-                "title": "Органы власти / Сайт Москвы",
-                "anchor_text": "[ xlsx/ 29.0Kb ]Скачать файл",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://www.mos.ru/upload/documents/files/4889/SvedeniyaodohodahKomitetpotyrizmygorodaMoskviza2018g.xlsx",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.mos.ru/upload/documents/files/4889/SvedeniyaodohodahKomitetpotyrizmygorodaMoskviza2018g.xlsx/dlrobot_data",
-        "sha256": "dfd9711431f3a84b44f595b46b65a13b6aa9e9601e410190fe7be4d425ee68bc",
         "dl_recognizer_result": 1
     },
     {
