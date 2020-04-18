@@ -12,25 +12,25 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42/0?page=1",
+                "url": "http://voronovskoe.ru/taxonomy/term/42?page=1",
                 "step": "declarations_div",
                 "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2016 год",
                 "engine": "selenium"
             },
             {
-                "url": "http://www.voronovskoe.ru/node/5740",
-                "step": "declarations_div_pages2",
+                "url": "http://voronovskoe.ru/node/5740",
+                "step": "declarations_div_pages",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2016 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "О доходах, расходах, об имуществе и обязательствах имущественного характера муниципальных служащих за 2016г..doc",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2017/05/__10081.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2017/05/__10081.doc",
+                "step": "declarations_div_pages2"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2017/05/__10081.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2017/05/__10081.doc/dlrobot_data",
         "sha256": "22f66550ede2ceb1056ed4f99454f3c25bfd21b16662a9ee372d98fda76b66dc",
         "dl_recognizer_result": 1
     },
@@ -69,25 +69,25 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42/0?page=1",
+                "url": "http://voronovskoe.ru/taxonomy/term/42?page=1",
                 "step": "declarations_div",
                 "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2016 год",
                 "engine": "selenium"
             },
             {
-                "url": "http://www.voronovskoe.ru/node/5740",
-                "step": "declarations_div_pages2",
+                "url": "http://voronovskoe.ru/node/5740",
+                "step": "declarations_div_pages",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2016 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "О внесении изменений в сведения о доходах расходах муниципальных служащих за 2016 год.doc",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2017/05/__70249.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2017/05/__70249.doc",
+                "step": "declarations_div_pages2"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2017/05/__70249.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2017/05/__70249.doc/dlrobot_data",
         "sha256": "27c7bb0a648216a1148acc004de9f703fa262afbe20c58decd9e5b3785289342",
         "dl_recognizer_result": 1
     },
@@ -101,32 +101,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42",
+                "url": "http://voronovskoe.ru/node/441",
                 "step": "declarations_div",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "последняя »",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42?page=3",
-                "step": "declarations_div_pages",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "Сведения о доходах за 2013 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/node/441",
-                "step": "declarations_div_pages2",
                 "title": "Сведения о доходах за 2013 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "о доходох, об имуществе и обязательствах имущественного характера руководителя муниципального учрежеднияза 2013г. -.doc",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2014/04/__91695.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2014/04/__91695.doc",
+                "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2014/04/__91695.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2014/04/__91695.doc/dlrobot_data",
         "sha256": "4362089b4a52396d195f1367db6b69b598dec2c8eac660b92cc673e433e6defc",
         "dl_recognizer_result": 1
     },
@@ -179,25 +165,25 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42/0?page=1",
+                "url": "http://voronovskoe.ru/taxonomy/term/42?page=1",
                 "step": "declarations_div",
                 "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2016 год",
                 "engine": "selenium"
             },
             {
-                "url": "http://www.voronovskoe.ru/node/5740",
-                "step": "declarations_div_pages2",
+                "url": "http://voronovskoe.ru/node/5740",
+                "step": "declarations_div_pages",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2016 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "О доходах, расходах, об имуществе и обязательствах имущественного характера, руководителей муниципальных учреждений за 2016 г.",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2017/05/__23070.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2017/05/__23070.doc",
+                "step": "declarations_div_pages2"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2017/05/__23070.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2017/05/__23070.doc/dlrobot_data",
         "sha256": "6512f3999ecd50d2ee5560691bba3380ab4dfdb91e4c28ac1336373acb7fbd87",
         "dl_recognizer_result": 1
     },
@@ -211,32 +197,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42",
+                "url": "http://voronovskoe.ru/node/1377",
                 "step": "declarations_div",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "3",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42?page=2",
-                "step": "declarations_div_pages",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2014 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/node/1377",
-                "step": "declarations_div_pages2",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2014 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "о доходах, расходах, об имуществе и обязательствах имущественного характера, руководителей муниципальных учреждений за 2014 г..doc",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2015/05/__62317.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2015/05/__62317.doc",
+                "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2015/05/__62317.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2015/05/__62317.doc/dlrobot_data",
         "sha256": "796fb48ecb021f9b2e1f8f8d3c633867a4e4999bff01fce2c6f9fd62175b19a4",
         "dl_recognizer_result": 1
     },
@@ -453,32 +425,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42",
+                "url": "http://voronovskoe.ru/node/1377",
                 "step": "declarations_div",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "3",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42?page=2",
-                "step": "declarations_div_pages",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2014 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/node/1377",
-                "step": "declarations_div_pages2",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2014 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "о доходах, расходах, об имуществе и обязательствах имущественного характера муниципальных служащих за 2014г..doc",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2015/05/__13126.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2015/05/__13126.doc",
+                "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2015/05/__13126.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2015/05/__13126.doc/dlrobot_data",
         "sha256": "ecfcb5e0700ee3bea294abc39efd198a2442189db240f4c360c5e89f23c53bf1",
         "dl_recognizer_result": 1
     },
@@ -492,32 +450,18 @@
                 "engine": "google"
             },
             {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42",
+                "url": "http://voronovskoe.ru/node/441",
                 "step": "declarations_div",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "последняя »",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/taxonomy/term/42?page=3",
-                "step": "declarations_div_pages",
-                "title": "Противодействие коррупции | Администрация поселения ВОРОНОВСКОЕ города Москвы",
-                "anchor_text": "Сведения о доходах за 2013 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.voronovskoe.ru/node/441",
-                "step": "declarations_div_pages2",
                 "title": "Сведения о доходах за 2013 год | Администрация поселения ВОРОНОВСКОЕ города Москвы",
                 "anchor_text": "о доходах лиц, замещающих муниципальные должности и муниципальных служащих за 2013 год..doc",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.voronovskoe.ru/sites/default/files/2014/04/__75349.doc",
-                "step": "declarations"
+                "url": "http://voronovskoe.ru/sites/default/files/2014/04/__75349.doc",
+                "step": "declarations_div_pages"
             }
         ],
-        "cached_file": "cached/www.voronovskoe.ru/sites/default/files/2014/04/__75349.doc/dlrobot_data",
+        "cached_file": "cached/voronovskoe.ru/sites/default/files/2014/04/__75349.doc/dlrobot_data",
         "sha256": "f41bd3bea4046dc86a2d74a0413d19ca6b7c865e735c141d358d2c14fe9a32c0",
         "dl_recognizer_result": 1
     }
