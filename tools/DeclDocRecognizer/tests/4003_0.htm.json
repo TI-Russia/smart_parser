@@ -3,6 +3,12 @@
     "smart_parser_person_count": 1,
     "start_text": "О суде Новости Организационная структура суда Локальные акты суда Документы президиума суда Интернет-приемная Арбитражный процесс Расписание рассмотрения дел Госпошлина Информация по банкротству Пресса о нас Государственные закупки Вопросы-ответы Телефон доверия Правовые основы Справочно поисковые системы Судебные органы Обращения по судебным делам Видеоконференц-связь Противодействие коррупции Методические материалы Нормативные правовые и иные акты в сфере противодействия коррупции Сведения о д",
     "text_len": 2377,
+    "other_document_type": {
+        "matches": [
+            "<re.Match object; span=(776, 782), match='бланки'>"
+        ],
+        "start": 776
+    },
     "person": {
         "matches": [
             "<re.Match object; span=(808, 821), match='Рыбников А.Н.'>",
@@ -12,9 +18,18 @@
     },
     "auto": {
         "matches": [
-            "<re.Match object; span=(1400, 1407), match='Renault'>"
+            "<re.Match object; span=(0, 0), match=''>",
+            "<re.Match object; span=(1, 1), match=''>",
+            "<re.Match object; span=(2, 2), match=''>",
+            "<re.Match object; span=(6, 6), match=''>",
+            "<re.Match object; span=(7, 7), match=''>",
+            "<re.Match object; span=(14, 14), match=''>",
+            "<re.Match object; span=(15, 15), match=''>",
+            "<re.Match object; span=(30, 30), match=''>",
+            "<re.Match object; span=(31, 31), match=''>",
+            "<re.Match object; span=(40, 40), match=''>"
         ],
-        "start": 1400
+        "start": 0
     },
     "transport_word": {
         "matches": [
