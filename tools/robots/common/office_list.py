@@ -12,7 +12,7 @@ from robots.common.download import read_from_cache_or_download, get_site_domain_
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
 
 from robots.common.http_request import get_request_rate
-from robots.common.export_files import DL_RECOGNIZER_UNKNOWN
+from DeclDocRecognizer.dlrecognizer import  DL_RECOGNIZER_ENUM
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
                     find_links_in_html_by_text, common_link_check
@@ -84,14 +84,14 @@ class TUrlInfo:
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
             self.downloaded_files = init_json.get('downloaded_files', list())
-            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_UNKNOWN)
+            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
         else:
             self.step_name = step_name
             self.title = title
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
-            self.dl_recognizer_result = DL_RECOGNIZER_UNKNOWN
+            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
 
     def to_json(self):
         record = {
@@ -102,7 +102,7 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = self.downloaded_files
-        if self.dl_recognizer_result != DL_RECOGNIZER_UNKNOWN:
+        if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
             record['dl_recognizer_result'] = self.dl_recognizer_result
         return record
 

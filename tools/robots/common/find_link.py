@@ -2,8 +2,8 @@ import os
 import logging
 import time
 from urllib.parse import urljoin, unquote
-from robots.common.download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
+from robots.common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
+    DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
 
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy

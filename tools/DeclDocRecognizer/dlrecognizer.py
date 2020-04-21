@@ -4,9 +4,9 @@ import re
 import os
 import hashlib
 import shutil
-from document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR
+from .document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR
 from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TConversionTasks
-from external_convertors import EXTERNAl_CONVERTORS
+from .external_convertors import EXTERNAl_CONVERTORS
 
 class DL_RECOGNIZER_ENUM:
     UNKNOWN = "unknown_result"

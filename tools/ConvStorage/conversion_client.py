@@ -10,6 +10,9 @@ from robots.common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 
 DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
+if DECLARATOR_CONV_URL is None:
+    print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
+    assert DECLARATOR_CONV_URL is not None
 
 
 def assert_declarator_conv_alive():
@@ -56,6 +59,17 @@ class TConversionTasks(object):
         conn = http.client.HTTPConnection(self.db_conv_url)
         conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
         return conn.getresponse().code == 200
+
+    def retrieve_document(self, sha256, output_file_name):
+        conn = http.client.HTTPConnection(self.db_conv_url)
+        conn.request("GET", "?sha256=" + sha256)
+        response = conn.getresponse()
+        if response.code == 200:
+            with open(output_file_name, "wb") as out:
+                out.write(response.read())
+            return True
+        else:
+            return False
 
     def start_thread(self):
         self.conversion_thread.start()

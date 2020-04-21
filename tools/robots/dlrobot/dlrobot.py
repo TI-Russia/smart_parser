@@ -1,5 +1,4 @@
-﻿import sys
-import re
+﻿import re
 import os
 import argparse
 import logging
@@ -9,8 +8,8 @@ from tempfile import TemporaryDirectory
 from robots.common.download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
 from robots.common.export_files import export_files_to_folder
 from robots.common.office_list import  TRobotProject
-from robots.common.conversion_tasks import wait_doc_conversion_finished, assert_declarator_conv_alive
-
+from ConvStorage.conversion_client import wait_doc_conversion_finished, assert_declarator_conv_alive
+from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.find_link import \
     check_anticorr_link_text, \
     ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
@@ -115,19 +114,11 @@ def check_documents(link_info):
 
 def declaration_step_anchor_text(anchor_text):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+    global SOME_OTHER_DOCUMENTS
     anchor_text = normalize_anchor_text(anchor_text)
-    if anchor_text.find('шаблоны') != -1:
-        return False
-    if anchor_text.find('решение') != -1:
-        return False
-    if anchor_text.find('постановление') != -1:
-        return False
-    if anchor_text.find('доклад') != -1:
-        return False
-    if anchor_text.find('протокол') != -1:
-        return False
-    if anchor_text.startswith('план'):
-        return False
+    for typ in SOME_OTHER_DOCUMENTS:
+        if anchor_text.find(typ) != -1:
+            return False
     if anchor_text.startswith('скачать'):
         return True
     if anchor_text.startswith('загрузить'):

@@ -10,41 +10,10 @@ import hashlib
 from robots.common.archives import dearchive_one_archive, is_archive_extension
 from robots.common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS,  \
     get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION
-
-DECL_RECOGNIZER_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                    os.path.normpath("../../DeclDocRecognizer/dlrecognizer.sh"))
-if not os.path.exists(DECL_RECOGNIZER_PATH):
-    raise Exception("cannot find {} ".format(DECL_RECOGNIZER_PATH))
+from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
 
 if shutil.which('unrar') is None:
     raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt intall unrar")
-
-DL_RECOGNIZER_UNKNOWN = -1
-DL_RECOGNIZER_POSITIVE = 1
-DL_RECOGNIZER_NEGATIVE = 0
-
-
-def run_decl_recognizer(inputfile):
-    global DECL_RECOGNIZER_PATH
-    logger = logging.getLogger("dlrobot_logger")
-    json_file = inputfile + ".json"
-    cmd = "bash {} {} {}".format(DECL_RECOGNIZER_PATH, inputfile, json_file)
-    logger.debug(cmd)
-    os.system(cmd)
-    if os.path.exists(json_file):
-        with open(json_file, "r", encoding="utf8") as inpf:
-            recognizer_result = json.load(inpf).get("result", "unknown_result")
-        os.remove(json_file)
-        if recognizer_result == "declaration_result":
-            return DL_RECOGNIZER_POSITIVE
-        elif recognizer_result == "some_other_document_result":
-            return DL_RECOGNIZER_NEGATIVE
-        else:
-            assert recognizer_result == "unknown_result"
-    return DL_RECOGNIZER_UNKNOWN
-
-
-
 
 
 def html_to_text(html):
@@ -139,13 +108,17 @@ def export_downloaded_docs(office_info, office_folder, index, export_files):
 def recognize_document_types(sorted_files):
     separate_files_to_dl_results = defaultdict(int)
     archives_to_dl_results = defaultdict(int)
+    logger = logging.getLogger("dlrobot_logger")
 
     for sha256, group in groupby(sorted_files, itemgetter('sha256')):
         first_equal_file = list(group)[0]
-        dl_recognizer_result = run_decl_recognizer(first_equal_file['export_path'])
+        input_file = first_equal_file['export_path']
+        logger.debug("run_dl_recognizer for {}".format(input_file))
+        dl_recognizer_result = run_dl_recognizer(input_file).get("result", DL_RECOGNIZER_ENUM.UNKNOWN)
+
         separate_files_to_dl_results[sha256] = dl_recognizer_result
-        if dl_recognizer_result > 0:
-            archives_to_dl_results[first_equal_file['cached_file']] += 1 #sum good files in each archive
+        if dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
+            archives_to_dl_results[first_equal_file['cached_file']] += 1  #sum good files in each archive
     return separate_files_to_dl_results, archives_to_dl_results
 
 
@@ -156,7 +129,7 @@ def reorder_export_files_and_delete_non_declarations(office_folder, export_files
     exported_files = list()
     for sha256, group in groupby(sorted_files, itemgetter('sha256')):
         # make test results stable
-        group = sorted(group, key=(lambda x: " ".join((x['url'], x.get('anchor_text', ""), x.get('engine', ""))))
+        group = sorted(group, key=(lambda x: " ".join((x['url'], x.get('anchor_text', ""), x.get('engine', "")))))
 
         # in order to be more stable take a file with the shortest path (for example without prefix www.)
         # the files were already sorted
@@ -166,9 +139,9 @@ def reorder_export_files_and_delete_non_declarations(office_folder, export_files
         old_file_name = chosen_file['export_path']
         dl_recognizer_result = separate_files_to_dl_results[sha256]
 
-        if dl_recognizer_result == DL_RECOGNIZER_NEGATIVE:
+        if dl_recognizer_result == DL_RECOGNIZER_ENUM.NEGATIVE:
             if archives_to_dl_results.get(chosen_file['cached_file'], 0) > 1:  # more than 1 document in archive are declarations
-                dl_recognizer_result = DL_RECOGNIZER_POSITIVE  # consider other documents to be also declarations
+                dl_recognizer_result = DL_RECOGNIZER_ENUM.POSITIVE  # consider other documents to be also declarations
             else:
                 logger.debug("remove temporally exported file cached:{} url: {}, since decl_recognizer=0".format(chosen_file['cached_file'], chosen_file['url'],))
                 for r in group:
