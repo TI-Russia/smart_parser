@@ -32,13 +32,16 @@
     },
     "realty": {
         "matches": [
-            "<re.Match object; span=(3184, 3192), match='Квартира'>"
+            "<re.Match object; span=(3184, 3192), match='Квартира'>",
+            "<re.Match object; span=(3229, 3234), match='Гараж'>"
         ],
         "start": 3184
     },
     "header": {
         "matches": [
-            "<re.Match object; span=(3069, 3087), match='Сведения о доходах'>"
+            "<re.Match object; span=(3069, 3087), match='Сведения о доходах'>",
+            "<re.Match object; span=(3150, 3171), match='Декларированный доход'>",
+            "<re.Match object; span=(3357, 3378), match='Декларированный доход'>"
         ],
         "start": 3069
     }

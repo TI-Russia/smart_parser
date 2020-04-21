@@ -70,11 +70,11 @@
             "<re.Match object; span=(217, 226), match='жилой дом'>",
             "<re.Match object; span=(266, 274), match='квартира'>",
             "<re.Match object; span=(276, 283), match='долевая'>",
+            "<re.Match object; span=(297, 302), match='гараж'>",
             "<re.Match object; span=(402, 410), match='квартира'>",
             "<re.Match object; span=(458, 466), match='квартира'>",
             "<re.Match object; span=(468, 475), match='долевая'>",
-            "<re.Match object; span=(538, 546), match='квартира'>",
-            "<re.Match object; span=(617, 634), match='земельный участок'>"
+            "<re.Match object; span=(538, 546), match='квартира'>"
         ],
         "start": 131
     },
