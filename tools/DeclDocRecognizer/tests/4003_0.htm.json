@@ -18,18 +18,9 @@
     },
     "auto": {
         "matches": [
-            "<re.Match object; span=(0, 0), match=''>",
-            "<re.Match object; span=(1, 1), match=''>",
-            "<re.Match object; span=(2, 2), match=''>",
-            "<re.Match object; span=(6, 6), match=''>",
-            "<re.Match object; span=(7, 7), match=''>",
-            "<re.Match object; span=(14, 14), match=''>",
-            "<re.Match object; span=(15, 15), match=''>",
-            "<re.Match object; span=(30, 30), match=''>",
-            "<re.Match object; span=(31, 31), match=''>",
-            "<re.Match object; span=(40, 40), match=''>"
+            "<re.Match object; span=(1400, 1407), match='Renault'>"
         ],
-        "start": 0
+        "start": 1400
     },
     "transport_word": {
         "matches": [

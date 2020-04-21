@@ -35,18 +35,18 @@
     },
     "auto": {
         "matches": [
-            "<re.Match object; span=(0, 0), match=''>",
-            "<re.Match object; span=(8, 8), match=''>",
-            "<re.Match object; span=(9, 9), match=''>",
-            "<re.Match object; span=(10, 10), match=''>",
-            "<re.Match object; span=(11, 11), match=''>",
-            "<re.Match object; span=(18, 18), match=''>",
-            "<re.Match object; span=(19, 19), match=''>",
-            "<re.Match object; span=(30, 30), match=''>",
-            "<re.Match object; span=(31, 31), match=''>",
-            "<re.Match object; span=(46, 46), match=''>"
+            "<re.Match object; span=(704, 708), match='Ауди'>",
+            "<re.Match object; span=(1646, 1653), match='Шевроле'>",
+            "<re.Match object; span=(1663, 1669), match='Сузуки'>",
+            "<re.Match object; span=(3673, 3676), match='KIA'>",
+            "<re.Match object; span=(4156, 4161), match='Нисан'>",
+            "<re.Match object; span=(4370, 4376), match='Сузуки'>",
+            "<re.Match object; span=(4991, 4995), match='Рено'>",
+            "<re.Match object; span=(5217, 5221), match='Audi'>",
+            "<re.Match object; span=(6661, 6665), match='Форд'>",
+            "<re.Match object; span=(6796, 6800), match='Форд'>"
         ],
-        "start": 0
+        "start": 704
     },
     "income": {
         "matches": [

@@ -9,21 +9,6 @@
         ],
         "start": 863
     },
-    "auto": {
-        "matches": [
-            "<re.Match object; span=(0, 0), match=''>",
-            "<re.Match object; span=(8, 8), match=''>",
-            "<re.Match object; span=(9, 9), match=''>",
-            "<re.Match object; span=(10, 10), match=''>",
-            "<re.Match object; span=(11, 11), match=''>",
-            "<re.Match object; span=(18, 18), match=''>",
-            "<re.Match object; span=(20, 20), match=''>",
-            "<re.Match object; span=(22, 22), match=''>",
-            "<re.Match object; span=(23, 23), match=''>",
-            "<re.Match object; span=(32, 32), match=''>"
-        ],
-        "start": 0
-    },
     "transport_word": {
         "matches": [
             "<re.Match object; span=(575, 584), match='транспорт'>"
