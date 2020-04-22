@@ -1,57 +1,93 @@
 {
-    "result": "declaration_result",
+    "verdict": "declaration_result",
     "smart_parser_person_count": 1,
     "start_text": "О суде Новости Организационная структура суда Локальные акты суда Документы президиума суда Интернет-приемная Арбитражный процесс Расписание рассмотрения дел Госпошлина Информация по банкротству Пресса о нас Государственные закупки Вопросы-ответы Телефон доверия Правовые основы Справочно поисковые системы Судебные органы Обращения по судебным делам Видеоконференц-связь Противодействие коррупции Методические материалы Нормативные правовые и иные акты в сфере противодействия коррупции Сведения о д",
     "text_len": 2377,
-    "other_document_type": {
-        "matches": [
-            "<re.Match object; span=(776, 782), match='бланки'>"
+    "description": "vehicles and surnames_word",
+    "text_features": {
+        "other_document_type": [
+            {
+                "span": "776,782",
+                "match": "бланки"
+            }
         ],
-        "start": 776
-    },
-    "header": {
-        "matches": [
-            "<re.Match object; span=(488, 506), match='сведения о доходах'>",
-            "<re.Match object; span=(822, 840), match='сведения о доходах'>",
-            "<re.Match object; span=(942, 1099), match='фамилия, инициалы должность перечень объектов нед>"
+        "header": [
+            {
+                "span": "488,506",
+                "match": "сведения о доходах"
+            },
+            {
+                "span": "822,840",
+                "match": "сведения о доходах"
+            },
+            {
+                "span": "942,1099",
+                "match": "фамилия, инициалы должность перечень объектов недвижимого имущества, принадлежащих на праве собственности или находящихся в пользовании перечень транспортных"
+            }
         ],
-        "start": 488
-    },
-    "person": {
-        "matches": [
-            "<re.Match object; span=(808, 821), match='Рыбников А.Н.'>",
-            "<re.Match object; span=(1285, 1298), match='Рыбников А.Н.'>"
+        "person": [
+            {
+                "span": "808,821",
+                "match": "Рыбников А.Н."
+            },
+            {
+                "span": "1285,1298",
+                "match": "Рыбников А.Н."
+            }
         ],
-        "start": 808
-    },
-    "transport_word": {
-        "matches": [
-            "<re.Match object; span=(1087, 1096), match='транспорт'>"
+        "vehicles": [
+            {
+                "span": "1400,1407",
+                "match": "Renault"
+            }
         ],
-        "start": 1087
-    },
-    "income": {
-        "matches": [
-            "<re.Match object; span=(1541, 1547), match='115796'>",
-            "<re.Match object; span=(1649, 1655), match='115796'>",
-            "<re.Match object; span=(1749, 1755), match='131046'>",
-            "<re.Match object; span=(1855, 1861), match='414014'>",
-            "<re.Match object; span=(2061, 2067), match='163763'>"
+        "vehicles_word": [
+            {
+                "span": "1087,1096",
+                "match": "транспорт"
+            }
         ],
-        "start": 1541
-    },
-    "realty": {
-        "matches": [
-            "<re.Match object; span=(1305, 1313), match='Квартира'>",
-            "<re.Match object; span=(1330, 1338), match='Квартира'>",
-            "<re.Match object; span=(1468, 1476), match='Квартира'>"
+        "income": [
+            {
+                "span": "1541,1547",
+                "match": "115796"
+            },
+            {
+                "span": "1649,1655",
+                "match": "115796"
+            },
+            {
+                "span": "1749,1755",
+                "match": "131046"
+            },
+            {
+                "span": "1855,1861",
+                "match": "414014"
+            },
+            {
+                "span": "2061,2067",
+                "match": "163763"
+            }
         ],
-        "start": 1305
-    },
-    "surname_word": {
-        "matches": [
-            "<re.Match object; span=(942, 949), match='Фамилия'>"
+        "realty": [
+            {
+                "span": "1305,1313",
+                "match": "Квартира"
+            },
+            {
+                "span": "1330,1338",
+                "match": "Квартира"
+            },
+            {
+                "span": "1468,1476",
+                "match": "Квартира"
+            }
         ],
-        "start": 942
+        "surname_word": [
+            {
+                "span": "942,949",
+                "match": "Фамилия"
+            }
+        ]
     }
 }
