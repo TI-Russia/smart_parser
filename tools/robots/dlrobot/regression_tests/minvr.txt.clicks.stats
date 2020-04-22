@@ -25,7 +25,7 @@
         ],
         "cached_file": "cached/minvostokrazvitia.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx/dlrobot_data",
         "sha256": "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -50,7 +50,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/123/1_svedeniya_dlya_sayta_organizatsii_2017_tablitsa-_6_.xlsx/dlrobot_data",
         "sha256": "02a748362844edf8dde8f4fe0f8da1977821b25713ba1c599a4b51fd1ea11388",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -75,7 +75,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/f34/Svedeniia__Ministerstvo_-_PK.xlsx/dlrobot_data",
         "sha256": "04f99ada6ced1d77564db8da07c23dca8005c970c9cab9870c8451082e8c2afd",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -107,7 +107,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/578/SAIT_Organizatsii.xlsx/dlrobot_data",
         "sha256": "0538041f2208acaaff1f2ab6e95aca3382c866946b30ec709516f7f238cd3dbf",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -132,7 +132,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/doc/31-05-2019/Otchet.pdf/dlrobot_data",
         "sha256": "0f5d0fb52d7e7c5d5ec42d815b9db481000d320d5908240031173d0c33dcba7a",
-        "dl_recognizer_result": -1
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -157,7 +157,7 @@
         ],
         "cached_file": "cached/minvostokrazvitia.ru/upload/iblock/e0a/metodicheskie_rekom-2018.docx/dlrobot_data",
         "sha256": "108a8d79387bb2c82b9d73980d5ebc9607118e1aab824c88825ab0448591c148",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -189,7 +189,7 @@
         ],
         "cached_file": "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincome/data_20180523t1130_structure_20180523t1130._b1362d902f6fa3f61bd85604ca02dfa1/dlrobot_data",
         "sha256": "144deda665dc4faa33af9081436bcdc0051be9c996963c9785191132c5da9fde",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -214,7 +214,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/3f2/1-svedeniya-dlya-sayta-organizatsii-2018_tablitsa.xlsx/dlrobot_data",
         "sha256": "2543c0973fe1da73e35ab56045a0f0402bceb547359781c07a1a9c7c01699ace",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -239,7 +239,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/5ca/Svedeniia_Organizatsii.xlsx/dlrobot_data",
         "sha256": "36256f8769ada716eeb152535aa4116ab8c62472287054f4b6467af59fa50fe4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -264,7 +264,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/6ee/2_svedeniya_dlya_sayta_ministerstvo_2018_god.xlsx/dlrobot_data",
         "sha256": "3a96ef0805a32baca56e5a936831da4aceef615cb9ab5739d36dec4eda0e4b2a",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -289,7 +289,7 @@
         ],
         "cached_file": "cached/gossluzhba.gov.ru/page/index/spravki_bk/dlrobot_data",
         "sha256": "3b72b4cd7ab794a643dbfa0072de71775765384a51de1cac7da450ebdfae6377",
-        "dl_recognizer_result": -1
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -314,7 +314,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/b7a/svdir_ruk_org_2014.xls/dlrobot_data",
         "sha256": "406ee320b2916b691e803c4a69643d4998f341d4e702e41552a5366ef63277cb",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -339,7 +339,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/971/1_svedeniya_dlya_sayta_ministerstvo_2017_god-_6_.xlsx/dlrobot_data",
         "sha256": "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -364,7 +364,7 @@
         ],
         "cached_file": "cached/minvostokrazvitia.ru/upload/iblock/eb0/Broshiura.pdf/dlrobot_data",
         "sha256": "7fbfe0e4a205a1f0222be3360b9d0f76c1d621dca90a2922472cde691719de07",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -382,7 +382,7 @@
         ],
         "cached_file": "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
         "sha256": "7ff11f1af18b797235e3df9a21fa87ce3f33cc46f40db13f4963d35cbb547c79",
-        "dl_recognizer_result": -1
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -407,7 +407,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/520/svdir_other_go_xx.doc/dlrobot_data",
         "sha256": "8f16410a6c1bee5c0e63815d2ab4bb97b45a0152714df3135c9359e08a87d610",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -432,7 +432,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/9ce/svdir_minvr_2012.xls/dlrobot_data",
         "sha256": "9cee8dc3a102ac6a2d55bb5d674915f3c5320c1bc57e925a83b9510a2b212b4b",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -457,7 +457,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/871/Sait_GS_na_sait.xlsx/dlrobot_data",
         "sha256": "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -482,7 +482,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/252/svdir_minvr_2014.xls/dlrobot_data",
         "sha256": "c2715235c4147dbacb3e4fa1c8928040d9f5bab6287e75f70b1b63f16cdd416e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -514,7 +514,7 @@
         ],
         "cached_file": "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincomemin/data_20180523t1104_structure_20180523t11_04dd27a1374d7d37a637e33758a8a37b/dlrobot_data",
         "sha256": "d7736b2579843724d019b59eae6cfc32a60c672c07ae8e55676c17dac66d9286",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -539,7 +539,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/5cb/svdir_corr_minvr_2014.xls/dlrobot_data",
         "sha256": "e06885f1083bc8a8168618c7eb9734ad03d7dbaf4178e4fe352d1030dbd72580",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -564,7 +564,7 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/811/Sait_GS_utochnennye_dannye_na_sait.xlsx/dlrobot_data",
         "sha256": "f3629633f0b3ef5f6f87d60497810c093188bc6106255a10aaa548d1001304a8",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -589,6 +589,6 @@
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/036/svdir_minvr_2013.xls/dlrobot_data",
         "sha256": "fdf7f3daa86ee3d2fe92cdb7fdbce8d3091d9b790d0b3584dc695f6a8ecc2169",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     }
 ]
