@@ -32,7 +32,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20190530-092749.xlsx/dlrobot_data",
         "sha256": "009b6de141bda44f2adbe4fa6b5298e46f4dc8b8a1bf86098f891de252653f0a",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -71,7 +71,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170912-030909.xls/dlrobot_data",
         "sha256": "0ae4a1bd6a1a66543211deceea5d3c9bb05a7d8946d70abce71e45f76a1d098c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -96,7 +96,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170912-030110.xls/dlrobot_data",
         "sha256": "2c7cbee0f0d4e274991bc54c02286feae04f19bb6a3a96c7e38a34975f62aba0",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -135,7 +135,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170912-030933.xlsx/dlrobot_data",
         "sha256": "3da795eae02a78e93d6594cf7a62a5fd112b154d50ca9d362e0a1b71fea5599c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -174,7 +174,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170912-030125.xlsx/dlrobot_data",
         "sha256": "4d155186bc9661010627ff63d602d321ddfcd9f417851c88e6794c069ce0dc8e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -206,7 +206,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20190530-092820.xlsx/dlrobot_data",
         "sha256": "5635fcc6505fee3ea8b53e9c1d541fe3835df0338b36f019790c4811be7c5965",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -245,7 +245,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170627-050331.xls/dlrobot_data",
         "sha256": "77bb096a6b62cc69ef8ee5c8e925ef2c88455207692c6482156e5ee902ddf522",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -284,7 +284,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20180522-075418.xls/dlrobot_data",
         "sha256": "9e722fd4f537e1dc9e929efbf03e2c2d07c550396441948b81c3e4f17aea5400",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -302,7 +302,7 @@
         ],
         "cached_file": "cached/kraevoy.hbr.sudrf.ru/modules.php_name_norm_akt_id_28/dlrobot_data",
         "sha256": "a3d447f74436a029f4be33fe1df037230d6d4a593a8bcbac41b7ff863c96c9dd",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -341,7 +341,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20180606-025054.xlsx/dlrobot_data",
         "sha256": "b89444003243bbae3ab59e85ce881a7292b55d673652d684e074a731239f514b",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -366,7 +366,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170912-030137.xls/dlrobot_data",
         "sha256": "bac5cdd2c62f092bc1ce3d1c0e5749ddc38a8969aea408f410582b7b639355f2",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -391,7 +391,7 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20160524-032423.xls/dlrobot_data",
         "sha256": "c1071cd21ccec3c731cd149ecd551afe7369e37db565b0f0ab1f07372abd07b1",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -430,6 +430,6 @@
         ],
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data",
         "sha256": "c71d05b6ea91ac78dc8818cb6049b0921d1ba3421d83916bcb12a8e3594bb864",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     }
 ]
