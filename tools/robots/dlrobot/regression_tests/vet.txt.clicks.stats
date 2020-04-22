@@ -25,7 +25,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2018.doc/dlrobot_data",
         "sha256": "08877a0bb58f6958fdbaf200afeb0afbf2f512b0cd76e6debb897123106400b9",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -50,7 +50,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincomestart2015.doc/dlrobot_data",
         "sha256": "0f1d736254ae2cab98d7aa70eaeb1ed7c6f66612eaa58f4b2cc1d54be2aa310e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -75,7 +75,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2014.doc/dlrobot_data",
         "sha256": "0f49d8aa079eaff2d3b739d5f9426dd3533a02a895473dd5d12da3ce65dfdf3c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -100,7 +100,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2018.doc/dlrobot_data",
         "sha256": "16ecc6a5016a42abe032f3d99568fcde69f708768028c1ba5ba36ba946261930",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -125,7 +125,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2010.doc/dlrobot_data",
         "sha256": "1e5fb2dc5204a1144098ad1ab139023d16cedb1cd560ecb02a1a320e8f9a4998",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -150,7 +150,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2015.doc/dlrobot_data",
         "sha256": "2139f4455502f3ff01b020a536640d108763d2f02db35817d52d2df3aba067c4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -175,7 +175,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2016.doc/dlrobot_data",
         "sha256": "26f7bf7c096c2d146fe7f7a6fd817faa1f9f4276f74b5e7c66e2c81534835ecb",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -200,7 +200,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2014.doc/dlrobot_data",
         "sha256": "3423bc82bdcb7f432db9fdfd1b43c8fdd981a29d02a2c786ba8a6ec8ae074e40",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -225,7 +225,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2012.doc/dlrobot_data",
         "sha256": "3da8d1ab6e683d2ed6deabb472debfa279de22158bab3c1a6bea7cffef94c1fa",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -250,7 +250,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2011.doc/dlrobot_data",
         "sha256": "440f2bf6e186bf89e6e5358c6840fac3ae83ec39dc45f89524cd8ff4ef7b83c4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -275,7 +275,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2011.doc/dlrobot_data",
         "sha256": "52dd0dee4535aeb1e318f60a7c68cbc7bbd5d21957428e81bbd18a0db2da4bb6",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -300,7 +300,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2014.doc/dlrobot_data",
         "sha256": "5bd9ed13e3e163889d41539c4e7c3b2f8fc20d2a6ac1d62c23653d774dcc48b9",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -325,7 +325,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2016.doc/dlrobot_data",
         "sha256": "6069a14a5100e1d0791d9dea82c5e1b885cb6551c5146ab0a0625cf01167d536",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -350,7 +350,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2012.doc/dlrobot_data",
         "sha256": "627f0fd72ec5462a27ec8822502cf6440ae25f847dd76c6066e71a7b27fa9719",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -375,7 +375,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2015.doc/dlrobot_data",
         "sha256": "6d45547d137dfc929def0e3be9674167d5f97d486a075778bcc6adfc4ac713a7",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -400,7 +400,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2016.doc/dlrobot_data",
         "sha256": "7353edf47e85486b77a4ac49025312bc7d275c42b0aa07872dfd9f334675dda8",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -425,7 +425,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2009.doc/dlrobot_data",
         "sha256": "769996fd70cc4e0c85510384f7a4e74970dbd744967dafeb170068f2de815684",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -450,7 +450,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2016.doc/dlrobot_data",
         "sha256": "88c49adde666ba7d7c7ec2f2ffaeeebe46c91d3176b86ee9649b98c01cf32458",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -475,7 +475,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2017.doc/dlrobot_data",
         "sha256": "8a17bd935aaf6a003d26e32565af2e8b0cf5f0378f2e960b69d77175af837c7f",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -500,7 +500,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2017.doc/dlrobot_data",
         "sha256": "8e1473e35fb84d4234458c3e1523431272ed4a0ca6aa51c14ab594ab2665dab2",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -525,7 +525,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2015.doc/dlrobot_data",
         "sha256": "8fcff38660c6740a7fbe0370461fe1738ab0c097baf0eff9689c8942c7eb10c7",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -550,7 +550,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2015.doc/dlrobot_data",
         "sha256": "97f51f4a4e35c677d04e85c57e173573d03a5d97cbd740f41e6eab03c3690dd2",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -575,7 +575,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2015.doc/dlrobot_data",
         "sha256": "a5bdb915cb370fab55500cfce3f417e06193be6631f1b673d9f8ef286c58b954",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -600,7 +600,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2009.doc/dlrobot_data",
         "sha256": "a6309b084be8e4ec128741da49e1a5028a617a7270ecfbfd9aa6529f5e7bff9c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -625,7 +625,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2015.doc/dlrobot_data",
         "sha256": "a89de3839130aad1bbfc45039dc8fc7ce64dd8d60e00311add68ae972a2af311",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -650,7 +650,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2016.doc/dlrobot_data",
         "sha256": "aa50e352b303237a5d6a16958c164c99ad7a5db05684ce08abb2d50b07514ef4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -675,7 +675,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2017.doc/dlrobot_data",
         "sha256": "aa8e1d3e64b77c324e3e6e9d445e8ddbba78e1ea9ce42b46dfd035258248749c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -700,7 +700,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/admin_income_2013.doc/dlrobot_data",
         "sha256": "b11444bc6f7cc2d3c6f187f279e9c7ba90327be7a2e6bc6af21afe3d36c3c45b",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -725,7 +725,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2017.doc/dlrobot_data",
         "sha256": "b5b33b118b35091a6906884a9b6dfe8e0f7dd7ae2c54324da422d74b7b5d35d4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -750,7 +750,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2013.doc/dlrobot_data",
         "sha256": "b694b1f5d04a16b5db69b0a9a1fefa69cf241d4ca11f09e9d3696bdfa6ac410a",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -775,7 +775,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2018.doc/dlrobot_data",
         "sha256": "c12269ba7002d996ee9d550143d31d74644c4081bb0c5431ebbac1839296c915",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -800,7 +800,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2016.doc/dlrobot_data",
         "sha256": "ccffd1009bb0502b1570f57f76a8c9a0a7b8813890fef6050d195440dd78fa31",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -825,7 +825,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2014.doc/dlrobot_data",
         "sha256": "d3691fff9a2a93f5aa4dbd7bf26600b267a75b0ef00feaebbaf4df8dca702590",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -850,7 +850,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2016.doc/dlrobot_data",
         "sha256": "e0be0974e52f325a86d0d9ec284bb4ad45e4608a7d0c049858269d47f8eef860",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -875,7 +875,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2018.doc/dlrobot_data",
         "sha256": "e0f4ccdd96cccbd7b5aa86670ded6c13ef5ef35a9beb1ecb97a6742e180cec95",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -900,7 +900,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2015.doc/dlrobot_data",
         "sha256": "eba5ad1c7665baf606baee8b0595ce932e5d795819554557ecc5369b1f2d1927",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -925,7 +925,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2013-1.doc/dlrobot_data",
         "sha256": "fc8b0423a4d0934c5cb09559108a680ace648b5d1102b4409fdc7d45d7f1ae41",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -950,7 +950,7 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2017.doc/dlrobot_data",
         "sha256": "fd270701c770fc25a858c41abc63a681c97872c608e9af0b35f546d12444fb29",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -975,6 +975,6 @@
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2010.doc/dlrobot_data",
         "sha256": "ff6956dc11cbc6327135379d5a522ee96e53a502b02d8458b44554f7dcf9e9a9",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     }
 ]
