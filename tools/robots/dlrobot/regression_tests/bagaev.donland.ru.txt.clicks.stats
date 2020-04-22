@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 20
+        "files_count": 21
     },
     {
         "click_path": [
@@ -25,7 +25,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_god._30b75300b471f0dd8be677f9d573a1ff/dlrobot_data",
         "sha256": "0148f7aec84518ce298ff1b5e77befe558bd6dd34022686f15c195a6fd1fe6ca",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -50,7 +50,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2015_g_9ca892d995b4e8a37fc1ccd6466df624/dlrobot_data",
         "sha256": "0831fcb74c462dd742c7ea8e78cc6cfcee3c51f560017814d3d6a8faab78f649",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -75,7 +75,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_dlia_saita_za_2017_god.do_95a7fe035a22e6082f048091f1d3a480/dlrobot_data",
         "sha256": "180a2bf9b9bff4e1f12845b1c5650546d6419b940f4654d60b5a4a6b2f4ce2bf",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -100,7 +100,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_eee7e1c8020d47b024baae205dc9ebf5/dlrobot_data",
         "sha256": "1e77ec9e07ff5d19f2885a5df0d5c61e3eaf8b3a5b41a53830982dd0747ee53c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -125,7 +125,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2018_go_f11c0e473950592c5b57e41c06d04c29/dlrobot_data",
         "sha256": "32ae8f1bd545a6c007dfff9f78f731083f2e5c6af49e7e25fca8a229bbb91832",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -150,7 +150,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2017__756b3dc510e2a6d8908685e8aa00b735/dlrobot_data",
         "sha256": "3a3fe112f093d18c0190646f5f6f8ae1626c2ce00f146af25d81d5865553fe1a",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -175,7 +175,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2017_g_616c04aeeae8108d1bc94bdb7d41ac80/dlrobot_data",
         "sha256": "4424b9f88315def7a4f13604a3618143768b51d722e41a3f49e1bb14a653db57",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -200,7 +200,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_za_2016_god.docx/dlrobot_data",
         "sha256": "4556b69186a8bcdafa3f7867c991db49493efd8efc68cf46cae2a4fc2c02505a",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -225,7 +225,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_48366333aa2c375ad62201e177c65b47/dlrobot_data",
         "sha256": "4a35644845dcf584da2ee58c4f4949b250a17308a8aa1f69ce2033f5ca890868",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -237,20 +237,20 @@
                 "engine": "google"
             },
             {
-                "url": "http://bagaev.donland.ru/Default.aspx?pageid=93741",
+                "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
                 "step": "declarations_div",
-                "title": "Собрание депутатов",
-                "anchor_text": "Собрание депутатов",
+                "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
+                "anchor_text": "Приказ № 66 –о/д от 29.12.2018 «Об утверждении Порядка составления, утверждения и ведения смет УСЗН Администрации Багаевского района»",
                 "engine": "urllib"
             },
             {
-                "url": "http://bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/Prot_170127_7.doc",
+                "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/усзн/Inf_170220_2.zip",
                 "step": "declarations"
             }
         ],
-        "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/Prot_170127_7.doc/dlrobot_data",
-        "sha256": "5f1d532738b4e8842a2e658306e2ede0352a31c32ec8bdda63f8b3a341b131d8",
-        "dl_recognizer_result": 1
+        "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_170220_2.zip/dlrobot_data",
+        "sha256": "4c85195279e98f7c2a6be8e2153f83046078a3cfe1d3067b415f712b760c47ff",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -275,7 +275,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/svedeniiaodokhodakhiraskhodakh.doc/dlrobot_data",
         "sha256": "647704695f24789ff2d7bad57cf8917486fefd10a4df3aae4a24c43683865fd2",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -300,7 +300,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_2015.doc/dlrobot_data",
         "sha256": "675541f4ee768812bc55c1939baba7bb61e72d54f25287f17322f7ca773595e5",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -332,7 +332,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/15.05.2017doc.docx/dlrobot_data",
         "sha256": "7418b89e8a85bf297c0d538d8133dced080d4861c409e89174f3073066de4582",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -357,7 +357,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYA_o_dokhodakh_za_2018__431aab6e439573be0a1a35d4f8a756e1/dlrobot_data",
         "sha256": "7dda683575e5f4b34eb3189d31c579cb377298529871c6bb03662459b4940f93",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -389,7 +389,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2015god.doc/dlrobot_data",
         "sha256": "9497a608a954bc74623a99fcae23d92e5f161b433a0c4fc42dd885ed9fbd9b77",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -414,7 +414,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhza2013god.doc/dlrobot_data",
         "sha256": "afa68e4f208bbafb5aa4160c904028b29f3de7c1a0b1e52e377fee727c9edbb9",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -439,7 +439,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2017_go_99b626288f5b1299e654f7af5db596a5/dlrobot_data",
         "sha256": "c2756bc23a6771aeb88a6bb74b33a598dfef895f56330fb973f35b7a8d2725fb",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -464,7 +464,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhzamov.doc/dlrobot_data",
         "sha256": "c8ead4a1ce86b3fce95b5a3a1bbf93ac2c91a0e730dcafd20364102a3fe35a38",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -489,7 +489,7 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2017god.doc/dlrobot_data",
         "sha256": "d3384583a0ab00dca181ba779999b8978a53a8fc63ebce9048ab6fb0c8e4f837",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -514,6 +514,31 @@
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2016__303263d53b33fb87fa1c452313a891f3/dlrobot_data",
         "sha256": "f2090493af179c3f287e377a45d3df3f9248af4f0f2b253164bdc2728decad9f",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://bagaev.donland.ru",
+                "step": null,
+                "title": "Главная - Администрация Багаевского района",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
+                "step": "declarations_div",
+                "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
+                "anchor_text": "Приказ № 66 –о/д от 29.12.2018 «Об утверждении Порядка составления, утверждения и ведения смет УСЗН Администрации Багаевского района»",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/усзн/Inf_170220_2.zip",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Inf_170220_2.zip/dlrobot_data",
+        "sha256": "f3c9f52ff21371c93ecc7e678812cf1e29fa86d7c23e1fef39ac7fa70d8067e0",
+        "dl_recognizer_result": "unknown_result"
     }
 ]

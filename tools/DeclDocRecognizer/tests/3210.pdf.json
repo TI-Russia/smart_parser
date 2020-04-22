@@ -3,84 +3,9 @@
     "smart_parser_person_count": 0,
     "start_text": "Сведения о доходах федеральных государственных служащих Федеральной миграционной службы за 2010 год супруга Автаева С.Н. 120000,00 земельный участок под ИЖС (индивидуальная) земельный участок под ИЖС (индивидуальная) жилой дом (индивидуальная) баня (индивидуальная) квартира (долевая - 1 /2 доля) гараж (индивидуальная) 1500 1200 127 84 53,6 17,5 Россия Россия Россия Россия Россия дочь Автаева С.Н. - квартира (индивидуальная) 51 Россия дочь Автаева С.Н. - квартира (долевая-1/2 доля) 53,6 Россия Аб",
     "text_len": 6945,
-    "person": {
-        "matches": [
-            "<re.Match object; span=(108, 120), match='Автаева С.Н.'>",
-            "<re.Match object; span=(387, 399), match='Автаева С.Н.'>",
-            "<re.Match object; span=(443, 455), match='Автаева С.Н.'>",
-            "<re.Match object; span=(498, 510), match='Абрамов М.Г.'>",
-            "<re.Match object; span=(593, 606), match='Абрамова М.Г.'>",
-            "<re.Match object; span=(713, 726), match='Баринова А.А.'>",
-            "<re.Match object; span=(900, 914), match='Бариновой А.А.'>",
-            "<re.Match object; span=(973, 986), match='Дробышев А.В.'>",
-            "<re.Match object; span=(1060, 1074), match='Дробышева А.В.'>",
-            "<re.Match object; span=(1128, 1142), match='Дробышева А.В.'>"
-        ],
-        "start": 108
-    },
-    "relative": {
-        "matches": [
-            "<re.Match object; span=(100, 107), match='супруга'>",
-            "<re.Match object; span=(382, 386), match='дочь'>",
-            "<re.Match object; span=(438, 442), match='дочь'>",
-            "<re.Match object; span=(585, 592), match='супруга'>",
-            "<re.Match object; span=(896, 899), match='сын'>",
-            "<re.Match object; span=(1052, 1059), match='супруга'>",
-            "<re.Match object; span=(1123, 1127), match='дочь'>",
-            "<re.Match object; span=(1192, 1196), match='дочь'>",
-            "<re.Match object; span=(1261, 1265), match='дочь'>",
-            "<re.Match object; span=(1683, 1690), match='супруга'>"
-        ],
-        "start": 100
-    },
-    "auto": {
-        "matches": [
-            "<re.Match object; span=(704, 708), match='Ауди'>",
-            "<re.Match object; span=(1646, 1653), match='Шевроле'>",
-            "<re.Match object; span=(1663, 1669), match='Сузуки'>",
-            "<re.Match object; span=(3673, 3676), match='KIA'>",
-            "<re.Match object; span=(4156, 4161), match='Нисан'>",
-            "<re.Match object; span=(4370, 4376), match='Сузуки'>",
-            "<re.Match object; span=(4991, 4995), match='Рено'>",
-            "<re.Match object; span=(5217, 5221), match='Audi'>",
-            "<re.Match object; span=(6661, 6665), match='Форд'>",
-            "<re.Match object; span=(6796, 6800), match='Форд'>"
-        ],
-        "start": 704
-    },
-    "income": {
-        "matches": [
-            "<re.Match object; span=(106, 112), match='120000'>",
-            "<re.Match object; span=(281, 287), match='150012'>",
-            "<re.Match object; span=(287, 293), match='001278'>",
-            "<re.Match object; span=(457, 463), match='702568'>",
-            "<re.Match object; span=(527, 533), match='312062'>",
-            "<re.Match object; span=(592, 598), match='701156'>",
-            "<re.Match object; span=(647, 653), match='530519'>",
-            "<re.Match object; span=(874, 880), match='572312'>",
-            "<re.Match object; span=(937, 943), match='162000'>",
-            "<re.Match object; span=(1191, 1197), match='642476'>"
-        ],
-        "start": 106
-    },
-    "realty": {
-        "matches": [
-            "<re.Match object; span=(131, 148), match='земельный участок'>",
-            "<re.Match object; span=(174, 191), match='земельный участок'>",
-            "<re.Match object; span=(217, 226), match='жилой дом'>",
-            "<re.Match object; span=(266, 274), match='квартира'>",
-            "<re.Match object; span=(276, 283), match='долевая'>",
-            "<re.Match object; span=(297, 302), match='гараж'>",
-            "<re.Match object; span=(402, 410), match='квартира'>",
-            "<re.Match object; span=(458, 466), match='квартира'>",
-            "<re.Match object; span=(468, 475), match='долевая'>",
-            "<re.Match object; span=(538, 546), match='квартира'>"
-        ],
-        "start": 131
-    },
     "header": {
         "matches": [
-            "<re.Match object; span=(0, 18), match='Сведения о доходах'>"
+            "<re.Match object; span=(0, 18), match='сведения о доходах'>"
         ],
         "start": 0
     }

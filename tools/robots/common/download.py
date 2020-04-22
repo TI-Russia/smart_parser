@@ -6,7 +6,7 @@ import logging
 from unidecode import unidecode
 import os
 from robots.common.http_request import make_http_request, request_url_headers
-from ConvStorage.conversion_client import on_save_file
+from ConvStorage.conversion_client import start_conversion_task_if_needed
 from robots.common.content_types import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 FILE_CACHE_FOLDER = "cached"
 
@@ -30,8 +30,6 @@ def get_site_domain_wo_www(url):
     if domain.startswith('www.'):
         domain = domain[len('www.'):]
     return domain
-
-
 
 
 def http_get_with_urllib(url, search_for_js_redirect=True):
@@ -66,6 +64,7 @@ def read_url_info_from_cache(url):
         return json.loads(inf.read())
 
 
+# file downloaded by urllib
 def write_cache_file(localfile, info_file, info, data):
     with open(localfile, "wb") as f:
         f.write(data)
@@ -79,10 +78,11 @@ def write_cache_file(localfile, info_file, info, data):
     with open(info_file, "w", encoding="utf8") as f:
         f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
     file_extension = get_file_extension_by_content_type(url_info['headers'])
-    on_save_file(localfile, file_extension)
+    start_conversion_task_if_needed(localfile, file_extension)
     return data
 
 
+# save from selenium
 def save_download_file(filename):
     global FILE_CACHE_FOLDER
     logger = logging.getLogger("dlrobot_logger")
@@ -99,7 +99,7 @@ def save_download_file(filename):
         logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
-    on_save_file(saved_filename, file_extension)
+    start_conversion_task_if_needed(saved_filename, file_extension)
     return saved_filename
 
 
@@ -158,7 +158,7 @@ def convert_html_to_utf8(url, html_data):
 
 
 def get_file_extension_by_content_type(headers):
-    content_type = headers.get('Content-Type', "text")
+    content_type = headers.get('Content-Type', headers.get('Content-type', "text"))
     content_disposition = headers.get('Content-Disposition')
     if content_disposition is not None:
         found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())

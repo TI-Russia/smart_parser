@@ -9,18 +9,20 @@
         ],
         "start": 776
     },
+    "header": {
+        "matches": [
+            "<re.Match object; span=(488, 506), match='сведения о доходах'>",
+            "<re.Match object; span=(822, 840), match='сведения о доходах'>",
+            "<re.Match object; span=(942, 1099), match='фамилия, инициалы должность перечень объектов нед>"
+        ],
+        "start": 488
+    },
     "person": {
         "matches": [
             "<re.Match object; span=(808, 821), match='Рыбников А.Н.'>",
             "<re.Match object; span=(1285, 1298), match='Рыбников А.Н.'>"
         ],
         "start": 808
-    },
-    "auto": {
-        "matches": [
-            "<re.Match object; span=(1400, 1407), match='Renault'>"
-        ],
-        "start": 1400
     },
     "transport_word": {
         "matches": [
@@ -45,14 +47,6 @@
             "<re.Match object; span=(1468, 1476), match='Квартира'>"
         ],
         "start": 1305
-    },
-    "header": {
-        "matches": [
-            "<re.Match object; span=(488, 506), match='Сведения о доходах'>",
-            "<re.Match object; span=(822, 840), match='Сведения О доходах'>",
-            "<re.Match object; span=(942, 1099), match='Фамилия, инициалы Должность Перечень объектов нед>"
-        ],
-        "start": 488
     },
     "surname_word": {
         "matches": [

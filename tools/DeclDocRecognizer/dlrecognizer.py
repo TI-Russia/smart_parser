@@ -4,14 +4,17 @@ import re
 import os
 import hashlib
 import shutil
-from .document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR
+import sys
+from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify
 from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TConversionTasks
-from .external_convertors import EXTERNAl_CONVERTORS
+from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+
 
 class DL_RECOGNIZER_ENUM:
     UNKNOWN = "unknown_result"
     POSITIVE = "declaration_result"
     NEGATIVE = "some_other_document_result"
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -64,6 +67,7 @@ def find_relatives(input_text, result, name):
 
 def find_vehicles(input_text, result, name):
     global VEHICLE_REGEXP_STR
+    input_text = russify(input_text).lower()
     get_matches(re.finditer(VEHICLE_REGEXP_STR, input_text, re.IGNORECASE), result, name)
 
 
@@ -90,6 +94,7 @@ def find_suname_word(input_text, result, name):
 
 
 def find_header(input_text, result, name):
+    input_text = russify(input_text).lower()
     regexps = [
         r"(Сведения о доходах)",
         r"(Сведения о расходах)",
@@ -157,29 +162,34 @@ def read_input_text(filename):
 
 
 def initialize_classification_vedict(source_file, input_text):
-    verdict = {"result": DL_RECOGNIZER_ENUM.UNKNOWN,
-              "smart_parser_person_count": get_smart_parser_result(source_file)
+    verdict = { "result": DL_RECOGNIZER_ENUM.UNKNOWN,
+                "smart_parser_person_count": get_smart_parser_result(source_file)
               }
     verdict["start_text"] = input_text[0:500]
     verdict["text_len"] = len(input_text)
     find_other_document_types(input_text, verdict, "other_document_type")
+    find_header(input_text, verdict, "header")
     return verdict
 
 
-def apply_first_rules(verdict, input_text):
-    _, file_extension = os.path.splitext(args.source_file)
+def apply_first_rules(source_file, verdict, input_text):
+    _, file_extension = os.path.splitext(source_file)
     if len(input_text) < 200:
         if file_extension in {".html", ".htm", ".docx", ".doc", ".xls", ".xlsx"}:
             if len(input_text) == 0:
                 verdict["description"] = "file is too short"  # jpeg in document
             else:
-                verdict["result"] = "some_other_document_result"  # fast empty files, but not empty
+                verdict["result"] = DL_RECOGNIZER_ENUM.NEGATIVE  # fast empty files, but not empty
         else:
             verdict["description"] = "file is too short"
+    elif verdict.get("header", dict()).get("start", 21) < 20:
+        verdict["result"] = DL_RECOGNIZER_ENUM.POSITIVE
+    elif verdict.get('other_document_type', {}).get("start", sys.maxsize) == 0:
+        verdict["result"] = DL_RECOGNIZER_ENUM.NEGATIVE
     elif TCharCategory.get_most_popular_char_category(verdict["start_text"]) != 'RUSSIAN_CHAR':
         verdict["result"] = DL_RECOGNIZER_ENUM.UNKNOWN
         verdict["description"] = "cannot find Russian chars, may be encoding problems"
-    elif verdict.get('other_document_type') is not None and verdict['other_document_type']['start'] < 400:
+    elif verdict.get('other_document_type', {}).get("start", sys.maxsize) < 400:
         verdict["result"] = DL_RECOGNIZER_ENUM.NEGATIVE
     elif verdict['smart_parser_person_count'] > 0 and len(input_text) / verdict['smart_parser_person_count'] < 2048:
         verdict["result"] = DL_RECOGNIZER_ENUM.POSITIVE
@@ -195,7 +205,6 @@ def apply_second_rules(verdict, input_text):
     find_vehicles_word(input_text, verdict, "transport_word")
     find_income(input_text, verdict, "income")  # not used
     find_realty(input_text, verdict, "realty")
-    find_header(input_text, verdict, "header")
     find_suname_word(input_text, verdict, "surname_word")
     person_count = len(verdict.get('person', dict()).get('matches', list()))
     #relative_count = len(verdict.get('relative', dict()).get('matches', list()))
@@ -207,9 +216,7 @@ def apply_second_rules(verdict, input_text):
     elif verdict.get("surname_word", dict()).get("start", 1) == 0 and len(
             input_text) < 2000 and person_count > 0 and realty_count > 0:
         is_declaration = True
-    elif verdict.get("header", dict()).get("start", 1) == 0:
-        is_declaration = True
-    elif realty_count > 5:
+    elif realty_count > 5 and verdict.get("header") is not None:
         is_declaration = True
     elif person_count > 0 and verdict.get("header") is not None:
         if person_count > 2 and verdict["header"]['start'] < verdict["person"]['start']:
@@ -266,13 +273,13 @@ def external_convert(source_file):
 def get_classification_verdict(source_file, txt_file):
     if not os.path.exists(txt_file):
         return {
-            "result": "some_other_document_result",
+            "result": DL_RECOGNIZER_ENUM.NEGATIVE,
             "description": "cannot parse document"
         }
     else:
         input_text = read_input_text(txt_file)
         verdict = initialize_classification_vedict(source_file, input_text)
-        if not apply_first_rules(verdict, input_text):
+        if not apply_first_rules(source_file, verdict, input_text):
             apply_second_rules(verdict, input_text)
         return verdict
 

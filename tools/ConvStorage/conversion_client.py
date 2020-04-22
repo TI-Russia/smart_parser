@@ -28,6 +28,7 @@ def assert_declarator_conv_alive():
         print("cannot connect to {} (declarator conversion server)".format(DECLARATOR_CONV_URL))
         raise
 
+
 def process_files_to_convert_in_another_thread(conversion_tasks):
     while True:
         time.sleep(5)
@@ -43,6 +44,7 @@ def process_files_to_convert_in_another_thread(conversion_tasks):
                             conversion_tasks.send_file_to_conversion_db(export_filename, DEFAULT_PDF_EXTENSION)
             else:
                 conversion_tasks.send_file_to_conversion_db(filename, file_extension)
+
 
 class TConversionTasks(object):
     def __init__(self):
@@ -130,9 +132,11 @@ class TConversionTasks(object):
                 self.logger.error("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
                 break
 
+
 CONVERSION_TASKS = None
 
-def on_save_file(filename, file_extension):
+
+def start_conversion_task_if_needed(filename, file_extension):
     global CONVERSION_TASKS
     if CONVERSION_TASKS is None:
         CONVERSION_TASKS = TConversionTasks()

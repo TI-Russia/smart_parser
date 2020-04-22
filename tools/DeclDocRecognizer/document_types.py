@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections import defaultdict
 
 SOME_OTHER_DOCUMENTS = [
     'шаблоны',
@@ -11,7 +12,9 @@ SOME_OTHER_DOCUMENTS = [
     'утверждена',  # декларации не утверждают
     'реестр',
     'указ',
-    'рейтинг'
+    'рейтинг',
+    'распоряжение',
+    'российская федерация федеральный закон'
 ]
 
 
@@ -66,3 +69,11 @@ def build_vehicle_regexp():
     return "|".join(vehicle_items)
 
 VEHICLE_REGEXP_STR = build_vehicle_regexp()
+
+
+def russify(s):
+    s = s.replace('O', 'О').replace('Х', 'Х').replace('E', 'Е').replace('C', 'С').replace('T', 'Т').replace('P', 'Р')
+    s = s.replace('A', 'А').replace('H', 'Н').replace('K', 'К').replace('B', 'В').replace('M', 'М')
+    s = s.replace('o', 'о').replace('x', 'х').replace('e', 'е').replace('c', 'с').replace('p', 'р').replace('a', 'а')
+    s = s.replace('k', 'к')
+    return s

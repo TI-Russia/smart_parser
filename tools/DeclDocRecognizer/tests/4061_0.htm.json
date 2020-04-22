@@ -3,6 +3,14 @@
     "smart_parser_person_count": 0,
     "start_text": "<div><img src= //mc.yandex.ru/watch/13249753 style= position:absolute; left:-9999px; alt= /></div> Арбитражный суд Ивановской области О суде Судьи Картотека дел 23Расписание Перерывы Практика Процесс Подать документ Меню О суде История создания Наши судьи Наши сотрудники Сведения об аппарате суда Структура суда Арбитражные заседатели Пропускной режим в здании суда Статистика суда Новости Кадровое обеспечение Режим работы и контактная информация Суды округа Специализация судебных составов Отчёт о",
     "text_len": 3507,
+    "header": {
+        "matches": [
+            "<re.Match object; span=(3069, 3087), match='сведения о доходах'>",
+            "<re.Match object; span=(3150, 3171), match='декларированный доход'>",
+            "<re.Match object; span=(3357, 3378), match='декларированный доход'>"
+        ],
+        "start": 3069
+    },
     "person": {
         "matches": [
             "<re.Match object; span=(962, 995), match='Тимошкин Константин Александрович'>",
@@ -12,8 +20,8 @@
     },
     "auto": {
         "matches": [
-            "<re.Match object; span=(3287, 3292), match='Нисан'>",
-            "<re.Match object; span=(3423, 3428), match='Нисан'>"
+            "<re.Match object; span=(3287, 3292), match='нисан'>",
+            "<re.Match object; span=(3423, 3428), match='нисан'>"
         ],
         "start": 3287
     },
@@ -36,13 +44,5 @@
             "<re.Match object; span=(3229, 3234), match='Гараж'>"
         ],
         "start": 3184
-    },
-    "header": {
-        "matches": [
-            "<re.Match object; span=(3069, 3087), match='Сведения о доходах'>",
-            "<re.Match object; span=(3150, 3171), match='Декларированный доход'>",
-            "<re.Match object; span=(3357, 3378), match='Декларированный доход'>"
-        ],
-        "start": 3069
     }
 }
