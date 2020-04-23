@@ -8,6 +8,8 @@ import sys
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify
 from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TConversionTasks
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+import itertools
+from collections import defaultdict
 
 
 class DL_RECOGNIZER_ENUM:
@@ -15,11 +17,23 @@ class DL_RECOGNIZER_ENUM:
     POSITIVE = "declaration_result"
     NEGATIVE = "some_other_document_result"
 
+class FEATURE_ENUM:
+    surname_word = "surname_word"
+    realty = "realty"
+    income = "income"
+    transport_word = "transport_word"
+    person = "person"
+    header = "header"
+    other_document_type = "other_document_type"
+    vehicles_word = "vehicles_word"
+    vehicles = "vehicles"
+    relative = "relative"
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-file", dest='source_file', required=True)
-    parser.add_argument("--keep-temp", dest='keep_temp', action="store_true", default=False)
+    parser.add_argument("--keep-txt", dest='keep_txt', action="store_true", default=False)
+    parser.add_argument("--reuse-txt", dest='reuse_txt', action="store_true", default=False)
     parser.add_argument("--output", dest='output', default=None)
     args = parser.parse_args()
     if args.output is None:
@@ -27,96 +41,18 @@ def parse_args():
     return args
 
 
-def get_matches(match_object, result, name, max_count=10):
-    if match_object is None:
-        return False
-    matches = list()
-    first_offset = -1
-    for x in match_object:
-        if first_offset == -1:
-            first_offset = x.start()
-        matches.append(str(x))
-        if len(matches) >= max_count:
-            result[name] = {
-                'matches': matches,
-                "start": first_offset
-            }
-            break
-    if len(matches) == 0:
-        return False
-    result[name] = {
-        'matches': matches,
-        "start": first_offset
-    }
-    return True
+class TMatch:
+    def __init__(self, match_object):
+        self.start = match_object.start(0)
+        self.end = match_object.end(0)
+        self.text = match_object.string[self.start:self.end]
 
+    def to_json(self):
+        return {
+                "span": "{},{}".format(self.start, self.end),
+                "match": self.text
+        }
 
-def find_person(input_text, result, name):
-    regexp = "[А-Я]\w+ [А-Я]\w+ [А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))"  # # Сокирко Алексей Викторович
-    if get_matches(re.finditer(regexp, input_text), result, name):
-        pass
-    else:
-        regexp = "[А-Я]\w+ [А-Я]\. *[А-Я]\."  # Сокирко А.В.
-        get_matches(re.finditer(regexp, input_text), result, name)
-
-
-def find_relatives(input_text, result, name):
-    regexp = "супруга|(несовершеннолетний ребенок)|сын|дочь|(супруг\b)"
-    get_matches(re.finditer(regexp, input_text), result, name)
-
-
-def find_vehicles(input_text, result, name):
-    global VEHICLE_REGEXP_STR
-    input_text = russify(input_text).lower()
-    get_matches(re.finditer(VEHICLE_REGEXP_STR, input_text, re.IGNORECASE), result, name)
-
-
-def find_vehicles_word(input_text, result, name):
-    regexp = "транспорт|транспортных"
-    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
-
-
-def find_income(input_text, result, name):
-    regexp = '[0-9]{6}'
-    get_matches(re.finditer(regexp, input_text.replace(' ', ''), re.IGNORECASE), result, name)
-
-
-def find_realty(input_text, result, name):
-    estates = ["квартира", "земельный участок", "жилое помещение", "комната", "долевая", "з/ *участок", "ж/ *дом",
-               "жилой дом", "машиноместо", "гараж", "приусадебный участок"]
-    regexp = "|".join(map((lambda x: "({})".format(x)), estates) )
-    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
-
-
-def find_suname_word(input_text, result, name):
-    regexp = "(фамилия)|(фио)|(ф.и.о.)"
-    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
-
-
-def find_header(input_text, result, name):
-    input_text = russify(input_text).lower()
-    regexps = [
-        r"(Сведения о доходах)",
-        r"(Сведения о расходах)",
-        r"(Сведения об имущественном положении и доходах)",
-        r"((Фамилия|ФИО).{1,200}Должность.{1,200}Перечень объектов.{1,200}транспортных)",
-        r"(Сведения *,? предоставленные руководителями)",
-        r"(Перечень объектов недвижимого имущества ?, принадлежащих)",
-        r"(Сведения об источниках получения средств)",
-        r"(декларированный доход)",
-    ]
-
-    regexp = '(' + "|".join(regexps) + ")"
-    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
-
-
-def find_other_document_types(input_text, result, name):
-    global SOME_OTHER_DOCUMENTS
-    words = list()
-    for w in SOME_OTHER_DOCUMENTS:
-        words.append('(' + " *".join(w) + ')')
-    regexp = '(' + "|".join(words) + ")" + r"\b"
-    get_matches(re.finditer(regexp, input_text, re.IGNORECASE), result, name)
 
 
 def process_smart_parser_json(json_file):
@@ -153,6 +89,110 @@ def get_smart_parser_result(source_file):
     return people_count
 
 
+class TClassificationVerdict:
+
+    def __init__(self, input_text, smart_parser_person_count):
+        self.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
+        self.smart_parser_person_count = smart_parser_person_count
+        self.start_text = input_text[0:500]
+        self.input_text = input_text
+        self.text_features = defaultdict(dict)
+        self.description = ""
+        self.find_other_document_types()
+        self.find_header()
+
+    def to_json(self):
+        rec = {
+            "verdict": self.verdict,
+            "smart_parser_person_count": self.smart_parser_person_count,
+            "start_text": self.start_text,
+            "text_len": len(self.input_text),
+            "description": self.description,
+            "text_features": dict((k, list(m.to_json() for m in f.values())) for k, f in self.text_features.items())
+        }
+        return rec
+
+    def add_matches(self, match_object, feature_name, max_count=10):
+        if match_object is None:
+            return False
+        cnt = 0
+        for x in itertools.islice(match_object, 0, max_count):
+            m = TMatch(x)
+            self.text_features[feature_name][m.start] = m
+            cnt += 1
+        return cnt > 0
+
+    def get_first_features_match(self, feature_name):
+        f = self.text_features.get(feature_name)
+        if f is None:
+            return sys.maxsize
+        return min(f.keys())
+
+    def get_features_match_count(self, feature_name):
+        return len(self.text_features.get(feature_name, dict()))
+
+    def find_person(self):
+        regexp = "[А-Я]\w+ [А-Я]\w+ [А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))"  # # Сокирко Алексей Викторович
+        if self.add_matches(re.finditer(regexp, self.input_text), FEATURE_ENUM.person):
+            pass
+        else:
+            regexp = "[А-Я]\w+ [А-Я]\. *[А-Я]\."  # Сокирко А.В.
+            self.add_matches(re.finditer(regexp, self.input_text), FEATURE_ENUM.person)
+
+    def find_relatives(self):
+        regexp = "супруга|(несовершеннолетний ребенок)|сын|дочь|(супруг\b)"
+        self.add_matches(re.finditer(regexp, self.input_text), FEATURE_ENUM.relative)
+
+    def find_vehicles(self):
+        global VEHICLE_REGEXP_STR
+        self.add_matches(re.finditer(VEHICLE_REGEXP_STR, self.input_text, re.IGNORECASE), FEATURE_ENUM.vehicles)
+
+        input_text = russify(self.input_text).lower()
+        self.add_matches(re.finditer(VEHICLE_REGEXP_STR, input_text, re.IGNORECASE), FEATURE_ENUM.vehicles)
+
+    def find_vehicles_word(self):
+        regexp = "транспорт|транспортных"
+        self.add_matches(re.finditer(regexp, self.input_text, re.IGNORECASE), FEATURE_ENUM.vehicles_word)
+
+    def find_income(self):
+        regexp = '[0-9]{6}'
+        self.add_matches(re.finditer(regexp, self.input_text.replace(' ', ''), re.IGNORECASE), FEATURE_ENUM.income)
+
+    def find_realty(self):
+        estates = ["квартира", "земельный участок", "жилое помещение", "комната", "долевая", "з/ *участок", "ж/ *дом",
+                   "жилой дом", "машиноместо", "гараж", "приусадебный участок"]
+        regexp = "|".join(map((lambda x: "({})".format(x)), estates))
+        self.add_matches(re.finditer(regexp, self.input_text, re.IGNORECASE), FEATURE_ENUM.realty)
+
+    def find_surname_word(self):
+        regexp = "(фамилия)|(фио)|(ф.и.о.)"
+        self.add_matches(re.finditer(regexp, self.input_text, re.IGNORECASE), FEATURE_ENUM.surname_word)
+
+    def find_header(self):
+        input_text = russify(self.input_text).lower()
+        regexps = [
+            r"(Сведения о доходах)",
+            r"(Сведения о расходах)",
+            r"(Сведения об имущественном положении и доходах)",
+            r"((Фамилия|ФИО).{1,200}Должность.{1,200}Перечень объектов.{1,200}транспортных)",
+            r"(Сведения *,? предоставленные руководителями)",
+            r"(Перечень объектов недвижимого имущества ?, принадлежащих)",
+            r"(Сведения об источниках получения средств)",
+            r"(декларированный доход)",
+        ]
+
+        regexp = '(' + "|".join(regexps) + ")"
+        self.add_matches(re.finditer(regexp, input_text, re.IGNORECASE), FEATURE_ENUM.header)
+
+    def find_other_document_types(self):
+        global SOME_OTHER_DOCUMENTS
+        words = list()
+        for w in SOME_OTHER_DOCUMENTS:
+            words.append('(' + " *".join(w) + ')')
+        regexp = '(' + "|".join(words) + ")" + r"\b"
+        self.add_matches(re.finditer(regexp, self.input_text, re.IGNORECASE), FEATURE_ENUM.other_document_type)
+
+
 def read_input_text(filename):
     with open(filename, "r", encoding="utf8", errors="ignore") as inpf:
         input_text = inpf.read().replace("\n", " ").replace("\r", " ").replace('"', ' ').strip("\t \n\r")
@@ -162,78 +202,80 @@ def read_input_text(filename):
 
 
 def initialize_classification_vedict(source_file, input_text):
-    verdict = { "result": DL_RECOGNIZER_ENUM.UNKNOWN,
-                "smart_parser_person_count": get_smart_parser_result(source_file)
-              }
-    verdict["start_text"] = input_text[0:500]
-    verdict["text_len"] = len(input_text)
-    find_other_document_types(input_text, verdict, "other_document_type")
-    find_header(input_text, verdict, "header")
+    verdict = TClassificationVerdict(input_text, get_smart_parser_result(source_file))
     return verdict
 
 
-def apply_first_rules(source_file, verdict, input_text):
+def apply_first_rules(source_file, verdict):
     _, file_extension = os.path.splitext(source_file)
-    if len(input_text) < 200:
+    if len(verdict.input_text) < 200:
         if file_extension in {".html", ".htm", ".docx", ".doc", ".xls", ".xlsx"}:
-            if len(input_text) == 0:
-                verdict["description"] = "file is too short"  # jpeg in document
+            if len(verdict.input_text) == 0:
+                verdict.description = "file is too short"  # jpeg in document
             else:
-                verdict["result"] = DL_RECOGNIZER_ENUM.NEGATIVE  # fast empty files, but not empty
+                verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE  # fast empty files, but not empty
         else:
-            verdict["description"] = "file is too short"
-    elif verdict.get("header", dict()).get("start", 21) < 20:
-        verdict["result"] = DL_RECOGNIZER_ENUM.POSITIVE
-    elif verdict.get('other_document_type', {}).get("start", sys.maxsize) == 0:
-        verdict["result"] = DL_RECOGNIZER_ENUM.NEGATIVE
-    elif TCharCategory.get_most_popular_char_category(verdict["start_text"]) != 'RUSSIAN_CHAR':
-        verdict["result"] = DL_RECOGNIZER_ENUM.UNKNOWN
-        verdict["description"] = "cannot find Russian chars, may be encoding problems"
-    elif verdict.get('other_document_type', {}).get("start", sys.maxsize) < 400:
-        verdict["result"] = DL_RECOGNIZER_ENUM.NEGATIVE
-    elif verdict['smart_parser_person_count'] > 0 and len(input_text) / verdict['smart_parser_person_count'] < 2048:
-        verdict["result"] = DL_RECOGNIZER_ENUM.POSITIVE
+            verdict.description = "file is too short"
+    elif verdict.get_first_features_match("header") < 20:
+        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+        verdict.description = "header < 20"
+    elif verdict.get_first_features_match('other_document_type') == 0:
+        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+        verdict.description = "other_document_type=0"
+    elif TCharCategory.get_most_popular_char_category(verdict.start_text) != 'RUSSIAN_CHAR':
+        verdict.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
+        verdict.description = "cannot find Russian chars, may be encoding problems"
+    elif verdict.get_first_features_match('other_document_type') < 400:
+        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+        verdict.description = "other_document_type<400"
+    elif verdict.smart_parser_person_count > 0 and len(verdict.input_text) / verdict.smart_parser_person_count < 2048:
+        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+        verdict.description = "found smart_parser results"
     else:
         return False
     return True
 
 
-def apply_second_rules(verdict, input_text):
-    find_person(input_text, verdict, "person")
-    find_relatives(input_text, verdict, "relative")  # not used
-    find_vehicles(input_text, verdict, "auto")
-    find_vehicles_word(input_text, verdict, "transport_word")
-    find_income(input_text, verdict, "income")  # not used
-    find_realty(input_text, verdict, "realty")
-    find_suname_word(input_text, verdict, "surname_word")
-    person_count = len(verdict.get('person', dict()).get('matches', list()))
-    #relative_count = len(verdict.get('relative', dict()).get('matches', list()))
-    realty_count = len(verdict.get('realty', dict()).get('matches', list()))
-    vehicle_count = len(verdict.get('auto', dict()).get('matches', list()))
-    is_declaration = False
-    if vehicle_count > 0 and verdict.get("surname_word") is not None:
-        is_declaration = True
-    elif verdict.get("surname_word", dict()).get("start", 1) == 0 and len(
-            input_text) < 2000 and person_count > 0 and realty_count > 0:
-        is_declaration = True
-    elif realty_count > 5 and verdict.get("header") is not None:
-        is_declaration = True
-    elif person_count > 0 and verdict.get("header") is not None:
-        if person_count > 2 and verdict["header"]['start'] < verdict["person"]['start']:
-            is_declaration = True
-        else:
-            if realty_count > 0:
-                is_declaration = True
+def apply_second_rules(verdict):
+    verdict.find_person()
+    verdict.find_relatives()
+    verdict.find_vehicles()
+    verdict.find_vehicles_word()
+    verdict.find_income()
+    verdict.find_realty()
+    verdict.find_surname_word()
+    person_count = verdict.get_features_match_count(FEATURE_ENUM.person)
+    realty_count = verdict.get_features_match_count(FEATURE_ENUM.realty)
+    vehicle_count = verdict.get_features_match_count(FEATURE_ENUM.vehicles)
+    header_count = verdict.get_features_match_count(FEATURE_ENUM.header)
+    verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+    if vehicle_count > 0 and verdict.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
+        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+        verdict.description = "vehicles and surnames_word"
+    elif verdict.get_first_features_match(FEATURE_ENUM.surname_word) == 0 and len(verdict.input_text) < 2000 \
+            and person_count > 0 and realty_count > 0:
+        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+        verdict.description = "person name is at start and realty_count > 0"
+    elif header_count > 0:
+        if realty_count > 5:
+            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            verdict.description = "header is found and realty_count > 5"
+        elif person_count > 2 and verdict.get_first_features_match(FEATURE_ENUM.header) < verdict.get_first_features_match(FEATURE_ENUM.person):
+            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            verdict.description = "person_count > 2  and header is before person"
+        elif person_count > 0 and realty_count > 0:
+            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            verdict.description = "header found and person_count > 0  and realties are found"
 
-    verdict["result"] = DL_RECOGNIZER_ENUM.POSITIVE if is_declaration else DL_RECOGNIZER_ENUM.NEGATIVE
 
-
-def external_convert(source_file):
+def external_convert(source_file, reuse_txt=False):
     global EXTERNAl_CONVERTORS
     ec = EXTERNAl_CONVERTORS
     _, file_extension = os.path.splitext(source_file)
     file_extension = file_extension.lower()
     txt_file = source_file + ".txt"
+    if reuse_txt and os.path.exists(txt_file):
+        return txt_file
     if file_extension == ".xlsx":
         ec.run_xlsx2csv(source_file, txt_file)
     elif file_extension == ".xls":
@@ -272,28 +314,28 @@ def external_convert(source_file):
 
 def get_classification_verdict(source_file, txt_file):
     if not os.path.exists(txt_file):
-        return {
-            "result": DL_RECOGNIZER_ENUM.NEGATIVE,
-            "description": "cannot parse document"
-        }
+        v = TClassificationVerdict("", 0)
+        v.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+        v.description = "cannot parse document"
+        return v
     else:
         input_text = read_input_text(txt_file)
         verdict = initialize_classification_vedict(source_file, input_text)
-        if not apply_first_rules(source_file, verdict, input_text):
-            apply_second_rules(verdict, input_text)
+        if not apply_first_rules(source_file, verdict):
+            apply_second_rules(verdict)
         return verdict
 
 
-def run_dl_recognizer(source_file, keep_temp=False):
-    txt_file = external_convert(source_file)
+def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
+    txt_file = external_convert(source_file, reuse_txt)
     verdict = get_classification_verdict(source_file, txt_file)
-    if not keep_temp and os.path.exists(txt_file):
+    if not keep_txt and os.path.exists(txt_file):
         os.unlink(txt_file)
     return verdict
 
 
 if __name__ == "__main__":
     args = parse_args()
-    verdict = run_dl_recognizer(args.source_file, args.keep_temp)
+    verdict = run_dl_recognizer(args.source_file, args.keep_txt)
     with open(args.output, "w", encoding="utf8") as outf:
-        outf.write(json.dumps(verdict, ensure_ascii=False, indent=4))
+        outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))

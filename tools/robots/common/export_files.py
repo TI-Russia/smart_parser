@@ -114,7 +114,7 @@ def recognize_document_types(sorted_files):
         first_equal_file = list(group)[0]
         input_file = first_equal_file['export_path']
         logger.debug("run_dl_recognizer for {}".format(input_file))
-        dl_recognizer_result = run_dl_recognizer(input_file).get("result", DL_RECOGNIZER_ENUM.UNKNOWN)
+        dl_recognizer_result = run_dl_recognizer(input_file).verdict
 
         separate_files_to_dl_results[sha256] = dl_recognizer_result
         if dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
