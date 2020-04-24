@@ -1,5 +1,7 @@
+False	www.mvd.ru	www.yandex.ru
 True	mvd.ru	мвд.рф
 True	www.mvd.ru	mvd.ru
+False	www.mvd.ru	www.mvd.ru/print=1
 True	bagaev.donland.ru	donland.ru
 True	kraevoy.hbr.sudrf.ru	files.sudrf.ru
 True	kremlin.ru	static.kremlin.ru

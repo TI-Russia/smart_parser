@@ -2,8 +2,10 @@ import sys
 from robots.common.find_link import web_link_is_absolutely_prohibited
 
 mirror_examples = [
+    ("www.mvd.ru", "www.yandex.ru"),
     ("mvd.ru", "мвд.рф"),
-    ("www.mvd.ru", "mvd.ru")
+    ("www.mvd.ru", "mvd.ru"),
+    ("www.mvd.ru", "www.mvd.ru/print=1"),
 ]
 
 if __name__ == "__main__":
