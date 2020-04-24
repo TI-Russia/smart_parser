@@ -153,7 +153,12 @@ def wait_doc_conversion_finished():
             CONVERSION_TASKS.wait_new_tasks = False
             CONVERSION_TASKS.conversion_thread.join()
             CONVERSION_TASKS.wait_conversion_tasks()
+            CONVERSION_TASKS = None
         except Exception as exp:
             logging.getLogger("dlrobot_logger").error("wait_doc_conversion_finished, exception caught: {}".format(exp))
 
-
+def stop_conversion_thread():
+    global CONVERSION_TASKS
+    if CONVERSION_TASKS is not None:
+        CONVERSION_TASKS.conversion_thread.join()
+        CONVERSION_TASKS = None
