@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 8
+        "files_count": 9
     },
     {
         "click_path": [
@@ -168,6 +168,31 @@
         ],
         "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_843/dlrobot_data",
         "sha256": "8344db6e86fd1a53bc55d73e7fb84c72aca1c543a4e0f4f6a0ffc911aec397dd",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://gorsovet-podolsk.ru",
+                "step": null,
+                "title": "Официальный сайт Совета депутатов Городского округа Подольск",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.gorsovet-podolsk.ru/otchety",
+                "step": "declarations_div",
+                "title": "Отчеты - Совет депутатов Городского округа Подольск",
+                "anchor_text": "Скачать документ ( pdf, 549.36 KB )",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=934",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_934/dlrobot_data",
+        "sha256": "eec18bc48c7ba8d245e88603c855e2de57358ad944f5fd04f21a93d748ab8b77",
         "dl_recognizer_result": "declaration_result"
     },
     {
