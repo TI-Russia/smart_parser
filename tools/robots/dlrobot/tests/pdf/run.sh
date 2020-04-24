@@ -1,5 +1,4 @@
 PROJECT=$1
-
 python ../../dlrobot.py --project $PROJECT
 
 files_count=`/usr/bin/find result -type f | wc -l`

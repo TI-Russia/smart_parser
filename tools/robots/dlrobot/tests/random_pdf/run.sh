@@ -1,4 +1,5 @@
 # create a random.pdf and start pdf conversion task
+PROJECT=$1
 which soffice
 if [ $? -ne 0 ]; then
 	echo "cannot find soffice (libreoffice) in path"
@@ -12,13 +13,8 @@ rm random.txt
 cd -
 
 
-source ../setup_web_server.sh
+python ../../dlrobot.py --project $PROJECT
 
-[ ! -d cached ] || rm -rf cached
-
-python ../../dlrobot.py --project project.txt 
-
-kill $WEB_SERVER_PID >/dev/null
 
 files_count=`/usr/bin/find result -type f | wc -l`
 if [ $files_count != 1 ]; then

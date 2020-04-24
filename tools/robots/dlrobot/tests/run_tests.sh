@@ -1,15 +1,13 @@
-echo "do not run these tests if production dlrobot is executing on this workstation!"
-tests=`/usr/bin/find . -maxdepth 1 -mindepth 1 -type d`
+echo "do not run these tests if production dlrobot is executing on this workstation, we are gonna to kill all firefox instances!"
+taskkill /F  /IM firefox.exe
+
+tests=`/usr/bin/find . -maxdepth 1 -mindepth 1 -type d `
+PORT=8190
+
 for test_folder in $tests; do
-  echo -n "test $test_folder -> "
-  cd $test_folder
-  [ ! -f test_log.out ] || rm test_log.out
-  bash -x run.sh >test_log.out 2>&1
-  if [ $? -eq 0 ]; then
-     echo "success"
-  else
-     echo "failed"
-     exit 1
-  fi
-  cd - >/dev/null
+  bash run_one_test.sh $test_folder $PORT &
+  PORT=$((PORT+1))
+  sleep 2  #otherwise firefox at start is too slow
 done
+
+wait
