@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 45
+        "files_count": 46
     },
     {
         "click_path": [
@@ -20,7 +20,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -45,7 +45,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -70,7 +70,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -95,7 +95,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -120,11 +120,36 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
         "sha256": "0ae1ded6e4dd9a0d6eaefa63f90f82915f7a53c07f42cae8b87f1b51171f12df",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://arshush.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://www.arshush.ru/content/view/109/",
+                "step": "declarations_div",
+                "title": "",
+                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера\r\n главы муниципального образования Шушенский район, главы администрации Шушенского района \r\n и муниципальных служащих, замещающих должности муниципальной службы категории «руководители» \r\nза 2010 год",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx/dlrobot_data",
+        "sha256": "1167c8b5dad8481b36f118ada5b4b7607b512c16136d7d5bcc8b60bdd5421dc6",
         "dl_recognizer_result": "declaration_result"
     },
     {
@@ -145,7 +170,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -170,7 +195,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -195,7 +220,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -220,7 +245,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -237,8 +262,15 @@
                 "engine": "google"
             },
             {
+                "url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                "step": "declarations_div",
+                "title": "",
+                "anchor_text": "Cведения о доходах муниципальных служащих - 2018 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://arshush.ru/downloads/2019/svedeniya-o-dohodah-2018.docx",
-                "step": "declarations_div"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya-o-dohodah-2018.docx/dlrobot_data",
@@ -263,7 +295,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -288,7 +320,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -313,7 +345,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -338,7 +370,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -363,7 +395,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -388,7 +420,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -405,8 +437,15 @@
                 "engine": "google"
             },
             {
+                "url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                "step": "declarations_div",
+                "title": "",
+                "anchor_text": "Cведения о доходах муниципальных служащих - 2017 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://arshush.ru/downloads/2018/svedeniya-o-dohodah-2017.docx",
-                "step": "declarations_div"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya-o-dohodah-2017.docx/dlrobot_data",
@@ -431,7 +470,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -456,7 +495,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -481,7 +520,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -506,7 +545,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -531,7 +570,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -556,29 +595,11 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
         "sha256": "85ed4ac010c2406c1f9ba5aa6691756b0945d0db087e5b48e2b4e53132562e8f",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://arshush.ru",
-                "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://arshush.ru/content/view/1042/",
-                "step": "declarations_div_pages"
-            }
-        ],
-        "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
-        "sha256": "8c92771a7accc7eb15ea5eed5c2f56836200b22fd2cada40232dd7317bc04e88",
         "dl_recognizer_result": "declaration_result"
     },
     {
@@ -599,7 +620,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -624,7 +645,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -649,7 +670,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -674,7 +695,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -699,7 +720,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -724,7 +745,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -749,7 +770,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -774,7 +795,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -799,7 +820,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -824,11 +845,36 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
         "sha256": "ae68f1de0c76057b50cb46965ce2dd71122a267c0fd2a486a248acffae9ebd07",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://arshush.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                "step": "declarations_div",
+                "title": "",
+                "anchor_text": "Сведения о доходах - 2015 год",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://arshush.ru/content/view/1042/",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
+        "sha256": "c3cde5c92557726bc0959217bc4ded3ad569c99fc6f1df2edf555349994dbd08",
         "dl_recognizer_result": "declaration_result"
     },
     {
@@ -849,7 +895,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -899,7 +945,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -924,7 +970,7 @@
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
@@ -949,7 +995,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2018/svedeniya_za_2017.zip/dlrobot_data",
@@ -966,15 +1012,15 @@
                 "engine": "google"
             },
             {
-                "url": "http://arshush.ru/content/view/1068/48/",
-                "step": "declarations_div_pages",
+                "url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                "step": "declarations_div",
                 "title": "",
                 "anchor_text": "Информация",
                 "engine": "urllib"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/ruk_li_mu.zip",
-                "step": "declarations"
+                "step": "declarations_div_pages"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/ruk_li_mu.zip/dlrobot_data",
@@ -999,7 +1045,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
@@ -1049,7 +1095,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
@@ -1099,7 +1145,7 @@
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
-                "step": "declarations"
+                "step": "declarations_div"
             }
         ],
         "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
