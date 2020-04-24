@@ -56,6 +56,9 @@ def make_http_request(url, method):
     global HTTP_503_ERRORS_COUNT
     consider_request_policy(url, method)
 
+    if url.find('://') == -1:
+        url = "http://" + url
+
     o = list(urlparse(url)[:])
     if has_cyrillic(o[1]):
         o[1] = o[1].encode('idna').decode('latin')
@@ -82,11 +85,10 @@ def make_http_request(url, method):
     try:
         with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
             data = '' if method == "HEAD" else request.read()
-            info = request.info()
-            headers = request.headers
+            headers = request.info()
             if HTTP_503_ERRORS_COUNT > 0:
                 HTTP_503_ERRORS_COUNT -= 1 #decrement HTTP_503_ERRORS_COUNT on successful http_request
-            return info, headers, data
+            return headers, data
     except urllib.error.HTTPError as e:
         if e.code == 503:
             request_rates = get_request_rate()
@@ -106,7 +108,7 @@ def make_http_request(url, method):
         raise
 
 
-def request_url_headers (url):
+def request_url_headers(url):
     global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME, PROXIES
     if url in HEADER_MEMORY_CACHE:
         return HEADER_MEMORY_CACHE[url]
@@ -121,6 +123,6 @@ def request_url_headers (url):
 
 
     HEADER_REQUEST_COUNT[url] += 1
-    _, headers, _ = make_http_request(url, "HEAD")
+    headers, _ = make_http_request(url, "HEAD")
     HEADER_MEMORY_CACHE[url] = headers
     return headers

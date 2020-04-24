@@ -6,7 +6,7 @@ import os
 import tempfile
 import urllib
 import time
-import operator
+import datetime
 from bs4 import BeautifulSoup
 from robots.common.download import read_from_cache_or_download, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
@@ -15,7 +15,7 @@ from robots.common.http_request import get_request_rate
 from DeclDocRecognizer.dlrecognizer import  DL_RECOGNIZER_ENUM
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
-                    find_links_in_html_by_text, common_link_check
+                    find_links_in_html_by_text, web_link_is_absolutely_prohibited
 
 
 from robots.common.serp_parser import GoogleSearch
@@ -109,7 +109,7 @@ class TUrlInfo:
     def add_downloaded_file(self, record):
         self.downloaded_files.append(record)
 
-    def add_link(self, href, record):
+    def add_child_link(self, href, record):
         self.linked_nodes[href] = record
 
 
@@ -187,6 +187,7 @@ class TRobotWebSite:
             new_path.reverse()
             all_paths.append(new_path)
             return
+        start = datetime.datetime.now()
         for parent_url in self.get_parents(tail_node):
             parent_url_info = self.url_nodes[parent_url]
             if url != '':
@@ -207,6 +208,8 @@ class TRobotWebSite:
                     found_in_path = True
             if not found_in_path:
                 self.get_path_to_root_recursive(list(path) + [record], all_paths)
+            if (datetime.datetime.now() - start).total_seconds() > 2:
+                break
 
 
     def get_shortest_path_to_root(self, url):
@@ -216,7 +219,9 @@ class TRobotWebSite:
         path = [{'url': url, 'step': url_info.step_name}]
         all_paths = list()
         self.get_path_to_root_recursive(path, all_paths)
-        assert len(all_paths) > 0
+        if len(all_paths) == 0:
+            #timeout
+            return [{"exception": "graph is too large, timeout is set to 2 seconds"}]
         all_paths = sorted(all_paths, key=get_joined_path)
         path_lens = list(len(p) for p in all_paths)
         min_path = all_paths[path_lens.index(min(path_lens))]
@@ -232,7 +237,7 @@ class TProcessUrlTemporary:
 
     def add_link_wrapper(self, source, link_info):
         href = link_info.pop('href')
-        if not common_link_check(href):
+        if web_link_is_absolutely_prohibited(source, href):
             self.website.logger.debug('skip {} since it looks like a print link or it is an external url'.format(href))
             return
 
@@ -243,7 +248,7 @@ class TProcessUrlTemporary:
 
         href_title = link_info.pop('title') if 'title' in link_info else request_url_title(href)
 
-        self.website.url_nodes[source].add_link(href, link_info)
+        self.website.url_nodes[source].add_child_link(href, link_info)
         self.robot_step.step_urls.add(href)
 
         if href not in self.website.url_nodes:
@@ -290,6 +295,8 @@ class TRobotProject:
                 'sites': [o.to_json() for o in self.offices],
                 'step_names': self.step_names
             }
+            if not self.enable_search_engine:
+                output["disable_search_engine"] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
 
     def read_project(self):
@@ -461,7 +468,9 @@ class TRobotProject:
         if request is None:
             return
         min_normal_count = step_info.step_passport.get('min_normal_count', 1)
-        if len(step_info.robot_step.step_urls) >= min_normal_count:
+        already_found = len(step_info.robot_step.step_urls)
+        if already_found >= min_normal_count:
+            TRobotProject.logger.info('already found urls: {} >= {}, skip search engine'.format(already_found, min_normal_count))
             return
         TRobotProject.logger.info('search engine request: {}'.format(request))
         morda_url = step_info.website.morda_url

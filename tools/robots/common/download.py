@@ -1,6 +1,6 @@
 import json
 import re
-from urllib.parse import urlparse, unquote
+import urllib
 import hashlib
 import logging
 from unidecode import unidecode
@@ -21,33 +21,54 @@ def find_simple_js_redirect(data):
     if res:
         url = res.group(3)
         return url
-    return Non
+    return None
 
 
 def get_site_domain_wo_www(url):
     url = "http://" + url.split("://")[-1]
-    domain = urlparse(url).netloc
+    domain = urllib.parse.urlparse(url).netloc
     if domain.startswith('www.'):
         domain = domain[len('www.'):]
     return domain
 
 
+def convert_html_to_utf8_using_content_charset(content_charset, html_data):
+    if content_charset is not None:
+        encoding = content_charset
+    else:
+        match = re.search('charset\s*=\s*"?([^"\']+)', html_data.decode('latin', errors="ignore"))
+        if match:
+            encoding = match.group(1).strip()
+        else:
+            raise ValueError('unable to find encoding')
+    if encoding.lower().startswith('cp-'):
+        encoding = 'cp' + encoding[3:]
+
+    return html_data.decode(encoding, errors="ignore")
+
+
+def convert_html_to_utf8(url, html_data):
+    url_info = read_url_info_from_cache(url)
+    return convert_html_to_utf8_using_content_charset(url_info.get('charset'), html_data)
+
+
 def http_get_with_urllib(url, search_for_js_redirect=True):
-    info, headers, data = make_http_request(url, "GET")
+    headers, data = make_http_request(url, "GET")
 
     try:
-        if is_html_contents(info):
+        if is_html_contents(headers):
             if search_for_js_redirect:
                 try:
-                    redirect_url = find_simple_js_redirect(data.decode('latin', errors="ignore"))
+                    data_utf8 = convert_html_to_utf8_using_content_charset(headers.get_content_charset(), data)
+                    redirect_url = find_simple_js_redirect(data_utf8)
                     if redirect_url is not None and redirect_url != url:
                         return http_get_with_urllib(redirect_url, search_for_js_redirect=False)
-                except Exception as err:
+                except urllib.error.URLError as err:
                     pass
 
     except AttributeError:
         pass
-    return data, info
+    return data, headers
 
 
 def read_cache_file(local_file):
@@ -104,7 +125,7 @@ def save_download_file(filename):
 
 
 def _url_to_cached_folder (url):
-    local_path = unquote(url)
+    local_path = urllib.parse.unquote(url)
     if local_path.startswith('http://'):
         local_path = local_path[len('http://'):]
     if local_path.startswith('https://'):
@@ -142,19 +163,6 @@ def read_from_cache_or_download(url):
     return data
 
 
-def convert_html_to_utf8(url, html_data):
-    url_info = read_url_info_from_cache(url)
-    encoding = url_info.get('charset')
-    if encoding is None:
-        match = re.search('charset=([^"\']+)', html_data.decode('latin', errors="ignore"))
-        if match:
-            encoding = match.group(1)
-        else:
-            raise ValueError('unable to find encoding')
-    if encoding.lower().startswith('cp-'):
-        encoding = 'cp' + encoding[3:]
-
-    return html_data.decode(encoding, errors="ignore")
 
 
 def get_file_extension_by_content_type(headers):
