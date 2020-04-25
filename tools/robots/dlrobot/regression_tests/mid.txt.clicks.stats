@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 15
+        "files_count": 12
     },
     {
         "click_path": [
@@ -12,8 +12,15 @@
                 "engine": "google"
             },
             {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2014 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/1276672",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2014 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -37,40 +44,15 @@
                 "engine": "google"
             },
             {
-                "url": "https://www.mid.ru/activity/corruption/documents",
-                "step": "declarations_div",
-                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2017 году (за отчетный 2016 год)",
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2013 год",
                 "engine": "urllib"
-            },
-            {
-                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/2105011",
-                "step": "declarations_div_pages",
-                "title": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2017 году (за отчетный 2016 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Скачать файл",
-                "engine": "urllib"
-            },
-            {
-                "url": "https://www.mid.ru/documents/10180/2543721/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+2016.pdf/cc22a2e3-0dcc-423a-afd8-847f34e23b39",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.mid.ru/documents/10180/2543721/Metodicheskie_rekomendatsii_2016.pdf/cc22a2e3-0dcc-423a-afd8-847f_985183b4edea097bb1d891468e8a66e8/dlrobot_data",
-        "sha256": "16b960fbd0b8590db2759f8b0aa0c5e0dc8227c1336eb55d08ce29fcf23f0308",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mid.ru",
-                "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/673298",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2013 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -95,7 +77,7 @@
             },
             {
                 "url": "https://www.mid.ru/formi_documentov_anticorrup",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Формы документов, связанных с противодействием коррупции, для заполнения - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Уведомление о получении подарка",
                 "engine": "urllib"
@@ -120,14 +102,14 @@
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Таблица сведений о доходах руководства министерства за 2011 год",
                 "engine": "urllib"
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/161014",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2011 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -151,40 +133,15 @@
                 "engine": "google"
             },
             {
-                "url": "https://www.mid.ru/activity/corruption/documents",
-                "step": "declarations_div",
-                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2019 году (за отчетный 2018 год)",
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2012 год",
                 "engine": "urllib"
-            },
-            {
-                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/3469075",
-                "step": "declarations_div_pages",
-                "title": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2019 году (за отчетный 2018 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Скачать файл",
-                "engine": "urllib"
-            },
-            {
-                "url": "https://www.mid.ru/documents/10180/3468401/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D0%B7%D0%B0%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E+%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D0%BA+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85+%D0%B7%D0%B0+2018+%D0%B3%D0%BE%D0%B4.pdf/c753f05e-948a-4f4a-ae22-0e45392eba81",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.mid.ru/documents/10180/3468401/Metodicheskie_rekomendatsii_po_zapolneniiu_spravok_o_dokhodakh_za_75b7c821afd96b1fc97d67ab7195f90c/dlrobot_data",
-        "sha256": "83f2d82758c1a69b301182a862199f5d01a307ab65f8773b823925f9ec078aa0",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mid.ru",
-                "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/112282",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2012 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -208,8 +165,15 @@
                 "engine": "google"
             },
             {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2016 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/2755826",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2016 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -234,14 +198,14 @@
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2017 год",
                 "engine": "urllib"
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3189889",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2017 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -265,8 +229,15 @@
                 "engine": "google"
             },
             {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2017 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3211936",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2017 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -290,40 +261,15 @@
                 "engine": "google"
             },
             {
-                "url": "https://www.mid.ru/activity/corruption/documents",
-                "step": "declarations_div",
-                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2018 году (за отчетный 2017 год)",
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2015 год",
                 "engine": "urllib"
-            },
-            {
-                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/2971094",
-                "step": "declarations_div_pages",
-                "title": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2018 году (за отчетный 2017 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Скачать файл",
-                "engine": "urllib"
-            },
-            {
-                "url": "https://www.mid.ru/documents/10180/2970982/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8E+%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B9+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85+%D0%B2+2018.docx/132ec0f8-1f19-4296-a8a7-7eb223bfcd64",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.mid.ru/documents/10180/2970982/Metodicheskie_rekomendatsii_po_predstavleniiu_svedenii_o_dokhodak_caf04d71bace50d65c5208d52d950643/dlrobot_data",
-        "sha256": "be89b030fd38665365914236fc1f39e3ecf9395093790460378f6fdec3f33fb5",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mid.ru",
-                "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/2268754",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2015 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -348,14 +294,14 @@
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2018 год",
                 "engine": "urllib"
             },
             {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3584019",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2018 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
@@ -379,8 +325,15 @@
                 "engine": "google"
             },
             {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2018 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3637836",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Таблица сведений о доходах руководства министерства за 2018 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Таблица сведений о доходах руководства министерства за 2018 год",
                 "engine": "urllib"
@@ -404,26 +357,187 @@
                 "engine": "google"
             },
             {
-                "url": "https://www.mid.ru/activity/corruption/documents",
-                "step": "declarations_div",
-                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
-                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2020 году (за отчетный 2019 год)",
+                "url": "https://www.mid.ru/2019-g./-/asset_publisher/V85Da6aP5B5Y/content/id/3564686",
+                "step": "declarations",
+                "title": "Приказ МИД России от 25 января 2019 г. № 799 «Об утверждении Перечня должностей федеральной государственной гражданской службы в центральном аппарате Министерства иностранных дел Российской Федерации, дипломатических представительствах и консульских учреждениях Российской Федерации, территориальных органах - представительствах Министерства иностранных дел Российской Федерации на территории Российской Федерации, при замещении которых федеральные государственные гражданские служащие обязаны представлять сведения о своих доходах, об имуществе и обязательствах имущественного характера, а также сведения о доходах, об имуществе и обязательствах имущественного характера своих супруги (супруга) и несовершеннолетних детей» - 2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2015 г.",
                 "engine": "urllib"
             },
             {
-                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/3990460",
-                "step": "declarations_div_pages",
-                "title": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2020 году (за отчетный 2019 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
+                "url": "https://www.mid.ru/2015-g.",
+                "step": "declarations",
+                "title": "2015 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Административные регламенты",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/reglaments",
+                "step": "declarations",
+                "title": "Административные регламенты - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "НПА МИД России, утратившие силу",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/no_longer_valid",
+                "step": "declarations",
+                "title": "НПА МИД России, утратившие силу - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "3",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/no_longer_valid?p_p_id=101_INSTANCE_FlJbPH9sD9yw&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_FlJbPH9sD9yw_delta=20&_101_INSTANCE_FlJbPH9sD9yw_keywords=&_101_INSTANCE_FlJbPH9sD9yw_advancedSearch=false&_101_INSTANCE_FlJbPH9sD9yw_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_FlJbPH9sD9yw_cur=3",
+                "step": "declarations",
+                "title": "НПА МИД России, утратившие силу - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "6",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/no_longer_valid?p_p_id=101_INSTANCE_FlJbPH9sD9yw&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_FlJbPH9sD9yw_delta=20&_101_INSTANCE_FlJbPH9sD9yw_keywords=&_101_INSTANCE_FlJbPH9sD9yw_advancedSearch=false&_101_INSTANCE_FlJbPH9sD9yw_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_FlJbPH9sD9yw_cur=6",
+                "step": "declarations",
+                "title": "НПА МИД России, утратившие силу - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Сведения об изменениях в НПА МИД России",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/changes",
+                "step": "declarations",
+                "title": "Изменения в НПА - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/changes?p_p_id=101_INSTANCE_9RAkEaP19sh3&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_9RAkEaP19sh3_delta=20&_101_INSTANCE_9RAkEaP19sh3_keywords=&_101_INSTANCE_9RAkEaP19sh3_advancedSearch=false&_101_INSTANCE_9RAkEaP19sh3_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_9RAkEaP19sh3_cur=2",
+                "step": "declarations",
+                "title": "Изменения в НПА - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "1",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/changes?p_p_id=101_INSTANCE_9RAkEaP19sh3&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_9RAkEaP19sh3_delta=20&_101_INSTANCE_9RAkEaP19sh3_keywords=&_101_INSTANCE_9RAkEaP19sh3_advancedSearch=false&_101_INSTANCE_9RAkEaP19sh3_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_9RAkEaP19sh3_cur=1",
+                "step": "declarations",
+                "title": "Изменения в НПА - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "3",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/changes?p_p_id=101_INSTANCE_9RAkEaP19sh3&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_9RAkEaP19sh3_delta=20&_101_INSTANCE_9RAkEaP19sh3_keywords=&_101_INSTANCE_9RAkEaP19sh3_advancedSearch=false&_101_INSTANCE_9RAkEaP19sh3_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_9RAkEaP19sh3_cur=3",
+                "step": "declarations",
+                "title": "Изменения в НПА - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Формы обращений, заявлений и других документов, принимаемых МИД к рассмотрению",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/forms_adopted_by_review",
+                "step": "declarations",
+                "title": "Формы обращений, заявлений и других документов, принимаемых МИД к рассмотрению - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Инструкция о порядке рассмотрения обращений граждан в центральном аппарате Министерства иностранных дел Российской Федерации",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/forms_adopted_by_review/-/asset_publisher/yjd6DcbNB0GP/content/id/184654",
+                "step": "declarations",
+                "title": "Инструкция о порядке рассмотрения обращений граждан в центральном аппарате Министерства иностранных дел Российской Федерации - Формы обращений, заявлений и других документов, принимаемых МИД к рассмотрению - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Сведения о государственной регистрации НПА МИД России",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/registration",
+                "step": "declarations",
+                "title": "Государственная регистрация НПА МИД России - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2019 г.",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mid.ru/2019-g.",
+                "step": "declarations",
+                "title": "2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2019-g.?p_p_id=101_INSTANCE_V85Da6aP5B5Y&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_V85Da6aP5B5Y_delta=20&_101_INSTANCE_V85Da6aP5B5Y_keywords=&_101_INSTANCE_V85Da6aP5B5Y_advancedSearch=false&_101_INSTANCE_V85Da6aP5B5Y_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_V85Da6aP5B5Y_cur=2",
+                "step": "declarations",
+                "title": "2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2014 и ранее",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2014-g.",
+                "step": "declarations",
+                "title": "2014 и ранее - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2014-g.?p_p_id=101_INSTANCE_23VZDzdWWuX9&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_23VZDzdWWuX9_delta=20&_101_INSTANCE_23VZDzdWWuX9_keywords=&_101_INSTANCE_23VZDzdWWuX9_advancedSearch=false&_101_INSTANCE_23VZDzdWWuX9_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_23VZDzdWWuX9_cur=2",
+                "step": "declarations",
+                "title": "2014 и ранее - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2020 г.",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2020-g.",
+                "step": "declarations",
+                "title": "2020 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2018 г.",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mid.ru/2018-g.",
+                "step": "declarations",
+                "title": "2018 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2017 г.",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2017-g.",
+                "step": "declarations",
+                "title": "2017 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2017-g.?p_p_id=101_INSTANCE_23VZDzdWWuX9&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_23VZDzdWWuX9_delta=20&_101_INSTANCE_23VZDzdWWuX9_keywords=&_101_INSTANCE_23VZDzdWWuX9_advancedSearch=false&_101_INSTANCE_23VZDzdWWuX9_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_23VZDzdWWuX9_cur=2",
+                "step": "declarations",
+                "title": "2017 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Проекты административных регламентов (независимая экспертиза)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/independent_review",
+                "step": "declarations",
+                "title": "Проекты административных регламентов (независимая экспертиза) - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "3",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/independent_review?p_p_id=101_INSTANCE_JMs9O8NBmIh9&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_JMs9O8NBmIh9_delta=20&_101_INSTANCE_JMs9O8NBmIh9_keywords=&_101_INSTANCE_JMs9O8NBmIh9_advancedSearch=false&_101_INSTANCE_JMs9O8NBmIh9_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_JMs9O8NBmIh9_cur=3",
+                "step": "declarations",
+                "title": "Проекты административных регламентов (независимая экспертиза) - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "2",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/independent_review?p_p_id=101_INSTANCE_JMs9O8NBmIh9&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_101_INSTANCE_JMs9O8NBmIh9_delta=20&_101_INSTANCE_JMs9O8NBmIh9_keywords=&_101_INSTANCE_JMs9O8NBmIh9_advancedSearch=false&_101_INSTANCE_JMs9O8NBmIh9_andOperator=true&p_r_p_564233524_resetCur=false&_101_INSTANCE_JMs9O8NBmIh9_cur=2",
+                "step": "declarations",
+                "title": "Проекты административных регламентов (независимая экспертиза) - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Проект Административного регламента Министерства иностранных дел Российской Федерации по предоставлению государственной услуги по оформлению изменения гражданства",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/legislation_documents/independent_review/-/asset_publisher/JMs9O8NBmIh9/content/id/183590",
+                "step": "declarations",
+                "title": "Проект Административного регламента Министерства иностранных дел Российской Федерации по предоставлению государственной услуги по оформлению изменения гражданства - Проекты административных регламентов (независимая экспертиза) - Министерство иностранных дел Российской Федерации",
                 "anchor_text": "Скачать файл",
                 "engine": "urllib"
             },
             {
-                "url": "https://www.mid.ru/documents/10180/3985035/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%81%D0%BF%D1%80%D0%B2%D0%BA%D0%B0%D0%BC+%D0%B7%D0%B0+2019.docx/209aab31-86fa-4de7-89ca-3cf779213413",
+                "url": "https://www.mid.ru/documents/10180/180087/2.14+%D0%9F%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5+11.doc/93f2e676-e734-4b0e-92b8-5e2487b01e67",
                 "step": "declarations"
             }
         ],
-        "cached_file": "cached/www.mid.ru/documents/10180/3985035/Metodicheskie_rekomendatsii_po_sprvkam_za_2019.docx/209aab31-86fa_96e4a628d679b2cc20868fb6fb6a44d6/dlrobot_data",
-        "sha256": "fd0300fbe391f25e9428a564b14155251725a79b1636d89b942390fb31425ae0",
-        "dl_recognizer_result": "declaration_result"
+        "cached_file": "cached/www.mid.ru/documents/10180/180087/2.14_Prilozhenie_11.doc/93f2e676-e734-4b0e-92b8-5e2487b01e67/dlrobot_data",
+        "sha256": "f54a9e32765fc585d2683728a97c9d2962c4fc3b36f8403e8818dc9c608bbb92",
+        "dl_recognizer_result": "unknown_result"
     }
 ]
