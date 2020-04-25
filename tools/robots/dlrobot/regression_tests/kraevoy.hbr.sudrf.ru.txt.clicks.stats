@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 13
+        "files_count": 16
     },
     {
         "click_path": [
@@ -12,15 +12,22 @@
                 "engine": "google"
             },
             {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "2018",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
-                "engine": "selenium"
+                "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -44,22 +51,22 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2015",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=91",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -83,8 +90,54 @@
                 "engine": "google"
             },
             {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=8",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах в 2019 году (за отчетный 2018 год)",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=119",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Скачать документ",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://files.sudrf.ru/991/anticorruption/doc20190313-051102.doc",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20190313-051102.doc/dlrobot_data",
+        "sha256": "13e493bdf378196ed96fb287d81499a2dbe548d0e01c095e6c8c3cfa20a125cc",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru",
+                "step": null,
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "2014",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=9",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -108,22 +161,22 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2015",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=92",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -147,22 +200,40 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=norm_akt&id=28",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/kraevoy.hbr.sudrf.ru/modules.php_name_norm_akt_id_28/dlrobot_data",
+        "sha256": "4218b915a6ef5b86ee60101c2c88cb994e82fcac1f5dbe88012584cb64f666db",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru",
+                "step": null,
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2014",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=9",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=54",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -186,15 +257,22 @@
                 "engine": "google"
             },
             {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "2018",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
-                "engine": "selenium"
+                "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=127",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -218,22 +296,22 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2016",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=105",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -257,22 +335,22 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2017",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=15",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=117",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -296,40 +374,29 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=norm_akt&id=28",
-                "step": "declarations_div"
-            }
-        ],
-        "cached_file": "cached/kraevoy.hbr.sudrf.ru/modules.php_name_norm_akt_id_28/dlrobot_data",
-        "sha256": "a3d447f74436a029f4be33fe1df037230d6d4a593a8bcbac41b7ff863c96c9dd",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://kraevoy.hbr.sudrf.ru",
-                "step": null,
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
+                "anchor_text": "2015",
+                "engine": "urllib"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2017",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=15",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=118",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -354,7 +421,7 @@
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -378,8 +445,29 @@
                 "engine": "google"
             },
             {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "2018",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "2015",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=93",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -403,22 +491,22 @@
                 "engine": "google"
             },
             {
-                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=53",
-                "step": "declarations_div",
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "2016",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
                 "engine": "urllib"
             },
             {
                 "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=104",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Хабаровский краевой суд",
                 "anchor_text": "Скачать документ",
                 "engine": "urllib"
@@ -431,5 +519,69 @@
         "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data",
         "sha256": "c71d05b6ea91ac78dc8818cb6049b0921d1ba3421d83916bcb12a8e3594bb864",
         "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru",
+                "step": null,
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=8",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Методичесикие рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=47",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Скачать документ",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://files.sudrf.ru/991/anticorruption/doc20170214-023259.doc",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170214-023259.doc/dlrobot_data",
+        "sha256": "d012a03de45207a7479df7f1488e66f982ac313cb1a8af7e985d77dd822170b6",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru",
+                "step": null,
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=8",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Основные новеллы в 2020 году (за отчетный 2019 год)",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=131",
+                "step": "declarations",
+                "title": "Хабаровский краевой суд",
+                "anchor_text": "Скачать документ",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://files.sudrf.ru/991/anticorruption/doc20200204-044902.rtf",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20200204-044902.rtf/dlrobot_data",
+        "sha256": "fbef5c7caf74e0e325c8d0615c307c0b55c7a1a3e4c09e10b4eb29cbd15e439b",
+        "dl_recognizer_result": "unknown_result"
     }
 ]
