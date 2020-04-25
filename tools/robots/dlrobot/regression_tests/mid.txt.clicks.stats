@@ -1,75 +1,468 @@
 [
     {
-        "files_count": 14
+        "files_count": 16
     },
-    [
-        "0a565c60cdcf17bb50b64c083c2dd5466c48877c5a23833fa9cf834f10dbcd9c",
-        "cached/www.mid.ru/documents/10180/1569528/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_105f2c286e37a4fbaa99390bfaf5caa6/dlrobot_data",
-        1
-    ],
-    [
-        "16b960fbd0b8590db2759f8b0aa0c5e0dc8227c1336eb55d08ce29fcf23f0308",
-        "cached/www.mid.ru/documents/10180/2543721/Metodicheskie_rekomendatsii_2016.pdf/cc22a2e3-0dcc-423a-afd8-847f_985183b4edea097bb1d891468e8a66e8/dlrobot_data",
-        1
-    ],
-    [
-        "2dcfbf95da924d0c30986021f50f8b6fb0f87647161721f6c0c2e7f7667016b3",
-        "cached/www.mid.ru/documents/10180/e4849bf7-48df-40cf-b879-8acdfafc976c_t_1412764602739/dlrobot_data",
-        1
-    ],
-    [
-        "748d57961da906ae7676cc7f002ea35e09e99ad56d7ea7f3fc4449bdb37bd1a3",
-        "cached/www.mid.ru/documents/10180/4c371f18-6a60-45cd-8163-dea248102331_t_1406685873147/dlrobot_data",
-        1
-    ],
-    [
-        "83f2d82758c1a69b301182a862199f5d01a307ab65f8773b823925f9ec078aa0",
-        "cached/www.mid.ru/documents/10180/3468401/Metodicheskie_rekomendatsii_po_zapolneniiu_spravok_o_dokhodakh_za_75b7c821afd96b1fc97d67ab7195f90c/dlrobot_data",
-        1
-    ],
-    [
-        "9ff7d73a5c9c70ec1356bc835ea50855290ff4503d66c727e1601295a101fa8b",
-        "cached/www.mid.ru/documents/10180/9dd07960-af89-42c6-af4a-cb475384deb4_t_1406676329283/dlrobot_data",
-        1
-    ],
-    [
-        "a8727ae3595b82460e2f16b85aa86a6a7086e9e22ee95107cafa9a91871e00df",
-        "cached/www.mid.ru/documents/10180/2755679/spisok_na_sait.doc/11aba85b-dc20-4352-bea1-37fd8b6946fa/dlrobot_data",
-        1
-    ],
-    [
-        "b3d4719f248ef20f760ac43d34ca69629e508f7d45fde18a9cec6528eb4c7fbe",
-        "cached/www.mid.ru/documents/10180/3189816/Svod_dlia_DIP_na_sait_MID_2017.xlsx/4239019c-0fb7-40e8-806a-f8cc2_34293220c81bb2ef1d405e95a216813c/dlrobot_data",
-        1
-    ],
-    [
-        "b910fb10243b7fe8d456651502acf0c9404c5c82fc4e5cf96ba92e1f402eb3b9",
-        "cached/www.mid.ru/documents/10180/3210531/dokhody_2017.pdf/7aa26525-1f36-4cdd-827d-69b40f077eb4/dlrobot_data",
-        1
-    ],
-    [
-        "be89b030fd38665365914236fc1f39e3ecf9395093790460378f6fdec3f33fb5",
-        "cached/www.mid.ru/documents/10180/2970982/Metodicheskie_rekomendatsii_po_predstavleniiu_svedenii_o_dokhodak_caf04d71bace50d65c5208d52d950643/dlrobot_data",
-        1
-    ],
-    [
-        "d096b1ac8607060d86c73dc5fbf8fda3cd2934f7c68e4fe8be4e797dcc23a720",
-        "cached/www.mid.ru/documents/10180/2288000/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_9a06755f2c9f87b4c2c13f3938edc6da/dlrobot_data",
-        1
-    ],
-    [
-        "ef169991d05b93ad8a8c2f5fce32ac3f8a8e26365aa1a5e2e617b96ae0032f4f",
-        "cached/www.mid.ru/documents/10180/3583717/Svod_dlia_DIP_na_sait_MID_2018.xlsx/4e37c7d5-7962-4288-8033-88534_3cd36b6189e593dd19e9409c5a46f603/dlrobot_data",
-        1
-    ],
-    [
-        "f3d1fd2aededa4bb86d05bd374fa4931ef1935563c83b2674f4ff07615f119ea",
-        "cached/www.mid.ru/documents/10180/3636043/Tablitsa_svedenii_o_dokhodakh_rukovodstva_Ministerstva_za_2018_go_9aa25e85713a79d91ac907f36b52e698/dlrobot_data",
-        1
-    ],
-    [
-        "fd0300fbe391f25e9428a564b14155251725a79b1636d89b942390fb31425ae0",
-        "cached/www.mid.ru/documents/10180/3985035/Metodicheskie_rekomendatsii_po_sprvkam_za_2019.docx/209aab31-86fa_96e4a628d679b2cc20868fb6fb6a44d6/dlrobot_data",
-        1
-    ]
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/1276672",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2014 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/1569528/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%2C+%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85%2C+%D0%BE%D0%B1+%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5+%D0%B8+%D0%BE%D0%B1%D1%8F%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%B0%D1%85+%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE+%D1%85%D0%B0%D1%80%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B0+%D0%B7%D0%B0+2014+%D0%B3.+%282%29.doc/12b37b65-98aa-4484-a1c2-c62c22fcc335",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/1569528/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_105f2c286e37a4fbaa99390bfaf5caa6/dlrobot_data",
+        "sha256": "0a565c60cdcf17bb50b64c083c2dd5466c48877c5a23833fa9cf834f10dbcd9c",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/2019-g.",
+                "step": "declarations_div",
+                "title": "2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Приказ МИД России от 26 декабря 2018 г. № 24949 «Об утверждении Примерных должностных регламентов федеральных государственных гражданских служащих центрального аппарата Министерства иностранных дел Российской Федерации»",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2019-g./-/asset_publisher/V85Da6aP5B5Y/content/id/3518595",
+                "step": "declarations_div_pages",
+                "title": "Приказ МИД России от 26 декабря 2018 г. № 24949 «Об утверждении Примерных должностных регламентов федеральных государственных гражданских служащих центрального аппарата Министерства иностранных дел Российской Федерации» - 2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3518228/24949.pdf/34e700bf-fce1-43ad-b18b-cf59b7467cd0",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3518228/24949.pdf/34e700bf-fce1-43ad-b18b-cf59b7467cd0/dlrobot_data",
+        "sha256": "0af7cf7d5d2474838af2d9a420f5041f831bcf24fefed0598a423202aa0571d8",
+        "dl_recognizer_result": -1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents",
+                "step": "declarations_div",
+                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2017 году (за отчетный 2016 год)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/2105011",
+                "step": "declarations_div_pages",
+                "title": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2017 году (за отчетный 2016 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/2543721/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+2016.pdf/cc22a2e3-0dcc-423a-afd8-847f34e23b39",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/2543721/Metodicheskie_rekomendatsii_2016.pdf/cc22a2e3-0dcc-423a-afd8-847f_985183b4edea097bb1d891468e8a66e8/dlrobot_data",
+        "sha256": "16b960fbd0b8590db2759f8b0aa0c5e0dc8227c1336eb55d08ce29fcf23f0308",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/673298",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2013 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/e4849bf7-48df-40cf-b879-8acdfafc976c?t=1412764602739",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/e4849bf7-48df-40cf-b879-8acdfafc976c_t_1412764602739/dlrobot_data",
+        "sha256": "2dcfbf95da924d0c30986021f50f8b6fb0f87647161721f6c0c2e7f7667016b3",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/2019-g.",
+                "step": "declarations_div",
+                "title": "2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Приказ МИД России от 25 февраля 2019 г. № 2803 «Об утверждении перечней документов, необходимых для проведения оценки последствий принятия решения о реконструкции, модернизации, об изменении назначения или о ликвидации объекта социальной инфраструктуры для детей, являющегося федеральной государственной собственностью, заключении федеральной государственной организацией, образующей социальную инфраструктуру для детей, находящейся в ведении Министерства иностранных дел Российской Федерации, договора аренды, договора безвозмездного пользования закрепленных за ней объектов собственности»",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/2019-g./-/asset_publisher/V85Da6aP5B5Y/content/id/3627050",
+                "step": "declarations_div_pages",
+                "title": "Приказ МИД России от 25 февраля 2019 г. № 2803 «Об утверждении перечней документов, необходимых для проведения оценки последствий принятия решения о реконструкции, модернизации, об изменении назначения или о ликвидации объекта социальной инфраструктуры для детей, являющегося федеральной государственной собственностью, заключении федеральной государственной организацией, образующей социальную инфраструктуру для детей, находящейся в ведении Министерства иностранных дел Российской Федерации, договора аренды, договора безвозмездного пользования закрепленных за ней объектов собственности» - 2019 г. - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3626174/2803.pdf/fe535176-c730-402b-95bd-10b7b7c9e789",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3626174/2803.pdf/fe535176-c730-402b-95bd-10b7b7c9e789/dlrobot_data",
+        "sha256": "360ca74b38e10ee9b68de3a421e94f89f5ced4dfa5cd21a5f5535af4041c9c6f",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2011 год",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/161014",
+                "step": "declarations_div_pages",
+                "title": "Таблица сведений о доходах руководства министерства за 2011 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/4c371f18-6a60-45cd-8163-dea248102331?t=1406685873147",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/4c371f18-6a60-45cd-8163-dea248102331_t_1406685873147/dlrobot_data",
+        "sha256": "748d57961da906ae7676cc7f002ea35e09e99ad56d7ea7f3fc4449bdb37bd1a3",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents",
+                "step": "declarations_div",
+                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2019 году (за отчетный 2018 год)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/3469075",
+                "step": "declarations_div_pages",
+                "title": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2019 году (за отчетный 2018 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3468401/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D0%B7%D0%B0%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E+%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D0%BA+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85+%D0%B7%D0%B0+2018+%D0%B3%D0%BE%D0%B4.pdf/c753f05e-948a-4f4a-ae22-0e45392eba81",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3468401/Metodicheskie_rekomendatsii_po_zapolneniiu_spravok_o_dokhodakh_za_75b7c821afd96b1fc97d67ab7195f90c/dlrobot_data",
+        "sha256": "83f2d82758c1a69b301182a862199f5d01a307ab65f8773b823925f9ec078aa0",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/112282",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2012 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/9dd07960-af89-42c6-af4a-cb475384deb4?t=1406676329283",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/9dd07960-af89-42c6-af4a-cb475384deb4_t_1406676329283/dlrobot_data",
+        "sha256": "9ff7d73a5c9c70ec1356bc835ea50855290ff4503d66c727e1601295a101fa8b",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/2755826",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2016 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/2755679/%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA+%D0%BD%D0%B0+%D1%81%D0%B0%D0%B9%D1%82.doc/11aba85b-dc20-4352-bea1-37fd8b6946fa",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/2755679/spisok_na_sait.doc/11aba85b-dc20-4352-bea1-37fd8b6946fa/dlrobot_data",
+        "sha256": "a8727ae3595b82460e2f16b85aa86a6a7086e9e22ee95107cafa9a91871e00df",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2017 год",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3189889",
+                "step": "declarations_div_pages",
+                "title": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2017 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3189816/%D0%A1%D0%B2%D0%BE%D0%B4_%D0%B4%D0%BB%D1%8F+%D0%94%D0%98%D0%9F_%D0%BD%D0%B0+%D1%81%D0%B0%D0%B9%D1%82+%D0%9C%D0%98%D0%94_2017.xlsx/4239019c-0fb7-40e8-806a-f8cc20179b45",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3189816/Svod_dlia_DIP_na_sait_MID_2017.xlsx/4239019c-0fb7-40e8-806a-f8cc2_34293220c81bb2ef1d405e95a216813c/dlrobot_data",
+        "sha256": "b3d4719f248ef20f760ac43d34ca69629e508f7d45fde18a9cec6528eb4c7fbe",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3211936",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2017 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3210531/%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D1%8B+2017.pdf/7aa26525-1f36-4cdd-827d-69b40f077eb4",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3210531/dokhody_2017.pdf/7aa26525-1f36-4cdd-827d-69b40f077eb4/dlrobot_data",
+        "sha256": "b910fb10243b7fe8d456651502acf0c9404c5c82fc4e5cf96ba92e1f402eb3b9",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents",
+                "step": "declarations_div",
+                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2018 году (за отчетный 2017 год)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/2971094",
+                "step": "declarations_div_pages",
+                "title": "Методические рекомендации по вопросам представления справок о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2018 году (за отчетный 2017 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/2970982/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8E+%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B9+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85+%D0%B2+2018.docx/132ec0f8-1f19-4296-a8a7-7eb223bfcd64",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/2970982/Metodicheskie_rekomendatsii_po_predstavleniiu_svedenii_o_dokhodak_caf04d71bace50d65c5208d52d950643/dlrobot_data",
+        "sha256": "be89b030fd38665365914236fc1f39e3ecf9395093790460378f6fdec3f33fb5",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/2268754",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2015 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/2288000/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%2C+%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85%2C+%D0%BE%D0%B1+%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5+%D0%B8+%D0%BE%D0%B1%D1%8F%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%B0%D1%85+%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE+%D1%85%D0%B0%D1%80%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B0+%D0%B7%D0%B0+2015+%D0%B3..doc/1bc9e230-00fd-4703-9c31-f6a5978035f9",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/2288000/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_9a06755f2c9f87b4c2c13f3938edc6da/dlrobot_data",
+        "sha256": "d096b1ac8607060d86c73dc5fbf8fda3cd2934f7c68e4fe8be4e797dcc23a720",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2018 год",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3584019",
+                "step": "declarations_div_pages",
+                "title": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2018 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3583717/%D0%A1%D0%B2%D0%BE%D0%B4_%D0%B4%D0%BB%D1%8F+%D0%94%D0%98%D0%9F_%D0%BD%D0%B0+%D1%81%D0%B0%D0%B9%D1%82+%D0%9C%D0%98%D0%94_2018.xlsx/4e37c7d5-7962-4288-8033-885343f7e5da",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3583717/Svod_dlia_DIP_na_sait_MID_2018.xlsx/4e37c7d5-7962-4288-8033-88534_3cd36b6189e593dd19e9409c5a46f603/dlrobot_data",
+        "sha256": "ef169991d05b93ad8a8c2f5fce32ac3f8a8e26365aa1a5e2e617b96ae0032f4f",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3637836",
+                "step": "declarations_div",
+                "title": "Таблица сведений о доходах руководства министерства за 2018 год - Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Таблица сведений о доходах руководства министерства за 2018 год",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3636043/%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0+%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B9+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85+%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0+%D0%9C%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D0%B5%D1%80%D1%81%D1%82%D0%B2%D0%B0+%D0%B7%D0%B0+2018+%D0%B3%D0%BE%D0%B4.doc/d7d324c5-8892-4e81-abb3-125b8120e839",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3636043/Tablitsa_svedenii_o_dokhodakh_rukovodstva_Ministerstva_za_2018_go_9aa25e85713a79d91ac907f36b52e698/dlrobot_data",
+        "sha256": "f3d1fd2aededa4bb86d05bd374fa4931ef1935563c83b2674f4ff07615f119ea",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mid.ru",
+                "step": null,
+                "title": "",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents",
+                "step": "declarations_div",
+                "title": "Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2020 году (за отчетный 2019 год)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/3990460",
+                "step": "declarations_div_pages",
+                "title": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2020 году (за отчетный 2019 год) - Методические материалы - Министерство иностранных дел Российской Федерации",
+                "anchor_text": "Скачать файл",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mid.ru/documents/10180/3985035/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%81%D0%BF%D1%80%D0%B2%D0%BA%D0%B0%D0%BC+%D0%B7%D0%B0+2019.docx/209aab31-86fa-4de7-89ca-3cf779213413",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mid.ru/documents/10180/3985035/Metodicheskie_rekomendatsii_po_sprvkam_za_2019.docx/209aab31-86fa_96e4a628d679b2cc20868fb6fb6a44d6/dlrobot_data",
+        "sha256": "fd0300fbe391f25e9428a564b14155251725a79b1636d89b942390fb31425ae0",
+        "dl_recognizer_result": 1
+    }
 ]

@@ -1,85 +1,518 @@
 [
     {
-        "files_count": 16
+        "files_count": 18
     },
-    [
-        "0d9d434cd48ffc7bb6a939a1c78af768146e67deb7187347247943af9f96aaf3",
-        "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/035/742/original/SVEDENIIa_O_DOKhODAKh_GRAZh_04e7fc42c4424ebd90ef51d977b17159/dlrobot_data",
-        1
-    ],
-    [
-        "15b2c8cdf3815afde141605e17675b739611e2a63f7b2088948f28abf7c7f136",
-        "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/030/461/original/Svedeniia__predstavlennye_r_c851d797986d406fef0c64c10a9ef4c4/dlrobot_data",
-        1
-    ],
-    [
-        "360451a0ed70ac9153d65ab44c1327df9a25ac88c4a76c20c0b5bba8b40953bf",
-        "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/024/067/original/SVEDENIIa_NA_SAIT_Word_2007_acf6447a725813fa657772de852b316a/dlrobot_data",
-        1
-    ],
-    [
-        "371fe210ae0fe660cc39bcefd3dbbcd8252dfd1ea98556ae1d0464b7ae94c278",
-        "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/026/634/original/SVEDENIIa_O_DOKhODAKh_RABOT_f20ea7cb4909c2d025ecf6c104f35e72/dlrobot_data",
-        1
-    ],
-    [
-        "466ce2c2f0c3011aa28168ff7d54be3041e7a2e710d07d23cd6fb694996af7aa",
-        "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/026/770/original/Svedeniia_o_dokhodakh__rask_d483222c457fc80d643cbf4cae2c3702/dlrobot_data",
-        1
-    ],
-    [
-        "8b9389b11802d4f991a79574bb09795dc2a171f999e7beda03d7df987e40a4c3",
-        "cached/static-0.rosminzdrav.ru/system/attachments/attaches/000/030/676/original/Svedeniia_o_dokhodakh_raskh_b5db610925df94a1ad33821760378339/dlrobot_data",
-        1
-    ],
-    [
-        "920bc3e033ced33581f38f37347e29fb105f1dd7c34a72e7c1e64c46ce104e93",
-        "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/034/828/original/SVEDENIIa_O_DOKhODAKh_RUKOV_de023482563882bef3e0ba4b8f788878/dlrobot_data",
-        1
-    ],
-    [
-        "92a8edba65a3adb129a5d0984e2739c4ea6e5fffbad0eeb62b68893e97690886",
-        "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/026/057/original/Svedeniia.doc_1431595664/dlrobot_data",
-        1
-    ],
-    [
-        "95fd32ae6f04b65f47fdb770aa426480738a4b21e4480589bb321c6dd89e9573",
-        "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/026/487/original/SVEDENIIa_O_DOKhODAKh_RABOT_774465c87950dab7dca74cc0b2ed411d/dlrobot_data",
-        1
-    ],
-    [
-        "9f9209faa8b7ab404ae08d5240f72d8517905d590341ed0be00cceba8550f0ed",
-        "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/044/888/original/Svedeniia_o_dokhodakh_rukov_4dda510343c54ba0325c0a52400d4e91/dlrobot_data",
-        1
-    ],
-    [
-        "a21a8356611d04733261fe79356887e5f15b56e8574eb70c88d7135c33730025",
-        "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/034/688/original/SVEDENIIa_O_DOKhODAKh_ZAMES_55b558bd05d875a9e29a39cca47689f8/dlrobot_data",
-        1
-    ],
-    [
-        "a96b336bca3a8b9dc27934a6d24b73e9325e3d47cc6fd8d99beb9e473a5a7c45",
-        "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/045/150/original/Svedeniia_o_dokhodakh_gossl_7a61cd033b1d38e219465cf1bed611e3/dlrobot_data",
-        1
-    ],
-    [
-        "be8c6a26c21b76674404afb3b146f1d2ca99843be7fa760c2a90485f9bc2b26b",
-        "cached/static-0.rosminzdrav.ru/system/attachments/attaches/000/044/813/original/Final_Svedeniia_o_dokhodakh_40e97de13bf83171243c394c1a0c32d4/dlrobot_data",
-        1
-    ],
-    [
-        "c75c1cf10e99f805e40fbc8e7b89cb32165deaedc21a0dffbddba35494788732",
-        "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/020/400/original/SVOD_PU_2013_Word_2007.doc__ba783ac2ad54e4137162dd861c146881/dlrobot_data",
-        1
-    ],
-    [
-        "d51831e239df75418c405d8228920f3a041a3eaccc90149b76030beb01c7e721",
-        "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/028/146/original/Prikaz_Minzdrava_Rossii_ot__9256821ef1fb3359f0931e43e4466f3e/dlrobot_data",
-        1
-    ],
-    [
-        "ff1b56271f7bd4802b51fc872b948595b447d2183689be259a10b3e4224a5d83",
-        "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/038/387/original/Svedeniia_o_dokhodakh_gossl_15af0966c07bebae987099a1e2291c30/dlrobot_data",
-        1
-    ]
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6",
+                "step": "declarations_div",
+                "title": "Сведения о  доходах, расходах,об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2016 года по 31 декабря 2016 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2016-goda-po-31-dekabrya-2016-goda",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2016 года по 31 декабря 2016 года",
+                "anchor_text": "СВЕДЕНИЯ_О_ДОХОДАХ_ГРАЖДАНСКИХ_СЛУЖАЩИХ_МИНЗДРАВА_РОССИИ_ЗА_2016_ОТЧЕТНЫЙ_ГОД",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-3.rosminzdrav.ru/system/attachments/attaches/000/035/742/original/%D0%A1%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%AF_%D0%9E_%D0%94%D0%9E%D0%A5%D0%9E%D0%94%D0%90%D0%A5_%D0%93%D0%A0%D0%90%D0%96%D0%94%D0%90%D0%9D%D0%A1%D0%9A%D0%98%D0%A5_%D0%A1%D0%9B%D0%A3%D0%96%D0%90%D0%A9%D0%98%D0%A5_%D0%9C%D0%98%D0%9D%D0%97%D0%94%D0%A0%D0%90%D0%92%D0%90_%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98_%D0%97%D0%90_2016_%D0%9E%D0%A2%D0%A7%D0%95%D0%A2%D0%9D%D0%AB%D0%99_%D0%93%D0%9E%D0%94.doc?1504860872",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/035/742/original/SVEDENIIa_O_DOKhODAKh_GRAZh_04e7fc42c4424ebd90ef51d977b17159/dlrobot_data",
+        "sha256": "0d9d434cd48ffc7bb6a939a1c78af768146e67deb7187347247943af9f96aaf3",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsiiza-otchetnyy-period-s-1-yanvarya-2015-goda-po-31-dekabrya-2015-goda",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации, а также руководителями организаций, находящихся в ведении Министерства здравоохранения Российской Федерации, за отчетный период с 1 января 2015 года по 31 декабря 2015 года",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций созданных для выполнения задач, поставленных перед Минздравом России, за отчетный период с 1 января 2015 года по 31 декабря 2015 года",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-3.rosminzdrav.ru/system/attachments/attaches/000/030/461/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F__%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5_%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D1%8F%D0%BC%D0%B8_%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B9_%D0%B7%D0%B0_2015.docx?1465316489",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/030/461/original/Svedeniia__predstavlennye_r_c851d797986d406fef0c64c10a9ef4c4/dlrobot_data",
+        "sha256": "15b2c8cdf3815afde141605e17675b739611e2a63f7b2088948f28abf7c7f136",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6",
+                "step": "declarations_div",
+                "title": "Сведения о  доходах, расходах,об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2013 года по 31 декабря 2013 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/stranitsa-942",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации  за отчетный период с 1 января 2013 года по 31 декабря 2013 года",
+                "anchor_text": "СВЕДЕНИЯ_НА_САЙТ_Word_2007_1-1",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-3.rosminzdrav.ru/system/attachments/attaches/000/024/067/original/%D0%A1%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%AF_%D0%9D%D0%90_%D0%A1%D0%90%D0%99%D0%A2_Word_2007_1-1.doc?1425578736",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/024/067/original/SVEDENIIa_NA_SAIT_Word_2007_acf6447a725813fa657772de852b316a/dlrobot_data",
+        "sha256": "360451a0ed70ac9153d65ab44c1327df9a25ac88c4a76c20c0b5bba8b40953bf",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/special/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/4/0",
+                "step": "declarations_div",
+                "title": "Действующие федеральные законы, указы Президента Российской Федерации, постановления Правительства Российской Федерации, международные правовые акты",
+                "anchor_text": "Постановление Правительства Российской Федерации от 13.03.2013 № 208 \"Об утверждении Правил представления лицом, поступающим на работу на должность руководителя федерального государственного учреждения, а также руководителем федерального государственного учреждения сведений о своих доходах, об имуществе и обязательствах имущественного характера и о доходах, об имуществе и обязательствах имущественного характера своих супруга (супруги) и несовершеннолетних детей\"",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/special/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/4/0/22",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/www.rosminzdrav.ru/special/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption_8f2908c41a40cff9ba1b40f8f0afbd32/dlrobot_data",
+        "sha256": "36c1b75f041f5bb559d55b9ee7903f87d107cdd0139cff88fc958ae2f719471e",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6",
+                "step": "declarations_div",
+                "title": "Сведения о  доходах, расходах,об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников учреждений, находящихся в ведении Министерства здравоохранения Российской Федерации за период с 1 января 2014 года по 31 декабря 2014 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-rabotnikov-uchrezhdeniy-nahodyaschihsya-v-vedenii-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-period-s-1-yanvarya-2014-goda-po-31-dekabrya-2014-goda",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера  работников учреждений, находящихся в ведении Министерства здравоохранения Российской Федерации за период с 1 января 2014 года по 31 декабря 2014 года",
+                "anchor_text": "СВЕДЕНИЯ_О_ДОХОДАХ_РАБОТНИКОВ_ОРГАНИЗАЦИЙ_НАХОДЯЩИХСЯ_В_ВЕДЕНИИ_МИНЗДРАВА_РОССИИ_ЗА_2014_ГОД",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-1.rosminzdrav.ru/system/attachments/attaches/000/026/634/original/%D0%A1%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%AF_%D0%9E_%D0%94%D0%9E%D0%A5%D0%9E%D0%94%D0%90%D0%A5_%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%9D%D0%98%D0%9A%D0%9E%D0%92_%D0%9E%D0%A0%D0%93%D0%90%D0%9D%D0%98%D0%97%D0%90%D0%A6%D0%98%D0%99_%D0%9D%D0%90%D0%A5%D0%9E%D0%94%D0%AF%D0%A9%D0%98%D0%A5%D0%A1%D0%AF_%D0%92_%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%98_%D0%9C%D0%98%D0%9D%D0%97%D0%94%D0%A0%D0%90%D0%92%D0%90_%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98_%D0%97%D0%90_2014_%D0%93%D0%9E%D0%94.doc?1434711276",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/026/634/original/SVEDENIIa_O_DOKhODAKh_RABOT_f20ea7cb4909c2d025ecf6c104f35e72/dlrobot_data",
+        "sha256": "371fe210ae0fe660cc39bcefd3dbbcd8252dfd1ea98556ae1d0464b7ae94c278",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6",
+                "step": "declarations_div",
+                "title": "Сведения о  доходах, расходах,об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера гражданского служащего, его супруги (супруга) и несовершеннолетних детей, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за период с 1 января 2014 года по 31 декабря 2014 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-grazhdanskogo-sluzhaschego-ego-suprugi-supruga-i-nesovershennoletnih-detey-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-period-s-1-yanvarya-2014-goda-po-31-dekabrya-2014-goda",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера  гражданского служащего, его супруги (супруга) и несовершеннолетних детей, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за период с 1 января 2014 года по 31 декабря 2014 года",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера гражданского служащего, его супруги (супруга) и несовершеннолетних детей, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за период с 1 января 2014 года по 31 декабря 2014 года",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-1.rosminzdrav.ru/system/attachments/attaches/000/026/770/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85__%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85__%D0%BE%D0%B1_%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5_%D0%B8_%D0%BE%D0%B1%D1%8F%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%B0%D1%85_%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D1%85%D0%B0%D1%80%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B0_%D0%B3%D0%BE%D1%81%D1%81%D0%BB%D1%83%D0%B6%D0%B0%D1%89%D0%B8%D1%85.doc?1436284715",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/026/770/original/Svedeniia_o_dokhodakh__rask_d483222c457fc80d643cbf4cae2c3702/dlrobot_data",
+        "sha256": "466ce2c2f0c3011aa28168ff7d54be3041e7a2e710d07d23cd6fb694996af7aa",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsiiza-otchetnyy-period-s-1-yanvarya-2015-goda-po-31-dekabrya-2015-goda",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации, а также руководителями организаций, находящихся в ведении Министерства здравоохранения Российской Федерации, за отчетный период с 1 января 2015 года по 31 декабря 2015 года",
+                "anchor_text": "Сведения_о_доходах_расходах_гражданских_служащих_Минздрава_России_за_2015_год",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-0.rosminzdrav.ru/system/attachments/attaches/000/030/676/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D1%85_%D1%81%D0%BB%D1%83%D0%B6%D0%B0%D1%89%D0%B8%D1%85_%D0%9C%D0%B8%D0%BD%D0%B7%D0%B4%D1%80%D0%B0%D0%B2%D0%B0_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8_%D0%B7%D0%B0_2015_%D0%B3%D0%BE%D0%B4.doc?1466687341",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-0.rosminzdrav.ru/system/attachments/attaches/000/030/676/original/Svedeniia_o_dokhodakh_raskh_b5db610925df94a1ad33821760378339/dlrobot_data",
+        "sha256": "8b9389b11802d4f991a79574bb09795dc2a171f999e7beda03d7df987e40a4c3",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-rukovoditeley-organizatsiy-sozdannyh-dlya-vypolneniya-zadach-postavlennyh-pered-minzdravom-rossii-za-otchetnyy-period-s-1-yanvarya-2016-goda-po-31-dekabrya-2016-goda",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций созданных для выполнения задач, поставленных перед Минздравом России, за отчетный период с 1 января 2016 года по 31 декабря 2016 года",
+                "anchor_text": "СВЕДЕНИЯ_О_ДОХОДАХ_РУКОВОДИТЕЛЕЙ_ОРГАНИЗАЦИЙ__ПОДВЕДОМСТВЕННЫХ_МИНЗДРАВУ_РОССИИ__ЗА_2016_ГОД",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-2.rosminzdrav.ru/system/attachments/attaches/000/034/828/original/%D0%A1%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%AF_%D0%9E_%D0%94%D0%9E%D0%A5%D0%9E%D0%94%D0%90%D0%A5_%D0%A0%D0%A3%D0%9A%D0%9E%D0%92%D0%9E%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%95%D0%99_%D0%9E%D0%A0%D0%93%D0%90%D0%9D%D0%98%D0%97%D0%90%D0%A6%D0%98%D0%99__%D0%9F%D0%9E%D0%94%D0%92%D0%95%D0%94%D0%9E%D0%9C%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%9D%D0%AB%D0%A5_%D0%9C%D0%98%D0%9D%D0%97%D0%94%D0%A0%D0%90%D0%92%D0%A3_%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98__%D0%97%D0%90_2016_%D0%93%D0%9E%D0%94.doc?1497002272",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/034/828/original/SVEDENIIa_O_DOKhODAKh_RUKOV_de023482563882bef3e0ba4b8f788878/dlrobot_data",
+        "sha256": "920bc3e033ced33581f38f37347e29fb105f1dd7c34a72e7c1e64c46ce104e93",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации (с учетом уточнений, представленных до 10 июля 2013 года) за отчетный период с 1 января 2012 года по 31 декабря 2012 года,подлежащих размещению на официальном сайте Министерства здравоохранения Российской Федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/0",
+                "step": "declarations_div_pages2",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации (с учетом уточнений, представленных до 10 июля 2013 года) за отчетный период с 1 января 2012 года по 31 декабря 2012 года,подлежащих размещению на официальном сайте Министерства здравоохранения Российской Федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации  за отчетный период с 1 января 2012 года по 31 декабря 2012 года",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://static-3.rosminzdrav.ru/system/attachments/attaches/000/026/057/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F.doc?1431595664",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/026/057/original/Svedeniia.doc_1431595664/dlrobot_data",
+        "sha256": "92a8edba65a3adb129a5d0984e2739c4ea6e5fffbad0eeb62b68893e97690886",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613",
+                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте Министерства здравоохранения Российской Федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2",
+                "step": "declarations_div_pages2",
+                "title": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте Министерства здравоохранения Российской Федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным Указом Президента Российской Федерации от 8 июля 2013 г. № 613",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций созданных для выполнения задач, поставленных перед Минздравом России, за отчетный период с 1 января 2012 года по 31 декабря 2012 года",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://static-2.rosminzdrav.ru/system/attachments/attaches/000/026/487/original/%D0%A1%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%AF_%D0%9E_%D0%94%D0%9E%D0%A5%D0%9E%D0%94%D0%90%D0%A5_%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%9D%D0%98%D0%9A%D0%9E%D0%92_%D0%9E%D0%A0%D0%93%D0%90%D0%9D%D0%98%D0%97%D0%90%D0%A6%D0%98%D0%99_%D0%9D%D0%90%D0%A5%D0%9E%D0%94%D0%AF%D0%A9%D0%98%D0%A5%D0%A1%D0%AF_%D0%92_%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%98_%D0%9C%D0%98%D0%9D%D0%97%D0%94%D0%A0%D0%90%D0%92%D0%90_%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%98_%D0%97%D0%90_%D0%9F%D0%95%D0%A0%D0%98%D0%9E%D0%94_%D0%A1_1_%D0%AF%D0%9D%D0%92%D0%90%D0%A0%D0%AF_%D0%9F%D0%9E_31_%D0%94%D0%95%D0%9A%D0%90%D0%91%D0%A0%D0%AF_2012_%D0%93%D0%9E%D0%94%D0%90.doc?1433936353",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/026/487/original/SVEDENIIa_O_DOKhODAKh_RABOT_774465c87950dab7dca74cc0b2ed411d/dlrobot_data",
+        "sha256": "95fd32ae6f04b65f47fdb770aa426480738a4b21e4480589bb321c6dd89e9573",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-rukovoditelyami-organizatsiy-sozdannyh-dlya-vypolneniya-zadach-postavlennyh-pered-ministerstvom-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2018-goda-po-31-dekabrya-2018-goda",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера,  представленные руководителями организаций, созданных для выполнения задач,  поставленных перед Министерством здравоохранения Российской Федерации за отчетный период с 1 января 2018 года по 31 декабря 2018 года",
+                "anchor_text": "Сведения_о_доходах_руководителей_подведомственных_организаций_за_2018",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-1.rosminzdrav.ru/system/attachments/attaches/000/044/888/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9_%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B9_%D0%B7%D0%B0_2018.xlsx?1559300816",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/044/888/original/Svedeniia_o_dokhodakh_rukov_4dda510343c54ba0325c0a52400d4e91/dlrobot_data",
+        "sha256": "9f9209faa8b7ab404ae08d5240f72d8517905d590341ed0be00cceba8550f0ed",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6",
+                "step": "declarations_div",
+                "title": "Сведения о  доходах, расходах,об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2016 года по 31 декабря 2016 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2016-goda-po-31-dekabrya-2016-goda",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2016 года по 31 декабря 2016 года",
+                "anchor_text": "СВЕДЕНИЯ_О_ДОХОДАХ_ЗАМЕСТИТЕЛЕЙ_МИНИСТРА_ЗДРАВООХРАНЕНИЯ_РОССИЙСКОЙ_ФЕДЕРАЦИИ__ПОМОЩНИКОВ_(СОВЕТНИКОВ)_ЗА_2016_ГОД",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-2.rosminzdrav.ru/system/attachments/attaches/000/034/688/original/%D0%A1%D0%92%D0%95%D0%94%D0%95%D0%9D%D0%98%D0%AF_%D0%9E_%D0%94%D0%9E%D0%A5%D0%9E%D0%94%D0%90%D0%A5_%D0%97%D0%90%D0%9C%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%95%D0%9B%D0%95%D0%99_%D0%9C%D0%98%D0%9D%D0%98%D0%A1%D0%A2%D0%A0%D0%90_%D0%97%D0%94%D0%A0%D0%90%D0%92%D0%9E%D0%9E%D0%A5%D0%A0%D0%90%D0%9D%D0%95%D0%9D%D0%98%D0%AF_%D0%A0%D0%9E%D0%A1%D0%A1%D0%98%D0%99%D0%A1%D0%9A%D0%9E%D0%99_%D0%A4%D0%95%D0%94%D0%95%D0%A0%D0%90%D0%A6%D0%98%D0%98__%D0%9F%D0%9E%D0%9C%D0%9E%D0%A9%D0%9D%D0%98%D0%9A%D0%9E%D0%92_%28%D0%A1%D0%9E%D0%92%D0%95%D0%A2%D0%9D%D0%98%D0%9A%D0%9E%D0%92%29_%D0%97%D0%90_2016_%D0%93%D0%9E%D0%94.docx?1495698215",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/034/688/original/SVEDENIIa_O_DOKhODAKh_ZAMES_55b558bd05d875a9e29a39cca47689f8/dlrobot_data",
+        "sha256": "a21a8356611d04733261fe79356887e5f15b56e8574eb70c88d7135c33730025",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2018-goda-po-31-dekabrya-2018-goda",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2018 года по 31 декабря 2018 года",
+                "anchor_text": "Сведения_о_доходах_госслужащих_за_2018",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-2.rosminzdrav.ru/system/attachments/attaches/000/045/150/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%B3%D0%BE%D1%81%D1%81%D0%BB%D1%83%D0%B6%D0%B0%D1%89%D0%B8%D1%85_%D0%B7%D0%B0_2018.xlsx?1560504940",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/045/150/original/Svedeniia_o_dokhodakh_gossl_7a61cd033b1d38e219465cf1bed611e3/dlrobot_data",
+        "sha256": "a96b336bca3a8b9dc27934a6d24b73e9325e3d47cc6fd8d99beb9e473a5a7c45",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-rukovoditelyami-organizatsiy-sozdannyh-dlya-vypolneniya-zadach-postavlennyh-pered-ministerstvom-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2017-goda-po-31-dekabrya-2017-goda",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера,  представленные руководителями организаций, созданных для выполнения задач, поставленных перед Министерством здравоохранения Российской Федерации за отчетный период с 1 января 2017 года по 31 декабря 2017 года",
+                "anchor_text": "Финал_Сведения_о_доходах_руководителей_подведомственных_организаций_за_2017",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-0.rosminzdrav.ru/system/attachments/attaches/000/044/813/original/%D0%A4%D0%B8%D0%BD%D0%B0%D0%BB_%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9_%D0%BF%D0%BE%D0%B4%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B9_%D0%B7%D0%B0_2017.xlsx?1558946014",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-0.rosminzdrav.ru/system/attachments/attaches/000/044/813/original/Final_Svedeniia_o_dokhodakh_40e97de13bf83171243c394c1a0c32d4/dlrobot_data",
+        "sha256": "be8c6a26c21b76674404afb3b146f1d2ca99843be7fa760c2a90485f9bc2b26b",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/stranitsa-944",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций созданных для выполнения задач, поставленных перед Минздравом России, за отчетный период с 1 января 2013 года по 31 декабря 2013 года",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций созданных для выполнения задач, поставленных перед Минздравом России, за отчетный период с 1 января 2013 года по 31 декабря 2013 года",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-3.rosminzdrav.ru/system/attachments/attaches/000/020/400/original/%D0%A1%D0%92%D0%9E%D0%94_%D0%9F%D0%A3_2013_Word_2007.doc?1400866076",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/static-3.rosminzdrav.ru/system/attachments/attaches/000/020/400/original/SVOD_PU_2013_Word_2007.doc__ba783ac2ad54e4137162dd861c146881/dlrobot_data",
+        "sha256": "c75c1cf10e99f805e40fbc8e7b89cb32165deaedc21a0dffbddba35494788732",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/documents?document_search%5Bissued_by%5D=&document_search%5Bissued_from%5D=&document_search%5Bissued_until%5D=&document_search%5Bkind%5D=&document_search%5Bnumber%5D=&document_search%5Border%5D=date_desc&document_search%5Bq%5D=%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2%D0%BE%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D0%B5+%D0%BA%D0%BE%D1%80%D1%80%D1%83%D0%BF%D1%86%D0%B8%D0%B8&document_search%5Btitle_only%5D=&page=&utf8=%E2%9C%93",
+                "step": "declarations_div",
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "Приказ Министерства здравоохранения Российской Федерации от 15 июля 2013 г. № 462н «О перечне должностей, замещаемых на основании трудового договора в организациях, созданных для выполнения задач, поставленных перед Министерством здравоохранения Российской Федерации, при назначении на которые и при замещении которых граждане обязаны представлять сведения о своих доходах, расходах, об имуществе и обязательствах имущественного характера, а также сведения о доходах, расходах, об имуществе и обязательствах имущественного характера своих супруги (супруга) и несовершеннолетних детей»",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/documents/9087-prikaz-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-ot-15-iyulya-2013-g-462n-o-perechne-dolzhnostey-zameschaemyh-na-osnovanii-trudovogo-dogovora-v-organizatsiyah-sozdannyh-dlya-vypolneniya-zadach-postavlennyh-pered-ministerstvom-zdravoohraneniya-rossiyskoy-federatsii-pri-naznachenii-na-kotorye-i-pri-zameschenii-kotoryh-grazhdane-obyazany-predstavlyat-svedeniya-o-svoih-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-a-takzhe-svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-svoih-suprugi-supruga-i-nesovershennoletnih-detey",
+                "step": "declarations_div_pages",
+                "title": "Приказ Министерства здравоохранения Российской Федерации от 15 июля 2013 г. № 462н «О перечне должностей, замещаемых на основании трудового договора в организациях, созданных для выполнения задач, поставленных перед Министерством здравоохранения Российской Федерации, при назначении на которые и при замещении которых граждане обязаны представлять сведения о своих доходах, расходах, об имуществе и обязательствах имущественного характера, а также сведения о доходах, расходах, об имуществе и обязательствах имущественного характера своих супруги (супруга) и несовершеннолетних детей»",
+                "anchor_text": "Приказ Министерства здравоохранения Российской Федерации от 15 июля 2013 г. № 462н «О перечне должностей, замещаемых на основании трудового договора в организациях, созданных для выполнения задач, поставленных перед Министерством здравоохранения Российской Федерации, при назначении на которые и при замещении которых граждане обязаны представлять сведения о своих доходах, расходах, об имуществе и обязательствах имущественного характера, а также сведения о доходах, расходах, об имуществе и обязательствах имущественного характера своих супруги (супруга) и несовершеннолетних детей»",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-2.rosminzdrav.ru/system/attachments/attaches/000/028/146/original/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7_%D0%9C%D0%B8%D0%BD%D0%B7%D0%B4%D1%80%D0%B0%D0%B2%D0%B0_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8_%D0%BE%D1%82_15.07.2013_%E2%84%96_462%D0%BD.pdf?1446041691",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-2.rosminzdrav.ru/system/attachments/attaches/000/028/146/original/Prikaz_Minzdrava_Rossii_ot__9256821ef1fb3359f0931e43e4466f3e/dlrobot_data",
+        "sha256": "d51831e239df75418c405d8228920f3a041a3eaccc90149b76030beb01c7e721",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/special/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/4/0",
+                "step": "declarations_div",
+                "title": "Действующие федеральные законы, указы Президента Российской Федерации, постановления Правительства Российской Федерации, международные правовые акты",
+                "anchor_text": "Указ Президента Российской Федерации от 18 мая 2009 г. № 559 «О представлении гражданами, претендующими на замещение должностей федеральной государственной службы, и федеральными государственными служащими сведений о доходах, об имуществе и обязательствах имущественного характера»",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/special/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/4/0/6",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/www.rosminzdrav.ru/special/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption_7fc84c2562781713ab0a0cfd36254226/dlrobot_data",
+        "sha256": "dfe2cb830a0717710fea2fabd543e87f3ed7e6c8e07c9a0797045c7fb247b416",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.rosminzdrav.ru",
+                "step": null,
+                "title": "Министерство здравоохранения Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6",
+                "step": "declarations_div",
+                "title": "Сведения о  доходах, расходах,об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2017 года по 31 декабря 2017 года",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.rosminzdrav.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2017-goda-po-31-dekabrya-2017-goda",
+                "step": "declarations_div_pages",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные федеральными государственными гражданскими служащими Министерства здравоохранения Российской Федерации за отчетный период с 1 января 2017 года по 31 декабря 2017 года",
+                "anchor_text": "Сведения_о_доходах_госслужащих",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://static-1.rosminzdrav.ru/system/attachments/attaches/000/038/387/original/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%B3%D0%BE%D1%81%D1%81%D0%BB%D1%83%D0%B6%D0%B0%D1%89%D0%B8%D1%85.xlsx?1527087245",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/static-1.rosminzdrav.ru/system/attachments/attaches/000/038/387/original/Svedeniia_o_dokhodakh_gossl_15af0966c07bebae987099a1e2291c30/dlrobot_data",
+        "sha256": "ff1b56271f7bd4802b51fc872b948595b447d2183689be259a10b3e4224a5d83",
+        "dl_recognizer_result": 1
+    }
 ]

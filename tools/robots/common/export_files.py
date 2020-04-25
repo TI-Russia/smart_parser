@@ -109,10 +109,6 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
         }
 
 
-def sha256_key_and_url(r):
-    return r["sha256"], len(r["url"]), r["url"], r.get("archive_index", -1)
-
-
 def export_last_step_docs(office_info, office_folder, export_files):
     logger = logging.getLogger("dlrobot_logger")
     index = 0
@@ -141,35 +137,45 @@ def export_downloaded_docs(office_info, office_folder, index, export_files):
 
 
 def recognize_document_types(sorted_files):
-    recognizer_results = defaultdict(int)
-    for _, group in groupby(sorted_files, itemgetter('sha256')):
+    separate_files_to_dl_results = defaultdict(int)
+    archives_to_dl_results = defaultdict(int)
+
+    for sha256, group in groupby(sorted_files, itemgetter('sha256')):
         first_equal_file = list(group)[0]
-        old_file_name = first_equal_file['export_path']
-        dl_recognizer_result = run_decl_recognizer(old_file_name)
-        recognizer_results[old_file_name] = dl_recognizer_result
+        dl_recognizer_result = run_decl_recognizer(first_equal_file['export_path'])
+        separate_files_to_dl_results[sha256] = dl_recognizer_result
         if dl_recognizer_result > 0:
-            recognizer_results[first_equal_file['cached_file']] += 1 #the same key for archives
-    return recognizer_results
+            archives_to_dl_results[first_equal_file['cached_file']] += 1 #sum good files in each archive
+    return separate_files_to_dl_results, archives_to_dl_results
 
 
-def reorder_export_files_and_delete_non_declarations(office_folder, recognizer_results, sorted_files):
+def reorder_export_files_and_delete_non_declarations(office_folder, export_files):
+    sorted_files = sorted(export_files, key=itemgetter('sha256'))
+    separate_files_to_dl_results, archives_to_dl_results = recognize_document_types(sorted_files)
     logger = logging.getLogger("dlrobot_logger")
     exported_files = list()
-    for _, group in groupby(sorted_files, itemgetter('sha256')):
-        group = list(group)
-        first_equal_file = group[0]
-        old_file_name = first_equal_file['export_path']
-        dl_recognizer_result = recognizer_results[old_file_name]
+    for sha256, group in groupby(sorted_files, itemgetter('sha256')):
+        # make test results stable
+        group = sorted(group, key=(lambda x: " ".join((x['url'], x.get('anchor_text', ""), x.get('engine', ""))))
+
+        # in order to be more stable take a file with the shortest path (for example without prefix www.)
+        # the files were already sorted
+        path_lens = list(len(f['url']) for f in group)
+        chosen_file = group[path_lens.index(min(path_lens))]
+
+        old_file_name = chosen_file['export_path']
+        dl_recognizer_result = separate_files_to_dl_results[sha256]
 
         if dl_recognizer_result == DL_RECOGNIZER_NEGATIVE:
-            if recognizer_results[first_equal_file['cached_file']] > 1:  # more than 1 documents in archive are declarations
+            if archives_to_dl_results.get(chosen_file['cached_file'], 0) > 1:  # more than 1 document in archive are declarations
                 dl_recognizer_result = DL_RECOGNIZER_POSITIVE  # consider other documents to be also declarations
             else:
+                logger.debug("remove temporally exported file cached:{} url: {}, since decl_recognizer=0".format(chosen_file['cached_file'], chosen_file['url'],))
                 for r in group:
                     os.remove(r['export_path'])
                 continue
 
-        logger.debug("export url: {} cached: {}".format(first_equal_file['url'], first_equal_file['cached_file']))
+        logger.debug("export url: {} cached: {}".format(chosen_file['url'], chosen_file['cached_file']))
         extension = os.path.splitext(old_file_name)[1]
         new_file_name = os.path.join(office_folder, str(len(exported_files)) + extension)
         shutil.copy2(old_file_name, new_file_name)  # copy and delete = rename
@@ -184,9 +190,9 @@ def reorder_export_files_and_delete_non_declarations(office_folder, recognizer_r
 
             os.remove(r['export_path'])
 
-        first_equal_file["dl_recognizer_result"] = dl_recognizer_result
-        first_equal_file['export_path'] = new_file_name.replace('\\', '/')  # to compare windows and unix
-        exported_files.append(first_equal_file)
+        chosen_file["dl_recognizer_result"] = dl_recognizer_result
+        chosen_file['export_path'] = new_file_name.replace('\\', '/')  # to compare windows and unix
+        exported_files.append(chosen_file)
 
     return exported_files
 
@@ -202,9 +208,7 @@ def export_files_to_folder(offices, outfolder):
         export_files = list()
         index = export_last_step_docs(office_info, office_folder, export_files)
         export_downloaded_docs(office_info, office_folder, index, export_files)
-        sorted_files = sorted(export_files, key=sha256_key_and_url)
-        recognizer_results = recognize_document_types(sorted_files)
-        office_info.exported_files = reorder_export_files_and_delete_non_declarations(office_folder, recognizer_results, sorted_files)
+        office_info.exported_files = reorder_export_files_and_delete_non_declarations(office_folder, export_files)
 
         logger.info("found {} files, exported {} files to {}".format(
             len(export_files),

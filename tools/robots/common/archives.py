@@ -4,7 +4,7 @@ import shutil
 import logging
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, DEFAULT_RAR_EXTENSION, \
     DEFAULT_7Z_EXTENSION
-
+import tempfile
 
 def unzip_one_archive(input_file, main_index, outfolder):
     with zipfile.ZipFile(input_file) as zf:
@@ -41,12 +41,14 @@ def unrar_one_archive(input_file, main_index, outfolder):
     if os.path.exists(temp_folder):
         shutil.rmtree(temp_folder)
     os.mkdir(temp_folder)
-    cmd = "unrar e {} {} >unrar.log".format(input_file, temp_folder)
+    handle, logfile = tempfile.mkstemp(prefix='unrar')
+    os.close(handle)
+    cmd = "unrar e {} {} >{}".format(input_file, temp_folder, logfile)
     logger.debug(cmd)
     os.system(cmd)
-    os.unlink("unrar.log")
     for x in process_temp_folder(temp_folder, main_index, outfolder):
         yield x
+    os.unlink(logfile)
 
 
 def un7z_one_archive(input_file, main_index, outfolder):
@@ -58,10 +60,12 @@ def un7z_one_archive(input_file, main_index, outfolder):
     seven_z_binary = "7z"
     if os.name == "nt":
        seven_z_binary = "C:/cygwin64/lib/p7zip/7z.exe"
-    cmd = "{} e -bb -y -o{} {} >7z.log".format(seven_z_binary, temp_folder, input_file.replace("\\", "/"))
+    handle, logfile = tempfile.mkstemp(prefix='7zlog')
+    os.close(handle)
+    cmd = "{} e -bb -y -o{} {} >{}".format(seven_z_binary, temp_folder, input_file.replace("\\", "/"), logfile)
     logger.debug(cmd)
     os.system(cmd)
-    os.unlink("7z.log")
+    os.unlink(logfile)
     for x in process_temp_folder(temp_folder, main_index, outfolder):
         yield x
 

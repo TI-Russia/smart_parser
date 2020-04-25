@@ -6,6 +6,7 @@ import os
 import tempfile
 import urllib
 import time
+import operator
 from bs4 import BeautifulSoup
 from robots.common.download import read_from_cache_or_download, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
@@ -121,6 +122,7 @@ def request_url_title(url):
     except Exception as err:
         return ""
 
+
 class TRobotWebSite:
     def __init__(self, step_names, init_json=None):
         self.url_nodes = dict()
@@ -175,13 +177,16 @@ class TRobotWebSite:
         for p in parents:
             yield p
 
-
-    def get_path_to_root_recursive(self, path):
+    def get_path_to_root_recursive(self, path, all_paths):
         assert len(path) >= 1
+        assert type(all_paths) is list
         tail_node = path[-1]
         url = tail_node.get('url', '')
         if url == self.morda_url:
-            return True
+            new_path = list(path)
+            new_path.reverse()
+            all_paths.append(new_path)
+            return
         for parent_url in self.get_parents(tail_node):
             parent_url_info = self.url_nodes[parent_url]
             if url != '':
@@ -193,26 +198,29 @@ class TRobotWebSite:
                 'url': parent_url,
                 'step': parent_url_info.step_name,
                 'title': parent_url_info.title,
-                'anchor_text': link_info['text']
+                'anchor_text': link_info['text'],
+                'engine': link_info.get('engine', '')
             }
+            found_in_path = False
+            for u in path:
+                if u['url'] == parent_url:
+                    found_in_path = True
+            if not found_in_path:
+                self.get_path_to_root_recursive(list(path) + [record], all_paths)
 
-            if parent_url not in {u['url'] for u in path}:
-                new_path = list(path) + [record]
-                if self.get_path_to_root_recursive(new_path):
-                    path.clear()
-                    path.extend(new_path)
-                    return True
-        return False
 
-    def get_path_to_root(self, url):
+    def get_shortest_path_to_root(self, url):
+        def get_joined_path(path):
+            return " ".join(u['url'] for u in path)
         url_info = self.url_nodes[url]
         path = [{'url': url, 'step': url_info.step_name}]
-        found_root = self.get_path_to_root_recursive(path)
-        assert found_root
-        path.reverse()
-        return path
-
-
+        all_paths = list()
+        self.get_path_to_root_recursive(path, all_paths)
+        assert len(all_paths) > 0
+        all_paths = sorted(all_paths, key=get_joined_path)
+        path_lens = list(len(p) for p in all_paths)
+        min_path = all_paths[path_lens.index(min(path_lens))]
+        return min_path
 
 
 class TProcessUrlTemporary:
@@ -334,7 +342,7 @@ class TRobotProject:
             for url, info in office_info.url_nodes.items():
                 if len(info.downloaded_files) > 0:
                     for d in info.downloaded_files:
-                        path = office_info.get_path_to_root(url)
+                        path = office_info.get_shortest_path_to_root(url)
                         file_info = dict(d.items())
                         file_info['url'] = 'element_index:{}. url:{}'.format(d['element_index'], url)
                         path.append(file_info)
@@ -365,20 +373,23 @@ class TRobotProject:
 
     def write_export_stats(self):
         result = list()
-        for o in self.offices:
-            for export_record in o.exported_files:
-                infile = export_record['cached_file']
-                result.append( (
-                    export_record['sha256'],
-                    infile.replace('\\', '/'),
-                    export_record['dl_recognizer_result']))
-        result = sorted(result)
+        for office_info in self.offices:
+            for export_record in office_info.exported_files:
+                path = office_info.get_shortest_path_to_root(export_record['url'])
+                rec = {
+                    'click_path': path,
+                    'cached_file': export_record['cached_file'].replace('\\', '/'),
+                    'sha256': export_record['sha256'],
+                    'dl_recognizer_result': export_record['dl_recognizer_result'],
+                }
+                result.append(rec)
+        result = sorted(result, key=(lambda x: x['sha256']))
         with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
             summary = {
                 "files_count": len(result)
             }
             result.insert(0, summary)
-            json.dump(result, outf, indent=4)
+            json.dump(result, outf, ensure_ascii=False, indent=4)
 
     @staticmethod
     def find_links_with_selenium (step_info, main_url):

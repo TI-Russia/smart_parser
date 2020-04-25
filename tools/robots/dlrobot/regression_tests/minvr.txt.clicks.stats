@@ -1,125 +1,594 @@
 [
     {
-        "files_count": 24
+        "files_count": 23
     },
-    [
-        "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
-        "cached/www.minvostokrazvitia.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx/dlrobot_data",
-        1
-    ],
-    [
-        "02a748362844edf8dde8f4fe0f8da1977821b25713ba1c599a4b51fd1ea11388",
-        "cached/minvr.ru/upload/iblock/123/1_svedeniya_dlya_sayta_organizatsii_2017_tablitsa-_6_.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "04f99ada6ced1d77564db8da07c23dca8005c970c9cab9870c8451082e8c2afd",
-        "cached/minvr.ru/upload/iblock/f34/Svedeniia__Ministerstvo_-_PK.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "0538041f2208acaaff1f2ab6e95aca3382c866946b30ec709516f7f238cd3dbf",
-        "cached/minvr.ru/upload/iblock/578/SAIT_Organizatsii.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "0f5d0fb52d7e7c5d5ec42d815b9db481000d320d5908240031173d0c33dcba7a",
-        "cached/minvr.ru/upload/doc/31-05-2019/Otchet.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "108a8d79387bb2c82b9d73980d5ebc9607118e1aab824c88825ab0448591c148",
-        "cached/www.minvostokrazvitia.ru/upload/iblock/e0a/metodicheskie_rekom-2018.docx/dlrobot_data",
-        1
-    ],
-    [
-        "144deda665dc4faa33af9081436bcdc0051be9c996963c9785191132c5da9fde",
-        "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincome/data_20180523t1130_structure_20180523t1130._b1362d902f6fa3f61bd85604ca02dfa1/dlrobot_data",
-        1
-    ],
-    [
-        "2543c0973fe1da73e35ab56045a0f0402bceb547359781c07a1a9c7c01699ace",
-        "cached/minvr.ru/upload/iblock/3f2/1-svedeniya-dlya-sayta-organizatsii-2018_tablitsa.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "36256f8769ada716eeb152535aa4116ab8c62472287054f4b6467af59fa50fe4",
-        "cached/minvr.ru/upload/iblock/5ca/Svedeniia_Organizatsii.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "3a96ef0805a32baca56e5a936831da4aceef615cb9ab5739d36dec4eda0e4b2a",
-        "cached/minvr.ru/upload/iblock/6ee/2_svedeniya_dlya_sayta_ministerstvo_2018_god.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "3b72b4cd7ab794a643dbfa0072de71775765384a51de1cac7da450ebdfae6377",
-        "cached/gossluzhba.gov.ru/page/index/spravki_bk/dlrobot_data",
-        -1
-    ],
-    [
-        "406ee320b2916b691e803c4a69643d4998f341d4e702e41552a5366ef63277cb",
-        "cached/minvr.ru/upload/iblock/b7a/svdir_ruk_org_2014.xls/dlrobot_data",
-        1
-    ],
-    [
-        "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4",
-        "cached/minvr.ru/upload/iblock/971/1_svedeniya_dlya_sayta_ministerstvo_2017_god-_6_.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "7fbfe0e4a205a1f0222be3360b9d0f76c1d621dca90a2922472cde691719de07",
-        "cached/www.minvostokrazvitia.ru/upload/iblock/eb0/Broshiura.pdf/dlrobot_data",
-        1
-    ],
-    [
-        "7ff11f1af18b797235e3df9a21fa87ce3f33cc46f40db13f4963d35cbb547c79",
-        "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
-        -1
-    ],
-    [
-        "8f16410a6c1bee5c0e63815d2ab4bb97b45a0152714df3135c9359e08a87d610",
-        "cached/minvr.ru/upload/iblock/520/svdir_other_go_xx.doc/dlrobot_data",
-        1
-    ],
-    [
-        "9cee8dc3a102ac6a2d55bb5d674915f3c5320c1bc57e925a83b9510a2b212b4b",
-        "cached/minvr.ru/upload/iblock/9ce/svdir_minvr_2012.xls/dlrobot_data",
-        1
-    ],
-    [
-        "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e",
-        "cached/minvr.ru/upload/iblock/871/Sait_GS_na_sait.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "c1d995e98ccf449009c37be34c312deb9f0cf284836ba274450115c107b2b9a0",
-        "cached/minvr.ru/upload/iblock/54f/No.__156_ot_19.08.2015_Uvedomleniia_FGGS.pdf/dlrobot_data",
-        -1
-    ],
-    [
-        "c2715235c4147dbacb3e4fa1c8928040d9f5bab6287e75f70b1b63f16cdd416e",
-        "cached/minvr.ru/upload/iblock/252/svdir_minvr_2014.xls/dlrobot_data",
-        1
-    ],
-    [
-        "d7736b2579843724d019b59eae6cfc32a60c672c07ae8e55676c17dac66d9286",
-        "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincomemin/data_20180523t1104_structure_20180523t11_04dd27a1374d7d37a637e33758a8a37b/dlrobot_data",
-        1
-    ],
-    [
-        "e06885f1083bc8a8168618c7eb9734ad03d7dbaf4178e4fe352d1030dbd72580",
-        "cached/minvr.ru/upload/iblock/5cb/svdir_corr_minvr_2014.xls/dlrobot_data",
-        1
-    ],
-    [
-        "f3629633f0b3ef5f6f87d60497810c093188bc6106255a10aaa548d1001304a8",
-        "cached/minvr.ru/upload/iblock/811/Sait_GS_utochnennye_dannye_na_sait.xlsx/dlrobot_data",
-        1
-    ],
-    [
-        "fdf7f3daa86ee3d2fe92cdb7fdbce8d3091d9b790d0b3584dc695f6a8ecc2169",
-        "cached/minvr.ru/upload/iblock/036/svdir_minvr_2013.xls/dlrobot_data",
-        1
-    ]
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/metodicheskie-materialy/",
+                "step": "declarations_div",
+                "title": "Методические материалы",
+                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2018 году (за отчетный 2017 год)                \n            \n\n                         DOCX (116.05 КБ)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/minvostokrazvitia.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx/dlrobot_data",
+        "sha256": "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (65.64 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/123/1_svedeniya_dlya_sayta_organizatsii_2017_tablitsa-_6_.xlsx",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/123/1_svedeniya_dlya_sayta_organizatsii_2017_tablitsa-_6_.xlsx/dlrobot_data",
+        "sha256": "02a748362844edf8dde8f4fe0f8da1977821b25713ba1c599a4b51fd1ea11388",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (67.43 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/f34/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%20%D0%9C%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D0%B5%D1%80%D1%81%D1%82%D0%B2%D0%BE%20-%20%D0%9F%D0%9A.xlsx",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/f34/Svedeniia__Ministerstvo_-_PK.xlsx/dlrobot_data",
+        "sha256": "04f99ada6ced1d77564db8da07c23dca8005c970c9cab9870c8451082e8c2afd",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/formy-dokumentov-svyazannykh-s-protivodeystviem-korruptsii-dlya-zapolneniya/",
+                "step": "declarations_div",
+                "title": "Формы документов, связанных с противодействием коррупции, для заполнения",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (26.3 КБ)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/578/САЙТ_Организации.xlsx",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/578/SAIT_Organizatsii.xlsx/dlrobot_data",
+        "sha256": "0538041f2208acaaff1f2ab6e95aca3382c866946b30ec709516f7f238cd3dbf",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/",
+                "step": "declarations_div",
+                "title": "Открытые данные",
+                "anchor_text": "Скачать PDF (7.65 МВ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/doc/31-05-2019/Otchet.pdf",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/doc/31-05-2019/Otchet.pdf/dlrobot_data",
+        "sha256": "0f5d0fb52d7e7c5d5ec42d815b9db481000d320d5908240031173d0c33dcba7a",
+        "dl_recognizer_result": -1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/metodicheskie-materialy/",
+                "step": "declarations_div",
+                "title": "Методические материалы",
+                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2019 году (за отчетный 2018 год)                \n            \n\n                         DOCX (91.10 КБ)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/upload/iblock/e0a/metodicheskie_rekom-2018.docx",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/minvostokrazvitia.ru/upload/iblock/e0a/metodicheskie_rekom-2018.docx/dlrobot_data",
+        "sha256": "108a8d79387bb2c82b9d73980d5ebc9607118e1aab824c88825ab0448591c148",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/",
+                "step": "declarations_div",
+                "title": "Открытые данные",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/186/",
+                "step": "declarations_div_pages",
+                "title": "Открытые данные",
+                "anchor_text": "Скачать",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/_2721194275-dataincome/data_20180523t1130_structure_20180523t1130.csv",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincome/data_20180523t1130_structure_20180523t1130._b1362d902f6fa3f61bd85604ca02dfa1/dlrobot_data",
+        "sha256": "144deda665dc4faa33af9081436bcdc0051be9c996963c9785191132c5da9fde",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (58.04 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/3f2/1-svedeniya-dlya-sayta-organizatsii-2018_tablitsa.xlsx",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/3f2/1-svedeniya-dlya-sayta-organizatsii-2018_tablitsa.xlsx/dlrobot_data",
+        "sha256": "2543c0973fe1da73e35ab56045a0f0402bceb547359781c07a1a9c7c01699ace",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (19.43 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/5ca/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%9E%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8.xlsx",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/5ca/Svedeniia_Organizatsii.xlsx/dlrobot_data",
+        "sha256": "36256f8769ada716eeb152535aa4116ab8c62472287054f4b6467af59fa50fe4",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (71.96 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/6ee/2_svedeniya_dlya_sayta_ministerstvo_2018_god.xlsx",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/6ee/2_svedeniya_dlya_sayta_ministerstvo_2018_god.xlsx/dlrobot_data",
+        "sha256": "3a96ef0805a32baca56e5a936831da4aceef615cb9ab5739d36dec4eda0e4b2a",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/formy-dokumentov-svyazannykh-s-protivodeystviem-korruptsii-dlya-zapolneniya/",
+                "step": "declarations_div",
+                "title": "Формы документов, связанных с противодействием коррупции, для заполнения",
+                "anchor_text": "Скачать ПО «Справки БК»",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://gossluzhba.gov.ru/page/index/spravki_bk",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/gossluzhba.gov.ru/page/index/spravki_bk/dlrobot_data",
+        "sha256": "3b72b4cd7ab794a643dbfa0072de71775765384a51de1cac7da450ebdfae6377",
+        "dl_recognizer_result": -1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLS (36.5 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/b7a/svdir_ruk_org_2014.xls",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/b7a/svdir_ruk_org_2014.xls/dlrobot_data",
+        "sha256": "406ee320b2916b691e803c4a69643d4998f341d4e702e41552a5366ef63277cb",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (69.5 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/971/1_svedeniya_dlya_sayta_ministerstvo_2017_god-_6_.xlsx",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/971/1_svedeniya_dlya_sayta_ministerstvo_2017_god-_6_.xlsx/dlrobot_data",
+        "sha256": "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/metodicheskie-materialy/",
+                "step": "declarations_div",
+                "title": "Методические материалы",
+                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответсвующей формы справки в 2017 году                \n            \n\n                         PDF (1.42 МБ)",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/upload/iblock/eb0/Брошюра.pdf",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/minvostokrazvitia.ru/upload/iblock/eb0/Broshiura.pdf/dlrobot_data",
+        "sha256": "7fbfe0e4a205a1f0222be3360b9d0f76c1d621dca90a2922472cde691719de07",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/bitrix/redirect.php?event1=file&event2=download&event3=svdir_other_go_0415.doc&goto=/upload/iblock/ec0/svdir_other_go_0415.doc",
+                "step": "declarations_div"
+            }
+        ],
+        "cached_file": "cached/www.minvostokrazvitia.ru/bitrix/redirect.php_event1_file_event2_download_event3_svdir_other_go_0415._095c3d76fc39a5e4b3e89dc7a8f4dec8/dlrobot_data",
+        "sha256": "7ff11f1af18b797235e3df9a21fa87ce3f33cc46f40db13f4963d35cbb547c79",
+        "dl_recognizer_result": -1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать DOC (262.5 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/520/svdir_other_go_xx.doc",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/520/svdir_other_go_xx.doc/dlrobot_data",
+        "sha256": "8f16410a6c1bee5c0e63815d2ab4bb97b45a0152714df3135c9359e08a87d610",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLS (134.5 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/9ce/svdir_minvr_2012.xls",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/9ce/svdir_minvr_2012.xls/dlrobot_data",
+        "sha256": "9cee8dc3a102ac6a2d55bb5d674915f3c5320c1bc57e925a83b9510a2b212b4b",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (86.66 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/871/%D0%A1%D0%B0%D0%B9%D1%82%20%D0%93%D0%A1_%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.xlsx",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/871/Sait_GS_na_sait.xlsx/dlrobot_data",
+        "sha256": "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLS (185 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/252/svdir_minvr_2014.xls",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/252/svdir_minvr_2014.xls/dlrobot_data",
+        "sha256": "c2715235c4147dbacb3e4fa1c8928040d9f5bab6287e75f70b1b63f16cdd416e",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/",
+                "step": "declarations_div",
+                "title": "Открытые данные",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/5414/",
+                "step": "declarations_div_pages",
+                "title": "Открытые данные",
+                "anchor_text": "Скачать",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minvostokrazvitia.ru/opendata/_2721194275-dataincomemin/data_20180523t1104_structure_20180523t1104.csv",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.minvostokrazvitia.ru/opendata/_2721194275-dataincomemin/data_20180523t1104_structure_20180523t11_04dd27a1374d7d37a637e33758a8a37b/dlrobot_data",
+        "sha256": "d7736b2579843724d019b59eae6cfc32a60c672c07ae8e55676c17dac66d9286",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLS (185 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/5cb/svdir_corr_minvr_2014.xls",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/5cb/svdir_corr_minvr_2014.xls/dlrobot_data",
+        "sha256": "e06885f1083bc8a8168618c7eb9734ad03d7dbaf4178e4fe352d1030dbd72580",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLSX (86.75 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/811/%D0%A1%D0%B0%D0%B9%D1%82%20%D0%93%D0%A1%20%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.xlsx",
+                "step": "declarations_div_pages2"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/811/Sait_GS_utochnennye_dannye_na_sait.xlsx/dlrobot_data",
+        "sha256": "f3629633f0b3ef5f6f87d60497810c093188bc6106255a10aaa548d1001304a8",
+        "dl_recognizer_result": 1
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://minvostokrazvitia.ru",
+                "step": null,
+                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "step": "declarations_div",
+                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "anchor_text": "Скачать XLS (113.5 КБ)",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://minvr.ru/upload/iblock/036/svdir_minvr_2013.xls",
+                "step": "declarations_div_pages"
+            }
+        ],
+        "cached_file": "cached/minvr.ru/upload/iblock/036/svdir_minvr_2013.xls/dlrobot_data",
+        "sha256": "fdf7f3daa86ee3d2fe92cdb7fdbce8d3091d9b790d0b3584dc695f6a8ecc2169",
+        "dl_recognizer_result": 1
+    }
 ]
