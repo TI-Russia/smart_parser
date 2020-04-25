@@ -13,7 +13,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( doc, 355 KB )",
                 "engine": "urllib"
@@ -38,7 +38,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( doc, 433 KB )",
                 "engine": "urllib"
@@ -63,7 +63,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( doc, 454 KB )",
                 "engine": "urllib"
@@ -88,7 +88,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( doc, 88 KB )",
                 "engine": "urllib"
@@ -113,7 +113,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=67",
-                "step": "declarations_div"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_67/dlrobot_data",
@@ -131,7 +131,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( doc, 109.5 KB )",
                 "engine": "urllib"
@@ -156,7 +156,7 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( doc, 82.5 KB )",
                 "engine": "urllib"
@@ -181,14 +181,14 @@
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/otchety",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Отчеты - Совет депутатов Городского округа Подольск",
                 "anchor_text": "Скачать документ ( pdf, 549.36 KB )",
                 "engine": "urllib"
             },
             {
                 "url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=934",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_934/dlrobot_data",
