@@ -5,11 +5,14 @@
     "text_len": 6945,
     "description": "header < 20",
     "text_features": {
-        "header": [
-            {
-                "span": "0,18",
-                "match": "сведения о доходах"
-            }
-        ]
+        "header": {
+            "first_matches": [
+                {
+                    "span": "0,18",
+                    "match": "сведения о доходах"
+                }
+            ],
+            "all_matches_count": 1
+        }
     }
 }

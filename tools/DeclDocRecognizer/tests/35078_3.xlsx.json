@@ -5,15 +5,18 @@
     "text_len": 7504,
     "description": "found smart_parser results",
     "text_features": {
-        "header": [
-            {
-                "span": "21,39",
-                "match": "сведения о доходах"
-            },
-            {
-                "span": "397,437",
-                "match": "сведения об источниках получения средств"
-            }
-        ]
+        "header": {
+            "first_matches": [
+                {
+                    "span": "21,39",
+                    "match": "сведения о доходах"
+                },
+                {
+                    "span": "397,437",
+                    "match": "сведения об источниках получения средств"
+                }
+            ],
+            "all_matches_count": 2
+        }
     }
 }
