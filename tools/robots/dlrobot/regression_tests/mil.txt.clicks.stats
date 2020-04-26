@@ -1,26 +1,33 @@
 [
     {
-        "files_count": 19
+        "files_count": 18
     },
     {
         "click_path": [
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-2.docx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-2.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-2.docx/dlrobot_data",
@@ -32,20 +39,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2014.xlsx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income_2014.xlsx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income_2014.xlsx/dlrobot_data",
@@ -57,20 +71,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2015.xlsx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income_2015.xlsx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income_2015.xlsx/dlrobot_data",
@@ -82,24 +103,17 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
+                "title": "Главная : Министерство обороны Российской Федерации",
                 "anchor_text": "\"сведения о доходах\"",
                 "engine": "google"
             },
             {
-                "url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
-                "step": "declarations_div",
-                "title": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2016 году (за отчетный 2015 год) : Министерство обороны Российской Федерации",
-                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2016 году (за отчетный 2015 год)",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://mil.ru/download/doc/morf/military/files/prkor_metod-mintruda-05svedeniya_o_dohodah-2016.pdf?contentdisposition=attachment",
-                "step": "declarations_div_pages"
+                "url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12152880@cmsArticle",
+                "step": "declarations"
             }
         ],
-        "cached_file": "cached/mil.ru/download/doc/morf/military/files/prkor_metod-mintruda-05svedeniya_o_dohodah-2016.pdf_contentd_73626a69d41b883b4f28030d6093bdc0/dlrobot_data",
-        "sha256": "39f44fbfc70f0f7a72e964079b7e60400b200739a1620f948626f00625a95bdb",
+        "cached_file": "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12152880@cmsArticle/dlrobot_data",
+        "sha256": "4842202f66b9c572dfd3278d4ade15aa563637c9e6880e9efeaacbc845a57e06",
         "dl_recognizer_result": "declaration_result"
     },
     {
@@ -107,20 +121,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2009.doc",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2009.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2009.doc/dlrobot_data",
@@ -132,20 +153,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-5.docx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-5.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-5.docx/dlrobot_data",
@@ -157,20 +185,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-6.docx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-6.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-6.docx/dlrobot_data",
@@ -182,20 +217,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2017.xlsx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income_2017.xlsx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income_2017.xlsx/dlrobot_data",
@@ -207,20 +249,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-7.doc",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-7.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-7.doc/dlrobot_data",
@@ -232,20 +281,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-1.docx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-1.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-1.docx/dlrobot_data",
@@ -257,20 +313,20 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
+                "title": "Главная : Министерство обороны Российской Федерации",
                 "anchor_text": "\"сведения о доходах\"",
                 "engine": "google"
             },
             {
                 "url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12096403@cmsArticle",
-                "step": "declarations_div",
-                "title": "",
+                "step": "declarations",
+                "title": "Методические рекомендации по заполнению электронной формы со сведениями о доходах, расходах, об имуществе и обязательствах имущественного характера военнослужащих, федеральных государственных гражданских служащих и работников Министерства обороны Российской Федерации и членов их семей для последующего размещения на официальном сайте Министерства обороны Российской Федерации : Министерство обороны Российской Федерации",
                 "anchor_text": "Приложение № 1 к Методическим рекомендациям.",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/anti_korr_metod_pril_1.rtf",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/anti_korr_metod_pril_1.rtf/dlrobot_data",
@@ -282,20 +338,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-3.docx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-3.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-3.docx/dlrobot_data",
@@ -307,20 +370,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2016.xlsx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income2016.xlsx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income2016.xlsx/dlrobot_data",
@@ -332,20 +402,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2011.xls",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/defense_income_2011.xls",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/defense_income_2011.xls/dlrobot_data",
@@ -357,20 +434,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2013",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income_2013_.xls",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income_2013_.xls/dlrobot_data",
@@ -382,20 +466,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "defense_income_2010-4.docx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/defense_income_2010-4.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/defense_income_2010-4.docx/dlrobot_data",
@@ -407,20 +498,27 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2018.xlsx",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income_2018.xlsx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income_2018.xlsx/dlrobot_data",
@@ -432,42 +530,31 @@
             {
                 "url": "http://www.mil.ru",
                 "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
+                "title": "Главная : Министерство обороны Российской Федерации",
+                "anchor_text": "противодействие коррупции",
                 "engine": "google"
             },
             {
+                "url": "http://mil.ru/anti-corruption.htm",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции : Министерство обороны Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://mil.ru/anti-corruption/income_info.htm",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах : Министерство обороны Российской Федерации",
                 "anchor_text": "income_2012",
                 "engine": "urllib"
             },
             {
                 "url": "http://mil.ru/files/morf/income_2012.xls",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/mil.ru/files/morf/income_2012.xls/dlrobot_data",
         "sha256": "fcd809f68e155921554516a08a85db8e6395f06c43c496d18a5c47648a82ccfd",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mil.ru",
-                "step": null,
-                "title": "",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
-                "step": "declarations_div"
-            }
-        ],
-        "cached_file": "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data",
-        "sha256": "fd26e8cd262279a020427306d5ffd493bcac31d3559dce900c0442e60c07cf6a",
         "dl_recognizer_result": "declaration_result"
     }
 ]
