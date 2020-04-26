@@ -3,32 +3,52 @@ import logging
 import time
 import urllib
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from robots.common.download import get_site_domain_wo_www, read_from_cache_or_download
+from robots.common.download import  read_from_cache_or_download
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
+from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
+
+
+class TClickEngine:
+    urllib = 'urllib'
+    selenium = 'selenium'
+    google = 'google'
+    manual = 'manual'
 
 
 class TLinkInfo:
-    def __init__(self, page_html, anchor_text, source=None, target=None, tagName=None, download_by_selenium=None):
+    def __init__(self, engine, page_html, anchor_text, source=None, target=None, tag_name=None):
+        self.Engine = engine
         self.PageHtml = "" if page_html is None else page_html
-        self.Source = source
-        self.Target = target
-        self.AnchorText = '' if anchor_text is None else anchor_text
-        self.TagName = tagName
-        self.DownloadedBySelenium = download_by_selenium
+        self.SourceUrl = source
+        if target is not None:
+            self.TargetUrl = strip_viewer_prefix(target).strip(" \r\n\t")
+        else:
+            self.TargetUrl = None
+        self.AnchorText = ""
+        self.set_anchor_text(anchor_text)
+        self.TagName = tag_name
+        self.AnchorTextFoundSomewhere = False
+        self.DownloadedFile = None
+        self.TargetTitle = None
+        self.AdditFeatures = dict()
 
+    def set_anchor_text(self, anchor_text):
+        self.AnchorText = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
 
-def strip_viewer_prefix(href):
-    # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
-    viewers = ['https://docs.google.com/viewer?url=',
-                'https://docviewer.yandex.ru/?url=',
-                'https://view.officeapps.live.com/op/embed.aspx?src=',
-                'https://view.officeapps.live.com/op/view.aspx?src=']
-    for prefix in viewers:
-        if href.startswith(prefix):
-            href = href[len(prefix):]
-            return urllib.parse.unquote(href)
-    return href
+    def to_json(self):
+        rec = {
+            'text': self.AnchorText,
+            'engine': self.Engine,
+        }
+        if self.TagName is not None:
+            rec['tagname'] = self.TagName
+        if self.AnchorTextFoundSomewhere:
+            rec['text_proxim'] = True
+        if self.DownloadedFile is not None:
+            rec['downloaded_file'] = self.DownloadedFile
+        rec.update(self.AdditFeatures)
+        return rec
 
 
 def are_web_mirrors(domain1, domain2):
@@ -66,43 +86,6 @@ def web_link_is_absolutely_prohibited(source, href):
     return False
 
 
-def strip_html_url(url):
-    if url.endswith('.html'):
-        url = url[:-len('.html')]
-    if url.endswith('.htm'):
-        url = url[:-len('.htm')]
-    if url.startswith('http://'):
-        url = url[len('http://'):]
-    if url.startswith('http://'):
-        url = url[len('https://'):]
-    if url.startswith('www.'):
-        url = url[len('www.'):]
-    return url
-
-
-def check_sub_page_or_iframe(link_info):
-    if web_link_is_absolutely_prohibited(link_info.Source, link_info.Target):
-        return False
-    if link_info.Target is None:
-        return False
-    if link_info.TagName is not None and link_info.TagName.lower() == "iframe":
-        return True
-    parent = strip_html_url(link_info.Source)
-    subpage = strip_html_url(link_info.Target)
-    return subpage.startswith(parent)
-
-
-def check_anticorr_link_text(link_info):
-    if web_link_is_absolutely_prohibited(link_info.Source, link_info.Target):
-        return False
-
-    text = link_info.AnchorText.strip().lower()
-    if text.startswith(u'противодействие'):
-        return text.find("коррупц") != -1
-
-    return False
-
-
 def make_link(main_url, href):
     url = urllib.parse.urljoin(main_url, href)
     # see http://minpromtorg.gov.ru/open_ministry/anti/activities/info/
@@ -110,46 +93,6 @@ def make_link(main_url, href):
     #if i != -1:
     #    url = url[0:i]
     return url
-
-class SomeOtherTextException(Exception):
-    def __init__(self, value):
-        self.value = value
-    def __str__(self):
-        return (repr(self.value))
-
-
-def find_recursive_to_bottom(page_html, start_element, check_link_func, element):
-    children = element.findChildren()
-    if len(children) == 0:
-        if len(element.text) > 0 and element != start_element:
-            if check_link_func(TLinkInfo(page_html, element.text)):
-                return element.text
-            if len (element.text.strip()) > 10:
-                raise SomeOtherTextException(element.text.strip())
-    else:
-        for child in children:
-            start_time = time.time()
-            found_text = find_recursive_to_bottom(page_html, start_element, check_link_func, child)
-            if time.time() - start_time > 10:  # skip very large html (duma-torzhok.ru)
-                logging.getLogger("dlrobot_logger").error("stop  too long recursive html processing")
-                raise SomeOtherTextException("")
-            if len(found_text) > 0:
-                return found_text
-    return ""
-
-
-def check_long_near_text(page_html, start_element, upward_distance, check_link_func):
-    # go to the top
-    element = start_element
-    for i in range(upward_distance):
-        element = element.parent
-        if element is None:
-            return ""
-        # go to the bottom
-        found_text = find_recursive_to_bottom(page_html, start_element, check_link_func, element)
-        if len(found_text) > 0:
-            return found_text
-    return ""
 
 
 def can_be_office_document(href):
@@ -197,6 +140,14 @@ def prepare_for_logging(s):
     return s.strip()
 
 
+def get_soup_title(soup):
+    if soup.title is None:
+        return ""
+    if soup.title.string is None:
+        return ""
+    return soup.title.string
+
+
 def find_links_in_html_by_text(step_info, main_url, soup):
     logger = logging.getLogger("dlrobot_logger")
     if can_be_office_document(main_url):
@@ -207,7 +158,6 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     logger.debug("find_links_in_html_by_text url={} function={}".format(
         main_url, step_info.check_link_func.__name__))
     all_links_count = 0
-    page_title = soup.title.string if soup.title is not None else ""
     page_html = str(soup)
 
     for l in soup.findAll('a'):
@@ -216,34 +166,10 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             all_links_count += 1
             if not check_href_elementary(href):
                 continue
-            logger.debug("check link {}, \"{}\"".format(href, prepare_for_logging(l.text)))
-            href = strip_viewer_prefix( make_link(base, href) )
-            if step_info.check_link_func(TLinkInfo(page_html, l.text, main_url, href, l.name) ):
-                link_info = {
-                    'href': href,
-                    'text': l.text.strip(" \r\n\t"),
-                    'engine': 'urllib',
-                    'tagname': l.name,
-                }
-                step_info.add_link_wrapper(main_url, link_info)
-            else:
-                if can_be_office_document(href):
-                    try:
-                        if step_info.check_link_func(TLinkInfo(page_html, page_title, main_url, href, l.name)):
-                            found_text = page_title
-                        else:
-                            found_text = check_long_near_text(page_html, l, 3, step_info.check_link_func)
-                    except SomeOtherTextException as err:
-                        continue
-                    if found_text is not None and len(found_text) > 0:
-                        link_info = {
-                            'href': href,
-                            'text': found_text.strip(" \r\n\t"),
-                            'engine': 'urllib',
-                            'text_proxim': True,
-                            'tagname': l.name,
-                        }
-                        step_info.add_link_wrapper(main_url, link_info)
+            logger.debug("check link {}, \"{}\"".format(prepare_for_logging(href), prepare_for_logging(l.text)))
+            link_info = TLinkInfo(TClickEngine.urllib, page_html, l.text, main_url, make_link(base, href), l.name)
+            if step_info.check_link_func(link_info):
+                step_info.add_link_wrapper(link_info)
 
     for l in soup.findAll('iframe'):
         href = l.attrs.get('src')
@@ -251,56 +177,34 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             all_links_count += 1
             if not check_href_elementary(href):
                 continue
-
-            href = make_link(base, href)
-            if step_info.check_link_func( TLinkInfo(page_html, l.text, main_url, href, l.name)):
-                link_info = {
-                    'href': href,
-                    'text': l.text.strip(" \r\n\t"),
-                    'engine': 'urllib',
-                    'tagname': l.name,
-                }
-                step_info.add_link_wrapper(main_url, link_info)
+            link_info = TLinkInfo(TClickEngine.urllib, page_html, l.text, main_url, make_link(base, href), l.name)
+            if step_info.check_link_func(link_info ):
+                step_info.add_link_wrapper(link_info)
 
 
 def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index):
     tag_name = element.tag_name
     link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
-    href = element.get_attribute('href')
     page_html = driver_holder.the_driver.page_source
-    save_url_without_click = False
-    if href is not None and len(link_text) > 0:
-        link_url = make_link(main_url, href) # try to get url without click a normal link
-        downloaded_file = None
-        save_url_without_click = True
-    else:
-        consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
-        driver_holder.click_element(element)
-        link_url = driver_holder.the_driver.current_url
-        downloaded_file = driver_holder.last_downloaded_file
+    consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
 
-    if step_info.check_link_func(TLinkInfo(page_html, link_text, main_url, link_url, tag_name, downloaded_file)):
-        link_info = {
-            'text': link_text,
-            'engine': 'selenium',
-            'tagname': tag_name,
-        }
-        if save_url_without_click:
-            link_info['got_url_wo_click'] = True
-        else:
-            link_info['title'] = driver_holder.the_driver.title
-
-        if driver_holder.last_downloaded_file is not None:
-            link_info['downloaded_file'] = driver_holder.last_downloaded_file
-            link_info['element_index'] = element_index
-            step_info.add_downloaded_file_wrapper(main_url, link_info)
-        else:
-            link_info['href'] = link_url
-            step_info.add_link_wrapper(main_url, link_info)
-
+    driver_holder.click_element(element)
+    link_info = TLinkInfo(TClickEngine.selenium,
+                          page_html,
+                          link_text,
+                          main_url,
+                          driver_holder.the_driver.current_url,
+                          tag_name)
+    link_info.DownloadedFile = driver_holder.last_downloaded_file
+    link_info.TargetTitle = driver_holder.the_driver.title
     driver_holder.close_window_tab()
 
-
+    if step_info.check_link_func(link_info):
+        if link_info.DownloadedFile is not None:
+            link_info.AdditFeatures['element_index'] = element_index
+            step_info.add_downloaded_file_wrapper(link_info)
+        else:
+            step_info.add_link_wrapper(link_info)
 
 
 def click_all_selenium(step_info, main_url, driver_holder):
@@ -312,22 +216,19 @@ def click_all_selenium(step_info, main_url, driver_holder):
     for i in range(len(elements)):
         element = elements[i]
         link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
-        if len(link_text) > 0:
-            logger.debug("check element {} before click, text={}".format(i, prepare_for_logging(link_text)))
-            if step_info.check_link_func(TLinkInfo(page_html, link_text)):
-                if element.tag_name == "a":
-                    #no click needed just read href
-                    href = element.get_attribute("href")
-                    if step_info.check_link_func(TLinkInfo(page_html, link_text, main_url, href, element.tag_name)):
-                        link_info = {
-                            'text': link_text,
-                            'engine': 'selenium',
-                            'tagname': element.tag_name,
-                            'href': href
-                        }
-                        step_info.add_link_wrapper(main_url, link_info)
-                else:
-                    click_selenium_if_no_href(step_info, main_url, driver_holder,  element, i)
-                    elements = driver_holder.get_buttons_and_links()
+        if len(link_text) == 0:
+            continue
+        logger.debug("check element {} before click, text={}".format(i, prepare_for_logging(link_text)))
+        if not step_info.check_link_func(TLinkInfo(TClickEngine.selenium, page_html, link_text)):
+            continue #preliminary test, delete it?
+        href = element.get_attribute('href')
+        if href is not None:
+            href = make_link(main_url, href) # may be we do not need it in selenium?
+            link_info = TLinkInfo(TClickEngine.selenium, page_html, link_text, main_url, href, element.tag_name)
+            if step_info.check_link_func(link_info):
+                step_info.add_link_wrapper(link_info)
+        else:
+            click_selenium_if_no_href(step_info, main_url, driver_holder,  element, i)
+            elements = driver_holder.get_buttons_and_links()
 
 

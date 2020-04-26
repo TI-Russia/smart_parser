@@ -7,7 +7,7 @@ from unidecode import unidecode
 import os
 from robots.common.http_request import make_http_request, request_url_headers
 from ConvStorage.conversion_client import start_conversion_task_if_needed
-from robots.common.content_types import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 FILE_CACHE_FOLDER = "cached"
 
 
@@ -23,13 +23,6 @@ def find_simple_js_redirect(data):
         return url
     return None
 
-
-def get_site_domain_wo_www(url):
-    url = "http://" + url.split("://")[-1]
-    domain = urllib.parse.urlparse(url).netloc
-    if domain.startswith('www.'):
-        domain = domain[len('www.'):]
-    return domain
 
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
@@ -161,8 +154,6 @@ def read_from_cache_or_download(url):
         write_cache_file(local_file, info_file, info, data)
 
     return data
-
-
 
 
 def get_file_extension_by_content_type(headers):

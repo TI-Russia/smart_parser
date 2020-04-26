@@ -18,6 +18,7 @@ HEADER_MEMORY_CACHE = dict()
 HEADER_REQUEST_COUNT = defaultdict(int)
 HTTP_503_ERRORS_COUNT = 0
 
+
 def get_request_rate(min_time=0):
     global ALL_HTTP_REQUEST
     current_time = time.time()

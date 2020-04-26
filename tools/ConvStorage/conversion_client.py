@@ -138,11 +138,12 @@ CONVERSION_TASKS = None
 
 def start_conversion_task_if_needed(filename, file_extension):
     global CONVERSION_TASKS
-    if CONVERSION_TASKS is None:
-        CONVERSION_TASKS = TConversionTasks()
-        CONVERSION_TASKS.start_thread()
 
     if file_extension == DEFAULT_PDF_EXTENSION or is_archive_extension(file_extension):
+        if CONVERSION_TASKS is None:
+            CONVERSION_TASKS = TConversionTasks()
+            CONVERSION_TASKS.start_thread()
+
         CONVERSION_TASKS.add_file(filename, file_extension)
 
 

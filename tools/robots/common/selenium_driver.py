@@ -109,6 +109,7 @@ class TSeleniumDriver:
         return None
 
     def click_element(self, element):
+        self.last_downloaded_file = None
         if self.download_folder is not None:
             make_folder_empty(self.download_folder)
         self.window_before_click = self.the_driver.window_handles[0]

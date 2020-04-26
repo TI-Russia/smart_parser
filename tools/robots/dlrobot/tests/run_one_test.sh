@@ -13,22 +13,23 @@ cd $TEST_FOLDER
 [ ! -f geckodriver.log ] || rm -rf geckodriver.log
 [ ! -f dlrobot.log ] || rm -rf dlrobot.log
 
-curl --connect-timeout 4 -I $WEB_ADDR 2>/dev/null
-
-if [ $? -eq 0 ]; then
-    echo "stop other instance of http.server on $WEB_ADDR"
-    exit 1
-fi
 
 echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 
 if [ -d $HTML_FOLDER ]; then
+	curl --connect-timeout 4 -I $WEB_ADDR 2>/dev/null
+
+	if [ $? -eq 0 ]; then
+    		echo "stop other instance of http.server on $WEB_ADDR"
+    		exit 1
+	fi
 	python -m http.server --bind $WEB_IP --directory $HTML_FOLDER $WEB_PORT 1>&2 2> server.log &
 	WEB_SERVER_PID=$!
 	disown
 fi
 
 bash -x run.sh $PROJECT >test_log.out 2>&1
+#bash -x run.sh $PROJECT
 
 if [ $? -eq 0 ]; then
      echo "$TEST_FOLDER succeeded"

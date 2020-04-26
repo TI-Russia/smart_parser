@@ -8,7 +8,6 @@ import sys
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify
 from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TConversionTasks
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
-import itertools
 from collections import defaultdict
 
 
@@ -16,6 +15,7 @@ class DL_RECOGNIZER_ENUM:
     UNKNOWN = "unknown_result"
     POSITIVE = "declaration_result"
     NEGATIVE = "some_other_document_result"
+
 
 class FEATURE_ENUM:
     surname_word = "surname_word"
@@ -28,6 +28,7 @@ class FEATURE_ENUM:
     vehicles_word = "vehicles_word"
     vehicles = "vehicles"
     relative = "relative"
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -88,6 +89,16 @@ def get_smart_parser_result(source_file):
             sheet_index += 1
     return people_count
 
+class TTextFeature:
+    def __init__(self):
+        self.first_matches = dict()
+        self.all_matches_count = 0
+
+    def to_json(self):
+        return {
+            "first_matches" :  list(m.to_json() for m in self.first_matches.values()),
+            "all_matches_count": self.all_matches_count
+        }
 
 class TClassificationVerdict:
 
@@ -96,7 +107,7 @@ class TClassificationVerdict:
         self.smart_parser_person_count = smart_parser_person_count
         self.start_text = input_text[0:500]
         self.input_text = input_text
-        self.text_features = defaultdict(dict)
+        self.text_features = defaultdict(TTextFeature)
         self.description = ""
         self.find_other_document_types()
         self.find_header()
@@ -108,7 +119,7 @@ class TClassificationVerdict:
             "start_text": self.start_text,
             "text_len": len(self.input_text),
             "description": self.description,
-            "text_features": dict((k, list(m.to_json() for m in f.values())) for k, f in self.text_features.items())
+            "text_features": dict((k, v.to_json()) for k, v in self.text_features.items()),
         }
         return rec
 
@@ -116,9 +127,13 @@ class TClassificationVerdict:
         if match_object is None:
             return False
         cnt = 0
-        for x in itertools.islice(match_object, 0, max_count):
+        matches = list(match_object)
+        if len(matches) == 0:
+            return False
+        self.text_features[feature_name].all_matches_count += len(matches)
+        for x in matches[:max_count]:
             m = TMatch(x)
-            self.text_features[feature_name][m.start] = m
+            self.text_features[feature_name].first_matches[m.start] = m
             cnt += 1
         return cnt > 0
 
@@ -126,10 +141,15 @@ class TClassificationVerdict:
         f = self.text_features.get(feature_name)
         if f is None:
             return sys.maxsize
-        return min(f.keys())
+        if len(f.first_matches) == 0:
+            return sys.maxsize
+        return min(f.first_matches.keys())
 
     def get_features_match_count(self, feature_name):
-        return len(self.text_features.get(feature_name, dict()))
+        x = self.text_features.get(feature_name)
+        if x is None:
+            return 0
+        return x.all_matches_count
 
     def find_person(self):
         regexp = "[А-Я]\w+ [А-Я]\w+ [А-Я]\w+((вич)|(ьич)|(кич)|(вна)|(чна))"  # # Сокирко Алексей Викторович
@@ -214,6 +234,7 @@ def apply_first_rules(source_file, verdict):
                 verdict.description = "file is too short"  # jpeg in document
             else:
                 verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE  # fast empty files, but not empty
+                verdict.description = "file is too short"  # jpeg in document
         else:
             verdict.description = "file is too short"
     elif verdict.get_first_features_match("header") < 20:
@@ -249,9 +270,9 @@ def apply_second_rules(verdict):
     vehicle_count = verdict.get_features_match_count(FEATURE_ENUM.vehicles)
     header_count = verdict.get_features_match_count(FEATURE_ENUM.header)
     verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
-    if vehicle_count > 0 and verdict.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
+    if float(vehicle_count)/float(len(verdict.input_text)) > 0.0001 and verdict.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
         verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-        verdict.description = "vehicles and surnames_word"
+        verdict.description = "enough vehicles and surnames_word"
     elif verdict.get_first_features_match(FEATURE_ENUM.surname_word) == 0 and len(verdict.input_text) < 2000 \
             and person_count > 0 and realty_count > 0:
         verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
@@ -266,6 +287,9 @@ def apply_second_rules(verdict):
         elif person_count > 0 and realty_count > 0:
             verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
             verdict.description = "header found and person_count > 0  and realties are found"
+        elif vehicle_count > 0 and verdict.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
+            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            verdict.description = "headers and vehicles and surnames_word"
 
 
 def external_convert(source_file, reuse_txt=False):
@@ -336,6 +360,6 @@ def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
 
 if __name__ == "__main__":
     args = parse_args()
-    verdict = run_dl_recognizer(args.source_file, args.keep_txt)
+    verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt)
     with open(args.output, "w", encoding="utf8") as outf:
         outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))

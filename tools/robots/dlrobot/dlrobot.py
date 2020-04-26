@@ -11,12 +11,9 @@ from robots.common.export_files import export_files_to_folder
 from robots.common.office_list import  TRobotProject
 from ConvStorage.conversion_client import wait_doc_conversion_finished, assert_declarator_conv_alive, stop_conversion_thread
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
-from robots.common.find_link import \
-    check_anticorr_link_text, \
-    ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    web_link_is_absolutely_prohibited, \
-    check_sub_page_or_iframe
-
+from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS
+from robots.common.primitives import normalize_anchor_text, check_link_sitemap, check_anticorr_link_text, \
+                                    check_sub_page_or_iframe
 
 def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
@@ -37,29 +34,23 @@ def setup_logging(logger, logfilename):
     logger.addHandler(ch)
 
 
-def normalize_anchor_text(text):
-    if text is not None:
-        text = text.strip(' \n\t\r').strip('"').lower()
-        text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
-        return text
-    return ""
+NEGATIVE_WORDS = [
+    'координат',  'заседании',
+    #'должност', # замещающих должности
+    'выборы',    'памятка',    'доклад',
+    'конкурс',    'пресс-релиз',    'правила',
+    'положение',    'методические',    'заявление',
+    'схема',    'концепция',    'доктрина',
+    'технические',    '^федеральный',    '^историческ',
+    '^закон',    'новости',
+] + SOME_OTHER_DOCUMENTS
 
-
-def check_link_sitemap(link_info):
-    if web_link_is_absolutely_prohibited(link_info.Source, link_info.Target):
-        return False
-    text = normalize_anchor_text(link_info.AnchorText)
-    return text.startswith('карта сайта')
+NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WORDS)))
 
 
 def has_negative_words(anchor_text):
-    global SOME_OTHER_DOCUMENTS
-    if re.search('(координат)|(заседании)|(должностях)', anchor_text):
-        return True
-    for typ in SOME_OTHER_DOCUMENTS:
-        if anchor_text.find(typ) != -1:
-            return True
-    return False
+    global NEGATIVE_REGEXP
+    return NEGATIVE_REGEXP.search(anchor_text) is not None
 
 
 def looks_like_a_document_link(link_info):
@@ -67,8 +58,8 @@ def looks_like_a_document_link(link_info):
     anchor_text = normalize_anchor_text(link_info.AnchorText)
     if re.search('(скачать)|(загрузить)', anchor_text) is not None:
         return True
-    if link_info.Target is not None:
-        target = link_info.Target.lower()
+    if link_info.TargetUrl is not None:
+        target = link_info.TargetUrl.lower()
         if re.search('(docs)|(documents)|(files)|(download)', target):
             return True
         if target.endswith('html') or target.endswith('htm'):
@@ -82,12 +73,12 @@ def looks_like_a_document_link(link_info):
             return True
 
     try:
-        if link_info.Target is not None:
-            ext = get_file_extension_by_url(link_info.Target)
+        if link_info.TargetUrl is not None:
+            ext = get_file_extension_by_url(link_info.TargetUrl)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
     except Exception as err:
         logger = logging.getLogger("dlrobot_logger")
-        logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.Target, str(err)))
+        logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, str(err)))
         return False
 
     return False
@@ -95,9 +86,6 @@ def looks_like_a_document_link(link_info):
 
 def looks_like_a_declaration_link(link_info):
     # here is a place for ML
-    if web_link_is_absolutely_prohibited(link_info.Source, link_info.Target):
-        return False  # to make faster
-
     anchor_text = normalize_anchor_text(link_info.AnchorText)
     page_html = normalize_anchor_text(link_info.PageHtml)
     if has_negative_words(anchor_text):
@@ -110,8 +98,8 @@ def looks_like_a_declaration_link(link_info):
     is_document_link = looks_like_a_document_link(link_info)
     is_a_sub_page = check_sub_page_or_iframe(link_info)
     income_in_url_path = False
-    if link_info.Target is not None:
-        target = link_info.Target.lower()
+    if link_info.TargetUrl is not None:
+        target = link_info.TargetUrl.lower()
         if re.search('(^sved)|(sveodoh)', target):
             svedenia = True
         if re.search('(do[ck]?[hx]od)|(income)', target):
@@ -138,7 +126,7 @@ def looks_like_a_declaration_link(link_info):
 
 
 def check_html_can_be_declaration(html):
-    # to do: call dl_recognizer
+    # dl_recognizer is called afterwards
     html = html.lower()
     words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
     numbers = re.search('[0-9]{6}', html) is not None # доход
@@ -155,37 +143,24 @@ ROBOT_STEPS = [
         'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
         'include_sources': "copy_if_empty",
-        'search_engine_request': "противодействие коррупции",
-        'min_normal_count': 1
-    },
-    {
-        'step_name': "declarations_div",
-        'check_link_func': looks_like_a_declaration_link,
-        'include_sources': "copy_if_empty",
-        'do_not_copy_urls_from_steps': [None, 'sitemap'], # None is for morda_url
-        'search_engine_request': '"сведения о доходах"',
-        'min_normal_count': 20
-     },
-    {
-        'step_name': "declarations_div_pages",
-        'check_link_func': looks_like_a_declaration_link,
-        'include_sources': "always",
-        'transitive': True,
-        'fallback_to_selenium': False
-    },
-    {
-        'step_name': "declarations_div_pages2",
-        'check_link_func': looks_like_a_declaration_link,
-        'include_sources': "always"
+        'search_engine': {
+            'request': "противодействие коррупции",
+            'policy': "run_after_if_no_results",
+            'max_serp_results': 1
+        }
     },
     {
         'step_name': "declarations",
         'check_link_func': looks_like_a_declaration_link,
+        'include_sources': "copy_if_empty",
+        'do_not_copy_urls_from_steps': [None, 'sitemap'],  # None is for morda_url
+        'search_engine': {
+            'request': '"сведения о доходах"',
+            'policy': "run_always_before"
+        },
         'check_html_sources': check_html_can_be_declaration,
-        'include_sources': "copy_missing_docs",
-        'search_engine_request': '"сведения о доходах"',
-        'min_normal_count': 3
-    },
+        'transitive': True,
+    }
 ]
 
 
