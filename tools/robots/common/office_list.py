@@ -20,7 +20,7 @@ from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can
 
 from robots.common.serp_parser import GoogleSearch
 from collections import defaultdict
-from robots.common.primitives import get_site_domain_wo_www
+from robots.common.primitives import get_site_domain_wo_www, prepare_for_logging
 
 FIXLIST =  {
     'fsin.su': {
@@ -234,9 +234,17 @@ class TProcessUrlTemporary:
         self.robot_step = robot_step
         self.step_passport = step_passport
 
-    def check_link_func(self, link_info):
-        if web_link_is_absolutely_prohibited(link_info.SourceUrl, link_info.TargetUrl):
-            return False
+    def normalize_and_check_link(self, link_info):
+        if link_info.TargetUrl is not None:
+            link_info.TargetUrl = strip_viewer_prefix(link_info.TargetUrl).strip(" \r\n\t")
+            if web_link_is_absolutely_prohibited(link_info.SourceUrl, link_info.TargetUrl):
+                return False
+        self.website.logger.debug(
+            "check element {}, url={} text={}".format(
+                link_info.ElementIndex,
+                prepare_for_logging(link_info.TargetUrl),
+                prepare_for_logging(link_info.AnchorText)))
+
         return self.step_passport['check_link_func'](link_info)
 
     def add_link_wrapper(self, link_info):
@@ -476,7 +484,7 @@ class TRobotProject:
             return
 
         for url in serp_urls:
-            link_info = TLinkInfo(TClickEngine.google, "", request, morda_url, url)
+            link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
             step_info.add_link_wrapper(link_info)
             if max_results == 1:
                 break  # one  link found
@@ -526,7 +534,7 @@ class TRobotProject:
 
         fixed_url = FIXLIST.get(office_info.get_domain_name(), {}).get(step_name)
         if fixed_url is not None:
-            link_info = TLinkInfo(TClickEngine.manual, "", "", office_info.morda_url, fixed_url)
+            link_info = TLinkInfo(TClickEngine.manual, office_info.morda_url, fixed_url)
             step_info.add_link_wrapper(link_info)
             return
 

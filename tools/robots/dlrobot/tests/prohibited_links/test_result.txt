@@ -8,8 +8,8 @@ True	kremlin.ru	static.kremlin.ru
 True	ksl.spb.sudrf.ru	files.sudrf.ru
 True	mil.ru	recrut.mil.ru
 True	mil.ru	stat.mil.ru
-True	minpromtorg.gov.ru	gossluzhba.gov.ru
-True	minpromtorg.gov.ru	pravo.gov.ru
+False	minpromtorg.gov.ru	gossluzhba.gov.ru
+False	minpromtorg.gov.ru	pravo.gov.ru
 False	minvostokrazvitia.ru	data.gov.ru
 False	minvostokrazvitia.ru	gossluzhba.gov.ru
 True	minvostokrazvitia.ru	minvr.ru

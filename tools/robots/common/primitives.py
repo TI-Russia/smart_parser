@@ -65,3 +65,13 @@ def get_site_domain_wo_www(url):
     if domain.startswith('www.'):
         domain = domain[len('www.'):]
     return domain
+
+
+def prepare_for_logging(s):
+    if s is None:
+        return ""
+    s = s.translate(str.maketrans(
+        {"\n": " ",
+         "\t": " ",
+         "\r": " "}))
+    return s.strip()
