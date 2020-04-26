@@ -140,8 +140,8 @@
                 "url": "http://www.arshush.ru/content/view/109/",
                 "step": "declarations",
                 "title": "",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера\r\n главы муниципального образования Шушенский район, главы администрации Шушенского района \r\n и муниципальных служащих, замещающих должности муниципальной службы категории «руководители» \r\nза 2010 год",
-                "engine": "urllib"
+                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы муниципального образования Шушенский район, главы администрации Шушенского района и муниципальных служащих, замещающих должности муниципальной службы категории «руководители» за 2010 год",
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx",
@@ -266,7 +266,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Cведения о доходах муниципальных служащих - 2018 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya-o-dohodah-2018.docx",
@@ -441,7 +441,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Cведения о доходах муниципальных служащих - 2017 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya-o-dohodah-2017.docx",
@@ -866,7 +866,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Сведения о доходах - 2015 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/content/view/1042/",
@@ -916,7 +916,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Cведения о доходах депутатов районого Совета - 2018 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_o_dohodah_deputatov-2018.docx",
@@ -1066,7 +1066,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Сведения о доходах - 2016 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2017/svedeniya-o-dohodah-2016.docx",
@@ -1116,7 +1116,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Cведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленных лицами, замещающими муниципальные должности - 2017 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya-o-dohodah-zam-2017.docx",
