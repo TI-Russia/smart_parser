@@ -13,14 +13,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих  Администрации Багаевского района, их супругов и есовершеннолетних детей за 2014 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20и%20расходах%20за%202014%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_god._30b75300b471f0dd8be677f9d573a1ff/dlrobot_data",
@@ -38,14 +38,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
                 "anchor_text": "СВЕДЕНИЯ о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих  УСЗН Администрации Багаевского района, их супругов и несовершеннолетних детей за 2015 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/усзн/Сведения%20о%20доходах%20для%20сайта%20за%202015%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2015_g_9ca892d995b4e8a37fc1ccd6466df624/dlrobot_data",
@@ -63,14 +63,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих Администрации Багаевского района, их супругов и несовершеннолетних детей за 2016 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20для%20сайта%20за%202017%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_dlia_saita_za_2017_god.do_95a7fe035a22e6082f048091f1d3a480/dlrobot_data",
@@ -88,14 +88,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих Администрации Багаевского района, их супругов и несовершеннолетних детей за 2018 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20муниципальных%20служащих%20за%202018%20год..docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_eee7e1c8020d47b024baae205dc9ebf5/dlrobot_data",
@@ -113,14 +113,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, об имуществе и обязательствах имущественного характера  руководителей муниципальных учреждений Багаевского района  и руководителей  отраслевых (функциональных) органов Администрации Багаевского района, их супругов и несовершеннолетних детей за 2018 год.",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20руководителей%20%20за%202018%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2018_go_f11c0e473950592c5b57e41c06d04c29/dlrobot_data",
@@ -138,14 +138,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=148212",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Администрация Багаевского района",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера депутатов Собрания депутатов Багаевского района, их супругов и несовершеннолетних детей за период с 01.01.2017 по 31.12.2017 года",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/сведения/SVEDENIYa_o_dokhodakh_za_2017_tablitsa.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2017__756b3dc510e2a6d8908685e8aa00b735/dlrobot_data",
@@ -163,14 +163,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
                 "anchor_text": "СВЕДЕНИЯ о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих  УСЗН Администрации Багаевского района, их супругов и несовершеннолетних детей за 2017 год.",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/усзн/Сведения%20о%20доходах%20для%20сайта%20за%202017%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2017_g_616c04aeeae8108d1bc94bdb7d41ac80/dlrobot_data",
@@ -188,14 +188,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
                 "anchor_text": "СВЕДЕНИЯ о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих  УСЗН Администрации Багаевского района, их супругов и несовершеннолетних детей за 2016 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/усзн/Сведения%20о%20доходах%20за%202016%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_za_2016_god.docx/dlrobot_data",
@@ -213,14 +213,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
                 "anchor_text": "СВЕДЕНИЯ о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих  УСЗН Администрации Багаевского района, их супругов и несовершеннолетних детей за 2014 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/усзн/Сведения%20о%20доходах%20и%20расходах%20за%202014%20год.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_48366333aa2c375ad62201e177c65b47/dlrobot_data",
@@ -238,7 +238,7 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
                 "anchor_text": "Приказ № 66 –о/д от 29.12.2018 «Об утверждении Порядка составления, утверждения и ведения смет УСЗН Администрации Багаевского района»",
                 "engine": "urllib"
@@ -262,15 +262,22 @@
                 "engine": "google"
             },
             {
+                "url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
+                "step": "declarations",
+                "title": "Сведения о доходах, расходах, имуществе и обязательств имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района",
+                "anchor_text": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2014 год",
+                "engine": "urllib"
+            },
+            {
                 "url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=160322&mid=160420",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2014 год - Администрация Багаевского района",
                 "anchor_text": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2014 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/finotdel/сведенияодоходахирасходах.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/svedeniiaodokhodakhiraskhodakh.doc/dlrobot_data",
@@ -288,14 +295,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих  Администрации Багаевского района, их супругов и несовершеннолетних детей за 2015 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%202015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_2015.doc/dlrobot_data",
@@ -313,21 +320,21 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, имуществе и обязательств имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района",
-                "anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и несовершеннолетних детей за 2016 год.",
-                "engine": "selenium"
+                "anchor_text": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и  несовершеннолетних детей за 2016 год.",
+                "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=193885&mid=160420",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и  несовершеннолетних детей за 2016 год. - Администрация Багаевского района",
                 "anchor_text": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и несовершеннолетних детей за 2016 год.",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/15.05.2017doc.docx",
-                "step": "declarations_div_pages2"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/15.05.2017doc.docx/dlrobot_data",
@@ -345,14 +352,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=148212",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Администрация Багаевского района",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера депутатов Собрания депутатов Багаевского района, их супругов и несовершеннолетних детей за период с 01.01.2018 по 31.12.2018 года",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/сведения/SVEDENIYА_o_dokhodakh_za_2018_tablitsa.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYA_o_dokhodakh_za_2018__431aab6e439573be0a1a35d4f8a756e1/dlrobot_data",
@@ -370,21 +377,21 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, имуществе и обязательств имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района",
                 "anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2015 год",
-                "engine": "selenium"
+                "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=162776&mid=160420",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2015 год - Администрация Багаевского района",
                 "anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2015 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/сведенияодоходахирасходах-за2015год.doc",
-                "step": "declarations_div_pages2"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2015god.doc/dlrobot_data",
@@ -402,14 +409,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, имуществе и обязательствах имущественного характера муниципальных служащих, замещающих высшую группу должностей муниципальной службы в Администрации Багаевского района, их супругов и несовершеннолетних детей за 2013 го",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/сведенияодоходахза2013год.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhza2013god.doc/dlrobot_data",
@@ -427,14 +434,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, об имуществе и обязательствах имущественного характера  руководителей муниципальных учреждений Багаевского района  и руководителей  отраслевых (функциональных) органов Администрации Багаевского района, их супругов и несовершеннолетних детей за 2017 год.",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20руководителей%20%20за%202017%20год.docx",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2017_go_99b626288f5b1299e654f7af5db596a5/dlrobot_data",
@@ -452,14 +459,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе",
                 "anchor_text": "СВЕДЕНИЯ о доходах, имуществе и обязательствах имущественного характера муниципальных служащих, замещающих высшую группу должностей муниципальной службы в Администрации Багаевского района, их супругов и несовершеннолетних детей за 2012 год",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/сведенияодоходахзамов.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhzamov.doc/dlrobot_data",
@@ -477,14 +484,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и несовершеннолетних детей за 2017 год. - Администрация Багаевского района",
                 "anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и несовершеннолетних детей за 2017 год.",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/сведенияодоходахирасходах-за2017год.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2017god.doc/dlrobot_data",
@@ -502,14 +509,14 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=148212",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера - Администрация Багаевского района",
                 "anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера депутатов Собрания депутатов Багаевского района, их супругов и несовершеннолетних детей за период с 01.01.2016 по 31.12.2016 года",
                 "engine": "urllib"
             },
             {
                 "url": "http://bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/сведения/SVEDENIYa_o_dokhodakh_za_2016_tablitsa.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2016__303263d53b33fb87fa1c452313a891f3/dlrobot_data",
@@ -527,7 +534,7 @@
             },
             {
                 "url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Управление социальной защиты населения Администрации Багаевского района Ростовской области",
                 "anchor_text": "Приказ № 66 –о/д от 29.12.2018 «Об утверждении Порядка составления, утверждения и ведения смет УСЗН Администрации Багаевского района»",
                 "engine": "urllib"
