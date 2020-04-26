@@ -1,6 +1,5 @@
 import os
 import logging
-import time
 import urllib
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from robots.common.download import  read_from_cache_or_download
@@ -61,12 +60,37 @@ def are_web_mirrors(domain1, domain2):
         return False
 
 
+def get_office_domain(web_domain):
+    index = 2
+    if web_domain.endswith("gov.ru"):
+        index = 3 #minpromtorg.gov.ru
+
+    return ".".join(web_domain.split(".")[-index:])
+
+
+def check_href_elementary(href):
+    if href.startswith('mailto:'):
+        return False
+    if href.startswith('tel:'):
+        return False
+    if href.startswith('javascript:'):
+        return False
+    if href.startswith('consultantplus:'):
+        return False
+    if href.startswith('#'):
+        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
+            return False
+    return True
+
+
 def web_link_is_absolutely_prohibited(source, href):
     if href is None:
         return False  # unknown result for clicking by an element without href
     if len(href) == 0:
         return True
     if href.find('redirect') != -1:
+        return True
+    if check_href_elementary(href):
         return True
     if source.strip('/') == href.strip('/'):
         return True
@@ -78,9 +102,7 @@ def web_link_is_absolutely_prohibited(source, href):
     source_domain = get_site_domain_wo_www(source)
     if is_super_popular_domain(href_domain):
         return True
-    href_domains_first_2_domain = ".".join(href_domain.split(".")[-2:])
-    source_domains_first_2_domain = ".".join(source_domain.split(".")[-2:])
-    if href_domains_first_2_domain != source_domains_first_2_domain:
+    if get_office_domain(href_domain) != get_office_domain(source_domain):
         if not are_web_mirrors(source_domain, href_domain):
             return True
     return False
@@ -115,21 +137,6 @@ def get_base_url(main_url, soup):
     return main_url
 
 
-def check_href_elementary(href):
-    if href.startswith('mailto:'):
-        return False
-    if href.startswith('tel:'):
-        return False
-    if href.startswith('javascript:'):
-        return False
-    if href.startswith('consultantplus:'):
-        return False
-    if href.startswith('#'):
-        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
-            return False
-    return True
-
-
 def prepare_for_logging(s):
     if s is None:
         return ""
@@ -156,17 +163,16 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     if base.startswith('/'):
         base = make_link(main_url, base)
     logger.debug("find_links_in_html_by_text url={} function={}".format(
-        main_url, step_info.check_link_func.__name__))
-    all_links_count = 0
+        main_url, step_info.step_passport['check_link_func'].__name__))
     page_html = str(soup)
-
+    element_index = 0
     for l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
-            all_links_count += 1
+            element_index += 1
             if not check_href_elementary(href):
                 continue
-            logger.debug("check link {}, \"{}\"".format(prepare_for_logging(href), prepare_for_logging(l.text)))
+            logger.debug("check link {} {}, \"{}\"".format(element_index, prepare_for_logging(href), prepare_for_logging(l.text)))
             link_info = TLinkInfo(TClickEngine.urllib, page_html, l.text, main_url, make_link(base, href), l.name)
             if step_info.check_link_func(link_info):
                 step_info.add_link_wrapper(link_info)
@@ -174,11 +180,13 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     for l in soup.findAll('iframe'):
         href = l.attrs.get('src')
         if href is not None:
-            all_links_count += 1
             if not check_href_elementary(href):
                 continue
+            element_index += 1
             link_info = TLinkInfo(TClickEngine.urllib, page_html, l.text, main_url, make_link(base, href), l.name)
-            if step_info.check_link_func(link_info ):
+            logger.debug("check link {} {}, \"{}\"".format(element_index, prepare_for_logging(href),
+                                                           prepare_for_logging(l.text)))
+            if step_info.check_link_func(link_info):
                 step_info.add_link_wrapper(link_info)
 
 
@@ -218,17 +226,18 @@ def click_all_selenium(step_info, main_url, driver_holder):
         link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
         if len(link_text) == 0:
             continue
-        logger.debug("check element {} before click, text={}".format(i, prepare_for_logging(link_text)))
-        if not step_info.check_link_func(TLinkInfo(TClickEngine.selenium, page_html, link_text)):
-            continue #preliminary test, delete it?
         href = element.get_attribute('href')
         if href is not None:
+            logger.debug("check element {}, url={} text={}".format(i, prepare_for_logging(href), prepare_for_logging(link_text)))
             href = make_link(main_url, href) # may be we do not need it in selenium?
             link_info = TLinkInfo(TClickEngine.selenium, page_html, link_text, main_url, href, element.tag_name)
             if step_info.check_link_func(link_info):
                 step_info.add_link_wrapper(link_info)
         else:
-            click_selenium_if_no_href(step_info, main_url, driver_holder,  element, i)
-            elements = driver_holder.get_buttons_and_links()
+            logger.debug("check element {} before click with text={}".format(i, prepare_for_logging(link_text)))
+            if step_info.check_link_func(TLinkInfo(TClickEngine.selenium, page_html, link_text)):
+                logger.debug("click element {} with text={}".format(i, prepare_for_logging(link_text)))
+                click_selenium_if_no_href(step_info, main_url, driver_holder,  element, i)
+                elements = driver_holder.get_buttons_and_links()
 
 

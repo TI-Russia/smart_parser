@@ -257,8 +257,8 @@ class TRobotProject:
     logger = None
     selenium_driver = TSeleniumDriver()
     step_names = list()
-    panic_mode_url_count = 400
-    max_step_url_count = 800
+    panic_mode_url_count = 600
+    max_step_url_count = 1000
 
     def __init__(self, filename, robot_steps):
         self.project_file = filename + ".clicks"

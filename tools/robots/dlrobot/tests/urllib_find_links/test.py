@@ -30,3 +30,5 @@ if __name__ == "__main__":
         child2 = url_info.linked_nodes.get('http://arshush.ru/downloads/2011/some_doc.docx')
         assert (child2 is not None)
         assert (len(child2['text']) > 0)
+
+        assert url_info.linked_nodes.get('http://pravo.gov.ru/proxy/ips/?docbody=&nd=102074279&rdk=&intelsearch') is None
