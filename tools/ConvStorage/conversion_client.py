@@ -1,7 +1,8 @@
 import time
 import http.client
 import logging
-import urllib
+import urllib.request
+import urllib.error
 import threading
 import hashlib
 import os

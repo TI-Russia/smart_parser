@@ -1,4 +1,4 @@
-import urllib.request as urllib2
+import urllib.parse
 import json
 import sys
 import time
@@ -37,7 +37,7 @@ class GoogleSearch:
 
     @staticmethod
     def _request_urllib(url):
-        opener = urllib2.build_opener()
+        opener = urllib.parse.build_opener()
         opener.addheaders = [
             ('User-Agent', random.choice(USER_AGENTS)),
             ("Accept-Language", random.choice(ACCEPT_LANGUAGES))

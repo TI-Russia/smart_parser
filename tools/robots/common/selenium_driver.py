@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from robots.common.content_types import ALL_CONTENT_TYPES
 import logging
-from selenium.common.exceptions  import WebDriverException, NoSuchWindowException
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import os
@@ -80,16 +80,19 @@ class TSeleniumDriver:
             time.sleep(timeout)
             return self.get_buttons_and_links()
 
+    def restart(self):
+        logging.getLogger("dlrobot_logger").error("restart selenium")
+        self.stop_executable()
+        self.start_executable()
+        time.sleep(10)
+
     def navigate_and_get_links(self, url, timeout=6):
         try:
             return self._navigate_and_get_links(url, timeout)
-        except (WebDriverException, NoSuchWindowException) as exp:
+        except WebDriverException as exp:
             logger = logging.getLogger("dlrobot_logger")
-            logger.error(
-                "exception during selenium navigate and get elements, exception={}, try restart".format(str(exp)))
-            self.stop_executable()
-            self.start_executable()
-            time.sleep(10)
+            logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
+            self.restart()
             return self._navigate_and_get_links(url, timeout)
 
     def wait_download_finished(self, timeout=120):

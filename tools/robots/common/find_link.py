@@ -1,11 +1,13 @@
 import os
 import logging
-import urllib
+import urllib.error
+import urllib.parse
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from robots.common.download import  read_from_cache_or_download
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
 from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
+from selenium.common.exceptions import WebDriverException
 
 
 class TClickEngine:
@@ -54,7 +56,7 @@ def are_web_mirrors(domain1, domain2):
         html2 = read_from_cache_or_download(domain2)
         res = len(html1) == len(html2) # it is enough
         return res
-    except urllib.error.URLError as exp:
+    except (urllib.error.HTTPError, urllib.error.URLError) as exp:
         return False
 
 
@@ -215,5 +217,11 @@ def click_all_selenium(step_info, main_url, driver_holder):
             only_anchor_text = TLinkInfo(TClickEngine.selenium, main_url, None, page_html=page_html, anchor_text=link_text)
             if step_info.normalize_and_check_link(only_anchor_text):
                 logger.debug("click element {}".format(element_index))
-                click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index)
-                elements = driver_holder.get_buttons_and_links()
+                try:
+                    click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index)
+                    elements = driver_holder.get_buttons_and_links()
+                except WebDriverException as exp:
+                    logger.error("exception: {}, try restart and get the next element".format(str(exp)))
+                    driver_holder.restart()
+                    elements = driver_holder.navigate_and_get_links(main_url)
+

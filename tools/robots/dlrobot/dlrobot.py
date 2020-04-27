@@ -4,8 +4,9 @@ import argparse
 import logging
 import datetime
 import sys
+import traceback
 from tempfile import TemporaryDirectory
-
+import urllib.error
 from robots.common.download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
 from robots.common.export_files import export_files_to_folder
 from robots.common.office_list import  TRobotProject
@@ -14,6 +15,7 @@ from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS
 from robots.common.primitives import normalize_anchor_text, check_link_sitemap, check_anticorr_link_text, \
                                     check_sub_page_or_iframe
+from robots.common.http_request import HttpHeadException
 
 def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
@@ -43,7 +45,7 @@ NEGATIVE_WORDS = [
     'схема',    'концепция',    'доктрина',
     'технические',    '^федеральный',    '^историческ',
     '^закон',    'новости', "^формы", "обратная", "обращения",
-    "^перечень", "прочие"
+    "^перечень", "прочие", "слабовидящих"
 ] + SOME_OTHER_DOCUMENTS
 
 NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WORDS)))
@@ -78,9 +80,11 @@ def looks_like_a_document_link(link_info):
         try:
             ext = get_file_extension_by_url(link_info.TargetUrl)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except Exception as err:
+        except HttpHeadException as err:
+            pass  # do not spam logs
+        except (urllib.error.HTTPError, urllib.error.URLError) as err:
             logger = logging.getLogger("dlrobot_logger")
-            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, str(err)))
+            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, err))
             return False
 
     return False
@@ -264,6 +268,11 @@ if __name__ == "__main__":
                 logging.shutdown()
         else:
             open_project(args, args.logfile)
+    except Exception as e:
+        print("unhandled exception type={}, exception={} ".format(type(e), e))
+        traceback.print_exc(file=sys.stdout)
+        stop_conversion_thread()
+        sys.exit(1)
     except KeyboardInterrupt:
         print("ctrl+c received")
         stop_conversion_thread()

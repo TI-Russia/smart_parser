@@ -3,15 +3,15 @@ import logging
 import json
 import shutil
 import os
+import re
 import tempfile
-import urllib
+import urllib.error
 import time
 import datetime
 from bs4 import BeautifulSoup
 from robots.common.download import read_from_cache_or_download,  get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
-from robots.common.http_request import request_url_headers
-from robots.common.http_request import get_request_rate
+from robots.common.http_request import request_url_headers, get_request_rate, HttpHeadException
 from DeclDocRecognizer.dlrecognizer import  DL_RECOGNIZER_ENUM
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
@@ -21,6 +21,7 @@ from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can
 from robots.common.serp_parser import GoogleSearch
 from collections import defaultdict
 from robots.common.primitives import get_site_domain_wo_www, prepare_for_logging
+from selenium.common.exceptions import WebDriverException
 
 FIXLIST =  {
     'fsin.su': {
@@ -244,8 +245,11 @@ class TProcessUrlTemporary:
                 link_info.ElementIndex,
                 prepare_for_logging(link_info.TargetUrl), # not redirected yet
                 prepare_for_logging(link_info.AnchorText)))
-
-        return self.step_passport['check_link_func'](link_info)
+        try:
+            return self.step_passport['check_link_func'](link_info)
+        except UnicodeEncodeError as exp:
+            self.website.logger.debug(exp)
+            return False
 
     def add_link_wrapper(self, link_info):
         assert link_info.TargetUrl is not None
@@ -254,8 +258,14 @@ class TProcessUrlTemporary:
             # there are also javascript redirects, that can be processed only with a http get request
             # but http get requests are heavy, that's why we deal with them after the link check
             link_info.TargetUrl, _ = request_url_headers(link_info.TargetUrl)
-        except urllib.error.HTTPError as err:
-            pass
+        except UnicodeEncodeError as err:
+                return  # unknown exception during urllib.request.urlopen (possibly url has a bad encoding)
+        except HttpHeadException as err:
+            return # we tried to make http head 3 times, but failed no sense, to retry
+        except (urllib.error.HTTPError, urllib.error.URLError) as err:
+            if isinstance(err, urllib.error.HTTPError)  and err.code == 404:
+                return
+            pass  # save link and  try one more time to fetch it
 
         self.website.url_nodes[link_info.SourceUrl].add_child_link(link_info.TargetUrl, link_info.to_json())
         self.robot_step.step_urls.add(link_info.TargetUrl)
@@ -285,6 +295,7 @@ class TRobotProject:
         self.human_files = list()
         TRobotProject.step_names = [r['step_name'] for r in robot_steps]
         self.enable_search_engine = True  #switched off in tests, otherwize google shows captcha
+        self.runtime_processed_files = dict()
 
     def __enter__(self):
         TRobotProject.logger = logging.getLogger("dlrobot_logger")
@@ -409,7 +420,10 @@ class TRobotProject:
     def find_links_with_selenium (step_info, main_url):
         if can_be_office_document(main_url):
             return
-        click_all_selenium(step_info, main_url, TRobotProject.selenium_driver)
+        try:
+            click_all_selenium(step_info, main_url, TRobotProject.selenium_driver)
+        except WebDriverException as exp:
+            TRobotProject.logger.error('selenium exception={}'.format(exp))
 
     @staticmethod
     def get_file_data_and_extension(url, convert_to_utf8=False):
@@ -421,31 +435,37 @@ class TRobotProject:
                     html = convert_html_to_utf8(url, html)
             return html, extension
         except Exception as err:
-            TRobotProject.logger.error('cannot download page url={} while add_links, exception={}'.format(url, str(err)))
+            TRobotProject.logger.error('cannot download page url={} while add_links, exception={}'.format(url, err))
             return None, None
 
-    @staticmethod
-    def add_links(step_info, url, fallback_to_selenium=True):
+    def add_links(self, step_info, url, fallback_to_selenium=True):
         file_data, extension = TRobotProject.get_file_data_and_extension(url)
         if extension != DEFAULT_HTML_EXTENSION:
             return
-
         try:
             soup = BeautifulSoup(file_data, "html.parser")
+        except Exception as e:
+            TRobotProject.logger.error('cannot parse html, exception {}'.format(url, e))
+            return
+        html_text = str(soup)
+        if len(html_text) > 1000:
+            html_text = re.sub('[0-9]+', 'd', html_text)
+            hash_code = "{}_{}".format(step_info.step_passport['step_name'],
+                            hashlib.sha256(html_text.encode("utf8")).hexdigest())
+            already = self.runtime_processed_files.get(hash_code)
+            if already is not None:
+                TRobotProject.logger.error(
+                    'skip processing {}, a similar file is already processed on this step: {}'.format(url, already))
+                return
+            self.runtime_processed_files[hash_code] = url
+        try:
             find_links_in_html_by_text(step_info, url, soup)
             if fallback_to_selenium: # switch off selenium is almost a panic mode (too many links)
                 TRobotProject.find_links_with_selenium(step_info, url)
+        except (urllib.error.HTTPError, urllib.error.URLError, WebDriverException) as e:
+            TRobotProject.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
-        except urllib.error.HTTPError as e:
-            TRobotProject.logger.error(
-                'cannot download page url={} while find_links, exception={}'.format(url, str(e)))
-#        except (TypeError, NameError, IndexError,  KeyError, AttributeError) as err:
-#            raise err
-#        except Exception as err:
-#            TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}'.format(url, str(err)))
-
-    @staticmethod
-    def find_links_for_one_website_transitive(step_info, start_pages):
+    def find_links_for_one_website_transitive(self, step_info, start_pages):
         fallback_to_selenium = step_info.step_passport.get('fallback_to_selenium', True)
         transitive = step_info.step_passport.get('transitive', False)
         pages_to_process = set(start_pages)
@@ -455,7 +475,7 @@ class TRobotProject:
                 TRobotProject.logger.info("iteration N {}, process {} pages".format(iteration, len(pages_to_process)))
             for url in pages_to_process:
                 processed_pages.add(url)
-                TRobotProject.add_links(step_info, url, fallback_to_selenium)
+                self.add_links(step_info, url, fallback_to_selenium)
                 found_links_count = len(step_info.robot_step.step_urls)
                 if fallback_to_selenium and found_links_count >= TRobotProject.panic_mode_url_count:
                     fallback_to_selenium = False
@@ -485,8 +505,8 @@ class TRobotProject:
         links_count = 0
         try:
             serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
-        except urllib.error.HTTPError as err:
-            TRobotProject.logger.error('cannot request search engine, exception {}'.format(str(err)))
+        except (urllib.error.HTTPError, urllib.error.URLError) as err:
+            TRobotProject.logger.error('cannot request search engine, exception {}'.format(err))
             return
 
         for url in serp_urls:

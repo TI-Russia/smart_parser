@@ -1,6 +1,7 @@
 import json
 import re
-import urllib
+import urllib.parse
+import urllib.error
 import hashlib
 import logging
 from unidecode import unidecode
@@ -17,7 +18,7 @@ def is_html_contents(info):
 
 
 def find_simple_js_redirect(data):
-    res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\']+)([\'"]?\s*;)', data)
+    res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data)
     if res:
         url = res.group(3)
         return url
@@ -28,7 +29,7 @@ def find_simple_js_redirect(data):
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     if content_charset is not None:
         encoding = content_charset
-    else:
+    else: # todo: use BeautifulSoup here
         match = re.search('charset\s*=\s*"?([^"\']+)', html_data.decode('latin', errors="ignore"))
         if match:
             encoding = match.group(1).strip()
@@ -56,7 +57,7 @@ def http_get_with_urllib(url, search_for_js_redirect=True):
                     redirect_url = find_simple_js_redirect(data_utf8)
                     if redirect_url is not None and redirect_url != url:
                         return http_get_with_urllib(redirect_url, search_for_js_redirect=False)
-                except urllib.error.URLError as err:
+                except (urllib.error.HTTPError, urllib.error.URLError, ValueError) as err:
                     pass
 
     except AttributeError:

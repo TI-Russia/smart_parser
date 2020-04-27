@@ -1,12 +1,10 @@
 import ssl
 import logging
-import urllib.parse
+import urllib.error
 import urllib.request
-from urllib.parse import urlparse, quote, unquote, urlunparse
+import urllib.parse
 from collections import defaultdict
 import time
-from urllib.error import HTTPError
-import urllib.request
 import datetime
 import re
 import sys
@@ -60,13 +58,13 @@ def make_http_request(url, method):
     if url.find('://') == -1:
         url = "http://" + url
 
-    o = list(urlparse(url)[:])
+    o = list(urllib.parse.urlparse(url)[:])
     if has_cyrillic(o[1]):
         o[1] = o[1].encode('idna').decode('latin')
 
-    o[2] = unquote(o[2])
-    o[2] = quote(o[2])
-    url = urlunparse(o)
+    o[2] = urllib.parse.unquote(o[2])
+    o[2] = urllib.parse.quote(o[2])
+    url = urllib.parse.urlunparse(o)
     context = ssl._create_unverified_context()
     redirect_handler = urllib.request.HTTPRedirectHandler()
     redirect_handler.max_redirections = 5
@@ -109,12 +107,20 @@ def make_http_request(url, method):
         raise
 
 
+class HttpHeadException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return self.value
+
+
 def request_url_headers(url):
     global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME
     if url in HEADER_MEMORY_CACHE:
         return HEADER_MEMORY_CACHE[url]
     if HEADER_REQUEST_COUNT[url] >= 3:
-        raise Exception("too many times to get headers that caused exceptions")
+        raise HttpHeadException("too many times to get headers that caused exceptions")
 
     # do not ddos sites
     elapsed_time = datetime.datetime.now() - LAST_HEAD_REQUEST_TIME

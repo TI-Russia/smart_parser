@@ -1,4 +1,4 @@
-import urllib
+import urllib.parse
 
 def strip_viewer_prefix(href):
     if href is None:
