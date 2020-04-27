@@ -49,6 +49,7 @@ class TLinkInfo:
 
 def are_web_mirrors(domain1, domain2):
     try:
+        # check all mirrors including simple javascript
         html1 = read_from_cache_or_download(domain1)
         html2 = read_from_cache_or_download(domain2)
         res = len(html1) == len(html2) # it is enough
@@ -71,6 +72,8 @@ def check_href_elementary(href):
     if href.startswith('tel:'):
         return False
     if href.startswith('javascript:'):
+        return False
+    if href.startswith('about:'):
         return False
     if href.startswith('consultantplus:'):
         return False

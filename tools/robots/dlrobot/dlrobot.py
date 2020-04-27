@@ -56,16 +56,11 @@ def has_negative_words(anchor_text):
 
 def looks_like_a_document_link(link_info):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
+
+    # check anchor text
     anchor_text = normalize_anchor_text(link_info.AnchorText)
     if re.search('(скачать)|(загрузить)', anchor_text) is not None:
         return True
-    if link_info.TargetUrl is not None:
-        target = link_info.TargetUrl.lower()
-        if re.search('(docs)|(documents)|(files)|(download)', target):
-            return True
-        if target.endswith('html') or target.endswith('htm'):
-            return False
-
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if e == DEFAULT_HTML_EXTENSION:
             continue
@@ -73,14 +68,20 @@ def looks_like_a_document_link(link_info):
         if anchor_text.find(e[1:]) != -1:
             return True
 
-    try:
-        if link_info.TargetUrl is not None:
+    # check url path or make http head request
+    if link_info.TargetUrl is not None:
+        target = link_info.TargetUrl.lower()
+        if re.search('(docs)|(documents)|(files)|(download)', target):
+            return True
+        if target.endswith('html') or target.endswith('htm'):
+            return False
+        try:
             ext = get_file_extension_by_url(link_info.TargetUrl)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    except Exception as err:
-        logger = logging.getLogger("dlrobot_logger")
-        logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, str(err)))
-        return False
+        except Exception as err:
+            logger = logging.getLogger("dlrobot_logger")
+            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, str(err)))
+            return False
 
     return False
 

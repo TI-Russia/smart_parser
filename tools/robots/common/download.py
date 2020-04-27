@@ -46,7 +46,7 @@ def convert_html_to_utf8(url, html_data):
 
 
 def http_get_with_urllib(url, search_for_js_redirect=True):
-    headers, data = make_http_request(url, "GET")
+    redirected_url, headers, data = make_http_request(url, "GET")
 
     try:
         if is_html_contents(headers):
@@ -212,7 +212,7 @@ def get_file_extension_by_cached_url(url):
 
 
 def get_file_extension_by_url(url):
-    headers = request_url_headers(url)
+    redirected_url, headers = request_url_headers(url)
     ext = get_file_extension_by_content_type(headers)
     return ext
 

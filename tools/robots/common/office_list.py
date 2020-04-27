@@ -10,7 +10,7 @@ import datetime
 from bs4 import BeautifulSoup
 from robots.common.download import read_from_cache_or_download,  get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
-
+from robots.common.http_request import request_url_headers
 from robots.common.http_request import get_request_rate
 from DeclDocRecognizer.dlrecognizer import  DL_RECOGNIZER_ENUM
 from robots.common.selenium_driver import TSeleniumDriver
@@ -242,12 +242,21 @@ class TProcessUrlTemporary:
         self.website.logger.debug(
             "check element {}, url={} text={}".format(
                 link_info.ElementIndex,
-                prepare_for_logging(link_info.TargetUrl),
+                prepare_for_logging(link_info.TargetUrl), # not redirected yet
                 prepare_for_logging(link_info.AnchorText)))
 
         return self.step_passport['check_link_func'](link_info)
 
     def add_link_wrapper(self, link_info):
+        assert link_info.TargetUrl is not None
+        try:
+            # get rid of http redirects here, for example www.yandex.ru -> yandex.ru to store only one url variant
+            # there are also javascript redirects, that can be processed only with a http get request
+            # but http get requests are heavy, that's why we deal with them after the link check
+            link_info.TargetUrl, _ = request_url_headers(link_info.TargetUrl)
+        except urllib.error.HTTPError as err:
+            pass
+
         self.website.url_nodes[link_info.SourceUrl].add_child_link(link_info.TargetUrl, link_info.to_json())
         self.robot_step.step_urls.add(link_info.TargetUrl)
         if link_info.TargetUrl not in self.website.url_nodes:
@@ -286,7 +295,6 @@ class TRobotProject:
     def __exit__(self, type, value, traceback):
         TRobotProject.selenium_driver.stop_executable()
         shutil.rmtree(TRobotProject.selenium_driver.download_folder)
-
 
     def write_project(self):
         with open(self.project_file, "w", encoding="utf8") as outf:
@@ -424,19 +432,17 @@ class TRobotProject:
 
         try:
             soup = BeautifulSoup(file_data, "html.parser")
-
-            #save_links_count = len(step_info.robot_step.step_urls)
             find_links_in_html_by_text(step_info, url, soup)
             if fallback_to_selenium: # switch off selenium is almost a panic mode (too many links)
                 TRobotProject.find_links_with_selenium(step_info, url)
 
-            #if save_links_count == len(step_info.robot_step.step_urls) and fallback_to_selenium:
-            #    TRobotProject.find_links_with_selenium(step_info, url)
-
-        except (TypeError, NameError, IndexError,  KeyError, AttributeError) as err:
-            raise err
-        except Exception as err:
-            TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}'.format(url, str(err)))
+        except urllib.error.HTTPError as e:
+            TRobotProject.logger.error(
+                'cannot download page url={} while find_links, exception={}'.format(url, str(e)))
+#        except (TypeError, NameError, IndexError,  KeyError, AttributeError) as err:
+#            raise err
+#        except Exception as err:
+#            TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}'.format(url, str(err)))
 
     @staticmethod
     def find_links_for_one_website_transitive(step_info, start_pages):

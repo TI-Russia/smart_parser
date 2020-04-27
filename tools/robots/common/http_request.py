@@ -89,7 +89,7 @@ def make_http_request(url, method):
             headers = request.info()
             if HTTP_503_ERRORS_COUNT > 0:
                 HTTP_503_ERRORS_COUNT -= 1 #decrement HTTP_503_ERRORS_COUNT on successful http_request
-            return headers, data
+            return request.geturl(), headers, data
     except urllib.error.HTTPError as e:
         if e.code == 503:
             request_rates = get_request_rate()
@@ -110,7 +110,7 @@ def make_http_request(url, method):
 
 
 def request_url_headers(url):
-    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME, PROXIES
+    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME
     if url in HEADER_MEMORY_CACHE:
         return HEADER_MEMORY_CACHE[url]
     if HEADER_REQUEST_COUNT[url] >= 3:
@@ -124,6 +124,8 @@ def request_url_headers(url):
 
 
     HEADER_REQUEST_COUNT[url] += 1
-    headers, _ = make_http_request(url, "HEAD")
-    HEADER_MEMORY_CACHE[url] = headers
-    return headers
+    redirected_url, headers, _ = make_http_request(url, "HEAD")
+    HEADER_MEMORY_CACHE[url] = (redirected_url, headers)
+    if redirected_url != url:
+        HEADER_MEMORY_CACHE[redirected_url] = (redirected_url,headers)
+    return redirected_url, headers
