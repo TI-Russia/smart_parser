@@ -1,7 +1,4 @@
-import sys
 from robots.common.find_link import web_link_is_absolutely_prohibited
-from ConvStorage.conversion_client import stop_conversion_thread
-
 
 mirror_examples = [
     ("www.mvd.ru", "www.yandex.ru"),

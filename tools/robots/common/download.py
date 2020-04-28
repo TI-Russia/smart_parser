@@ -7,10 +7,10 @@ import logging
 from unidecode import unidecode
 import os
 from robots.common.http_request import make_http_request, request_url_headers
-from ConvStorage.conversion_client import start_conversion_task_if_needed
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 FILE_CACHE_FOLDER = "cached"
 
+CONVERSION_CLIENT = None
 
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
@@ -23,7 +23,6 @@ def find_simple_js_redirect(data):
         url = res.group(3)
         return url
     return None
-
 
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
@@ -81,6 +80,7 @@ def read_url_info_from_cache(url):
 
 # file downloaded by urllib
 def write_cache_file(localfile, info_file, info, data):
+    global CONVERSION_CLIENT
     with open(localfile, "wb") as f:
         f.write(data)
     assert info is not None
@@ -93,13 +93,14 @@ def write_cache_file(localfile, info_file, info, data):
     with open(info_file, "w", encoding="utf8") as f:
         f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
     file_extension = get_file_extension_by_content_type(url_info['headers'])
-    start_conversion_task_if_needed(localfile, file_extension)
+    if CONVERSION_CLIENT is not None:
+        CONVERSION_CLIENT.start_conversion_task_if_needed(localfile, file_extension)
     return data
 
 
 # save from selenium
 def save_download_file(filename):
-    global FILE_CACHE_FOLDER
+    global FILE_CACHE_FOLDER, CONVERSION_CLIENT
     logger = logging.getLogger("dlrobot_logger")
     download_folder = os.path.join(FILE_CACHE_FOLDER, "downloads")
     if not os.path.exists(download_folder):
@@ -114,7 +115,8 @@ def save_download_file(filename):
         logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
-    start_conversion_task_if_needed(saved_filename, file_extension)
+    if CONVERSION_CLIENT is not None:
+        CONVERSION_CLIENT.start_conversion_task_if_needed(saved_filename, file_extension)
     return saved_filename
 
 

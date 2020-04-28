@@ -7,15 +7,15 @@ import sys
 import traceback
 from tempfile import TemporaryDirectory
 import urllib.error
-from robots.common.download import  get_file_extension_only_by_headers, DEFAULT_HTML_EXTENSION
+from robots.common.download import  get_file_extension_only_by_headers, DEFAULT_HTML_EXTENSION, CONVERSION_CLIENT
 from robots.common.export_files import export_files_to_folder
 from robots.common.office_list import  TRobotProject
-from ConvStorage.conversion_client import wait_doc_conversion_finished, assert_declarator_conv_alive, stop_conversion_thread
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS
 from robots.common.primitives import normalize_anchor_text, check_link_sitemap, check_anticorr_link_text, \
                                     check_sub_page_or_iframe
 from robots.common.http_request import HttpHeadException
+from ConvStorage.conversion_client import TDocConversionClient
 
 def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
@@ -200,6 +200,7 @@ def step_index_by_name(name):
 
 
 def make_steps(args, project):
+    global CONVERSION_CLIENT
     logger = logging.getLogger("dlrobot_logger")
     if args.start_from != "last_step":
         start = step_index_by_name(args.start_from) if args.start_from is not None else 0
@@ -229,7 +230,7 @@ def make_steps(args, project):
         project.download_last_step()
 
     logger.info("=== wait for all document conversion finished =========")
-    wait_doc_conversion_finished()
+    CONVERSION_CLIENT.wait_doc_conversion_finished()
 
     logger.info("=== export_files_to_folder =========")
     export_files_to_folder(project.offices, args.result_folder)
@@ -259,8 +260,9 @@ def open_project(args, log_file_name):
 
 if __name__ == "__main__":
     args = parse_args()
-    assert_declarator_conv_alive()
     try:
+        CONVERSION_CLIENT = TDocConversionClient()
+        CONVERSION_CLIENT.start_conversion_thread()
         if args.logfile == "temp":
             with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
                 log_file_name = os.path.join(tmp_folder, "dlrobot.log")
@@ -271,9 +273,9 @@ if __name__ == "__main__":
     except Exception as e:
         print("unhandled exception type={}, exception={} ".format(type(e), e))
         traceback.print_exc(file=sys.stdout)
-        stop_conversion_thread()
         sys.exit(1)
     except KeyboardInterrupt:
         print("ctrl+c received")
-        stop_conversion_thread()
         sys.exit(1)
+    finally:
+        CONVERSION_CLIENT.stop_conversion_thread()

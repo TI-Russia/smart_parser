@@ -6,7 +6,7 @@ import hashlib
 import shutil
 import sys
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify
-from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TConversionTasks
+from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
 
@@ -321,7 +321,7 @@ def external_convert(source_file, reuse_txt=False):
         temp_file = source_file + ".docx"
         with open(source_file, "rb") as f:
             sha256 = hashlib.sha256(f.read()).hexdigest()
-            if TConversionTasks().retrieve_document(sha256, temp_file):
+            if TDocConversionClient().retrieve_document(sha256, temp_file):
                 ec.run_office2txt(temp_file, txt_file)
             else:
                 # the worse case, let's use calibre
