@@ -219,7 +219,8 @@ class TConvDatabase:
             time.sleep(10)
 
             input_files = list(os.listdir(self.args.input_folder))
-            self.logger.debug("the input folder contains {} unprocessed files".format(len(input_files)))
+            if len(input_files) > 0:
+                self.logger.debug("the input folder contains {} unprocessed files".format(len(input_files)))
 
             updated = False
             for some_file in input_files:
