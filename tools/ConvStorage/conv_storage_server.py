@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import logging
 import threading
+import tempfile
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -164,6 +165,7 @@ class TConvDatabase:
             return False
         with open(filename, 'wb') as output_file:
             output_file.write(file_bytes)
+        self.logger.debug("save new file {} ".format(output_file))
         return True
 
     def move_one_ocred_file(self, some_file):
@@ -184,7 +186,7 @@ class TConvDatabase:
     def process_one_input_file(self, some_file):
         stripped_file = os.path.join(self.args.input_folder_cracked, some_file)
         input_file = os.path.join(self.args.input_folder, some_file)
-        self.logger.debug("pwd={}".format(os.getcwd()))
+        self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
         if not self.args.enable_ocr or check_pdf_has_text(self.logger, stripped_file):
@@ -206,25 +208,30 @@ class TConvDatabase:
             shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, some_file))
             shutil.move(input_file, os.path.join(self.converted_files_folder, some_file))
 
-    def process_input_files(self):
+    def setup_environment(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
+        self.logger.debug("input folder for new files: {} ".format(self.args.input_folder))
         assert os.path.exists(self.args.microsoft_pdf_2_docx)
-        if os.path.exists(self.args.input_folder_cracked):
-            shutil.rmtree(self.args.input_folder_cracked)
-        if not os.path.exists(self.args.input_folder_cracked):
-            logger.debug("mkdir {} ".format(self.args.input_folder_cracked))
-            os.mkdir(self.args.input_folder_cracked)
+        self.args.input_folder_cracked = tempfile.mkdtemp(prefix="input_files_cracked", dir=".")
+
+    def process_input_files(self):
         while True:
-            time.sleep(1)
+            time.sleep(10)
+
+            input_files = list(os.listdir(self.args.input_folder))
+            if len(input_files) > 0:
+                self.logger.debug("the input folder contains {} unprocessed files".format(len(input_files)))
+
             updated = False
-            for some_file in os.listdir(self.args.input_folder):
+            for some_file in input_files:
                 try:
                     self.process_one_input_file(some_file)
                     updated = True
                 except Exception as exp:
+                    logger.error("Exception: {}".format(exp))
                     fname = os.path.join(self.args.input_folder, some_file)
                     if os.path.exists(fname):
-                        logger.error("Exception {}, delete {}".format(exp, some_file))
+                        logger.error("delete {}".format(fname))
                         os.unlink(fname)
 
             for some_file in os.listdir(self.args.ocr_output_folder):
@@ -320,12 +327,6 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         self.wfile.write(reply_body.encode('utf-8'))
 
 
-
-
-
-
-
-
 if __name__ == '__main__':
     assert shutil.which("qpdf") is not None # sudo apt install qpdf
     assert shutil.which("pdfcrack") is not None #https://sourceforge.net/projects/pdfcrack/files/
@@ -342,6 +343,7 @@ if __name__ == '__main__':
         os.mkdir(args.ocr_output_folder)
 
     CONV_DATABASE = TConvDatabase(args)
+    CONV_DATABASE.setup_environment()
     _thread.start_new_thread(TConvDatabase.process_input_files, (CONV_DATABASE,))
 
     host, port = args.server_address.split(":")
