@@ -7,7 +7,7 @@ import sys
 import traceback
 from tempfile import TemporaryDirectory
 import urllib.error
-from robots.common.download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
+from robots.common.download import  get_file_extension_only_by_headers, DEFAULT_HTML_EXTENSION
 from robots.common.export_files import export_files_to_folder
 from robots.common.office_list import  TRobotProject
 from ConvStorage.conversion_client import wait_doc_conversion_finished, assert_declarator_conv_alive, stop_conversion_thread
@@ -78,7 +78,7 @@ def looks_like_a_document_link(link_info):
         if target.endswith('html') or target.endswith('htm'):
             return False
         try:
-            ext = get_file_extension_by_url(link_info.TargetUrl)
+            ext = get_file_extension_only_by_headers(link_info.TargetUrl)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
         except HttpHeadException as err:
             pass  # do not spam logs

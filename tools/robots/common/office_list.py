@@ -416,14 +416,6 @@ class TRobotProject:
             result.insert(0, summary)
             json.dump(result, outf, ensure_ascii=False, indent=4)
 
-    @staticmethod
-    def find_links_with_selenium (step_info, main_url):
-        if can_be_office_document(main_url):
-            return
-        try:
-            click_all_selenium(step_info, main_url, TRobotProject.selenium_driver)
-        except WebDriverException as exp:
-            TRobotProject.logger.error('selenium exception={}'.format(exp))
 
     @staticmethod
     def get_file_data_and_extension(url, convert_to_utf8=False):
@@ -438,6 +430,20 @@ class TRobotProject:
             TRobotProject.logger.error('cannot download page url={} while add_links, exception={}'.format(url, err))
             return None, None
 
+    def check_html_cache(self, step_info, url, soup):
+        html_text = str(soup)
+        if len(html_text) > 1000:
+            html_text = re.sub('[0-9]+', 'd', html_text)
+            hash_code = "{}_{}".format(step_info.step_passport['step_name'],
+                                       hashlib.sha256(html_text.encode("utf8")).hexdigest())
+            already = self.runtime_processed_files.get(hash_code)
+            if already is not None:
+                TRobotProject.logger.error(
+                    'skip processing {}, a similar file is already processed on this step: {}'.format(url, already))
+                return False
+            self.runtime_processed_files[hash_code] = url
+        return True
+
     def add_links(self, step_info, url, fallback_to_selenium=True):
         file_data, extension = TRobotProject.get_file_data_and_extension(url)
         if extension != DEFAULT_HTML_EXTENSION:
@@ -447,21 +453,12 @@ class TRobotProject:
         except Exception as e:
             TRobotProject.logger.error('cannot parse html, exception {}'.format(url, e))
             return
-        html_text = str(soup)
-        if len(html_text) > 1000:
-            html_text = re.sub('[0-9]+', 'd', html_text)
-            hash_code = "{}_{}".format(step_info.step_passport['step_name'],
-                            hashlib.sha256(html_text.encode("utf8")).hexdigest())
-            already = self.runtime_processed_files.get(hash_code)
-            if already is not None:
-                TRobotProject.logger.error(
-                    'skip processing {}, a similar file is already processed on this step: {}'.format(url, already))
-                return
-            self.runtime_processed_files[hash_code] = url
+        if not self.check_html_cache(step_info, url, soup):
+            return
         try:
             find_links_in_html_by_text(step_info, url, soup)
-            if fallback_to_selenium: # switch off selenium is almost a panic mode (too many links)
-                TRobotProject.find_links_with_selenium(step_info, url)
+            if fallback_to_selenium:  # switch off selenium is almost a panic mode (too many links)
+                click_all_selenium(step_info, url, TRobotProject.selenium_driver)
         except (urllib.error.HTTPError, urllib.error.URLError, WebDriverException) as e:
             TRobotProject.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 

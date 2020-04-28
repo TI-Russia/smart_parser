@@ -28,7 +28,7 @@ if [ -d $HTML_FOLDER ]; then
 	disown
 fi
 
-bash -x run.sh $PROJECT >test_log.out 2>&1
+bash -x run.sh $PROJECT $WEB_ADDR >test_log.out 2>&1
 #bash -x run.sh $PROJECT
 
 if [ $? -eq 0 ]; then

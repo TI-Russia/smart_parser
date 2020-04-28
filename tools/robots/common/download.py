@@ -167,7 +167,17 @@ def get_file_extension_by_content_type(headers):
             _, file_extension = os.path.splitext(filename)
             return file_extension
 
-    if content_type.startswith("text"):
+    if content_type.startswith("text/csv"):
+        return ".csv"
+    elif content_type.startswith("text/css"):
+        return ".css"
+    elif content_type.startswith("text/javascript"):
+        return ".js"
+    elif content_type.startswith("text/plain"):
+        return ".txt"
+    elif content_type.startswith("text/xml"):
+        return ".xml"
+    elif content_type.startswith("text"):
         return DEFAULT_HTML_EXTENSION
     elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
         return ".xlsx"
@@ -204,6 +214,14 @@ def get_file_extension_by_content_type(headers):
 
 
 def get_file_extension_by_cached_url(url):
+    local_file = get_local_file_name_by_url(url)
+    if os.path.exists(local_file):  #can be 404, do not try to fetch it
+        data_start = read_cache_file(local_file).decode('latin', errors="ignore").strip(" \r\n\t")[0:100]
+        data_start = data_start.lower().replace(" ", "")
+        if data_start.startswith("<html") or data_start.startswith("<docttypehtml") \
+                or data_start.startswith("<!docttypehtml"):
+            return DEFAULT_HTML_EXTENSION
+
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if url.lower().endswith(e):
             return e
@@ -212,8 +230,9 @@ def get_file_extension_by_cached_url(url):
     return get_file_extension_by_content_type(headers)
 
 
-def get_file_extension_by_url(url):
-    redirected_url, headers = request_url_headers(url)
+# use it preliminary, because ContentDisposition and Content-type often contain errors
+def get_file_extension_only_by_headers(url):
+    _, headers = request_url_headers(url)
     ext = get_file_extension_by_content_type(headers)
     return ext
 

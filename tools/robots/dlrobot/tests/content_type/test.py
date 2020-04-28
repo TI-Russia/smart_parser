@@ -8,6 +8,8 @@ from robots.common.download import get_file_extension_only_by_headers, read_from
 
 HTTP_HEAD_REQUESTS_COUNT = 0
 HTTP_GET_REQUESTS_COUNT = 0
+
+
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
     def build_headers(self):
@@ -48,7 +50,7 @@ if __name__ == '__main__':
     wrong_extension = get_file_extension_only_by_headers(url)
     assert wrong_extension == ".doc" # see minvr.ru for this error
     read_from_cache_or_download(url)
-    right_extension = get_file_extension_by_cached_url(url)
+    right_extension = get_file_extension_by_cached_url(url) #read file contents to determine it's type
     assert right_extension == DEFAULT_HTML_EXTENSION
     #server_thread.join()
     HTTP_SERVER.shutdown()
