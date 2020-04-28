@@ -16,7 +16,9 @@ def process_file(conv_tasks, filename, rebuild):
             sha256hash = hashlib.sha256(f.read()).hexdigest()
         if conv_tasks.check_file_was_converted(sha256hash):
             print("delete old converted file for {} {}".format(filename, sha256hash))
-            conv_tasks.delete_file(sha256hash)
+            if conv_tasks.delete_file(sha256hash):
+                print("conv_tasks.delete_file failed")
+
     conv_tasks.start_conversion_task_if_needed(filename, ".pdf")
 
 

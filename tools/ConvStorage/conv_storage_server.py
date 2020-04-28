@@ -331,7 +331,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
                 del CONV_DATABASE.conv_db_json['files'][sha256]
                 CONV_DATABASE.rebuild_json_wrapper()  # just to save
                 self.send_response(200)
-                self.wfile.write(b"done")
+                self.wfile.write(b"done ")
             else:
                 self.send_response(200)
                 self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
