@@ -227,6 +227,7 @@ class TConvDatabase:
         assert os.path.exists(self.args.microsoft_pdf_2_docx)
         self.args.input_folder_cracked = tempfile.mkdtemp(prefix="input_files_cracked", dir=".")
 
+    # can only add new files
     def rebuild_json_wrapper(self):
         self.logger.info("rebuild json started, files number={}".format(len(self.conv_db_json["files"])))
         rebuild_json(self.conv_db_json,
@@ -327,7 +328,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
                 if os.path.exists(file_path):
                     CONV_DATABASE.logger.debug("delete {}".format(file_path))
                     os.remove(file_path)
-                CONV_DATABASE.rebuild_json_wrapper()
+                del CONV_DATABASE.conv_db_json['files'][sha256]
+                CONV_DATABASE.rebuild_json_wrapper()  # just to save
                 self.send_response(200)
             else:
                 self.send_response(200)

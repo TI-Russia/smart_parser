@@ -133,7 +133,8 @@ class TDocConversionClient(object):
     def delete_file(self, sha256):
         conn = http.client.HTTPConnection(self.db_conv_url)
         conn.request("GET", "?delete_file=1&sha256=" + sha256)
-        return conn.getresponse().code == 200
+        resp = conn.getresponse()
+        return resp.code == 200
 
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url)
