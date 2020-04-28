@@ -80,11 +80,22 @@ class TExternalConverters:
         shutil.move(temp_outfile, out)
         return 0
 
+    def convert_to_html_with_soffice(self, inp):
+        run_with_timeout([self.soffice, '--headless', '--convert-to', 'html', inp])
+        filename_wo_extenstion, _ = os.path.splitext(inp)
+        temp_outfile = filename_wo_extenstion + ".html"
+        if not os.path.exists(temp_outfile):
+            return None
+        with open(temp_outfile, encoding="utf8") as inp:
+            html = inp.read()
+        os.unlink(temp_outfile)
+        return html
+
     def run_xlsx2csv(self, inp, out):
         return run_cmd("python \"{}\" -c utf-8 -d tab {} {}".format(self.xlsx2csv, inp, out))
 
     def run_xls2csv(self, inp, out):
-        return run_cmd("{} -q 0 -c $'\t' -d utf-8 {} > {}".format(self.xls2csv, inp, out))
+        return run_cmd("{} -q 0 -c ' ' -d utf-8 {} > {}".format(self.xls2csv, inp, out))
 
     def run_catdoc(self, inp, out):
         return run_cmd("{} -d utf-8 {} > {}".format(self.catdoc, inp, out))

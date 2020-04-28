@@ -9,6 +9,7 @@ import _thread
 import shutil
 import subprocess
 import logging
+import threading
 
 def parse_args():
     parser = argparse.ArgumentParser()

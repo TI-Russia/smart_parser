@@ -10,6 +10,11 @@ from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TConversionTasks
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
 
+def normalize_whitespace(str):
+    str = re.sub(r'\s+', ' ', str)
+    str = str.strip()
+    return str
+
 
 class DL_RECOGNIZER_ENUM:
     UNKNOWN = "unknown_result"
@@ -105,6 +110,7 @@ class TClassificationVerdict:
     def __init__(self, input_text, smart_parser_person_count):
         self.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
         self.smart_parser_person_count = smart_parser_person_count
+        input_text = normalize_whitespace(input_text)
         self.start_text = input_text[0:500]
         self.input_text = input_text
         self.text_features = defaultdict(TTextFeature)
