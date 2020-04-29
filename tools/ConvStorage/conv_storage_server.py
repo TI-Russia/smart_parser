@@ -13,6 +13,7 @@ import tempfile
 import sys
 import queue
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DECLARATOR_CONV_URL")
@@ -102,9 +103,9 @@ def check_pdf_has_text(logger, filename):
 
 
 def strip_drm(logger, filename, stripped_file):
-    cmd = "pdfcrack {0} > crack.info".format(filename)
-    logger.debug(cmd )
-    os.system(cmd)
+    with open("crack.info", "w", encoding="utf8") as outf:
+        subprocess.run(['pdfcrack', filename], stderr=subprocess.DEVNULL, stdout=outf)
+        logger.debug("pdfcrack {}".format(filename))
     password = None
     with open("crack.info", "r") as log:
         prefix = "found user-password: "
@@ -113,18 +114,33 @@ def strip_drm(logger, filename, stripped_file):
                 password = prefix[len(prefix):].strip("'")
     os.unlink("crack.info")
     if password is not None:
-        logger.debug("use password {0}".format(password))
-        cmd = "qpdf --password={0} --decrypt {1} {2}".format(password, filename, stripped_file)
-        logger.debug (cmd)
-        os.system(cmd)
+        logger.debug("run qpdf on {} with password {}".format(filename, password))
+        subprocess.run(['qpdf', '--password={}'.format(password), '--decrypt', filename, stripped_file],
+                       stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
         return True
     return False
 
 
-def convert_with_microsoft_word(microsoft_pdf_2_docx, filename):
-    subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10)
-    os.system("taskkill /F /IM  winword.exe >dummy.log")
-    os.system("taskkill /F /IM  pdfreflow.exe >dummy.log")
+def taskkill_windows(process_name):
+    subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+
+
+def convert_with_microsoft_word(logger, microsoft_pdf_2_docx, filename):
+    taskkill_windows('winword.exe')
+    taskkill_windows('pdfreflow.exe')
+
+    with tempfile.NamedTemporaryFile(prefix="microsoft_pdf_2_docx.log", dir=".") as log_file:
+        subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10, stderr=log_file, stdout=log_file)
+        try:
+            log_file.seek(0)
+            log_data = log_file.read().decode("utf8").replace("\n", " ").strip()
+            logger.debug(log_data)
+        except Exception as exp:
+            pass
+
+
+    taskkill_windows('winword.exe')
+    taskkill_windows('pdfreflow.exe')
 
 
 def delete_file_if_exists(logger, full_path):
@@ -205,7 +221,7 @@ class TConvDatabase:
             shutil.copyfile(input_file, stripped_file)
         if not self.args.enable_ocr or check_pdf_has_text(self.logger, stripped_file):
             self.logger.info("convert {} with microsoft word".format(input_file))
-            convert_with_microsoft_word(self.args.microsoft_pdf_2_docx, stripped_file)
+            convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
             docxfile = stripped_file + ".docx"
             if not os.path.exists(docxfile):
                 self.logger.info("cannot process {}, delete it".format(input_file))
@@ -225,6 +241,8 @@ class TConvDatabase:
     def create_folders(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
         self.logger.debug("input folder for new files: {} ".format(self.args.input_folder))
+        if os.path.exists(self.args.ocr_input_folder): #no way to process the input files without queue
+            shutil.rmtree(self.args.ocr_input_folder, ignore_errors=True)
         if not os.path.exists(self.args.ocr_input_folder):
             os.mkdir(self.args.ocr_input_folder)
         if not os.path.exists(self.args.ocr_output_folder):
@@ -436,7 +454,7 @@ if __name__ == '__main__':
         myServer = http.server.HTTPServer((host, int(port)), THttpServer)
         myServer.serve_forever()
         myServer.server_close()
-    except KeyboardInterrupt:
-        print("ctrl+c received")
+    except KeyboardInterrupt as exp:
+        print("ctrl+c received, exception: {}".format(exp))
         CONV_DATABASE.stop_input_files_thread()
         sys.exit(1)

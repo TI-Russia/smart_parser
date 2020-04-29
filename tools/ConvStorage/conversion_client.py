@@ -97,8 +97,9 @@ class TDocConversionClient(object):
 
             if hashcode in self._sent_tasks:
                 return
-            if self.check_file_was_converted(hashcode):
-                return
+            if not rebuild:
+                if self.check_file_was_converted(hashcode):
+                    return
             self.logger.debug("register conversion task for {}".format(filename))
             self._register_task(file_extension, file_contents, hashcode, rebuild)
         except Exception as exp:
@@ -119,10 +120,6 @@ class TDocConversionClient(object):
                 self.logger.error("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
                 break
 
-    def stop_conversion_thread(self):
-        self._files = []
-        self.wait_new_tasks = False
-        self.conversion_thread.join()
 
     def check_file_was_converted(self, sha256):
         conn = http.client.HTTPConnection(self.db_conv_url)
@@ -144,6 +141,11 @@ class TDocConversionClient(object):
         if file_extension == DEFAULT_PDF_EXTENSION or is_archive_extension(file_extension):
             assert self.conversion_thread is not None
             self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
+
+    def stop_conversion_thread(self):
+        self._input_tasks.task_done()
+        self.wait_new_tasks = False
+        self.conversion_thread.join()
 
     def wait_doc_conversion_finished(self):
         try:

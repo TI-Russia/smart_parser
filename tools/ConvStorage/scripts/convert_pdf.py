@@ -1,5 +1,6 @@
 import hashlib
 import argparse
+import sys
 from ConvStorage.conversion_client import TDocConversionClient
 
 
@@ -24,9 +25,15 @@ if __name__ == '__main__':
     try:
         conv_tasks.start_conversion_thread()
         for filepath in args.input:
+            sys.stderr.write("send {}\n".format(filepath))
             conv_tasks.start_conversion_task_if_needed(filepath, ".pdf", args.rebuild_pdf)
+
+        sys.stderr.write("wait conversion finished\n")
         conv_tasks.wait_doc_conversion_finished()
+
         for filepath in args.input:
+            sys.stderr.write("download docx for {}\n".format(filepath))
             download_converted_file_for(conv_tasks, filepath)
     finally:
+        sys.stderr.write("stop_conversion_thread\n")
         conv_tasks.stop_conversion_thread()
