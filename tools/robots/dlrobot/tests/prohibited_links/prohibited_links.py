@@ -1,5 +1,5 @@
 from robots.common.find_link import web_link_is_absolutely_prohibited
-
+from robots.common.download import TDownloadEnv
 mirror_examples = [
     ("www.mvd.ru", "www.yandex.ru"),
     ("mvd.ru", "мвд.рф"),
@@ -8,7 +8,9 @@ mirror_examples = [
 ]
 
 if __name__ == "__main__":
-    for d1,d2 in mirror_examples:
+    TDownloadEnv.clear_cache_folder()
+
+    for d1, d2 in mirror_examples:
         res = web_link_is_absolutely_prohibited(d1, d2)
         print ("\t".join((str(not res), d1, d2)))
 

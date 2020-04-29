@@ -4,7 +4,7 @@ import os
 import shutil
 import threading
 from robots.common.download import get_file_extension_only_by_headers, read_from_cache_or_download, \
-            get_file_extension_by_cached_url, DEFAULT_HTML_EXTENSION,FILE_CACHE_FOLDER
+            get_file_extension_by_cached_url, DEFAULT_HTML_EXTENSION, TDownloadEnv
 
 HTTP_HEAD_REQUESTS_COUNT = 0
 HTTP_GET_REQUESTS_COUNT = 0
@@ -40,8 +40,7 @@ def start_server(host, port):
 
 
 if __name__ == '__main__':
-    if os.path.exists(FILE_CACHE_FOLDER):
-        shutil.rmtree(FILE_CACHE_FOLDER, ignore_errors=True)
+    TDownloadEnv.clear_cache_folder()
     web_addr = sys.argv[1]
     host, port = web_addr.split(":")
     server_thread = threading.Thread(target=start_server, args=(host, port))

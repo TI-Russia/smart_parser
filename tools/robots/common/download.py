@@ -6,11 +6,28 @@ import hashlib
 import logging
 from unidecode import unidecode
 import os
+import shutil
 from robots.common.http_request import make_http_request, request_url_headers
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-FILE_CACHE_FOLDER = "cached"
+from ConvStorage.conversion_client import TDocConversionClient
 
-CONVERSION_CLIENT = None
+
+class TDownloadEnv:
+    FILE_CACHE_FOLDER = "cached"
+    CONVERSION_CLIENT = None
+
+    @staticmethod
+    def clear_cache_folder():
+        if os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
+            shutil.rmtree(TDownloadEnv.FILE_CACHE_FOLDER, ignore_errors=True)
+        if not os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
+            os.mkdir(TDownloadEnv.FILE_CACHE_FOLDER)
+
+    @staticmethod
+    def init_conversion():
+        TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient()
+        TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
+
 
 def is_html_contents(info):
     content_type = info.get('Content-Type', "text").lower()
@@ -80,7 +97,6 @@ def read_url_info_from_cache(url):
 
 # file downloaded by urllib
 def write_cache_file(localfile, info_file, info, data):
-    global CONVERSION_CLIENT
     with open(localfile, "wb") as f:
         f.write(data)
     assert info is not None
@@ -93,16 +109,15 @@ def write_cache_file(localfile, info_file, info, data):
     with open(info_file, "w", encoding="utf8") as f:
         f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
     file_extension = get_file_extension_by_content_type(url_info['headers'])
-    if CONVERSION_CLIENT is not None:
-        CONVERSION_CLIENT.start_conversion_task_if_needed(localfile, file_extension)
+    if TDownloadEnv.CONVERSION_CLIENT is not None:
+        TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(localfile, file_extension)
     return data
 
 
 # save from selenium
 def save_download_file(filename):
-    global FILE_CACHE_FOLDER, CONVERSION_CLIENT
     logger = logging.getLogger("dlrobot_logger")
-    download_folder = os.path.join(FILE_CACHE_FOLDER, "downloads")
+    download_folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "downloads")
     if not os.path.exists(download_folder):
         os.makedirs(download_folder)
     assert (os.path.exists(filename))
@@ -115,8 +130,8 @@ def save_download_file(filename):
         logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
-    if CONVERSION_CLIENT is not None:
-        CONVERSION_CLIENT.start_conversion_task_if_needed(saved_filename, file_extension)
+    if TDownloadEnv.CONVERSION_CLIENT is not None:
+        TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(saved_filename, file_extension)
     return saved_filename
 
 
@@ -137,8 +152,7 @@ def _url_to_cached_folder (url):
 
 
 def get_local_file_name_by_url(url):
-    global FILE_CACHE_FOLDER
-    cached_file = os.path.join(FILE_CACHE_FOLDER, _url_to_cached_folder(url), "dlrobot_data")
+    cached_file = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, _url_to_cached_folder(url), "dlrobot_data")
     folder = os.path.dirname(cached_file)
     if not os.path.exists(folder):
         os.makedirs(folder)
