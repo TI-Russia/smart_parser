@@ -18,7 +18,7 @@ if [ $hotfolders_count == "0" ]; then
 fi
 
 [ ! -d input_files ] || rm -rf input_files
-[ ! -d input_files_cracked* ] || rm -rf input_files_cracked*
+rm -rf input_files_cracked*
 [ ! -d files ] || rm -rf files
 [ ! -f db_conv.log ] || rm  db_conv.log
 if [ -f db_conv.log ]; then
