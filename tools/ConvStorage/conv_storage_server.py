@@ -95,25 +95,29 @@ def check_pdf_has_text(logger, filename):
     with open(log_file_name, "w", encoding="utf8") as log_file:
         logger.info("pdftotext {} {}".format(filename, text_file_name))
         subprocess.run(['pdftotext', filename, text_file_name], stderr=log_file, stdout=subprocess.DEVNULL)
-    if not os.path.exists(log_file_name):
-        return False
-    with open(log_file_name, "r") as inpf:
-        logdata = inpf.read()
+    logdata = ""
+    textdata = ""
+    try:
+        if not os.path.exists(log_file_name):
+            return False
+        with open(log_file_name, "r") as inpf:
+            logdata = inpf.read()
+        os.unlink(log_file_name)
 
-    if not os.path.exists(text_file_name):
-        return False
-    with open(text_file_name, "r", encoding="utf8") as inpf:
-        textdata = inpf.read()
-
-    os.unlink(log_file_name)
-    os.unlink(text_file_name)
+        if not os.path.exists(text_file_name):
+            return False
+        with open(text_file_name, "r", encoding="utf8") as inpf:
+            textdata = inpf.read()
+        os.unlink(text_file_name)
+    except Exception as exp:
+        logger.info("Exception {}: {}".format(exp, filename))
 
     if logdata.find("PDF file is damaged") != -1:
-        return False  # complicated_pdf in  tests
+        return False  # "complicated_pdf" test case
     if len(textdata) < 500:
         return False
     if TCharCategory.get_most_popular_char_category(textdata[:500]) != 'RUSSIAN_CHAR':
-        return False  # must_be_ocred
+        return False  # "must_be_ocred" test case
     return True
 
 
