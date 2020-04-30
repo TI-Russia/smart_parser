@@ -40,7 +40,7 @@ function convert_file() {
 convert_file # no rebuild, since db is empty
 convert_file
 
-deletion_count=`grep -c delete_item db_conv.log`
+deletion_count=`grep -c delete_conversion_record db_conv.log`
 if [ "$deletion_count" != "1" ]; then
    kill $conv_server_pid >/dev/null
    echo "logs do not contain deletion traces"

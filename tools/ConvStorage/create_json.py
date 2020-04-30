@@ -1,6 +1,6 @@
 import os
 import argparse
-from conv_storage_server import rebuild_json
+from conv_storage_server import find_new_files_and_add_them_to_json
 
 
 def parse_args():
@@ -14,5 +14,5 @@ if __name__ == '__main__':
     args = parse_args()
     if not os.path.exists(args.directory):
         os.mkdir(args.directory)
-    rebuild_json(None, args.directory, args.output_file)
+    find_new_files_and_add_them_to_json(None, args.directory, args.output_file)
 

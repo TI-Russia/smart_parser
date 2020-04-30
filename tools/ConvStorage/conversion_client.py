@@ -39,7 +39,7 @@ class TInputTask:
 
 
 class TDocConversionClient(object):
-    def __init__(self):
+    def __init__(self, logger=None):
         global DECLARATOR_CONV_URL
         assert_declarator_conv_alive()
         self.wait_new_tasks = True
@@ -48,7 +48,8 @@ class TDocConversionClient(object):
         self._sent_tasks = list()
         self.conversion_thread = None
         self.db_conv_url = DECLARATOR_CONV_URL
-        self.logger = logging.getLogger("dlrobot_logger")
+        self.input_task_timeout = 5
+        self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
 
     def start_conversion_thread(self):
         self.conversion_thread = threading.Thread(target=self._process_files_to_convert_in_a_separate_thread, args=())
@@ -56,7 +57,7 @@ class TDocConversionClient(object):
 
     def _process_files_to_convert_in_a_separate_thread(self):
         while True:
-            time.sleep(5)
+            time.sleep(self.input_task_timeout)
             if self._input_tasks.empty() and not self.wait_new_tasks:
                 break
             while not self._input_tasks.empty():
@@ -111,6 +112,7 @@ class TDocConversionClient(object):
             time.sleep(10)
             for sha256 in list(self._sent_tasks):
                 if self.check_file_was_converted(sha256):
+                    self.logger.debug("{} was converted".format(sha256))
                     self.lock.acquire()
                     try:
                         self._sent_tasks.remove(sha256)
@@ -119,7 +121,6 @@ class TDocConversionClient(object):
             if time.time() > start_time + timeout_in_seconds:
                 self.logger.error("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
                 break
-
 
     def check_file_was_converted(self, sha256):
         conn = http.client.HTTPConnection(self.db_conv_url)
@@ -141,16 +142,25 @@ class TDocConversionClient(object):
         if file_extension == DEFAULT_PDF_EXTENSION or is_archive_extension(file_extension):
             assert self.conversion_thread is not None
             self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
+            return True
+        return False
 
     def stop_conversion_thread(self):
-        self._input_tasks.task_done()
         self.wait_new_tasks = False
-        self.conversion_thread.join()
+        self.conversion_thread.join(1)
 
     def wait_doc_conversion_finished(self):
         try:
+            if not self._input_tasks.empty():
+                self.logger.debug("wait all conversion tasks to be sent to the server")
+                while not self._input_tasks.empty():
+                    time.sleep(1) # time to send tasks
+
+            self.logger.debug("stop the input conversion client thread")
             self.wait_new_tasks = False
-            self.conversion_thread.join()
+            self.conversion_thread.join(self.input_task_timeout + 1)
+
+            self.logger.debug("wait the conversion server convert all files")
             self._wait_conversion_tasks()
         except Exception as exp:
-            self.logger.error("wait_doc_conversion_finished, exception caught: {}".format(exp))
+            self.logger.error("wait_doc_conversion_finished: exception {}".format(exp))

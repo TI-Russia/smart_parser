@@ -12,13 +12,14 @@ import threading
 import tempfile
 import sys
 import queue
-
+from DeclDocRecognizer.document_types import TCharCategory
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DECLARATOR_CONV_URL")
     parser.add_argument("--logfile", dest='logfile', default='db_conv.log')
     parser.add_argument("--db-json", dest='db_json', required=True)
+    parser.add_argument("--clear-json", dest='clear_json', required=False, action="store_true")
     parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
     parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
@@ -50,7 +51,7 @@ def setup_logging(logger, logfilename):
     #logger.addHandler(ch)
 
 
-def rebuild_json(conv_db_json, converted_files_folder, output_file):
+def find_new_files_and_add_them_to_json(conv_db_json, converted_files_folder, output_file):
     if conv_db_json is None:
         conv_db_json = {
             "files": {}
@@ -89,17 +90,31 @@ def rebuild_json(conv_db_json, converted_files_folder, output_file):
 
 
 def check_pdf_has_text(logger, filename):
-    cmd = "pdftotext {0} dummy.txt 2> pdftotext.log".format(filename)
-    logger.info(cmd)
-    os.system(cmd)
-    with open("pdftotext.log", "r") as inpf:
-        log = inpf.read()
-    os.unlink("pdftotext.log")
-    if log.find("PDF file is damaged") != -1:
+    text_file_name = "dummy.txt"
+    log_file_name = "pdftotext.log"
+    with open(log_file_name, "w", encoding="utf8") as log_file:
+        logger.info("pdftotext {} {}".format(filename, text_file_name))
+        subprocess.run(['pdftotext', filename, text_file_name], stderr=log_file, stdout=subprocess.DEVNULL)
+    if not os.path.exists(log_file_name):
+        return False
+    with open(log_file_name, "r") as inpf:
+        logdata = inpf.read()
+
+    if not os.path.exists(text_file_name):
+        return False
+    with open(text_file_name, "r", encoding="utf8") as inpf:
+        textdata = inpf.read()
+
+    os.unlink(log_file_name)
+    os.unlink(text_file_name)
+
+    if logdata.find("PDF file is damaged") != -1:
         return False  # complicated_pdf in  tests
-    is_good_text = os.path.getsize("dummy.txt") > 200
-    os.unlink("dummy.txt")
-    return is_good_text
+    if len(textdata) < 500:
+        return False
+    if TCharCategory.get_most_popular_char_category(textdata[:500]) != 'RUSSIAN_CHAR':
+        return False  # must_be_ocred
+    return True
 
 
 def strip_drm(logger, filename, stripped_file):
@@ -153,21 +168,24 @@ def delete_file_if_exists(logger, full_path):
 
 
 class TInputTask:
-    def __init__(self, file_path, sha256,  rebuild):
+    def __init__(self, file_path, sha256):
         self.file_path = file_path
         self.sha256 = sha256
-        self.rebuild = rebuild
 
 
 class TConvDatabase:
     def __init__(self, args):
         self.args = args
         self.conv_db_json_file_name = args.db_json
-        self.input_folder = args.input_folder
+
         with open(args.db_json, "r", encoding="utf8") as inp:
             self.conv_db_json = json.load(inp)
         self.converted_files_folder = self.conv_db_json['directory']
+        self.modify_json_lock = threading.Lock()
         assert "files" in self.conv_db_json
+        if args.clear_json:
+            self.conv_db_json['files'] = dict()
+            self.save_json()
         self.logger = logging.getLogger("db_conv_logger")
         self.input_thread = None
         self.stop_input_thread = False
@@ -187,14 +205,14 @@ class TConvDatabase:
         else:
             return None
 
-    def save_new_file(self, sha256, file_bytes, file_extension, rebuild):
-        filename = os.path.join(self.input_folder, sha256 + file_extension)
-        if os.path.exists(filename): #already registered as an input task
+    def save_new_file(self, sha256, file_bytes, file_extension):
+        filename = os.path.join(self.args.input_folder, sha256 + file_extension)
+        if os.path.exists(filename):  # already registered as an input task
             return False
         with open(filename, 'wb') as output_file:
             output_file.write(file_bytes)
         self.logger.debug("save new file {} ".format(filename))
-        task = TInputTask(filename, sha256, rebuild)
+        task = TInputTask(filename, sha256)
         self.input_task_queue.put(task)
         return True
 
@@ -240,15 +258,17 @@ class TConvDatabase:
 
     def create_folders(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
+
+        if os.path.exists(self.args.input_folder):   #no way to process the input files without queue
+            shutil.rmtree(self.args.input_folder, ignore_errors=True)
+        if not os.path.exists(self.args.input_folder):
+            os.mkdir(self.args.input_folder)
         self.logger.debug("input folder for new files: {} ".format(self.args.input_folder))
-        if os.path.exists(self.args.ocr_input_folder): #no way to process the input files without queue
-            shutil.rmtree(self.args.ocr_input_folder, ignore_errors=True)
-        if not os.path.exists(self.args.ocr_input_folder):
-            os.mkdir(self.args.ocr_input_folder)
+
         if not os.path.exists(self.args.ocr_output_folder):
             os.mkdir(self.args.ocr_output_folder)
-        if not os.path.exists(self.input_folder):
-            os.mkdir(self.input_folder)
+        if not os.path.exists(self.args.ocr_input_folder):
+            os.mkdir(self.args.ocr_input_folder)
         if not os.path.exists(self.converted_files_folder):
             os.mkdir(self.converted_files_folder)
 
@@ -258,9 +278,13 @@ class TConvDatabase:
     # can only add new files
     def rebuild_json_wrapper(self):
         self.logger.info("rebuild json started, files number={}".format(len(self.conv_db_json["files"])))
-        rebuild_json(self.conv_db_json,
-                     self.converted_files_folder,
-                     self.conv_db_json_file_name)
+        self.modify_json_lock.acquire()
+        try:
+            find_new_files_and_add_them_to_json(self.conv_db_json,
+                                              self.converted_files_folder,
+                                              self.conv_db_json_file_name)
+        finally:
+            self.modify_json_lock.release()
         self.logger.info("rebuild json finished, files number={}".format(len(self.conv_db_json["files"])))
 
     def save_json(self):
@@ -273,9 +297,6 @@ class TConvDatabase:
             new_files_in_db = False
             while not self.input_task_queue.empty():
                 task = self.input_task_queue.get()
-                if task.rebuild:
-                    self.delete_item(task.sha256)
-                    self.save_json()
                 try:
                     self.process_one_input_file(task.file_path)
                     new_files_in_db = True
@@ -314,21 +335,26 @@ class TConvDatabase:
     def input_files_thread_is_alive(self):
         self.input_thread.is_alive()
 
-    def delete_item(self, sha256):
+    def delete_conversion_record(self, sha256):
         if sha256 not in self.conv_db_json['files']:
             return False
-        self.logger.debug("delete_item {}".format(sha256))
-        file_path = CONV_DATABASE.get_converted_file_name(sha256)
-        if os.path.exists(file_path):
-            self.logger.debug("delete {}".format(file_path))
-            os.remove(file_path)
+        self.modify_json_lock.acquire()
+        try:
+            self.logger.debug("delete_conversion_record {}".format(sha256))
+            file_path = CONV_DATABASE.get_converted_file_name(sha256)
+            if os.path.exists(file_path):
+                self.logger.debug("delete {}".format(file_path))
+                os.remove(file_path)
 
-        file_path = CONV_DATABASE.get_input_file_name(sha256)
-        if os.path.exists(file_path):
-            self.logger.debug("delete {}".format(file_path))
-            os.remove(file_path)
+            file_path = CONV_DATABASE.get_input_file_name(sha256)
+            if os.path.exists(file_path):
+                self.logger.debug("delete {}".format(file_path))
+                os.remove(file_path)
 
-        del self.conv_db_json['files'][sha256]
+            del self.conv_db_json['files'][sha256]
+            self.save_json()
+        finally:
+            self.modify_json_lock.release()
         return True
 
 
@@ -416,13 +442,14 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         CONV_DATABASE.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
         sha256 = hashlib.sha256(file_bytes).hexdigest()
-        if not rebuild:
+        if rebuild:
+            CONV_DATABASE.delete_conversion_record(sha256)
+        else:
             if CONV_DATABASE.get_converted_file_name(sha256):
                 self.send_response(201, 'Already exists')
                 self.end_headers()
                 return
-
-        if not CONV_DATABASE.save_new_file(sha256, file_bytes,  file_extension, rebuild):
+        if not CONV_DATABASE.save_new_file(sha256, file_bytes,  file_extension):
             self.send_response(201, 'Already registered as a conversion task, wait ')
             self.end_headers()
             return
