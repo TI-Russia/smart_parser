@@ -1,5 +1,5 @@
 False	www.mvd.ru	www.yandex.ru
-False	mvd.ru	мвд.рф
+True	mvd.ru	мвд.рф
 True	www.mvd.ru	mvd.ru
 False	www.mvd.ru	www.mvd.ru/print=1
 True	bagaev.donland.ru	donland.ru
