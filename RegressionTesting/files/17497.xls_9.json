@@ -1,0 +1,3626 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Хлутков  Е.С.",
+        "role": "И.О.                    главного врача",
+        "department": "ФГБУЗ Санаторий \"Архипово-Осиповка\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 967269.76,
+          "size_raw": "967 269, 76",
+          "relative": null
+        },
+        {
+          "size": 163410.0,
+          "size_raw": "163410",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 45.9,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "45,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 45.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "45,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Тайота Камри",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Крылова  Е.Ю.",
+        "role": "Зам. главного",
+        "department": "ФГБУЗ Санаторий \"Архипово-Осиповка\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1147511.0,
+          "size_raw": "1147511",
+          "relative": null
+        },
+        {
+          "size": 178136.46,
+          "size_raw": "178 136, 46",
+          "relative": "Ребенок",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 65.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/5 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 111.8,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "111,8",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "квартира",
+          "square": 65.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/5 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 111.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "111,8",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Цуневская  Л.Н.",
+        "role": "Зам.главного врача",
+        "department": "ФГБУЗ Санаторий \"Архипово-Осиповка\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1011468.73,
+          "size_raw": "1 011 468, 73",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1498.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1498",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 300.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "300",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 160.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "160",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 35.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "35,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Тайота Карола",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Асланиди  Н.В.",
+        "role": "Гл. бухгалтер",
+        "department": "ФГБУЗ Санаторий \"Архипово-Осиповка\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 572503.81,
+          "size_raw": "572 503, 81",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 250.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "250",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Филиппова  Л.В.",
+        "role": "и.о.зам.гл.врача",
+        "department": "ФГБУЗ Санаторий \"Архипово-Осиповка\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 691364.22,
+          "size_raw": "691 364, 22",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 62.9,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "62,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Ниссан Альмера",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 5,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Тер-Акопов  Г.Н.",
+        "role": "Директор",
+        "department": "ФГБУЗ  МЦ \"Юность\"  ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 9751974.18,
+          "size_raw": "9751974,18",
+          "relative": null
+        },
+        {
+          "size": 730631.99,
+          "size_raw": "730631,99",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 499.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "499",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 84.6,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "84,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 706.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "706",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 117.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "117",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 404.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "404",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 54.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "54",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "зем. участок под хоз.постр.",
+          "square": 5092.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "5092",
+          "country_raw": "Россия",
+          "type_raw": "зем. участок под хоз.постр.",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "зем.участок под торг.оф.пом.",
+          "square": 571.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "571",
+          "country_raw": "Россия",
+          "type_raw": "зем.участок под торг.оф.пом.",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 73.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "73,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 141.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "141,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 411.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "411,3",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 27.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "27,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 53.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "53,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 34.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "34",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 19.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "19,2",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "гараж",
+          "square": 19.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "19,4",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "торговый павильон",
+          "square": 20.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20,6",
+          "country_raw": "Россия",
+          "type_raw": "торговый павильон",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "магазин",
+          "square": 71.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "71,2",
+          "country_raw": "Россия",
+          "type_raw": "магазин",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "торгово-офисное помещение",
+          "square": 370.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "370,4",
+          "country_raw": "Россия",
+          "type_raw": "торгово-офисное помещение",
+          "own_type_raw": "индивидуальное"
+        },
+        {
+          "text": "закусочная с летн.площадкой",
+          "square": 68.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,4",
+          "country_raw": "Россия",
+          "type_raw": "закусочная с летн.площадкой",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "магазин с площадкой",
+          "square": 19.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "19,6",
+          "country_raw": "Россия",
+          "type_raw": "магазин с площадкой",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "хоз.помещения",
+          "square": 1226.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1226,8",
+          "country_raw": "Россия",
+          "type_raw": "хоз.помещения",
+          "own_type_raw": "индивидуальное"
+        },
+        {
+          "text": "квартира",
+          "square": 35.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "35,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 64.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "64,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 80.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "80,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 81.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "81,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 84.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "84,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 84.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "84,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mazda CX-5",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Тер-Акопов Н.Г.",
+        "role": "Зам.директора ",
+        "department": "ФГБУЗ  МЦ \"Юность\"  ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1339748.78,
+          "size_raw": "1339748,78",
+          "relative": null
+        },
+        {
+          "size": 313369.47,
+          "size_raw": "313369,47",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "дачный участок",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "дачный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 227.11,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "227,11",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "2/9 доли"
+        },
+        {
+          "text": "Жилой дом",
+          "square": 31.64,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "31,64",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": "2/9 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 84.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "84,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 41.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "41,5",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 569866.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "569866",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 84.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "84,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 1017.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1017",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "47/100"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 605.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "605",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 642.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "642",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 34.85,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,85",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 58.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,2",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 58.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,2",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Месронян  С.К.",
+        "role": "Заместитель директора",
+        "department": "ФГБУЗ  МЦ \"Юность\"  ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1000358.00,
+          "size_raw": "1000358",
+          "relative": null
+        },
+        {
+          "size": 261600.00,
+          "size_raw": "261600",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 57.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "57,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 57.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "57,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 28.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "28,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/4 доли"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Жолнерович  Т.М.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ  МЦ \"Юность\"  ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1305789.71,
+          "size_raw": "1305789,71",
+          "relative": null
+        },
+        {
+          "size": 426820.52,
+          "size_raw": "426820,52",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 628.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "628",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 52.3,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "52,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом",
+          "square": 39.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,4",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 52.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 17.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,6",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ВАЗ 21150",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Князев М.В.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ МЦ \"Решма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2070283.63,
+          "size_raw": "2070283,63",
+          "relative": null
+        },
+        {
+          "size": 195331.53,
+          "size_raw": "195331,53",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 69.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "69,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "3/5 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 61.6,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "61,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 69.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "69,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "2/5 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 69.3,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "69,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 69.3,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "69,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Антипина С.Б.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ МЦ \"Решма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1789381.83,
+          "size_raw": "1789381,83",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 37.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "37",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 28.7,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "28,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 37.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "37",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 28.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "28,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Краснобаев С.В.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ МЦ \"Решма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1616151.00,
+          "size_raw": "1616151",
+          "relative": null
+        },
+        {
+          "size": 1480630.00,
+          "size_raw": "1480630",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1100.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1100",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 900.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "900",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 49.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "49",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "дачный дом",
+          "square": 294.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "294",
+          "country_raw": "Россия",
+          "type_raw": "дачный дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 165.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "165,4",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальное"
+        },
+        {
+          "text": "земельный участок",
+          "square": 900.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "900",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 54.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "54",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "KIA Sorento",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "KIA Sportage",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Сибирева Н.И.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ МЦ \"Решма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1581504.23,
+          "size_raw": "1581504,23",
+          "relative": null
+        },
+        {
+          "size": 292012.72,
+          "size_raw": "292012,72",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 79.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "79,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 65.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 79.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "79,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Тойота Камри",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Кулаковская Т.В.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Санаторий \"Смена\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1536542.12,
+          "size_raw": "1536542,12",
+          "relative": null
+        },
+        {
+          "size": 1856000.52,
+          "size_raw": "1856000,52",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 47.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "47",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 47.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "47",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 58.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "58",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 47.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "47",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Opel Zafira",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Вартанянц Н Н",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Санаторий \"Смена\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 733544.05,
+          "size_raw": "733544,05",
+          "relative": null
+        },
+        {
+          "size": 393134.72,
+          "size_raw": "393134,72",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 150.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "150",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 150.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "150",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Golf",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Чепарина Г П",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Санаторий \"Смена\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 485381.39,
+          "size_raw": "485381,39",
+          "relative": null
+        },
+        {
+          "size": 458635.36,
+          "size_raw": "458635,36",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 330.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "330",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 79.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "79",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 330.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "330",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 79.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "79",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Passat",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Волга ГАЗ 331029",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Лукашова Л.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ Санаторий \"Смена\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1070856.59,
+          "size_raw": "1070856,59",
+          "relative": null
+        },
+        {
+          "size": 300000.00,
+          "size_raw": "300000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 146.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "146,2",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 443.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "443",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 443.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "443",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок"
+        },
+        {
+          "text": "жилой дом",
+          "square": 146.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "146,2",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Touareg",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Ходова Т.В.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ \"Детский санаторий им. Н.К. Крупской\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1225596.36,
+          "size_raw": "1225596,36",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 90.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "90,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 12.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "12,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 14.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "14,9",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "БМВ Х3",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Кочеткова И.Б.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ \"Детский санаторий им. Н.К. Крупской\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1052971.67,
+          "size_raw": "1052971,67",
+          "relative": null
+        },
+        {
+          "size": 50640.00,
+          "size_raw": "50640",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 800.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "800",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 49.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "49,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 49.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "49,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 49.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "49,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ВАЗ 211540",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Василенко И.Н.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ \"Детский санаторий им. Н.К. Крупской\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1036957.98,
+          "size_raw": "1036957,98",
+          "relative": null
+        },
+        {
+          "size": 224459.86,
+          "size_raw": "224459,86",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 47.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "47",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 47.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "47",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Митсубиси Лансер",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Бабарыкин А.Н.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ \"Детский санаторий им. Н.К. Крупской\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 450301.00,
+          "size_raw": "450301",
+          "relative": null
+        },
+        {
+          "size": 93600.00,
+          "size_raw": "93600",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "гараж",
+          "square": 19.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "19,5",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 585.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "585",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок"
+        },
+        {
+          "text": "квартира",
+          "square": 68.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Chevrolet Niva",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Mercedes-Benz",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Апостолова И.С.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ \"Детский санаторий им. Н.К. Крупской\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1187753.11,
+          "size_raw": "1187753,11",
+          "relative": null
+        },
+        {
+          "size": 429942.54,
+          "size_raw": "429942,54",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 33.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "33,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 58.7,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "58,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок под гараж",
+          "square": 23.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "23",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "садовый участок",
+          "square": 500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "садовый участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 58.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 23.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "23,7",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 58.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "58,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 58.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "58,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Опель Астра",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "УАЗ 3962",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "грузовой"
+        }
+      ],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Шмаков  Н.А.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ  Центральный клинический санаторий Малаховка ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2688912.30,
+          "size_raw": "2 688 912, 30",
+          "relative": null
+        },
+        {
+          "size": 1871096.60,
+          "size_raw": "1871096,6",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 2362.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2362",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 549.1,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "549,1",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "земельный участок",
+          "square": 323.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "323",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 39.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,8",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 132.65,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "132,65",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "дачный участок",
+          "square": 1512.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1512",
+          "country_raw": "Россия",
+          "type_raw": "дачный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земелный участок под ИЖС",
+          "square": 1160.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1160",
+          "country_raw": "Россия",
+          "type_raw": "земелный участок под ИЖС",
+          "own_type_raw": "3/4 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 549.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "549,1",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "3/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 104.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "104,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земелный участок под ИЖС",
+          "square": 1160.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1160",
+          "country_raw": "Россия",
+          "type_raw": "земелный участок под ИЖС",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 549.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "549,1",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 154.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "154,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Вольво ХС70",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Вольво ХС70",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Ауди Q5",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Филиппова  М.А.",
+        "role": "Зам.главного врача",
+        "department": "ФГБУЗ  Центральный клинический санаторий Малаховка ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1871096.60,
+          "size_raw": "1871096,6",
+          "relative": null
+        },
+        {
+          "size": 2688912.30,
+          "size_raw": "2 688 912, 30",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Жилой дом",
+          "square": 549.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "549,1",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок",
+          "square": 1160.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1160",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "3/4 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1512.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1512",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 104.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "104,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 2362.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "2362",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 323.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "323",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 39.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,8",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 132.65,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "132,65",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "земелный участок под ИЖС",
+          "square": 1160.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1160",
+          "country_raw": "Россия",
+          "type_raw": "земелный участок под ИЖС",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 549.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "549,1",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 154.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "154,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Вольво ХС70",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Ауди Q5",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Вольво ХС70",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Елезова  Л.И.",
+        "role": "Зам.главного врача",
+        "department": "ФГБУЗ  Центральный клинический санаторий Малаховка ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1728003.96,
+          "size_raw": "1728003,96",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 34.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 34.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "34,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Пежо 308",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Бакало   Н.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ  Центральный клинический санаторий Малаховка ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2204282.00,
+          "size_raw": "2204282",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 67.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "67,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 67.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "67,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Ниссан Теана",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Арсланов  С.Н.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Детский кардиоревматологический санаторий \"Клязьма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1567570.18,
+          "size_raw": "1567570,18",
+          "relative": null
+        },
+        {
+          "size": 482774.33,
+          "size_raw": "482 774, 33",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 30.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "30,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 88.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "88,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Петрова  С.Ю.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Детский кардиоревматологический санаторий \"Клязьма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1070162.00,
+          "size_raw": "1070162",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 200.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 15.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "15",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "садовый дом",
+          "square": 20.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20",
+          "country_raw": "Россия",
+          "type_raw": "садовый дом",
+          "own_type_raw": "1/3 доли"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Кожухова  И.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ Детский кардиоревматологический санаторий \"Клязьма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 945311.00,
+          "size_raw": "945311",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 44.3,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "дача",
+          "square": 72.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "72",
+          "country_raw": "Россия",
+          "type_raw": "дача",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Суюндиков  М.Б.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Детский кардиоревматологический санаторий \"Клязьма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1153286.34,
+          "size_raw": "1153286,34",
+          "relative": null
+        },
+        {
+          "size": 766649.18,
+          "size_raw": "766 649, 18",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "43",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "комната",
+          "square": 17.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "17,5",
+          "country_raw": "Россия",
+          "type_raw": "комната"
+        },
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "43",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "43",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "43",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "43",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Ушаков С.В.",
+        "role": "Генеральный директор",
+        "department": "ФГБУЗ Санаторий им.С.М.Кирова ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2444915.96,
+          "size_raw": "2 444 915, 96",
+          "relative": null
+        },
+        {
+          "size": 462034.0,
+          "size_raw": "462034",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 1433.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1433",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 852.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "852",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок"
+        },
+        {
+          "text": "земельный участок",
+          "square": 10000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "10000",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "теунхаус",
+          "square": 120.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "120",
+          "country_raw": "Россия",
+          "type_raw": "теунхаус"
+        },
+        {
+          "text": "квартира",
+          "square": 55.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "55,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "square": 306.2,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "306,2",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 852.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "852",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "теунхаус",
+          "square": 120.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "120",
+          "country_raw": "Россия",
+          "type_raw": "теунхаус",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 306.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "306,2",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 53.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "53,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Ауди Q7",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "КИА Пиканто",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Билык П.Н.",
+        "role": "Заместитель генерального директора",
+        "department": "ФГБУЗ Санаторий им.С.М.Кирова ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1558904.0,
+          "size_raw": "1558904",
+          "relative": null
+        },
+        {
+          "size": 219719.0,
+          "size_raw": "219719",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 10000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "10000",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 894.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "894",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 305.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "305,3",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 49.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "49,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "земельный участок под гараж",
+          "square": 25.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "25",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 305.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "305,3",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "квартира",
+          "square": 49.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "49,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 50.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "50",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Фольксваген Тигуан",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Барбакуц Л.Г.",
+        "role": "Заместитель генерального директора",
+        "department": "ФГБУЗ Санаторий им.С.М.Кирова ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1369585.00,
+          "size_raw": "1369585",
+          "relative": null
+        },
+        {
+          "size": 216000.00,
+          "size_raw": "216000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 31.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "31,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 84.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "84,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "дачный участок",
+          "square": 509.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "509",
+          "country_raw": "Россия",
+          "type_raw": "дачный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 85.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "85,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 39.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,4",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 31.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "31,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ВАЗ 21053",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Васильченко Е.В.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ Санаторий им.С.М.Кирова ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1298844.83,
+          "size_raw": "1 298 844, 83",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 86.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "86",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 20.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Скрипникова   Л.Н.",
+        "role": "Заместитель генерального директора",
+        "department": "ФГБУЗ Санаторий им.С.М.Кирова ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1465925.00,
+          "size_raw": "1465925",
+          "relative": null
+        },
+        {
+          "size": 234139.00,
+          "size_raw": "234139",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 184.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "184",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 184.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "184",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Лада Калина",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Газель",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "грузовой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Крюков  С.П.",
+        "role": "Заместитель генерального директора",
+        "department": "ФГБУЗ Санаторий им.С.М.Кирова ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1480003.00,
+          "size_raw": "1480003",
+          "relative": null
+        },
+        {
+          "size": 425189.00,
+          "size_raw": "425189",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "зем.участок под гараж",
+          "square": 23.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "23,9",
+          "country_raw": "Россия",
+          "type_raw": "зем.участок под гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 47.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "47",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 47.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "47",
+          "country_raw": "",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Байчоров Б.Х.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Санаторий \"НАРАТ\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1356817.39,
+          "size_raw": "1356817,39",
+          "relative": null
+        },
+        {
+          "size": 141072.72,
+          "size_raw": "141072,72",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1443.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1443",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 103.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "103,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 57.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "57,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "square": 103.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "103,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 103.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "103,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Лексус 470",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Байчоров Р.К.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Санаторий \"НАРАТ\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 510636.70,
+          "size_raw": "510636,7",
+          "relative": null
+        },
+        {
+          "size": 309820.61,
+          "size_raw": "309820,61",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 34.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 29.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "29,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 34.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "34,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 34.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "34,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Кипкеева  М. Х.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ Санаторий \"НАРАТ\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 661410.20,
+          "size_raw": "661410,2",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участки",
+          "square": 950.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "950",
+          "country_raw": "Россия",
+          "type_raw": "земельный участки",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 67.4,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "67,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом",
+          "square": 83.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "83",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 42.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "жилой дом",
+          "square": 82.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "82",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 67.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "67,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 67.4,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "67,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 67.4,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "67,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ГАЗ 31105",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Газель",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "грузовой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Пахомов  В.Н.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Санаторий \"Салют\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1744019.91,
+          "size_raw": "1744019,91",
+          "relative": null
+        },
+        {
+          "size": 1547376.97,
+          "size_raw": "1547376,97",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 58.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 107.2,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "107,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 39.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 107.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "107,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 9.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "9",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальное"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 55.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "55",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальное"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Tiguan",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "KIA Picanto",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Потапенко  Т.В.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ Санаторий \"Салют\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1389577.00,
+          "size_raw": "1389577",
+          "relative": null
+        },
+        {
+          "size": 85188.00,
+          "size_raw": "85188",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 12.78,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "12,78",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 28.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "28,1",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 17.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,3",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 12.78,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "12,78",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "SsangYong ACTYON",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Кочелова  А.М.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Санаторий \"Салют\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1306019.00,
+          "size_raw": "1306019",
+          "relative": null
+        },
+        {
+          "size": 128179.00,
+          "size_raw": "128179",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом",
+          "square": 77.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "77,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 77.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Казаков  Г.П.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Санаторий \"Салют\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1281464.96,
+          "size_raw": "1281464,96",
+          "relative": null
+        },
+        {
+          "size": 167268.00,
+          "size_raw": "167268",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 73.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "73",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "земельный участок под ИЖС",
+          "square": 898.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "898",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под ИЖС",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "гараж",
+          "square": 28.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "28",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 73.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "73",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Citroen C4",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Егорова  Е.Л.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Санаторий \"Салют\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1123204.42,
+          "size_raw": "1123204,42",
+          "relative": null
+        },
+        {
+          "size": 145000.00,
+          "size_raw": "145000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 800.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "800",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 100.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "100",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 100.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "100",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 100.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "100",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 100.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "100",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Toyota Corolla",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Камаз 5511",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "грузовой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Костив  И.М.",
+        "role": "Директор",
+        "department": "ФГБУЗ Медицинский реабилитационный центр \"Сергиевские минеральные воды\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1897265.50,
+          "size_raw": "1897265,5",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 32.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "32,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 81.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "81,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Ауди А6",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Фунтикова  Л.В.",
+        "role": "Заместитель",
+        "department": "ФГБУЗ Медицинский реабилитационный центр \"Сергиевские минеральные воды\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1257672.87,
+          "size_raw": "1 257 672, 87",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 56.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "56",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного                                              характера руководителей организаций ФМБА России за период                                                                                                                 с 1 января 2014 года по 31 декабря 2014 года",
+    "year": 2014,
+    "sheet_number": 9,
+    "documentfile_id": 17497
+  }
+}

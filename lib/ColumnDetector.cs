@@ -180,9 +180,9 @@ namespace Smart.Parser.Lib
             if (subCells.Count == 1)
                 return;
             string cleanHeader = headerCell.Text.ToLower().Replace(" ", "");
-            if (cleanHeader.Contains("транспортныесредства") && cleanHeader.Contains("вид,марка"))
+            
+            if (cleanHeader.Contains("транспортныесредства") && cleanHeader.Contains("марка") && cleanHeader.Contains("вид"))
             {
-                columnOrdering.Delete(DeclarationField.Vehicle);
 
                 TColumnInfo columnVehicleType = new TColumnInfo();
                 columnVehicleType.BeginColumn = headerCell.Col;
@@ -197,6 +197,8 @@ namespace Smart.Parser.Lib
                 columnVehicleModel.ColumnPixelWidth = headerCell.CellWidth / 2;
                 columnVehicleModel.Field = DeclarationField.VehicleModel;
                 columnOrdering.Add(columnVehicleModel);
+
+                columnOrdering.Delete(DeclarationField.Vehicle);
 
             }
         }
@@ -346,7 +348,7 @@ namespace Smart.Parser.Lib
                 DeclarationField field;
                 string clean_text = AbsenceMarkers.Aggregate(text, (x, y) => x.Replace(y, "")).Trim();
                 //string clean_text = text.Replace("-", "").Trim();
-                if (text == "" || clean_text.Length <= 1)
+                if ((text == "" || clean_text.Length <= 1) && (text != "№"))
                 {
                     field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());

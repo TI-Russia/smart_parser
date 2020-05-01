@@ -1,0 +1,1180 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Голосова  С.А.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Центр крови ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 3559267.00,
+          "size_raw": "3559267",
+          "relative": null
+        },
+        {
+          "size": 1446243.00,
+          "size_raw": "1446243",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 62.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "62,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 73.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "73",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 840.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "840",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 73.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "73",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Nissan X-Trail",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Бедоева  О.В.",
+        "role": "Заместитель директора",
+        "department": "ФГБУЗ Центр крови ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2239579.58,
+          "size_raw": "2239579,58",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 45.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "45,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volvo S60",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Бранц  А.В.",
+        "role": "Заместитель директора",
+        "department": "ФГБУЗ Центр крови ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 5580594.53,
+          "size_raw": "5580594,53",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 38.9,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "38,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 38.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mitsubishi Lancer",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Nissan Tiida",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Кондратьев  С.А.",
+        "role": "Заместитель директора",
+        "department": "ФГБУЗ Центр крови ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1914437.67,
+          "size_raw": "1914437,67",
+          "relative": null
+        },
+        {
+          "size": 381697.59,
+          "size_raw": "381697,59",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 79.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "79,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 39.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 79.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "79,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 79.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "79,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Lexus 350",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Suzuki Grand Vitara",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Паршина  Н.Н.",
+        "role": "Главный \nбухгалтер",
+        "department": "ФГБУЗ Центр крови ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2373464.33,
+          "size_raw": "2373464,33",
+          "relative": null
+        },
+        {
+          "size": 542094.43,
+          "size_raw": "542094,43",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 35.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "35",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 45.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "45",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 45.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "45",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Chevrolet КЛАН",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 5,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Дмитриева  О.И.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Ростов-на-Дону"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1208501.48,
+          "size_raw": "1208501,48",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 549.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "549",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 3400.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "3400",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 55.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "55,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 37.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "37,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 36.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "36,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Шаров  Д.Н.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Ростов-на-Дону"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 384563.05,
+          "size_raw": "384563,05",
+          "relative": null
+        },
+        {
+          "size": 16737.66,
+          "size_raw": "16737,66",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 43.6,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "43,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 43.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "43,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 43.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "43,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "CHEVROLET LACETTI",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Кузнецова  Т.С.",
+        "role": "Главный \nбухгалтер",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Ростов-на-Дону"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 715549.50,
+          "size_raw": "715549,5",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 33.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "33,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 33.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "33,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 33.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "33,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Daewoo Espero",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Смирнова   М.И.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Екатеринбург"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1233587.08,
+          "size_raw": "1233587,08",
+          "relative": null
+        },
+        {
+          "size": 51390.59,
+          "size_raw": "51390,59",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 33.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "33",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 33.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "33",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Santa Fe",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Ковтун  О.П.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Екатеринбург"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 746887.30,
+          "size_raw": "746887,3",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 57.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "57,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Toyota Yaris",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Демина  И.А.",
+        "role": "Главный \nбухгалтер",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Екатеринбург"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1154717.00,
+          "size_raw": "1154717",
+          "relative": null
+        },
+        {
+          "size": 226400.00,
+          "size_raw": "226400",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 48.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 64.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "64,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1005.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1005",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 64.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "64,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 48.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Subaru Forester",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Коробатова  Е.Р.",
+        "role": "Главный врач",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Челябинск"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1344280.45,
+          "size_raw": "1344280,45",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 53.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "53",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Чащухин Д.Н.",
+        "role": "Заместитель главного врача",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Челябинск"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 956990.60,
+          "size_raw": "956990,6",
+          "relative": null
+        },
+        {
+          "size": 324361.72,
+          "size_raw": "324361,72",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 54.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "54,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 54.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "54,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 17.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,8",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 54.3,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "54,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Hyundai Santa Fe",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "ВАЗ 21124",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Сиягина  Л.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУЗ Станция переливания крови ФМБА России г. Челябинск"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 722941.20,
+          "size_raw": "722941,2",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1151.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1151",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 65.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 34.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Тхай  С.В.",
+        "role": "Генеральный директор",
+        "department": "ФГБУ Российский медицинский научно-производственный центр \"Росплазма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 8391703.90,
+          "size_raw": "8391703,9",
+          "relative": null
+        },
+        {
+          "size": 43825579.35,
+          "size_raw": "43825579,35",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1110.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1110",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "гостиничный блок",
+          "square": 40.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "40",
+          "country_raw": "Россия",
+          "type_raw": "гостиничный блок"
+        },
+        {
+          "text": "жилой дом",
+          "square": 456.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "456,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 131.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "131,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 161.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "161,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 161.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "161,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 161.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "161,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mercedes-Benz ML350",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Porsche Cayenne Turbo",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Land Rover",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Land Rover",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Mercedes CLS 350",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Тряхонин  В.Н.",
+        "role": "Заместитель генерального директора",
+        "department": "ФГБУ Российский медицинский научно-производственный центр \"Росплазма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 5692402.40,
+          "size_raw": "5692402,4",
+          "relative": null
+        },
+        {
+          "size": 267652.93,
+          "size_raw": "267652,93",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 135.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "135",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 64.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "64",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 74.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "74,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "парковочный бокс",
+          "square": 14.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "14,9",
+          "country_raw": "Россия",
+          "type_raw": "парковочный бокс",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1019.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1019",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 188.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "188,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 50.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "50,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 74.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "74,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гаражный бокс",
+          "square": 16.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "16,3",
+          "country_raw": "Россия",
+          "type_raw": "гаражный бокс",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Lexus RX350",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Jeep Wrangler",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Сленене  И.В.",
+        "role": "Заместитель генерального директора",
+        "department": "ФГБУ Российский медицинский научно-производственный центр \"Росплазма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 6917989.90,
+          "size_raw": "6917989,9",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 46.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "46",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 50.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "50",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 46.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "46",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 46.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "46",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Opel Zafira",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R0C4"
+    },
+    {
+      "person": {
+        "name_raw": "Ожегова  М.П.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБУ Российский медицинский научно-производственный центр \"Росплазма\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 4137359.47,
+          "size_raw": "4137359,47",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 2643.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2643",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 35.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "35",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 62.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "62,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C4"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного                         характера руководителей организаций ФМБА России за период                                                                                        с 1 января 2014 года по 31 декабря 2014 года",
+    "year": 2014,
+    "sheet_number": 11,
+    "documentfile_id": 17497
+  }
+}

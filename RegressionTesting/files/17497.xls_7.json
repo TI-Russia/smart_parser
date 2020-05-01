@@ -1,0 +1,1365 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Рева  В.В.",
+        "role": "Ректор",
+        "department": "ФГБОУ ДПО Институт повышения квалификации ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 4036090.00,
+          "size_raw": "4036090",
+          "relative": null
+        },
+        {
+          "size": 309800.00,
+          "size_raw": "309800",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "садовый участок",
+          "square": 1000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1000",
+          "country_raw": "Россия",
+          "type_raw": "садовый участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "садовый дом",
+          "square": 102.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "102,4",
+          "country_raw": "Россия",
+          "type_raw": "садовый дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 81.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "81",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая 1/2"
+        },
+        {
+          "text": "гараж",
+          "square": 14.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "14",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 81.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "81",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая 1/2"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Toyota Avensis",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Гизатулина  Л.А.",
+        "role": "Проректор",
+        "department": "ФГБОУ ДПО Институт повышения квалификации ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2785662.77,
+          "size_raw": "2785662,77",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 58.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "SEAT Altea",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Антонова  О.В.",
+        "role": "Проректор",
+        "department": "ФГБОУ ДПО Институт повышения квалификации ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 3118356.00,
+          "size_raw": "3118356",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 32.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "32,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Citroën",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Mercedes-Benz",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Житкова  Л.А.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБОУ ДПО Институт повышения квалификации ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1837308.65,
+          "size_raw": "1837308,65",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 45.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "45",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Тамкович Е.Г.",
+        "role": "Директор",
+        "department": "ФГБОУ ДПО Обнинский центр повышения квалификации и переподготовки специалистов со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1083392.98,
+          "size_raw": "1083392,98",
+          "relative": null
+        },
+        {
+          "size": 358380.68,
+          "size_raw": "358380,68",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 66.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "66,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 66.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "66,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ВАЗ 21060",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Мажукина Е.В.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ ДПО Обнинский центр повышения квалификации и переподготовки специалистов со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 584515.62,
+          "size_raw": "584515,62",
+          "relative": null
+        },
+        {
+          "size": 120000.00,
+          "size_raw": "120000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 55.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "55,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 29.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "29,6",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 55.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "55,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "гараж",
+          "square": 42.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,2",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Киричевская О.И.",
+        "role": "Главный \nбухгалтер",
+        "department": "ФГБОУ ДПО Обнинский центр повышения квалификации и переподготовки специалистов со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 740031.50,
+          "size_raw": "740031,5",
+          "relative": null
+        },
+        {
+          "size": 204597.73,
+          "size_raw": "204597,73",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 32.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "32,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1390.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1390",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 32.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "32,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 49.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "49,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Lifan",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Шарапина Н.Н.",
+        "role": "Директор",
+        "department": "ФГБОУ СПО Электростальский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1395851.80,
+          "size_raw": "1395851,8",
+          "relative": null
+        },
+        {
+          "size": 940279.06,
+          "size_raw": "940279,06",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 78.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "78,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 63.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "63,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "7/24 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 78.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "78,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Коптяев В.В.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Электростальский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 880842.33,
+          "size_raw": "880842,33",
+          "relative": null
+        },
+        {
+          "size": 362534.92,
+          "size_raw": "362534,92",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 68.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 68.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 68.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "68,1",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ВАЗ 219050",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Андерсон С.А.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Электростальский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 904552.49,
+          "size_raw": "904552,49",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 46.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "46,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 46.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "46,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Анохина А.Н.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБОУ СПО Электростальский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 939878.76,
+          "size_raw": "939878,76",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 37.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "37",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 61.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "61",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "гараж",
+          "square": 22.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "22",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Škoda Octavia",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Надежкина Т.В.",
+        "role": "Директор",
+        "department": "ФГБОУ СПО Саратовский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1071686.54,
+          "size_raw": "1071686,54",
+          "relative": null
+        },
+        {
+          "size": 1195694.29,
+          "size_raw": "1195694,29",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 59.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 58.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "58",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 59.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 59.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "59,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Hyundai Getz",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Audi Q5",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Дорожкина Л.М.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Саратовский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 874957.53,
+          "size_raw": "874957,53",
+          "relative": null
+        },
+        {
+          "size": 495928.28,
+          "size_raw": "495928,28",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 31.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "31,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "15/32 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 61.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "2/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 31.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "31,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "17/32"
+        },
+        {
+          "text": "квартира",
+          "square": 61.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "61,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Lada Kalina",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Соколова И.В.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Саратовский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 856954.83,
+          "size_raw": "856954,83",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 67.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "67",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 40.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "40",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 20.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 67.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "67",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Golf",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Кочерещенко Т.В.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБОУ СПО Саратовский медицинский колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1104847.04,
+          "size_raw": "1104847,04",
+          "relative": null
+        },
+        {
+          "size": 602591.32,
+          "size_raw": "602591,32",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 59.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 59.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Бахтина  И.С.",
+        "role": "Директор",
+        "department": "ФГБОУ ДПО Санкт-Петербургский центр последипломного образования работников со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2513735.35,
+          "size_raw": "2513735,35",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 72.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "72",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "7/16 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Subaru Forester",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Егорова  Н.А.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ ДПО Санкт-Петербургский центр последипломного образования работников со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1885504.00,
+          "size_raw": "1885504",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 44.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "44",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Василенок  Е.К.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ ДПО Санкт-Петербургский центр последипломного образования работников со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1188103.60,
+          "size_raw": "1188103,6",
+          "relative": null
+        },
+        {
+          "size": 1649334.65,
+          "size_raw": "1649334,65",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 71.91,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "71,91",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 74.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "74,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1200.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "дача",
+          "square": 89.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "89,6",
+          "country_raw": "Россия",
+          "type_raw": "дача",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 71.91,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "71,91",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 58.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mitsubishi ASX",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Петрова  Н.Н.",
+        "role": "Главный бухгалтер",
+        "department": "ФГБОУ ДПО Санкт-Петербургский центр последипломного образования работников со средним медицинским и фармацевтическим образованием ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1419857.98,
+          "size_raw": "1419857,98",
+          "relative": null
+        },
+        {
+          "size": 592691.00,
+          "size_raw": "592691",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 38.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "38",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 38.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "38",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 72.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "72,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 43.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "43,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Hyundai Elantra",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "Ford Kuga",
+          "relative": null,
+          "type_raw": "легковое"
+        },
+        {
+          "text": "ВАЗ 21093",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Власова М.М.",
+        "role": "Директор",
+        "department": "ФГБОУ СПО Санкт-Петербургский медико-технический колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 38106457.74,
+          "size_raw": "38106457,74",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 3100.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "3100",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 75.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "75,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 38.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "38",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 96.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "96,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 45.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "45,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 2.03,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2,03",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Lexus RX350",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Смирнова Е.Н.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Санкт-Петербургский медико-технический колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 937938.57,
+          "size_raw": "937938,57",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 65.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "16/51 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 61.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Давыденко А.С.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Санкт-Петербургский медико-технический колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 926371.61,
+          "size_raw": "926371,61",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 30.2,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "30,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Разумова Н.Е.",
+        "role": "Заместитель директора",
+        "department": "ФГБОУ СПО Санкт-Петербургский медико-технический колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 893880.81,
+          "size_raw": "893880,81",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 58.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "гараж",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Polo",
+          "relative": null,
+          "type_raw": "легковое"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Захарова З.А.",
+        "role": "Главный бухгалтер ",
+        "department": "ФГБОУ СПО Санкт-Петербургский медико-технический колледж ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1290930.00,
+          "size_raw": "1290930",
+          "relative": null
+        },
+        {
+          "size": 810149.00,
+          "size_raw": "810149",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 32.61,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "32,61",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 52.6,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "52,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 52.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "52,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 5,
+      "document_position": "R0C3"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера представленные руководителями организации ФМБА России за период                                                             с 1 января 2014 года по 31 декабря 2014 года",
+    "year": 2014,
+    "sheet_number": 7,
+    "documentfile_id": 17497
+  }
+}

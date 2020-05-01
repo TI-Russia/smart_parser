@@ -1,0 +1,817 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Зернов  И.С.",
+        "role": "И.о. генерального директора",
+        "department": "ФГУП Дирекция строящихся объектов ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2085158.74,
+          "size_raw": "2085158,74",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 35.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "35,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Козин О.М.",
+        "role": "И.О. директора",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 4003681.86,
+          "size_raw": "4003681,86",
+          "relative": null
+        },
+        {
+          "size": 164887.91,
+          "size_raw": "164887,91",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1656.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1656",
+          "country_raw": "Черногория",
+          "type_raw": "земельный участок",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 76.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "76",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 560.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "560",
+          "country_raw": "Черногория",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 2500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 319.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "319,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 98.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "98,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 44.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "44",
+          "country_raw": "Черногория",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 17.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,9",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 17.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,9",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1656.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1656",
+          "country_raw": "Черногория",
+          "type_raw": "земельный участок",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 76.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "76",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 98.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "98,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 44.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "44",
+          "country_raw": "Черногория",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 17.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,9",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "гараж",
+          "square": 17.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "17,9",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mazda CX-9",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Удовенко Д.Н.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2761620.75,
+          "size_raw": "2761620,75",
+          "relative": null
+        },
+        {
+          "size": 47344.77,
+          "size_raw": "47344,77",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 90.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "90,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 90.4,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "90,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 70.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "70,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 90.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "90,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Агейкин С.Г.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2436874.00,
+          "size_raw": "2436874",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 66.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "66",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Каныгин В.В.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2037166.46,
+          "size_raw": "2037166,46",
+          "relative": null
+        },
+        {
+          "size": 9123777.61,
+          "size_raw": "9123777,61",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "комната",
+          "square": 22.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "22",
+          "country_raw": "Россия",
+          "type_raw": "комната"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1200.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 65.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "65",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 105.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "105,8",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "садовый дом",
+          "square": 12.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "12,8",
+          "country_raw": "Россия",
+          "type_raw": "садовый дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 12.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "12,4",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Волнов А.В.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 689383.18,
+          "size_raw": "689383,18",
+          "relative": null
+        },
+        {
+          "size": 604171.17,
+          "size_raw": "604171,17",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 59356.80,
+          "size_raw": "59356,8",
+          "relative": "Ребенок",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 127.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "127,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 20.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20,8",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "нежилое помещение",
+          "square": 6.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "6,2",
+          "country_raw": "Россия",
+          "type_raw": "нежилое помещение",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 56.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "56",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "2/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 127.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "127,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 95.3,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "95,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 127.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "127,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "BMW X5",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Хныкова Л.В.",
+        "role": "Финансовый директор",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 3053617.32,
+          "size_raw": "3053617,32",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 60.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "60",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 76.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "76,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Volkswagen Golf Plus",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Volkswagen Golf",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Еременко В.П.",
+        "role": "Главный инженер",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1956428.00,
+          "size_raw": "1956428",
+          "relative": null
+        },
+        {
+          "size": 197379.00,
+          "size_raw": "197379",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 43.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "43,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1278.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1278",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 202.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "202,9",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 43.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "43,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/3 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Mitsubishi Pajero",
+          "relative": null,
+          "type_raw": "легковой"
+        },
+        {
+          "text": "Nissan X-Trail",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Чеканова С.И.",
+        "role": "Главный бухгалтер",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2995291.85,
+          "size_raw": "2995291,85",
+          "relative": null
+        },
+        {
+          "size": 628530.89,
+          "size_raw": "628530,89",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 77.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "77,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 77.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "77,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 30.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "30",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 77.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Opel Corsa",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "person_index": 8,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Демидов П.А.",
+        "role": "Директор филиала",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2233580.68,
+          "size_raw": "2233580,68",
+          "relative": null
+        },
+        {
+          "size": 45499.04,
+          "size_raw": "45499,04",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 800.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "800",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "садовый дом",
+          "square": 46.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "46,6",
+          "country_raw": "Россия",
+          "type_raw": "садовый дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 59.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "59",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 59.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "59",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Opel Astra",
+          "relative": null,
+          "type_raw": "легковой"
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Андреев О.И.",
+        "role": "Директор филиала",
+        "department": "ФГУП Федеральный центр по проектированию и развитию объектов ядерной медицины"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2340661.35,
+          "size_raw": "2340661,35",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 10,
+      "document_position": "R0C3"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного                      характера представленные руководителями организации ФМБА России                                                     за период  с 1 января 2014 года по 31 декабря 2014 года",
+    "year": 2014,
+    "sheet_number": 6,
+    "documentfile_id": 17497
+  }
+}

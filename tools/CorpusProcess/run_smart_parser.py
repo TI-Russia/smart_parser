@@ -37,7 +37,7 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?office=5300", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?office=497", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
