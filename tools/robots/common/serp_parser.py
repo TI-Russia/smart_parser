@@ -1,12 +1,13 @@
-import urllib.request as urllib2
+import urllib.parse
 import json
 import sys
 import time
 import os
 import random
 from unidecode import unidecode
-from robots.common.download import FILE_CACHE_FOLDER, get_site_domain_wo_www
+from robots.common.download import TDownloadEnv
 from selenium.webdriver.common.keys import Keys
+from robots.common.primitives import get_site_domain_wo_www
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/ 58.0.3029.81 Safari/537.36",
@@ -27,7 +28,7 @@ ACCEPT_LANGUAGES = [
 ]
 RESULT_SELECTOR = ".srg .g .rc .r a"
 
-REQUEST_CACHE_FOLDER = os.path.join(FILE_CACHE_FOLDER, "search_engine_requests")
+REQUEST_CACHE_FOLDER = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "search_engine_requests")
 if not os.path.exists(REQUEST_CACHE_FOLDER):
     os.makedirs(REQUEST_CACHE_FOLDER)
 
@@ -36,7 +37,7 @@ class GoogleSearch:
 
     @staticmethod
     def _request_urllib(url):
-        opener = urllib2.build_opener()
+        opener = urllib.parse.build_opener()
         opener.addheaders = [
             ('User-Agent', random.choice(USER_AGENTS)),
             ("Accept-Language", random.choice(ACCEPT_LANGUAGES))

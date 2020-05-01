@@ -1,100 +1,18 @@
 {
-    "result": "declaration_result",
+    "verdict": "declaration_result",
     "smart_parser_person_count": 0,
-    "start_text": "Сведения о доходах федеральных государственных служащих Федеральной миграционной службы за 2010 год Фамилия, инициалы Должность Общая Перечень объектов недвижимого Перечень сумма имущества, транспортных деклариро принадлежащих на праве средств, ванного Ви собс д объ т е в к е т нн ов о н с е т ди в и и л ж и и мости принадл Площа еж дь а ( щ к и в. Страна годового находящихся в пользовании х м) расположения дохода на праве за 2009 г. собственности НАЧАЛЬНИКИ ОТДЕЛОВ (руб). (вид, марка) ФМС РОССИ",
-    "text_len": 7716,
-    "person": {
-        "matches": [
-            "<re.Match object; span=(502, 517), match='Абрамкина Т. С.'>",
-            "<re.Match object; span=(651, 666), match='Абрамкиной Т.С.'>",
-            "<re.Match object; span=(695, 706), match='Автаев С.Н.'>",
-            "<re.Match object; span=(845, 857), match='Автаева С.Н.'>",
-            "<re.Match object; span=(1124, 1136), match='Автаева С.Н.'>",
-            "<re.Match object; span=(1180, 1192), match='Автаева С.Н.'>",
-            "<re.Match object; span=(1235, 1247), match='Абрамов М.Г.'>",
-            "<re.Match object; span=(1358, 1371), match='Абрамова М.Г.'>",
-            "<re.Match object; span=(1462, 1475), match='Баринова А.А.'>",
-            "<re.Match object; span=(1659, 1673), match='Бариновой А.А.'>"
-        ],
-        "start": 502
-    },
-    "relative": {
-        "matches": [
-            "<re.Match object; span=(837, 844), match='супруга'>",
-            "<re.Match object; span=(1119, 1123), match='дочь'>",
-            "<re.Match object; span=(1175, 1179), match='дочь'>",
-            "<re.Match object; span=(1322, 1329), match='супруга'>",
-            "<re.Match object; span=(1655, 1658), match='сын'>",
-            "<re.Match object; span=(1812, 1819), match='супруга'>",
-            "<re.Match object; span=(1883, 1887), match='дочь'>",
-            "<re.Match object; span=(1952, 1956), match='дочь'>",
-            "<re.Match object; span=(2021, 2025), match='дочь'>",
-            "<re.Match object; span=(2443, 2450), match='супруга'>"
-        ],
-        "start": 837
-    },
-    "auto": {
-        "matches": [
-            "<re.Match object; span=(563, 569), match='Тойота'>",
-            "<re.Match object; span=(1404, 1408), match='Ауди'>",
-            "<re.Match object; span=(2374, 2380), match='Сузуки'>",
-            "<re.Match object; span=(4425, 4428), match='KIA'>",
-            "<re.Match object; span=(4892, 4897), match='Нисан'>",
-            "<re.Match object; span=(5083, 5089), match='Сузуки'>",
-            "<re.Match object; span=(5742, 5746), match='Рено'>",
-            "<re.Match object; span=(5941, 5945), match='Audi'>",
-            "<re.Match object; span=(7432, 7436), match='Форд'>",
-            "<re.Match object; span=(7560, 7564), match='Форд'>"
-        ],
-        "start": 563
-    },
-    "transport_word": {
-        "matches": [
-            "<re.Match object; span=(190, 199), match='транспорт'>"
-        ],
-        "start": 190
-    },
-    "income": {
-        "matches": [
-            "<re.Match object; span=(437, 443), match='619127'>",
-            "<re.Match object; span=(517, 523), match='668485'>",
-            "<re.Match object; span=(603, 609), match='714338'>",
-            "<re.Match object; span=(724, 730), match='120000'>",
-            "<re.Match object; span=(1069, 1075), match='702568'>",
-            "<re.Match object; span=(1133, 1139), match='312062'>",
-            "<re.Match object; span=(1270, 1276), match='530519'>",
-            "<re.Match object; span=(1505, 1511), match='572312'>",
-            "<re.Match object; span=(1574, 1580), match='162000'>",
-            "<re.Match object; span=(1822, 1828), match='642476'>"
-        ],
-        "start": 437
-    },
-    "realty": {
-        "matches": [
-            "<re.Match object; span=(538, 546), match='квартира'>",
-            "<re.Match object; span=(630, 638), match='квартира'>",
-            "<re.Match object; span=(727, 735), match='квартира'>",
-            "<re.Match object; span=(791, 798), match='комната'>",
-            "<re.Match object; span=(868, 885), match='земельный участок'>",
-            "<re.Match object; span=(923, 940), match='земельный участок'>",
-            "<re.Match object; span=(1048, 1056), match='квартира'>",
-            "<re.Match object; span=(1058, 1065), match='долевая'>",
-            "<re.Match object; span=(1139, 1147), match='квартира'>",
-            "<re.Match object; span=(1195, 1203), match='квартира'>"
-        ],
-        "start": 538
-    },
-    "header": {
-        "matches": [
-            "<re.Match object; span=(0, 18), match='Сведения о доходах'>",
-            "<re.Match object; span=(100, 202), match='Фамилия, инициалы Должность Общая Перечень объект>"
-        ],
-        "start": 0
-    },
-    "surname_word": {
-        "matches": [
-            "<re.Match object; span=(100, 107), match='Фамилия'>"
-        ],
-        "start": 100
+    "start_text": "Сведения о доходах федеральных государственных служащих Федеральной миграционной службы за 2010 год супруга Автаева С.Н. 120000,00 земельный участок под ИЖС (индивидуальная) земельный участок под ИЖС (индивидуальная) жилой дом (индивидуальная) баня (индивидуальная) квартира (долевая - 1 /2 доля) гараж (индивидуальная) 1500 1200 127 84 53,6 17,5 Россия Россия Россия Россия Россия дочь Автаева С.Н. - квартира (индивидуальная) 51 Россия дочь Автаева С.Н. - квартира (долевая-1/2 доля) 53,6 Россия Аб",
+    "text_len": 6945,
+    "description": "header < 20",
+    "text_features": {
+        "header": {
+            "first_matches": [
+                {
+                    "span": "0,18",
+                    "match": "сведения о доходах"
+                }
+            ],
+            "all_matches_count": 1
+        }
     }
 }

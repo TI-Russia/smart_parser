@@ -1,38 +1,16 @@
 [
     {
-        "files_count": 31
+        "files_count": 40
     },
     {
         "click_path": [
             {
-                "url": "http://www.minpromtorg.gov.ru",
-                "step": null,
-                "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/search_results/index.php?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=16",
-                "step": "declarations_div",
-                "title": "Минпромторг",
-                "anchor_text": "Образец заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера несовершеннолетнего ребенка",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_nesovershennoletnego_rebenka",
-                "step": "declarations_div_pages",
-                "title": "Минпромторг :: Документы",
-                "anchor_text": "ЗАГРУЗИТЬ\n3.26 MB, 20.03.2018",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5ab0c06c0bec9/actual/Obrazets_zapolneniya_spravki_obyazatelstva_imushchestvennogo_kharaktera_rebenok.pdf",
-                "step": "declarations"
+                "exception": "graph is too large, timeout is set to 2 seconds"
             }
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5ab0c06c0bec9/actual/Obrazets_zapolneniya_spravki_obyaz_dd0d3bb34031d3e094b9febdfe4bfcfc/dlrobot_data",
         "sha256": "088c8e54d62ebd5dcf4a9790c40f41690523905fb2f19d8b3b81c2680871f119",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -44,8 +22,15 @@
                 "engine": "google"
             },
             {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
+                "step": "declarations",
+                "title": "Минпромторг :: Сведения о доходах",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
+                "engine": "selenium"
+            },
+            {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2017_g_po_31_dekabrya_2017_g",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n26.15 KB, 22.05.2018",
                 "engine": "selenium"
@@ -57,7 +42,17 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5afda260c9c66/actual/Rukovodstvo_Minpromtorga_Rossii_20_173cd5ce478a28ea6c7d349f3fa9acb5/dlrobot_data",
         "sha256": "11cb463b44ec21f1b3b2321f8cc9ba55b01e7bf965ba9af9a557d37c14ee0c6e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/Seminar_17.11.17_Analiz_raboty_s_otchetnostu_GISP-1.pdf/dlrobot_data",
+        "sha256": "1afbee74426cee60e20b9739d7fc99514c3dede61a934eb52758301109becc9b",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -69,8 +64,15 @@
                 "engine": "google"
             },
             {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
+                "step": "declarations",
+                "title": "Минпромторг :: Сведения о доходах",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
+                "engine": "selenium"
+            },
+            {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2017_g_po_31_dekabrya_2017_g",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n860.00 KB, 21.05.2019",
                 "engine": "selenium"
@@ -82,7 +84,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5afd94a11ec7e/actual/Rabotniki_organizatsii_Minpromtorg_e2f924bb3c661e5406e950b6c1d64c06/dlrobot_data",
         "sha256": "1f1998504891e2c71519548475876c785700173ce0e2e0044f4e3b8df8392a47",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -95,14 +97,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2018 г. по 31 декабря 2018 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n236.78 KB, 25.09.2019",
                 "engine": "selenium"
@@ -114,7 +116,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce6d14f33c04/actual/publikaciaCA.docx/dlrobot_data",
         "sha256": "28f05985bbb4f0fdcdfd24288f7c77c37ea4e3caf6de1a3a1355908ff2fe7faf",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -122,19 +124,26 @@
                 "url": "http://www.minpromtorg.gov.ru",
                 "step": null,
                 "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
+                "anchor_text": "Противодействие коррупции",
+                "engine": "urllib"
             },
             {
-                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
-                "step": "declarations_div",
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/",
+                "step": "anticorruption_div",
+                "title": "Минпромторг",
+                "anchor_text": "Формы документов, связанных с противодействием коррупции, для заполнения",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
+                "step": "declarations",
                 "title": "Минпромторг",
                 "anchor_text": "Образец заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера – «Супруга (супруг)»",
                 "engine": "urllib"
             },
             {
-                "url": "http://minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_raskhodah_ob_imushchestve_i_obyazatelstvah_imushchestvennogo_haraktera_supruga",
-                "step": "declarations_div_pages",
+                "url": "http://www.minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_raskhodah_ob_imushchestve_i_obyazatelstvah_imushchestvennogo_haraktera_supruga",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n3.24 MB, 29.01.2020",
                 "engine": "selenium"
@@ -146,32 +155,17 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc73e0f4a1/actual/primer_2_1.pdf/dlrobot_data",
         "sha256": "2db81a5c1e1ffcad19d33950c0bd8807ccfdbd018f3c2a8762147bea65edabfe",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
             {
-                "url": "http://www.minpromtorg.gov.ru",
-                "step": null,
-                "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
-                "step": "declarations_div",
-                "title": "Минпромторг",
-                "anchor_text": "Скачать специальное программное обеспечение «Справки БК» для заполнения формы справки о доходах, расходах, об имуществе и обязательствах имущественного характера, с руководством пользователя",
-                "engine": "urllib"
-            },
-            {
-                "url": "https://gossluzhba.gov.ru/anticorruption/spravki_bk",
-                "step": "declarations"
+                "exception": "graph is too large, timeout is set to 2 seconds"
             }
         ],
-        "cached_file": "cached/gossluzhba.gov.ru/anticorruption/spravki_bk/dlrobot_data",
-        "sha256": "3b72b4cd7ab794a643dbfa0072de71775765384a51de1cac7da450ebdfae6377",
-        "dl_recognizer_result": -1
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5de1013002206/actual/Pasport_FP_ot_06.09.2019.pdf/dlrobot_data",
+        "sha256": "33de51cfda8a47c43e0734d5dd66d025f0d6c458a9649a399285b9812f846a04",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -184,14 +178,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России и его территориальных органов, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_i_ego_territorialnyh_organov_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2015_g_po_31_dekabrya_2015_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n218.54 KB, 20.02.2018",
                 "engine": "selenium"
@@ -203,7 +197,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beb6c4cdaa/actual/TSentralnyi_apparat.docx/dlrobot_data",
         "sha256": "46a16f947d32c47f9e12df94643c146da741f9aedcc366cc152ab327b91a4f7e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -216,14 +210,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2016_g_po_31_dekabrya_2016_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n32.14 KB, 20.02.2018",
                 "engine": "selenium"
@@ -235,7 +229,27 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bea6b53d1b/actual/Rukovodstvo_Minpromtorga_Rossii.do_908d45b62d9024800abf0c8d8057d610/dlrobot_data",
         "sha256": "505dce5c4d67115ca278c417ec8ac44926f1df9404971d9d683392635b0bfb95",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/Seminar_17.11.17_Osnovnye_voprosy_pri_zapolnenii_spravo_59f1a338a3134d1fe58e2d711ec58002/dlrobot_data",
+        "sha256": "5100f735add94572bcfe77d5a5ed9be53ce6853bbdd80a692237b2a26adebbbb",
+        "dl_recognizer_result": "unknown_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5defbb7d2992b/actual/ppa_3.pdf/dlrobot_data",
+        "sha256": "54ccd41611ed3ce21cc5eed3d359fb725ecee6132d8d5bafa2a6351d326187e0",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -247,13 +261,13 @@
                 "engine": "google"
             },
             {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8af009c795d/actual/Seminar_17.11.17_Osnovnye_voprosy_pri_zapolnenii_spravok_o_dokhodakh.pdf",
-                "step": "declarations_div"
+                "url": "http://minpromtorg.gov.ru/common/upload/files/docs/Primer_GS_012018.pdf",
+                "step": "declarations"
             }
         ],
-        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8af009c795d/actual/Seminar_17.11.17_Osnovnye_voprosy__1e915e0b9944b769e50afc9d938004c5/dlrobot_data",
-        "sha256": "5100f735add94572bcfe77d5a5ed9be53ce6853bbdd80a692237b2a26adebbbb",
-        "dl_recognizer_result": 1
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/Primer_GS_012018.pdf/dlrobot_data",
+        "sha256": "586cab339b4972944272cf4c8776d463d196f82cff1b9b633d0bb210602fc9af",
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -263,10 +277,17 @@
                 "title": "Минпромторг",
                 "anchor_text": "\"сведения о доходах\"",
                 "engine": "google"
+            },
+            {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
+                "step": "declarations",
+                "title": "Минпромторг :: Сведения о доходах",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2015_g_po_31_dekabrya_2015_g",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n35.82 KB, 20.02.2018",
                 "engine": "selenium"
@@ -278,7 +299,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beb3d0c8c6/actual/Rukovodstvo.docx/dlrobot_data",
         "sha256": "5ec067abafc0bffd908580a7670ce913dd665863b5bf84618c5f4e0f9cf3e124",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -290,8 +311,15 @@
                 "engine": "google"
             },
             {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
+                "step": "declarations",
+                "title": "Минпромторг :: Сведения о доходах",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
+                "engine": "selenium"
+            },
+            {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2017_g_po_31_dekabrya_2017_g",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n204.58 KB, 14.06.2018",
                 "engine": "selenium"
@@ -303,39 +331,27 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5b046211d9327/actual/TsA_Minpromtorga_Rossii_2017.docx/dlrobot_data",
         "sha256": "60e7214e30af428ed84c9c7832d4782910fae12042e339251caf2b308d07db1c",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
             {
-                "url": "http://www.minpromtorg.gov.ru",
-                "step": null,
-                "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/Razvitie_aviatsionnoy_promyshlennosti[1].pdf/dlrobot_data",
+        "sha256": "686316d0988055946d97ee857d34858e6f620736d0795dd5c2a40df6888955ec",
+        "dl_recognizer_result": "unknown_result"
+    },
+    {
+        "click_path": [
             {
-                "url": "http://minpromtorg.gov.ru/search_results/index.php?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=16",
-                "step": "declarations_div",
-                "title": "Минпромторг",
-                "anchor_text": "Образец заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera",
-                "step": "declarations_div_pages",
-                "title": "Минпромторг :: Документы",
-                "anchor_text": "ЗАГРУЗИТЬ\n5.05 MB, 20.03.2018",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5ab0c18a57382/actual/Obrazets_zapolneniya_spravki_obyazatelstva_imushchestvennogo_kharaktera.pdf",
-                "step": "declarations"
+                "exception": "graph is too large, timeout is set to 2 seconds"
             }
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5ab0c18a57382/actual/Obrazets_zapolneniya_spravki_obyaz_67c07519b6afebd0b82b80f019153a81/dlrobot_data",
         "sha256": "69001b556e6f9b8b432226b48577ee1c5a24a8c1d14859824c783c88afbaba90",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -348,14 +364,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2011 г. по 31 декабря 2011 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2011_g_po_31_dekabrya_2011_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n196.37 KB, 20.02.2018",
                 "engine": "selenium"
@@ -367,7 +383,17 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf233b4882/actual/svedeniya_o_dokhodakh_2011_Pr2-1.d_00718a3063b8e0a34251c432539f59eb/dlrobot_data",
         "sha256": "6b2f63248865588d2dc0e5ad4d55849359c07535f141ee6c14c44d151b6aa390",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/Russian_light_prom_players.pdf/dlrobot_data",
+        "sha256": "723d7b86c9455609f9955b3e83c06e0150074ebd6b6c8a4e3f03942a0a600efc",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -380,14 +406,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2010 г. по 31 декабря 2010 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2010_g_po_31_dekabrya_2010_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n204.38 KB, 20.02.2018",
                 "engine": "selenium"
@@ -399,7 +425,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf2ee0a126/actual/svedeniya_o_dokhodakh_2010_Pr1-1.d_f124a89b087108237c8f79124cea94c1/dlrobot_data",
         "sha256": "7538324ed054ad3b4dcf626f43cf9db593cd24ca8c8d604286f95370ba7b59cf",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -412,14 +438,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России и его территориальных органов, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_i_ego_territorialnyh_organov_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2014_g_po_31_dekabrya_2014_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n362.94 KB, 20.02.2018",
                 "engine": "selenium"
@@ -431,7 +457,27 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bec3668ed8/actual/Svedeniya_o_dokhodakh_i_raskhodakh_7dc9a2e80337d8466efc4ca520e1fc08/dlrobot_data",
         "sha256": "7b1389e5c903b6bfd5fa57f78a52d4f09c92d4df890105ae7bcdb7fb8650a096",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/Seminar_17.11.17_Lokalnye_akty_Organizatsii.pdf/dlrobot_data",
+        "sha256": "7d76f7598f4e1eaa36e5452d656a716ada8f9aff6da9c6cad246e18869f76b1f",
+        "dl_recognizer_result": "unknown_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/DEKLARATCII-1.1.pdf/dlrobot_data",
+        "sha256": "816b9f2fd9fb0d3e49fc9c0f143c32510cd22e255822e477d0dab64c1d61ae20",
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -444,14 +490,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2018 г. по 31 декабря 2018 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n100.99 KB, 25.09.2019",
                 "engine": "selenium"
@@ -463,7 +509,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce3d65aac018/actual/rabotniki_2018_1.docx/dlrobot_data",
         "sha256": "849b92c582127e38bc00408ae0e37cbd5872826766c992289c792941c252b107",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -476,14 +522,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера директоров федеральных бюджетных учреждений, а также их супруги (супруга) и несовершеннолетних детей за отчетный период с 1 января 2012 года по 31 декабря 2012 года",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_direktorov_federalnyh_byudzhetnyh_uchrezhdeniy_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_otchetnyy_period_s_1_yanvarya_2012_goda_po_31_dekabrya_2012_goda",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n30.22 KB, 20.02.2018",
                 "engine": "selenium"
@@ -495,7 +541,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf1ff97633/actual/DEKLARATSII-1-2012_Pr4.docx/dlrobot_data",
         "sha256": "8949e5b5f2155ffb0cc20aac50be1ab4ed72f4dcab637dc72d5a0acb9c78eddc",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -508,14 +554,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2013 г. по 31 декабря 2013 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2013_g_po_31_dekabrya_2013_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n37.86 KB, 20.02.2018",
                 "engine": "selenium"
@@ -527,7 +573,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bef6a57aec/actual/Svedeniya_o_dokhodakh-rukovodstvo._9d5489768d180eee8c5abfb0633e9ca7/dlrobot_data",
         "sha256": "8972965509778f9ccb44b54481e1730f722e59b4c8d9065179e782de18c9b83d",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -540,14 +586,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2013 г. по 31 декабря 2013 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2013_g_po_31_dekabrya_2013_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n508.47 KB, 15.06.2018",
                 "engine": "selenium"
@@ -559,7 +605,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8befa665b3b/actual/TsA_2013_15__2_1111.docx/dlrobot_data",
         "sha256": "9452be724c75cac0414cb0a5bc43688577b9105c64863d675905f5c2cbde20e6",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -571,8 +617,15 @@
                 "engine": "google"
             },
             {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
+                "step": "declarations",
+                "title": "Минпромторг :: Сведения о доходах",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2018 г. по 31 декабря 2018 г.",
+                "engine": "selenium"
+            },
+            {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n191.00 KB, 20.05.2019",
                 "engine": "selenium"
@@ -584,7 +637,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5ce29aee276c0/actual/Rukovodstvo_2018.doc/dlrobot_data",
         "sha256": "9530c2e01e7b50037dab5ad3163b17702126f7ad26ee83938bf5db412fb2016f",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -597,14 +650,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2016_g_po_31_dekabrya_2016_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n73.47 KB, 20.02.2018",
                 "engine": "selenium"
@@ -616,7 +669,17 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beaff641b9/actual/Podvedy_Minpromtorga_Rossii.docx/dlrobot_data",
         "sha256": "9fa8426922e8273ed1e076dc7ba8a76ede9e07746c838c8795f5e8c9537424ff",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8ae1ffd4f9f/actual/primer_1_1.pdf/dlrobot_data",
+        "sha256": "a3158a6b4811f30bbe8df8f3d1bfaeee6c518de55f555cd3e7e3d0db68b75ac9",
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -624,63 +687,223 @@
                 "url": "http://www.minpromtorg.gov.ru",
                 "step": null,
                 "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
-                "step": "declarations_div",
-                "title": "Минпромторг",
-                "anchor_text": "Образец заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера – «Гражданский служащий» (работник подведомственной организации)",
+                "anchor_text": "Противодействие коррупции",
                 "engine": "urllib"
             },
             {
-                "url": "http://minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_raskhodah_ob_imushchestve_i_obyazatelstvah_imushchestvennogo_haraktera_grazhdanskij_sluzhashchij",
-                "step": "declarations_div_pages",
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/",
+                "step": "anticorruption_div",
+                "title": "Минпромторг",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/activities/info/",
+                "step": "declarations",
+                "title": "Минпромторг :: Сведения о доходах",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2017_g_po_31_dekabrya_2017_g",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
-                "anchor_text": "ЗАГРУЗИТЬ\n3.84 MB, 29.01.2020",
+                "anchor_text": "1516",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/?from_18=1516",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "1512",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/?from_18=1512",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "1510",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/?from_18=1510",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": ">",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/?from_18=1511",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "Госпошлина за предоставление лицензии на разработку, производство, испытание и ремонт авиационной техники",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/#!gosposhlina_za_predostavlenie_licenzii_na_razrabotku_proizvodstvo_ispytanie_i_remont_aviacionnoy_tehniki",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "..",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/?from_18=6",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "Документы",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "3",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=3",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "7",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=7",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "..",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=12",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "16",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=16",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "15",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=15",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "..",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=10",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "8",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=8",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "5",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=5",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "9",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=9",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "..",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=4",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "2",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/docs/?from_18=2",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "Заседание комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих и урегулированию конфликта интересов в Министерстве промышленности и торговли Российской Федерации",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/#!zasedanie_komissii_po_soblyudeniyu_trebovaniy_k_sluzhebnomu_povedeniyu_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_i_uregulirovaniyu_konflikta_interesov_v_ministerstve_promyshlennosti_i_torgovli_rossiyskoy_federacii1583401846",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "Прочие документы",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/other_documents/",
+                "step": "declarations",
+                "title": "Минпромторг :: Прочие документы",
+                "anchor_text": "..",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/other_documents/?from_18=6",
+                "step": "declarations",
+                "title": "Минпромторг :: Прочие документы",
+                "anchor_text": ">",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/other_documents/?from_18=7",
+                "step": "declarations",
+                "title": "Минпромторг :: Прочие документы",
+                "anchor_text": "3",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/other_documents/?from_18=3",
+                "step": "declarations",
+                "title": "Минпромторг :: Прочие документы",
+                "anchor_text": "Программа повышения экологической эффективности АО «ЕВРАЗ КГОК»",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/#!programma_povysheniya_ekologicheskoy_effektivnosti_ao_evraz_kgok",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "График инспектирования иностранных производителей",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/docs/#!grafik_inspektirovaniya_inostrannyh_proizvoditeley",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "ЗАГРУЗИТЬ\n29.93 KB, 24.04.2020",
                 "engine": "selenium"
             },
             {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8bc6d68ee0c/actual/primer_1_1.pdf",
+                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8ec16e656b1/actual/grafik_24_04_2020.xls",
                 "step": "declarations"
             }
         ],
-        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc6d68ee0c/actual/primer_1_1.pdf/dlrobot_data",
-        "sha256": "a3158a6b4811f30bbe8df8f3d1bfaeee6c518de55f555cd3e7e3d0db68b75ac9",
-        "dl_recognizer_result": 1
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8ec16e656b1/actual/grafik_24_04_2020.xls/dlrobot_data",
+        "sha256": "b03d5e7558b6dcae8685de1a9bdfc2c03df09da6bc0e456f709afcc003632925",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
             {
-                "url": "http://www.minpromtorg.gov.ru",
-                "step": null,
-                "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/search_results/index.php?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=16",
-                "step": "declarations_div",
-                "title": "Минпромторг",
-                "anchor_text": "Образец заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера супруги (супруга)",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_suprugi_supruga",
-                "step": "declarations_div_pages",
-                "title": "Минпромторг :: Документы",
-                "anchor_text": "ЗАГРУЗИТЬ\n4.47 MB, 20.03.2018",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5ab0bfa5063cd/actual/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%B5%D1%86_%D0%B7%D0%B0%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F_%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B8_%D0%BE_%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_(%D1%81%D1%83%D0%BF%D1%80%D1%83%D0%B3).pdf",
-                "step": "declarations"
+                "exception": "graph is too large, timeout is set to 2 seconds"
             }
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5ab0bfa5063cd/actual/Obrazets_zapolneniia_spravki_o_dok_9e517bac5b1b30de2cc0d1293a6a7b1f/dlrobot_data",
         "sha256": "b7ec4315d1388a9a8ef15c1dad7960ee721e6594e68751e06efa1262ce89ef8e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -693,14 +916,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2016_g_po_31_dekabrya_2016_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n169.36 KB, 20.02.2018",
                 "engine": "selenium"
@@ -712,7 +935,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8beaab5223d/actual/d2.docx/dlrobot_data",
         "sha256": "beb44144c4ea619a99cf3e09a530381f66fd126a406da12c93318be73faefdb8",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -725,14 +948,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2012 г. по 31 декабря 2012 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2012_g_po_31_dekabrya_2012_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n196.96 KB, 20.02.2018",
                 "engine": "selenium"
@@ -744,39 +967,27 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf14559c26/actual/TSA_2012.docx/dlrobot_data",
         "sha256": "c090c997fd27cba8d9864836252c50533382d6fb6424ea7ca7cc604a570ee21d",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
             {
-                "url": "http://www.minpromtorg.gov.ru",
-                "step": null,
-                "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
-                "step": "declarations_div",
-                "title": "Минпромторг",
-                "anchor_text": "Методические рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки в 2020 году (за отчетный 2019 год) (Минтруд России)",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/docs/#!metodicheskie_rekomendacii_po_voprosam_predstavleniya_svedeniy_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_i_zapolneniya_sootvetstvuyushhey_formy_spravki_v_2020_godu_za_otchetnyy_2019_god_mintrud_rossii1519110114",
-                "step": "declarations_div_pages",
-                "title": "Минпромторг :: Документы",
-                "anchor_text": "ЗАГРУЗИТЬ\n546.75 KB, 22.01.2020",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8bc7baa378e/actual/met_rec.pdf",
-                "step": "declarations"
+                "exception": "graph is too large, timeout is set to 2 seconds"
             }
         ],
-        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc7baa378e/actual/met_rec.pdf/dlrobot_data",
-        "sha256": "d4e8e8c150bf90e5632fd18613a2140b421fb27a3a88a4ecba3fbe17d09b5436",
-        "dl_recognizer_result": 1
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8af968b4e2d/actual/primer_2.pdf/dlrobot_data",
+        "sha256": "c635cd73b99879c12f24570ab820b4b474fad8b16eb0f72b0bf344f38e93660c",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/GP_RAP_20140109_v2.1.pdf/dlrobot_data",
+        "sha256": "d1b967ac68da299f6d295de7193c087571c5a28a8a0ebb2a93714ff111764a58",
+        "dl_recognizer_result": "unknown_result"
     },
     {
         "click_path": [
@@ -789,14 +1000,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2014_g_po_31_dekabrya_2014_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n108.80 KB, 14.06.2018",
                 "engine": "selenium"
@@ -808,7 +1019,17 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8becf11ef59/actual/Podvedy_2014.docx/dlrobot_data",
         "sha256": "de69811ff4cc386c49b74abfd757aee1eae1039b0f1befb5fd62e2ca13d95f66",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/minpromtorg.gov.ru/common/upload/files/docs/svedeniya_o_dokhodakh_rukovodstvo_2014.doc/dlrobot_data",
+        "sha256": "e63c828a3f32cb8b14d81a8ee3889b2cb9eeb89de4d9a6eaf25c2a6d8fe52f4c",
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -821,39 +1042,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2013 г. по 31 декабря 2013 г.",
                 "engine": "selenium"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2014_g_po_31_dekabrya_2014_g",
-                "step": "declarations_div_pages",
-                "title": "Минпромторг :: Документы",
-                "anchor_text": "ЗАГРУЗИТЬ\n233.50 KB, 20.02.2018",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8bebe625652/actual/svedeniya_o_dokhodakh_rukovodstvo_2014.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bebe625652/actual/svedeniya_o_dokhodakh_rukovodstvo__4399a9d736c0152f338834dfeb0984e9/dlrobot_data",
-        "sha256": "e63c828a3f32cb8b14d81a8ee3889b2cb9eeb89de4d9a6eaf25c2a6d8fe52f4c",
-        "dl_recognizer_result": 1
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.minpromtorg.gov.ru",
-                "step": null,
-                "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2013_g_po_31_dekabrya_2013_g",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n117.03 KB, 14.06.2018",
                 "engine": "selenium"
@@ -865,7 +1061,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bf0f1c8599/actual/Podvedy_2013.docx/dlrobot_data",
         "sha256": "f2fecb14597ce7e995d9f2dfde39fa7a3ac096d817d74b7767ea752e498cd4ad",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -873,19 +1069,61 @@
                 "url": "http://www.minpromtorg.gov.ru",
                 "step": null,
                 "title": "Минпромторг",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
+                "anchor_text": "Противодействие коррупции",
+                "engine": "urllib"
             },
             {
-                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
-                "step": "declarations_div",
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/",
+                "step": "anticorruption_div",
+                "title": "Минпромторг",
+                "anchor_text": "Формы документов, связанных с противодействием коррупции, для заполнения",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/forms/",
+                "step": "declarations",
+                "title": "Минпромторг",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/faq/",
+                "step": "declarations",
+                "title": "Минпромторг :: Вопрос&ndash;Ответ",
+                "anchor_text": "Ответ",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/faq/#!21",
+                "step": "declarations",
+                "title": "Минпромторг :: Вопрос&ndash;Ответ",
+                "anchor_text": "Ответ",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.minpromtorg.gov.ru/open_ministry/anti/docs/faq/#!19",
+                "step": "declarations",
+                "title": "Минпромторг :: Вопрос&ndash;Ответ",
+                "anchor_text": "Документы",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/",
+                "step": "declarations",
+                "title": "Минпромторг :: Документы",
+                "anchor_text": "Формы документов",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://minpromtorg.gov.ru/open_ministry/anti/docs/forms",
+                "step": "declarations",
                 "title": "Минпромторг",
                 "anchor_text": "Образец заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера – «Несовершеннолетний ребенок»",
                 "engine": "urllib"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!obrazec_zapolneniya_spravki_o_dohodah_raskhodah_ob_imushchestve_i_obyazatelstvah_imushchestvennogo_haraktera_nesovershennoletnij_rebenok",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n1.91 MB, 29.01.2020",
                 "engine": "selenium"
@@ -897,7 +1135,7 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc77f2f98f/actual/primer_3_1.pdf/dlrobot_data",
         "sha256": "f942e29d5d08847eeca407cc9221733959a05d15925bb07c2682aba67c64127f",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -910,14 +1148,14 @@
             },
             {
                 "url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Минпромторг :: Сведения о доходах",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минпромторгом России, а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_rabotnikov_organizaciy_sozdannyh_dlya_vypolneniya_zadach_postavlennyh_pered_minpromtorgom_rossii_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2015_g_po_31_dekabrya_2015_g",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Минпромторг :: Документы",
                 "anchor_text": "ЗАГРУЗИТЬ\n82.63 KB, 20.02.2018",
                 "engine": "selenium"
@@ -929,6 +1167,6 @@
         ],
         "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bebb207674/actual/Podvedomstvennye_organizatsii.docx/dlrobot_data",
         "sha256": "fc44146a07e1a622b6aa98741e4c9eccf8f9caefb5965cac94f9ac2e456e9c54",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     }
 ]

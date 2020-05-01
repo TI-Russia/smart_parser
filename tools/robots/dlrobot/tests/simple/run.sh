@@ -1,9 +1,6 @@
-source ../setup_web_server.sh
+PROJECT=$1
 
-
-python ../../dlrobot.py --project project.txt 
-
-kill $WEB_SERVER_PID >/dev/null
+python ../../dlrobot.py --project $PROJECT
 
 files_count=`/usr/bin/find result -type f | wc -l`
 if [ $files_count != 1 ]; then

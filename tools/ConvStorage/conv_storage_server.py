@@ -5,18 +5,21 @@ import http.server
 import os
 import urllib
 import hashlib
-import _thread
 import shutil
 import subprocess
 import logging
+import threading
 import tempfile
-
+import sys
+import queue
+from DeclDocRecognizer.document_types import TCharCategory
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DECLARATOR_CONV_URL")
     parser.add_argument("--logfile", dest='logfile', default='db_conv.log')
     parser.add_argument("--db-json", dest='db_json', required=True)
+    parser.add_argument("--clear-json", dest='clear_json', required=False, action="store_true")
     parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
     parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
@@ -43,12 +46,12 @@ def setup_logging(logger, logfilename):
     logger.addHandler(fh)
 
     # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
+    #ch = logging.StreamHandler()
+    #ch.setLevel(logging.INFO)
+    #logger.addHandler(ch)
 
 
-def rebuild_json(conv_db_json, converted_files_folder, output_file):
+def find_new_files_and_add_them_to_json(conv_db_json, converted_files_folder, output_file):
     if conv_db_json is None:
         conv_db_json = {
             "files": {}
@@ -85,24 +88,43 @@ def rebuild_json(conv_db_json, converted_files_folder, output_file):
     with open(output_file, "w") as outf:
         json.dump(conv_db_json, outf, indent=4)
 
+
 def check_pdf_has_text(logger, filename):
-    cmd = "pdftotext {0} dummy.txt 2> pdftotext.log".format(filename)
-    logger.info(cmd)
-    os.system(cmd)
-    with open("pdftotext.log", "r") as inpf:
-        log = inpf.read()
-    os.unlink("pdftotext.log")
-    if log.find("PDF file is damaged") != -1:
-        return False  # complicated_pdf in  tests
-    is_good_text = os.path.getsize("dummy.txt") > 200
-    os.unlink("dummy.txt")
-    return is_good_text
+    text_file_name = "dummy.txt"
+    log_file_name = "pdftotext.log"
+    with open(log_file_name, "w", encoding="utf8") as log_file:
+        logger.info("pdftotext {} {}".format(filename, text_file_name))
+        subprocess.run(['pdftotext', filename, text_file_name], stderr=log_file, stdout=subprocess.DEVNULL)
+    logdata = ""
+    textdata = ""
+    try:
+        if not os.path.exists(log_file_name):
+            return False
+        with open(log_file_name, "r") as inpf:
+            logdata = inpf.read()
+        os.unlink(log_file_name)
+
+        if not os.path.exists(text_file_name):
+            return False
+        with open(text_file_name, "r", encoding="utf8") as inpf:
+            textdata = inpf.read()
+        os.unlink(text_file_name)
+    except Exception as exp:
+        logger.info("Exception {}: {}".format(exp, filename))
+
+    if logdata.find("PDF file is damaged") != -1:
+        return False  # "complicated_pdf" test case
+    if len(textdata) < 500:
+        return False
+    if TCharCategory.get_most_popular_char_category(textdata[:500]) != 'RUSSIAN_CHAR':
+        return False  # "must_be_ocred" test case
+    return True
 
 
 def strip_drm(logger, filename, stripped_file):
-    cmd = "pdfcrack {0} > crack.info".format(filename)
-    logger.debug(cmd )
-    os.system(cmd)
+    with open("crack.info", "w", encoding="utf8") as outf:
+        subprocess.run(['pdfcrack', filename], stderr=subprocess.DEVNULL, stdout=outf)
+        logger.debug("pdfcrack {}".format(filename))
     password = None
     with open("crack.info", "r") as log:
         prefix = "found user-password: "
@@ -111,20 +133,33 @@ def strip_drm(logger, filename, stripped_file):
                 password = prefix[len(prefix):].strip("'")
     os.unlink("crack.info")
     if password is not None:
-        logger.debug("use password {0}".format(password))
-        cmd = "qpdf --password={0} --decrypt {1} {2}".format(password, filename, stripped_file)
-        logger.debug (cmd)
-        os.system(cmd)
+        logger.debug("run qpdf on {} with password {}".format(filename, password))
+        subprocess.run(['qpdf', '--password={}'.format(password), '--decrypt', filename, stripped_file],
+                       stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
         return True
     return False
 
 
-def convert_with_microsoft_word(microsoft_pdf_2_docx, filename):
-    subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10)
-    os.system("taskkill /F /IM  winword.exe")
-    os.system("taskkill /F /IM  pdfreflow.exe")
+def taskkill_windows(process_name):
+    subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 
+def convert_with_microsoft_word(logger, microsoft_pdf_2_docx, filename):
+    taskkill_windows('winword.exe')
+    taskkill_windows('pdfreflow.exe')
+
+    with tempfile.NamedTemporaryFile(prefix="microsoft_pdf_2_docx.log", dir=".") as log_file:
+        subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10, stderr=log_file, stdout=log_file)
+        try:
+            log_file.seek(0)
+            log_data = log_file.read().decode("utf8").replace("\n", " ").strip()
+            logger.debug(log_data)
+        except Exception as exp:
+            pass
+
+
+    taskkill_windows('winword.exe')
+    taskkill_windows('pdfreflow.exe')
 
 
 def delete_file_if_exists(logger, full_path):
@@ -136,18 +171,29 @@ def delete_file_if_exists(logger, full_path):
         logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
 
 
+class TInputTask:
+    def __init__(self, file_path, sha256):
+        self.file_path = file_path
+        self.sha256 = sha256
+
+
 class TConvDatabase:
     def __init__(self, args):
         self.args = args
         self.conv_db_json_file_name = args.db_json
-        self.input_folder = args.input_folder
-        if not os.path.exists(self.input_folder):
-            os.mkdir(self.input_folder)
+
         with open(args.db_json, "r", encoding="utf8") as inp:
             self.conv_db_json = json.load(inp)
         self.converted_files_folder = self.conv_db_json['directory']
+        self.modify_json_lock = threading.Lock()
         assert "files" in self.conv_db_json
+        if args.clear_json:
+            self.conv_db_json['files'] = dict()
+            self.save_json()
         self.logger = logging.getLogger("db_conv_logger")
+        self.input_thread = None
+        self.stop_input_thread = False
+        self.input_task_queue = queue.Queue()
 
     def get_converted_file_name(self, sha256):
         value = self.conv_db_json['files'].get(sha256)
@@ -156,16 +202,22 @@ class TConvDatabase:
         else:
             return None
 
-    def save_new_file(self, file_bytes, file_extension):
-        sha256 = hashlib.sha256(file_bytes).hexdigest()
-        if self.get_converted_file_name(sha256):
-            return False
-        filename = os.path.join(self.input_folder, sha256 + file_extension)
-        if os.path.exists(filename):
+    def get_input_file_name(self, sha256):
+        value = self.conv_db_json['files'].get(sha256)
+        if value is not None:
+            return os.path.join(self.converted_files_folder, value["input"])
+        else:
+            return None
+
+    def save_new_file(self, sha256, file_bytes, file_extension):
+        filename = os.path.join(self.args.input_folder, sha256 + file_extension)
+        if os.path.exists(filename):  # already registered as an input task
             return False
         with open(filename, 'wb') as output_file:
             output_file.write(file_bytes)
-        self.logger.debug("save new file {} ".format(output_file))
+        self.logger.debug("save new file {} ".format(filename))
+        task = TInputTask(filename, sha256)
+        self.input_task_queue.put(task)
         return True
 
     def move_one_ocred_file(self, some_file):
@@ -183,77 +235,131 @@ class TConvDatabase:
             logger.debug("move {} to {}".format(converted_file, output_file))
             shutil.move(converted_file, output_file)
 
-    def process_one_input_file(self, some_file):
-        stripped_file = os.path.join(self.args.input_folder_cracked, some_file)
-        input_file = os.path.join(self.args.input_folder, some_file)
+    def process_one_input_file(self, input_file):
+        basename = os.path.basename(input_file)
+        stripped_file = os.path.join(self.args.input_folder_cracked, basename)
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
         if not self.args.enable_ocr or check_pdf_has_text(self.logger, stripped_file):
             self.logger.info("convert {} with microsoft word".format(input_file))
-            convert_with_microsoft_word(self.args.microsoft_pdf_2_docx, stripped_file)
+            convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
             docxfile = stripped_file + ".docx"
             if not os.path.exists(docxfile):
-                self.logger.info("cannot process {}, delete it".format(some_file))
+                self.logger.info("cannot process {}, delete it".format(input_file))
                 os.unlink(input_file)
                 os.unlink(stripped_file)
             else:
                 self.logger.info(
                     "move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
-                shutil.move(docxfile, os.path.join(self.converted_files_folder, some_file + ".docx"))
-                shutil.move(input_file, os.path.join(self.converted_files_folder, some_file))
+                shutil.move(docxfile, os.path.join(self.converted_files_folder, basename + ".docx"))
+                shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
                 os.unlink(stripped_file)
         else:
             self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
-            shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, some_file))
-            shutil.move(input_file, os.path.join(self.converted_files_folder, some_file))
+            shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, basename))
+            shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
 
-    def setup_environment(self):
+    def create_folders(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
+
+        if os.path.exists(self.args.input_folder):   #no way to process the input files without queue
+            shutil.rmtree(self.args.input_folder, ignore_errors=True)
+        if not os.path.exists(self.args.input_folder):
+            os.mkdir(self.args.input_folder)
         self.logger.debug("input folder for new files: {} ".format(self.args.input_folder))
+
+        if not os.path.exists(self.args.ocr_output_folder):
+            os.mkdir(self.args.ocr_output_folder)
+        if not os.path.exists(self.args.ocr_input_folder):
+            os.mkdir(self.args.ocr_input_folder)
+        if not os.path.exists(self.converted_files_folder):
+            os.mkdir(self.converted_files_folder)
+
         assert os.path.exists(self.args.microsoft_pdf_2_docx)
         self.args.input_folder_cracked = tempfile.mkdtemp(prefix="input_files_cracked", dir=".")
 
-    def process_input_files(self):
-        while True:
+    # can only add new files
+    def rebuild_json_wrapper(self):
+        self.logger.info("rebuild json started, files number={}".format(len(self.conv_db_json["files"])))
+        self.modify_json_lock.acquire()
+        try:
+            find_new_files_and_add_them_to_json(self.conv_db_json,
+                                              self.converted_files_folder,
+                                              self.conv_db_json_file_name)
+        finally:
+            self.modify_json_lock.release()
+        self.logger.info("rebuild json finished, files number={}".format(len(self.conv_db_json["files"])))
+
+    def save_json(self):
+        with open(self.conv_db_json_file_name, "w") as outf:
+            json.dump(self.conv_db_json, outf, indent=4)
+
+    def process_input_tasks(self):
+        while not self.stop_input_thread:
             time.sleep(10)
-
-            input_files = list(os.listdir(self.args.input_folder))
-            self.logger.debug("the input folder contains {} unprocessed files".format(len(input_files)))
-
-            updated = False
-            for some_file in input_files:
+            new_files_in_db = False
+            while not self.input_task_queue.empty():
+                task = self.input_task_queue.get()
                 try:
-                    self.process_one_input_file(some_file)
-                    updated = True
+                    self.process_one_input_file(task.file_path)
+                    new_files_in_db = True
                 except Exception as exp:
-                    logger.error("Exception: {}".format(exp))
-                    fname = os.path.join(self.args.input_folder, some_file)
-                    if os.path.exists(fname):
-                        logger.error("delete {}".format(fname))
-                        os.unlink(fname)
+                    self.logger.error("Exception: {}".format(exp))
+                    if os.path.exists(task.file_path):
+                        self.logger.error("delete {}".format(task.file_path))
+                        os.unlink(task.file_path)
 
             for some_file in os.listdir(self.args.ocr_output_folder):
                 if not some_file.endswith(".docx"):
                     continue
                 for try_index in [1, 2, 3]:
-                    logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
+                    self.logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
                     try:
                         self.move_one_ocred_file(some_file)
-                        updated = True
+                        new_files_in_db = True
                         break
                     except Exception as exp:
-                        logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
+                        self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
                         time.sleep(60)
 
                 delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
 
-            if updated:
-                logger.info("rebuild json started, files number={}".format(len(self.conv_db_json["files"])))
-                rebuild_json(self.conv_db_json,
-                             self.converted_files_folder,
-                             self.conv_db_json_file_name)
-                logger.info("rebuild json finished, files number={}".format(len(self.conv_db_json["files"])))
+            if new_files_in_db:
+                self.rebuild_json_wrapper()
+
+    def start_input_files_thread(self):
+        self.input_thread = threading.Thread(target=self.process_input_tasks, args=())
+        self.input_thread.start()
+
+    def stop_input_files_thread(self):
+        self.stop_input_thread = True
+        self.input_thread.join()
+
+    def input_files_thread_is_alive(self):
+        self.input_thread.is_alive()
+
+    def delete_conversion_record(self, sha256):
+        if sha256 not in self.conv_db_json['files']:
+            return False
+        self.modify_json_lock.acquire()
+        try:
+            self.logger.debug("delete_conversion_record {}".format(sha256))
+            file_path = CONV_DATABASE.get_converted_file_name(sha256)
+            if os.path.exists(file_path):
+                self.logger.debug("delete {}".format(file_path))
+                os.remove(file_path)
+
+            file_path = CONV_DATABASE.get_input_file_name(sha256)
+            if os.path.exists(file_path):
+                self.logger.debug("delete {}".format(file_path))
+                os.remove(file_path)
+
+            del self.conv_db_json['files'][sha256]
+            self.save_json()
+        finally:
+            self.modify_json_lock.release()
+        return True
 
 
 CONV_DATABASE = None
@@ -261,26 +367,38 @@ CONV_DATABASE = None
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
+    def parse_cgi(self, query_components):
+        query = urllib.parse.urlparse(self.path).query
+        if query == "":
+            return True
+        for qc in query.split("&"):
+            items = qc.split("=")
+            if len(items) != 2:
+                return False
+            query_components[items[0]] = items[1]
+        return True
+
+    def log_message(self, msg_format, *args):
+        global CONV_DATABASE
+        CONV_DATABASE.logger.debug(msg_format % args)
+
     def do_GET(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
 
         global CONV_DATABASE
+        CONV_DATABASE.input_files_thread_is_alive()
         CONV_DATABASE.logger.debug(self.path)
         if self.path == "/ping":
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"yes")
             return
-        query = urllib.parse.urlparse(self.path).query
 
         query_components = dict()
-        for qc in query.split("&"):
-            items = qc.split("=")
-            if len(items) != 2:
-                send_error('bad request')
-                return
-            query_components[items[0]] = items[1]   
+        if not self.parse_cgi(query_components):
+            send_error('bad request')
+            return
 
         sha256 = query_components.get('sha256', None)
         if not sha256:
@@ -288,42 +406,62 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             return
 
         file_path = CONV_DATABASE.get_converted_file_name(sha256)
-        if file_path is not None:
-            if not os.path.exists(file_path):
-                send_error("Converted file does not exist")
-                return
-
+        if file_path is None:
+            send_error('File not found')
+            return
+        if not os.path.exists(file_path):
+            send_error("Converted file does not exist")
+            return
+        try:
             self.send_response(200)
             self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
             self.end_headers()
             if query_components.get("download_converted_file", True):
                 with open(file_path, 'rb') as fh:
                     self.wfile.write(fh.read())  # Read the file and send the contents
-        else:
-            send_error('File not found')
+        except Exception as exp:
+            send_error(str(exp))
 
     def do_PUT(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
         global CONV_DATABASE
+        CONV_DATABASE.input_files_thread_is_alive()
         if self.path is None:
             send_error("no file specified")
             return
-        file_extension = os.path.splitext(self.path)[1]
+        action, file_extension = os.path.split(self.path)
+        action = action.strip('//')
+        if action == "convert_if_absent":
+            rebuild = False
+        elif action == "convert_mandatory":
+            rebuild = True
+        else:
+            send_error("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
+            return
         if len(file_extension) <= 3:
             send_error("bad file extension")
             return
-        CONV_DATABASE.logger.debug(self.path)
         file_length = int(self.headers['Content-Length'])
+        CONV_DATABASE.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
-        if not CONV_DATABASE.save_new_file(file_bytes,  file_extension):
-            send_error("file already exists")
+        sha256 = hashlib.sha256(file_bytes).hexdigest()
+        if rebuild:
+            CONV_DATABASE.delete_conversion_record(sha256)
+        else:
+            if CONV_DATABASE.get_converted_file_name(sha256):
+                self.send_response(201, 'Already exists')
+                self.end_headers()
+                return
+        if not CONV_DATABASE.save_new_file(sha256, file_bytes,  file_extension):
+            self.send_response(201, 'Already registered as a conversion task, wait ')
+            self.end_headers()
             return
 
         self.send_response(201, 'Created')
         self.end_headers()
-        reply_body = 'Saved "%s"\n' % self.path
-        self.wfile.write(reply_body.encode('utf-8'))
+        #reply_body = 'Saved file {} (file length={})\n'.format(self.path, file_length)
+        #self.wfile.write(reply_body.encode('utf-8'))
 
 
 if __name__ == '__main__':
@@ -336,17 +474,18 @@ if __name__ == '__main__':
         args.server_address = os.environ['DECLARATOR_CONV_URL']
     logger = logging.getLogger("db_conv_logger")
     setup_logging(logger, args.logfile)
-    if not os.path.exists(args.ocr_input_folder):
-        os.mkdir(args.ocr_input_folder)
-    if not os.path.exists(args.ocr_output_folder):
-        os.mkdir(args.ocr_output_folder)
 
     CONV_DATABASE = TConvDatabase(args)
-    CONV_DATABASE.setup_environment()
-    _thread.start_new_thread(TConvDatabase.process_input_files, (CONV_DATABASE,))
+    CONV_DATABASE.create_folders()
+    CONV_DATABASE.start_input_files_thread()
 
     host, port = args.server_address.split(":")
     logger.debug("start server {}:{}".format(host, port))
-    myServer = http.server.HTTPServer((host, int(port)), THttpServer)
-    myServer.serve_forever()
-    myServer.server_close()
+    try:
+        myServer = http.server.HTTPServer((host, int(port)), THttpServer)
+        myServer.serve_forever()
+        myServer.server_close()
+    except KeyboardInterrupt as exp:
+        print("ctrl+c received, exception: {}".format(exp))
+        CONV_DATABASE.stop_input_files_thread()
+        sys.exit(1)

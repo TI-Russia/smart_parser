@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 14
+        "files_count": 16
     },
     {
         "click_path": [
@@ -8,15 +8,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -32,7 +32,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_124/dlrobot_data",
         "sha256": "199aab915e53e8a769bcec89b3163bab3e4c8fce7bd3440f6fbeea971d3a92f0",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -50,7 +50,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_154/dlrobot_data",
         "sha256": "1af08fb7f84080aca1c5c5ccf6b8dc4208bae82581807ce45cf024fb12016df6",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -68,7 +68,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_73/dlrobot_data",
         "sha256": "1c46f2e50970c8629ce7f158f464df5eaacffdf78858e434db9162fc5e7aaba8",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -76,15 +76,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -100,7 +100,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_32/dlrobot_data",
         "sha256": "300f9b8f00ae8fdedd6f614bcedcc1b8d8cf6e63fc1755dbb6dd69e81d7ff689",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -118,7 +118,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_31/dlrobot_data",
         "sha256": "4cd5305461e44d76783c5d6bd1cbfe851971dbb4a059a3e42a6f12f321417e3d",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -126,15 +126,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -150,7 +150,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_195/dlrobot_data",
         "sha256": "78438289047fb6cab626126ab631e7f7f83ab709c22be47b8b2f1e08b99cd97e",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -158,15 +158,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -182,7 +182,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_44/dlrobot_data",
         "sha256": "79acdb97fbf68b172c442cf6b4a410fa7238be7debf3ae72356085b8d77080c2",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -190,15 +190,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -214,7 +214,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_153/dlrobot_data",
         "sha256": "7f83e79d0025c69a5a10593ac456ca48790dbfe29083540800fb70d735731b85",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -232,7 +232,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_33/dlrobot_data",
         "sha256": "8370cca5940a67cb3b59a370e1bb7afcd497b0365e6ac22c0655c39dc5f879b4",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -240,15 +240,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -264,7 +264,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_82/dlrobot_data",
         "sha256": "8f5a134baf8dd1b0211b5a401b071639d67ba71dd52dff3f0aee28ae5952ecbe",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -272,15 +272,51 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://oblsud.tula.sudrf.ru/modules.php?name=norm_akt&id=36",
+                "step": "declarations_div"
+            }
+        ],
+        "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_norm_akt_id_36/dlrobot_data",
+        "sha256": "8f76ab725f0bfcac9838ce2d0dce9fc878e746c88d1f4fdd1f67a13a83b30c1e",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://oblsud.tula.sudrf.ru",
+                "step": null,
+                "title": "Тульский областной суд",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=158",
+                "step": "declarations_div"
+            }
+        ],
+        "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_158/dlrobot_data",
+        "sha256": "9368fa97d35a0dfa833abc2aee128e8856d019bea438a5842978d43f960af365",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://oblsud.tula.sudrf.ru",
+                "step": null,
+                "title": "Тульский областной суд",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -296,7 +332,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_81/dlrobot_data",
         "sha256": "a88ce0d1ab5e83240337e41090d2869649848d876a818234951c76c263d0ed91",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -314,7 +350,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_74/dlrobot_data",
         "sha256": "d41dd3dad8dd8d07bd003e7d45a5bef844c10510d12a12cc347b3ed348acaa92",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -322,15 +358,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -346,7 +382,7 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_194/dlrobot_data",
         "sha256": "d59e9d786a7eaaf0519b9bc992430a2bdc277168414f5c212da8808367c4f4bd",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     },
     {
         "click_path": [
@@ -354,15 +390,15 @@
                 "url": "http://oblsud.tula.sudrf.ru",
                 "step": null,
                 "title": "Тульский областной суд",
-                "anchor_text": "ПРОТИВОДЕЙСТВИЕ КОРРУПЦИИ",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption",
                 "step": "anticorruption_div",
                 "title": "Тульский областной суд",
                 "anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
@@ -378,6 +414,6 @@
         ],
         "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_121/dlrobot_data",
         "sha256": "ed6c6ea49e7953302d331861f93cf8daaff3652a244380fc8cb3c19134ddfd38",
-        "dl_recognizer_result": 1
+        "dl_recognizer_result": "declaration_result"
     }
 ]

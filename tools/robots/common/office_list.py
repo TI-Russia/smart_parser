@@ -3,23 +3,25 @@ import logging
 import json
 import shutil
 import os
+import re
 import tempfile
-import urllib
+import urllib.error
 import time
-import operator
+import datetime
 from bs4 import BeautifulSoup
-from robots.common.download import read_from_cache_or_download, get_site_domain_wo_www, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
+from robots.common.download import read_from_cache_or_download,  get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
                 get_file_extension_by_cached_url, ACCEPTED_DECLARATION_FILE_EXTENSIONS, convert_html_to_utf8
-
-from robots.common.http_request import get_request_rate
-from robots.common.export_files import DL_RECOGNIZER_UNKNOWN
+from robots.common.http_request import request_url_headers, get_request_rate, HttpHeadException
+from DeclDocRecognizer.dlrecognizer import  DL_RECOGNIZER_ENUM
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
-                    find_links_in_html_by_text, common_link_check
+                    find_links_in_html_by_text, web_link_is_absolutely_prohibited, TLinkInfo, TClickEngine
 
 
 from robots.common.serp_parser import GoogleSearch
 from collections import defaultdict
+from robots.common.primitives import get_site_domain_wo_www, prepare_for_logging
+from selenium.common.exceptions import WebDriverException
 
 FIXLIST =  {
     'fsin.su': {
@@ -84,14 +86,14 @@ class TUrlInfo:
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
             self.downloaded_files = init_json.get('downloaded_files', list())
-            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_UNKNOWN)
+            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
         else:
             self.step_name = step_name
             self.title = title
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
-            self.dl_recognizer_result = DL_RECOGNIZER_UNKNOWN
+            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
 
     def to_json(self):
         record = {
@@ -102,14 +104,14 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = self.downloaded_files
-        if self.dl_recognizer_result != DL_RECOGNIZER_UNKNOWN:
+        if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
             record['dl_recognizer_result'] = self.dl_recognizer_result
         return record
 
     def add_downloaded_file(self, record):
         self.downloaded_files.append(record)
 
-    def add_link(self, href, record):
+    def add_child_link(self, href, record):
         self.linked_nodes[href] = record
 
 
@@ -187,6 +189,7 @@ class TRobotWebSite:
             new_path.reverse()
             all_paths.append(new_path)
             return
+        start = datetime.datetime.now()
         for parent_url in self.get_parents(tail_node):
             parent_url_info = self.url_nodes[parent_url]
             if url != '':
@@ -207,7 +210,8 @@ class TRobotWebSite:
                     found_in_path = True
             if not found_in_path:
                 self.get_path_to_root_recursive(list(path) + [record], all_paths)
-
+            if (datetime.datetime.now() - start).total_seconds() > 2:
+                break
 
     def get_shortest_path_to_root(self, url):
         def get_joined_path(path):
@@ -216,7 +220,9 @@ class TRobotWebSite:
         path = [{'url': url, 'step': url_info.step_name}]
         all_paths = list()
         self.get_path_to_root_recursive(path, all_paths)
-        assert len(all_paths) > 0
+        if len(all_paths) == 0:
+            #timeout
+            return [{"exception": "graph is too large, timeout is set to 2 seconds"}]
         all_paths = sorted(all_paths, key=get_joined_path)
         path_lens = list(len(p) for p in all_paths)
         min_path = all_paths[path_lens.index(min(path_lens))]
@@ -226,43 +232,60 @@ class TRobotWebSite:
 class TProcessUrlTemporary:
     def __init__(self, website, robot_step, step_passport):
         self.website = website
-        self.check_link_func = step_passport['check_link_func']
         self.robot_step = robot_step
         self.step_passport = step_passport
 
-    def add_link_wrapper(self, source, link_info):
-        href = link_info.pop('href')
-        if not common_link_check(href):
-            self.website.logger.debug('skip {} since it looks like a print link or it is an external url'.format(href))
-            return
+    def normalize_and_check_link(self, link_info):
+        if link_info.TargetUrl is not None:
+            link_info.TargetUrl = strip_viewer_prefix(link_info.TargetUrl).strip(" \r\n\t")
+            if web_link_is_absolutely_prohibited(link_info.SourceUrl, link_info.TargetUrl):
+                return False
+        self.website.logger.debug(
+            "check element {}, url={} text={}".format(
+                link_info.ElementIndex,
+                prepare_for_logging(link_info.TargetUrl), # not redirected yet
+                prepare_for_logging(link_info.AnchorText)))
+        try:
+            return self.step_passport['check_link_func'](link_info)
+        except UnicodeEncodeError as exp:
+            self.website.logger.debug(exp)
+            return False
 
-        href = strip_viewer_prefix(href)
-        href = href.strip(" \r\n\t")
-        if source == href:
-            return
+    def add_link_wrapper(self, link_info):
+        assert link_info.TargetUrl is not None
+        try:
+            # get rid of http redirects here, for example www.yandex.ru -> yandex.ru to store only one url variant
+            # there are also javascript redirects, that can be processed only with a http get request
+            # but http get requests are heavy, that's why we deal with them after the link check
+            link_info.TargetUrl, _ = request_url_headers(link_info.TargetUrl)
+        except UnicodeEncodeError as err:
+                return  # unknown exception during urllib.request.urlopen (possibly url has a bad encoding)
+        except HttpHeadException as err:
+            return # we tried to make http head 3 times, but failed no sense, to retry
+        except (urllib.error.HTTPError, urllib.error.URLError) as err:
+            if isinstance(err, urllib.error.HTTPError)  and err.code == 404:
+                return
+            pass  # save link and  try one more time to fetch it
 
-        href_title = link_info.pop('title') if 'title' in link_info else request_url_title(href)
+        self.website.url_nodes[link_info.SourceUrl].add_child_link(link_info.TargetUrl, link_info.to_json())
+        self.robot_step.step_urls.add(link_info.TargetUrl)
+        if link_info.TargetUrl not in self.website.url_nodes:
+            if link_info.TargetTitle is None:
+                link_info.TargetTitle = request_url_title(link_info.TargetUrl)
+            self.website.url_nodes[link_info.TargetUrl] = TUrlInfo(title=link_info.TargetTitle, step_name=self.robot_step.step_name)
+        self.website.url_nodes[link_info.TargetUrl].parent_nodes.add(link_info.SourceUrl)
+        self.website.logger.debug("add link {0}".format(link_info.TargetUrl))
 
-        self.website.url_nodes[source].add_link(href, link_info)
-        self.robot_step.step_urls.add(href)
-
-        if href not in self.website.url_nodes:
-            self.website.url_nodes[href] = TUrlInfo(title=href_title, step_name=self.robot_step.step_name)
-        new_node = self.website.url_nodes[href]
-        new_node.parent_nodes.add(source)
-        self.website.logger.debug("add link {0}".format(href))
-
-    def add_downloaded_file_wrapper(self, source, record):
-        self.website.url_nodes[source].add_downloaded_file(record)
-
+    def add_downloaded_file_wrapper(self, link_info):
+        self.website.url_nodes[link_info.SourceUrl].add_downloaded_file(link_info.to_json())
 
 
 class TRobotProject:
     logger = None
     selenium_driver = TSeleniumDriver()
     step_names = list()
-    panic_mode_url_count = 400
-    max_step_url_count = 800
+    panic_mode_url_count = 600
+    max_step_url_count = 1000
 
     def __init__(self, filename, robot_steps):
         self.project_file = filename + ".clicks"
@@ -272,6 +295,7 @@ class TRobotProject:
         self.human_files = list()
         TRobotProject.step_names = [r['step_name'] for r in robot_steps]
         self.enable_search_engine = True  #switched off in tests, otherwize google shows captcha
+        self.runtime_processed_files = dict()
 
     def __enter__(self):
         TRobotProject.logger = logging.getLogger("dlrobot_logger")
@@ -283,13 +307,14 @@ class TRobotProject:
         TRobotProject.selenium_driver.stop_executable()
         shutil.rmtree(TRobotProject.selenium_driver.download_folder)
 
-
     def write_project(self):
         with open(self.project_file, "w", encoding="utf8") as outf:
             output =  {
                 'sites': [o.to_json() for o in self.offices],
                 'step_names': self.step_names
             }
+            if not self.enable_search_engine:
+                output["disable_search_engine"] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
 
     def read_project(self):
@@ -391,11 +416,6 @@ class TRobotProject:
             result.insert(0, summary)
             json.dump(result, outf, ensure_ascii=False, indent=4)
 
-    @staticmethod
-    def find_links_with_selenium (step_info, main_url):
-        if can_be_office_document(main_url):
-            return
-        click_all_selenium(step_info, main_url, TRobotProject.selenium_driver)
 
     @staticmethod
     def get_file_data_and_extension(url, convert_to_utf8=False):
@@ -407,40 +427,52 @@ class TRobotProject:
                     html = convert_html_to_utf8(url, html)
             return html, extension
         except Exception as err:
-            TRobotProject.logger.error('cannot download page url={} while add_links, exception={}'.format(url, str(err)))
+            TRobotProject.logger.error('cannot download page url={} while add_links, exception={}'.format(url, err))
             return None, None
 
-    @staticmethod
-    def add_links(step_info, url, fallback_to_selenium=True):
+    def check_html_cache(self, step_info, url, soup):
+        html_text = str(soup)
+        if len(html_text) > 1000:
+            html_text = re.sub('[0-9]+', 'd', html_text)
+            hash_code = "{}_{}".format(step_info.step_passport['step_name'],
+                                       hashlib.sha256(html_text.encode("utf8")).hexdigest())
+            already = self.runtime_processed_files.get(hash_code)
+            if already is not None:
+                TRobotProject.logger.error(
+                    'skip processing {}, a similar file is already processed on this step: {}'.format(url, already))
+                return False
+            self.runtime_processed_files[hash_code] = url
+        return True
+
+    def add_links(self, step_info, url, fallback_to_selenium=True):
         file_data, extension = TRobotProject.get_file_data_and_extension(url)
         if extension != DEFAULT_HTML_EXTENSION:
             return
-
         try:
             soup = BeautifulSoup(file_data, "html.parser")
-
-            save_links_count = len(step_info.robot_step.step_urls)
+        except Exception as e:
+            TRobotProject.logger.error('cannot parse html, exception {}'.format(url, e))
+            return
+        if not self.check_html_cache(step_info, url, soup):
+            return
+        try:
             find_links_in_html_by_text(step_info, url, soup)
+            if fallback_to_selenium:  # switch off selenium is almost a panic mode (too many links)
+                click_all_selenium(step_info, url, TRobotProject.selenium_driver)
+        except (urllib.error.HTTPError, urllib.error.URLError, WebDriverException) as e:
+            TRobotProject.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
-            # see http://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2018_g_po_31_dekabrya_2018_g
-            if save_links_count == len(step_info.robot_step.step_urls) and fallback_to_selenium:
-                TRobotProject.find_links_with_selenium(step_info, url)
-
-        except (TypeError, NameError, IndexError,  KeyError, AttributeError) as err:
-            raise err
-        except Exception as err:
-            TRobotProject.logger.error('cannot download page url={0} while find_links, exception={1}'.format(url, str(err)))
-
-    @staticmethod
-    def find_links_for_one_website_transitive(step_info, start_pages):
+    def find_links_for_one_website_transitive(self, step_info, start_pages):
         fallback_to_selenium = step_info.step_passport.get('fallback_to_selenium', True)
         transitive = step_info.step_passport.get('transitive', False)
-        while True:
-            save_count = len(step_info.robot_step.step_urls)
-
-            for url in start_pages:
-                TRobotProject.add_links(step_info, url, fallback_to_selenium)
-
+        pages_to_process = set(start_pages)
+        processed_pages = set()
+        for iteration in range(7):  # max 7
+            if transitive:
+                TRobotProject.logger.info("iteration N {}, process {} pages".format(iteration, len(pages_to_process)))
+            for url in pages_to_process:
+                processed_pages.add(url)
+                self.add_links(step_info, url, fallback_to_selenium)
                 found_links_count = len(step_info.robot_step.step_urls)
                 if fallback_to_selenium and found_links_count >= TRobotProject.panic_mode_url_count:
                     fallback_to_selenium = False
@@ -451,51 +483,65 @@ class TRobotProject:
                         TRobotProject.max_step_url_count,
                         step_info.robot_step.step_name))
                     return
-            new_count = len(step_info.robot_step.step_urls)
-            if not transitive or save_count == new_count:
+
+            pages_to_process = set()
+            for x in step_info.robot_step.step_urls:
+                if x not in processed_pages:
+                    if get_file_extension_by_cached_url(x) == DEFAULT_HTML_EXTENSION:
+                        pages_to_process.add(x)
+            if not transitive or len(pages_to_process) == 0:
                 return
 
     @staticmethod
-    def try_use_search_engine(step_info):
-        request = step_info.step_passport.get('search_engine_request')
-        if request is None:
-            return
-        min_normal_count = step_info.step_passport.get('min_normal_count', 1)
-        if len(step_info.robot_step.step_urls) >= min_normal_count:
-            return
+    def use_search_engine(step_info):
+        request = step_info.step_passport['search_engine']['request']
+        max_results = step_info.step_passport['search_engine'].get('max_serp_results', 10)
         TRobotProject.logger.info('search engine request: {}'.format(request))
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         links_count = 0
         try:
             serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
-        except urllib.error.HTTPError as err:
-            TRobotProject.logger.error('cannot request search engine, exception {}'.format(str(err)))
+        except (urllib.error.HTTPError, urllib.error.URLError) as err:
+            TRobotProject.logger.error('cannot request search engine, exception {}'.format(err))
             return
 
         for url in serp_urls:
-            link_info = {
-                'engine': 'google',
-                'text': request,
-                'href': url
-            }
-            step_info.add_link_wrapper(morda_url, link_info)
-            if min_normal_count == 1:
+            link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
+            step_info.add_link_wrapper(link_info)
+            if max_results == 1:
                 break  # one  link found
             links_count += 1
         TRobotProject.logger.info('found {} links using search engine'.format(links_count))
 
     @staticmethod
-    def check_html_sources(step_info, start_pages):
+    def check_html_sources(step_info):
         check_func = step_info.step_passport.get('check_html_sources')
         assert check_func is not None
-        for url in start_pages:
-            file_data, extenstion = TRobotProject.get_file_data_and_extension(url, convert_to_utf8=True)
-            if extenstion == DEFAULT_HTML_EXTENSION and check_func(file_data):
-                TRobotProject.logger.debug("add url {} by {}".format(url, check_func.__name__))
-                step_info.robot_step.step_urls.add(url)
+        new_urls = set()
+        for url in step_info.robot_step.step_urls:
+            file_data, extension = TRobotProject.get_file_data_and_extension(url, convert_to_utf8=True)
+            if extension == DEFAULT_HTML_EXTENSION:
+                if not check_func(file_data):
+                    TRobotProject.logger.debug("delete url {} because of {} ".format(url, check_func.__name__))
+                else:
+                    new_urls.add(url)
+            else:
+                new_urls.add(url)
 
+        step_info.robot_step.step_urls = new_urls
 
+    def need_search_engine_before(self, step_info):
+        if not self.enable_search_engine:
+            return False
+        policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
+        return policy == "run_always_before"
+
+    def need_search_engine_after(self, step_info):
+        if not self.enable_search_engine:
+            return False
+        policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
+        return policy == "run_after_if_no_results" and len(step_info.robot_step.step_urls) == 0
 
     def find_links_for_one_website(self, office_info, step_passport):
         global FIXLIST
@@ -511,12 +557,8 @@ class TRobotProject:
 
         fixed_url = FIXLIST.get(office_info.get_domain_name(), {}).get(step_name)
         if fixed_url is not None:
-            link_info = {
-                'engine': 'manual',
-                'text': '',
-                'href': fixed_url
-            }
-            step_info.add_link_wrapper(office_info.morda_url, link_info)
+            link_info = TLinkInfo(TClickEngine.manual, office_info.morda_url, fixed_url)
+            step_info.add_link_wrapper(link_info)
             return
 
         if step_index == 0:
@@ -527,9 +569,13 @@ class TRobotProject:
         if include_source == "always":
             target.step_urls.update(start_pages)
 
+        if self.need_search_engine_before(step_info):
+            self.use_search_engine(step_info)
+
         self.find_links_for_one_website_transitive(step_info, start_pages)
-        if self.enable_search_engine:
-            self.try_use_search_engine(step_info)
+
+        if self.need_search_engine_after(step_info):
+            self.use_search_engine(step_info)
 
         if include_source == "copy_if_empty" and len(target.step_urls) == 0:
             do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())
@@ -538,15 +584,8 @@ class TRobotProject:
                 if step_name not in do_not_copy_urls_from_steps:
                     target.step_urls.add(url)
 
-        if include_source == "copy_missing_docs":
-            for url in start_pages:
-                if url not in target.step_urls:
-                    ext = get_file_extension_by_cached_url(url)
-                    if ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-                        target.step_urls.add(url)
-
         if step_passport.get('check_html_sources') is not None:
-            TRobotProject.check_html_sources(step_info, start_pages)
+            TRobotProject.check_html_sources(step_info)
         target.profiler = {
             "elapsed_time":  time.time() - start_time,
             "step_request_rate": get_request_rate(start_time),

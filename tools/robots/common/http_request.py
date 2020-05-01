@@ -1,12 +1,10 @@
 import ssl
 import logging
-import urllib.parse
+import urllib.error
 import urllib.request
-from urllib.parse import urlparse, quote, unquote, urlunparse
+import urllib.parse
 from collections import defaultdict
 import time
-from urllib.error import HTTPError
-import urllib.request
 import datetime
 import re
 import sys
@@ -17,6 +15,7 @@ LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
 HEADER_MEMORY_CACHE = dict()
 HEADER_REQUEST_COUNT = defaultdict(int)
 HTTP_503_ERRORS_COUNT = 0
+
 
 def get_request_rate(min_time=0):
     global ALL_HTTP_REQUEST
@@ -56,13 +55,16 @@ def make_http_request(url, method):
     global HTTP_503_ERRORS_COUNT
     consider_request_policy(url, method)
 
-    o = list(urlparse(url)[:])
+    if url.find('://') == -1:
+        url = "http://" + url
+
+    o = list(urllib.parse.urlparse(url)[:])
     if has_cyrillic(o[1]):
         o[1] = o[1].encode('idna').decode('latin')
 
-    o[2] = unquote(o[2])
-    o[2] = quote(o[2])
-    url = urlunparse(o)
+    o[2] = urllib.parse.unquote(o[2])
+    o[2] = urllib.parse.quote(o[2])
+    url = urllib.parse.urlunparse(o)
     context = ssl._create_unverified_context()
     redirect_handler = urllib.request.HTTPRedirectHandler()
     redirect_handler.max_redirections = 5
@@ -74,7 +76,8 @@ def make_http_request(url, method):
         data=None,
         headers={
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
+        },
+        method=method
     )
 
     logger = logging.getLogger("dlrobot_logger")
@@ -82,11 +85,10 @@ def make_http_request(url, method):
     try:
         with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
             data = '' if method == "HEAD" else request.read()
-            info = request.info()
-            headers = request.headers
+            headers = request.info()
             if HTTP_503_ERRORS_COUNT > 0:
                 HTTP_503_ERRORS_COUNT -= 1 #decrement HTTP_503_ERRORS_COUNT on successful http_request
-            return info, headers, data
+            return request.geturl(), headers, data
     except urllib.error.HTTPError as e:
         if e.code == 503:
             request_rates = get_request_rate()
@@ -106,12 +108,20 @@ def make_http_request(url, method):
         raise
 
 
-def request_url_headers (url):
-    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME, PROXIES
+class HttpHeadException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return self.value
+
+
+def request_url_headers(url):
+    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME
     if url in HEADER_MEMORY_CACHE:
         return HEADER_MEMORY_CACHE[url]
     if HEADER_REQUEST_COUNT[url] >= 3:
-        raise Exception("too many times to get headers that caused exceptions")
+        raise HttpHeadException("too many times to get headers that caused exceptions")
 
     # do not ddos sites
     elapsed_time = datetime.datetime.now() - LAST_HEAD_REQUEST_TIME
@@ -121,6 +131,8 @@ def request_url_headers (url):
 
 
     HEADER_REQUEST_COUNT[url] += 1
-    _, headers, _ = make_http_request(url, "HEAD")
-    HEADER_MEMORY_CACHE[url] = headers
-    return headers
+    redirected_url, headers, _ = make_http_request(url, "HEAD")
+    HEADER_MEMORY_CACHE[url] = (redirected_url, headers)
+    if redirected_url != url:
+        HEADER_MEMORY_CACHE[redirected_url] = (redirected_url,headers)
+    return redirected_url, headers

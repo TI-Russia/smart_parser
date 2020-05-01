@@ -10,14 +10,14 @@ disown
 
 
 
-http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL --upload-file bad.pdf --output dummy.txt`
+http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL/convert_if_absent/ --upload-file bad.pdf --output dummy.txt`
 if [ "$http_code" != "201" ]; then
   echo "cannot upload a file"
   kill $conv_server_pid >/dev/null
   exit  1
 fi
 
-http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL --upload-file good.pdf --output dummy.txt`
+http_code=`curl -s -w '%{http_code}' $DECLARATOR_CONV_URL/convert_if_absent/ --upload-file good.pdf --output dummy.txt`
 if [ "$http_code" != "201" ]; then
   echo "cannot upload a file"
   kill $conv_server_pid >/dev/null

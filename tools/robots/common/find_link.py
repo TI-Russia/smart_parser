@@ -1,140 +1,120 @@
 import os
 import logging
-import time
-from urllib.parse import urljoin, unquote
-from robots.common.download import  ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    save_download_file, DEFAULT_HTML_EXTENSION, get_site_domain_wo_www
-
+import urllib.error
+import urllib.parse
+from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+from robots.common.download import  read_from_cache_or_download
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
+from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
+from selenium.common.exceptions import WebDriverException
+
+
+class TClickEngine:
+    urllib = 'urllib'
+    selenium = 'selenium'
+    google = 'google'
+    manual = 'manual'
+
 
 class TLinkInfo:
-    def __init__(self, text, source=None, target=None, tagName=None, download_by_selenium=None):
-        self.Source = source
-        self.Target = target
-        self.Text = '' if text is None else text
-        self.TagName = tagName
-        self.DownloadedBySelenium = download_by_selenium
+    def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="",  tag_name=None):
+        self.Engine = engine
+        self.ElementIndex = element_index
+        self.PageHtml = "" if page_html is None else page_html
+        self.SourceUrl = source
+        self.TargetUrl = target
+        self.AnchorText = ""
+        self.set_anchor_text(anchor_text)
+        self.TagName = tag_name
+        self.AnchorTextFoundSomewhere = False
+        self.DownloadedFile = None
+        self.TargetTitle = None
+
+    def set_anchor_text(self, anchor_text):
+        self.AnchorText = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
+
+    def to_json(self):
+        rec = {
+            'text': self.AnchorText,
+            'engine': self.Engine,
+            'element_index': self.ElementIndex,
+        }
+        if self.TagName is not None:
+            rec['tagname'] = self.TagName
+        if self.AnchorTextFoundSomewhere:
+            rec['text_proxim'] = True
+        if self.DownloadedFile is not None:
+            rec['downloaded_file'] = self.DownloadedFile
+        return rec
 
 
-def strip_viewer_prefix(href):
-    # https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D247%26area%3Dstatic%26viewonline%3D1
-    viewers = ['https://docs.google.com/viewer?url=',
-                'https://docviewer.yandex.ru/?url=',
-                'https://view.officeapps.live.com/op/embed.aspx?src=',
-                'https://view.officeapps.live.com/op/view.aspx?src=']
-    for prefix in viewers:
-        if href.startswith(prefix):
-            href = href[len(prefix):]
-            return unquote(href)
-    return href
-
-
-def common_link_check(href):
-    if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
+def are_web_mirrors(domain1, domain2):
+    try:
+        # check all mirrors including simple javascript
+        html1 = read_from_cache_or_download(domain1)
+        html2 = read_from_cache_or_download(domain2)
+        res = len(html1) == len(html2) # it is enough
+        return res
+    except (urllib.error.HTTPError, urllib.error.URLError) as exp:
         return False
-    if is_super_popular_domain(get_site_domain_wo_www(href)):
+
+
+def get_office_domain(web_domain):
+    index = 2
+    if web_domain.endswith("gov.ru"):
+        index = 3 #minpromtorg.gov.ru
+
+    return ".".join(web_domain.split(".")[-index:])
+
+
+def check_href_elementary(href):
+    if href.startswith('mailto:'):
         return False
-    if href.find('print=') != -1:
+    if href.startswith('tel:'):
         return False
+    if href.startswith('javascript:'):
+        return False
+    if href.startswith('about:'):
+        return False
+    if href.startswith('consultantplus:'):
+        return False
+    if href.startswith('#'):
+        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
+            return False
     return True
 
 
-def strip_html_url(url):
-    if url.endswith('.html'):
-        url = url[:-len('.html')]
-    if url.endswith('.htm'):
-        url = url[:-len('.htm')]
-    if url.startswith('http://'):
-        url = url[len('http://'):]
-    if url.startswith('http://'):
-        url = url[len('https://'):]
-    if url.startswith('www.'):
-        url = url[len('www.'):]
-    return url
-
-
-def check_sub_page_or_iframe(link_info):
-    if not check_self_link(link_info):
-        return False
-    if link_info.Target is None:
-        return False
-    if link_info.TagName is not None and link_info.TagName.lower() == "iframe":
+def web_link_is_absolutely_prohibited(source, href):
+    if len(href) == 0:
         return True
-    parent = strip_html_url(link_info.Source)
-    subpage = strip_html_url(link_info.Target)
-    return subpage.startswith(parent)
-
-
-def check_self_link(link_info):
-    if link_info.Target is not None:
-        if len(link_info.Target) == 0:
-            return False
-        if link_info.Target.find('redirect') != -1:
-            return False
-        if link_info.Source.strip('/') == link_info.Target.strip('/'):
-            return False
-    return True
-
-
-def check_anticorr_link_text(link_info):
-    if not check_self_link(link_info):
-        return False
-
-    text = link_info.Text.strip().lower()
-    if text.startswith(u'противодействие'):
-        return text.find("коррупц") != -1
-
+    if href.find('redirect') != -1:
+        return True
+    if not check_href_elementary(href):
+        return True
+    if source.strip('/') == href.strip('/'):
+        return True
+    if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
+        return True
+    if href.find('print=') != -1:
+        return True
+    href_domain = get_site_domain_wo_www(href)
+    source_domain = get_site_domain_wo_www(source)
+    if is_super_popular_domain(href_domain):
+        return True
+    if get_office_domain(href_domain) != get_office_domain(source_domain):
+        if not are_web_mirrors(source_domain, href_domain):
+            return True
     return False
 
 
 def make_link(main_url, href):
-    url = urljoin(main_url, href)
+    url = urllib.parse.urljoin(main_url, href)
     # see http://minpromtorg.gov.ru/open_ministry/anti/activities/info/
     #i = url.find('#')
     #if i != -1:
     #    url = url[0:i]
     return url
-
-class SomeOtherTextException(Exception):
-    def __init__(self, value):
-        self.value = value
-    def __str__(self):
-        return (repr(self.value))
-
-
-def find_recursive_to_bottom (start_element, check_link_func, element):
-    children = element.findChildren()
-    if len(children) == 0:
-        if len(element.text) > 0 and element != start_element:
-            if check_link_func(TLinkInfo(element.text)):
-                return element.text
-            if len (element.text.strip()) > 10:
-                raise SomeOtherTextException (element.text.strip())
-    else:
-        for child in children:
-            start_time = time.time()
-            found_text = find_recursive_to_bottom(start_element, check_link_func, child)
-            if time.time() - start_time > 10:  # skip very large html (duma-torzhok.ru)
-                logging.getLogger("dlrobot_logger").error("stop  too long recursive html processing")
-                raise SomeOtherTextException("")
-            if len(found_text) > 0:
-                return found_text
-    return ""
-
-
-def check_long_near_text (start_element, upward_distance, check_link_func):
-    # go to the top
-    element = start_element
-    for i in range(upward_distance):
-        element = element.parent
-        if element is None:
-            return ""
-        # go to the bottom
-        found_text = find_recursive_to_bottom (start_element, check_link_func, element)
-        if len(found_text) > 0:
-            return found_text
-    return ""
 
 
 def can_be_office_document(href):
@@ -157,19 +137,12 @@ def get_base_url(main_url, soup):
     return main_url
 
 
-def check_href_elementary(href):
-    if href.startswith('mailto:'):
-        return False
-    if href.startswith('tel:'):
-        return False
-    if href.startswith('javascript:'):
-        return False
-    if href.startswith('consultantplus:'):
-        return False
-    if href.startswith('#'):
-        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
-            return False
-    return True
+def get_soup_title(soup):
+    if soup.title is None:
+        return ""
+    if soup.title.string is None:
+        return ""
+    return soup.title.string
 
 
 def find_links_in_html_by_text(step_info, main_url, soup):
@@ -180,127 +153,75 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     if base.startswith('/'):
         base = make_link(main_url, base)
     logger.debug("find_links_in_html_by_text url={} function={}".format(
-        main_url, step_info.check_link_func.__name__))
-    all_links_count = 0
+        main_url, step_info.step_passport['check_link_func'].__name__))
+    page_html = str(soup)
+    element_index = 0
     for l in soup.findAll('a'):
         href = l.attrs.get('href')
         if href is not None:
-            all_links_count += 1
-            if not check_href_elementary(href):
-                continue
-            logger.debug("check link {0}".format(href))
-            href = strip_viewer_prefix( make_link(base, href) )
-            if  step_info.check_link_func( TLinkInfo(l.text, main_url, href, l.name) ):
-                link_info = {
-                    'href': href,
-                    'text': l.text.strip(" \r\n\t"),
-                    'engine': 'urllib',
-                    'tagname': l.name,
-                }
-                step_info.add_link_wrapper(main_url, link_info)
-            else:
-                if can_be_office_document(href):
-                    try:
-                        title = soup.title.string if soup.title is not None else ""
-                        if step_info.check_link_func(TLinkInfo(title, main_url, href, l.name)):
-                            found_text = title
-                        else:
-                            found_text = check_long_near_text(l, 3, step_info.check_link_func)
-                    except SomeOtherTextException as err:
-                        continue
-                    if found_text is not None and len(found_text) > 0:
-                        link_info = {
-                            'href': href,
-                            'text': found_text.strip(" \r\n\t"),
-                            'engine': 'urllib',
-                            'text_proxim': True,
-                            'tagname': l.name,
-                        }
-                        step_info.add_link_wrapper(main_url, link_info)
+            element_index += 1
+            link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
+                                  page_html=page_html, anchor_text=l.text, tag_name=l.name, element_index=element_index)
+            if step_info.normalize_and_check_link(link_info):
+                step_info.add_link_wrapper(link_info)
 
     for l in soup.findAll('iframe'):
         href = l.attrs.get('src')
         if href is not None:
-            all_links_count += 1
-            if not check_href_elementary(href):
-                continue
-
-            href = make_link(base, href)
-            if step_info.check_link_func( TLinkInfo(l.text, main_url, href, l.name)):
-                link_info = {
-                    'href': href,
-                    'text': l.text.strip(" \r\n\t"),
-                    'engine': 'urllib',
-                    'tagname': l.name,
-                }
-                step_info.add_link_wrapper(main_url, link_info)
+            element_index += 1
+            link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
+                                  page_html=page_html, anchor_text=l.text, tag_name=l.name, element_index=element_index)
+            if step_info.normalize_and_check_link(link_info):
+                step_info.add_link_wrapper(link_info)
 
 
 def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index):
     tag_name = element.tag_name
     link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
-    href = element.get_attribute('href')
-    if href is not None and len(link_text) > 0:
-        link_url = make_link(main_url, href) # try to get url without click a normal link
-        downloaded_file = None
-        title = None
-    else:
-        consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
-        driver_holder.click_element(element)
-        link_url = driver_holder.the_driver.current_url
-        downloaded_file = driver_holder.last_downloaded_file
-        title = driver_holder.the_driver.title
+    page_html = driver_holder.the_driver.page_source
+    consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
 
-    if step_info.check_link_func(TLinkInfo(link_text, main_url, link_url, tag_name, downloaded_file)):
-        link_info = {
-            'text': link_text,
-            'engine': 'selenium',
-            'tagname': tag_name,
-        }
-        if title is not None:
-            link_info['title'] = title
-        else:
-            link_info['got_url_wo_click'] = True
-        if driver_holder.last_downloaded_file is not None:
-            link_info['downloaded_file'] = driver_holder.last_downloaded_file
-            link_info['element_index'] = element_index
-            step_info.add_downloaded_file_wrapper(main_url, link_info)
-        else:
-            link_info['href'] = link_url
-            step_info.add_link_wrapper(main_url, link_info)
-
+    driver_holder.click_element(element)
+    link_info = TLinkInfo(TClickEngine.selenium, main_url, driver_holder.the_driver.current_url,
+                          page_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index)
+    link_info.DownloadedFile = driver_holder.last_downloaded_file
+    link_info.TargetTitle = driver_holder.the_driver.title
     driver_holder.close_window_tab()
 
+    if step_info.normalize_and_check_link(link_info):
+        if link_info.DownloadedFile is not None:
+            step_info.add_downloaded_file_wrapper(link_info)
+        else:
+            step_info.add_link_wrapper(link_info)
 
-def prepare_for_logging(s):
-    s = s.translate(str.maketrans({"\n": r"\n", "\t": r"\\t", "\r": r"\r"}))
-    return s
 
-
-def click_all_selenium (step_info, main_url, driver_holder):
+def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
-    logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.check_link_func.__name__))
+    logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.normalize_and_check_link.__name__))
     consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
-    for i in range(len(elements)):
-        element = elements[i]
+    page_html = driver_holder.the_driver.page_source
+    for element_index in range(len(elements)):
+        element = elements[element_index]
         link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
-        if len(link_text) > 0:
-            logger.debug("check element {} before click, text={}".format(i, prepare_for_logging(link_text)))
-            if step_info.check_link_func(TLinkInfo(link_text)):
-                if element.tag_name == "a":
-                    #no click needed just read href
-                    href = element.get_attribute("href")
-                    if step_info.check_link_func(TLinkInfo(link_text, main_url, href, element.tag_name)):
-                        link_info = {
-                            'text': link_text,
-                            'engine': 'selenium',
-                            'tagname': element.tag_name,
-                            'href': href
-                        }
-                        step_info.add_link_wrapper(main_url, link_info)
-                else:
-                    click_selenium_if_no_href(step_info, main_url, driver_holder,  element, i)
+        if len(link_text) == 0:
+            continue
+        href = element.get_attribute('href')
+        if href is not None:
+            href = make_link(main_url, href) # may be we do not need it in selenium?
+            link_info = TLinkInfo(TClickEngine.selenium, main_url, href,
+                                  page_html=page_html, anchor_text=link_text,  tag_name=element.tag_name, element_index=element_index)
+            if step_info.normalize_and_check_link(link_info):
+                step_info.add_link_wrapper(link_info)
+        else:
+            only_anchor_text = TLinkInfo(TClickEngine.selenium, main_url, None, page_html=page_html, anchor_text=link_text)
+            if step_info.normalize_and_check_link(only_anchor_text):
+                logger.debug("click element {}".format(element_index))
+                try:
+                    click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index)
                     elements = driver_holder.get_buttons_and_links()
-
+                except WebDriverException as exp:
+                    logger.error("exception: {}, try restart and get the next element".format(str(exp)))
+                    driver_holder.restart()
+                    elements = driver_holder.navigate_and_get_links(main_url)
 

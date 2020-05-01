@@ -1,21 +1,20 @@
-﻿import sys
-import re
+﻿import re
 import os
 import argparse
 import logging
 import datetime
+import sys
+import traceback
 from tempfile import TemporaryDirectory
-
-from robots.common.download import  get_file_extension_by_url, DEFAULT_HTML_EXTENSION
+import urllib.error
+from robots.common.download import get_file_extension_only_by_headers, DEFAULT_HTML_EXTENSION, TDownloadEnv
 from robots.common.export_files import export_files_to_folder
-from robots.common.office_list import  TRobotProject
-from robots.common.conversion_tasks import wait_doc_conversion_finished, assert_declarator_conv_alive
-
-from robots.common.find_link import \
-    check_anticorr_link_text, \
-    ACCEPTED_DECLARATION_FILE_EXTENSIONS, \
-    check_self_link, \
-    check_sub_page_or_iframe, common_link_check
+from robots.common.office_list import TRobotProject
+from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
+from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS
+from robots.common.primitives import normalize_anchor_text, check_link_sitemap, check_anticorr_link_text, \
+                                    check_sub_page_or_iframe
+from robots.common.http_request import HttpHeadException
 
 
 def setup_logging(logger, logfilename):
@@ -37,151 +36,103 @@ def setup_logging(logger, logfilename):
     logger.addHandler(ch)
 
 
-def normalize_anchor_text(text):
-    if text is not None:
-        text = text.strip(' \n\t\r').strip('"').lower()
-        text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
-        return text
-    return ""
+NEGATIVE_WORDS = [
+    'координат',  'заседании',
+    #'должност', # замещающих должности
+    'выборы',    'памятка',    'доклад',
+    'конкурс',    'пресс-релиз',    'правила',
+    'положение',    'методические',    'заявление',
+    'схема',    'концепция',    'доктрина',
+    'технические',    '^федеральный',    '^историческ',
+    '^закон',    'новости', "^формы", "обратная", "обращения",
+    "^перечень", "прочие", "слабовидящих"
+] + SOME_OTHER_DOCUMENTS
 
-def check_link_sitemap(link_info):
-    if not check_self_link(link_info):
-        return False
-    text = normalize_anchor_text(link_info.Text)
-    return text.startswith('карта сайта')
-
-
-def check_link_svedenia_o_doxodax(link_info):
-    if not check_self_link(link_info):
-        return False
-
-    text = normalize_anchor_text(link_info.Text)
-
-    if text.find('координат') != -1:
-        return False
-    if text.find('заседании') != -1:
-        return False
-    if text.find('приказ') != -1:
-        return False
+NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WORDS)))
 
 
-    if re.search('((сведения)|(справк[аи])) о доходах', text) is not None:
-        return True
-
-    #http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
-    # "Сведения за 2018 год"
-    if re.search('сведения.*20[0-9][0-9]', text) is not None:
-        return True
-
-    if text.startswith('сведения') and text.find("коррупц") != -1:
-        return True
-    return False
+def has_negative_words(anchor_text):
+    global NEGATIVE_REGEXP
+    return NEGATIVE_REGEXP.search(anchor_text) is not None
 
 
-def declarations_div_pages_step(link_info):
-    if check_sub_page_or_iframe(link_info):
-        return True
-
-    # here is a place for ML
-    if link_info.Text is not None:
-        text = normalize_anchor_text(link_info.Text)
-        if text.find('должностях') != -1:
-            return False
-        if text.find('сведения') != -1:
-            return True
-        if text.find('справка о доходах') != -1:
-            return True
-        year_pattern = r'(20[0-9][0-9]( год)?)'
-        if re.match('^' + year_pattern, text) is not None:
-            return True
-        if re.match(year_pattern + '$', text) is not None:
-            return True
-    if link_info.Target is not None:
-        target = link_info.Target.lower()
-        if re.search('(^sved)|(sveodoh)|(do[ck]?[hx]od)|(income)', target) is not None:
-            return True
-
-    return False
-
-
-def check_documents(link_info):
-    text = normalize_anchor_text(link_info.Text)
-    if text.find("сведения") == -1:
-        return False
-    if link_info.Target is not None:
-        return re.search('(docs)||(documents)|(files)', link_info.Target.lower()) is not None
-    return True
-
-
-def declaration_step_anchor_text(anchor_text):
+def looks_like_a_document_link(link_info):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    anchor_text = normalize_anchor_text(anchor_text)
-    if anchor_text.find('шаблоны') != -1:
-        return False
-    if anchor_text.find('решение') != -1:
-        return False
-    if anchor_text.find('постановление') != -1:
-        return False
-    if anchor_text.find('доклад') != -1:
-        return False
-    if anchor_text.find('протокол') != -1:
-        return False
-    if anchor_text.startswith('план'):
-        return False
-    if anchor_text.startswith('скачать'):
-        return True
-    if anchor_text.startswith('загрузить'):
-        return True
 
+    # check anchor text
+    anchor_text = normalize_anchor_text(link_info.AnchorText)
+    if re.search('(скачать)|(загрузить)', anchor_text) is not None:
+        return True
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if e == DEFAULT_HTML_EXTENSION:
             continue
         # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
         if anchor_text.find(e[1:]) != -1:
             return True
-    return None # undef
 
-
-def declaration_step_url(target_url):
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-
-    if target_url.find("download") != -1:
-        return True  # otherwise ddos on admuni.ru
-    if not common_link_check(target_url):
-        return False  # to make faster
-
-    # only office documents, not html, html must be checked by check_html_can_be_declaration
-    if target_url.endswith('html'):
-        return False
-
-    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        if e != DEFAULT_HTML_EXTENSION:
-            if target_url.lower().endswith(e):
-                return True
-    try:
-        ext = get_file_extension_by_url(target_url)
-        return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    except Exception as err:
-        logger = logging.getLogger("dlrobot_logger")
-        logger.error('cannot query (HEAD) url={}  exception={}\n'.format(target_url, str(err)))
-        return False
-
-
-def declaration_step(link_info):
-    checked_by_text = declaration_step_anchor_text(link_info.Text)
-    if checked_by_text is not None:
-        return checked_by_text
-
-    if link_info.DownloadedBySelenium is not None:
-        return True
-
-    if link_info.Target is not None:
-        if declaration_step_url(link_info.Target):
+    # check url path or make http head request
+    if link_info.TargetUrl is not None:
+        target = link_info.TargetUrl.lower()
+        if re.search('(docs)|(documents)|(files)|(download)', target):
             return True
+        if target.endswith('html') or target.endswith('htm'):
+            return False
+        try:
+            ext = get_file_extension_only_by_headers(link_info.TargetUrl)
+            return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
+        except HttpHeadException as err:
+            pass  # do not spam logs
+        except (urllib.error.HTTPError, urllib.error.URLError) as err:
+            logger = logging.getLogger("dlrobot_logger")
+            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, err))
+            return False
+
+    return False
+
+
+def looks_like_a_declaration_link(link_info):
+    # here is a place for ML
+    anchor_text = normalize_anchor_text(link_info.AnchorText)
+    page_html = normalize_anchor_text(link_info.PageHtml)
+    if has_negative_words(anchor_text):
+        return False
+    svedenia = re.search('сведения', anchor_text) is not None
+    doc_type = re.search('(сведения)|(справк[аи])', anchor_text) is not None
+    year_found = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
+    income_regexp = '(доход((ах)|(е)))|(коррупц)'
+    income = re.search(income_regexp, page_html) is not None
+    is_document_link = looks_like_a_document_link(link_info)
+    is_a_sub_page = check_sub_page_or_iframe(link_info)
+    income_in_url_path = False
+    if link_info.TargetUrl is not None:
+        target = link_info.TargetUrl.lower()
+        if re.search('(^sved)|(sveodoh)', target):
+            svedenia = True
+        if re.search('(do[ck]?[hx]od)|(income)', target):
+            income = True
+            income_in_url_path = True
+    all_features = (("income", income), ("doc_type", doc_type), ("year_found", year_found),
+                     ("is_document_link", is_document_link), ("is_a_sub_page", is_a_sub_page),
+                     ("income_in_url_path", income_in_url_path))
+    positive_case = None
+    if income and (doc_type or year_found or is_document_link or is_a_sub_page):
+        positive_case = "case 1"
+    elif income_in_url_path and is_a_sub_page:
+        positive_case = "case 2"
+    # http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
+    # "Сведения за 2018 год" and  no thematic word
+    elif svedenia and (year_found or is_document_link):
+        positive_case = "case 3"
+
+    if positive_case is not None:
+        all_features_str = ";".join(k for k, v in all_features if v)
+        logging.getLogger("dlrobot_logger").debug("{}, features: {}".format(positive_case, all_features_str))
+        return True
     return False
 
 
 def check_html_can_be_declaration(html):
+    # dl_recognizer is called afterwards
     html = html.lower()
     words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
     numbers = re.search('[0-9]{6}', html) is not None # доход
@@ -198,37 +149,24 @@ ROBOT_STEPS = [
         'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
         'include_sources': "copy_if_empty",
-        'search_engine_request': "противодействие коррупции",
-        'min_normal_count': 1
-    },
-    {
-        'step_name': "declarations_div",
-        'check_link_func': check_link_svedenia_o_doxodax,
-        'include_sources': "copy_if_empty",
-        'do_not_copy_urls_from_steps': [None, 'sitemap'], # None is for morda_url
-        'search_engine_request': '"сведения о доходах"',
-        'min_normal_count': 5
-    },
-    {
-        'step_name': "declarations_div_pages",
-        'check_link_func': declarations_div_pages_step,
-        'include_sources': "always",
-        'transitive': True,
-        'fallback_to_selenium': False
-    },
-    {
-        'step_name': "declarations_div_pages2",
-        'check_link_func': check_documents,
-        'include_sources': "always"
+        'search_engine': {
+            'request': "противодействие коррупции",
+            'policy': "run_after_if_no_results",
+            'max_serp_results': 1
+        }
     },
     {
         'step_name': "declarations",
-        'check_link_func': declaration_step,
+        'check_link_func': looks_like_a_declaration_link,
+        'include_sources': "copy_if_empty",
+        'do_not_copy_urls_from_steps': [None, 'sitemap'],  # None is for morda_url
+        'search_engine': {
+            'request': '"сведения о доходах"',
+            'policy': "run_always_before"
+        },
         'check_html_sources': check_html_can_be_declaration,
-        'include_sources': "copy_missing_docs",
-        'search_engine_request': '"сведения о доходах"',
-        'min_normal_count': 3
-    },
+        'transitive': True,
+    }
 ]
 
 
@@ -245,6 +183,7 @@ def parse_args():
     parser.add_argument("--input-url-list", dest='hypots', default=None)
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
+    parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default="False", action="store_true")
     args = parser.parse_args()
     if args.step is  not None:
         args.start_from = args.step
@@ -289,8 +228,9 @@ def make_steps(args, project):
     if not args.skip_final_download:
         logger.info("=== download all declarations =========")
         project.download_last_step()
-        logger.info("=== wait for all document conversion finished =========")
-        wait_doc_conversion_finished()
+
+    logger.info("=== wait for all document conversion finished =========")
+    TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished()
 
     logger.info("=== export_files_to_folder =========")
     export_files_to_folder(project.offices, args.result_folder)
@@ -320,12 +260,23 @@ def open_project(args, log_file_name):
 
 if __name__ == "__main__":
     args = parse_args()
-    assert_declarator_conv_alive()
-    if args.logfile == "temp":
-        with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
-            log_file_name = os.path.join(tmp_folder, "dlrobot.log")
-            open_project(args, log_file_name)
-            logging.shutdown()
-    else:
-        open_project(args, args.logfile)
-
+    if args.clear_cache_folder:
+        TDownloadEnv.clear_cache_folder()
+    try:
+        TDownloadEnv.init_conversion()
+        if args.logfile == "temp":
+            with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
+                log_file_name = os.path.join(tmp_folder, "dlrobot.log")
+                open_project(args, log_file_name)
+                logging.shutdown()
+        else:
+            open_project(args, args.logfile)
+    except Exception as e:
+        print("unhandled exception type={}, exception={} ".format(type(e), e))
+        traceback.print_exc(file=sys.stdout)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print("ctrl+c received")
+        sys.exit(1)
+    finally:
+        TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
