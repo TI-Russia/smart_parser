@@ -8,15 +8,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -41,7 +41,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -58,15 +58,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -91,7 +91,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -108,15 +108,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -158,15 +158,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -183,15 +183,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -216,7 +216,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -233,15 +233,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -283,15 +283,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -308,15 +308,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -333,15 +333,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -358,15 +358,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -383,15 +383,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -416,7 +416,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -458,15 +458,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -483,15 +483,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -508,15 +508,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -541,7 +541,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -558,15 +558,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -583,15 +583,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -608,15 +608,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -633,15 +633,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -658,15 +658,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -683,15 +683,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -708,15 +708,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -733,15 +733,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -766,7 +766,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -783,15 +783,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -808,15 +808,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -833,15 +833,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -874,7 +874,7 @@
             }
         ],
         "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
-        "sha256": "c3cde5c92557726bc0959217bc4ded3ad569c99fc6f1df2edf555349994dbd08",
+        "sha256": "b5b9c9ab39a86aabf1a488582b7c30af4b1897eef36ce401c6b6ad06d3e26ccc",
         "dl_recognizer_result": "declaration_result"
     },
     {
@@ -891,7 +891,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -933,15 +933,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -966,7 +966,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru//downloads/2016/svedenia_za_2015_god.rar",
@@ -983,15 +983,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2018/svedeniya_za_2017.zip",
@@ -1016,7 +1016,7 @@
                 "step": "declarations",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/ruk_li_mu.zip",
@@ -1033,15 +1033,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
@@ -1083,15 +1083,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
@@ -1133,15 +1133,15 @@
                 "url": "http://arshush.ru",
                 "step": null,
                 "title": "",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
             },
             {
                 "url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                 "step": "anticorruption_div",
                 "title": "",
                 "anchor_text": "Информация",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
