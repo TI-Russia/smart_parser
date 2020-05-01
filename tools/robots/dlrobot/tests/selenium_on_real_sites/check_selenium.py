@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument("--url", dest='source_url', required=True)
     parser.add_argument("--anchor", dest='anchor')
     parser.add_argument("--target", dest='target_url')
-    parser.add_argument("--visible", dest='headless', default="True", action="store_false")
+    parser.add_argument("--visible", dest='headless', default=True, action="store_false")
     parser.add_argument("--download-folder", dest='download_folder', default=None)
     return parser.parse_args()
 
@@ -74,7 +74,6 @@ if __name__ == "__main__":
     logger.info("Title:{}, type={}\n".format(driver_holder.the_driver.title, type(driver_holder.the_driver.title)))
     logger.info("html len: {0}".format(len(driver_holder.the_driver.page_source)))
     logger.info("links and buttons found: {0}".format(len(links)))
-    obj = driver_holder.switch_to.alert
     if args.target_url is not None:
         get_first_link(args, links)
 

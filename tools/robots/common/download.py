@@ -159,7 +159,7 @@ def get_local_file_name_by_url(url):
             os.makedirs(folder)
     except FileNotFoundError as exp:
         logging.getLogger("dlrobot_logger").error("cannot create verbose path for {}, hash it".format(url))
-        hashcode = hashlib.sha256(url.encode('latin', errors="ignore"))
+        hashcode = hashlib.sha256(url.encode('latin', errors="ignore")).hexdigest()
         folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, hashcode)
     return os.path.join(folder, "dlrobot_data")
 

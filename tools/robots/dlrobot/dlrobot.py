@@ -101,24 +101,27 @@ def looks_like_a_declaration_link(link_info):
     page_html = normalize_and_russify_anchor_text(link_info.PageHtml)
     if has_negative_words(anchor_text):
         return False
-    svedenia = re.search('сведения', anchor_text) is not None
+    svedenia_anchor = re.search('сведения', anchor_text) is not None
     doc_type = re.search('(сведения)|(справк[аи])', anchor_text) is not None
     year_found = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
     income_regexp = '(доход((ах)|(е)))|(коррупц)'
     income = re.search(income_regexp, page_html) is not None
+    income_in_anchor = re.search(income_regexp, anchor_text) is not None
     is_document_link = looks_like_a_document_link(link_info)
     is_a_sub_page = check_sub_page_or_iframe(link_info)
     income_in_url_path = False
+    svedenia_path = False
     if link_info.TargetUrl is not None:
         target = link_info.TargetUrl.lower()
         if re.search('(^sved)|(sveodoh)', target):
-            svedenia = True
+            svedenia_path = True
         if re.search('(do[ck]?[hx]od)|(income)', target):
             income = True
             income_in_url_path = True
     all_features = (("income", income), ("doc_type", doc_type), ("year_found", year_found),
                      ("is_document_link", is_document_link), ("is_a_sub_page", is_a_sub_page),
-                     ("income_in_url_path", income_in_url_path))
+                     ("income_in_url_path", income_in_url_path), ('income_in_anchor', income_in_anchor),
+                    ('svedenia_anchor', svedenia_anchor), ('svedenia_path', svedenia_path) )
     positive_case = None
     if income and (doc_type or year_found or is_document_link or is_a_sub_page):
         positive_case = "case 1"
@@ -126,12 +129,24 @@ def looks_like_a_declaration_link(link_info):
         positive_case = "case 2"
     # http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
     # "Сведения за 2018 год" and  no thematic word
-    elif svedenia and (year_found or is_document_link):
+    elif (svedenia_anchor or svedenia_path) and (year_found or is_document_link):
         positive_case = "case 3"
 
     if positive_case is not None:
+        weight = 0
+        if income_in_anchor:
+            weight += 50
+        if svedenia_anchor:
+            weight += 10
+        if svedenia_path:
+            weight += 10
+        if income_in_url_path:
+            weight += 10
+        if year_found:
+            weight += 5
         all_features_str = ";".join(k for k, v in all_features if v)
-        logging.getLogger("dlrobot_logger").debug("{}, features: {}".format(positive_case, all_features_str))
+        logging.getLogger("dlrobot_logger").debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
+        link_info.Weight = weight
         return True
     return False
 
@@ -189,7 +204,9 @@ def parse_args():
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
+    parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
     args = parser.parse_args()
+    TRobotProject.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step

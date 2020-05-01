@@ -18,7 +18,8 @@ class TClickEngine:
 
 
 class TLinkInfo:
-    def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="",  tag_name=None):
+    MINIMAL_LINK_WEIGHT = 0.0
+    def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="", tag_name=None):
         self.Engine = engine
         self.ElementIndex = element_index
         self.PageHtml = "" if page_html is None else page_html
@@ -30,6 +31,7 @@ class TLinkInfo:
         self.AnchorTextFoundSomewhere = False
         self.DownloadedFile = None
         self.TargetTitle = None
+        self.Weight = TLinkInfo.MINIMAL_LINK_WEIGHT
 
     def set_anchor_text(self, anchor_text):
         self.AnchorText = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
@@ -46,6 +48,8 @@ class TLinkInfo:
             rec['text_proxim'] = True
         if self.DownloadedFile is not None:
             rec['downloaded_file'] = self.DownloadedFile
+        if self.Weight != 0.0:
+            rec['link_weight'] = self.Weight
         return rec
 
 

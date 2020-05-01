@@ -48,7 +48,7 @@ class TSeleniumDriver:
             assert os.path.isdir(self.download_folder)
             options.set_preference("browser.download.dir", self.download_folder)
             options.set_preference("browser.download.manager.showAlertOnComplete", False)
-            temporal options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
+            options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
         self.the_driver = webdriver.Firefox(firefox_options=options)
 

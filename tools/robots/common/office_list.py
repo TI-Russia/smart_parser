@@ -16,8 +16,6 @@ from DeclDocRecognizer.dlrecognizer import  DL_RECOGNIZER_ENUM
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.find_link import strip_viewer_prefix, click_all_selenium, can_be_office_document, \
                     find_links_in_html_by_text, web_link_is_absolutely_prohibited, TLinkInfo, TClickEngine
-
-
 from robots.common.serp_parser import GoogleSearch
 from collections import defaultdict
 from robots.common.primitives import get_site_domain_wo_www, prepare_for_logging
@@ -54,26 +52,32 @@ class TRobotStep:
     def __init__(self, step_name, init_json=None):
         self.step_name = step_name
         self.profiler = dict()
+        self.step_urls = defaultdict(float)
         if init_json  is not None:
-            self.step_urls = set(init_json.get('step_urls', list()))
+            step_urls = init_json.get('step_urls')
+            if isinstance(step_urls, list):
+                self.step_urls.update(dict((k, TLinkInfo.MINIMAL_LINK_WEIGHT) for k in step_urls))
+            else:
+                assert (isinstance(step_urls, dict))
+                self.step_urls.update(step_urls)
             self.profiler = init_json.get('profiler', dict())
-        else:
-            self.step_urls = set()
 
-    def delete_url_mirrors(self):
+    def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
         for u in self.step_urls:
             m = TUrlMirror(u)
             mirrors[m.normalized_url].append(m)
-        self.step_urls = set()
+        new_step_urls = defaultdict(float)
         for urls in mirrors.values():
             urls = sorted(urls, key=(lambda x: len(x.input_url)))
-            self.step_urls.add(urls[-1].input_url)  # get the longest url
+            max_weight = max(self.step_urls[u] for u in urls)
+            new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
+        self.step_urls = new_step_urls
 
     def to_json(self):
         return {
             'step_name': self.step_name,
-            'step_urls': list(self.step_urls),
+            'step_urls': dict( (k,v) for (k, v)  in self.step_urls.items() ),
             'profiler': self.profiler
         }
 
@@ -164,7 +168,7 @@ class TRobotWebSite:
 
     def get_last_step_sha256(self):
         result = set()
-        for url in self.robot_steps[-1].step_urls:
+        for url in self.robot_steps[-1].step_urls.keys():
             infile = get_local_file_name_by_url(url)
             if os.path.exists(infile):
                 with open(infile, "rb") as f:
@@ -268,7 +272,7 @@ class TProcessUrlTemporary:
             pass  # save link and  try one more time to fetch it
 
         self.website.url_nodes[link_info.SourceUrl].add_child_link(link_info.TargetUrl, link_info.to_json())
-        self.robot_step.step_urls.add(link_info.TargetUrl)
+        self.robot_step.step_urls[link_info.TargetUrl] = max(link_info.Weight, self.robot_step.step_urls[link_info.TargetUrl])
         if link_info.TargetUrl not in self.website.url_nodes:
             if link_info.TargetTitle is None:
                 link_info.TargetTitle = request_url_title(link_info.TargetUrl)
@@ -389,7 +393,7 @@ class TRobotProject:
 
     def download_last_step(self):
         for office_info in self.offices:
-            for url in office_info.robot_steps[-1].step_urls:
+            for url in office_info.robot_steps[-1].step_urls.keys():
                 try:
                     read_from_cache_or_download(url)
                 except Exception as err:
@@ -462,35 +466,40 @@ class TRobotProject:
         except (urllib.error.HTTPError, urllib.error.URLError, WebDriverException) as e:
             TRobotProject.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
+    @staticmethod
+    def get_url_with_max_weight(d):
+        max_v = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
+        best_k = None
+        for k, v in d.items():
+            if v >= max_v or best_k is None:
+                max_v = v
+                best_k = k
+        return best_k
+
     def find_links_for_one_website_transitive(self, step_info, start_pages):
         fallback_to_selenium = step_info.step_passport.get('fallback_to_selenium', True)
         transitive = step_info.step_passport.get('transitive', False)
-        pages_to_process = set(start_pages)
         processed_pages = set()
-        for iteration in range(7):  # max 7
-            if transitive:
-                TRobotProject.logger.info("iteration N {}, process {} pages".format(iteration, len(pages_to_process)))
-            for url in pages_to_process:
-                processed_pages.add(url)
-                self.add_links(step_info, url, fallback_to_selenium)
-                found_links_count = len(step_info.robot_step.step_urls)
-                if fallback_to_selenium and found_links_count >= TRobotProject.panic_mode_url_count:
-                    fallback_to_selenium = False
-                    TRobotProject.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
-                        TRobotProject.panic_mode_url_count))
-                if found_links_count >= TRobotProject.max_step_url_count:
-                    TRobotProject.logger.error("too many links (>{}),  stop processing step {}".format(
-                        TRobotProject.max_step_url_count,
-                        step_info.robot_step.step_name))
-                    return
+        pages_to_process = defaultdict(float)
+        pages_to_process.update(start_pages)
+        for url_index in range(TRobotProject.max_step_url_count):
+            if len(pages_to_process) == 0:
+                break
+            url = self.get_url_with_max_weight(pages_to_process)
+            processed_pages.add(url)
+            del pages_to_process[url]
 
-            pages_to_process = set()
-            for x in step_info.robot_step.step_urls:
-                if x not in processed_pages:
-                    if get_file_extension_by_cached_url(x) == DEFAULT_HTML_EXTENSION:
-                        pages_to_process.add(x)
-            if not transitive or len(pages_to_process) == 0:
-                return
+            self.add_links(step_info, url, fallback_to_selenium)
+            found_links_count = len(step_info.robot_step.step_urls.keys())
+            if fallback_to_selenium and found_links_count >= TRobotProject.panic_mode_url_count:
+                fallback_to_selenium = False
+                TRobotProject.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
+                    TRobotProject.panic_mode_url_count))
+            if transitive:
+                for u, w in step_info.robot_step.step_urls.items():
+                    if u not in processed_pages:
+                        if get_file_extension_by_cached_url(u) == DEFAULT_HTML_EXTENSION:
+                            pages_to_process[u] = max(pages_to_process[u], w)
 
     @staticmethod
     def use_search_engine(step_info):
@@ -508,6 +517,7 @@ class TRobotProject:
 
         for url in serp_urls:
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
+            link_info.Weight = TLinkInfo.MINIMAL_LINK_WEIGHT + 1  # > 0
             step_info.add_link_wrapper(link_info)
             if max_results == 1:
                 break  # one  link found
@@ -518,16 +528,16 @@ class TRobotProject:
     def check_html_sources(step_info):
         check_func = step_info.step_passport.get('check_html_sources')
         assert check_func is not None
-        new_urls = set()
-        for url in step_info.robot_step.step_urls:
+        new_urls = defaultdict(float)
+        for url, weight in step_info.robot_step.step_urls.items():
             file_data, extension = TRobotProject.get_file_data_and_extension(url, convert_to_utf8=True)
             if extension == DEFAULT_HTML_EXTENSION:
                 if not check_func(file_data):
                     TRobotProject.logger.debug("delete url {} because of {} ".format(url, check_func.__name__))
                 else:
-                    new_urls.add(url)
+                    new_urls[url] = weight
             else:
-                new_urls.add(url)
+                new_urls[url] = weight
 
         step_info.robot_step.step_urls = new_urls
 
@@ -549,9 +559,8 @@ class TRobotProject:
         include_source = step_passport['include_sources']
         step_index = self.step_names.index(step_name)
         assert step_index != -1
-        office_info.robot_steps[step_index].step_urls = set()
         target = office_info.robot_steps[step_index]
-        target.step_urls = set()
+        target.step_urls = defaultdict(float)
         step_info = TProcessUrlTemporary(office_info, target, step_passport)
         start_time = time.time()
 
@@ -562,7 +571,7 @@ class TRobotProject:
             return
 
         if step_index == 0:
-            start_pages = {office_info.morda_url}
+            start_pages = {office_info.morda_url: 0}
         else:
             start_pages = office_info.robot_steps[step_index - 1].step_urls
 
@@ -571,6 +580,7 @@ class TRobotProject:
 
         if self.need_search_engine_before(step_info):
             self.use_search_engine(step_info)
+            start_pages.update(target.step_urls)
 
         self.find_links_for_one_website_transitive(step_info, start_pages)
 
@@ -579,10 +589,10 @@ class TRobotProject:
 
         if include_source == "copy_if_empty" and len(target.step_urls) == 0:
             do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())
-            for url in start_pages:
+            for url, weight in start_pages.items():
                 step_name = office_info.url_nodes[url].step_name
                 if step_name not in do_not_copy_urls_from_steps:
-                    target.step_urls.add(url)
+                    target.step_urls[url] = weight
 
         if step_passport.get('check_html_sources') is not None:
             TRobotProject.check_html_sources(step_info)
@@ -591,5 +601,5 @@ class TRobotProject:
             "step_request_rate": get_request_rate(start_time),
             "site_request_rate": get_request_rate()
         }
-        target.delete_url_mirrors()
+        target.delete_url_mirrors_by_www_and_protocol_prefix()
         self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))

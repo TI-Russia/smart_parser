@@ -1,5 +1,6 @@
 from robots.common.find_link import web_link_is_absolutely_prohibited
 from robots.common.download import TDownloadEnv
+import sys
 
 if __name__ == "__main__":
     TDownloadEnv.clear_cache_folder()
