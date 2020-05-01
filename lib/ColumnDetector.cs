@@ -17,7 +17,7 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
-        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?" };
+        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано"};
        
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
@@ -106,6 +106,8 @@ namespace Smart.Parser.Lib
 
                 if (row >= adapter.GetRowsCount())
                 {
+                    row = 0;
+                    break;
                     throw new ColumnDetectorException(String.Format("Headers not found"));
                 }
                 prevRowIsSection = isSection;
@@ -165,6 +167,40 @@ namespace Smart.Parser.Lib
             ordering.Add(s);
         }
 
+        static void FixMissingSubheadersForVehicle(IAdapter adapter, ColumnOrdering columnOrdering)
+        {
+            if (!columnOrdering.ContainsField(DeclarationField.Vehicle))
+                return;
+
+            TColumnInfo dummy;
+            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.Vehicle,out dummy);
+            if (headerCell.MergedColsCount != 2)
+                return;
+            var subCells = FindSubcellsUnder(adapter, headerCell);
+            if (subCells.Count == 1)
+                return;
+            string cleanHeader = headerCell.Text.ToLower().Replace(" ", "");
+            if (cleanHeader.Contains("транспортныесредства") && cleanHeader.Contains("вид,марка"))
+            {
+                columnOrdering.Delete(DeclarationField.Vehicle);
+
+                TColumnInfo columnVehicleType = new TColumnInfo();
+                columnVehicleType.BeginColumn = headerCell.Col;
+                columnVehicleType.EndColumn = headerCell.Col + 1;
+                columnVehicleType.ColumnPixelWidth = headerCell.CellWidth / 2;
+                columnVehicleType.Field = DeclarationField.VehicleType;
+                columnOrdering.Add(columnVehicleType);
+
+                TColumnInfo columnVehicleModel = new TColumnInfo();
+                columnVehicleModel.BeginColumn = headerCell.Col + 1;
+                columnVehicleModel.EndColumn = headerCell.Col + 2;
+                columnVehicleModel.ColumnPixelWidth = headerCell.CellWidth / 2;
+                columnVehicleModel.Field = DeclarationField.VehicleModel;
+                columnOrdering.Add(columnVehicleModel);
+
+            }
+        }
+    
         static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, ColumnOrdering columnOrdering)
         {
             //see DepEnergo2010.doc  in tests
@@ -279,7 +315,7 @@ namespace Smart.Parser.Lib
                     if (columnCells.Count == 1 && cell.MergedRowsCount == 1 && underCells.Count == 1)
                     {
                         string cellBelowName = underCells[0].GetText(true);
-                        headerCanHaveSecondLevel = cellBelowName.Length == 0;
+                        headerCanHaveSecondLevel = cellBelowName.Length < 5;
                     }
                 }
                 // current cell spans several columns, so the header probably occupies two rows instead of just one
@@ -370,6 +406,7 @@ namespace Smart.Parser.Lib
             }
             // todo check whether we need them
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
+            FixMissingSubheadersForVehicle(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
             FixBadColumnName02(columnOrdering);
             columnOrdering.FinishOrderingBuilding(cells[0].AdditTableIndention);

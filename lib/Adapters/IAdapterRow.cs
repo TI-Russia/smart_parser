@@ -244,7 +244,7 @@ namespace Smart.Parser.Adapters
 
         public void Merge(DataRow other)
         {
-            for (int i = 0; i < Cells.Count(); i++)
+            for (int i = 0; i < Cells.Count() && i < other.Cells.Count(); i++)
             {
                 Cells[i].Text += " " + other.Cells[i].Text;
             }

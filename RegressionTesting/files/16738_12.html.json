@@ -18,7 +18,11 @@
           "text": "Квартира (Индивидуальная) - 61,9 кв.м. РФ",
           "square": null,
           "relative": null,
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,9 кв,м,",
+          "country_raw": "РФ",
+          "type_raw": "Квартира (Индивидуальная) - 61,9 кв.м. РФ",
+          "own_type_raw": "(Индивидуальная)"
         }
       ],
       "vehicles": []

@@ -514,16 +514,19 @@ namespace Smart.Parser.Lib
             string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
             string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare);
             string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry);
+            string owntypeStr = currRow.GetContents(DeclarationField.MixedRealEstateOwnershipType, false);
+            if (owntypeStr == "")
+                owntypeStr = null;
 
             try
             {
                 if (GetLinesStaringWithNumbers(squareStr).Count > 1)
                 {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, null, squareStr, countryStr, person);
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, owntypeStr, squareStr, countryStr, person);
                 }
                 else
                 {
-                    ParseOwnedPropertySingleRow(estateTypeStr, null, squareStr, countryStr, person);
+                    ParseOwnedPropertySingleRow(estateTypeStr, owntypeStr, squareStr, countryStr, person);
                 }
             }
             catch (Exception e)

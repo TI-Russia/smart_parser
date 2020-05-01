@@ -233,7 +233,7 @@ namespace RegressionTesting
         {
             TestSmartParser("DepEnergo2010.doc", "prod");
         }
-
+        
 
         [TestMethod]
         [TestCategory("docx")]
@@ -606,6 +606,13 @@ namespace RegressionTesting
         public void MergeByHyphen()
         {
             TestSmartParser("16694.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("xls")]
+        public void FixVehicleColumns()
+        {
+            TestSmartParser("17497.xls", "prod");
         }
 
         [TestMethod]

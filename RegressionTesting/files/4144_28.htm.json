@@ -25,19 +25,31 @@
           "text": "Квартира (долевая собственность) 122 кв.м.",
           "square": null,
           "relative": null,
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "122 кв,м,",
+          "country_raw": "",
+          "type_raw": "Квартира (долевая собственность) 122 кв.м.",
+          "own_type_raw": "(долевая собственность)"
         },
         {
           "text": "Квартира (долевая собственность) 122 кв.м.",
           "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "122 кв,м,",
+          "country_raw": "",
+          "type_raw": "Квартира (долевая собственность) 122 кв.м.",
+          "own_type_raw": "(долевая собственность)"
         },
         {
           "text": "Квартира (долевая собственность) 122 кв.м.",
           "square": null,
           "relative": "Ребенок",
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "122 кв,м,",
+          "country_raw": "",
+          "type_raw": "Квартира (долевая собственность) 122 кв.м.",
+          "own_type_raw": "(долевая собственность)"
         }
       ],
       "vehicles": [
