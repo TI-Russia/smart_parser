@@ -1,4 +1,6 @@
 import urllib.parse
+import re
+
 
 def strip_viewer_prefix(href):
     if href is None:
@@ -29,7 +31,7 @@ def strip_html_url(url):
     return url
 
 
-def normalize_anchor_text(text):
+def normalize_and_russify_anchor_text(text):
     if text is not None:
         text = text.strip(' \n\t\r').strip('"').lower()
         text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
@@ -38,7 +40,7 @@ def normalize_anchor_text(text):
 
 
 def check_link_sitemap(link_info):
-    text = normalize_anchor_text(link_info.AnchorText)
+    text = normalize_and_russify_anchor_text(link_info.AnchorText)
     return text.startswith('карта сайта')
 
 
@@ -60,7 +62,8 @@ def check_sub_page_or_iframe(link_info):
 
 
 def get_site_domain_wo_www(url):
-    url = "http://" + url.split("://")[-1]
+    if not re.search(r'^[A-Za-z0-9+.\-]+://', url):
+        url = 'http://{0}'.format(url)
     domain = urllib.parse.urlparse(url).netloc
     if domain.startswith('www.'):
         domain = domain[len('www.'):]

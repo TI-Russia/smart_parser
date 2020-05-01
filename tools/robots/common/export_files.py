@@ -139,7 +139,7 @@ def reorder_export_files_and_delete_non_declarations(office_folder, export_files
         old_file_name = chosen_file['export_path']
         dl_recognizer_result = separate_files_to_dl_results[sha256]
 
-        if dl_recognizer_result == DL_RECOGNIZER_ENUM.NEGATIVE:
+        if dl_recognizer_result != DL_RECOGNIZER_ENUM.POSITIVE:
             if archives_to_dl_results.get(chosen_file['cached_file'], 0) > 1:  # more than 1 document in archive are declarations
                 dl_recognizer_result = DL_RECOGNIZER_ENUM.POSITIVE  # consider other documents to be also declarations
             else:

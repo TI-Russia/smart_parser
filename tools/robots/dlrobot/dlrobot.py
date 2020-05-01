@@ -7,12 +7,12 @@ import sys
 import traceback
 from tempfile import TemporaryDirectory
 import urllib.error
-from robots.common.download import get_file_extension_only_by_headers, DEFAULT_HTML_EXTENSION, TDownloadEnv
+from robots.common.download import get_file_extension_only_by_headers, TDownloadEnv
 from robots.common.export_files import export_files_to_folder
 from robots.common.office_list import TRobotProject
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
-from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS
-from robots.common.primitives import normalize_anchor_text, check_link_sitemap, check_anticorr_link_text, \
+from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
                                     check_sub_page_or_iframe
 from robots.common.http_request import HttpHeadException
 
@@ -60,14 +60,17 @@ def looks_like_a_document_link(link_info):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
 
     # check anchor text
-    anchor_text = normalize_anchor_text(link_info.AnchorText)
-    if re.search('(скачать)|(загрузить)', anchor_text) is not None:
+    anchor_text_ru = normalize_and_russify_anchor_text(link_info.AnchorText)
+    anchor_text_en = link_info.AnchorText.lower()
+    if re.search('(скачать)|(загрузить)', anchor_text_ru) is not None:
+        return True
+    if anchor_text_en.find("download") != -1:
         return True
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if e == DEFAULT_HTML_EXTENSION:
             continue
         # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
-        if anchor_text.find(e[1:]) != -1:
+        if anchor_text_en.find(e[1:]) != -1:
             return True
 
     # check url path or make http head request
@@ -76,6 +79,8 @@ def looks_like_a_document_link(link_info):
         if re.search('(docs)|(documents)|(files)|(download)', target):
             return True
         if target.endswith('html') or target.endswith('htm'):
+            return False
+        if target.endswith('.jpg') or target.endswith('.png'):
             return False
         try:
             ext = get_file_extension_only_by_headers(link_info.TargetUrl)
@@ -92,8 +97,8 @@ def looks_like_a_document_link(link_info):
 
 def looks_like_a_declaration_link(link_info):
     # here is a place for ML
-    anchor_text = normalize_anchor_text(link_info.AnchorText)
-    page_html = normalize_anchor_text(link_info.PageHtml)
+    anchor_text = normalize_and_russify_anchor_text(link_info.AnchorText)
+    page_html = normalize_and_russify_anchor_text(link_info.PageHtml)
     if has_negative_words(anchor_text):
         return False
     svedenia = re.search('сведения', anchor_text) is not None
@@ -183,7 +188,7 @@ def parse_args():
     parser.add_argument("--input-url-list", dest='hypots', default=None)
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
-    parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default="False", action="store_true")
+    parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     args = parser.parse_args()
     if args.step is  not None:
         args.start_from = args.step

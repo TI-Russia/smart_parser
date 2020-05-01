@@ -3,7 +3,7 @@ import logging
 import urllib.error
 import urllib.parse
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from robots.common.download import  read_from_cache_or_download
+from robots.common.download import  read_from_cache_or_download, get_file_extension_only_by_headers
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
 from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
@@ -181,22 +181,24 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     page_html = driver_holder.the_driver.page_source
     consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
 
-    driver_holder.click_element(element)
-    link_info = TLinkInfo(TClickEngine.selenium, main_url, driver_holder.the_driver.current_url,
+    link_info = TLinkInfo(TClickEngine.selenium, main_url, None,
                           page_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index)
-    link_info.DownloadedFile = driver_holder.last_downloaded_file
-    link_info.TargetTitle = driver_holder.the_driver.title
-    driver_holder.close_window_tab()
+
+    driver_holder.click_element(element, link_info)
 
     if step_info.normalize_and_check_link(link_info):
         if link_info.DownloadedFile is not None:
             step_info.add_downloaded_file_wrapper(link_info)
-        else:
+        elif link_info.TargetUrl is not None:
             step_info.add_link_wrapper(link_info)
 
 
 def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
+    if get_file_extension_only_by_headers(main_url) != DEFAULT_HTML_EXTENSION:
+        logger.debug("do not browse {} with selenium, since it has wrong http headers".format(main_url))
+        return
+
     logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.normalize_and_check_link.__name__))
     consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)

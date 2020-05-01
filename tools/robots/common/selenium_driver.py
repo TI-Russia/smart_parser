@@ -9,9 +9,11 @@ import os
 import shutil
 from pathlib import Path
 import time
+from robots.common.download import save_downloaded_file
 from contextlib import contextmanager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import staleness_of
+
 
 def make_folder_empty(folder):
     for filename in os.listdir(folder):
@@ -26,25 +28,27 @@ def make_folder_empty(folder):
 
 
 class TSeleniumDriver:
-    def __init__(self, headless=True, download_folder=None):
+    def __init__(self, headless=True, download_folder=None, loglevel=None):
         self.the_driver = None
         self.driver_processed_urls_count  = 0
         self.download_folder = download_folder
         assert download_folder != "."
         self.headless = headless
-        self.last_downloaded_file = None
-        self.window_before_click = None
+        self.loglevel = loglevel
 
     def start_executable(self):
         options = FirefoxOptions()
         options.headless = self.headless
+        options.log.level = self.loglevel
         options.set_preference("browser.download.folderList", 2)
         options.set_preference("browser.download.manager.showWhenStarting", False)
         options.set_preference("browser.download.manager.closeWhenDone", True)
         options.set_preference("browser.download.manager.focusWhenStarting", False)
         if self.download_folder is not None:
+            assert os.path.isdir(self.download_folder)
             options.set_preference("browser.download.dir", self.download_folder)
-            options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
+            options.set_preference("browser.download.manager.showAlertOnComplete", False)
+            temporal options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
         self.the_driver = webdriver.Firefox(firefox_options=options)
 
@@ -105,37 +109,33 @@ class TSeleniumDriver:
                     (len(chrome_temp_file) == 0):
                 files = os.listdir(self.download_folder)
                 if len(files) > 0:
-                    return save_download_file(os.path.join(self.download_folder, files[0]))
+                    return save_downloaded_file(os.path.join(self.download_folder, files[0]))
                 return None
             time.sleep(1)
             seconds += 1
         return None
 
-    def click_element(self, element):
-        self.last_downloaded_file = None
+    def click_element(self, element, link_info):
         if self.download_folder is not None:
             make_folder_empty(self.download_folder)
-        self.window_before_click = self.the_driver.window_handles[0]
-        self.the_driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
-        time.sleep(1)
-        # open in a new tab, send ctrl-click
-        ActionChains(self.the_driver) \
-            .key_down(Keys.CONTROL) \
-            .click(element) \
-            .key_up(Keys.CONTROL) \
-            .perform()
+        assert link_info.TargetUrl is None
+        assert self.the_driver.current_url == link_info.SourceUrl
 
+        #self.the_driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
+        ActionChains(self.the_driver).move_to_element(element) # it is the same?
+
+        element.click()
         time.sleep(6)
-        if len(self.the_driver.window_handles) < 2:
-            logger = logging.getLogger("dlrobot_logger")
-            logger.debug("cannot click, no new window is found")
-            return
-        window_after = self.the_driver.window_handles[1]
-        self.the_driver.switch_to_window(window_after)
         if self.download_folder is not None:
-            self.last_downloaded_file = self.wait_download_finished(180)
+            link_info.DownloadedFile = self.wait_download_finished(180)
 
-    def close_window_tab(self):
-        self.the_driver.close()
-        assert self.window_before_click  is not None
-        self.the_driver.switch_to.window(self.window_before_click)
+        if link_info.DownloadedFile is None:
+            if self.the_driver.current_url != link_info.SourceUrl:
+                link_info.TargetUrl = self.the_driver.current_url
+                link_info.TargetTitle = self.the_driver.title
+
+        if self.the_driver.current_url != link_info.SourceUrl:
+            self.the_driver.back()
+        if self.the_driver.current_url != link_info.SourceUrl:
+            self.the_driver.get(link_info.SourceUrl)
+

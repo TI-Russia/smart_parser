@@ -9,6 +9,7 @@ import datetime
 import re
 import sys
 import json
+import socket
 
 ALL_HTTP_REQUEST = dict() # (url, method) -> time
 LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
@@ -89,6 +90,9 @@ def make_http_request(url, method):
             if HTTP_503_ERRORS_COUNT > 0:
                 HTTP_503_ERRORS_COUNT -= 1 #decrement HTTP_503_ERRORS_COUNT on successful http_request
             return request.geturl(), headers, data
+    except socket.timeout as exp:
+        logger.error("socket timeout, while getting {}: {}".format(url, exp))
+        raise urllib.error.HTTPError(url, 504, "socket.timeout", None, None)  # coerce socket.timeout
     except urllib.error.HTTPError as e:
         if e.code == 503:
             request_rates = get_request_rate()

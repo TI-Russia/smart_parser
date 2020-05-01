@@ -5,8 +5,9 @@ else
    tests=`/usr/bin/find . -maxdepth 1 -mindepth 1 -type d`
 fi
 
-echo "do not run these tests if production dlrobot is executing on this workstation, we are gonna to kill all firefox instances!"
-taskkill /F  /IM firefox.exe
+#echo "do not run these tests if production dlrobot is executing on this workstation, we are gonna to kill all firefox instances!"
+#taskkill /F  /IM firefox.exe
+
 PORT=8190
 
 for test_folder in $tests; do

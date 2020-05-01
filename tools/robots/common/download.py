@@ -115,7 +115,7 @@ def write_cache_file(localfile, info_file, info, data):
 
 
 # save from selenium
-def save_download_file(filename):
+def save_downloaded_file(filename):
     logger = logging.getLogger("dlrobot_logger")
     download_folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "downloads")
     if not os.path.exists(download_folder):
@@ -135,15 +135,16 @@ def save_download_file(filename):
     return saved_filename
 
 
-def _url_to_cached_folder (url):
+def _url_to_cached_folder_verbose(url):
     local_path = urllib.parse.unquote(url)
     if local_path.startswith('http://'):
         local_path = local_path[len('http://'):]
     if local_path.startswith('https://'):
         local_path = local_path[len('https://'):]
     local_path = local_path.replace('\\', '/') # must be the same to calc hashlib.md5, change it after hashlib.md5
+    local_path = re.sub('/\\.+/', '/q/', local_path)  # dots are interpreted as to go to the parent folder  (cd ..)
     local_path = unidecode(local_path)
-    local_path = re.sub("[:&=?'\"+<>()*| ]", '_', local_path)
+    local_path = re.sub("[#:&=?'\"+<>()*| ]", '_', local_path)
     local_path = local_path.strip("/") #https:////files.sudrf.ru/1060/user/Prikaz_o_naznachenii_otvetstvennogo.pdf
     if len(local_path) > 100:
         local_path = local_path[0:100] + "_" + hashlib.md5(local_path.encode('latin',  errors="ignore")).hexdigest()
@@ -152,11 +153,15 @@ def _url_to_cached_folder (url):
 
 
 def get_local_file_name_by_url(url):
-    cached_file = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, _url_to_cached_folder(url), "dlrobot_data")
-    folder = os.path.dirname(cached_file)
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-    return cached_file
+    folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, _url_to_cached_folder_verbose(url))
+    try:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+    except FileNotFoundError as exp:
+        logging.getLogger("dlrobot_logger").error("cannot create verbose path for {}, hash it".format(url))
+        hashcode = hashlib.sha256(url.encode('latin', errors="ignore"))
+        folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, hashcode)
+    return os.path.join(folder, "dlrobot_data")
 
 
 def read_from_cache_or_download(url):
