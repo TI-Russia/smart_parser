@@ -74,9 +74,10 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Avensis",
+          "text": "легковое Toyota Avensis",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Toyota Avensis"
         }
       ],
       "document_position": "R0C3"
@@ -119,9 +120,10 @@
       ],
       "vehicles": [
         {
-          "text": "SEAT Altea",
+          "text": "легковое SEAT Altea",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "SEAT Altea"
         }
       ],
       "document_position": "R0C3"
@@ -154,14 +156,16 @@
       ],
       "vehicles": [
         {
-          "text": "Citroën",
+          "text": "легковое Citroën",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Citroën"
         },
         {
-          "text": "Mercedes-Benz",
+          "text": "легковое Mercedes-Benz",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Mercedes-Benz"
         }
       ],
       "document_position": "R0C3"
@@ -240,9 +244,10 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21060",
+          "text": "легковое ВАЗ 21060",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "ВАЗ 21060"
         }
       ],
       "person_index": 1,
@@ -385,7 +390,7 @@
       ],
       "vehicles": [
         {
-          "text": "Lifan",
+          "text": "легковое Lifan",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -502,9 +507,10 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 219050",
+          "text": "легковое ВАЗ 219050",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "ВАЗ 219050"
         }
       ],
       "person_index": 2,
@@ -596,9 +602,10 @@
       ],
       "vehicles": [
         {
-          "text": "Škoda Octavia",
+          "text": "легковое Škoda Octavia",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Škoda Octavia"
         }
       ],
       "document_position": "R0C3"
@@ -666,12 +673,13 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Getz",
+          "text": "легковое Hyundai Getz",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Hyundai Getz"
         },
         {
-          "text": "Audi Q5",
+          "text": "легковое Audi Q5",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -743,7 +751,7 @@
       ],
       "vehicles": [
         {
-          "text": "Lada Kalina",
+          "text": "легковое Lada Kalina",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -810,7 +818,7 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Golf",
+          "text": "легковое Volkswagen Golf",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -892,9 +900,10 @@
       ],
       "vehicles": [
         {
-          "text": "Subaru Forester",
+          "text": "легковое Subaru Forester",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Subaru Forester"
         }
       ],
       "person_index": 1,
@@ -1014,7 +1023,7 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi ASX",
+          "text": "легковое Mitsubishi ASX",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -1085,17 +1094,19 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Elantra",
+          "text": "легковое Hyundai Elantra",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Hyundai Elantra"
         },
         {
-          "text": "Ford Kuga",
+          "text": "легковое Ford Kuga",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Ford Kuga"
         },
         {
-          "text": "ВАЗ 21093",
+          "text": "легковое ВАЗ 21093",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -1181,9 +1192,10 @@
       ],
       "vehicles": [
         {
-          "text": "Lexus RX350",
+          "text": "легковое Lexus RX350",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Lexus RX350"
         }
       ],
       "document_position": "R0C3"
@@ -1294,9 +1306,10 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Polo",
+          "text": "легковое Volkswagen Polo",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Volkswagen Polo"
         }
       ],
       "document_position": "R0C3"

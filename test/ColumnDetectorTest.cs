@@ -101,7 +101,7 @@ namespace test
             ColumnPredictor.InitializeIfNotAlready();
 
             ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
-            Assert.AreEqual(ordering.ColumnOrder.Count, 14);
+            Assert.AreEqual(15, ordering.ColumnOrder.Count);
             Assert.IsTrue(ordering.ContainsField(DeclarationField.VehicleType));
             Assert.IsTrue(ordering.ContainsField(DeclarationField.VehicleModel));
             Assert.IsFalse(ordering.ContainsField(DeclarationField.Vehicle));

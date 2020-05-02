@@ -21,6 +21,7 @@ namespace Smart.Parser.Adapters
         public static string ConvertedFileStorageUrl = "";
 
         public virtual bool IsExcel() { return false; }
+        
         public virtual string GetDocumentPosition(int row, int col)
         {
             return null;

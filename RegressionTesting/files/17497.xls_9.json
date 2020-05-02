@@ -42,9 +42,10 @@
       ],
       "vehicles": [
         {
-          "text": "Тайота Камри",
+          "text": "легковое Тайота Камри",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Тайота Камри"
         }
       ],
       "person_index": 1,
@@ -172,9 +173,10 @@
       ],
       "vehicles": [
         {
-          "text": "Тайота Карола",
+          "text": "легковой Тайота Карола",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Тайота Карола"
         }
       ],
       "document_position": "R0C3"
@@ -235,9 +237,10 @@
       ],
       "vehicles": [
         {
-          "text": "Ниссан Альмера",
+          "text": "легковой Ниссан Альмера",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Ниссан Альмера"
         }
       ],
       "person_index": 5,
@@ -543,7 +546,7 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda CX-5",
+          "text": "легковой Mazda CX-5",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -832,9 +835,10 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21150",
+          "text": "легковой ВАЗ 21150",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "ВАЗ 21150"
         }
       ],
       "document_position": "R0C3"
@@ -1073,12 +1077,13 @@
       ],
       "vehicles": [
         {
-          "text": "KIA Sorento",
+          "text": "легковой KIA Sorento",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "KIA Sorento"
         },
         {
-          "text": "KIA Sportage",
+          "text": "легковой KIA Sportage",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1139,9 +1144,10 @@
       ],
       "vehicles": [
         {
-          "text": "Тойота Камри",
+          "text": "легковой Тойота Камри",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Тойота Камри"
         }
       ],
       "document_position": "R0C3"
@@ -1207,7 +1213,7 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Zafira",
+          "text": "легковой Opel Zafira",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1259,7 +1265,7 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Golf",
+          "text": "легковой Volkswagen Golf",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1332,13 +1338,13 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Passat",
+          "text": "легковой Volkswagen Passat",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
         },
         {
-          "text": "Волга ГАЗ 331029",
+          "text": "легковой Волга ГАЗ 331029",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1408,7 +1414,7 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Touareg",
+          "text": "легковой Volkswagen Touareg",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1464,9 +1470,10 @@
       ],
       "vehicles": [
         {
-          "text": "БМВ Х3",
+          "text": "легковой БМВ Х3",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "БМВ Х3"
         }
       ],
       "document_position": "R0C3"
@@ -1534,7 +1541,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 211540",
+          "text": "легковой ВАЗ 211540",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1586,7 +1593,7 @@
       ],
       "vehicles": [
         {
-          "text": "Митсубиси Лансер",
+          "text": "легковой Митсубиси Лансер",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -1647,14 +1654,16 @@
       ],
       "vehicles": [
         {
-          "text": "Chevrolet Niva",
+          "text": "легковой Chevrolet Niva",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Chevrolet Niva"
         },
         {
-          "text": "Mercedes-Benz",
+          "text": "легковой Mercedes-Benz",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Mercedes-Benz"
         }
       ],
       "document_position": "R0C3"
@@ -1760,13 +1769,13 @@
       ],
       "vehicles": [
         {
-          "text": "Опель Астра",
+          "text": "легковой Опель Астра",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
         },
         {
-          "text": "УАЗ 3962",
+          "text": "грузовой УАЗ 3962",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "грузовой"
@@ -1918,18 +1927,19 @@
       ],
       "vehicles": [
         {
-          "text": "Вольво ХС70",
+          "text": "легковой Вольво ХС70",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Вольво ХС70"
         },
         {
-          "text": "Вольво ХС70",
+          "text": "легковой Вольво ХС70",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
         },
         {
-          "text": "Ауди Q5",
+          "text": "легковой Ауди Q5",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -2071,17 +2081,19 @@
       ],
       "vehicles": [
         {
-          "text": "Вольво ХС70",
+          "text": "легковой Вольво ХС70",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Вольво ХС70"
         },
         {
-          "text": "Ауди Q5",
+          "text": "легковой Ауди Q5",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Ауди Q5"
         },
         {
-          "text": "Вольво ХС70",
+          "text": "легковой Вольво ХС70",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -2136,9 +2148,10 @@
       ],
       "vehicles": [
         {
-          "text": "Пежо 308",
+          "text": "легковой Пежо 308",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Пежо 308"
         }
       ],
       "document_position": "R0C3"
@@ -2181,9 +2194,10 @@
       ],
       "vehicles": [
         {
-          "text": "Ниссан Теана",
+          "text": "легковой Ниссан Теана",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Ниссан Теана"
         }
       ],
       "person_index": 4,
@@ -2535,12 +2549,13 @@
       ],
       "vehicles": [
         {
-          "text": "Ауди Q7",
+          "text": "легковой Ауди Q7",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Ауди Q7"
         },
         {
-          "text": "КИА Пиканто",
+          "text": "легковой КИА Пиканто",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -2651,9 +2666,10 @@
       ],
       "vehicles": [
         {
-          "text": "Фольксваген Тигуан",
+          "text": "легковой Фольксваген Тигуан",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Фольксваген Тигуан"
         }
       ],
       "document_position": "R0C3"
@@ -2740,7 +2756,7 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ 21053",
+          "text": "легковой ВАЗ 21053",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -2840,13 +2856,13 @@
       ],
       "vehicles": [
         {
-          "text": "Лада Калина",
+          "text": "легковой Лада Калина",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
         },
         {
-          "text": "Газель",
+          "text": "грузовой Газель",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "грузовой"
@@ -2980,7 +2996,7 @@
       ],
       "vehicles": [
         {
-          "text": "Лексус 470",
+          "text": "легковой Лексус 470",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -3147,13 +3163,13 @@
       ],
       "vehicles": [
         {
-          "text": "ГАЗ 31105",
+          "text": "легковой ГАЗ 31105",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
         },
         {
-          "text": "Газель",
+          "text": "грузовой Газель",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "грузовой"
@@ -3244,12 +3260,13 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Tiguan",
+          "text": "легковой Volkswagen Tiguan",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Volkswagen Tiguan"
         },
         {
-          "text": "KIA Picanto",
+          "text": "легковой KIA Picanto",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -3331,7 +3348,7 @@
       ],
       "vehicles": [
         {
-          "text": "SsangYong ACTYON",
+          "text": "легковой SsangYong ACTYON",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковой"
@@ -3448,9 +3465,10 @@
       ],
       "vehicles": [
         {
-          "text": "Citroen C4",
+          "text": "легковой Citroen C4",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Citroen C4"
         }
       ],
       "person_index": 4,
@@ -3527,12 +3545,13 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Corolla",
+          "text": "легковой Toyota Corolla",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Toyota Corolla"
         },
         {
-          "text": "Камаз 5511",
+          "text": "грузовой Камаз 5511",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "грузовой"
@@ -3578,9 +3597,10 @@
       ],
       "vehicles": [
         {
-          "text": "Ауди А6",
+          "text": "легковой Ауди А6",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Ауди А6"
         }
       ],
       "person_index": 1,

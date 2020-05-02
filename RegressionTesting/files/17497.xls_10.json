@@ -54,17 +54,19 @@
       ],
       "vehicles": [
         {
-          "text": "Škoda Fabia",
+          "text": "легковое Škoda Fabia",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Škoda Fabia"
         },
         {
-          "text": "Audi A1",
+          "text": "легковое Audi A1",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Audi A1"
         },
         {
-          "text": "ВАЗ 21150",
+          "text": "легковое ВАЗ 21150",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -209,9 +211,10 @@
       ],
       "vehicles": [
         {
-          "text": "KIA Sorento",
+          "text": "легковое KIA Sorento",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "KIA Sorento"
         }
       ],
       "person_index": 3,

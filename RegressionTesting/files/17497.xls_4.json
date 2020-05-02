@@ -121,7 +121,7 @@
       ],
       "vehicles": [
         {
-          "text": "Audi Q3",
+          "text": "легковое",
           "relative": null
         },
         {
@@ -325,11 +325,11 @@
       ],
       "vehicles": [
         {
-          "text": "JEEP Cherokee",
+          "text": "легковое",
           "relative": null
         },
         {
-          "text": "Mazda 6",
+          "text": "легковое",
           "relative": null
         }
       ],
@@ -525,11 +525,11 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan Teana",
+          "text": "легковое",
           "relative": null
         },
         {
-          "text": "Ford Focus",
+          "text": "легковое",
           "relative": null
         }
       ],
@@ -603,7 +603,7 @@
       ],
       "vehicles": [
         {
-          "text": "Opel ANTARA",
+          "text": "легковое",
           "relative": null
         }
       ],
@@ -752,12 +752,12 @@
       ],
       "vehicles": [
         {
-          "text": "ВАЗ - 111130 Ока",
+          "text": "легковой",
           "relative": "Супруг(а)",
           "relative_index": 1
         },
         {
-          "text": "ВАЗ - 11183 Калина",
+          "text": "легковой",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -798,7 +798,7 @@
       ],
       "vehicles": [
         {
-          "text": "WV-passat",
+          "text": "легковой",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -880,7 +880,7 @@
       ],
       "vehicles": [
         {
-          "text": "Хонда CRV",
+          "text": "легковой",
           "relative": "Супруг(а)",
           "relative_index": 1
         }

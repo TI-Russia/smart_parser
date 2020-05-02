@@ -63,7 +63,7 @@
       ],
       "vehicles": [
         {
-          "text": "Nissan X-Trail",
+          "text": "легковое Nissan X-Trail",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -100,9 +100,10 @@
       ],
       "vehicles": [
         {
-          "text": "Volvo S60",
+          "text": "легковое Volvo S60",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Volvo S60"
         }
       ],
       "person_index": 2,
@@ -145,12 +146,13 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Lancer",
+          "text": "легковое Mitsubishi Lancer",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Mitsubishi Lancer"
         },
         {
-          "text": "Nissan Tiida",
+          "text": "легковое Nissan Tiida",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -221,14 +223,16 @@
       ],
       "vehicles": [
         {
-          "text": "Lexus 350",
+          "text": "легковое Lexus 350",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Lexus 350"
         },
         {
-          "text": "Suzuki Grand Vitara",
+          "text": "легковое Suzuki Grand Vitara",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Suzuki Grand Vitara"
         }
       ],
       "document_position": "R0C4"
@@ -286,7 +290,7 @@
       ],
       "vehicles": [
         {
-          "text": "Chevrolet КЛАН",
+          "text": "легковое Chevrolet КЛАН",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -416,9 +420,10 @@
       ],
       "vehicles": [
         {
-          "text": "CHEVROLET LACETTI",
+          "text": "легковое CHEVROLET LACETTI",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "CHEVROLET LACETTI"
         }
       ],
       "person_index": 2,
@@ -470,9 +475,10 @@
       ],
       "vehicles": [
         {
-          "text": "Daewoo Espero",
+          "text": "легковое Daewoo Espero",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Daewoo Espero"
         }
       ],
       "person_index": 3,
@@ -522,9 +528,10 @@
       ],
       "vehicles": [
         {
-          "text": "Santa Fe",
+          "text": "легковое Santa Fe",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Santa Fe"
         }
       ],
       "person_index": 1,
@@ -558,9 +565,10 @@
       ],
       "vehicles": [
         {
-          "text": "Toyota Yaris",
+          "text": "легковое Toyota Yaris",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Toyota Yaris"
         }
       ],
       "person_index": 2,
@@ -638,9 +646,10 @@
       ],
       "vehicles": [
         {
-          "text": "Subaru Forester",
+          "text": "легковое Subaru Forester",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Subaru Forester"
         }
       ],
       "person_index": 3,
@@ -739,14 +748,16 @@
       ],
       "vehicles": [
         {
-          "text": "Hyundai Santa Fe",
+          "text": "легковое Hyundai Santa Fe",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Hyundai Santa Fe"
         },
         {
-          "text": "ВАЗ 21124",
+          "text": "легковое ВАЗ 21124",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "ВАЗ 21124"
         }
       ],
       "document_position": "R0C4"
@@ -891,27 +902,31 @@
       ],
       "vehicles": [
         {
-          "text": "Mercedes-Benz ML350",
+          "text": "легковое Mercedes-Benz ML350",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Mercedes-Benz ML350"
         },
         {
-          "text": "Porsche Cayenne Turbo",
+          "text": "легковое Porsche Cayenne Turbo",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Porsche Cayenne Turbo"
         },
         {
-          "text": "Land Rover",
+          "text": "легковое Land Rover",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Land Rover"
         },
         {
-          "text": "Land Rover",
+          "text": "легковое Land Rover",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Land Rover"
         },
         {
-          "text": "Mercedes CLS 350",
+          "text": "легковое Mercedes CLS 350",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -1033,12 +1048,13 @@
       ],
       "vehicles": [
         {
-          "text": "Lexus RX350",
+          "text": "легковое Lexus RX350",
           "relative": null,
-          "type_raw": "легковое"
+          "type_raw": "легковое",
+          "model": "Lexus RX350"
         },
         {
-          "text": "Jeep Wrangler",
+          "text": "легковое Jeep Wrangler",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"
@@ -1102,7 +1118,7 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Zafira",
+          "text": "легковое Opel Zafira",
           "relative": "Супруг(а)",
           "relative_index": 1,
           "type_raw": "легковое"

@@ -9,14 +9,16 @@ namespace TI.Declarator.ParserCommon
 {
     public class Vehicle
     {
-        public Vehicle(string text, string type = null)
+        public Vehicle(string text, string type = null, string model = null)
         {
             Text = text;
             Type = type;
+            Model = model;
         }
 
         public string Text;
         public string Type;
+        public string Model;
 
         public static implicit operator Vehicle(string v)
         {

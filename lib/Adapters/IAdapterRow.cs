@@ -123,7 +123,8 @@ namespace Smart.Parser.Adapters
             this.adapter = adapter;
             this.ColumnOrdering = columnOrdering;
             Cells = adapter.GetCells(row, columnOrdering.GetMaxColumnEndIndex());
-            MapCells();
+            if (!this.adapter.IsExcel())
+                MapCells();
             
         }
         public string DebugString()

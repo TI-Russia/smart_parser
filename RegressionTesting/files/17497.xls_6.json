@@ -202,9 +202,10 @@
       ],
       "vehicles": [
         {
-          "text": "Mazda CX-9",
+          "text": "легковой Mazda CX-9",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Mazda CX-9"
         }
       ],
       "document_position": "R0C3"
@@ -495,9 +496,10 @@
       ],
       "vehicles": [
         {
-          "text": "BMW X5",
+          "text": "легковой BMW X5",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "BMW X5"
         }
       ],
       "document_position": "R0C3"
@@ -540,14 +542,16 @@
       ],
       "vehicles": [
         {
-          "text": "Volkswagen Golf Plus",
+          "text": "легковой Volkswagen Golf Plus",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Volkswagen Golf Plus"
         },
         {
-          "text": "Volkswagen Golf",
+          "text": "легковой Volkswagen Golf",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Volkswagen Golf"
         }
       ],
       "document_position": "R0C3"
@@ -616,14 +620,16 @@
       ],
       "vehicles": [
         {
-          "text": "Mitsubishi Pajero",
+          "text": "легковой Mitsubishi Pajero",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Mitsubishi Pajero"
         },
         {
-          "text": "Nissan X-Trail",
+          "text": "легковой Nissan X-Trail",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Nissan X-Trail"
         }
       ],
       "document_position": "R0C3"
@@ -700,9 +706,10 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Corsa",
+          "text": "легковой Opel Corsa",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Opel Corsa"
         }
       ],
       "person_index": 8,
@@ -771,9 +778,10 @@
       ],
       "vehicles": [
         {
-          "text": "Opel Astra",
+          "text": "легковой Opel Astra",
           "relative": null,
-          "type_raw": "легковой"
+          "type_raw": "легковой",
+          "model": "Opel Astra"
         }
       ],
       "document_position": "R0C3"

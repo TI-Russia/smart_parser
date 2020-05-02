@@ -79,7 +79,7 @@ namespace Smart.Parser.Adapters
             }
             return WorkSheetRows;
         }
-
+        
         public override int GetColsCount()
         {
             return totalColumns;

@@ -705,8 +705,9 @@ namespace Smart.Parser.Lib
             {
                 var m = r.GetContents(DeclarationField.VehicleModel);
                 var t = r.GetContents(DeclarationField.VehicleType);
+                var text = t + " " + m;
                 if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
-                    person.Vehicles.Add(new Vehicle(m, t));
+                    person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
             }
 
         }
