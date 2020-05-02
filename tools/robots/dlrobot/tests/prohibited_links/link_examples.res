@@ -28,3 +28,4 @@ good_link	stat.mil.ru	mil.ru
 good_link	stat.mil.ru	recrut.mil.ru
 bad_link	voronovskoe.ru	trud.mos.ru
 bad_link	https://minvr.ru/press-center/collegium/5197/	http://vk.com/share.php?url=https://minvr.ru:443/press-center/collegium/5197/
+good_link	https://oren-rshn.ru:443	https://oren-rshn.ru
