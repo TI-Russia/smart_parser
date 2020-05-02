@@ -8,6 +8,7 @@ from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
 from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
 from selenium.common.exceptions import WebDriverException
+import re
 
 
 class TClickEngine:
@@ -19,6 +20,7 @@ class TClickEngine:
 
 class TLinkInfo:
     MINIMAL_LINK_WEIGHT = 0.0
+
     def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="", tag_name=None):
         self.Engine = engine
         self.ElementIndex = element_index
@@ -106,6 +108,9 @@ def web_link_is_absolutely_prohibited(source, href):
     source_domain = get_site_domain_wo_www(source)
     if is_super_popular_domain(href_domain):
         return True
+    href_domain = re.sub(':[0-9]+$', '', href_domain) # delete port
+    source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
+
     if get_office_domain(href_domain) != get_office_domain(source_domain):
         if not are_web_mirrors(source_domain, href_domain):
             return True
@@ -156,11 +161,11 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     base = get_base_url(main_url, soup)
     if base.startswith('/'):
         base = make_link(main_url, base)
-    logger.debug("find_links_in_html_by_text url={} function={}".format(
-        main_url, step_info.step_passport['check_link_func'].__name__))
     page_html = str(soup)
     element_index = 0
-    for l in soup.findAll('a'):
+    links_to_process = list(soup.findAll('a'))
+    logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
+    for l in links_to_process:
         href = l.attrs.get('href')
         if href is not None:
             element_index += 1
@@ -203,7 +208,7 @@ def click_all_selenium(step_info, main_url, driver_holder):
         logger.debug("do not browse {} with selenium, since it has wrong http headers".format(main_url))
         return
 
-    logger.debug("find_links_with_selenium url={0} , function={1}".format(main_url, step_info.normalize_and_check_link.__name__))
+    logger.debug("find_links_with_selenium url={}".format(main_url))
     consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
     page_html = driver_holder.the_driver.page_source

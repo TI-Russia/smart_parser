@@ -81,7 +81,6 @@ class TRobotStep:
             'profiler': self.profiler
         }
 
-
 class TUrlInfo:
     def __init__(self, title=None, step_name=None, init_json=None):
         if init_json is not None:
@@ -283,13 +282,16 @@ class TProcessUrlTemporary:
     def add_downloaded_file_wrapper(self, link_info):
         self.website.url_nodes[link_info.SourceUrl].add_downloaded_file(link_info.to_json())
 
+    def get_check_func_name(self):
+        return self.step_passport['check_link_func'].__name__
+
 
 class TRobotProject:
     logger = None
     selenium_driver = TSeleniumDriver()
     step_names = list()
     panic_mode_url_count = 600
-    max_step_url_count = 1000
+    max_step_url_count = 800
 
     def __init__(self, filename, robot_steps):
         self.project_file = filename + ".clicks"
@@ -486,6 +488,11 @@ class TRobotProject:
             if len(pages_to_process) == 0:
                 break
             url = self.get_url_with_max_weight(pages_to_process)
+            TRobotProject.logger.debug("max weight={}, index={}, url={} function={}".format(
+                pages_to_process[url],
+                url_index,
+                url,
+                step_info.get_check_func_name()))
             processed_pages.add(url)
             del pages_to_process[url]
 

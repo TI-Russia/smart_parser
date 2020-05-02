@@ -15,6 +15,7 @@ from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DE
 from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
                                     check_sub_page_or_iframe
 from robots.common.http_request import HttpHeadException
+from robots.common.find_link import TLinkInfo
 
 
 def setup_logging(logger, logfilename):
@@ -101,49 +102,49 @@ def looks_like_a_declaration_link(link_info):
     page_html = normalize_and_russify_anchor_text(link_info.PageHtml)
     if has_negative_words(anchor_text):
         return False
-    svedenia_anchor = re.search('сведения', anchor_text) is not None
-    doc_type = re.search('(сведения)|(справк[аи])', anchor_text) is not None
-    year_found = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
     income_regexp = '(доход((ах)|(е)))|(коррупц)'
-    income = re.search(income_regexp, page_html) is not None
-    income_in_anchor = re.search(income_regexp, anchor_text) is not None
-    is_document_link = looks_like_a_document_link(link_info)
-    is_a_sub_page = check_sub_page_or_iframe(link_info)
-    income_in_url_path = False
-    svedenia_path = False
+
+    good_doc_type_anchor = re.search('(сведения)|(справк[аи])', anchor_text) is not None
+    year_found_anchor = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
+    income_page = re.search(income_regexp, page_html) is not None
+    income_anchor = re.search(income_regexp, anchor_text) is not None
+    document_link = looks_like_a_document_link(link_info)
+    sub_page = check_sub_page_or_iframe(link_info)
+    income_path = False
+    good_doc_type_path = False
     if link_info.TargetUrl is not None:
         target = link_info.TargetUrl.lower()
         if re.search('(^sved)|(sveodoh)', target):
-            svedenia_path = True
+            good_doc_type_path = True
         if re.search('(do[ck]?[hx]od)|(income)', target):
-            income = True
-            income_in_url_path = True
-    all_features = (("income", income), ("doc_type", doc_type), ("year_found", year_found),
-                     ("is_document_link", is_document_link), ("is_a_sub_page", is_a_sub_page),
-                     ("income_in_url_path", income_in_url_path), ('income_in_anchor', income_in_anchor),
-                    ('svedenia_anchor', svedenia_anchor), ('svedenia_path', svedenia_path) )
+            income_path = True
+    all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
+                    ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
+                    ("document_link", document_link),
+                    ("sub_page", sub_page),
+                    ("year_found_anchor", year_found_anchor),)
+    if income_anchor:
+        assert income_page
     positive_case = None
-    if income and (doc_type or year_found or is_document_link or is_a_sub_page):
+    if (income_page or income_path) and (good_doc_type_anchor or year_found_anchor or document_link or sub_page):
         positive_case = "case 1"
-    elif income_in_url_path and is_a_sub_page:
-        positive_case = "case 2"
     # http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
-    # "Сведения за 2018 год" and  no thematic word
-    elif (svedenia_anchor or svedenia_path) and (year_found or is_document_link):
-        positive_case = "case 3"
+    # "Сведения за 2018 год" - no topic word
+    elif (good_doc_type_anchor or good_doc_type_path) and (year_found_anchor or document_link):
+        positive_case = "case 2"
 
     if positive_case is not None:
-        weight = 0
-        if income_in_anchor:
+        weight = TLinkInfo.MINIMAL_LINK_WEIGHT
+        if income_anchor:
             weight += 50
-        if svedenia_anchor:
+        if income_path:
+            weight += 50
+        if good_doc_type_anchor:
             weight += 10
-        if svedenia_path:
+        if good_doc_type_path:
             weight += 10
-        if income_in_url_path:
-            weight += 10
-        if year_found:
-            weight += 5
+        if year_found_anchor:
+            weight += 5  # better than sub_page
         all_features_str = ";".join(k for k, v in all_features if v)
         logging.getLogger("dlrobot_logger").debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
         link_info.Weight = weight

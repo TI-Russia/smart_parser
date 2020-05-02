@@ -14,7 +14,6 @@ cd $TEST_FOLDER
 [ ! -f dlrobot.log ] || rm -rf dlrobot.log
 
 
-echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 
 if [ -d $HTML_FOLDER ]; then
 	curl --connect-timeout 4 -I $WEB_ADDR 2>/dev/null
@@ -26,6 +25,8 @@ if [ -d $HTML_FOLDER ]; then
 	python -m http.server --bind $WEB_IP --directory $HTML_FOLDER $WEB_PORT 1>&2 2> server.log &
 	WEB_SERVER_PID=$!
 	disown
+
+    echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 fi
 
 bash -x run.sh $PROJECT $WEB_ADDR >test_log.out 2>&1
