@@ -47,7 +47,9 @@ NEGATIVE_WORDS = [
     'технические',    '^федеральный',    '^историческ',
     '^закон',    'новости', "^формы", "обратная", "обращения",
     "^перечень", "прочие", "слабовидящих"
-] + SOME_OTHER_DOCUMENTS
+] + ['^{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
+# document type  (указ, утверждена) can be inside the title, for example:
+#сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении министерства здравоохранения российской федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте министерства здравоохранения российской федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным указом президента российской федерации от 8 июля 2013 г. № 613
 
 NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WORDS)))
 
@@ -99,6 +101,10 @@ def looks_like_a_document_link(link_info):
 def looks_like_a_declaration_link(link_info):
     # here is a place for ML
     anchor_text = normalize_and_russify_anchor_text(link_info.AnchorText)
+    if re.search('^(сведения)|(справк[аи]) о доходах', anchor_text):
+        link_info.Weight = 50
+        logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.Weight))
+        return True
     page_html = normalize_and_russify_anchor_text(link_info.PageHtml)
     if has_negative_words(anchor_text):
         return False
