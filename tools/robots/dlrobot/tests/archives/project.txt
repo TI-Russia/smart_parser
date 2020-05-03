@@ -1,1 +1,1 @@
-{"sites":[{"morda_url":"http://127.0.0.1:8190"}],"disable_search_engine": true}
+{"sites":[{"morda_url":"http://127.0.0.1:8196"}],"disable_search_engine": true}

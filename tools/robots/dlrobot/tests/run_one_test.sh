@@ -22,9 +22,12 @@ if [ -d $HTML_FOLDER ]; then
     		echo "stop other instance of http.server on $WEB_ADDR"
     		exit 1
 	fi
-	python -m http.server --bind $WEB_IP --directory $HTML_FOLDER $WEB_PORT 1>&2 2> server.log &
+
+    cd $HTML_FOLDER
+	python -m http.server --bind $WEB_IP $WEB_PORT 1>&2 2> $TEST_FOLDER/server.log &
 	WEB_SERVER_PID=$!
 	disown
+    cd -
 
     echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 fi

@@ -13,7 +13,7 @@ if [[ ! -d cached/search_engine_requests ]]; then
 fi 
  
 
-pkill firefox
+source delete_firefox.sh 
 
 # too many files left after calibre convertor
 rm -rf /tmp/calibre*

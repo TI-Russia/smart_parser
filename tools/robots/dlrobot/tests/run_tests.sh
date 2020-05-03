@@ -5,8 +5,7 @@ else
    tests=`/usr/bin/find . -maxdepth 1 -mindepth 1 -type d`
 fi
 
-echo "do not run these tests if production dlrobot is executing on this workstation, we are gonna to kill all firefox instances!"
-taskkill /F  /IM firefox.exe
+source ../delete_firefox.sh 
 
 PORT=8190
 
