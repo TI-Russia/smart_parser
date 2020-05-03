@@ -8,6 +8,7 @@ fi
 source ../delete_firefox_instances.sh
 
 PORT=8190
+[ ! -f failed_tests.txt ] || rm   failed_tests.txt
 
 for test_folder in $tests; do
   bash run_one_test.sh $test_folder $PORT &
@@ -16,3 +17,9 @@ for test_folder in $tests; do
 done
 
 wait
+
+if [ -f failed_tests.txt ]; then
+    echo "failed tests:"
+    cat failed_tests.txt
+    rm failed_tests.txt
+fi
