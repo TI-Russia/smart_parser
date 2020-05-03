@@ -1,0 +1,897 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Кураленко А.А.",
+        "role": "и.о. руководителя",
+        "department": "ГУП Аптека 42 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2090222.02,
+          "size_raw": "2090222,02",
+          "relative": null
+        },
+        {
+          "size": 429877.72,
+          "size_raw": "429877,72",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 715.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "715",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 44.5,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом",
+          "square": 35.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "35,5",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 22.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "22",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок"
+        },
+        {
+          "text": "квартира",
+          "square": 39.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "39,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 22.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "22",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 600.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 44.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "44,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 70.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "70",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 30.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "30",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковое",
+          "relative": null
+        },
+        {
+          "text": "моторная лодка Прогресс Р3374ШК",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Сенченко С.Л.",
+        "role": "Заместитель руководителя",
+        "department": "ГУП Аптека 42 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 838322.31,
+          "size_raw": "838322,31",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 50.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "50",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Цыганкова Н.П.",
+        "role": "Заместитель руководителя",
+        "department": "ГУП Аптека 42 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 866109.38,
+          "size_raw": "866109,38",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 50.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "50",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 20.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": "индивидуальный"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Федунов Э. В.",
+        "role": "Генеральный директор",
+        "department": "ФГБУ Центр специализированного медицинского снабжения \"Спецмедснаб\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2384978.11,
+          "size_raw": "2384978,11",
+          "relative": null
+        },
+        {
+          "size": 382365.75,
+          "size_raw": "382365,75",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 350.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "350",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 79.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "79,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/6 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1200.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 600.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 200.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "200",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "1/3 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 115.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "115,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/12 доли"
+        },
+        {
+          "text": "жилой дом",
+          "square": 350.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "350",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 79.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "79,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 79.3,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "79,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/6 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковое",
+          "relative": null
+        },
+        {
+          "text": "легковое",
+          "relative": null
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Тхай В.И.",
+        "role": "Первый заместитель генерального директора",
+        "department": "ФГБУ Центр специализированного медицинского снабжения \"Спецмедснаб\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 208407.91,
+          "size_raw": "208407,91",
+          "relative": null
+        },
+        {
+          "size": 30000.00,
+          "size_raw": "30000",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 2,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Максимова Е. В.",
+        "role": "Заместитель директора",
+        "department": "ФГБУ Центр специализированного медицинского снабжения \"Спецмедснаб\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2468996.73,
+          "size_raw": "2468996,73",
+          "relative": null
+        },
+        {
+          "size": 221781.60,
+          "size_raw": "221781,6",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 2000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "2000",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "земельный участок",
+          "square": 506.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "506",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 165.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "165,7",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 118.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "118,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 61.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "61",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "2/3 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 2000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "2000",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок"
+        },
+        {
+          "text": "земельный участок",
+          "square": 506.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "506",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок"
+        },
+        {
+          "text": "жилой дом",
+          "square": 165.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "165,7",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "жилой дом",
+          "square": 118.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "118,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом"
+        },
+        {
+          "text": "квартира",
+          "square": 30.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "30,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 61.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "61",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковое",
+          "relative": null
+        },
+        {
+          "text": "легковое",
+          "relative": null
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Соловьева  О. И.",
+        "role": "Заместитель директора",
+        "department": "ФГБУ Центр специализированного медицинского снабжения \"Спецмедснаб\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 2171085.79,
+          "size_raw": "2171085,79",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 670.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "670",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 57.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "57,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 56.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "56,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "514/1000 доли"
+        },
+        {
+          "text": "садовый дом",
+          "square": 79.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "79,7",
+          "country_raw": "Россия",
+          "type_raw": "садовый дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 56.9,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "56,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "28/1000 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковое",
+          "relative": null
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Золотухина  И. В.",
+        "role": "Главный \nбухгалтер",
+        "department": "ФГБУ Центр специализированного медицинского снабжения \"Спецмедснаб\" ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1766702.20,
+          "size_raw": "1766702,2",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 49.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "49,3",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 5,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Лебедева  А.Е.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Аптека 21 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1021833.72,
+          "size_raw": "1021833,72",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 48.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,5",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 48.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Баранова  О.В.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Аптека 21 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 597787.72,
+          "size_raw": "597787,72",
+          "relative": null
+        },
+        {
+          "size": 417084.39,
+          "size_raw": "417084,39",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 541.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "541",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 34.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        },
+        {
+          "text": "земельный участок",
+          "square": 511.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "511",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 52.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 34.7,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "34,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "1/2 доли"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "легковой",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Краснова  О.Е.",
+        "role": "Заместитель директора",
+        "department": "ФГУП Аптека 21 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 600496.32,
+          "size_raw": "600496,32",
+          "relative": null
+        },
+        {
+          "size": 210460.00,
+          "size_raw": "210460",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 59.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,8",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 3,
+      "document_position": "R0C3"
+    },
+    {
+      "person": {
+        "name_raw": "Алексеенко  В.М.",
+        "role": "Главный бухгалтер",
+        "department": "ФГУП Аптека 21 ФМБА России"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 842687.73,
+          "size_raw": "842687,73",
+          "relative": null
+        },
+        {
+          "size": 567304.83,
+          "size_raw": "567304,83",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 729.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "729",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "жилой дом",
+          "square": 178.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "178",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 45.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "45,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 65.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "65",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 24.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "24",
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "легковой",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "document_position": "R0C3"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера представленные руководителями организации ФМБА России за период                                                          с 1 января 2014 года по 31 декабря 2014 года",
+    "year": 2014,
+    "sheet_number": 4,
+    "documentfile_id": 17497
+  }
+}

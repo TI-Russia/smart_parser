@@ -93,6 +93,20 @@ namespace test
             Assert.AreEqual(ordering.ColumnOrder.Count, 9);
         }
 
+        [TestMethod]
+        public void FixVehicleColumns()
+        {
+            string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "17497.xls");
+            IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile, -1);
+            ColumnPredictor.InitializeIfNotAlready();
+
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(15, ordering.ColumnOrder.Count);
+            Assert.IsTrue(ordering.ContainsField(DeclarationField.VehicleType));
+            Assert.IsTrue(ordering.ContainsField(DeclarationField.VehicleModel));
+            Assert.IsFalse(ordering.ContainsField(DeclarationField.Vehicle));
+        }
+
 
         [TestMethod]
         public void RedundantColumnDetector()

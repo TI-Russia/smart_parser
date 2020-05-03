@@ -514,16 +514,19 @@ namespace Smart.Parser.Lib
             string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
             string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare);
             string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry);
+            string owntypeStr = currRow.GetContents(DeclarationField.MixedRealEstateOwnershipType, false);
+            if (owntypeStr == "")
+                owntypeStr = null;
 
             try
             {
                 if (GetLinesStaringWithNumbers(squareStr).Count > 1)
                 {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, null, squareStr, countryStr, person);
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, owntypeStr, squareStr, countryStr, person);
                 }
                 else
                 {
-                    ParseOwnedPropertySingleRow(estateTypeStr, null, squareStr, countryStr, person);
+                    ParseOwnedPropertySingleRow(estateTypeStr, owntypeStr, squareStr, countryStr, person);
                 }
             }
             catch (Exception e)
@@ -702,8 +705,9 @@ namespace Smart.Parser.Lib
             {
                 var m = r.GetContents(DeclarationField.VehicleModel);
                 var t = r.GetContents(DeclarationField.VehicleType);
+                var text = t + " " + m;
                 if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
-                    person.Vehicles.Add(new Vehicle(m, t));
+                    person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
             }
 
         }

@@ -275,6 +275,7 @@ namespace TI.Declarator.JsonSerialization
                 jVehicle.Add(new JProperty("text", vehicleInfo.Text));
                 jVehicle.Add(new JProperty("relative", null));
                 AddNotNullProp(jVehicle, "type_raw", vehicleInfo.Type);
+                AddNotNullProp(jVehicle, "model", vehicleInfo.Model);
                 jVehicles.Add(jVehicle);
             }
 

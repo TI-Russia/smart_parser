@@ -25,31 +25,49 @@
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",
           "square": null,
           "relative": null,
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,3 кв,м,",
+          "country_raw": "(Россия)",
+          "type_raw": "квартира (пользование) 64,3 кв.м. (Россия)",
+          "own_type_raw": "(пользование)"
         },
         {
           "text": "гараж 52,7 кв.м. (Россия)",
           "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": null
+          "own_type_by_column": null,
+          "square_raw": "52,7 кв,м,",
+          "country_raw": "(Россия)"
         },
         {
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",
           "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,3 кв,м,",
+          "country_raw": "(Россия)",
+          "type_raw": "квартира (пользование) 64,3 кв.м. (Россия)",
+          "own_type_raw": "(пользование)"
         },
         {
           "text": "квартира (пользование) 64,5 кв.м. (Россия)",
           "square": null,
           "relative": "Супруг(а)",
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,5 кв,м,",
+          "country_raw": "(Россия)",
+          "type_raw": "квартира (пользование) 64,5 кв.м. (Россия)",
+          "own_type_raw": "(пользование)"
         },
         {
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",
           "square": null,
           "relative": "Ребенок",
-          "own_type_by_column": null
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,3 кв,м,",
+          "country_raw": "(Россия)",
+          "type_raw": "квартира (пользование) 64,3 кв.м. (Россия)",
+          "own_type_raw": "(пользование)"
         }
       ],
       "vehicles": [

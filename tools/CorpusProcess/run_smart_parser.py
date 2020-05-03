@@ -23,11 +23,11 @@ declarator_domain = 'https://declarator.org'
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
-                        default=4, type=int)
+                        default=8, type=int)
     parser.add_argument("--limit", dest='limit', help="Run smart parser only for N tasks",
                         default=None, type=int)
     parser.add_argument("--use-cache", dest='usecache', help="Parse only new files, skip existing JSONs",
-                        default=False, type=bool)
+                        default=False, action="store_true")
     parser.add_argument("--output", dest='output', help="Output and cache folder to store results.",
                         default="out", type=str)
     parser.add_argument("--force-upload", dest='force_upload',
@@ -37,7 +37,7 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?office=596", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?office=497", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -98,7 +98,7 @@ def run_smart_parser(filepath, args):
     start_time = datetime.now()
     sourcefile = filepath[:filepath.rfind('.')]
 
-    json_list = glob.glob("%s*.json" % sourcefile)
+    json_list = glob.glob("%s*.json" % glob.escape(sourcefile))
     if json_list:
         if not args.usecache:
             # logger.info("Delete existed JSON file(s).")
@@ -106,7 +106,7 @@ def run_smart_parser(filepath, args):
                 os.remove(jf)
         else:
             # logger.info("Skipping existed JSON file %s.json" % sourcefile)
-            return
+            return 1, ""
 
     smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8091"
 
@@ -126,12 +126,12 @@ def post_results(sourcefile, job, time_delta=None, parser_log=None):
     df_id, archive_file = job.get('document_file', None), job.get('archive_file', None)
     filename = sourcefile[:sourcefile.rfind('.')]
 
-    json_list = glob.glob("%s.json" % filename)
+    json_list = glob.glob("%s.json" % glob.escape(filename))
     if len(json_list) == 1:
         # Properly constructed final JSON found
         data = json.load(open(json_list[0], encoding='utf8'))
     else:
-        json_list = glob.glob("%s*.json" % filename)
+        json_list = glob.glob("%s*.json" % glob.escape(filename))
         if not json_list:
             # Build empty JSON to post report in API and skip parsing attemp in a future
             data = {'document': {'documentfile_id': df_id}, 'persons': []}
@@ -139,7 +139,7 @@ def post_results(sourcefile, job, time_delta=None, parser_log=None):
                 data['document']['archive_file'] = archive_file
         else:
             # Join separated JSON files (of XLSX lists)
-            json_list = glob.glob("%s*.json" % filename)
+            json_list = glob.glob("%s*.json" % glob.escape(filename))
             data = {'persons': [], 'document': {}}
             for json_file in json_list:
                 file_data = json.load(open(json_file, encoding='utf8'))

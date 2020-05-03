@@ -94,6 +94,7 @@ namespace Parser.Lib
         static bool TestFieldRegexpWeak(DeclarationField field, string text)
         {
             if (text.Length == 0) return true;
+            if (text == "п/п" && field == DeclarationField.Number) return true;
             if (    ((field & DeclarationField.StartsWithDigitMask) > 0)
                  && !Char.IsNumber(text[0]))
             {

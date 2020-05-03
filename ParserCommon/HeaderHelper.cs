@@ -103,6 +103,7 @@ namespace TI.Declarator.ParserCommon
         {
             string clean = s.Replace("-", "").Replace("\n", "").Replace(" ", "").ToLower();
             return (clean.Contains("фамилия") ||
+                    clean.Contains("фамилимя") ||
                     clean.Contains("фио") ||
                     clean.Contains(".иф.о.") ||
                     clean.Contains("ф.и.о"));
