@@ -5,7 +5,7 @@ else
    tests=`/usr/bin/find . -maxdepth 1 -mindepth 1 -type d`
 fi
 
-source ../delete_firefox.sh 
+source ../delete_firefox_instances.sh
 
 PORT=8190
 
