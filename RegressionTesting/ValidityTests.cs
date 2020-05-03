@@ -76,10 +76,10 @@ namespace RegressionTesting
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(TestContext.TestDir));
             if (solution_dir.EndsWith("RegressionTesting")) {
-                return Path.Join(solution_dir, "files"); // for ubuntu dotnet
+                return Path.Combine(solution_dir, "files"); // for ubuntu dotnet
             }
             else {
-                return Path.Join(solution_dir, "RegressionTesting", "files"); // in Windows Visual Studio
+                return Path.Combine(solution_dir, "RegressionTesting", "files"); // in Windows Visual Studio
             }
         }
 
@@ -90,7 +90,7 @@ namespace RegressionTesting
             Smart.Parser.Lib.Parser.InitializeSmartParser();
             Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
-            File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
+            File.Copy(Path.Combine(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = false;
@@ -110,7 +110,7 @@ namespace RegressionTesting
             SetupLog4Net();
             Smart.Parser.Lib.Parser.InitializeSmartParser();
             Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
-            File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
+            File.Copy(Path.Combine(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
