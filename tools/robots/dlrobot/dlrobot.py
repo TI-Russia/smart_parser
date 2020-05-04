@@ -5,7 +5,6 @@ import logging
 import datetime
 import sys
 import traceback
-from tempfile import TemporaryDirectory
 import urllib.error
 from robots.common.download import get_file_extension_only_by_headers, TDownloadEnv
 from robots.common.export_files import export_files_to_folder
@@ -114,7 +113,7 @@ def looks_like_a_declaration_link(link_info):
     year_found_anchor = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
     income_page = re.search(income_regexp, page_html) is not None
     income_anchor = re.search(income_regexp, anchor_text) is not None
-    document_link = looks_like_a_document_link(link_info)
+    document_link = None
     sub_page = check_sub_page_or_iframe(link_info)
     income_path = False
     good_doc_type_path = False
@@ -124,20 +123,29 @@ def looks_like_a_declaration_link(link_info):
             good_doc_type_path = True
         if re.search('(do[ck]?[hx]od)|(income)', target):
             income_path = True
-    all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
-                    ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
-                    ("document_link", document_link),
-                    ("sub_page", sub_page),
-                    ("year_found_anchor", year_found_anchor),)
-    if income_anchor:
-        assert income_page
     positive_case = None
-    if (income_page or income_path) and (good_doc_type_anchor or year_found_anchor or document_link or sub_page):
-        positive_case = "case 1"
+
+    if positive_case is None:
+        if income_page or income_path:
+            if good_doc_type_anchor or year_found_anchor or sub_page:
+                positive_case = "case 1"
+            else:
+                if document_link is None:
+                    document_link = looks_like_a_document_link(link_info)  #lazy calculaiton since it has a time-consuming head http-request
+                if document_link:
+                    positive_case = "case 1"
+
     # http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
     # "Сведения за 2018 год" - no topic word
-    elif (good_doc_type_anchor or good_doc_type_path) and (year_found_anchor or document_link):
-        positive_case = "case 2"
+    if positive_case is None:
+        if good_doc_type_anchor or good_doc_type_path:
+            if year_found_anchor:
+                positive_case = "case 2"
+            else:
+                if document_link is None:
+                    document_link = looks_like_a_document_link(link_info)
+                if document_link:
+                    positive_case = "case 2"
 
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
@@ -151,6 +159,13 @@ def looks_like_a_declaration_link(link_info):
             weight += 10
         if year_found_anchor:
             weight += 5  # better than sub_page
+
+        all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
+                        ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
+                        ("document_link", document_link),
+                        ("sub_page", sub_page),
+                        ("year_found_anchor", year_found_anchor),)
+
         all_features_str = ";".join(k for k, v in all_features if v)
         logging.getLogger("dlrobot_logger").debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
         link_info.Weight = weight
@@ -205,8 +220,7 @@ def parse_args():
     parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
     parser.add_argument("--stop-after", dest='stop_after', default=None)
-    parser.add_argument("--from-human", dest='from_human_file_name', default=None)
-    parser.add_argument("--logfile", dest='logfile', default="dlrobot.log")
+    parser.add_argument("--logfile", dest='logfile', default=None)
     parser.add_argument("--input-url-list", dest='hypots', default=None)
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
@@ -217,6 +231,8 @@ def parse_args():
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
+    if args.logfile is None:
+        args.logfile = args.project + ".log"
     return args
 
 
@@ -267,9 +283,9 @@ def make_steps(args, project):
     project.write_project()
 
 
-def open_project(args, log_file_name):
+def open_project(args):
     logger = logging.getLogger("dlrobot_logger")
-    setup_logging(logger, log_file_name)
+    setup_logging(logger, args.logfile)
     with TRobotProject(args.project, ROBOT_STEPS) as project:
         if args.hypots is not None:
             if args.start_from is not None:
@@ -281,8 +297,6 @@ def open_project(args, log_file_name):
 
         make_steps(args, project)
 
-        if args.from_human_file_name is not None:
-            project.check_all_offices()
         if args.click_features_file:
             project.write_click_features(args.click_features_file)
 
@@ -293,13 +307,7 @@ if __name__ == "__main__":
         TDownloadEnv.clear_cache_folder()
     try:
         TDownloadEnv.init_conversion()
-        if args.logfile == "temp":
-            with TemporaryDirectory(prefix="tmp_dlrobot_log", dir=".") as tmp_folder:
-                log_file_name = os.path.join(tmp_folder, "dlrobot.log")
-                open_project(args, log_file_name)
-                logging.shutdown()
-        else:
-            open_project(args, args.logfile)
+        open_project(args)
     except Exception as e:
         print("unhandled exception type={}, exception={} ".format(type(e), e))
         traceback.print_exc(file=sys.stdout)
