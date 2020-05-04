@@ -1,7 +1,7 @@
 import argparse
 import sys
 import os
-from robots.common.office_list import TRobotProject, TProcessUrlTemporary, TUrlInfo
+from robots.common.robot_project import TRobotProject, TProcessUrlTemporary, TUrlInfo
 from robots.common.download import get_file_extension_by_cached_url
 from robots.dlrobot.dlrobot import ROBOT_STEPS
 from robots.common.primitives import strip_html_url
@@ -9,6 +9,8 @@ from DeclDocRecognizer.external_convertors import TExternalConverters
 import shutil
 import csv
 import time
+import logging
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -24,7 +26,7 @@ def parse_args():
 #todo: pdf and zip files!
 
 def create_toloka_pool(project_path, toloka_stream):
-    with TRobotProject(project_path, ROBOT_STEPS) as project:
+    with TRobotProject(logging, project_path, ROBOT_STEPS, None) as project:
         project.read_project()
         office_info = project.offices[0]
         toloka_stream.write("INPUT:url\tINPUT:file_link\tINPUT:file_extension\tINPUT:html\n")

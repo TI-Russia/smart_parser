@@ -56,7 +56,6 @@ class TSeleniumDriver:
         if self.the_driver is not None:
             self.the_driver.quit()
 
-
     def navigate(self, url):
         #to reduce memory usage
         if self.driver_processed_urls_count > 100:

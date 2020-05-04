@@ -2,13 +2,13 @@
 import os
 import argparse
 import logging
-import datetime
 import sys
 import traceback
 import urllib.error
 from robots.common.download import get_file_extension_only_by_headers, TDownloadEnv
 from robots.common.export_files import export_files_to_folder
-from robots.common.office_list import TRobotProject
+from robots.common.robot_project import TRobotProject
+from robots.common.web_site import TRobotWebSite
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
@@ -17,7 +17,8 @@ from robots.common.http_request import HttpHeadException
 from robots.common.find_link import TLinkInfo
 
 
-def setup_logging(logger, logfilename):
+def setup_logging(logfilename):
+    logger = logging.getLogger("dlrobot_logger")
     logger.setLevel(logging.DEBUG)
 
     # create formatter and add it to the handlers
@@ -34,7 +35,7 @@ def setup_logging(logger, logfilename):
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
-
+    return logger
 
 NEGATIVE_WORDS = [
     'координат',  'заседании',
@@ -218,7 +219,7 @@ def parse_args():
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
     args = parser.parse_args()
-    TRobotProject.max_step_url_count = args.max_step_url_count
+    TRobotWebSite.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
@@ -237,24 +238,14 @@ def step_index_by_name(name):
 
 
 def make_steps(args, project):
-    logger = logging.getLogger("dlrobot_logger")
     if args.start_from != "last_step":
         start = step_index_by_name(args.start_from) if args.start_from is not None else 0
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
         for step_passport in ROBOT_STEPS[start:end]:
             step_name = step_passport['step_name']
-            logger.info("=== step {0} =========".format(step_name))
+            project.logger.info("=== step {0} =========".format(step_name))
             for office_info in project.offices:
-                start = datetime.datetime.now()
-                logger.info(office_info.get_domain_name())
-
-                project.find_links_for_one_website(office_info, step_passport)
-
-                logger.info("step elapsed time {} {} {}".format(
-                    office_info.morda_url,
-                    step_name,
-                    (datetime.datetime.now() - start).total_seconds()))
-
+                office_info.find_links_for_one_website(step_passport)
             project.write_project()
 
     if args.stop_after is not None:
@@ -262,25 +253,25 @@ def make_steps(args, project):
             return
 
     if not args.skip_final_download:
-        logger.info("=== download all declarations =========")
-        project.download_last_step()
+        project.logger.info("=== download all declarations =========")
+        for office_info in project.offices:
+            office_info.download_last_step()
 
-    logger.info("=== wait for all document conversion finished =========")
+    project.logger.info("=== wait for all document conversion finished =========")
     TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished()
 
-    logger.info("=== export_files_to_folder =========")
-    export_files_to_folder(project.offices, args.result_folder)
+    project.logger.info("=== export_files_to_folder =========")
+    export_files_to_folder(project.offices)
     project.write_export_stats()
     project.write_project()
 
 
 def open_project(args):
-    logger = logging.getLogger("dlrobot_logger")
-    setup_logging(logger, args.logfile)
-    with TRobotProject(args.project, ROBOT_STEPS) as project:
+    logger = setup_logging(args.logfile)
+    with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         if args.hypots is not None:
             if args.start_from is not None:
-                logger.info("ignore --input-url-list since --start-from  or --step is specified")
+                project.logger.info("ignore --input-url-list since --start-from  or --step is specified")
             else:
                 project.create_by_hypots(args.hypots)
         else:

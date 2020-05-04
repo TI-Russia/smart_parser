@@ -189,20 +189,16 @@ def reorder_export_files_and_delete_non_declarations(office_folder, export_files
     return exported_files
 
 
-def export_files_to_folder(offices, outfolder):
-    logger = logging.getLogger("dlrobot_logger")
+def export_files_to_folder(offices):
     for office_info in offices:
-        office_folder = os.path.join(outfolder, office_info.get_domain_name())
-        office_folder = office_folder.replace(':', '_')
-        if os.path.exists(office_folder):
-            shutil.rmtree(office_folder)
+        office_folder = office_info.get_export_folder()
 
         export_files = list()
         index = export_last_step_docs(office_info, office_folder, export_files)
         export_downloaded_docs(office_info, office_folder, index, export_files)
         office_info.exported_files = reorder_export_files_and_delete_non_declarations(office_folder, export_files)
 
-        logger.info("found {} files, exported {} files to {}".format(
+        office_folder.logger.info("found {} files, exported {} files to {}".format(
             len(export_files),
             len(office_info.exported_files),
             office_folder))

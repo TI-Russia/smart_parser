@@ -10,7 +10,7 @@ import shutil
 from robots.common.http_request import make_http_request, request_url_headers
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
-
+from bs4 import BeautifulSoup
 
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
@@ -257,4 +257,13 @@ def get_file_extension_only_by_headers(url):
     ext = get_file_extension_by_content_type(headers)
     return ext
 
+
+def request_url_title(url):
+    try:
+        html = read_from_cache_or_download(url)
+        if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
+            soup = BeautifulSoup(html, "html.parser")
+            return soup.title.string.strip(" \n\r\t")
+    except Exception as err:
+        return ""
 
