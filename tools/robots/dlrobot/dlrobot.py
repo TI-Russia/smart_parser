@@ -250,11 +250,6 @@ def make_steps(args, project):
         if args.stop_after != "last_step":
             return
 
-    if not args.skip_final_download:
-        project.logger.info("=== download all declarations =========")
-        for office_info in project.offices:
-            office_info.download_last_step()
-
     project.logger.info("=== wait for all document conversion finished =========")
     TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished()
 

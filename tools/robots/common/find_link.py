@@ -1,12 +1,10 @@
-import os
 import logging
 import urllib.error
 import urllib.parse
-from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from robots.common.download import  read_from_cache_or_download, get_file_extension_only_by_headers
+from robots.common.download import are_web_mirrors
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
-from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
+from robots.common.primitives import get_site_domain_wo_www
 from selenium.common.exceptions import WebDriverException
 import re
 
@@ -53,17 +51,6 @@ class TLinkInfo:
         if self.Weight != 0.0:
             rec['link_weight'] = self.Weight
         return rec
-
-
-def are_web_mirrors(domain1, domain2):
-    try:
-        # check all mirrors including simple javascript
-        html1 = read_from_cache_or_download(domain1)
-        html2 = read_from_cache_or_download(domain2)
-        res = len(html1) == len(html2) # it is enough
-        return res
-    except (urllib.error.HTTPError, urllib.error.URLError) as exp:
-        return False
 
 
 def get_office_domain(web_domain):
@@ -126,18 +113,6 @@ def make_link(main_url, href):
     return url
 
 
-def can_be_office_document(href):
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    filename, file_extension = os.path.splitext(href)
-    if file_extension == DEFAULT_HTML_EXTENSION:
-        return False
-    if file_extension.lower() in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        return True
-    if href.find('docs.google') != -1:
-        return True
-    return False
-
-
 def get_base_url(main_url, soup):
     for l in soup.findAll('base'):
         href = l.attrs.get('href')
@@ -156,8 +131,6 @@ def get_soup_title(soup):
 
 def find_links_in_html_by_text(step_info, main_url, soup):
     logger = logging.getLogger("dlrobot_logger")
-    if can_be_office_document(main_url):
-        return
     base = get_base_url(main_url, soup)
     if base.startswith('/'):
         base = make_link(main_url, base)
@@ -204,10 +177,6 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
 
 def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
-    if get_file_extension_only_by_headers(main_url) != DEFAULT_HTML_EXTENSION:
-        logger.debug("do not browse {} with selenium, since it has wrong http headers".format(main_url))
-        return
-
     logger.debug("find_links_with_selenium url={}".format(main_url))
     consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)

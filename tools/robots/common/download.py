@@ -10,7 +10,8 @@ import shutil
 from robots.common.http_request import make_http_request, request_url_headers
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
-from bs4 import BeautifulSoup
+from robots.common.primitives import get_html_title
+
 
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
@@ -27,11 +28,6 @@ class TDownloadEnv:
     def init_conversion():
         TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient()
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
-
-
-def is_html_contents(info):
-    content_type = info.get('Content-Type', "text").lower()
-    return content_type.startswith('text')
 
 
 def find_simple_js_redirect(data):
@@ -57,16 +53,11 @@ def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     return html_data.decode(encoding, errors="ignore")
 
 
-def convert_html_to_utf8(url, html_data):
-    url_info = read_url_info_from_cache(url)
-    return convert_html_to_utf8_using_content_charset(url_info.get('charset'), html_data)
-
-
 def http_get_with_urllib(url, search_for_js_redirect=True):
     redirected_url, headers, data = make_http_request(url, "GET")
 
     try:
-        if is_html_contents(headers):
+        if headers.get('Content-Type', "text").lower().startswith('text'):
             if search_for_js_redirect:
                 try:
                     data_utf8 = convert_html_to_utf8_using_content_charset(headers.get_content_charset(), data)
@@ -78,40 +69,7 @@ def http_get_with_urllib(url, search_for_js_redirect=True):
 
     except AttributeError:
         pass
-    return data, headers
-
-
-def read_cache_file(local_file):
-    with open(local_file, "rb") as f:
-        return f.read()
-
-
-def read_url_info_from_cache(url):
-    cached_file = get_local_file_name_by_url(url)
-    if not os.path.exists(cached_file):
-        return {}
-    info_file = cached_file + ".headers"
-    with open(info_file, "r", encoding="utf8") as inf:
-        return json.loads(inf.read())
-
-
-# file downloaded by urllib
-def write_cache_file(localfile, info_file, info, data):
-    with open(localfile, "wb") as f:
-        f.write(data)
-    assert info is not None
-    url_info = dict()
-    if hasattr(info, "_headers"):
-        url_info['headers'] = dict(info._headers)
-    else:
-        url_info['headers'] = dict()
-    url_info['charset'] = info.get_content_charset()
-    with open(info_file, "w", encoding="utf8") as f:
-        f.write(json.dumps(url_info, indent=4, ensure_ascii=False))
-    file_extension = get_file_extension_by_content_type(url_info['headers'])
-    if TDownloadEnv.CONVERSION_CLIENT is not None:
-        TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(localfile, file_extension)
-    return data
+    return redirected_url, headers, data
 
 
 # save from selenium
@@ -162,20 +120,6 @@ def get_local_file_name_by_url(url):
         hashcode = hashlib.sha256(url.encode('latin', errors="ignore")).hexdigest()
         folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, hashcode)
     return os.path.join(folder, "dlrobot_data")
-
-
-def read_from_cache_or_download(url):
-    local_file = get_local_file_name_by_url(url)
-    info_file = local_file + ".headers"
-    if os.path.exists(local_file):
-        data = read_cache_file(local_file)
-    else:
-        data, info = http_get_with_urllib(url)
-        if len(data) == 0:
-            return ""
-        write_cache_file(local_file, info_file, info, data)
-
-    return data
 
 
 def get_file_extension_by_content_type(headers):
@@ -234,22 +178,67 @@ def get_file_extension_by_content_type(headers):
         return DEFAULT_HTML_EXTENSION
 
 
-def get_file_extension_by_cached_url(url):
-    local_file = get_local_file_name_by_url(url)
-    if os.path.exists(local_file):  #can be 404, do not try to fetch it
-        data_start = read_cache_file(local_file).decode('latin', errors="ignore").strip(" \r\n\t")[0:100]
-        data_start = data_start.lower().replace(" ", "")
-        if data_start.startswith("<html") or data_start.startswith("<docttypehtml") \
-                or data_start.startswith("<!docttypehtml"):
-            return DEFAULT_HTML_EXTENSION
+class TDownloadedFile:
+    def get_page_info_file_name(self):
+        return self.data_file_path + ".page_info"
 
-    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        if url.lower().endswith(e):
-            return e
+    def __init__(self, original_url, download_if_absent=True):
+        self.original_url = original_url
+        self.page_info = dict()
+        self.data_file_path = get_local_file_name_by_url(self.original_url)
+        self.data = ""
+        self.file_extension = None
+        if os.path.exists(self.data_file_path):
+            with open(self.data_file_path, "rb") as f:
+                self.data = f.read()
+            with open(self.get_page_info_file_name(), "r", encoding="utf8") as f:
+                self.page_info = json.loads(f.read())
+            self.redirected_url = self.page_info.get('redirected_url', self.original_url)
+            self.file_extension = self.page_info.get('file_extension')
+        else:
+            redirected_url, info, data = http_get_with_urllib(original_url)
+            self.redirected_url = redirected_url
+            self.data = data
+            assert hasattr(info, "_headers")
+            self.page_info['headers'] = dict(info._headers)
+            self.page_info['charset'] = info.get_content_charset()
+            self.page_info['redirected_url'] = redirected_url
+            self.page_info['original_url'] = original_url
+            if len(self.data) > 0:
+                self.file_extension = self.calc_file_extension_by_data_and_headers()
+                self.page_info['file_extension'] = self.file_extension
+                self.write_file_to_cache()
+                if TDownloadEnv.CONVERSION_CLIENT is not None:
+                    TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(self.data_file_path, self.file_extension)
 
-    headers = read_url_info_from_cache(url).get('headers', {})
-    return get_file_extension_by_content_type(headers)
+    def write_file_to_cache(self):
+        with open(self.data_file_path, "wb") as f:
+            f.write(self.data)
+        with open(self.get_page_info_file_name(), "w", encoding="utf8") as f:
+            f.write(json.dumps(self.page_info, indent=4, ensure_ascii=False))
 
+    def convert_html_to_utf8(self):
+        return convert_html_to_utf8_using_content_charset(self.page_info.get('charset'), self.data)
+
+    def get_http_headers(self):
+        return self.page_info.get('headers', dict())
+
+    def calc_file_extension_by_data_and_headers(self):
+        if len(self.data) > 0:  # can be 404, do not try to fetch it
+            data_start = self.data.decode('latin', errors="ignore").strip(" \r\n\t")[0:100]
+            data_start = data_start.lower().replace(" ", "")
+            if data_start.startswith("<html") or data_start.startswith("<docttypehtml") \
+                    or data_start.startswith("<!docttypehtml"):
+                return DEFAULT_HTML_EXTENSION
+
+        for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+            if self.original_url.lower().endswith(e):
+                return e
+
+        return get_file_extension_by_content_type(self.get_http_headers())
+
+    def get_file_extension_only_by_headers(self):
+        return get_file_extension_by_content_type(self.get_http_headers())
 
 # use it preliminary, because ContentDisposition and Content-type often contain errors
 def get_file_extension_only_by_headers(url):
@@ -257,13 +246,12 @@ def get_file_extension_only_by_headers(url):
     ext = get_file_extension_by_content_type(headers)
     return ext
 
-
-def request_url_title(url):
+def are_web_mirrors(domain1, domain2):
     try:
-        html = read_from_cache_or_download(url)
-        if get_file_extension_by_cached_url(url) == DEFAULT_HTML_EXTENSION:
-            soup = BeautifulSoup(html, "html.parser")
-            return soup.title.string.strip(" \n\r\t")
-    except Exception as err:
-        return ""
-
+        # check all mirrors including simple javascript
+        html1 = TDownloadedFile(domain1).data
+        html2 = TDownloadedFile(domain2).data
+        res = len(html1) == len(html2)  # it is enough
+        return res
+    except (urllib.error.HTTPError, urllib.error.URLError) as exp:
+        return False

@@ -1,4 +1,3 @@
-import json
 from operator import itemgetter
 from bs4 import BeautifulSoup
 from itertools import groupby
@@ -9,8 +8,7 @@ import shutil
 import hashlib
 from robots.common.archives import dearchive_one_archive, is_archive_extension
 from robots.common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS,  \
-    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
-    read_from_cache_or_download, convert_html_to_utf8
+    TDownloadedFile,  DEFAULT_HTML_EXTENSION
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
 import re
 
@@ -40,7 +38,7 @@ def html_to_text(html):
     return output
 
 
-def build_sha256(filename, extension):
+def build_sha256(filename):
     with open(filename, "rb") as f:
         file_data = f.read()
         if filename.endswith(DEFAULT_HTML_EXTENSION):
@@ -48,11 +46,11 @@ def build_sha256(filename, extension):
         return hashlib.sha256(file_data).hexdigest()
 
 
-def export_one_file_tmp(url, index, cached_file, extension, office_folder):
-    logger = logging.getLogger("dlrobot_logger")
-    export_path = os.path.join(office_folder, str(index) + ".tmp" + extension)
+def export_one_file_tmp(url, cached_file, extension, index, office_folder):
     if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         return
+    logger = logging.getLogger("dlrobot_logger")
+    export_path = os.path.join(office_folder, str(index) + ".tmp" + extension)
     if not os.path.exists(cached_file):
         logger.error("cannot find cached file {}, cache is broken or 404 on fetching?".format(cached_file))
         return
@@ -63,7 +61,7 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
             logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
             yield {
                 "url": url,
-                "sha256": build_sha256(export_filename, os.path.splitext(export_filename)[1]),
+                "sha256": build_sha256(export_filename),
                 "cached_file": cached_file,
                 "export_path": export_filename,
                 "name_in_archive": name_in_archive,
@@ -74,7 +72,7 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
         shutil.copyfile(cached_file, export_path)
         yield {
                 "url": url,
-                "sha256": build_sha256(cached_file, extension),
+                "sha256": build_sha256(cached_file),
                 "export_path": export_path,
                 "cached_file": cached_file
         }
@@ -88,23 +86,21 @@ def check_html_can_be_declaration_preliminary(html):
     return words and numbers
 
 
-def export_last_step_docs(office_info, office_folder, export_files):
+def export_last_step_docs(office_info, export_files):
     logger = logging.getLogger("dlrobot_logger")
     index = 0
     last_step_urls = office_info.robot_steps[-1].step_urls
     logger.debug("process {} urls in last step".format(len(last_step_urls)))
+    office_folder = office_info.get_export_folder()
     for url in last_step_urls:
-        extension = get_file_extension_by_cached_url(url)
+        downloaded_file = TDownloadedFile(url)
 
-        if extension == DEFAULT_HTML_EXTENSION:
-            html = read_from_cache_or_download(url)
-            html = convert_html_to_utf8(url, html)
-            if not check_html_can_be_declaration_preliminary(html):
+        if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+            if not check_html_can_be_declaration_preliminary(downloaded_file.convert_html_to_utf8()):
                 logger.debug("do not export {} because of preliminary check".format(url))
                 continue
 
-        cached_file = get_local_file_name_by_url(url)
-        for e in export_one_file_tmp(url, index, cached_file, extension, office_folder):
+        for e in export_one_file_tmp(url, downloaded_file.data_file_path, downloaded_file.file_extension, index,  office_folder):
             e['parent'] = office_info.url_nodes[url]  # temporal link
             export_files.append(e)
             index += 1
@@ -112,12 +108,13 @@ def export_last_step_docs(office_info, office_folder, export_files):
     return index
 
 
-def export_downloaded_docs(office_info, office_folder, index, export_files):
+def export_downloaded_docs(office_info, index, export_files):
+    office_folder = office_info.get_export_folder()
     for url, url_info in office_info.url_nodes.items():
         for d in url_info.downloaded_files:
             cached_file = d['downloaded_file']
             extension = os.path.splitext(cached_file)[1]
-            for e in export_one_file_tmp(url, index, cached_file, extension, office_folder):
+            for e in export_one_file_tmp(url, cached_file, extension, index, office_folder):
                 e['parent'] = d  # temporal link
                 export_files.append(e)
                 index += 1
@@ -194,11 +191,11 @@ def export_files_to_folder(offices):
         office_folder = office_info.get_export_folder()
 
         export_files = list()
-        index = export_last_step_docs(office_info, office_folder, export_files)
-        export_downloaded_docs(office_info, office_folder, index, export_files)
+        index = export_last_step_docs(office_info, export_files)
+        export_downloaded_docs(office_info, index, export_files)
         office_info.exported_files = reorder_export_files_and_delete_non_declarations(office_folder, export_files)
 
-        office_folder.logger.info("found {} files, exported {} files to {}".format(
+        office_info.logger.info("found {} files, exported {} files to {}".format(
             len(export_files),
             len(office_info.exported_files),
             office_folder))

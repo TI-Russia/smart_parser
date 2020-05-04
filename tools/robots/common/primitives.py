@@ -1,5 +1,6 @@
 import urllib.parse
 import re
+from bs4 import BeautifulSoup
 
 
 def strip_viewer_prefix(href):
@@ -78,3 +79,12 @@ def prepare_for_logging(s):
          "\t": " ",
          "\r": " "}))
     return s.strip()
+
+
+def get_html_title(html):
+    try:
+        if soup.title is None:
+            return ""
+        return soup.title.string.strip(" \n\r\t")
+    except Exception as err:
+        return ""

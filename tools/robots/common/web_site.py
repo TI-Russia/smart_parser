@@ -1,7 +1,6 @@
-from robots.common.download import get_local_file_name_by_url, request_url_title, read_from_cache_or_download,  \
-                DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url,  convert_html_to_utf8
+from robots.common.download import TDownloadedFile
 from collections import defaultdict
-from robots.common.primitives import get_site_domain_wo_www
+from robots.common.primitives import get_site_domain_wo_www, get_html_title
 import os
 import shutil
 import time
@@ -39,7 +38,8 @@ class TRobotWebSite:
             for url, info in init_json.get('url_nodes', dict()).items():
                 self.url_nodes[url] = TUrlInfo(init_json=info)
             if len(self.url_nodes) == 0:
-                self.url_nodes[self.morda_url] = TUrlInfo(title=request_url_title(self.morda_url))
+                title = get_html_title(TDownloadedFile(self.morda_url).data)
+                self.url_nodes[self.morda_url] = TUrlInfo(title=title)
         else:
             self.morda_url = ""
             self.office_name = ""
@@ -61,15 +61,6 @@ class TRobotWebSite:
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
             'exported_files': self.exported_files
         }
-
-    def get_last_step_sha256(self):
-        result = set()
-        for url in self.robot_steps[-1].step_urls.keys():
-            infile = get_local_file_name_by_url(url)
-            if os.path.exists(infile):
-                with open(infile, "rb") as f:
-                    result.add(hashlib.sha256(f.read()).hexdigest())
-        return result
 
     def get_parents(self, record):
         url = record['url']
@@ -135,26 +126,6 @@ class TRobotWebSite:
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
 
-    def download_last_step(self):
-        for url in self.robot_steps[-1].step_urls.keys():
-            try:
-                read_from_cache_or_download(url)
-            except Exception as err:
-                self.logger.error("cannot download " + url + ": " + str(err) + "\n")
-                pass
-
-    def get_file_data_and_extension(self, url, convert_to_utf8=False):
-        try:
-            html = read_from_cache_or_download(url)
-            extension = get_file_extension_by_cached_url(url)
-            if convert_to_utf8:
-                if extension == DEFAULT_HTML_EXTENSION:
-                    html = convert_html_to_utf8(url, html)
-            return html, extension
-        except Exception as err:
-            self.logger.error('cannot download page url={} while add_links, exception={}'.format(url, err))
-            return None, None
-
     def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, soup):
         html_text = str(soup)
         if len(html_text) > 1000:
@@ -176,6 +147,12 @@ class TRobotWebSite:
             return True
         return False
 
+    def get_previous_step_urls(self, step_index):
+        if step_index == 0:
+            return {self.morda_url: 0}
+        else:
+            return self.robot_steps[step_index - 1].step_urls
+
     def find_links_for_one_website(self, step_index: int):
         step_passport = self.parent_project.robot_step_passports[step_index]
         step_name = step_passport['step_name']
@@ -189,21 +166,22 @@ class TRobotWebSite:
         if is_last_step:
             self.create_export_folder()
         if self.set_fixed_list_url(target):
+            assert not is_last_step
             return
 
-        if step_index == 0:
-            start_pages = {self.morda_url: 0}
-        else:
-            start_pages = self.robot_steps[step_index - 1].step_urls
+        start_pages = self.get_previous_step_urls(step_index)
+
+        target.pages_to_process = dict(start_pages)
 
         if include_source == "always":
-            target.step_urls.update(start_pages)
+            assert not is_last_step # todo: should we export it?
+            target.step_urls.update(target.pages_to_process)
 
         if self.parent_project.need_search_engine_before(target):
             self.parent_project.use_search_engine(target)
-            start_pages.update(target.step_urls)
+            target.pages_to_process.update(target.step_urls)
 
-        target.find_links_for_one_website_transitive(start_pages)
+        target.make_one_step()
 
         if self.parent_project.need_search_engine_after(target):
             self.parent_project.use_search_engine(target)

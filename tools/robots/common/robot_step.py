@@ -1,15 +1,14 @@
-from robots.common.download import  request_url_title,  \
-                DEFAULT_HTML_EXTENSION, get_file_extension_by_cached_url
+from robots.common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from collections import defaultdict
-from robots.common.http_request import request_url_headers, HttpHeadException
-from robots.common.primitives import prepare_for_logging
+from robots.common.http_request import HttpHeadException
+from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import WebDriverException
-from robots.common.find_link import strip_viewer_prefix, click_all_selenium,  \
-                    find_links_in_html_by_text, web_link_is_absolutely_prohibited, TLinkInfo
+from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
+                    web_link_is_absolutely_prohibited, TLinkInfo
 import urllib.error
-
+from robots.common.primitives import get_html_title
 
 
 class TUrlMirror:
@@ -69,12 +68,18 @@ class TUrlInfo:
 class TRobotStep:
     panic_mode_url_count = 600
     max_step_url_count = 800
+
     def __init__(self, website, step_passport, init_json=None):
         self.website = website
         self.logger = website.logger
         self.step_passport = step_passport
         self.profiler = dict()
         self.step_urls = defaultdict(float)
+        # runtime members
+        self.processed_pages = None
+        self.pages_to_process = dict()
+        self.url_weights = None
+
         if init_json is not None:
             step_urls = init_json.get('step_urls')
             if isinstance(step_urls, list):
@@ -125,27 +130,30 @@ class TRobotStep:
     def add_link_wrapper(self, link_info):
         assert link_info.TargetUrl is not None
         try:
-            # get rid of http redirects here, for example www.yandex.ru -> yandex.ru to store only one url variant
-            # there are also javascript redirects, that can be processed only with a http get request
-            # but http get requests are heavy, that's why we deal with them after the link check
-            link_info.TargetUrl, _ = request_url_headers(link_info.TargetUrl)
-        except UnicodeEncodeError as err:
-                return  # unknown exception during urllib.request.urlopen (possibly url has a bad encoding)
-        except HttpHeadException as err:
-            return # we tried to make http head 3 times, but failed no sense, to retry
-        except (urllib.error.HTTPError, urllib.error.URLError) as err:
-            if isinstance(err, urllib.error.HTTPError)  and err.code == 404:
-                return
-            pass  # save link and  try one more time to fetch it
+            downloaded_file = TDownloadedFile(link_info.TargetUrl)
+        except (urllib.error.HTTPError, urllib.error.URLError, HttpHeadException, UnicodeEncodeError) as err:
+            self.logger.error('cannot download page url={} while add_links, exception={}'.format(link_info.TargetUrl, err))
+            return
 
-        self.website.url_nodes[link_info.SourceUrl].add_child_link(link_info.TargetUrl, link_info.to_json())
-        self.step_urls[link_info.TargetUrl] = max(link_info.Weight, self.step_urls[link_info.TargetUrl])
-        if link_info.TargetUrl not in self.website.url_nodes:
-            if link_info.TargetTitle is None:
-                link_info.TargetTitle = request_url_title(link_info.TargetUrl)
-            self.website.url_nodes[link_info.TargetUrl] = TUrlInfo(title=link_info.TargetTitle, step_name=self.get_step_name())
-        self.website.url_nodes[link_info.TargetUrl].parent_nodes.add(link_info.SourceUrl)
-        self.logger.debug("add link {0}".format(link_info.TargetUrl))
+        href = link_info.TargetUrl
+
+        self.website.url_nodes[link_info.SourceUrl].add_child_link(href, link_info.to_json())
+        link_info.Weight = max(link_info.Weight, self.step_urls[href])
+        self.step_urls[href] = link_info.Weight
+
+        if href not in self.website.url_nodes:
+            if link_info.TargetTitle is None and downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+                link_info.TargetTitle = get_html_title(downloaded_file.data)
+            self.website.url_nodes[href] = TUrlInfo(title=link_info.TargetTitle, step_name=self.get_step_name())
+        else:
+            self.website.url_nodes[href].parent_nodes.add(link_info.SourceUrl)
+
+        if self.step_passport.get('transitive', False):
+            if href not in self.processed_pages:
+                if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+                    self.pages_to_process[href] = link_info.Weight
+
+        self.logger.debug("add link {0}".format(href))
 
     def add_downloaded_file_wrapper(self, link_info):
         self.website.url_nodes[link_info.SourceUrl].add_downloaded_file(link_info.to_json())
@@ -153,22 +161,16 @@ class TRobotStep:
     def get_check_func_name(self):
         return self.step_passport['check_link_func'].__name__
 
-    @staticmethod
-    def get_url_with_max_weight(d):
-        max_v = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
-        best_k = None
-        for k, v in d.items():
-            if v >= max_v or best_k is None:
-                max_v = v
-                best_k = k
-        return best_k
-
-    def add_links(self, url, fallback_to_selenium=True):
-        file_data, extension = self.website.get_file_data_and_extension(url)
-        if extension != DEFAULT_HTML_EXTENSION:
+    def add_page_links(self, url, fallback_to_selenium=True):
+        try:
+            downloaded_file = TDownloadedFile(url)
+        except (urllib.error.HTTPError, urllib.error.URLError, HttpHeadException, UnicodeEncodeError) as err:
+            self.logger.error('cannot download page url={} while add_page_links, exception={}'.format(url, err))
+            return
+        if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
             return
         try:
-            soup = BeautifulSoup(file_data, "html.parser")
+            soup = BeautifulSoup(downloaded_file.data, "html.parser")
         except Exception as e:
             self.logger.error('cannot parse html, exception {}'.format(url, e))
             return
@@ -179,47 +181,56 @@ class TRobotStep:
             else:
                 self.logger.error(
                     'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed))
+
                 if not fallback_to_selenium and len(list(soup.findAll('a'))) < 10:
                     self.website.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
                     fallback_to_selenium = True
 
             if fallback_to_selenium:  # switch off selenium is almost a panic mode (too many links)
-                click_all_selenium(self, url, self.website.parent_project.selenium_driver)
+                if downloaded_file.get_file_extension_only_by_headers() != DEFAULT_HTML_EXTENSION:
+                    # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
+                    self.website.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
+                else:
+                    click_all_selenium(self, url, self.website.parent_project.selenium_driver)
         except (urllib.error.HTTPError, urllib.error.URLError, WebDriverException) as e:
             self.websiterlogger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
-    def find_links_for_one_website_transitive(self, start_pages):
+    def pop_url_with_max_weight(self, url_index):
+        if len(self.pages_to_process) == 0:
+            return None
+        if url_index > 300 and max(self.url_weights[-10:]) < 10:
+            return None
+        max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
+        best_url = None
+        for url, weight in self.pages_to_process.items():
+            if weight >= max_weight or best_url is None:
+                max_weight = weight
+                best_url = url
+        if best_url is None:
+            return None
+        self.processed_pages.add(best_url)
+        del self.pages_to_process[best_url]
+        self.url_weights.append(max_weight)
+        self.website.logger.debug("max weight={}, index={}, url={} function={}".format(max_weight, url_index,
+                                                                                       best_url,
+                                                                                       self.get_check_func_name()))
+        return best_url
+
+    def make_one_step(self):
+        assert len(self.pages_to_process) > 0
+        self.processed_pages = set()
+        self.url_weights = list()
         fallback_to_selenium = self.step_passport.get('fallback_to_selenium', True)
-        processed_pages = set()
-        pages_to_process = defaultdict(float)
-        pages_to_process.update(start_pages)
-        url_weights = list()
         for url_index in range(TRobotStep.max_step_url_count):
-            if len(pages_to_process) == 0:
-                break
-            url = self.get_url_with_max_weight(pages_to_process)
-            url_weight = pages_to_process[url]
-            url_weights.append(url_weight)
-            # the main robot stop rule
-            if url_index > 300 and max(url_weights[-10:]) < 10:
+            url = self.pop_url_with_max_weight(url_index)
+            if url is None:
                 break
 
-            self.website.logger.debug("max weight={}, index={}, url={} function={}".format(url_weight, url_index,
-                                                                                   url,
-                                                                                   self.get_check_func_name()))
-            processed_pages.add(url)
-            del pages_to_process[url]
+            self.add_page_links(url, fallback_to_selenium)
 
-            self.add_links(url, fallback_to_selenium)
-
-            found_links_count = len(self.step_urls.keys())
-            if fallback_to_selenium and found_links_count >= TRobotStep.panic_mode_url_count:
+            if fallback_to_selenium and len(self.step_urls.keys()) >= TRobotStep.panic_mode_url_count:
                 fallback_to_selenium = False
                 self.website.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
                     TRobotStep.panic_mode_url_count))
-            if self.step_passport.get('transitive', False):
-                for u, w in self.step_urls.items():
-                    if u not in processed_pages:
-                        if get_file_extension_by_cached_url(u) == DEFAULT_HTML_EXTENSION:
-                            pages_to_process[u] = max(pages_to_process[u], w)
+
 
