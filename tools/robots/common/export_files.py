@@ -9,8 +9,10 @@ import shutil
 import hashlib
 from robots.common.archives import dearchive_one_archive, is_archive_extension
 from robots.common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS,  \
-    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION
+    get_file_extension_by_cached_url, get_local_file_name_by_url, DEFAULT_HTML_EXTENSION, \
+    read_from_cache_or_download, convert_html_to_utf8
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
+import re
 
 if shutil.which('unrar') is None:
     raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt intall unrar")
@@ -78,6 +80,14 @@ def export_one_file_tmp(url, index, cached_file, extension, office_folder):
         }
 
 
+def check_html_can_be_declaration_preliminary(html):
+    # dl_recognizer is called afterwards
+    html = html.lower()
+    words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
+    numbers = re.search('[0-9]{6}', html) is not None # доход
+    return words and numbers
+
+
 def export_last_step_docs(office_info, office_folder, export_files):
     logger = logging.getLogger("dlrobot_logger")
     index = 0
@@ -85,11 +95,20 @@ def export_last_step_docs(office_info, office_folder, export_files):
     logger.debug("process {} urls in last step".format(len(last_step_urls)))
     for url in last_step_urls:
         extension = get_file_extension_by_cached_url(url)
+
+        if extension == DEFAULT_HTML_EXTENSION:
+            html = read_from_cache_or_download(url)
+            html = convert_html_to_utf8(url, html)
+            if not check_html_can_be_declaration_preliminary(html):
+                logger.debug("do not export {} because of preliminary check".format(url))
+                continue
+
         cached_file = get_local_file_name_by_url(url)
         for e in export_one_file_tmp(url, index, cached_file, extension, office_folder):
             e['parent'] = office_info.url_nodes[url]  # temporal link
             export_files.append(e)
             index += 1
+
     return index
 
 

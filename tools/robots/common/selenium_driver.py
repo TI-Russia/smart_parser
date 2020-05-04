@@ -119,9 +119,8 @@ class TSeleniumDriver:
         if self.download_folder is not None:
             make_folder_empty(self.download_folder)
         assert link_info.TargetUrl is None
-        assert self.the_driver.current_url == link_info.SourceUrl
+        save_current_url = self.the_driver.current_url  # may differ from link_info.SourceUrl, because of redirects
 
-        #self.the_driver.execute_script("arguments[0].scrollIntoView({block: \"center\", behavior: \"smooth\"});", element)
         ActionChains(self.the_driver).move_to_element(element) # it is the same?
 
         element.click()
@@ -134,8 +133,13 @@ class TSeleniumDriver:
                 link_info.TargetUrl = self.the_driver.current_url
                 link_info.TargetTitle = self.the_driver.title
 
-        if self.the_driver.current_url != link_info.SourceUrl:
+        if self.the_driver.current_url != save_current_url:
             self.the_driver.back()
-        if self.the_driver.current_url != link_info.SourceUrl:
-            self.the_driver.get(link_info.SourceUrl)
+        if self.the_driver.current_url != save_current_url:
+            self.the_driver.get(link_info.SourceUrl)  # hope it leads to save_current_url
+            if save_current_url != link_info.SourceUrl:
+                logger = logging.getLogger("dlrobot_logger")
+                logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
+                    save_current_url, self.the_driver.current_url))
+
 
