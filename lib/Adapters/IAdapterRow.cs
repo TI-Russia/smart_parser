@@ -263,7 +263,7 @@ namespace Smart.Parser.Adapters
 
                 ;
             var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
-            if (exactCell.Text.Trim() != "")
+            if (exactCell.Text.Trim() != "" || exactCell.Col == -1)
             {
                 return exactCell;
             }
