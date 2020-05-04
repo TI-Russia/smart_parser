@@ -173,14 +173,6 @@ def looks_like_a_declaration_link(link_info):
     return False
 
 
-def check_html_can_be_declaration(html):
-    # dl_recognizer is called afterwards
-    html = html.lower()
-    words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
-    numbers = re.search('[0-9]{6}', html) is not None # доход
-    return words and numbers
-
-
 ROBOT_STEPS = [
     {
         'step_name': "sitemap",
@@ -206,7 +198,6 @@ ROBOT_STEPS = [
             'request': '"сведения о доходах"',
             'policy': "run_always_before"
         },
-        'check_html_sources': check_html_can_be_declaration,
         'transitive': True,
     }
 ]
