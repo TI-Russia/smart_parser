@@ -6,22 +6,25 @@ import urllib.error
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.find_link import TLinkInfo, TClickEngine
 from robots.common.serp_parser import GoogleSearch
-from robots.common.web_site import TRobotWebSite
+from robots.common.web_site import TRobotWebSite, TRobotStep
 
 
 class TRobotProject:
     selenium_driver = TSeleniumDriver()
 
-    def __init__(self, logger, filename, robot_steps, export_folder):
+    def __init__(self, logger, filename, robot_step_passports, export_folder):
         self.logger = logger
         self.project_file = filename + ".clicks"
         if not os.path.exists(self.project_file):
             shutil.copy2(filename, self.project_file)
         self.offices = list()
         self.human_files = list()
-        self.step_names = [r['step_name'] for r in robot_steps]
+        self.robot_step_passports = robot_step_passports
         self.enable_search_engine = True  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
+
+    def get_robot_step_names(self):
+        return list(r['step_name'] for r in self.robot_step_passports)
 
     def __enter__(self):
         TRobotProject.selenium_driver.download_folder = tempfile.mkdtemp()
@@ -36,7 +39,7 @@ class TRobotProject:
         with open(self.project_file, "w", encoding="utf8") as outf:
             output =  {
                 'sites': [o.to_json() for o in self.offices],
-                'step_names': self.step_names
+                'step_names': self.get_robot_step_names()
             }
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
@@ -47,7 +50,7 @@ class TRobotProject:
         with open(self.project_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
             if 'step_names' in json_dict:
-                if json_dict['step_names'] != self.step_names:
+                if json_dict['step_names'] != self.get_robot_step_names():
                     raise Exception("different step step_names, adjust manually or rebuild the project")
 
             for o in json_dict.get('sites', []):
@@ -131,15 +134,15 @@ class TRobotProject:
             links_count += 1
         self.logger.info('found {} links using search engine'.format(links_count))
 
-    def need_search_engine_before(self, step_info):
+    def need_search_engine_before(self, step_info: TRobotStep):
         if not self.enable_search_engine:
             return False
         policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
         return policy == "run_always_before"
 
-    def need_search_engine_after(self, step_info):
+    def need_search_engine_after(self, step_info: TRobotStep):
         if not self.enable_search_engine:
             return False
         policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
-        return policy == "run_after_if_no_results" and len(step_info.robot_step.step_urls) == 0
+        return policy == "run_after_if_no_results" and len(step_info.step_urls) == 0
 

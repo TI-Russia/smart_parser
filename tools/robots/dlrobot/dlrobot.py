@@ -8,7 +8,7 @@ import urllib.error
 from robots.common.download import get_file_extension_only_by_headers, TDownloadEnv
 from robots.common.export_files import export_files_to_folder
 from robots.common.robot_project import TRobotProject
-from robots.common.web_site import TRobotWebSite
+from robots.common.robot_step import TRobotStep
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
@@ -219,7 +219,7 @@ def parse_args():
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
     args = parser.parse_args()
-    TRobotWebSite.max_step_url_count = args.max_step_url_count
+    TRobotStep.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
         args.start_from = args.step
         args.stop_after = args.step
@@ -241,11 +241,9 @@ def make_steps(args, project):
     if args.start_from != "last_step":
         start = step_index_by_name(args.start_from) if args.start_from is not None else 0
         end = step_index_by_name(args.stop_after) + 1 if args.stop_after is not None else len(ROBOT_STEPS)
-        for step_passport in ROBOT_STEPS[start:end]:
-            step_name = step_passport['step_name']
-            project.logger.info("=== step {0} =========".format(step_name))
+        for step_no in range(start, end):
             for office_info in project.offices:
-                office_info.find_links_for_one_website(step_passport)
+                office_info.find_links_for_one_website(step_no)
             project.write_project()
 
     if args.stop_after is not None:
