@@ -72,8 +72,8 @@ class TExportFile:
         self.url = rec["url"]
         self.cached_file = rec["cached_file"]
         self.export_path = rec["export_path"]
-        self.archive_index = rec["archive_index"]
         self.sha256 = rec["sha256"]
+        self.archive_index = rec.get("archive_index", -1)
 
 
 class TExportFileSet:

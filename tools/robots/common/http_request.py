@@ -11,10 +11,10 @@ import sys
 import json
 import socket
 
-ALL_HTTP_REQUEST = dict() # (url, method) -> time
+ALL_HTTP_REQUEST = dict()  # (url, method) -> time
+HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
 LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
 HEADER_MEMORY_CACHE = dict()
-HEADER_REQUEST_COUNT = defaultdict(int)
 HTTP_503_ERRORS_COUNT = 0
 
 
@@ -52,12 +52,33 @@ def has_cyrillic(text):
     return bool(re.search('[Ёёа-яА-Я]', text))
 
 
+class HttpException(Exception):
+    def __init__(self, value, url, http_code, http_method):
+        global HTTP_EXCEPTION_COUNTER
+        key = (url, http_method)
+        HTTP_EXCEPTION_COUNTER[key] = HTTP_EXCEPTION_COUNTER[key] + 1
+        self.count = HTTP_EXCEPTION_COUNTER[key]
+        self.value = value
+        self.url = url
+        self.http_code = http_code
+        self.http_method = http_method
+
+    def __str__(self):
+        return "cannot make http-request ({}) to {} got code {}, initial exception: {}".format( \
+            self.http_method, self.url, self.http_code, self.value)
+
+
 def make_http_request(url, method):
     global HTTP_503_ERRORS_COUNT
-    consider_request_policy(url, method)
+    global HTTP_EXCEPTION_COUNTER
 
     if url.find('://') == -1:
         url = "http://" + url
+
+    if HTTP_EXCEPTION_COUNTER[(url, method)] > 2:
+        raise HttpException("stop requesting the same url", url, 429, method)
+
+    consider_request_policy(url, method)
 
     o = list(urllib.parse.urlparse(url)[:])
     if has_cyrillic(o[1]):
@@ -92,7 +113,12 @@ def make_http_request(url, method):
             return request.geturl(), headers, data
     except socket.timeout as exp:
         logger.error("socket timeout, while getting {}: {}".format(url, exp))
-        raise urllib.error.HTTPError(url, 504, "socket.timeout", None, None)  # coerce socket.timeout
+        raise HttpException("socket.timeout", url, 504, method)
+    except urllib.error.URLError as exp:
+        code = -1
+        if hasattr(exp, 'code'):
+            code = exp.code
+        raise HttpException(str(exp), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
             request_rates = get_request_rate()
@@ -109,31 +135,19 @@ def make_http_request(url, method):
                 if HTTP_503_ERRORS_COUNT + 1 > max_http_503_errors_count:
                     time.sleep(20*60)  # last chance, wait 20 minutes
 
-        raise
-
-
-class HttpHeadException(Exception):
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        return self.value
+        raise HttpException(str(e), url, e.code, method)
 
 
 def request_url_headers(url):
-    global HEADER_MEMORY_CACHE, HEADER_REQUEST_COUNT, LAST_HEAD_REQUEST_TIME
+    global HEADER_MEMORY_CACHE,  LAST_HEAD_REQUEST_TIME
     if url in HEADER_MEMORY_CACHE:
         return HEADER_MEMORY_CACHE[url]
-    if HEADER_REQUEST_COUNT[url] >= 3:
-        raise HttpHeadException("too many times to get headers that caused exceptions")
-
     # do not ddos sites
     elapsed_time = datetime.datetime.now() - LAST_HEAD_REQUEST_TIME
     if elapsed_time.total_seconds() < 1:
         time.sleep(1)
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
 
-    HEADER_REQUEST_COUNT[url] += 1
     redirected_url, headers, _ = make_http_request(url, "HEAD")
     HEADER_MEMORY_CACHE[url] = (redirected_url, headers)
     if redirected_url != url:

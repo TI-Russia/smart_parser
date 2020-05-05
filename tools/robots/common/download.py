@@ -10,6 +10,8 @@ import shutil
 from robots.common.http_request import make_http_request, request_url_headers
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
+from robots.common.http_request import HttpException
+
 
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
@@ -62,7 +64,7 @@ def http_get_with_urllib(url, search_for_js_redirect=True):
                     redirect_url = find_simple_js_redirect(data_utf8)
                     if redirect_url is not None and redirect_url != url:
                         return http_get_with_urllib(redirect_url, search_for_js_redirect=False)
-                except (urllib.error.HTTPError, urllib.error.URLError, ValueError) as err:
+                except (HttpException, ValueError) as err:
                     pass
 
     except AttributeError:
@@ -251,5 +253,5 @@ def are_web_mirrors(domain1, domain2):
         html2 = TDownloadedFile(domain2).data
         res = len(html1) == len(html2)  # it is enough
         return res
-    except (urllib.error.HTTPError, urllib.error.URLError) as exp:
+    except HttpException as exp:
         return False

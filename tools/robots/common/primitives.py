@@ -2,6 +2,7 @@ import urllib.parse
 import re
 from robots.common.link_info import TLinkInfo
 
+
 def strip_viewer_prefix(href):
     if href is None:
         return href
@@ -87,3 +88,4 @@ def get_html_title(html):
         return soup.title.string.strip(" \n\r\t")
     except Exception as err:
         return ""
+

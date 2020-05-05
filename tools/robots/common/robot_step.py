@@ -1,15 +1,14 @@
 from robots.common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from collections import defaultdict
-from robots.common.http_request import HttpHeadException
 from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import WebDriverException
 from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
                     web_link_is_absolutely_prohibited
 from robots.common.link_info import TLinkInfo
-import urllib.error
 from robots.common.primitives import get_html_title
+from robots.common.http_request import HttpException
 
 
 class TUrlMirror:
@@ -137,8 +136,11 @@ class TRobotStep:
         assert link_info.target_url is not None
         try:
             downloaded_file = TDownloadedFile(link_info.target_url)
-        except (urllib.error.HTTPError, urllib.error.URLError, HttpHeadException, UnicodeEncodeError) as err:
+        except UnicodeEncodeError as err:
             self.logger.error('cannot download page url={} while add_links, exception={}'.format(link_info.target_url, err))
+            return
+        except HttpException as err:
+            self.logger.error(err)
             return
 
         href = link_info.target_url
@@ -175,8 +177,8 @@ class TRobotStep:
     def add_page_links(self, url, fallback_to_selenium=True):
         try:
             downloaded_file = TDownloadedFile(url)
-        except (urllib.error.HTTPError, urllib.error.URLError, HttpHeadException, UnicodeEncodeError) as err:
-            self.logger.error('cannot download page url={} while add_page_links, exception={}'.format(url, err))
+        except (HttpException, UnicodeEncodeError) as err:
+            self.logger.error(err)
             return
         if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
             return
@@ -203,7 +205,7 @@ class TRobotStep:
                     self.website.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
                     click_all_selenium(self, url, self.website.parent_project.selenium_driver)
-        except (urllib.error.HTTPError, urllib.error.URLError, WebDriverException) as e:
+        except (HttpException, WebDriverException) as e:
             self.websiterlogger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
     def pop_url_with_max_weight(self, url_index):
@@ -231,7 +233,6 @@ class TRobotStep:
 
     def make_one_step(self):
         assert len(self.pages_to_process) > 0
-        self.processed_pages = set()
         self.url_weights = list()
         fallback_to_selenium = self.step_passport.get('fallback_to_selenium', True)
         for url_index in range(TRobotStep.max_step_url_count):

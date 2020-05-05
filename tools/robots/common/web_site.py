@@ -177,6 +177,7 @@ class TRobotWebSite:
         start_pages = self.get_previous_step_urls(step_index)
 
         target.pages_to_process = dict(start_pages)
+        target.processed_pages = set()
 
         if include_source == "always":
             assert not is_last_step # todo: should we export it?

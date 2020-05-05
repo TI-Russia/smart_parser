@@ -2,11 +2,11 @@ import json
 import shutil
 import os
 import tempfile
-import urllib.error
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.serp_parser import GoogleSearch
 from robots.common.web_site import TRobotWebSite, TRobotStep
+from robots.common.http_request import HttpException
 
 
 class TRobotProject:
@@ -120,7 +120,7 @@ class TRobotProject:
         links_count = 0
         try:
             serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
-        except (urllib.error.HTTPError, urllib.error.URLError) as err:
+        except HttpException as err:
             self.logger.error('cannot request search engine, exception {}'.format(err))
             return
 
