@@ -761,13 +761,13 @@ namespace Smart.Parser.Lib
             realEstateProperty.square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = NormalizeRawDecimalForTest(areaStr);
             realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
+            realEstateProperty.own_type_by_column = OwnedString;
 
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)
             {
                 realEstateProperty.type_raw = estateTypeStr;
                 realEstateProperty.own_type_raw = ownTypeStr;
-                realEstateProperty.own_type_by_column = OwnedString;
                 realEstateProperty.Text = estateTypeStr;
             }
             else // колонка содержит тип недвижимости и тип собственности

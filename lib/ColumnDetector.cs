@@ -17,7 +17,7 @@ namespace Smart.Parser.Lib
 
     public class ColumnDetector
     {
-        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано"};
+        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано", "не имеет"};
        
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
