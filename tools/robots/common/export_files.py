@@ -132,16 +132,20 @@ def check_html_can_be_declaration_preliminary(html):
 # more than 1 document in archive are declarations
 # consider other documents to be also declarations
 def set_archive_contain_declarations_if_two_files_are_declarations(office_info):
+    logger = office_info.logger
     archives_to_dl_results = defaultdict(set)
     for sha256, file_set in office_info.export_files_by_sha256.items():
         for f in file_set.file_copies:
             if f.archive_index != -1 and file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
                 archives_to_dl_results[f.cached_file].add(sha256)
     for sha256, file_set in office_info.export_files_by_sha256.items():
-        for f in file_set.file_copies:
-            if f.archive_index != -1 and len(archives_to_dl_results[f.cached_file]) > 1:
-                file_set.dl_recognizer_result = DL_RECOGNIZER_ENUM.POSITIVE
-                break
+        if file_set.dl_recognizer_result != DL_RECOGNIZER_ENUM.POSITIVE:
+            for f in file_set.file_copies:
+                if f.archive_index != -1 and len(archives_to_dl_results[f.cached_file]) > 1:
+                    file_set.dl_recognizer_result = DL_RECOGNIZER_ENUM.POSITIVE
+                    logger.debug("set dl_recognizer_result to {} for {} because other files in a archive are declarations".format(
+                        file_set.dl_recognizer_result, sha256))
+                    break
 
 
 def run_postponed_dl_recognizers(office_info):
