@@ -310,7 +310,8 @@ namespace Smart.Parser.Lib
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
-            if (!ColumnDetector.WeakHeaderCheck(row.Cells)) return false;
+            if (!ColumnDetector.WeakHeaderCheck(row.Cells)) 
+                return false;
             try
             {
                 columnOrdering = new ColumnOrdering();
@@ -490,11 +491,11 @@ namespace Smart.Parser.Lib
             {
                 if (GetLinesStaringWithNumbers(squareStr).Count > 1)
                 {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, squareStr, countryStr, person);
+                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
                 }
                 else
                 {
-                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, squareStr, countryStr, person);
+                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
                 }
             }
             catch (Exception e)
@@ -568,13 +569,16 @@ namespace Smart.Parser.Lib
         {
             if (!currRow.ColumnOrdering.ContainsField(field)) return false;
             string fieldStr = currRow.GetContents(field);
-            if (fieldStr == "") return false;
+            if (DataHelper.IsEmptyValue(fieldStr)) 
+                return false;
+
             bool fieldInThousands = (field & DeclarationField.DeclaredYearlyIncomeThousands) > 0;
             person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(fieldStr, fieldInThousands);
             if (!ignoreThousandMultiplier || fieldStr.Contains("тыс."))
             {
                 person.DeclaredYearlyIncome *= 1000;
             }
+
             if (!DataHelper.IsEmptyValue(fieldStr))
                 person.DeclaredYearlyIncomeRaw = NormalizeRawDecimalForTest(fieldStr);
             return true;
@@ -747,7 +751,7 @@ namespace Smart.Parser.Lib
             person.RealEstateProperties.Add(stateProperty);
         }
 
-        static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
+        static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
         {
             estateTypeStr = estateTypeStr.Trim();
             areaStr = areaStr.ReplaceEolnWithSpace();
@@ -761,7 +765,7 @@ namespace Smart.Parser.Lib
             realEstateProperty.square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = NormalizeRawDecimalForTest(areaStr);
             realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
-            realEstateProperty.own_type_by_column = OwnedString;
+            realEstateProperty.own_type_by_column = ownTypeByColumn;
 
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)
@@ -858,7 +862,7 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person)
+        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
         {
             List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
             List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
@@ -872,7 +876,8 @@ namespace Smart.Parser.Lib
                     GetListValueOrDefault(ownTypes, i, null),
                     GetListValueOrDefault(areas, i, ""),
                     GetListValueOrDefault(countries, i, ""),
-                    person
+                    person,
+                    ownTypeByColumn
                 );
             }
         }

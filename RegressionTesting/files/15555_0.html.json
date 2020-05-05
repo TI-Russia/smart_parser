@@ -18,7 +18,7 @@
           "text": "Земельный участок (под индивудуальное жилищное строительство)",
           "square": 951.0,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "951",
           "country_raw": "Россия"
         },
@@ -26,7 +26,7 @@
           "text": "Жилой дом",
           "square": 327.2,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "327,2",
           "country_raw": "Россия"
         },
@@ -34,7 +34,7 @@
           "text": "Квартира",
           "square": 74.9,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "74,9",
           "country_raw": "Россия"
         },
@@ -42,7 +42,7 @@
           "text": "Квартиры",
           "square": 102.3,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "102,3",
           "country_raw": "Россия"
         },
@@ -50,7 +50,7 @@
           "text": "Машина-место-бокс",
           "square": 15.9,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "15,9",
           "country_raw": "Россия"
         },

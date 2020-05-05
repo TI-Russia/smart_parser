@@ -121,6 +121,10 @@ namespace Smart.Parser.Lib
                 case "опекаемый": return RelationType.Child;
 
                 default:
+                    if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннолетн"))
+                        return RelationType.Child;
+                    if (clean.StartsWith("супруг"))
+                        return RelationType.Spouse;
                     if (throwException)
                     {
                         throw new ArgumentOutOfRangeException(strRel, $"Неизвестный тип родственника: {strRel}");
@@ -132,18 +136,22 @@ namespace Smart.Parser.Lib
         public static bool IsEmptyValue(string s)
         {
             if (s == null) return true;
-            s = s.Trim();
+            s = s.Trim().ToLower();
             if (Regex.Match(s, @"^[\s-_]+$").Success)
             {
                 return true;
             }
             return String.IsNullOrWhiteSpace(s)
                 || s == "-"
+                || s == "─"
+                || s == "- - -"
                 || s == "–"
                 || s == "_"
                 || s == "—"
                 || s == "нет"
                 || s == "не имеет"
+                || s == "не указан"
+                || s == "не указано"
                 || s == "отсутствует";
         }
 

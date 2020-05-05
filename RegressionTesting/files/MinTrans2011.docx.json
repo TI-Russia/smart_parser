@@ -24,7 +24,7 @@
           "text": "Квартира  (собственность)",
           "square": 42.70,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "42,7",
           "country_raw": "Россия"
         },
@@ -32,7 +32,7 @@
           "text": "Квартира (долевая собственность  1/2)",
           "square": 40.70,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "40,7",
           "country_raw": "Россия"
         },
@@ -49,7 +49,7 @@
           "text": "Гараж \n(собственность)",
           "square": 18.30,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "18,3",
           "country_raw": "Россия"
         },
@@ -57,7 +57,7 @@
           "text": "Нежилое помещение (долевая собственность \n1/3)",
           "square": 130.50,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "130,5",
           "country_raw": "Россия"
         },
@@ -65,7 +65,7 @@
           "text": "Квартира \n(собственность)",
           "square": 63.10,
           "relative": "Супруг(а)",
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "63,1",
           "country_raw": "Россия"
         },
@@ -73,7 +73,7 @@
           "text": "Квартира (долевая собственность \n1/2)",
           "square": 40.70,
           "relative": "Супруг(а)",
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "40,7",
           "country_raw": "Россия"
         },

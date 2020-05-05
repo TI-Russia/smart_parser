@@ -40,7 +40,7 @@
           "text": "Квартира (доля в праве) 35,7 (Россия)",
           "square": 35.7,
           "relative": "Ребенок",
-          "own_type_by_column": "В собственности",
+          "own_type_by_column": null,
           "square_raw": "35,7",
           "country_raw": "(Россия)",
           "type_raw": "Квартира (доля в праве) 35,7 (Россия)",

@@ -377,7 +377,7 @@ namespace Smart.Parser.Adapters
                 }
                 catch (Exception exp)
                 {
-                    Logger.Error(String.Format("cannot convert {0} to docx, try one more time", fileName));
+                    Logger.Error(String.Format("cannot convert {0} to docx, try one more time (exception: {1}", fileName, exp));
                     Thread.Sleep(10000); //10 seconds
                     fileName = _DocxConverter.ConvertFile2TempDocX(fileName);
                 }
