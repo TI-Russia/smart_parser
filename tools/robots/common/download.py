@@ -10,8 +10,6 @@ import shutil
 from robots.common.http_request import make_http_request, request_url_headers
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
-from robots.common.primitives import get_html_title
-
 
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"

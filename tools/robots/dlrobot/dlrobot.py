@@ -208,12 +208,10 @@ def parse_args():
     global ROBOT_STEPS
     parser = argparse.ArgumentParser()
     parser.add_argument("--project", dest='project', default="offices.txt", required=True)
-    parser.add_argument("--skip-final-download", dest='skip_final_download', default=False, action="store_true")
     parser.add_argument("--step", dest='step', default=None)
     parser.add_argument("--start-from", dest='start_from', default=None)
     parser.add_argument("--stop-after", dest='stop_after', default=None)
     parser.add_argument("--logfile", dest='logfile', default=None)
-    parser.add_argument("--input-url-list", dest='hypots', default=None)
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
@@ -262,16 +260,8 @@ def make_steps(args, project):
 def open_project(args):
     logger = setup_logging(args.logfile)
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
-        if args.hypots is not None:
-            if args.start_from is not None:
-                project.logger.info("ignore --input-url-list since --start-from  or --step is specified")
-            else:
-                project.create_by_hypots(args.hypots)
-        else:
-            project.read_project()
-
+        project.read_project()
         make_steps(args, project)
-
         if args.click_features_file:
             project.write_click_features(args.click_features_file)
 

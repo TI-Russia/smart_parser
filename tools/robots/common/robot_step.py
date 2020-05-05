@@ -35,8 +35,10 @@ class TUrlInfo:
             self.title = init_json['title']
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
-            self.downloaded_files = init_json.get('downloaded_files', list())
             self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
+            self.downloaded_files = list()
+            for rec in init_json.get('downloaded_files', list()):
+                self.downloaded_files.append(TLinkInfo(None, None, None).from_json(rec))
         else:
             self.step_name = step_name
             self.title = title
@@ -53,13 +55,13 @@ class TUrlInfo:
             'links': self.linked_nodes,
         }
         if len(self.downloaded_files) > 0:
-            record['downloaded_files'] = self.downloaded_files
+            record['downloaded_files'] = list(x.to_json() for x in self.downloaded_files)
         if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
             record['dl_recognizer_result'] = self.dl_recognizer_result
         return record
 
-    def add_downloaded_file(self, record):
-        self.downloaded_files.append(record)
+    def add_downloaded_file(self, link_info: TLinkInfo):
+        self.downloaded_files.append(link_info)
 
     def add_child_link(self, href, record):
         self.linked_nodes[href] = record
@@ -91,6 +93,9 @@ class TRobotStep:
 
     def get_step_name(self):
         return self.step_passport['step_name']
+
+    def is_last_step(self):
+        return self.get_step_name() == self.website.parent_project.robot_step_passports[-1]['step_name']
 
     def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
@@ -148,6 +153,10 @@ class TRobotStep:
         else:
             self.website.url_nodes[href].parent_nodes.add(link_info.SourceUrl)
 
+        if href not in self.website.exported_urls and self.is_last_step():
+            self.website.exported_urls.add(href)
+            self.website.export_file(downloaded_file)
+
         if self.step_passport.get('transitive', False):
             if href not in self.processed_pages:
                 if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
@@ -156,7 +165,9 @@ class TRobotStep:
         self.logger.debug("add link {0}".format(href))
 
     def add_downloaded_file_wrapper(self, link_info):
-        self.website.url_nodes[link_info.SourceUrl].add_downloaded_file(link_info.to_json())
+        self.website.url_nodes[link_info.SourceUrl].add_downloaded_file(link_info)
+        if self.is_last_step():
+            self.website.export_selenium_doc(link_info)
 
     def get_check_func_name(self):
         return self.step_passport['check_link_func'].__name__

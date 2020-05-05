@@ -94,15 +94,14 @@ class TRobotProject:
         result = list()
         for office_info in self.offices:
             for export_record in office_info.exported_files:
-                path = office_info.get_shortest_path_to_root(export_record['url'])
+                path = office_info.get_shortest_path_to_root(export_record.url)
                 rec = {
                     'click_path': path,
-                    'cached_file': export_record['cached_file'].replace('\\', '/'),
-                    'sha256': export_record['sha256'],
-                    'dl_recognizer_result': export_record['dl_recognizer_result'],
+                    'cached_file': export_record.cached_file.replace('\\', '/'),
+                    'sha256': export_record.sha256
                 }
-                if 'name_in_archive' in export_record:
-                    rec['name_in_archive'] = export_record['name_in_archive']
+                if export_record.name_in_archive is not None:
+                    rec['name_in_archive'] = export_record.name_in_archive
                 result.append(rec)
         result = sorted(result, key=(lambda x: x['sha256']))
         with open(self.project_file + ".stats", "w", encoding="utf8") as outf:

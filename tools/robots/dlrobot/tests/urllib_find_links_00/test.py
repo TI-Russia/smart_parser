@@ -15,9 +15,10 @@ ROBOT_STEPS = [
 ]
 
 if __name__ == "__main__":
-    with TRobotProject(logging, "project.txt", ROBOT_STEPS, None) as project:
+    with TRobotProject(logging, "project.txt", ROBOT_STEPS, "result") as project:
         project.read_project()
         office_info = project.offices[0]
+        office_info.create_export_folder()
         target = office_info.robot_steps[0]
         step_info = TRobotStep(office_info, ROBOT_STEPS[0])
         start_page = "sved.html"

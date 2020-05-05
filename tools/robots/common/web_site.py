@@ -1,4 +1,4 @@
-from robots.common.download import TDownloadedFile
+from robots.common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
 from collections import defaultdict
 from robots.common.primitives import get_site_domain_wo_www, get_html_title
 import os
@@ -10,6 +10,7 @@ import hashlib
 import re
 from robots.common.find_link import TLinkInfo, TClickEngine
 from robots.common.robot_step import TRobotStep, TUrlInfo
+from robots.common.export_files import export_one_file_tmp, check_html_can_be_declaration_preliminary, TExportFile
 
 FIXLIST = {
     'fsin.su': {
@@ -27,12 +28,19 @@ class TRobotWebSite:
         self.parent_project = project
         self.url_nodes = dict()
         self.logger = project.logger
+
+        #runtime members (no serialization)
         self.runtime_processed_files = dict()
+        self.sent_to_export_files_count = 0
+        self.export_files_by_sha256 = dict()
+        self.exported_files = list()
+        self.exported_urls = set()
+
         if init_json is not None:
             self.morda_url = init_json['morda_url']
             self.office_name = init_json.get('name', '')
             self.robot_steps = list()
-            self.exported_files = init_json.get('exported_files', [])
+            self.exported_files = list(TExportFile(init_json=x) for x in init_json.get('exported_files', []))
             for step_no, step in enumerate(init_json.get('steps', list())):
                 self.robot_steps.append(TRobotStep(self, project.robot_step_passports[step_no], init_json=step))
             for url, info in init_json.get('url_nodes', dict()).items():
@@ -44,7 +52,7 @@ class TRobotWebSite:
             self.morda_url = ""
             self.office_name = ""
             self.robot_steps = list()
-            self.exported_files = []
+
         if len(self.robot_steps) == 0:
             for p in project.robot_step_passports:
                 self.robot_steps.append(TRobotStep(self, p))
@@ -59,7 +67,7 @@ class TRobotWebSite:
             'name': self.office_name,
             'steps': [s.to_json() for s in self.robot_steps],
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
-            'exported_files': self.exported_files
+            'exported_files': list(x.to_json() for x in self.exported_files)
         }
 
     def get_parents(self, record):
@@ -125,6 +133,7 @@ class TRobotWebSite:
         office_folder = self.get_export_folder()
         if os.path.exists(office_folder):
             shutil.rmtree(office_folder)
+        os.makedirs(office_folder)
 
     def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, soup):
         html_text = str(soup)
@@ -201,3 +210,18 @@ class TRobotWebSite:
         self.logger.debug("{}".format(str(target.profiler)))
         target.delete_url_mirrors_by_www_and_protocol_prefix()
         self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))
+
+    def export_file(self, downloaded_file: TDownloadedFile):
+        url = downloaded_file.original_url
+        if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+            if not check_html_can_be_declaration_preliminary(downloaded_file.convert_html_to_utf8()):
+                self.logger.debug("do not export {} because of preliminary check".format(url))
+                return
+
+        export_one_file_tmp(self, url, downloaded_file.data_file_path,
+                            downloaded_file.file_extension, self.url_nodes[url])
+
+    def export_selenium_doc(self, link_info: TLinkInfo):
+        cached_file = link_info.DownloadedFile
+        extension = os.path.splitext(cached_file)[1]
+        export_one_file_tmp(self, link_info.SourceUrl, cached_file, extension, link_info)
