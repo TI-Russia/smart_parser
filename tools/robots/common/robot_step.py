@@ -6,7 +6,8 @@ from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import WebDriverException
 from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
-                    web_link_is_absolutely_prohibited, TLinkInfo
+                    web_link_is_absolutely_prohibited
+from robots.common.link_info import TLinkInfo
 import urllib.error
 from robots.common.primitives import get_html_title
 
@@ -116,58 +117,57 @@ class TRobotStep:
             'profiler': self.profiler
         }
 
-    def normalize_and_check_link(self, link_info):
-        if link_info.TargetUrl is not None:
-            link_info.TargetUrl = strip_viewer_prefix(link_info.TargetUrl).strip(" \r\n\t")
-            if web_link_is_absolutely_prohibited(link_info.SourceUrl, link_info.TargetUrl):
+    def normalize_and_check_link(self, link_info: TLinkInfo):
+        if link_info.target_url is not None:
+            link_info.target_url = strip_viewer_prefix(link_info.target_url).strip(" \r\n\t")
+            if web_link_is_absolutely_prohibited(link_info.source_url, link_info.target_url):
                 return False
         self.logger.debug(
             "check element {}, url={} text={}".format(
-                link_info.ElementIndex,
-                prepare_for_logging(link_info.TargetUrl), # not redirected yet
-                prepare_for_logging(link_info.AnchorText)))
+                link_info.element_index,
+                prepare_for_logging(link_info.target_url), # not redirected yet
+                prepare_for_logging(link_info.anchor_text)))
         try:
             return self.step_passport['check_link_func'](link_info)
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False
 
-    def add_link_wrapper(self, link_info):
-        assert link_info.TargetUrl is not None
+    def add_link_wrapper(self, link_info: TLinkInfo):
+        assert link_info.target_url is not None
         try:
-            downloaded_file = TDownloadedFile(link_info.TargetUrl)
+            downloaded_file = TDownloadedFile(link_info.target_url)
         except (urllib.error.HTTPError, urllib.error.URLError, HttpHeadException, UnicodeEncodeError) as err:
-            self.logger.error('cannot download page url={} while add_links, exception={}'.format(link_info.TargetUrl, err))
+            self.logger.error('cannot download page url={} while add_links, exception={}'.format(link_info.target_url, err))
             return
 
-        href = link_info.TargetUrl
+        href = link_info.target_url
 
-        self.website.url_nodes[link_info.SourceUrl].add_child_link(href, link_info.to_json())
-        link_info.Weight = max(link_info.Weight, self.step_urls[href])
-        self.step_urls[href] = link_info.Weight
+        self.website.url_nodes[link_info.source_url].add_child_link(href, link_info.to_json())
+        link_info.weight = max(link_info.weight, self.step_urls[href])
+        self.step_urls[href] = link_info.weight
 
         if href not in self.website.url_nodes:
-            if link_info.TargetTitle is None and downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-                link_info.TargetTitle = get_html_title(downloaded_file.data)
-            self.website.url_nodes[href] = TUrlInfo(title=link_info.TargetTitle, step_name=self.get_step_name())
+            if link_info.target_title is None and downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+                link_info.target_title = get_html_title(downloaded_file.data)
+            self.website.url_nodes[href] = TUrlInfo(title=link_info.target_title, step_name=self.get_step_name())
         else:
-            self.website.url_nodes[href].parent_nodes.add(link_info.SourceUrl)
+            self.website.url_nodes[href].parent_nodes.add(link_info.source_url)
 
-        if href not in self.website.exported_urls and self.is_last_step():
-            self.website.exported_urls.add(href)
-            self.website.export_file(downloaded_file)
+        if self.is_last_step():
+            self.website.export_env.export_file(downloaded_file, self.website.url_nodes[href])
 
         if self.step_passport.get('transitive', False):
             if href not in self.processed_pages:
                 if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-                    self.pages_to_process[href] = link_info.Weight
+                    self.pages_to_process[href] = link_info.weight
 
         self.logger.debug("add link {0}".format(href))
 
-    def add_downloaded_file_wrapper(self, link_info):
-        self.website.url_nodes[link_info.SourceUrl].add_downloaded_file(link_info)
+    def add_downloaded_file_wrapper(self, link_info: TLinkInfo):
+        self.website.url_nodes[link_info.source_url].add_downloaded_file(link_info)
         if self.is_last_step():
-            self.website.export_selenium_doc(link_info)
+            self.website.export_env.export_selenium_doc(link_info)
 
     def get_check_func_name(self):
         return self.step_passport['check_link_func'].__name__
@@ -209,8 +209,10 @@ class TRobotStep:
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
-        if url_index > 300 and max(self.url_weights[-10:]) < 10:
-            return None
+        if url_index > 300:  # and max(self.url_weights[-10:]) < 10:
+            if self.website.export_env.waiting_too_long():
+                self.website.logger.error("stop crawling since last time no declaration found")
+                return None
         max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
         best_url = None
         for url, weight in self.pages_to_process.items():

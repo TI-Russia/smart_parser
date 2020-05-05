@@ -4,7 +4,7 @@ import os
 import tempfile
 import urllib.error
 from robots.common.selenium_driver import TSeleniumDriver
-from robots.common.find_link import TLinkInfo, TClickEngine
+from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.serp_parser import GoogleSearch
 from robots.common.web_site import TRobotWebSite, TRobotStep
 
@@ -93,7 +93,7 @@ class TRobotProject:
     def write_export_stats(self):
         result = list()
         for office_info in self.offices:
-            for export_record in office_info.exported_files:
+            for export_record in office_info.export_env.exported_files:
                 path = office_info.get_shortest_path_to_root(export_record.url)
                 rec = {
                     'click_path': path,
@@ -126,7 +126,7 @@ class TRobotProject:
 
         for url in serp_urls:
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
-            link_info.Weight = TLinkInfo.MINIMAL_LINK_WEIGHT + 1  # > 0
+            link_info.weight = TLinkInfo.MINIMAL_LINK_WEIGHT + 1  # > 0
             step_info.add_link_wrapper(link_info)
             if max_results == 1:
                 break  # one  link found
@@ -145,3 +145,6 @@ class TRobotProject:
         policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
         return policy == "run_after_if_no_results" and len(step_info.step_urls) == 0
 
+    def export_files_to_folder(self):
+        for office_info in self.offices:
+            office_info.export_env.reorder_export_files_and_delete_non_declarations()

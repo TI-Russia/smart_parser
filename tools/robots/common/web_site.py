@@ -8,9 +8,9 @@ import datetime
 from robots.common.http_request import get_request_rate
 import hashlib
 import re
-from robots.common.find_link import TLinkInfo, TClickEngine
+from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.robot_step import TRobotStep, TUrlInfo
-from robots.common.export_files import export_one_file_tmp, check_html_can_be_declaration_preliminary, TExportFile
+from robots.common.export_files import TExportEnvironment
 
 FIXLIST = {
     'fsin.su': {
@@ -31,16 +31,12 @@ class TRobotWebSite:
 
         #runtime members (no serialization)
         self.runtime_processed_files = dict()
-        self.sent_to_export_files_count = 0
-        self.export_files_by_sha256 = dict()
-        self.exported_files = list()
-        self.exported_urls = set()
-
+        self.export_env = TExportEnvironment(self)
         if init_json is not None:
             self.morda_url = init_json['morda_url']
             self.office_name = init_json.get('name', '')
             self.robot_steps = list()
-            self.exported_files = list(TExportFile(init_json=x) for x in init_json.get('exported_files', []))
+            self.export_env.from_json(init_json.get('exported_files'))
             for step_no, step in enumerate(init_json.get('steps', list())):
                 self.robot_steps.append(TRobotStep(self, project.robot_step_passports[step_no], init_json=step))
             for url, info in init_json.get('url_nodes', dict()).items():
@@ -67,7 +63,7 @@ class TRobotWebSite:
             'name': self.office_name,
             'steps': [s.to_json() for s in self.robot_steps],
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
-            'exported_files': list(x.to_json() for x in self.exported_files)
+            'exported_files': self.export_env.to_json()
         }
 
     def get_parents(self, record):
@@ -211,17 +207,3 @@ class TRobotWebSite:
         target.delete_url_mirrors_by_www_and_protocol_prefix()
         self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))
 
-    def export_file(self, downloaded_file: TDownloadedFile):
-        url = downloaded_file.original_url
-        if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-            if not check_html_can_be_declaration_preliminary(downloaded_file.convert_html_to_utf8()):
-                self.logger.debug("do not export {} because of preliminary check".format(url))
-                return
-
-        export_one_file_tmp(self, url, downloaded_file.data_file_path,
-                            downloaded_file.file_extension, self.url_nodes[url])
-
-    def export_selenium_doc(self, link_info: TLinkInfo):
-        cached_file = link_info.DownloadedFile
-        extension = os.path.splitext(cached_file)[1]
-        export_one_file_tmp(self, link_info.SourceUrl, cached_file, extension, link_info)

@@ -1,18 +1,17 @@
+from robots.common.download import save_downloaded_file
+from robots.common.link_info import TLinkInfo
+from robots.common.content_types import ALL_CONTENT_TYPES
+
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from robots.common.content_types import ALL_CONTENT_TYPES
-import logging
 from selenium.common.exceptions import WebDriverException
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+
+import logging
 import os
 import shutil
 from pathlib import Path
 import time
-from robots.common.download import save_downloaded_file
-from contextlib import contextmanager
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.expected_conditions import staleness_of
 
 
 def make_folder_empty(folder):
@@ -114,29 +113,29 @@ class TSeleniumDriver:
             seconds += 1
         return None
 
-    def click_element(self, element, link_info):
+    def click_element(self, element, link_info: TLinkInfo):
         if self.download_folder is not None:
             make_folder_empty(self.download_folder)
-        assert link_info.TargetUrl is None
+        assert link_info.target_url is None
         save_current_url = self.the_driver.current_url  # may differ from link_info.SourceUrl, because of redirects
 
-        ActionChains(self.the_driver).move_to_element(element) # it is the same?
+        ActionChains(self.the_driver).move_to_element(element)
 
         element.click()
         time.sleep(6)
         if self.download_folder is not None:
-            link_info.DownloadedFile = self.wait_download_finished(180)
+            link_info.downloaded_file = self.wait_download_finished(180)
 
-        if link_info.DownloadedFile is None:
-            if self.the_driver.current_url != link_info.SourceUrl:
-                link_info.TargetUrl = self.the_driver.current_url
-                link_info.TargetTitle = self.the_driver.title
+        if link_info.downloaded_file is None:
+            if self.the_driver.current_url != link_info.source_url:
+                link_info.target_url = self.the_driver.current_url
+                link_info.target_title = self.the_driver.title
 
         if self.the_driver.current_url != save_current_url:
             self.the_driver.back()
         if self.the_driver.current_url != save_current_url:
-            self.the_driver.get(link_info.SourceUrl)  # hope it leads to save_current_url
-            if save_current_url != link_info.SourceUrl:
+            self.the_driver.get(link_info.source_url)  # hope it leads to save_current_url
+            if save_current_url != link_info.source_url:
                 logger = logging.getLogger("dlrobot_logger")
                 logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
                     save_current_url, self.the_driver.current_url))

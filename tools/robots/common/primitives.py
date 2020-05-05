@@ -1,7 +1,6 @@
 import urllib.parse
 import re
-from bs4 import BeautifulSoup
-
+from robots.common.link_info import TLinkInfo
 
 def strip_viewer_prefix(href):
     if href is None:
@@ -40,25 +39,25 @@ def normalize_and_russify_anchor_text(text):
     return ""
 
 
-def check_link_sitemap(link_info):
-    text = normalize_and_russify_anchor_text(link_info.AnchorText)
+def check_link_sitemap(link_info: TLinkInfo):
+    text = normalize_and_russify_anchor_text(link_info.anchor_text)
     return text.startswith('карта сайта')
 
 
-def check_anticorr_link_text(link_info):
-    text = link_info.AnchorText.strip().lower()
+def check_anticorr_link_text(link_info: TLinkInfo):
+    text = link_info.anchor_text.strip().lower()
     if text.startswith(u'противодействие'):
         return text.find("коррупц") != -1
     return False
 
 
-def check_sub_page_or_iframe(link_info):
-    if link_info.TargetUrl is None:
+def check_sub_page_or_iframe(link_info: TLinkInfo):
+    if link_info.target_url is None:
         return False
-    if link_info.TagName is not None and link_info.TagName.lower() == "iframe":
+    if link_info.tag_name is not None and link_info.tag_name.lower() == "iframe":
         return True
-    parent = strip_html_url(link_info.SourceUrl)
-    subpage = strip_html_url(link_info.TargetUrl)
+    parent = strip_html_url(link_info.source_url)
+    subpage = strip_html_url(link_info.target_url)
     return subpage.startswith(parent)
 
 

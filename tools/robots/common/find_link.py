@@ -7,69 +7,7 @@ from robots.common.http_request import consider_request_policy
 from robots.common.primitives import get_site_domain_wo_www
 from selenium.common.exceptions import WebDriverException
 import re
-from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
-
-
-class TClickEngine:
-    urllib = 'urllib'
-    selenium = 'selenium'
-    google = 'google'
-    manual = 'manual'
-
-
-class TLinkInfo:
-    MINIMAL_LINK_WEIGHT = 0.0
-
-    def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="", tag_name=None):
-        self.Engine = engine
-        self.ElementIndex = element_index
-        self.PageHtml = "" if page_html is None else page_html
-        self.SourceUrl = source
-        self.TargetUrl = target
-        self.AnchorText = ""
-        self.set_anchor_text(anchor_text)
-        self.TagName = tag_name
-        self.AnchorTextFoundSomewhere = False
-        self.DownloadedFile = None
-        self.TargetTitle = None
-        self.Weight = TLinkInfo.MINIMAL_LINK_WEIGHT
-        self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
-
-    def set_anchor_text(self, anchor_text):
-        self.AnchorText = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
-
-    def to_json(self):
-        rec = {
-            'src': self.SourceUrl,
-            'trg': self.TargetUrl,
-            'text': self.AnchorText,
-            'engine': self.Engine,
-            'element_index': self.ElementIndex,
-        }
-        if self.TagName is not None:
-            rec['tagname'] = self.TagName
-        if self.AnchorTextFoundSomewhere:
-            rec['text_proxim'] = True
-        if self.DownloadedFile is not None:
-            rec['downloaded_file'] = self.DownloadedFile
-        if self.Weight != 0.0:
-            rec['link_weight'] = self.Weight
-        if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
-            rec['dl_recognizer_result'] = self.dl_recognizer_result
-        return rec
-
-    def from_json(self, rec):
-        self.SourceUrl = rec['src']
-        self.TargetUrl = rec['trg']
-        self.AnchorText = rec['text']
-        self.Engine = rec['engine']
-        self.ElementIndex = rec['element_index']
-        self.TagName = rec.get('tagname')
-        self.AnchorTextFoundSomewhere = rec.get('text_proxim', False)
-        self.DownloadedFile = rec.get('downloaded_file')
-        self.Weight = rec.get('link_weight', 0.0)
-        self.dl_recognizer_result = rec.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
-        return self
+from robots.common.link_info import TLinkInfo, TClickEngine
 
 
 def get_office_domain(web_domain):
@@ -188,9 +126,9 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     driver_holder.click_element(element, link_info)
 
     if step_info.normalize_and_check_link(link_info):
-        if link_info.DownloadedFile is not None:
+        if link_info.downloaded_file is not None:
             step_info.add_downloaded_file_wrapper(link_info)
-        elif link_info.TargetUrl is not None:
+        elif link_info.target_url is not None:
             step_info.add_link_wrapper(link_info)
 
 

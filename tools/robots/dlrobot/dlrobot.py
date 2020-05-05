@@ -6,7 +6,6 @@ import sys
 import traceback
 import urllib.error
 from robots.common.download import get_file_extension_only_by_headers, TDownloadEnv
-from robots.common.export_files import export_files_to_folder
 from robots.common.robot_project import TRobotProject
 from robots.common.robot_step import TRobotStep
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
@@ -59,12 +58,12 @@ def has_negative_words(anchor_text):
     return NEGATIVE_REGEXP.search(anchor_text) is not None
 
 
-def looks_like_a_document_link(link_info):
+def looks_like_a_document_link(link_info: TLinkInfo):
     global ACCEPTED_DECLARATION_FILE_EXTENSIONS
 
     # check anchor text
-    anchor_text_ru = normalize_and_russify_anchor_text(link_info.AnchorText)
-    anchor_text_en = link_info.AnchorText.lower()
+    anchor_text_ru = normalize_and_russify_anchor_text(link_info.anchor_text)
+    anchor_text_en = link_info.anchor_text.lower()
     if re.search('(скачать)|(загрузить)', anchor_text_ru) is not None:
         return True
     if anchor_text_en.find("download") != -1:
@@ -77,8 +76,8 @@ def looks_like_a_document_link(link_info):
             return True
 
     # check url path or make http head request
-    if link_info.TargetUrl is not None:
-        target = link_info.TargetUrl.lower()
+    if link_info.target_url is not None:
+        target = link_info.target_url.lower()
         if re.search('(docs)|(documents)|(files)|(download)', target):
             return True
         if target.endswith('html') or target.endswith('htm'):
@@ -86,26 +85,26 @@ def looks_like_a_document_link(link_info):
         if target.endswith('.jpg') or target.endswith('.png'):
             return False
         try:
-            ext = get_file_extension_only_by_headers(link_info.TargetUrl)
+            ext = get_file_extension_only_by_headers(link_info.target_url)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
         except HttpHeadException as err:
             pass  # do not spam logs
         except (urllib.error.HTTPError, urllib.error.URLError) as err:
             logger = logging.getLogger("dlrobot_logger")
-            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.TargetUrl, err))
+            logger.error('cannot query (HEAD) url={}  exception={}\n'.format(link_info.target_url, err))
             return False
 
     return False
 
 
-def looks_like_a_declaration_link(link_info):
+def looks_like_a_declaration_link(link_info: TLinkInfo):
     # here is a place for ML
-    anchor_text = normalize_and_russify_anchor_text(link_info.AnchorText)
+    anchor_text = normalize_and_russify_anchor_text(link_info.anchor_text)
     if re.search('^(сведения)|(справк[аи]) о доходах', anchor_text):
-        link_info.Weight = 50
-        logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.Weight))
+        link_info.weight = 50
+        logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
         return True
-    page_html = normalize_and_russify_anchor_text(link_info.PageHtml)
+    page_html = normalize_and_russify_anchor_text(link_info.page_html)
     if has_negative_words(anchor_text):
         return False
     income_regexp = '(доход((ах)|(е)))|(коррупц)'
@@ -118,8 +117,8 @@ def looks_like_a_declaration_link(link_info):
     sub_page = check_sub_page_or_iframe(link_info)
     income_path = False
     good_doc_type_path = False
-    if link_info.TargetUrl is not None:
-        target = link_info.TargetUrl.lower()
+    if link_info.target_url is not None:
+        target = link_info.target_url.lower()
         if re.search('(^sved)|(sveodoh)', target):
             good_doc_type_path = True
         if re.search('(do[ck]?[hx]od)|(income)', target):
@@ -169,7 +168,7 @@ def looks_like_a_declaration_link(link_info):
 
         all_features_str = ";".join(k for k, v in all_features if v)
         logging.getLogger("dlrobot_logger").debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
-        link_info.Weight = weight
+        link_info.weight = weight
         return True
     return False
 
@@ -252,7 +251,7 @@ def make_steps(args, project):
     TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished()
 
     project.logger.info("=== export_files_to_folder =========")
-    export_files_to_folder(project.offices)
+    project.export_files_to_folder()
     project.write_export_stats()
     project.write_project()
 
