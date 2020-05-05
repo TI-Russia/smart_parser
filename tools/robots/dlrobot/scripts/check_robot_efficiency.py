@@ -77,7 +77,7 @@ if __name__ == "__main__":
             exported_files_count = float(mo.group(1))
     engine_stats.update_last_time(end_time)
     step_stats.update_last_time(end_time)
-    print('All milliseconds:{}'.format((end_time-start_time).total_seconds()))
+    print('All seconds:{}'.format((end_time-start_time).total_seconds()))
     print ('Engine time stats:{}'.format(engine_stats.time_stats))
     print ('Step time stats:{}'.format(step_stats.time_stats))
     print ("urllib_find_links={}, selenium_find_links={}".format(urllib_find_links_count, selenium_find_links_count))

@@ -133,7 +133,6 @@ def request_url_headers(url):
         time.sleep(1)
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
 
-
     HEADER_REQUEST_COUNT[url] += 1
     redirected_url, headers, _ = make_http_request(url, "HEAD")
     HEADER_MEMORY_CACHE[url] = (redirected_url, headers)

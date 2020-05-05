@@ -1,10 +1,8 @@
 import http.server
 import sys
-import os
-import shutil
 import threading
-from robots.common.download import get_file_extension_only_by_headers, read_from_cache_or_download, \
-            get_file_extension_by_cached_url, DEFAULT_HTML_EXTENSION, TDownloadEnv
+from robots.common.download import get_file_extension_only_by_headers, TDownloadedFile, \
+             DEFAULT_HTML_EXTENSION, TDownloadEnv
 
 HTTP_HEAD_REQUESTS_COUNT = 0
 HTTP_GET_REQUESTS_COUNT = 0
@@ -47,11 +45,10 @@ if __name__ == '__main__':
     server_thread.start()
     url = web_addr +"/somepath"
     wrong_extension = get_file_extension_only_by_headers(url)
-    assert wrong_extension == ".doc" # see minvr.ru for this error
-    read_from_cache_or_download(url)
-    right_extension = get_file_extension_by_cached_url(url) #read file contents to determine it's type
+    assert wrong_extension == ".doc"   # see minvr.ru for this error
+    downloaded_file = TDownloadedFile(url)
+    right_extension = downloaded_file.file_extension  #read file contents to determine it's type
     assert right_extension == DEFAULT_HTML_EXTENSION
-    #server_thread.join()
     HTTP_SERVER.shutdown()
     assert HTTP_GET_REQUESTS_COUNT == 1
     assert HTTP_HEAD_REQUESTS_COUNT == 1

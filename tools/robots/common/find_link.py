@@ -1,69 +1,13 @@
-import os
 import logging
 import urllib.error
 import urllib.parse
-from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from robots.common.download import  read_from_cache_or_download, get_file_extension_only_by_headers
+from robots.common.download import are_web_mirrors
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
-from robots.common.primitives import strip_viewer_prefix, get_site_domain_wo_www
+from robots.common.primitives import get_site_domain_wo_www
 from selenium.common.exceptions import WebDriverException
 import re
-
-
-class TClickEngine:
-    urllib = 'urllib'
-    selenium = 'selenium'
-    google = 'google'
-    manual = 'manual'
-
-
-class TLinkInfo:
-    MINIMAL_LINK_WEIGHT = 0.0
-
-    def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="", tag_name=None):
-        self.Engine = engine
-        self.ElementIndex = element_index
-        self.PageHtml = "" if page_html is None else page_html
-        self.SourceUrl = source
-        self.TargetUrl = target
-        self.AnchorText = ""
-        self.set_anchor_text(anchor_text)
-        self.TagName = tag_name
-        self.AnchorTextFoundSomewhere = False
-        self.DownloadedFile = None
-        self.TargetTitle = None
-        self.Weight = TLinkInfo.MINIMAL_LINK_WEIGHT
-
-    def set_anchor_text(self, anchor_text):
-        self.AnchorText = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
-
-    def to_json(self):
-        rec = {
-            'text': self.AnchorText,
-            'engine': self.Engine,
-            'element_index': self.ElementIndex,
-        }
-        if self.TagName is not None:
-            rec['tagname'] = self.TagName
-        if self.AnchorTextFoundSomewhere:
-            rec['text_proxim'] = True
-        if self.DownloadedFile is not None:
-            rec['downloaded_file'] = self.DownloadedFile
-        if self.Weight != 0.0:
-            rec['link_weight'] = self.Weight
-        return rec
-
-
-def are_web_mirrors(domain1, domain2):
-    try:
-        # check all mirrors including simple javascript
-        html1 = read_from_cache_or_download(domain1)
-        html2 = read_from_cache_or_download(domain2)
-        res = len(html1) == len(html2) # it is enough
-        return res
-    except (urllib.error.HTTPError, urllib.error.URLError) as exp:
-        return False
+from robots.common.link_info import TLinkInfo, TClickEngine
 
 
 def get_office_domain(web_domain):
@@ -126,18 +70,6 @@ def make_link(main_url, href):
     return url
 
 
-def can_be_office_document(href):
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-    filename, file_extension = os.path.splitext(href)
-    if file_extension == DEFAULT_HTML_EXTENSION:
-        return False
-    if file_extension.lower() in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        return True
-    if href.find('docs.google') != -1:
-        return True
-    return False
-
-
 def get_base_url(main_url, soup):
     for l in soup.findAll('base'):
         href = l.attrs.get('href')
@@ -156,8 +88,6 @@ def get_soup_title(soup):
 
 def find_links_in_html_by_text(step_info, main_url, soup):
     logger = logging.getLogger("dlrobot_logger")
-    if can_be_office_document(main_url):
-        return
     base = get_base_url(main_url, soup)
     if base.startswith('/'):
         base = make_link(main_url, base)
@@ -196,18 +126,14 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     driver_holder.click_element(element, link_info)
 
     if step_info.normalize_and_check_link(link_info):
-        if link_info.DownloadedFile is not None:
+        if link_info.downloaded_file is not None:
             step_info.add_downloaded_file_wrapper(link_info)
-        elif link_info.TargetUrl is not None:
+        elif link_info.target_url is not None:
             step_info.add_link_wrapper(link_info)
 
 
 def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
-    if get_file_extension_only_by_headers(main_url) != DEFAULT_HTML_EXTENSION:
-        logger.debug("do not browse {} with selenium, since it has wrong http headers".format(main_url))
-        return
-
     logger.debug("find_links_with_selenium url={}".format(main_url))
     consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
