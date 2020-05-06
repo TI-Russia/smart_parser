@@ -11,6 +11,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
 using System.Xml.Linq;
+using NPOI.SS.Formula.Functions;
 
 namespace Smart.Parser.Adapters
 {
@@ -193,6 +194,7 @@ namespace Smart.Parser.Adapters
             MergedColsCount = (gridSpan == null) ? 1 : (int)gridSpan.Val;
             Row = row;
             Col = column;
+
             if (inputCell.TableCellProperties != null
                 && inputCell.TableCellProperties.TableCellWidth != null
                 && inputCell.TableCellProperties.TableCellWidth.Type != null
@@ -307,6 +309,8 @@ namespace Smart.Parser.Adapters
             {
                 FontSize = docHolder.DefaultFontSize;
             }
+            
+            Logger.Info("FontName = {0}", FontName);
 
         }
 
@@ -574,6 +578,7 @@ namespace Smart.Parser.Adapters
 
                 }
             }
+            
             return widthInfo;
         }
 

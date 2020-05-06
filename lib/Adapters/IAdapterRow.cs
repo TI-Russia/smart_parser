@@ -56,6 +56,8 @@ namespace Smart.Parser.Adapters
             foreach (var hardLine in hardLines)
             {
                 stringSize = graphics.MeasureString(hardLine, font);
+                Logger.Info("stringSize = {0} (FontName = {2}, fontsize = {1})", stringSize, FontSize / 2, FontName);
+
                 int defaultMargin = 10; //to do calc it really
                 int softLinesCount = (int)(stringSize.Width / (CellWidth - defaultMargin)) + 1;
                 if (softLinesCount == 1)
