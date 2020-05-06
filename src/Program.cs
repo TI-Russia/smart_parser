@@ -445,7 +445,9 @@ namespace Smart.Parser
             Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
 
             Logger.Info(String.Format("Parsing {0}", declarationFile));
+
             IAdapter adapter = GetAdapter(declarationFile);
+            Logger.Info(String.Format("Using adapter {0}", adapter));
 
             Logger.Info(String.Format("TablesCount = {0}", adapter.GetTablesCount()));
             Logger.Info(String.Format("RowsCount = {0}", adapter.GetRowsCount()));
