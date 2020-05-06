@@ -44,7 +44,7 @@ NEGATIVE_WORDS = [
     'схема',    'концепция',    'доктрина',
     'технические',    '^федеральный',    '^историческ',
     '^закон',    'новости', "^формы", "обратная", "обращения",
-    "^перечень", "прочие", "слабовидящих"
+    "^перечень", "прочие", "слабовидящих", "бюджет"
 ] + ['^{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
 # document type  (указ, утверждена) can be inside the title, for example:
 #сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении министерства здравоохранения российской федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте министерства здравоохранения российской федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным указом президента российской федерации от 8 июля 2013 г. № 613
@@ -97,8 +97,8 @@ def looks_like_a_document_link(link_info: TLinkInfo):
 def looks_like_a_declaration_link(link_info: TLinkInfo):
     # here is a place for ML
     anchor_text = normalize_and_russify_anchor_text(link_info.anchor_text)
-    if re.search('^(сведения)|(справк[аи]) о доходах', anchor_text):
-        link_info.weight = 50
+    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text):
+        link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
         logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
         return True
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
@@ -147,15 +147,15 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         if income_anchor:
-            weight += 50
+            weight += TLinkInfo.BEST_LINK_WEIGHT
         if income_path:
-            weight += 50
+            weight += TLinkInfo.BEST_LINK_WEIGHT
         if good_doc_type_anchor:
-            weight += 10
+            weight += TLinkInfo.NORMAL_LINK_WEIGHT
         if good_doc_type_path:
-            weight += 10
+            weight += TLinkInfo.NORMAL_LINK_WEIGHT
         if year_found_anchor:
-            weight += 5  # better than sub_page
+            weight += TLinkInfo.TRASH_LINK_WEIGHT  # better than sub_page
 
         all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
                         ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),

@@ -82,8 +82,12 @@ class TExportFileSet:
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
         self.waiting_conversion = False
 
-    def run_dl_recognizer_wrapper(self):
-        self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
+    def run_dl_recognizer_wrapper(self, logger):
+        try:
+            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
+            self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
+        except Exception as exp:
+            logger.error(exp)
 
 
 def check_html_can_be_declaration_preliminary(html):
@@ -116,6 +120,7 @@ class TExportEnvironment:
         if rec is not None:
             self.exported_files = list(TExportFile(init_json=x) for x in rec)
 
+    # todo: do not save file copies
     def export_one_file_tmp(self, url, cached_file, extension, parent_record):
         if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             return
@@ -146,10 +151,10 @@ class TExportEnvironment:
                     not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
                     file_set.waiting_conversion = True
                 else:
-                    file_set.run_dl_recognizer_wrapper()
+                    file_set.run_dl_recognizer_wrapper(self.logger)
                     if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
                         self.last_found_declaration_time = time.time()
-                        self.logger.debug("found declaration")
+                        self.logger.debug("found a declaration")
                 self.export_files_by_sha256[new_file.sha256] = file_set
             else:
                 found_file.file_copies.append(new_file)
@@ -192,7 +197,7 @@ class TExportEnvironment:
     def run_postponed_dl_recognizers(self):
         for sha256, file_set in self.export_files_by_sha256.items():
             if file_set.waiting_conversion:
-                file_set.run_dl_recognizer_wrapper()
+                file_set.run_dl_recognizer_wrapper(self.logger)
                 file_set.waiting_conversion = False
 
     def reorder_export_files_and_delete_non_declarations(self):

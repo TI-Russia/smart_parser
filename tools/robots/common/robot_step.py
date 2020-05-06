@@ -211,10 +211,11 @@ class TRobotStep:
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
-        if url_index > 300:  # and max(self.url_weights[-10:]) < 10:
-            if self.website.export_env.waiting_too_long():
-                self.website.logger.error("stop crawling since last time no declaration found")
-                return None
+        if url_index > 100:
+            if url_index > 200 or max(self.url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT:
+                if self.website.export_env.waiting_too_long():
+                    self.website.logger.error("stop crawling since last time no declaration found")
+                    return None
         max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
         best_url = None
         for url, weight in self.pages_to_process.items():

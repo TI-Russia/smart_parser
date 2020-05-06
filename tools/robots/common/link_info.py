@@ -10,6 +10,9 @@ class TClickEngine:
 
 class TLinkInfo:
     MINIMAL_LINK_WEIGHT = 0.0
+    TRASH_LINK_WEIGHT = 5.0
+    NORMAL_LINK_WEIGHT = 10.0  # these links should be processed in normal case, if weight is less, then we can stop crawling
+    BEST_LINK_WEIGHT = 50.0
 
     def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="", tag_name=None):
         self.engine = engine
@@ -43,7 +46,7 @@ class TLinkInfo:
             rec['text_proxim'] = True
         if self.downloaded_file is not None:
             rec['downloaded_file'] = self.downloaded_file
-        if self.weight != 0.0:
+        if self.weight != TLinkInfo.MINIMAL_LINK_WEIGHT:
             rec['link_weight'] = self.weight
         if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
             rec['dl_recognizer_result'] = self.dl_recognizer_result
@@ -58,6 +61,6 @@ class TLinkInfo:
         self.tag_name = rec.get('tagname')
         self.text_proxim = rec.get('text_proxim', False)
         self.downloaded_file = rec.get('downloaded_file')
-        self.weight = rec.get('link_weight', 0.0)
+        self.weight = rec.get('link_weight', TLinkInfo.MINIMAL_LINK_WEIGHT)
         self.dl_recognizer_result = rec.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
         return self

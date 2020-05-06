@@ -126,7 +126,7 @@ class TRobotProject:
 
         for url in serp_urls:
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
-            link_info.weight = TLinkInfo.MINIMAL_LINK_WEIGHT + 1  # > 0
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             step_info.add_link_wrapper(link_info)
             if max_results == 1:
                 break  # one  link found
