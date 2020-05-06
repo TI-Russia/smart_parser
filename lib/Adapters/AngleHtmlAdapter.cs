@@ -77,6 +77,11 @@ namespace Smart.Parser.Adapters
             return String.Empty;
         }
 
+        string IMarkupFormatter.LiteralText(ICharacterData text)
+        {
+            return text.Data;
+        }
+
         String IMarkupFormatter.Text(ICharacterData text)
         {
             return text.Data;
@@ -98,11 +103,6 @@ namespace Smart.Parser.Adapters
         }
 
         String IMarkupFormatter.CloseTag(IElement element, Boolean selfClosing)
-        {
-            return String.Empty;
-        }
-
-        String IMarkupFormatter.Attribute(IAttr attr)
         {
             return String.Empty;
         }
