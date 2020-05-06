@@ -75,12 +75,23 @@ if __name__ == '__main__':
     TDownloadEnv.clear_cache_folder()
     web_addr = sys.argv[1]
     host, port = web_addr.split(":")
+
+    print ("start http server on {}".format(web_addr))
     server_thread = threading.Thread(target=start_server, args=(host, port))
     server_thread.start()
 
+    print ("request_the_same")
     request_the_same(web_addr +"/somepath")
+
+    print ("request_too_many_404")
     request_too_many_404(web_addr + "/not_existing")
+
+    print ("request_timeouted")
     request_timeouted(web_addr + "/very_long")
+
+    print ("sleep 20")
     time.sleep(20)
 
+    print ("shutdown http server")
+    sys.stdout.flush()
     HTTP_SERVER.shutdown()

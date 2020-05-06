@@ -11,6 +11,7 @@ PORT=8190
 [ ! -f failed_tests.txt ] || rm   failed_tests.txt
 
 for test_folder in $tests; do
+  echo "$test_folder port = $PORT"
   bash run_one_test.sh $test_folder $PORT &
   PORT=$((PORT+1))
   sleep 2  #otherwise firefox at start is too slow
