@@ -208,7 +208,7 @@ class TExportEnvironment:
         for sha256, file_set in self.export_files_by_sha256.items():
             # make test results stable
             if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
-                file_set.file_copies.sort(key=(lambda x: (len(x.url), x.url, x.archive_index)), reverse=True)
+                file_set.file_copies.sort(key=(lambda x: (len(x.url), x.url, x.archive_index)))
                 chosen_file = copy.copy(file_set.file_copies[0])
                 self.logger.debug("export url: {} cached: {}".format(chosen_file.url, chosen_file.cached_file))
                 old_file_name = chosen_file.export_path
