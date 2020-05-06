@@ -153,8 +153,8 @@ class TRobotStep:
             if link_info.target_title is None and downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
                 link_info.target_title = get_html_title(downloaded_file.data)
             self.website.url_nodes[href] = TUrlInfo(title=link_info.target_title, step_name=self.get_step_name())
-        else:
-            self.website.url_nodes[href].parent_nodes.add(link_info.source_url)
+
+        self.website.url_nodes[href].parent_nodes.add(link_info.source_url)
 
         if self.is_last_step():
             self.website.export_env.export_file(downloaded_file, self.website.url_nodes[href])

@@ -45,7 +45,7 @@ def build_sha256(filename):
 
 class TExportFile:
     def __init__(self, parent_record=None, url=None, cached_file=None, export_path=None,
-                 archive_index=-1, name_in_archive=None, init_json=None):
+                 archive_index: int = -1, name_in_archive:str=None, init_json=None):
         self.parent_record = parent_record
         self.url = url
         self.cached_file = cached_file
@@ -130,7 +130,7 @@ class TExportEnvironment:
         if is_archive_extension(extension):
             for archive_index, name_in_archive, export_filename in dearchive_one_archive(extension, cached_file, index, office_folder):
                 self.logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
-                new_files.append(TExportFile(parent_record, url, cached_file, export_filename, name_in_archive,  archive_index))
+                new_files.append(TExportFile(parent_record, url, cached_file, export_filename, archive_index, name_in_archive))
 
         else:
             self.logger.debug("export temporal file {} to {}".format(cached_file, export_path))
