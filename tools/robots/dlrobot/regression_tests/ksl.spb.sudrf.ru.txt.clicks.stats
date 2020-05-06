@@ -15,17 +15,16 @@
                 "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
                 "step": "sitemap",
                 "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2017 год",
+                "anchor_text": "Справка о доходах за 2014 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=41",
+                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=9",
                 "step": "declarations"
             }
         ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_41/dlrobot_data",
-        "sha256": "17f2b4e23da4efdc56990fc400fcc9d38ac7d21114849e7041d757b7d6ef08a1",
-        "dl_recognizer_result": "declaration_result"
+        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_9/dlrobot_data",
+        "sha256": "0693b35faabc66a37cf75b708ad4216d68ecd5c03d54d7b776d65f065ef22b26"
     },
     {
         "click_path": [
@@ -42,8 +41,7 @@
             }
         ],
         "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_map/dlrobot_data",
-        "sha256": "5a1aa8ccb5a981e1d0eae3d5a9d5e5340e1c694824f1ac28327cff2a02688007",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "1298803cfd2ed89e357ed6db31870a04527e3c3a324a1f77fa8f6ce684eb7218"
     },
     {
         "click_path": [
@@ -58,17 +56,33 @@
                 "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
                 "step": "sitemap",
                 "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2015 год",
+                "anchor_text": "Справка о доходах за 2017 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=13",
+                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=41",
                 "step": "declarations"
             }
         ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_13/dlrobot_data",
-        "sha256": "62afdd5fddd5012417e949b9a04ed73836ab42990933b18f998aee1e13d2e1d1",
-        "dl_recognizer_result": "declaration_result"
+        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_41/dlrobot_data",
+        "sha256": "5c6423427902baf94cc1d9bda83568478a994b0d3d1e8c24cac6a025bf45c29d"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://ksl.spb.sudrf.ru",
+                "step": null,
+                "title": "Красносельский районный суд города Санкт-Петербурга",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=51",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_51/dlrobot_data",
+        "sha256": "60fd1c828f9903e2fd758dc0836723ff67cf525d18c36bcc533a294544fcfede"
     },
     {
         "click_path": [
@@ -92,8 +106,7 @@
             }
         ],
         "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_18/dlrobot_data",
-        "sha256": "68fadffd474626ca97646d4482394e8d7bc9b1b9a3a804a2767b32ea1a635539",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "8c94bdacfea7561a05f97dd3631fa8ab28f435bd97962ec8037513fe157b728d"
     },
     {
         "click_path": [
@@ -108,34 +121,15 @@
                 "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
                 "step": "sitemap",
                 "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2014 год",
+                "anchor_text": "Справка о доходах за 2015 год",
                 "engine": "urllib"
             },
             {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=9",
+                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=13",
                 "step": "declarations"
             }
         ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_9/dlrobot_data",
-        "sha256": "6c5ecd5968ad04bd8d50b3b5734c84dbce1c2683599256678aa91e4a9e1f1e23",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=51",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_51/dlrobot_data",
-        "sha256": "f64e2eed09299d9075ca6afe3b09050166df6047c6121731245b1bd828ae2216",
-        "dl_recognizer_result": "declaration_result"
+        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_13/dlrobot_data",
+        "sha256": "958bd7d751c156422eb8eb54b6c6ecdec8d8c1e688a9fec84881130aafd6db46"
     }
 ]
