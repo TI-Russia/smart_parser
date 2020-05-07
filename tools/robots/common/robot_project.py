@@ -6,7 +6,7 @@ from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.serp_parser import GoogleSearch
 from robots.common.web_site import TRobotWebSite, TRobotStep
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
 
 
 class TRobotProject:
@@ -120,7 +120,7 @@ class TRobotProject:
         links_count = 0
         try:
             serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
-        except HttpException as err:
+        except RobotHttpException as err:
             self.logger.error('cannot request search engine, exception {}'.format(err))
             return
 

@@ -8,7 +8,7 @@ from robots.common.find_link import click_all_selenium,  find_links_in_html_by_t
                     web_link_is_absolutely_prohibited
 from robots.common.link_info import TLinkInfo
 from robots.common.primitives import get_html_title
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
 
 
 class TUrlMirror:
@@ -136,10 +136,7 @@ class TRobotStep:
         assert link_info.target_url is not None
         try:
             downloaded_file = TDownloadedFile(link_info.target_url)
-        except UnicodeEncodeError as err:
-            self.logger.error('cannot download page url={} while add_links, exception={}'.format(link_info.target_url, err))
-            return
-        except HttpException as err:
+        except RobotHttpException as err:
             self.logger.error(err)
             return
 
@@ -177,7 +174,7 @@ class TRobotStep:
     def add_page_links(self, url, fallback_to_selenium=True):
         try:
             downloaded_file = TDownloadedFile(url)
-        except (HttpException, UnicodeEncodeError) as err:
+        except RobotHttpException as err:
             self.logger.error(err)
             return
         if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
@@ -196,17 +193,17 @@ class TRobotStep:
                     'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed))
 
                 if not fallback_to_selenium and len(list(soup.findAll('a'))) < 10:
-                    self.website.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
+                    self.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
                     fallback_to_selenium = True
 
             if fallback_to_selenium:  # switch off selenium is almost a panic mode (too many links)
                 if downloaded_file.get_file_extension_only_by_headers() != DEFAULT_HTML_EXTENSION:
                     # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
-                    self.website.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
+                    self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
                     click_all_selenium(self, url, self.website.parent_project.selenium_driver)
-        except (HttpException, WebDriverException) as e:
-            self.websiterlogger.error('add_links failed on url={}, exception: {}'.format(url, e))
+        except (RobotHttpException, WebDriverException) as e:
+            self.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:

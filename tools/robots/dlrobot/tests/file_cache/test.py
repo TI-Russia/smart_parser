@@ -3,7 +3,7 @@ import sys
 import threading
 from robots.common.download import TDownloadedFile,  TDownloadEnv
 import time
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
 
 HTTP_HEAD_REQUESTS_COUNT = 0
 HTTP_GET_REQUESTS_COUNT = 0
@@ -57,7 +57,7 @@ def request_timeouted(url):
     got_timeout_exception = False
     try:
         TDownloadedFile(url)
-    except HttpException as exp:
+    except RobotHttpException as exp:
         got_timeout_exception = True
     assert got_timeout_exception
 
@@ -67,7 +67,7 @@ def request_too_many_404(url):
     for i in range(4):
         try:
             x = TDownloadedFile(url)
-        except HttpException as exp:
+        except RobotHttpException as exp:
             codes.append(exp.http_code)
     assert codes == [404, 404, 404, 429]
 

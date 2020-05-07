@@ -10,6 +10,7 @@ import re
 import sys
 import json
 import socket
+import http.client
 
 ALL_HTTP_REQUEST = dict()  # (url, method) -> time
 HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
@@ -52,7 +53,7 @@ def has_cyrillic(text):
     return bool(re.search('[Ёёа-яА-Я]', text))
 
 
-class HttpException(Exception):
+class RobotHttpException(Exception):
     def __init__(self, value, url, http_code, http_method):
         global HTTP_EXCEPTION_COUNTER
         key = (url, http_method)
@@ -76,7 +77,7 @@ def make_http_request(url, method):
         url = "http://" + url
 
     if HTTP_EXCEPTION_COUNTER[(url, method)] > 2:
-        raise HttpException("stop requesting the same url", url, 429, method)
+        raise RobotHttpException("stop requesting the same url", url, 429, method)
 
     consider_request_policy(url, method)
 
@@ -111,14 +112,18 @@ def make_http_request(url, method):
             if HTTP_503_ERRORS_COUNT > 0:
                 HTTP_503_ERRORS_COUNT -= 1 #decrement HTTP_503_ERRORS_COUNT on successful http_request
             return request.geturl(), headers, data
+    except (UnicodeEncodeError, UnicodeEncodeError) as exp:
+        raise RobotHttpException("cannot redirect to cyrillic web domains", url, 520, method)
+    except (ConnectionError, http.client.HTTPException) as exp:
+        raise RobotHttpException(str(exp), url, 520, method)
     except socket.timeout as exp:
         logger.error("socket timeout, while getting {}: {}".format(url, exp))
-        raise HttpException("socket.timeout", url, 504, method)
+        raise RobotHttpException("socket.timeout", url, 504, method)
     except urllib.error.URLError as exp:
         code = -1
         if hasattr(exp, 'code'):
             code = exp.code
-        raise HttpException(str(exp), url, code, method) #
+        raise RobotHttpException(str(exp), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
             request_rates = get_request_rate()
@@ -135,7 +140,7 @@ def make_http_request(url, method):
                 if HTTP_503_ERRORS_COUNT + 1 > max_http_503_errors_count:
                     time.sleep(20*60)  # last chance, wait 20 minutes
 
-        raise HttpException(str(e), url, e.code, method)
+        raise RobotHttpException(str(e), url, e.code, method)
 
 
 def request_url_headers(url):

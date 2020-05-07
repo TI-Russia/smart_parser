@@ -69,9 +69,14 @@ class TSeleniumDriver:
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
-    def _navigate_and_get_links(self, url, timeout=6):
+    def _navigate_and_get_links(self, url, timeout=4):
         self.navigate(url)
         time.sleep(timeout)
+        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(1)
+        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(1)
+
         links = self.get_buttons_and_links()
         try:
             for link in links:

@@ -11,7 +11,7 @@ from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
                                     check_sub_page_or_iframe
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
 from robots.common.find_link import TLinkInfo
 
 
@@ -86,7 +86,7 @@ def looks_like_a_document_link(link_info: TLinkInfo):
         try:
             ext = get_file_extension_only_by_headers(link_info.target_url)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except HttpException as err:
+        except RobotHttpException as err:
             if err.count == 1:
                 logging.getLogger("dlrobot_logger").error(err)
             return False
