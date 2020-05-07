@@ -8,7 +8,7 @@ from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.serp_parser import GoogleSearch
 from robots.common.web_site import TRobotWebSite, TRobotStep
 from robots.common.http_request import RobotHttpException
-
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 
 class TRobotProject:
     selenium_driver = TSeleniumDriver()

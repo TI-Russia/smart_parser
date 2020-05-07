@@ -1,6 +1,6 @@
 date
 
-rm regression_tests/*.txt.clicks.stats tests/*.txt.clicks
+rm regression_tests/*.txt.clicks.stats regression_tests/*.txt.clicks regression_tests/*.txt.log
 
 # do not set -P 5, because firefox can crush
 ls regression_tests/*.txt | xargs --verbose -I '{}' -n 1 -P 5  \
