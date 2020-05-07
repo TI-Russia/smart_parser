@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 18
+        "files_count": 15
     },
     {
         "click_path": [
@@ -12,34 +12,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/metodicheskie-materialy/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Методические материалы",
-                "anchor_text": "Скачать DOCX (116.05 КБ)",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://minvr.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/minvr.ru/upload/iblock/c28/metodicheskie-rekomendatsii-2018-g.docx/dlrobot_data",
-        "sha256": "01e0614d197a45d4d59868907f3dfcb6c418a77958c81d385c44a1c98516886c",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://minvostokrazvitia.ru",
-                "step": null,
-                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
-                "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (65.64 КБ)",
                 "engine": "selenium"
             },
@@ -49,8 +24,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/123/1_svedeniya_dlya_sayta_organizatsii_2017_tablitsa-_6_.xlsx/dlrobot_data",
-        "sha256": "02a748362844edf8dde8f4fe0f8da1977821b25713ba1c599a4b51fd1ea11388",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "02a748362844edf8dde8f4fe0f8da1977821b25713ba1c599a4b51fd1ea11388"
     },
     {
         "click_path": [
@@ -62,9 +36,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (67.43 КБ)",
                 "engine": "selenium"
             },
@@ -74,8 +48,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/f34/Svedeniia__Ministerstvo_-_PK.xlsx/dlrobot_data",
-        "sha256": "04f99ada6ced1d77564db8da07c23dca8005c970c9cab9870c8451082e8c2afd",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "04f99ada6ced1d77564db8da07c23dca8005c970c9cab9870c8451082e8c2afd"
     },
     {
         "click_path": [
@@ -91,16 +64,15 @@
                 "step": "declarations",
                 "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "anchor_text": "Скачать XLSX (26.3 КБ)",
-                "engine": "selenium"
+                "engine": "urllib"
             },
             {
-                "url": "https://minvr.ru/upload/iblock/578/%D0%A1%D0%90%D0%99%D0%A2_%D0%9E%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8.xlsx",
+                "url": "https://minvr.ru/upload/iblock/578/САЙТ_Организации.xlsx",
                 "step": "declarations"
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/578/SAIT_Organizatsii.xlsx/dlrobot_data",
-        "sha256": "0538041f2208acaaff1f2ab6e95aca3382c866946b30ec709516f7f238cd3dbf",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "0538041f2208acaaff1f2ab6e95aca3382c866946b30ec709516f7f238cd3dbf"
     },
     {
         "click_path": [
@@ -112,34 +84,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/metodicheskie-materialy/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Методические материалы",
-                "anchor_text": "Скачать DOCX (91.10 КБ)",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://minvr.ru/upload/iblock/e0a/metodicheskie_rekom-2018.docx",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/minvr.ru/upload/iblock/e0a/metodicheskie_rekom-2018.docx/dlrobot_data",
-        "sha256": "108a8d79387bb2c82b9d73980d5ebc9607118e1aab824c88825ab0448591c148",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://minvostokrazvitia.ru",
-                "step": null,
-                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
-                "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (58.04 КБ)",
                 "engine": "selenium"
             },
@@ -149,8 +96,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/3f2/1-svedeniya-dlya-sayta-organizatsii-2018_tablitsa.xlsx/dlrobot_data",
-        "sha256": "2543c0973fe1da73e35ab56045a0f0402bceb547359781c07a1a9c7c01699ace",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "2543c0973fe1da73e35ab56045a0f0402bceb547359781c07a1a9c7c01699ace"
     },
     {
         "click_path": [
@@ -162,9 +108,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (19.43 КБ)",
                 "engine": "selenium"
             },
@@ -174,8 +120,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/5ca/Svedeniia_Organizatsii.xlsx/dlrobot_data",
-        "sha256": "36256f8769ada716eeb152535aa4116ab8c62472287054f4b6467af59fa50fe4",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "36256f8769ada716eeb152535aa4116ab8c62472287054f4b6467af59fa50fe4"
     },
     {
         "click_path": [
@@ -187,9 +132,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (71.96 КБ)",
                 "engine": "selenium"
             },
@@ -199,8 +144,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/6ee/2_svedeniya_dlya_sayta_ministerstvo_2018_god.xlsx/dlrobot_data",
-        "sha256": "3a96ef0805a32baca56e5a936831da4aceef615cb9ab5739d36dec4eda0e4b2a",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "3a96ef0805a32baca56e5a936831da4aceef615cb9ab5739d36dec4eda0e4b2a"
     },
     {
         "click_path": [
@@ -212,9 +156,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLS (36.5 КБ)",
                 "engine": "selenium"
             },
@@ -224,8 +168,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/b7a/svdir_ruk_org_2014.xls/dlrobot_data",
-        "sha256": "406ee320b2916b691e803c4a69643d4998f341d4e702e41552a5366ef63277cb",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "406ee320b2916b691e803c4a69643d4998f341d4e702e41552a5366ef63277cb"
     },
     {
         "click_path": [
@@ -237,9 +180,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (69.5 КБ)",
                 "engine": "selenium"
             },
@@ -249,8 +192,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/971/1_svedeniya_dlya_sayta_ministerstvo_2017_god-_6_.xlsx/dlrobot_data",
-        "sha256": "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "6968fa56dc6ae15e1c84c6c8208102e7e252b8a75ac3712fe409dfc679ea82b4"
     },
     {
         "click_path": [
@@ -262,34 +204,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/metodicheskie-materialy/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Методические материалы",
-                "anchor_text": "Скачать PDF (1.42 МБ)",
-                "engine": "selenium"
-            },
-            {
-                "url": "https://minvr.ru/upload/iblock/eb0/%D0%91%D1%80%D0%BE%D1%88%D1%8E%D1%80%D0%B0.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/minvr.ru/upload/iblock/eb0/Broshiura.pdf/dlrobot_data",
-        "sha256": "7fbfe0e4a205a1f0222be3360b9d0f76c1d621dca90a2922472cde691719de07",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://minvostokrazvitia.ru",
-                "step": null,
-                "title": "Министерство Российской Федерации по развитию Дальнего Востока",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
-                "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать DOC (262.5 КБ)",
                 "engine": "selenium"
             },
@@ -299,8 +216,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/520/svdir_other_go_xx.doc/dlrobot_data",
-        "sha256": "8f16410a6c1bee5c0e63815d2ab4bb97b45a0152714df3135c9359e08a87d610",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "8f16410a6c1bee5c0e63815d2ab4bb97b45a0152714df3135c9359e08a87d610"
     },
     {
         "click_path": [
@@ -312,9 +228,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLS (134.5 КБ)",
                 "engine": "selenium"
             },
@@ -324,8 +240,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/9ce/svdir_minvr_2012.xls/dlrobot_data",
-        "sha256": "9cee8dc3a102ac6a2d55bb5d674915f3c5320c1bc57e925a83b9510a2b212b4b",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "9cee8dc3a102ac6a2d55bb5d674915f3c5320c1bc57e925a83b9510a2b212b4b"
     },
     {
         "click_path": [
@@ -337,9 +252,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (86.66 КБ)",
                 "engine": "selenium"
             },
@@ -349,8 +264,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/871/Sait_GS_na_sait.xlsx/dlrobot_data",
-        "sha256": "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "b0447d1e8838fec62e1d2400b916f6ad9b1a0bacefad3ced999ad992cc7f624e"
     },
     {
         "click_path": [
@@ -362,9 +276,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLS (185 КБ)",
                 "engine": "selenium"
             },
@@ -374,8 +288,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/252/svdir_minvr_2014.xls/dlrobot_data",
-        "sha256": "c2715235c4147dbacb3e4fa1c8928040d9f5bab6287e75f70b1b63f16cdd416e",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "c2715235c4147dbacb3e4fa1c8928040d9f5bab6287e75f70b1b63f16cdd416e"
     },
     {
         "click_path": [
@@ -387,9 +300,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLS (185 КБ)",
                 "engine": "selenium"
             },
@@ -399,8 +312,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/5cb/svdir_corr_minvr_2014.xls/dlrobot_data",
-        "sha256": "e06885f1083bc8a8168618c7eb9734ad03d7dbaf4178e4fe352d1030dbd72580",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "e06885f1083bc8a8168618c7eb9734ad03d7dbaf4178e4fe352d1030dbd72580"
     },
     {
         "click_path": [
@@ -412,9 +324,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLSX (86.75 КБ)",
                 "engine": "selenium"
             },
@@ -424,8 +336,7 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/811/Sait_GS_utochnennye_dannye_na_sait.xlsx/dlrobot_data",
-        "sha256": "f3629633f0b3ef5f6f87d60497810c093188bc6106255a10aaa548d1001304a8",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "f3629633f0b3ef5f6f87d60497810c093188bc6106255a10aaa548d1001304a8"
     },
     {
         "click_path": [
@@ -437,9 +348,9 @@
                 "engine": "google"
             },
             {
-                "url": "https://minvr.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                "url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                 "step": "declarations",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "title": "",
                 "anchor_text": "Скачать XLS (113.5 КБ)",
                 "engine": "selenium"
             },
@@ -449,7 +360,6 @@
             }
         ],
         "cached_file": "cached/minvr.ru/upload/iblock/036/svdir_minvr_2013.xls/dlrobot_data",
-        "sha256": "fdf7f3daa86ee3d2fe92cdb7fdbce8d3091d9b790d0b3584dc695f6a8ecc2169",
-        "dl_recognizer_result": "declaration_result"
+        "sha256": "fdf7f3daa86ee3d2fe92cdb7fdbce8d3091d9b790d0b3584dc695f6a8ecc2169"
     }
 ]
