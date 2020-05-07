@@ -2,6 +2,7 @@ import json
 import shutil
 import os
 import tempfile
+import time
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.serp_parser import GoogleSearch
@@ -111,6 +112,7 @@ class TRobotProject:
             result.insert(0, summary)
             json.dump(result, outf, ensure_ascii=False, indent=4)
 
+
     def use_search_engine(self, step_info):
         request = step_info.step_passport['search_engine']['request']
         max_results = step_info.step_passport['search_engine'].get('max_serp_results', 10)
@@ -118,11 +120,18 @@ class TRobotProject:
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         links_count = 0
-        try:
-            serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
-        except RobotHttpException as err:
-            self.logger.error('cannot request search engine, exception {}'.format(err))
-            return
+        serp_urls = list()
+        for retry in range(3):
+            try:
+                serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
+                break
+            except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
+                self.logger.error('cannot request search engine, exception {}'.format(err))
+                if retry == 2:
+                    return
+                else:
+                    time.sleep(5)
+                    self.logger.error('retry...')
 
         for url in serp_urls:
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
