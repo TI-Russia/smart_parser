@@ -106,7 +106,7 @@ def make_http_request(url, method):
     logger = logging.getLogger("dlrobot_logger")
     logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     try:
-        with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
+        with urllib.request.urlopen(req, context=context, timeout=30.0) as request:
             data = '' if method == "HEAD" else request.read()
             headers = request.info()
             if HTTP_503_ERRORS_COUNT > 0:

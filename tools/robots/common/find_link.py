@@ -5,7 +5,7 @@ from robots.common.download import are_web_mirrors
 from robots.common.popular_sites import is_super_popular_domain
 from robots.common.http_request import consider_request_policy
 from robots.common.primitives import get_site_domain_wo_www
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import re
 from robots.common.link_info import TLinkInfo, TClickEngine
 
@@ -157,7 +157,7 @@ def click_all_selenium(step_info, main_url, driver_holder):
                 try:
                     click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index)
                     elements = driver_holder.get_buttons_and_links()
-                except WebDriverException as exp:
+                except (WebDriverException, InvalidSwitchToTargetException) as exp:
                     logger.error("exception: {}, try restart and get the next element".format(str(exp)))
                     driver_holder.restart()
                     elements = driver_holder.navigate_and_get_links(main_url)

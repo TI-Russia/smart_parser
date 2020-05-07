@@ -3,7 +3,7 @@ from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from collections import defaultdict
 from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
 from bs4 import BeautifulSoup
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException,InvalidSwitchToTargetException
 from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
                     web_link_is_absolutely_prohibited
 from robots.common.link_info import TLinkInfo
@@ -189,7 +189,7 @@ class TRobotStep:
             if already_processed is None:
                 find_links_in_html_by_text(self, url, soup)
             else:
-                self.logger.error(
+                self.logger.debug(
                     'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed))
 
                 if not fallback_to_selenium and len(list(soup.findAll('a'))) < 10:
@@ -202,7 +202,7 @@ class TRobotStep:
                     self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
                     click_all_selenium(self, url, self.website.parent_project.selenium_driver)
-        except (RobotHttpException, WebDriverException) as e:
+        except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as e:
             self.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
     def pop_url_with_max_weight(self, url_index):

@@ -90,8 +90,13 @@ class TExportFileSet:
             logger.error(exp)
 
 
-def check_html_can_be_declaration_preliminary(html):
+def check_html_can_be_declaration_preliminary(downloaded_file):
     # dl_recognizer is called afterwards
+    try:
+        html = downloaded_file.convert_html_to_utf8()
+    except ValueError as exp:
+        # cannot find encoding
+        return False
     html = html.lower()
     words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
     numbers = re.search('[0-9]{6}', html) is not None # доход
@@ -166,7 +171,7 @@ class TExportEnvironment:
         self.exported_urls.add(url)
 
         if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-            if not check_html_can_be_declaration_preliminary(downloaded_file.convert_html_to_utf8()):
+            if not check_html_can_be_declaration_preliminary(downloaded_file):
                 self.logger.debug("do not export {} because of preliminary check".format(url))
                 return
 

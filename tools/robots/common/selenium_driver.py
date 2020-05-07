@@ -4,7 +4,7 @@ from robots.common.content_types import ALL_CONTENT_TYPES
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from selenium.webdriver.common.action_chains import ActionChains
 
 import logging
@@ -96,7 +96,7 @@ class TSeleniumDriver:
     def navigate_and_get_links(self, url, timeout=6):
         try:
             return self._navigate_and_get_links(url, timeout)
-        except WebDriverException as exp:
+        except (WebDriverException, InvalidSwitchToTargetException) as exp:
             logger = logging.getLogger("dlrobot_logger")
             logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
             self.restart()
