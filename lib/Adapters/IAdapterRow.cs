@@ -9,6 +9,7 @@ using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using System.Drawing.Text;
 
 
 namespace Smart.Parser.Adapters
@@ -51,6 +52,8 @@ namespace Smart.Parser.Adapters
             if (IsEmpty) return res;
             string[] hardLines = Text.Split('\n');
             var graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
+            graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+
             var stringSize = new SizeF();
             var font = new System.Drawing.Font(FontName, FontSize / 2);
             foreach (var hardLine in hardLines)
