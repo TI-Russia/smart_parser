@@ -6,6 +6,7 @@ using System.Globalization;
 using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
 using System.IO;
+using System.Runtime.InteropServices;
 using Parser.Lib;
 using TI.Declarator.DeclaratorApiClient;
 using TI.Declarator.ParserCommon;
@@ -182,6 +183,7 @@ namespace Smart.Parser
         {
             string declarationFile = ParseArgs(args);
             Logger.Info("Command line: " + String.Join(" ", args));
+            Logger.Info("OSDescription: " + RuntimeInformation.OSDescription);
             if (String.IsNullOrEmpty(declarationFile))
             {
                 Console.WriteLine("no input file or directory");
