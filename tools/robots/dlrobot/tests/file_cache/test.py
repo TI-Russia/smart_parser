@@ -95,3 +95,4 @@ if __name__ == '__main__':
     print ("shutdown http server")
     sys.stdout.flush()
     HTTP_SERVER.shutdown()
+    server_thread.join(1)
