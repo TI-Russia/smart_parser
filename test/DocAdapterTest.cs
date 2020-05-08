@@ -7,7 +7,6 @@ using Smart.Parser.Adapters;
 using System.IO;
 using Aspose.Words.Fields;
 
-
 namespace test
 {
     [TestClass]
@@ -40,16 +39,16 @@ namespace test
         {
             SizeF RunGraphicMeasure(string s, string fileName, TextRenderingHint textHint)
             {
-                var myBitmap = new Bitmap(250, 20);
+                var myBitmap = new Bitmap(350, 30);
                 var graphics = System.Drawing.Graphics.FromImage(myBitmap);
                 var FontName = "Times New Roman";
-                var FontSize = 10;
+                var FontSize = 20;
                 var drawBrush = new SolidBrush(Color.White);
                 var font = new System.Drawing.Font(
                     FontName,
                     FontSize,
                     FontStyle.Regular,
-                    GraphicsUnit.Point);
+                    GraphicsUnit.Pixel);
 
                 graphics.TextRenderingHint = textHint;
                 graphics.DrawString(s, font, drawBrush, 0, 0);
@@ -64,8 +63,6 @@ namespace test
                 return sizeF;
             }
 
-            var t = TextRenderingHint.SingleBitPerPixel;
-
             var testLine = "Test width of long string - whats that?";
             var stringSize = RunGraphicMeasure(testLine,"test-string-SingleBitPerPixel.jpg", TextRenderingHint.SingleBitPerPixel );
             stringSize = RunGraphicMeasure(testLine,"test-string-SingleBitPerPixelGridFit.jpg", TextRenderingHint.SingleBitPerPixelGridFit );
@@ -74,8 +71,8 @@ namespace test
             stringSize = RunGraphicMeasure(testLine,"test-string-AntiAliasGridFit.jpg", TextRenderingHint.AntiAliasGridFit );
             stringSize = RunGraphicMeasure(testLine,"test-string-AntiAlias.jpg", TextRenderingHint.AntiAlias );
 
-            Assert.AreEqual(103 * 2, stringSize.Width);
-            Assert.AreEqual(15, stringSize.Height);
+            Assert.AreEqual(304, stringSize.Width);
+            Assert.AreEqual(21, stringSize.Height);
         }
         
     }
