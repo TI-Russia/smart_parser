@@ -1,135 +1,119 @@
-[
-    {
-        "files_count": 6
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
-                "step": "sitemap",
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2014 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=9",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_9/dlrobot_data",
-        "sha256": "0693b35faabc66a37cf75b708ad4216d68ecd5c03d54d7b776d65f065ef22b26"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
-                "step": "sitemap"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_map/dlrobot_data",
-        "sha256": "1298803cfd2ed89e357ed6db31870a04527e3c3a324a1f77fa8f6ce684eb7218"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
-                "step": "sitemap",
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2017 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=41",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_41/dlrobot_data",
-        "sha256": "5c6423427902baf94cc1d9bda83568478a994b0d3d1e8c24cac6a025bf45c29d"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=51",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_51/dlrobot_data",
-        "sha256": "60fd1c828f9903e2fd758dc0836723ff67cf525d18c36bcc533a294544fcfede"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
-                "step": "sitemap",
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2016 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=18",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_18/dlrobot_data",
-        "sha256": "8c94bdacfea7561a05f97dd3631fa8ab28f435bd97962ec8037513fe157b728d"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ksl.spb.sudrf.ru",
-                "step": null,
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
-                "step": "sitemap",
-                "title": "Красносельский районный суд города Санкт-Петербурга",
-                "anchor_text": "Справка о доходах за 2015 год",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=13",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_13/dlrobot_data",
-        "sha256": "958bd7d751c156422eb8eb54b6c6ecdec8d8c1e688a9fec84881130aafd6db46"
-    }
-]
+{
+    "files_count": 6,
+    "files_sorted (short report)": [
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_13/dlrobot_data -1",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_18/dlrobot_data -1",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_41/dlrobot_data -1",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_51/dlrobot_data -1",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_9/dlrobot_data -1",
+        "cached/ksl.spb.sudrf.ru/modules.php_name_map/dlrobot_data -1"
+    ],
+    "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
+                    "source:step": "sitemap",
+                    "source:title": "",
+                    "target:anchor_text": "Справка о доходах за 2014 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=9",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_9/dlrobot_data",
+            "sha256": "0693b35faabc66a37cf75b708ad4216d68ecd5c03d54d7b776d65f065ef22b26"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
+                    "step": "sitemap"
+                }
+            ],
+            "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_map/dlrobot_data",
+            "sha256": "1298803cfd2ed89e357ed6db31870a04527e3c3a324a1f77fa8f6ce684eb7218"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
+                    "source:step": "sitemap",
+                    "source:title": "",
+                    "target:anchor_text": "Справка о доходах за 2017 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=41",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_41/dlrobot_data",
+            "sha256": "5c6423427902baf94cc1d9bda83568478a994b0d3d1e8c24cac6a025bf45c29d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=51",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_51/dlrobot_data",
+            "sha256": "60fd1c828f9903e2fd758dc0836723ff67cf525d18c36bcc533a294544fcfede"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
+                    "source:step": "sitemap",
+                    "source:title": "",
+                    "target:anchor_text": "Справка о доходах за 2016 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=18",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_18/dlrobot_data",
+            "sha256": "8c94bdacfea7561a05f97dd3631fa8ab28f435bd97962ec8037513fe157b728d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=map",
+                    "source:step": "sitemap",
+                    "source:title": "",
+                    "target:anchor_text": "Справка о доходах за 2015 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://ksl.spb.sudrf.ru/modules.php?name=anticorruption&id=13",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/ksl.spb.sudrf.ru/modules.php_name_anticorruption_id_13/dlrobot_data",
+            "sha256": "958bd7d751c156422eb8eb54b6c6ecdec8d8c1e688a9fec84881130aafd6db46"
+        }
+    ]
+}

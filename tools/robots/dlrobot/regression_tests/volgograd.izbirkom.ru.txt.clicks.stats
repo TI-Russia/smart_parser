@@ -1,812 +1,712 @@
-[
-    {
-        "files_count": 34
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Волгоградское региональное отделение Всероссийской политической партии «ЕДИНАЯ РОССИЯ»",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%95%D0%A0.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_ER._90d6b3c12c6db4a60f1000a4bb9bc0cb/dlrobot_data",
-        "sha256": "00c0fea8050775ac3438201a12afd3ffe8a3cc4e3606b91e0e460b6b1b0d3ad6"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2016 г. по 31 декабря 2016 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81.%D0%A2%D0%98%D0%9A%20%D0%B7%D0%B0%202016_%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82_%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F,%20%D0%BF%D1%80%D0%B5%D1%81%D1%82.%D0%B4%D0%BE%2030.05.2017.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/Svedeniia_o_dokhodakh_preds.TIK_za_201_92213a6bd95601d4c2006d2b22a417b7/dlrobot_data",
-        "sha256": "00f8d4d1e4b4a9448e0124064d2486f15670c359d7a5ba682550a064c5e5c857"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в аппарате Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2018 г. по 31 декабря 2018 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2018.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2018.doc/dlrobot_data",
-        "sha256": "05a01005cabc50e55692ba23e4d2489dbf8b111d0d321fd785bfcccd5c4879a6"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
-        "sha256": "0819577e1692eaf920ca7519f85f2a1db07c9c75341cfec65ee0d103ca45be05",
-        "name_in_archive": "¡Ññ«ßΓ«óÑα¡δÑ/æóÑñÑ¡¿∩ « ¡Ññ«ßΓ«óÑα¡«ßΓ¿ èÅÉö «Γ 6 ßÑ¡Γ∩íα∩.docx"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
-        "sha256": "2299fc8d6054ad349dc5fe40ef2f44a999a7d6f7660bcd77decd4f918e513de8",
-        "name_in_archive": "¡Ññ«ßΓ«óÑα¡δÑ/æóÑñÑ¡¿∩ « ¡Ññ«ßΓ«óÑα¡«ßΓ¿ ïäÅÉ.docx"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в аппарате Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2015 г. по 31 декабря 2015 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения_о_доходах_ггс_2015_с_уточн.PDF",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2015_s_utochn.PDF/dlrobot_data",
-        "sha256": "27ed46f623c4ad1ad61fd5172b3adba5ab0ba2fa0791f9d4a41f739eb685160a"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2018 г. по 31 декабря 2018 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2018.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2018.doc/dlrobot_data",
-        "sha256": "32ebdf8c541f985327fb7debd23a4d87b1db71c787042f84e4e00a280137458d"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах и имуществе государственных гражданских служащих ВО аппарата ИКВО и членов их семей за период с 1 января 2011 года по 31 декабря 2011 года",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/dohodyi1.xls",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/dohodyi1.xls/dlrobot_data",
-        "sha256": "375fa37ec99671dbb5fa7248250a3b7b193d47805bc1aa59249788ff84c5e9f5"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения%20о%20доходах%20лиц%20замещ.гос.должн.в%20ИКВО_2014.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_lits_zameshch.gos.dolzhn.v_IKVO_2014.doc/dlrobot_data",
-        "sha256": "3dced797dccba1c89a033cea05dba7b51b700d577ae93ef6bb24f669c9253fbe"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
-        "sha256": "453e189c738bbf7c31456808080a541c88a7b9f41167d028b97f61a29be9aacb",
-        "name_in_archive": "¡Ññ«ßΓ«óÑα¡δÑ/æóÑñÑ¡¿∩ « ¡Ññ«ßΓ«óÑα¡«ßΓ¿ àÉ.docx"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2014 г. по 31 декабря 2014 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения%20о%20доходах%20ггс%202014%20табл.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2014_tabl.doc/dlrobot_data",
-        "sha256": "5471024465f83031874adf5c17b89476c7e95a3643e79ac17e0fd25a3974a93c"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2018 г. по 31 декабря 2018 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_pred_tik_2018.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_pred_tik_2018.doc/dlrobot_data",
-        "sha256": "5c309497690e41196bbd0862e0d720ee32c6d72c204238a758390c544c6fce7b"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах и об имуществе зарегистрированных кандидатов на должность Губернатора Волгоградской области, их супругов и несовершеннолетних детей,  о счетах (вкладах) в банке, ценных бумагах - Бочаров Андрей Иванович",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.p_1f32c11e6abc2a2246196f7ca15c0aa6/dlrobot_data",
-        "sha256": "5c72d106fa3334416a5902bd10b64523c2593c7637a24261b0ef59d5e2c7d6d9"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - ВОЛГОГРАДСКОЕ ОБЛАСТНОЕ ОТДЕЛЕНИЕ политической партии «КОММУНИСТИЧЕСКАЯ ПАРТИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ»",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20_%D0%9A%D0%9F%D0%A0%D0%A4.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_dokhodakh__KPR_854c1893d2f6ba7df57d4e754458a4a8/dlrobot_data",
-        "sha256": "5d1576e6273d4bab5daa09cebbcaec8d826fcbd95704445bef66793614bfa44c"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc/dlrobot_data",
-        "sha256": "84e20c6eb375c17e56491f911c2d86bf8aceaaaeb509dc642c32eb03df110f93"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Волгоградское региональное отделение Политической партии ЛДПР - Либерально - Демократической партии России",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%9B%D0%94%D0%9F%D0%A0.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_dokhodakh_LDPR_6ca194d2e771087401ecc47019578b76/dlrobot_data",
-        "sha256": "8d3d887f0a027f00897a700e07651969a775ecedd01fda32495f8eb8cc04eef7"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2017 г. по 31 декабря 2017 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/dohody/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D0%A2%D0%98%D0%9A%20%D0%B7%D0%B0%202017%20%D1%81%20%D1%83%D1%82%D0%BE%D1%87%D0%BD.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/dohody/Svedeniia_o_dokhodakh_predsTIK__db61c5250dfc5fab088ea28058f59008/dlrobot_data",
-        "sha256": "8d8e3d1387beb2f586eb91b31cef931275c905b9d0c73f049658dd4d23b38db4"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Волгоградское региональное отделение Всероссийской политической партии «ЕДИНАЯ РОССИЯ»",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%95%D0%A0.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_ER.p_8abf64b867f6b3ecbf5956d42ba680f2/dlrobot_data",
-        "sha256": "8ec84836a42a4aced0241d6baf46fe0b446666d3b2937f7c54884f12d1a9cb8f"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Региональное отделение Политической партии «Российская партия пенсионеров за социальную справедливость» в Волгоградской области",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D0%BE%D0%BD%D0%B5%D1%80%D1%8B.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_pens_ff81fdd084ac2fc1d1763f0b54ce2d17/dlrobot_data",
-        "sha256": "99419fc235a2ed36fe71bf4362bf490eeb7835df5e59a0e0850f7c8325432c4d"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Волгоградское региональное отделение Политической партии ЛДПР - Либерально - Демократической партии России",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%20%D0%9B%D0%94%D0%9F%D0%A0.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_raskhodakh__LD_060c1434db58cd3fe7c1e7ff8e66a270/dlrobot_data",
-        "sha256": "9b608c2b3e6623b0a0b955dd0ff8d4f9b6d07a9444647466af8b93183becf667"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/sved_ch_ikvo_2015.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/sved_ch_ikvo_2015.doc/dlrobot_data",
-        "sha256": "9d7504d5c4d37f7844df74430203215a9d44a523bd165ac11b400d983012c299"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Региональное отделение Политической партии СПРАВЕДЛИВАЯ РОССИЯ в Волгоградской области",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh.pdf/dlrobot_data",
-        "sha256": "a382eb8d0ee2b1bcb7ada50a223766bf885e2b6803005674b5f0d06289033456"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Региональное отделение Политической партии «Российская партия пенсионеров за социальную справедливость» в Волгоградской области",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D0%BE%D0%BD%D0%B5%D1%80%D1%8B.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_pen_9d820c8a7b09713ea294367eb281ea5f/dlrobot_data",
-        "sha256": "a726c036b61edf6cb15326b9d32c8327eb0a0c0b82dc4b04f5af4a370dfbe26c"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в аппарате Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2017 г. по 31 декабря 2017 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2017.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2017.doc/dlrobot_data",
-        "sha256": "b295ce1653708c9c588da2e19c3148e0d3d3bb9c9c664bea27834e51f8897c57"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
-        "sha256": "bb6ec6dc920f407458bfebadf9dd355052940e5a693a04ba53733154b7acde27",
-        "name_in_archive": "¡Ññ«ßΓ«óÑα¡δÑ/æóÑñÑ¡¿∩ « ¡Ññ«ßΓ«óÑα¡«ßΓ¿ »« »áαΓ¿∩¼ ÅàìæêÄìàÉ¢.docx"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
-        "sha256": "c102c3fe20584f2885775fff289e0cdccbf49fed9229582f4fce4855b2045b47",
-        "name_in_archive": "¡Ññ«ßΓ«óÑα¡δÑ/æóÑñÑ¡¿∩ « ¡Ññ«ßΓ«óÑα¡«ßΓ¿ æÉ.docx"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами на должность Губернатора Волгоградской области",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%BD%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D0%BE%D0%B2%D0%B5%D1%80%D0%BD%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BA%D0%B0%D0%BD%D0%B4%D0%B8%D0%B4%D0%B0%D1%82%D0%B0%D0%BC%20%D0%93%D0%92%D0%9E%20%D0%BE%D1%82%206%20%D1%81%D0%B5%D0%BD%D1%82%D1%8F%D0%B1%D1%80%D1%8F.docx",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/Svedeniia_o_nedostovern_8a83a7308c5a442b063f3b4a8a523cce/dlrobot_data",
-        "sha256": "cabf3ebccfc428614374372fe3c911fee3209ef4dd2667d5fc065ac5ed4b2929"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2012 г. по 31 декабря 2012 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения%20о%20доходах%20ггс%202012%20таблица.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2012_tablitsa.doc/dlrobot_data",
-        "sha256": "cdd8d509a12a4d975f3336b731214ebbbed4eaea6d8364f173a500fff2168a10"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2016.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2016.doc/dlrobot_data",
-        "sha256": "d2af073ca81124f526f89ea738aaaf934b4df44e216d0ab46a2543e1860e1ba5"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2013 г. по 31 декабря 2013 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/Свед_о_доход_ГГС_2013.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Sved_o_dokhod_GGS_2013.doc/dlrobot_data",
-        "sha256": "e4c739d25ff2767aac6df86304e4043f04ec57f0b1e934cddbf6bd4cc37212f9"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Региональное отделение Политической партии СПРАВЕДЛИВАЯ РОССИЯ в Волгоградской области",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.pdf/dlrobot_data",
-        "sha256": "e8963b0400f57cddb24413ee39622cf9d98cf9d9743ef4a6b6a94661d296b41c"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ch_ikvo_2016.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ch_ikvo_2016.doc/dlrobot_data",
-        "sha256": "eb262a8ff7b8331fb0be16e1149c3605b4130f4a15bfdd879dd5a00b68b50992"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/index.php",
-                "step": "declarations",
-                "title": "Выдвижение и регистрация",
-                "anchor_text": "Сведения о доходах и об имуществе зарегистрированных кандидатов на должность Губернатора Волгоградской области, их супругов и несовершеннолетних детей,  о счетах (вкладах) в банке, ценных бумагах - Буров Алексей Никитович, Давыдовский Эдуард Францевич, Полещук Сергей Иванович, Рублев Владимир Геннадьевич",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%91_%D0%94_%D0%9F_%D0%A0.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_B_255c7c3dcfafb82dd5482ac9e0f9f76f/dlrobot_data",
-        "sha256": "eca01d768a16e16967918cb92fdd76df004edaaee92004e75f68894827d616c1"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://volgograd.izbirkom.ru",
-                "step": null,
-                "title": "Избирательная комиссия Волгоградской области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
-                "step": "anticorruption_div",
-                "title": "Вопросы противодействия коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2015 г. по 31 декабря 2015 г.",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://volgograd.izbirkom.ru/kadry/dohod/sved_pred_tik_2015.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/sved_pred_tik_2015.doc/dlrobot_data",
-        "sha256": "f457bfd9f8694b904f53aa5fafd410d3a67669095ad83c3c5d99f8e3da280f33"
-    }
-]
+{
+    "files_count": 34,
+    "files_sorted (short report)": [
+        "cached/volgograd.izbirkom.ru/kadry/dohod/Sved_o_dokhod_GGS_2013.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2012_tablitsa.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2014_tabl.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2015_s_utochn.PDF/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_lits_zameshch.gos.dolzhn.v_IKVO_2014.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/dohodyi1.xls/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/sved_ch_ikvo_2015.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/kadry/dohod/sved_pred_tik_2015.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_dokhodakh_LDPR_6ca194d2e771087401ecc47019578b76/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_dokhodakh__KPR_854c1893d2f6ba7df57d4e754458a4a8/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_raskhodakh__LD_060c1434db58cd3fe7c1e7ff8e66a270/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data 0",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data 1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data 2",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data 3",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data 4",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.pdf/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_ER.p_8abf64b867f6b3ecbf5956d42ba680f2/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_pens_ff81fdd084ac2fc1d1763f0b54ce2d17/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh.pdf/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_ER._90d6b3c12c6db4a60f1000a4bb9bc0cb/dlrobot_data -1",
+        "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_pen_9d820c8a7b09713ea294367eb281ea5f/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/Svedeniia_o_dokhodakh_preds.TIK_za_201_92213a6bd95601d4c2006d2b22a417b7/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/dohody/Svedeniia_o_dokhodakh_predsTIK__db61c5250dfc5fab088ea28058f59008/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ch_ikvo_2016.doc/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2016.doc/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2017.doc/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2018.doc/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2018.doc/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_pred_tik_2018.doc/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/Svedeniia_o_nedostovern_8a83a7308c5a442b063f3b4a8a523cce/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.p_1f32c11e6abc2a2246196f7ca15c0aa6/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_B_255c7c3dcfafb82dd5482ac9e0f9f76f/dlrobot_data -1"
+    ],
+    "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Волгоградское региональное отделение Всероссийской политической партии «ЕДИНАЯ РОССИЯ»",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%95%D0%A0.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_ER._90d6b3c12c6db4a60f1000a4bb9bc0cb/dlrobot_data",
+            "sha256": "00c0fea8050775ac3438201a12afd3ffe8a3cc4e3606b91e0e460b6b1b0d3ad6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2016 г. по 31 декабря 2016 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81.%D0%A2%D0%98%D0%9A%20%D0%B7%D0%B0%202016_%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82_%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F,%20%D0%BF%D1%80%D0%B5%D1%81%D1%82.%D0%B4%D0%BE%2030.05.2017.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/Svedeniia_o_dokhodakh_preds.TIK_za_201_92213a6bd95601d4c2006d2b22a417b7/dlrobot_data",
+            "sha256": "00f8d4d1e4b4a9448e0124064d2486f15670c359d7a5ba682550a064c5e5c857"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в аппарате Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2018 г. по 31 декабря 2018 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2018.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2018.doc/dlrobot_data",
+            "sha256": "05a01005cabc50e55692ba23e4d2489dbf8b111d0d321fd785bfcccd5c4879a6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
+            "sha256": "0819577e1692eaf920ca7519f85f2a1db07c9c75341cfec65ee0d103ca45be05",
+            "archive_index": 4
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
+            "sha256": "2299fc8d6054ad349dc5fe40ef2f44a999a7d6f7660bcd77decd4f918e513de8",
+            "archive_index": 3
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в аппарате Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения_о_доходах_ггс_2015_с_уточн.PDF",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2015_s_utochn.PDF/dlrobot_data",
+            "sha256": "27ed46f623c4ad1ad61fd5172b3adba5ab0ba2fa0791f9d4a41f739eb685160a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2018 г. по 31 декабря 2018 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2018.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2018.doc/dlrobot_data",
+            "sha256": "32ebdf8c541f985327fb7debd23a4d87b1db71c787042f84e4e00a280137458d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах и имуществе государственных гражданских служащих ВО аппарата ИКВО и членов их семей за период с 1 января 2011 года по 31 декабря 2011 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/dohodyi1.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/dohodyi1.xls/dlrobot_data",
+            "sha256": "375fa37ec99671dbb5fa7248250a3b7b193d47805bc1aa59249788ff84c5e9f5"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения%20о%20доходах%20лиц%20замещ.гос.должн.в%20ИКВО_2014.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_lits_zameshch.gos.dolzhn.v_IKVO_2014.doc/dlrobot_data",
+            "sha256": "3dced797dccba1c89a033cea05dba7b51b700d577ae93ef6bb24f669c9253fbe"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
+            "sha256": "453e189c738bbf7c31456808080a541c88a7b9f41167d028b97f61a29be9aacb",
+            "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения%20о%20доходах%20ггс%202014%20табл.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2014_tabl.doc/dlrobot_data",
+            "sha256": "5471024465f83031874adf5c17b89476c7e95a3643e79ac17e0fd25a3974a93c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2018 г. по 31 декабря 2018 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_pred_tik_2018.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_pred_tik_2018.doc/dlrobot_data",
+            "sha256": "5c309497690e41196bbd0862e0d720ee32c6d72c204238a758390c544c6fce7b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах и об имуществе зарегистрированных кандидатов на должность Губернатора Волгоградской области, их супругов и несовершеннолетних детей,  о счетах (вкладах) в банке, ценных бумагах - Бочаров Андрей Иванович",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.p_1f32c11e6abc2a2246196f7ca15c0aa6/dlrobot_data",
+            "sha256": "5c72d106fa3334416a5902bd10b64523c2593c7637a24261b0ef59d5e2c7d6d9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - ВОЛГОГРАДСКОЕ ОБЛАСТНОЕ ОТДЕЛЕНИЕ политической партии «КОММУНИСТИЧЕСКАЯ ПАРТИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ»",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20_%D0%9A%D0%9F%D0%A0%D0%A4.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_dokhodakh__KPR_854c1893d2f6ba7df57d4e754458a4a8/dlrobot_data",
+            "sha256": "5d1576e6273d4bab5daa09cebbcaec8d826fcbd95704445bef66793614bfa44c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc/dlrobot_data",
+            "sha256": "84e20c6eb375c17e56491f911c2d86bf8aceaaaeb509dc642c32eb03df110f93"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Волгоградское региональное отделение Политической партии ЛДПР - Либерально - Демократической партии России",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%9B%D0%94%D0%9F%D0%A0.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_dokhodakh_LDPR_6ca194d2e771087401ecc47019578b76/dlrobot_data",
+            "sha256": "8d3d887f0a027f00897a700e07651969a775ecedd01fda32495f8eb8cc04eef7"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2017 г. по 31 декабря 2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/dohody/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D0%A2%D0%98%D0%9A%20%D0%B7%D0%B0%202017%20%D1%81%20%D1%83%D1%82%D0%BE%D1%87%D0%BD.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/dohody/Svedeniia_o_dokhodakh_predsTIK__db61c5250dfc5fab088ea28058f59008/dlrobot_data",
+            "sha256": "8d8e3d1387beb2f586eb91b31cef931275c905b9d0c73f049658dd4d23b38db4"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Волгоградское региональное отделение Всероссийской политической партии «ЕДИНАЯ РОССИЯ»",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%95%D0%A0.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_ER.p_8abf64b867f6b3ecbf5956d42ba680f2/dlrobot_data",
+            "sha256": "8ec84836a42a4aced0241d6baf46fe0b446666d3b2937f7c54884f12d1a9cb8f"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Региональное отделение Политической партии «Российская партия пенсионеров за социальную справедливость» в Волгоградской области",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D0%BE%D0%BD%D0%B5%D1%80%D1%8B.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_pens_ff81fdd084ac2fc1d1763f0b54ce2d17/dlrobot_data",
+            "sha256": "99419fc235a2ed36fe71bf4362bf490eeb7835df5e59a0e0850f7c8325432c4d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Волгоградское региональное отделение Политической партии ЛДПР - Либерально - Демократической партии России",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%20%D0%9B%D0%94%D0%9F%D0%A0.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/Svedeniia_o_raskhodakh__LD_060c1434db58cd3fe7c1e7ff8e66a270/dlrobot_data",
+            "sha256": "9b608c2b3e6623b0a0b955dd0ff8d4f9b6d07a9444647466af8b93183becf667"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/sved_ch_ikvo_2015.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/sved_ch_ikvo_2015.doc/dlrobot_data",
+            "sha256": "9d7504d5c4d37f7844df74430203215a9d44a523bd165ac11b400d983012c299"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Региональное отделение Политической партии СПРАВЕДЛИВАЯ РОССИЯ в Волгоградской области",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh.pdf/dlrobot_data",
+            "sha256": "a382eb8d0ee2b1bcb7ada50a223766bf885e2b6803005674b5f0d06289033456"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о расходах зарегистрированных кандидатов в депутаты Волгоградской областной Думы, их супругов и несовершеннолетних детей по каждой сделке по приобретению земельного участка, другого объекта недвижимости, транспортного средства, ценных бумаг, акций (долей участия, паев в уставных (складочных) капиталах организаций) - Региональное отделение Политической партии «Российская партия пенсионеров за социальную справедливость» в Волгоградской области",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%BF%D0%B5%D0%BD%D1%81%D0%B8%D0%BE%D0%BD%D0%B5%D1%80%D1%8B.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_pen_9d820c8a7b09713ea294367eb281ea5f/dlrobot_data",
+            "sha256": "a726c036b61edf6cb15326b9d32c8327eb0a0c0b82dc4b04f5af4a370dfbe26c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в аппарате Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2017 г. по 31 декабря 2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2017.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2017.doc/dlrobot_data",
+            "sha256": "b295ce1653708c9c588da2e19c3148e0d3d3bb9c9c664bea27834e51f8897c57"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
+            "sha256": "bb6ec6dc920f407458bfebadf9dd355052940e5a693a04ba53733154b7acde27",
+            "archive_index": 2
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами в депутаты Волгоградской областной Думы - единый избирательный округ",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/недостоверные1.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
+            "sha256": "c102c3fe20584f2885775fff289e0cdccbf49fed9229582f4fce4855b2045b47",
+            "archive_index": 0
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о выявленных фактах недостоверности сведений, представленных кандидатами на должность Губернатора Волгоградской области",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%BD%D0%B5%D0%B4%D0%BE%D1%81%D1%82%D0%BE%D0%B2%D0%B5%D1%80%D0%BD%D0%BE%D1%81%D1%82%D0%B8%20%D0%BF%D0%BE%20%D0%BA%D0%B0%D0%BD%D0%B4%D0%B8%D0%B4%D0%B0%D1%82%D0%B0%D0%BC%20%D0%93%D0%92%D0%9E%20%D0%BE%D1%82%206%20%D1%81%D0%B5%D0%BD%D1%82%D1%8F%D0%B1%D1%80%D1%8F.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/Svedeniia_o_nedostovern_8a83a7308c5a442b063f3b4a8a523cce/dlrobot_data",
+            "sha256": "cabf3ebccfc428614374372fe3c911fee3209ef4dd2667d5fc065ac5ed4b2929"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2012 г. по 31 декабря 2012 г.",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/Сведения%20о%20доходах%20ггс%202012%20таблица.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2012_tablitsa.doc/dlrobot_data",
+            "sha256": "cdd8d509a12a4d975f3336b731214ebbbed4eaea6d8364f173a500fff2168a10"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2016.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ggs_2016.doc/dlrobot_data",
+            "sha256": "d2af073ca81124f526f89ea738aaaf934b4df44e216d0ab46a2543e1860e1ba5"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Волгоградской области, замещающих должности государственной гражданской службы Волгоградской области в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2013 г. по 31 декабря 2013 г.",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/Свед_о_доход_ГГС_2013.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/Sved_o_dokhod_GGS_2013.doc/dlrobot_data",
+            "sha256": "e4c739d25ff2767aac6df86304e4043f04ec57f0b1e934cddbf6bd4cc37212f9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе, о счетах (вкладах) в банках и ценных бумагах зарегистрированных кандидатов в депутаты Волгоградской областной Думы - Региональное отделение Политической партии СПРАВЕДЛИВАЯ РОССИЯ в Волгоградской области",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh.pdf/dlrobot_data",
+            "sha256": "e8963b0400f57cddb24413ee39622cf9d98cf9d9743ef4a6b6a94661d296b41c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности в Избирательной комиссии Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ch_ikvo_2016.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ch_ikvo_2016.doc/dlrobot_data",
+            "sha256": "eb262a8ff7b8331fb0be16e1149c3605b4130f4a15bfdd879dd5a00b68b50992"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/index.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах и об имуществе зарегистрированных кандидатов на должность Губернатора Волгоградской области, их супругов и несовершеннолетних детей,  о счетах (вкладах) в банке, ценных бумагах - Буров Алексей Никитович, Давыдовский Эдуард Францевич, Полещук Сергей Иванович, Рублев Владимир Геннадьевич",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85_%D0%91_%D0%94_%D0%9F_%D0%A0.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/vybory/2019/guber/vydvizhenie-i-registratsiya/docs/svedeniia_o_dokhodakh_B_255c7c3dcfafb82dd5482ac9e0f9f76f/dlrobot_data",
+            "sha256": "eca01d768a16e16967918cb92fdd76df004edaaee92004e75f68894827d616c1"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих государственные должности Волгоградской области в территориальных избирательных комиссиях Волгоградской области, их супруг (супругов) и несовершеннолетних детей за период с 01 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://volgograd.izbirkom.ru/kadry/dohod/sved_pred_tik_2015.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/volgograd.izbirkom.ru/kadry/dohod/sved_pred_tik_2015.doc/dlrobot_data",
+            "sha256": "f457bfd9f8694b904f53aa5fafd410d3a67669095ad83c3c5d99f8e3da280f33"
+        }
+    ]
+}
