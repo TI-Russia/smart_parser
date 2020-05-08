@@ -36,12 +36,22 @@ namespace test
         [TestMethod]
         public void FontWidthTest()
         {
+            var testLine = "Test width of long string - whats that?";
+
             var myBitmap = new Bitmap(250, 20);
             var graphics = System.Drawing.Graphics.FromImage(myBitmap);
             var FontName = "Times New Roman";
-            var testLine = "Test width of long string - whats that?";
-            var FontSize = 20;
-            var font = new System.Drawing.Font(FontName, FontSize / 2);
+            var FontSize = 10;
+            var fontTest = new System.Drawing.Font(
+                FontName,
+                FontSize);
+
+            var font = new System.Drawing.Font(
+                FontName,
+                FontSize,
+                FontStyle.Regular,
+                GraphicsUnit.Point);
+
             SolidBrush drawBrush = new SolidBrush(Color.White);
             graphics.DrawString(testLine, font, drawBrush, 0, 0);
             
