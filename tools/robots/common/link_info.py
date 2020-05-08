@@ -7,6 +7,9 @@ class TClickEngine:
     google = 'google'
     manual = 'manual'
 
+    @staticmethod
+    def is_search_engine(s):
+        return s == "google"
 
 class TLinkInfo:
     MINIMAL_LINK_WEIGHT = 0.0

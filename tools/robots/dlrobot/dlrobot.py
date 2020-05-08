@@ -213,6 +213,7 @@ def parse_args():
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
+    parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
     args = parser.parse_args()
     TRobotStep.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
@@ -250,17 +251,21 @@ def make_steps(args, project):
 
     project.logger.info("=== export_files_to_folder =========")
     project.export_files_to_folder()
-    project.write_export_stats()
     project.write_project()
+
 
 
 def open_project(args):
     logger = setup_logging(args.logfile)
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
-        make_steps(args, project)
-        if args.click_features_file:
-            project.write_click_features(args.click_features_file)
+        if args.only_click_stats:
+            project.write_export_stats()
+        else:
+            make_steps(args, project)
+            project.write_export_stats()
+            if args.click_features_file:
+                project.write_click_features(args.click_features_file)
 
 
 if __name__ == "__main__":

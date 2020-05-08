@@ -49,7 +49,17 @@ class TSeleniumDriver:
             options.set_preference("browser.download.manager.showAlertOnComplete", False)
             options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
-        self.the_driver = webdriver.Firefox(firefox_options=options)
+        for retry in range(3):
+            try:
+                self.the_driver = webdriver.Firefox(firefox_options=options)
+                break
+            except (WebDriverException, InvalidSwitchToTargetException) as exp:
+                if retry == 2:
+                    raise
+                logger = logging.getLogger("dlrobot_logger")
+                logger.error("Exception:{}, sleep and retry...".format(str(exp)))
+                time.sleep(10)
+
 
     def stop_executable(self):
         if self.the_driver is not None:
