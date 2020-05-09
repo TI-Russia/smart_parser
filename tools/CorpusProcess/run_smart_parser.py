@@ -37,7 +37,7 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?office=497", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?office=4199", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -126,7 +126,7 @@ def post_results(sourcefile, job, time_delta=None, parser_log=None):
     df_id, archive_file = job.get('document_file', None), job.get('archive_file', None)
     filename = sourcefile[:sourcefile.rfind('.')]
 
-    json_list = glob.glob("%s.json" % glob.escape(filename))
+    json_list = glob.glob("%s.json" % glob.escape(sourcefile))
     if len(json_list) == 1:
         # Properly constructed final JSON found
         data = json.load(open(json_list[0], encoding='utf8'))

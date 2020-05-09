@@ -51,6 +51,9 @@ namespace test
                     GraphicsUnit.Pixel);
 
                 graphics.TextRenderingHint = textHint;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
                 graphics.DrawString(s, font, drawBrush, 0, 0);
 
                 var myImageCodecInfo = GetEncoderInfo("image/jpeg");

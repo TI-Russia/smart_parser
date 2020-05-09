@@ -53,15 +53,18 @@ namespace Smart.Parser.Adapters
             string[] hardLines = Text.Split('\n');
             var graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
             graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            
             var stringSize = new SizeF();
             var font = new System.Drawing.Font(FontName, FontSize / 2);
             foreach (var hardLine in hardLines)
             {
                 stringSize = graphics.MeasureString(hardLine, font);
-                Logger.Info("stringSize = {0} (FontName = {2}, fontsize = {1})", stringSize, FontSize / 2, FontName);
+                // Logger.Info("stringSize = {0} (FontName = {2}, fontsize = {1})", stringSize, FontSize / 2, FontName);
 
-                int defaultMargin = 10; //to do calc it really
+                int defaultMargin = 11; //to do calc it really
                 int softLinesCount = (int)(stringSize.Width / (CellWidth - defaultMargin)) + 1;
                 if (softLinesCount == 1)
                 {
@@ -97,6 +100,7 @@ namespace Smart.Parser.Adapters
                     }
                 }
             }
+            Logger.Info("result = {0}", string.Join("|\n", res));
             return res;
         }
 

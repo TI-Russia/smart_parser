@@ -309,11 +309,7 @@ namespace Smart.Parser.Adapters
             {
                 FontSize = docHolder.DefaultFontSize;
             }
-            
-            Logger.Info("FontName = {0}", FontName);
-
         }
-
     }
 
     
