@@ -12,6 +12,11 @@ import json
 import socket
 import http.client
 
+#for curl
+import pycurl
+from io import BytesIO
+import certifi
+
 ALL_HTTP_REQUEST = dict()  # (url, method) -> time
 HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
 LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
@@ -69,7 +74,25 @@ class RobotHttpException(Exception):
             self.http_method, self.url, self.http_code, self.value)
 
 
-def make_http_request(url, method):
+def deal_with_http_code_503():
+    global HTTP_503_ERRORS_COUNT
+    logger = logging.getLogger("dlrobot_logger")
+    request_rates = get_request_rate()
+    logger.error("got HTTP-503 got, request_rate={}".format(json.dumps(request_rates)))
+    max_http_503_errors_count = 20
+    HTTP_503_ERRORS_COUNT += 1
+    if HTTP_503_ERRORS_COUNT > max_http_503_errors_count:
+        logger.error("full stop after {} HTTP-503 errors to prevent a possible ddos attack".format(
+            max_http_503_errors_count))
+        sys.exit(1)
+    else:
+        logger.error("wait 1 minute after HTTP-503 N {}".format(HTTP_503_ERRORS_COUNT))
+        time.sleep(60)
+        if HTTP_503_ERRORS_COUNT + 1 > max_http_503_errors_count:
+            time.sleep(20 * 60)  # last chance, wait 20 minutes
+
+
+def make_http_request_urllib(url, method):
     global HTTP_503_ERRORS_COUNT
     global HTTP_EXCEPTION_COUNTER
 
@@ -126,21 +149,73 @@ def make_http_request(url, method):
         raise RobotHttpException(str(exp), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
-            request_rates = get_request_rate()
-            logger.error("got HTTP-503 got, request_rate={}".format(json.dumps(request_rates)))
-            max_http_503_errors_count = 20
-            HTTP_503_ERRORS_COUNT += 1
-            if HTTP_503_ERRORS_COUNT > max_http_503_errors_count:
-                logger.error("full stop after {} HTTP-503 errors to prevent a possible ddos attack".format(max_http_503_errors_count))
-                #see http://bruhoveckaya.ru
-                sys.exit(1)
-            else:
-                logger.error("wait 1 minute after HTTP-503 N {}".format(HTTP_503_ERRORS_COUNT))
-                time.sleep(60)
-                if HTTP_503_ERRORS_COUNT + 1 > max_http_503_errors_count:
-                    time.sleep(20*60)  # last chance, wait 20 minutes
-
+            deal_with_http_code_503()
         raise RobotHttpException(str(e), url, e.code, method)
+
+
+LAST_HTTP_HEADERS_FOR_CURL = None
+def collect_http_headers_for_curl(header_line):
+    global LAST_HTTP_HEADERS_FOR_CURL
+    header_line = header_line.decode('iso-8859-1')
+
+    # Ignore all lines without a colon
+    if ':' not in header_line:
+        return
+
+    # Break the header line into header name and value
+    h_name, h_value = header_line.split(':', 1)
+
+    # Remove whitespace that may be present
+    h_name = h_name.strip()
+    h_value = h_value.strip()
+    h_name = h_name.lower() # Convert header names to lowercase
+    LAST_HTTP_HEADERS_FOR_CURL[h_name] = h_value # Header name and value.
+
+
+def make_http_request_curl(url, method):
+    global HTTP_503_ERRORS_COUNT
+    global HTTP_EXCEPTION_COUNTER
+    global LAST_HTTP_HEADERS_FOR_CURL
+    if HTTP_EXCEPTION_COUNTER[(url, method)] > 2:
+        raise RobotHttpException("stop requesting the same url", url, 429, method)
+
+    consider_request_policy(url, method)
+
+    buffer = BytesIO()
+    curl = pycurl.Curl()
+    curl.setopt(curl.URL, url)
+    curl.setopt(curl.HEADERFUNCTION, collect_http_headers_for_curl)
+    if method == "HEAD":
+        curl.setopt(curl.NOBODY, True)
+    else:
+        curl.setopt(curl.WRITEDATA, buffer)
+    curl.setopt(curl.FOLLOWLOCATION, True)
+    curl.setopt(curl.CONNECTTIMEOUT, 20)
+    curl.setopt(curl.TIMEOUT, 60)
+    curl.setopt(curl.CAINFO, certifi.where())
+    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+    curl.setopt(curl.USERAGENT, user_agent)
+    logger = logging.getLogger("dlrobot_logger")
+    logger.debug("curl ({}) method={}".format(url, method))
+    try:
+        LAST_HTTP_HEADERS_FOR_CURL = dict()
+        curl.perform()
+        http_code = curl.getinfo(curl.RESPONSE_CODE)
+        logger.debug('http_code = {} Time: {}'.format(http_code, curl.getinfo(curl.TOTAL_TIME)))
+        curl.close()
+
+        if http_code < 200 or http_code >= 300:
+            if http_code == 503:
+                deal_with_http_code_503()
+            raise RobotHttpException("curl failed", url, http_code, method)
+        data = b"" if method == "HEAD" else buffer.getvalue()
+        headers = dict(LAST_HTTP_HEADERS_FOR_CURL)
+        redirected_url = headers.get('Location', headers.get('location', url))
+        if HTTP_503_ERRORS_COUNT > 0:
+            HTTP_503_ERRORS_COUNT -= 1  # decrement HTTP_503_ERRORS_COUNT on successful http_request
+        return redirected_url, headers, data
+    except pycurl.error as err:
+        raise RobotHttpException(str(err), url, 520, method)
 
 
 def request_url_headers(url):
@@ -158,3 +233,9 @@ def request_url_headers(url):
     if redirected_url != url:
         HEADER_MEMORY_CACHE[redirected_url] = (redirected_url,headers)
     return redirected_url, headers
+
+
+make_http_request=make_http_request_urllib
+#make_http_request=make_http_request_curl
+
+

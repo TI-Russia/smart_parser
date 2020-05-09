@@ -38,8 +38,12 @@ def check_href_elementary(href):
 def web_link_is_absolutely_prohibited(source, href):
     if len(href) == 0:
         return True
-    if href.find('redirect') != -1:
-        return True
+
+    #http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
+    #href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
+    #if href.find('redirect') != -1:
+    #    return True
+
     if not check_href_elementary(href):
         return True
     if source.strip('/') == href.strip('/'):

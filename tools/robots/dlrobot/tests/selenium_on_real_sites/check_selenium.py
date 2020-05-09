@@ -33,11 +33,14 @@ def parse_args():
 
 def get_links(logger, links,  start_anchor_text):
     urls =  set()
+    element_index = 0
     for e in links:
+        element_index += 1
         try:
             if e.text is None:
                 continue
             link_text = e.text.strip('\n\r\t ')
+            logger.debug("check link anchor={}, element_index={}".format(link_text, element_index))
             if link_text.lower().startswith(start_anchor_text):
                 logger.debug("found link anchor={}".format(link_text))
                 href = e.get_attribute('href')
