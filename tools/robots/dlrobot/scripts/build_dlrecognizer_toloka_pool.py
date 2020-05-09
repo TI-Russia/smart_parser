@@ -1,14 +1,16 @@
 import argparse
 import sys
 import os
-from robots.common.office_list import TRobotProject, TProcessUrlTemporary, TUrlInfo
-from robots.common.download import get_file_extension_by_cached_url
+from robots.common.robot_project import TRobotProject, TUrlInfo
+from robots.common.download import TDownloadedFile
 from robots.dlrobot.dlrobot import ROBOT_STEPS
 from robots.common.primitives import strip_html_url
 from DeclDocRecognizer.external_convertors import TExternalConverters
 import shutil
 import csv
 import time
+import logging
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -24,7 +26,7 @@ def parse_args():
 #todo: pdf and zip files!
 
 def create_toloka_pool(project_path, toloka_stream):
-    with TRobotProject(project_path, ROBOT_STEPS) as project:
+    with TRobotProject(logging, project_path, ROBOT_STEPS, None) as project:
         project.read_project()
         office_info = project.offices[0]
         toloka_stream.write("INPUT:url\tINPUT:file_link\tINPUT:file_extension\tINPUT:html\n")
@@ -37,7 +39,7 @@ def create_toloka_pool(project_path, toloka_stream):
             sys.stderr.flush()
             url = export_record['url']
             cached_file = export_record['cached_file']
-            extension = get_file_extension_by_cached_url(url)
+            extension = TDownloadedFile(url).file_extension
             temp_file = "dummy" + extension
             shutil.copy(cached_file, temp_file)
             html = ec.convert_to_html_with_soffice(temp_file)
@@ -62,7 +64,7 @@ def copy_files(args, toloka_results):
             cached_file = export_record['cached_file']
             url = export_record['url']
             print ()
-            extension = get_file_extension_by_cached_url(url)
+            extension = TDownloadedFile(url).file_extension
             out_file = "{}_{}_{}{}".format(domain, index, int(time.time()), extension)
             tol_res = toloka_results.get(cached_file)
             if tol_res == "YES":

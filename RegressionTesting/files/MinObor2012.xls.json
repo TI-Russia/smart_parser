@@ -24,7 +24,7 @@
           "text": "квартира (общая долевая)",
           "square": 63.8,
           "relative": null,
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "63,8",
           "country_raw": "Россия"
         },
@@ -41,7 +41,7 @@
           "text": "квартира (общая долевая)",
           "square": 63.8,
           "relative": "Супруг(а)",
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "63,8",
           "country_raw": "Россия"
         },
@@ -58,7 +58,7 @@
           "text": "квартира (общая долевая)",
           "square": 63.8,
           "relative": "Ребенок",
-          "own_type_by_column": null,
+          "own_type_by_column": "В собственности",
           "square_raw": "63,8",
           "country_raw": "Россия"
         },

@@ -6,6 +6,10 @@ from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DE
     DEFAULT_7Z_EXTENSION
 import tempfile
 
+if shutil.which('unrar') is None:
+    raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt intall unrar")
+
+
 def unzip_one_archive(input_file, main_index, outfolder):
     with zipfile.ZipFile(input_file) as zf:
         for archive_index, zipinfo in enumerate(zf.infolist()):

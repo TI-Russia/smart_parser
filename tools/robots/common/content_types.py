@@ -700,6 +700,10 @@ content_types = [
 "application/vnd.handheld-entertainment+xml",
 "application/vnd.zzazz.deck+xml",
 "application/vnd.ms-word",
+"application/download",
+"binary/octet-stream",
+"application/binary",
+"application/x-unknown"
 ]
 
 ALL_CONTENT_TYPES = ";".join(content_types)

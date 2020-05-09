@@ -233,7 +233,15 @@ namespace RegressionTesting
         {
             TestSmartParser("DepEnergo2010.doc", "prod");
         }
+
         
+        [TestMethod]
+        [TestCategory("doc")]
+        public void TestWeakHeaderNumberCheck()
+        {
+            TestSmartParser("28733.doc", "prod");
+        }
+
 
         [TestMethod]
         [TestCategory("docx")]

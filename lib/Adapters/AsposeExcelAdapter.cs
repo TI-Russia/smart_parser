@@ -17,7 +17,7 @@ namespace Smart.Parser.Adapters
         {
             if (cell == null)
                 return;
-            { }
+            
 
             IsEmpty = cell.Type == Aspose.Cells.CellValueType.IsNull;
             // nobody wants to know how excel represents numbers inside itself

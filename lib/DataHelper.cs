@@ -75,9 +75,12 @@ namespace Smart.Parser.Lib
             {
                 case "супруг": return RelationType.Spouse;
                 case "упруга": return RelationType.Spouse;
+                case "супуг": return RelationType.Spouse;
                 case "супруг(супруга)": return RelationType.Spouse;
                 case "супруга(супруг)": return RelationType.Spouse;
                 case "суруга": return RelationType.Spouse;
+                case "спруга": return RelationType.Spouse;
+                case "супруа": return RelationType.Spouse;
                 case "супуга": return RelationType.Spouse;
                 case "супруга": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
@@ -95,11 +98,15 @@ namespace Smart.Parser.Lib
                 case "несовершеннолребенок": return RelationType.Child;
                 case "н/ребенок": return RelationType.Child;
                 case "дочь": return RelationType.Child;
+                case "дрчь": return RelationType.Child;
+                case "дочери": return RelationType.Child;
                 case "дочьсупроги": return RelationType.Child;
                 case "дочьсупруги": return RelationType.Child;
                 case "сынсупруги": return RelationType.Child;
                 case "сын": return RelationType.Child;
                 case "сына": return RelationType.Child;
+                case "сынжены(находитсянаиждивении)": return RelationType.Child;
+                case "пасынок": return RelationType.Child;
                 case "падчерица": return RelationType.Child;
                 case "сынжены": return RelationType.Child;
                 case "дочьжены": return RelationType.Child;
@@ -117,6 +124,10 @@ namespace Smart.Parser.Lib
                 case "опекаемый": return RelationType.Child;
 
                 default:
+                    if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннолетн"))
+                        return RelationType.Child;
+                    if (clean.StartsWith("супруг"))
+                        return RelationType.Spouse;
                     if (throwException)
                     {
                         throw new ArgumentOutOfRangeException(strRel, $"Неизвестный тип родственника: {strRel}");
@@ -128,18 +139,22 @@ namespace Smart.Parser.Lib
         public static bool IsEmptyValue(string s)
         {
             if (s == null) return true;
-            s = s.Trim();
+            s = s.Trim().ToLower();
             if (Regex.Match(s, @"^[\s-_]+$").Success)
             {
                 return true;
             }
             return String.IsNullOrWhiteSpace(s)
                 || s == "-"
+                || s == "─"
+                || s == "- - -"
                 || s == "–"
                 || s == "_"
                 || s == "—"
                 || s == "нет"
                 || s == "не имеет"
+                || s == "не указан"
+                || s == "не указано"
                 || s == "отсутствует";
         }
 

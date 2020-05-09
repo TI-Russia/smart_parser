@@ -1,9 +1,11 @@
 import os
 from robots.common.find_link import find_links_in_html_by_text
-from robots.common.office_list import TRobotProject, TProcessUrlTemporary, TUrlInfo
+from robots.common.robot_project import TRobotProject
+from robots.common.robot_step import TRobotStep, TUrlInfo
 from robots.dlrobot.dlrobot import looks_like_a_declaration_link
 from bs4 import BeautifulSoup
 import urllib.parse
+import logging
 
 ROBOT_STEPS = [
     {
@@ -13,11 +15,12 @@ ROBOT_STEPS = [
 ]
 
 if __name__ == "__main__":
-    with TRobotProject("project.txt", ROBOT_STEPS) as project:
+    with TRobotProject(logging, "project.txt", ROBOT_STEPS, "result") as project:
         project.read_project()
         office_info = project.offices[0]
+        office_info.create_export_folder()
         target = office_info.robot_steps[0]
-        step_info = TProcessUrlTemporary(office_info, target, ROBOT_STEPS[0])
+        step_info = TRobotStep(office_info, ROBOT_STEPS[0])
         start_page = "sved.html"
         html_path = os.path.join( os.path.dirname(os.path.realpath(__file__)), "html", start_page)
         soup = BeautifulSoup(open(html_path, encoding="utf8"), 'html.parser')

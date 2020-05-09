@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 39
+        "files_count": 40
     },
     {
         "click_path": [
@@ -13,14 +13,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2018 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2018.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2018.doc/dlrobot_data",
@@ -38,14 +38,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Поступившие на службу в 2015 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincomestart2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincomestart2015.doc/dlrobot_data",
@@ -63,14 +63,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2014 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2014.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2014.doc/dlrobot_data",
@@ -88,14 +88,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2018 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2018.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2018.doc/dlrobot_data",
@@ -113,14 +113,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2010 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2010.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2010.doc/dlrobot_data",
@@ -138,14 +138,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2015 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2015.doc/dlrobot_data",
@@ -163,14 +163,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2016 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2016.doc/dlrobot_data",
@@ -188,14 +188,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2014 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2014.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2014.doc/dlrobot_data",
@@ -213,14 +213,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2012 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2012.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2012.doc/dlrobot_data",
@@ -238,14 +238,39 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Россельхознадзор - Противодействие коррупции",
+                "anchor_text": "2013 год",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2013.doc",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2013.doc/dlrobot_data",
+        "sha256": "43395f455a193f8a46fffd036d3023b3cd50b2c5571938da972618b70f7b3e01",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.fsvps.ru",
+                "step": null,
+                "title": "Россельхознадзор - Официальный сайт",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2011 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2011.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2011.doc/dlrobot_data",
@@ -263,14 +288,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2011 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2011.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2011.doc/dlrobot_data",
@@ -288,14 +313,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2014 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2014.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2014.doc/dlrobot_data",
@@ -313,14 +338,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Принятые на работу в 2016 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2016.doc/dlrobot_data",
@@ -338,14 +363,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2012 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2012.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2012.doc/dlrobot_data",
@@ -363,14 +388,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2015 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2015.doc/dlrobot_data",
@@ -387,15 +412,8 @@
                 "engine": "google"
             },
             {
-                "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
-                "title": "Россельхознадзор - Противодействие коррупции",
-                "anchor_text": "2016 год",
-                "engine": "urllib"
-            },
-            {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2016.doc/dlrobot_data",
@@ -413,14 +431,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2009 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2009.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2009.doc/dlrobot_data",
@@ -438,14 +456,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Поступившие на службу в 2016 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2016.doc/dlrobot_data",
@@ -463,14 +481,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2017 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2017.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2017.doc/dlrobot_data",
@@ -488,14 +506,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2017 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2017.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2017.doc/dlrobot_data",
@@ -513,14 +531,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Поступившие на службу в 2015 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2015.doc/dlrobot_data",
@@ -538,14 +556,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2015 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2015.doc/dlrobot_data",
@@ -563,14 +581,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Принятые на работу в 2015 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2015.doc/dlrobot_data",
@@ -588,14 +606,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2009 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2009.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2009.doc/dlrobot_data",
@@ -613,14 +631,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2015 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2015.doc/dlrobot_data",
@@ -638,14 +656,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Поступившие на службу в 2016 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2016.doc/dlrobot_data",
@@ -663,14 +681,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2017 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2017.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2017.doc/dlrobot_data",
@@ -688,14 +706,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2013 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/admin_income_2013.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/admin_income_2013.doc/dlrobot_data",
@@ -713,14 +731,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Поступившие на службу в 2017 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2017.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2017.doc/dlrobot_data",
@@ -738,14 +756,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2013 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2013.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2013.doc/dlrobot_data",
@@ -763,14 +781,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2018 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2018.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2018.doc/dlrobot_data",
@@ -788,14 +806,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2016 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2016.doc/dlrobot_data",
@@ -813,14 +831,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2014 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2014.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2014.doc/dlrobot_data",
@@ -838,14 +856,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2016 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2016.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2016.doc/dlrobot_data",
@@ -863,14 +881,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2018 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2018.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2018.doc/dlrobot_data",
@@ -888,14 +906,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "Поступившие на службу в 2015 году",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2015.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2015.doc/dlrobot_data",
@@ -913,14 +931,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2013 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2013-1.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2013-1.doc/dlrobot_data",
@@ -938,14 +956,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2017 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2017.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2017.doc/dlrobot_data",
@@ -963,14 +981,14 @@
             },
             {
                 "url": "https://www.fsvps.ru/fsvps/corruption/income.html",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Россельхознадзор - Противодействие коррупции",
                 "anchor_text": "2010 год",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "https://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2010.doc",
-                "step": "declarations_div_pages"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2010.doc/dlrobot_data",

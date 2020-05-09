@@ -1,6 +1,6 @@
 [
     {
-        "files_count": 51
+        "files_count": 55
     },
     {
         "click_path": [
@@ -12,32 +12,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "2",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=2",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=2",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
-                "engine": "urllib"
-            },
-            {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha20180620/",
-                "step": "declarations_div_pages2",
-                "title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннол",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/f0a/f0a8e2c992161d433c02a48c9c393b13.docx",
@@ -58,32 +72,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2016 г. по 31 декабря 2016 г. (сведения размещаются по решению Комиссии по соблюдению требований к служебному поведению и урегулированию конфликта интересов от 06.10.2017)",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha2310201702/",
-                "step": "declarations_div_pages2",
-                "title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2016 г. по 31 декабря 2016 г. (сведения размещаются по решению Комиссии по соблюдению требован",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/806/806f91ab44935b307242d458ddf7bd1c.docx",
@@ -104,32 +125,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                "anchor_text": "6",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-lits_5/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России за период с 1 января 2014 г. по 31 декабря 2014 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/dd9/dd9823a8182f435b5a5850be189bc991.docx",
@@ -146,36 +181,68 @@
                 "url": "http://www.mkrf.ru",
                 "step": null,
                 "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_7/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_dbd6508b0201402d55270f33bafdba76/dlrobot_data",
+        "sha256": "1bc18dd8d8aea514e812b9b02399dd31cac4b5259b319148d9506de4a382d901",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
                 "anchor_text": "Противодействие коррупции",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu/",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Документы - Министерство культуры Российской Федерации",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/b92/b928edc15b6cc5b06c5d4818a5bce4ef.docx",
@@ -196,32 +263,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-lits/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/38e/38e71f3d9275f6a6e2a144c298a757ef.docx",
@@ -242,32 +316,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2013 г. по 31 декабря 2013 г.",
+                "anchor_text": "6",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu_8/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2013 г. по 31 декабря 2013 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/55e/55e6c234d83a0fa2d596825784379063.docx",
@@ -288,71 +376,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей территориальных управлений, заместителей Росархива и Ростуризма за период с 1 января 2014 г. по 31 декабря 2014 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_4/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_d5a8e5881d172f80ffc5a23c59c81695/dlrobot_data",
-        "sha256": "34f4c3f989def41b78b00d39600e2446b28221ed9a06ac5c3e5192c4dfd2738c",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
                 "anchor_text": "23_05_2017_10.docx (29.31 KB)",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/235/2358d3bfc5864ca14111013c0f8e0ef9.docx",
@@ -369,36 +425,75 @@
                 "url": "http://www.mkrf.ru",
                 "step": null,
                 "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mkrf.ru/activities/anti_corruption/subordinate-organizations/recommended-forms/",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "Форма для предоставления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера на заместителей руководителей, главных бухгалтеров подведомственных Минкультуры России организаций, их супругов и несовершеннолетних детей, для размещения на официальном сайте Минкультуры России",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/forma-dlya-predostavleniya-svedeniy-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushch1603201801/",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mkrf.ru/upload/iblock/bb4/bb46d84af76af42ebd781a620db311fa.docx",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/upload/iblock/bb4/bb46d84af76af42ebd781a620db311fa.docx/dlrobot_data",
+        "sha256": "417c7708965f7a8cace2bedd37772942354d52cd41cf54fc39646dfd4059fdcd",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
                 "anchor_text": "Противодействие коррупции",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha/",
-                "step": "declarations_div_pages2",
-                "title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) ...",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/051/051abb75f1b70ec3777421b38759cc6e.docx",
@@ -419,32 +514,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "5",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, \r\nразмещенные ранее на официальных сайтах иных государственных органах и (или) организаций  за предшествующие периоды",
-                "engine": "urllib"
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede_1/",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Документы - Министерство культуры Российской Федерации",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/d14/d147220d6f82b12a34e2896cb3c40c31.docx",
@@ -465,32 +567,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "5",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2014 г. по 31 декабря 2014 г.",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu_2/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2014 г. по 31 декабря 2014 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/3a1/3a1e049d495d9b6f16e262db0a42c949.docx",
@@ -511,32 +620,92 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
+                "anchor_text": "5",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-pred_3/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_674595793c73a1a9ed4e062a729f84a6/dlrobot_data",
+        "sha256": "4ed4c58a176d31b1d99a720ffa9f9270102cf66e976d5b36b229e9f00bcb4e8c",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "Противодействие коррупции",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, руководителей организаций созданных для выполнения задач, поставленных перед Минкультуры России, поступивших на работу с 1 января по 31 декабря 2015 года, за предшествующие периоды, размещенные ранее на сайтах иных государственных органов и (или) организаций",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_1/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, руководителей организаций созданных для выполнения задач, поставленных перед Минкультуры России, поступивших на работу с 1 января по 31 декабря 2015 года, за",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/c4b/c4b8cfdfc33e07b683ebf1850f5ab0f1.docx",
@@ -557,32 +726,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
                 "anchor_text": "23_05_2017_13.docx (26.03 KB)",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/f02/f025793cff4e9da556dc29bcdabfac14.docx",
@@ -603,32 +779,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
                 "anchor_text": "23_05_2017_12.docx (27.88 KB)",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/711/711591b849bcf88dffb8e63ae3ed2027.docx",
@@ -649,32 +832,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha_1/",
-                "step": "declarations_div_pages2",
-                "title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/55a/55a909396999df711b0bad85c97f35b7.docx",
@@ -695,32 +892,159 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "7",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "6",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=7",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_4/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_d5a8e5881d172f80ffc5a23c59c81695/dlrobot_data",
+        "sha256": "62cd81fc30d680971d5612a8cc81740784461142b5e355283b3593ccf8681a0f",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "Противодействие коррупции",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России за период с 1 января 2012 г. по 31 декабря 2012 г.",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "3",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=3",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-lits231021703/",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/upload/iblock/8fb/8fb610b8cf1b8abccd0aeb3ee07010ff.docx",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/upload/iblock/8fb/8fb610b8cf1b8abccd0aeb3ee07010ff.docx/dlrobot_data",
+        "sha256": "6513d45b63718233950eb655c3af059b182db79664b1aa7c0560dbe0c01837d2",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "Противодействие коррупции",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "7",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=7",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu_10/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России за период с 1 января 2012 г. по 31 декабря 2012 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/0c6/0c666aa95c4a7250825fd768a6106a84.docx",
@@ -741,32 +1065,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "7",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=7",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России, замещающих должности высшей группы, руководителей управлений Минкультуры России, заместителей руководителей федеральных агентств, их супругов и несовершеннолетних детей за период с 1 января 2011 г. по 31 декабря 2011 г.",
+                "anchor_text": "7",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=7",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosudarstvennykh_12/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России, замещающих должности высшей группы, руководителей управлений Минкультуры России, заместителей руководителей федеральных агентств, их",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/3c0/3c01009674a1fd508e9bdd546fc496cb.docx",
@@ -787,32 +1125,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "2",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=2",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=2",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
-                "engine": "urllib"
-            },
-            {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-lits2305201803/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних де",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/cef/cef2cdad7c9964a8a5f7a614d25a6516.docx",
@@ -833,32 +1185,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2015 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede_2/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2015 года, размещенные ранее на официальных сайтах ины",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/8cd/8cd827aa6456096e868476cf307dd024.docx",
@@ -879,25 +1245,32 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций созданных для выполнения задач, поставленных перед Минкультуры России, за отчетный период с 1 января 2018 г. по 31 декабря 2018 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha2006201902/",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Документы - Министерство культуры Российской Федерации",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/247/247899428cbb0fe1fb1c3b4287429faa.docx",
@@ -918,32 +1291,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "5",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, \r\nразмещенные ранее на официальных сайтах иных государственных органах и (или) организаций  за предшествующие периоды",
-                "engine": "urllib"
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-pred2011/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года,  размещенные ранее на официальных сайтах иных",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/22b/22b72b2f1a1564de58feee7ef45de8e4.docx",
@@ -964,32 +1344,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "2",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=2",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=2",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
-                "engine": "urllib"
-            },
-            {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko2305201802/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2017 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/b11/b1108c9a8fdbc7f0ffac0ebabe20ac57.docx",
@@ -1010,32 +1404,103 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "5",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede_1/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_527339a090ba749dfe18aad186ff5b42/dlrobot_data",
+        "sha256": "80bc98a045380ea908a3455c8bc749d0b14d44b528b0338f097d9b33b5ce6300",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-predstavlennye-12-2/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_3d11f24cee40ec4258fc07b8fb372c54/dlrobot_data",
+        "sha256": "86d9a0d26303e9286d990f98255b941edc5cc1c61f59173d3cef54c05b37a594",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "Противодействие коррупции",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu2405/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
-                "anchor_text": "скачать документ",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
                 "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "5",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu2405/",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/279/279cda117b00f27b9b3ad6bea0a34bde.docx",
@@ -1056,25 +1521,32 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за отчетный период с 1 января 2018 г. по 31 декабря 2018 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu2705201901/",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Документы - Министерство культуры Российской Федерации",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/464/464c2dd253107438f4f4502382f9a642.docx",
@@ -1095,32 +1567,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "7",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=7",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные государственными служащими Министерства культуры Российской Федерацииза отчетный финансовый год с 1 января 2009 года по 31 декабря 2009 года",
+                "anchor_text": "7",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=7",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-predstavlennye-_14/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные государственными служащими Министерства культуры Российской Федерацииза отчетный финансовый год с 1 января 2009 года по 31 декабря 2009 года",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/0a3/0a3b9281f49eee23a33b30db6aa0f40a.docx",
@@ -1141,29 +1627,36 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России за отчетный период с 1 января 2018 г. по 31 декабря 2018 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko2705201902/",
-                "step": "declarations_div_pages",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России за отчетный период с 1 января 2018 г. по 31 декабря 2018 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/f4e/f4ec0533d8b4fc9114a0224be1b199db.docx",
-                "step": "declarations_div_pages2"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.mkrf.ru/upload/iblock/f4e/f4ec0533d8b4fc9114a0224be1b199db.docx/dlrobot_data",
@@ -1180,32 +1673,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "7",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=7",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России, замещающих должности высшей группы, руководителей управлений Минкультуры России, заместителей руководителей федеральных агентств, их супругов и несовершеннолетних детей за период с 1 января 2012 г. по 31 декабря 2012 г",
+                "anchor_text": "7",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=7",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosudarstvennykh_11/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России, замещающих должности высшей группы, руководителей управлений Минкультуры России, заместителей руководителей федеральных агентств, их с",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/2c2/2c2ce19c7026942939e8749b42063b7f.docx",
@@ -1226,71 +1733,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "6",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей территориальных управлений, заместителей Росархива и Ростуризма за период с 1 января 2013 г. по 31 декабря 2013 г.",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_7/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_dbd6508b0201402d55270f33bafdba76/dlrobot_data",
-        "sha256": "a32b32699469f63ed6bfa8d550fbb8d7caae4a88c4c72f696355497fff0718bb",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих должности в организациях, создаваемых для выполнения задач, поставленных перед Минкультуры России за период с 1 января 2013 г. по 31 декабря 2013 г.",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-lits_6/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих должности в организациях, создаваемых для выполнения задач, поставленных перед Минкультуры России за период с 1 января 2013 г. по 31 декабря 2013 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/408/40835220ef350c46ab9eea8a86fc2953.docx",
@@ -1311,110 +1793,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "5",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-pred_3/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_674595793c73a1a9ed4e062a729f84a6/dlrobot_data",
-        "sha256": "b1a3e0008e0f9710d8cf419fd3bfeff9fe2a4c7761f50e6999225ad61b11d10a",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "5",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, \r\nразмещенные ранее на официальных сайтах иных государственных органах и (или) организаций  за предшествующие периоды",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede_1/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_527339a090ba749dfe18aad186ff5b42/dlrobot_data",
-        "sha256": "bb0089ea3ff0272510bb5256780d561a573f9084fd0b86489205191b7b0877da",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "7",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=7",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=7",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России, замещающих должности высшей группы, их супругов и несовершеннолетних детей за период с 1 января 2010 г. по 31 декабря 2010 г.",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosudarstvennykh_13/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, об имуществе и обязательствах имущественного характера, государственных служащих Минкультуры России, замещающих должности высшей группы, их супругов и несовершеннолетних детей за период с 1 января 2010 г. по 31 декабря 2010 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/2c1/2c150614822a4a105d1ee1f58f0afcd5.docx",
@@ -1435,110 +1853,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
-                "engine": "urllib"
+                "anchor_text": "2",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko2405/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_ad73c191fb4619717c905e2e61f18a3b/dlrobot_data",
-        "sha256": "be0fdac3f782d942fbdfcd53bad970ef359ea6d853ebad11187e43cb6a17201b",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении Минкультуры России отчетный период с 1 января 2012 года по 31 декабря 2012 года",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-predstavlennye-12-2/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_3d11f24cee40ec4258fc07b8fb372c54/dlrobot_data",
-        "sha256": "c13dc3d50ce43499282f9762ae7aaa506badd793feb1c183b1955b2de55807ef",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=2",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=2",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2017 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
-            },
-            {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede2305201804/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2017 года, размещенные ранее на официальных сайтах",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/06d/06d58f741f4d7a6584c44a4a9a51acb8.docx",
@@ -1559,32 +1913,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko2405/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/63d/63d5e83bd776817bc939473554f0753f.doc",
@@ -1605,32 +1973,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-fede/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 января по 31 декабря 2016 года, размещенные ранее на официальных сайтах",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
                 "anchor_text": "23_05_2017_11.docx (24.18 KB)",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/428/42849f08dc1e84c99c897fe8b98314ee.docx",
@@ -1651,71 +2026,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "5",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, \r\nразмещенные ранее на официальных сайтах иных государственных органах и (или) организаций  за предшествующие периоды",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-pred2011/",
-                "step": "declarations_div_pages2"
-            }
-        ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_e3cda386bfee7076a1667cb285badfe2/dlrobot_data",
-        "sha256": "c971a3c6b5f8ffd4deaae45cafd2695b437c5c6529d524e3c6fae7e5ebea4122",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://www.mkrf.ru",
-                "step": null,
-                "title": "Министерство культуры Российской Федерации",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
-                "step": "anticorruption_div",
-                "title": "Противодействие коррупции",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "5",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-lits1406201801/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих отдельные должности в организациях, созданных для выполнения задач, поставленных перед Минкультуры России, их супруг (супругов) и несовершеннолетних детей",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/b16/b1677fd417b08e8cdc3267961b74dfc9.docx",
@@ -1736,32 +2079,99 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "7",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=7",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=2",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-predstavlennye-_14/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_060e323d171a45e5e4b2ad95fd89e632/dlrobot_data",
+        "sha256": "d1468a908e8502350f4539c34e858b66b33379628b41f015af2a7e20216e9fa9",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "Противодействие коррупции",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
+                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2016 г. по 31 декабря 2016 г., выявленные в ходе анализа технических ошибок",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "2",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=2",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha2310201701/",
-                "step": "declarations_div_pages2",
-                "title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за период с 1 января 2016 г. по 31 декабря 2016 г., выявленные в ходе анализа технических ошибок",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/d5a/d5a1ee95e8bbdafb28e8149afc8f59d6.docx",
@@ -1775,6 +2185,16 @@
     {
         "click_path": [
             {
+                "exception": "graph is too large, timeout is set to 2 seconds"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/o-kulture-v-rossiyskoy-federatsii/dlrobot_data",
+        "sha256": "d7e987d12292e864dd3749c036e05472f7f752a5ff6e3520b2a273c4ea7f6c5c",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
                 "url": "http://www.mkrf.ru",
                 "step": null,
                 "title": "Министерство культуры Российской Федерации",
@@ -1782,32 +2202,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "5",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=5",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных государственных органах и (или) организаций за предшествующие периоды",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-pred_3/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минкультуры России, поступивших на службу с 1 мая по 31 декабря 2014 года, размещенные ранее на официальных сайтах иных г",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/5d7/5d7d8c9781bdec711664dd05b7d328ba.docx",
@@ -1828,32 +2255,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "4",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=4",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha__/",
-                "step": "declarations_div_pages2",
-                "title": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/3e3/3e373e2e20ca0442e09e2da34692ec35.doc",
@@ -1874,32 +2315,39 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "3",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=3",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по 31 декабря 2016 г.",
-                "engine": "urllib"
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей и заместителей руководителей территориальных управлений Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2016 г. по",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/e36/e36ada151f6872c76ccaa340f1cde301.docx",
@@ -1920,25 +2368,32 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Уточненные сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Минкультуры России за отчетный период с 1 января 2018 г. по 31 декабря 2018 г.",
                 "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/utochnennye-svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kha2006201901/",
-                "step": "declarations_div_pages",
+                "step": "declarations",
                 "title": "Документы - Министерство культуры Российской Федерации",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/3c8/3c8ae5ebbc3454be74b47be9e794dd2b.docx",
@@ -1959,29 +2414,43 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минкультуры России, у которых отсутствует официальный сайт организации (за исключением руководителей данных организаций), за отчетный период с 1 января 2018 года по 31 декабря 2018 года. (Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера, представленные работниками организаций, созданных для выполнения задач, поставленных перед Минкультуры России, у которых имеется официальный сайт (за исключением руководителей данных организаций), за отчетный 2018 год в соответствии с приказом Минкультуры России от 15.02.2019 № 159 размещаются на официальных сайтах данных организаций).",
+                "anchor_text": "ПРЕВЬЮ",
                 "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-rabo2705201904/",
-                "step": "declarations_div_pages",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера работников организаций, созданных для выполнения задач, поставленных перед Минкультуры России, у которых отсутствует официальный сайт организации (за исключением руков",
-                "anchor_text": "скачать документ",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-rabo2705201904/",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
+            },
+            {
                 "url": "http://www.mkrf.ru/upload/iblock/38c/38c295e6023ae6a6b55431d1585648db.docx",
-                "step": "declarations_div_pages2"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.mkrf.ru/upload/iblock/38c/38c295e6023ae6a6b55431d1585648db.docx/dlrobot_data",
@@ -1998,32 +2467,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей территориальных управлений, заместителей Росархива и Ростуризма за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                "anchor_text": "6",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_4/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей территориальных управлений, заместителей Росархива и Ростуризма за период с 1 января 2014 г. по 31 декабря 2014 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/2fa/2faa586bf49e796ceabae972d23bcbb4.docx",
@@ -2044,32 +2527,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "2",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=2",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=2",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
-                "engine": "urllib"
-            },
-            {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-gosu2305201801/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Минкультуры России, их супруг (супругов) и несовершеннолетних детей за период с 1 января 2017 г. по 31 декабря 2017 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/f4a/f4a8d5112078b04c117b3f74f62988ab.docx",
@@ -2090,32 +2587,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей территориальных управлений, заместителей Росархива и Ростуризма за период с 1 января 2013 г. по 31 декабря 2013 г.",
+                "anchor_text": "6",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko_7/",
-                "step": "declarations_div_pages2",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей территориальных управлений, заместителей Росархива и Ростуризма за период с 1 января 2013 г. по 31 декабря 2013 г.",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/eb0/eb052bf32bce9a3e1f7f504414b3e38b.docx",
@@ -2136,29 +2647,103 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
+                "anchor_text": "Федеральные программы",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/documents/article/federalnie-programmi/",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "7",
+                "engine": "selenium"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/article/federalnie-programmi/?PAGEN_1=7",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/article/federalnie-programmi/alt/?PAGEN_1=7",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "4",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/article/federalnie-programmi/alt/?PAGEN_1=4",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/o-realizatsii-federalnoy-tselevoy-programmy-kultura-rossii-2012-2018-gody-za-2014-god/",
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "скачать документ",
+                "engine": "urllib"
+            },
+            {
+                "url": "https://www.mkrf.ru/upload/iblock/879/879db02a8e08701d6cecad8ab614e30d.rar",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/upload/iblock/879/879db02a8e08701d6cecad8ab614e30d.rar/dlrobot_data",
+        "sha256": "ef7eb8e58f31b1d03d75717682f584816635be943ad52256cc34cf52a85c920c",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "Противодействие коррупции",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
+                "step": "anticorruption_div",
+                "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций созданных для выполнения задач, поставленных перед Минкультуры России, за отчетный период с 1 января 2018 года по 31 декабря 2018 года",
                 "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko2705201903/",
-                "step": "declarations_div_pages",
-                "title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей организаций созданных для выполнения задач, поставленных перед Минкультуры России, за отчетный период с 1 января 2018 года по 31 декабря 2018 года",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "step": "declarations",
+                "title": "Документы - Министерство культуры Российской Федерации",
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/c43/c4387b50a372c6fc64e22367f6f71dd5.docx",
-                "step": "declarations_div_pages2"
+                "step": "declarations"
             }
         ],
         "cached_file": "cached/www.mkrf.ru/upload/iblock/c43/c4387b50a372c6fc64e22367f6f71dd5.docx/dlrobot_data",
@@ -2175,33 +2760,65 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "7",
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "4",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=4",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=7",
-                "step": "declarations_div_pages",
-                "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные государственными служащими Министерства культуры Российской Федерацииза отчетный финансовый год с 1 января 2009 года по 31 декабря 2009 года",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-predstavlennye-_14/",
-                "step": "declarations_div_pages2"
+                "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-ruko2405/",
+                "step": "declarations"
             }
         ],
-        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-khar_060e323d171a45e5e4b2ad95fd89e632/dlrobot_data",
-        "sha256": "f8f378aac974dceb5fca5474d947a117214a809b536101e4a2cf3b06bcee674f",
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_ad73c191fb4619717c905e2e61f18a3b/dlrobot_data",
+        "sha256": "f743a78d2e8aeeda56af6d8ee3d745f8bc70997702a66502dabff38f55e92f24",
+        "dl_recognizer_result": "declaration_result"
+    },
+    {
+        "click_path": [
+            {
+                "url": "http://www.mkrf.ru",
+                "step": null,
+                "title": "Министерство культуры Российской Федерации",
+                "anchor_text": "\"сведения о доходах\"",
+                "engine": "google"
+            },
+            {
+                "url": "https://www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-pred2011/",
+                "step": "declarations"
+            }
+        ],
+        "cached_file": "cached/www.mkrf.ru/documents/svedeniya-o-dokhodakh-raskhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestv_e3cda386bfee7076a1667cb285badfe2/dlrobot_data",
+        "sha256": "f96a85f9f3cee59d8340d60a692c14b9190fd649638ec3f73ccf11072a20269b",
         "dl_recognizer_result": "declaration_result"
     },
     {
@@ -2214,32 +2831,46 @@
                 "engine": "urllib"
             },
             {
-                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_dalnevostochnomu_federalnomu_okrugu/anti-corruption/",
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/",
                 "step": "anticorruption_div",
                 "title": "Противодействие коррупции",
+                "anchor_text": "Состав комиссии",
+                "engine": "urllib"
+            },
+            {
+                "url": "http://www.mkrf.ru/about/territorial_authorities/upravlenie_ministerstva_kultury_rossiyskoy_federatsii_po_sibirskomu_federalnomu_okrugu/anti-corruption/commission/composition/",
+                "step": "declarations",
+                "title": "О министерстве - Министерство культуры Российской Федерации",
                 "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/activities/anti_corruption/income/",
-                "step": "declarations_div",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "6",
-                "engine": "urllib"
+                "anchor_text": "ПРЕВЬЮ",
+                "engine": "selenium"
             },
             {
-                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?PAGEN_1=6",
-                "step": "declarations_div_pages",
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt",
+                "step": "declarations",
                 "title": "Деятельность - Министерство культуры Российской Федерации",
-                "anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении Минкультуры России отчетный период с 1 января 2012 года по 31 декабря 2012 года",
+                "anchor_text": "6",
+                "engine": "selenium"
+            },
+            {
+                "url": "http://www.mkrf.ru/activities/anti_corruption/income/?show=alt&PAGEN_1=6",
+                "step": "declarations",
+                "title": "Деятельность - Министерство культуры Российской Федерации",
+                "anchor_text": "",
                 "engine": "urllib"
             },
             {
                 "url": "http://www.mkrf.ru/documents/svedeniya-o-dokhodakh-ob-imushchestve-i-obyazatelstvakh-imushchestvennogo-kharaktera-predstavlennye-12-2/",
-                "step": "declarations_div_pages2",
+                "step": "declarations",
                 "title": "Документы - Министерство культуры Российской Федерации",
-                "anchor_text": "скачать документ",
-                "engine": "urllib"
+                "anchor_text": "СКАЧАТЬ ДОКУМЕНТ",
+                "engine": "selenium"
             },
             {
                 "url": "http://www.mkrf.ru/upload/iblock/cad/cad689aaf96b68e5ac822f52a540c6ef.docx",
