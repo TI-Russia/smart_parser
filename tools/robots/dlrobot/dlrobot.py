@@ -11,7 +11,7 @@ from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
                                     check_sub_page_or_iframe
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
 from robots.common.find_link import TLinkInfo
 
 
@@ -45,9 +45,10 @@ NEGATIVE_WORDS = [
     'технические',    '^федеральный',    '^историческ',
     '^закон',    'новости', "^формы", "обратная", "обращения",
     "^перечень", "прочие", "слабовидящих"
-] + ['^{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
-# document type  (указ, утверждена) can be inside the title, for example:
+] + ['^.{{0,10}}{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
+# document type (SOME_OTHER_DOCUMENTS)  (указ, утверждена) can be inside the title, for example:
 #сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении министерства здравоохранения российской федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте министерства здравоохранения российской федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным указом президента российской федерации от 8 июля 2013 г. № 613
+# but not in the beginning (first 10 chars)
 
 NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WORDS)))
 
@@ -86,7 +87,7 @@ def looks_like_a_document_link(link_info: TLinkInfo):
         try:
             ext = get_file_extension_only_by_headers(link_info.target_url)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except HttpException as err:
+        except RobotHttpException as err:
             if err.count == 1:
                 logging.getLogger("dlrobot_logger").error(err)
             return False
@@ -97,8 +98,8 @@ def looks_like_a_document_link(link_info: TLinkInfo):
 def looks_like_a_declaration_link(link_info: TLinkInfo):
     # here is a place for ML
     anchor_text = normalize_and_russify_anchor_text(link_info.anchor_text)
-    if re.search('^(сведения)|(справк[аи]) о доходах', anchor_text):
-        link_info.weight = 50
+    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text):
+        link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
         logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
         return True
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
@@ -147,15 +148,15 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         if income_anchor:
-            weight += 50
+            weight += TLinkInfo.BEST_LINK_WEIGHT
         if income_path:
-            weight += 50
+            weight += TLinkInfo.BEST_LINK_WEIGHT
         if good_doc_type_anchor:
-            weight += 10
+            weight += TLinkInfo.NORMAL_LINK_WEIGHT
         if good_doc_type_path:
-            weight += 10
+            weight += TLinkInfo.NORMAL_LINK_WEIGHT
         if year_found_anchor:
-            weight += 5  # better than sub_page
+            weight += TLinkInfo.TRASH_LINK_WEIGHT  # better than sub_page
 
         all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
                         ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
@@ -212,6 +213,7 @@ def parse_args():
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
+    parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
     args = parser.parse_args()
     TRobotStep.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
@@ -249,17 +251,21 @@ def make_steps(args, project):
 
     project.logger.info("=== export_files_to_folder =========")
     project.export_files_to_folder()
-    project.write_export_stats()
     project.write_project()
+
 
 
 def open_project(args):
     logger = setup_logging(args.logfile)
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
-        make_steps(args, project)
-        if args.click_features_file:
-            project.write_click_features(args.click_features_file)
+        if args.only_click_stats:
+            project.write_export_stats()
+        else:
+            make_steps(args, project)
+            project.write_export_stats()
+            if args.click_features_file:
+                project.write_click_features(args.click_features_file)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ from robots.common.content_types import ALL_CONTENT_TYPES
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from selenium.webdriver.common.action_chains import ActionChains
 
 import logging
@@ -49,7 +49,17 @@ class TSeleniumDriver:
             options.set_preference("browser.download.manager.showAlertOnComplete", False)
             options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
-        self.the_driver = webdriver.Firefox(firefox_options=options)
+        for retry in range(3):
+            try:
+                self.the_driver = webdriver.Firefox(firefox_options=options)
+                break
+            except (WebDriverException, InvalidSwitchToTargetException) as exp:
+                if retry == 2:
+                    raise
+                logger = logging.getLogger("dlrobot_logger")
+                logger.error("Exception:{}, sleep and retry...".format(str(exp)))
+                time.sleep(10)
+
 
     def stop_executable(self):
         if self.the_driver is not None:
@@ -69,9 +79,14 @@ class TSeleniumDriver:
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
-    def _navigate_and_get_links(self, url, timeout=6):
+    def _navigate_and_get_links(self, url, timeout=4):
         self.navigate(url)
         time.sleep(timeout)
+        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(1)
+        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(1)
+
         links = self.get_buttons_and_links()
         try:
             for link in links:
@@ -91,7 +106,7 @@ class TSeleniumDriver:
     def navigate_and_get_links(self, url, timeout=6):
         try:
             return self._navigate_and_get_links(url, timeout)
-        except WebDriverException as exp:
+        except (WebDriverException, InvalidSwitchToTargetException) as exp:
             logger = logging.getLogger("dlrobot_logger")
             logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
             self.restart()

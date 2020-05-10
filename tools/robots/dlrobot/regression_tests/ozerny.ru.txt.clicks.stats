@@ -1,1451 +1,1512 @@
-[
-    {
-        "files_count": 57
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "01293e3d95e7ee432148772b4f15b51878d70ea4d0bb5a9214310a32702ab0b1",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/glava/",
-                "step": "declarations",
-                "title": "Глава ЗАТО Озерный",
-                "anchor_text": "Сведения о доходах за 201",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B0%D0%BF%D0%BF%D0%B0%D1%80%D0%B0%D1%82%20%D0%94%D1%83%D0%BC%D1%8B.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/svedeniia_o_dokhodakh_apparat_Dumy.7z/dlrobot_data",
-        "sha256": "01fb677e3741c3341268deadd5adb1c5a3ffb3605291816f056535c6f4163d8c",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "058d8fe96a9e13a54dad50c08cd59e63cd7345fdbbffa21acf50c70cab468a84",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "0870e9f6b6a58e2ed8f140e9ad07dc3d01938a499daf0cd5782c344363a97273",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "0d2b101759a7a74a74bab84b909a4cd2c3690e653462ace334b8299cdb7aca29",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "1d730a8f46653269bffcd2ee82a16f8e76e09022c971551ea0b2b4a10414f3a0",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "2156dbe27c9da59b7218be75fff3814609c88e84e9017f147397ff7f15a428bb",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "233dfbc21fe13e73e4e6f3b9205d1cf92dffbb250aa68a52a56deda63df74ecf",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "28d44731a6a44dc426ac8c3e9dedc2d13f18e13bddaa23bf3173a9e1ed6c7b62",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/ssyilki/%D0%90%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F%20%D0%97%D0%90%D0%A2%D0%9E%20%D0%9E%D0%B7%D0%B5%D1%80%D0%BD%D1%8B%D0%B9%202017%20%D0%B3%D0%BE%D0%B4.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/ssyilki/Administratsiia_ZATO_Ozernyi_2017_god.pdf/dlrobot_data",
-        "sha256": "295d14207ddf1e0370906825890e09f3650c7f9e5b8a904d4f7aebf0a925066c",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Документы",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/kumi/docs/",
-                "step": "declarations",
-                "title": "Документы",
-                "anchor_text": "Сведения о доходах муниципальных служащих за 2013 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/docs/kumi/dohodMS2013.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2013.doc/dlrobot_data",
-        "sha256": "29b7f5a266971eeeadf8333c4360c4de450b8ce491b8e7337f63332865058138",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "29d7762cd9dafc8784a13661ea81dac36155413d30ce30c80ff6dbcb5bb3c3b4",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "2b671a4e8f8e87ee89c42243fbb8356fa11a0b369790ac1a3b87b115cdfb7e55",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "33422041edc1da7f46dca311ef012a80b157ac89a779fc84349d9d73d5bc2b4d",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "3d7fbad4ec1aeee3e8c2ff4bbac8a02d4603715fff1f4e79e1c6d7ba98549724",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "4052b1f2f7a9d715d00b85f3d1fe12dfe6ba5e1e5944b9fe77bca0364b2f15f9",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Сведения о доходах и расходах администрации ЗАТО Озёрный за 2018 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/2016.02.29/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B8%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8%20%D0%97%D0%90%D0%A2%D0%9E%20%D0%9E%D0%B7%D1%91%D1%80%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.PDF",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/2016.02.29/Svedeniia_o_dokhodakh_i_raskhodakh_administratsii_ZATO_Oziornyi_za_201_6f87c27d2b76a27b8b8848bb83a62bab/dlrobot_data",
-        "sha256": "43808949a3374baf81d652f1f03eedd96eb7e28182dfc8e75dd1432f5877de32",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "43f7be9e5a62c8536b2977d321f90459e2b162ce0450b2bcd084f24e3f938bb1",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "59759b9d7ef52c197ce647caf2fcf05ad6ff433be77e77a60ac567ce3f40297f",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "65296c7dcba8cf1362e212dce10df208f77c4723602d3018418924101585ce8a",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "6673f52c7a98c5891dcd6817246cc6035aefea105f6b84b97aaffcbee25e31e6",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "6e552805d8ebf2c27176f7ab199d823e84ca0097078df28debfdd002d220f0b6",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/glava/",
-                "step": "declarations",
-                "title": "Глава ЗАТО Озерный",
-                "anchor_text": "Сведения о доходах за 2016 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/duma2016.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/duma2016.doc/dlrobot_data",
-        "sha256": "7643c8034ecc148fb959307a9f22d54b7be85edbdca16e2d5ad76e43be04e6cd",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "77e0f7679c0216bf02c836594625dd27a6b2f697b278945c925d957edce23047",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "7d08b2f0dba2ada00a5726366decce70848eff131a3b4b9e2ba083cb39357fc7",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "827320ded72ea9d380f8ac5ea20127c48523421dc14570018970425c7c93f0b7",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "8c6ac31d504c33377c531476364ab5a78ce944af8fb0134c0a801acc1ca06581",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "8ca21024eb8087edeeaaad08fb7ba9ed059c96d265fc94c87de836fc329f5f95",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "8d3e31e6ffad9829eb6a5c4167e257f3fb7d5767052df95a196e135014eb0aed",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/ssyilki/rukovoditeli_munitsipalnyih_uchrezhdeniy_i_predpriyatiy_2017_god.pdf.pdf",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/ssyilki/rukovoditeli_munitsipalnyih_uchrezhdeniy_i_predpriyatiy_2017_god.pdf.pdf/dlrobot_data",
-        "sha256": "9191dcdd6b50b35a0f91be5c4b2fdca5e6332ddecfa418c32d27547409f4a867",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "9218114979cfee8ee86fc01f33d22b4122e6878bead89232fbde4243adff0f2e",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "937a70af1df7c32e0c53e162cd873b6e2aeb181a7958be06ef7210d2ed2066a7",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "954a24501accbe423461151c38467dd8b8a2d0b71aafb7cf6854f3a7c89181c0",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Документы",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/kumi/docs/",
-                "step": "declarations",
-                "title": "Документы",
-                "anchor_text": "Сведения о доходах муниципальных служащих за 2015 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/docs/kumi/dohodMS2015.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2015.doc/dlrobot_data",
-        "sha256": "9b5d4ee70b7d9e941b760740bc0bf33ad061f20632a8e9b2881f7e0be407f5e8",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/glava/",
-                "step": "declarations",
-                "title": "Глава ЗАТО Озерный",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%20%28%D0%B0%D0%BF%D0%BF%D0%B0%D1%80%D0%B0%D1%82%292017.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/svedeniia_o_dokhodakh_na_sait__apparat_2017.doc/dlrobot_data",
-        "sha256": "9f4c11de5ccaf836350e1d4559b11efe7b2df270b575e80eead47d0e8b0ec656",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "a88f4ceb1b5cad5322908ca7e187c33629032b5b60da7d855f82ff4bdae49390",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "b0dfb0d5d59e01b524e935760d973bfe282483bb56e9c5c68c1bdfaf8924ff01",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Документы",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/kumi/docs/",
-                "step": "declarations",
-                "title": "Документы",
-                "anchor_text": "Сведения о доходах муниципальных служащих за 2016 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/2017/dohodMS2016.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/2017/dohodMS2016.doc/dlrobot_data",
-        "sha256": "b34df7d54313c292285a044d3e306c8ab1090f12cbabc2769dc9eb5cddda0e78",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "b43dc3f8de278bec9c024f18c5d9155b0a6cf2e4e8ab7d1fe82c4703513f6ef5",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "b88dfc57df188f282f121589951203c545ab49d7ac5549bc666b42439ad1a6f3",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "c6b3b55fb3b9d91b8c3d7411e7912f53892cc985fff8e36d45a1ab5ffc6ec347",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "c708ad420a014bc4fef966ad7cf2777eb31a5721e6e6353c5837f4c2f654cc8b",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "c99425fba38ac584adf3fd8ae282bce1137d37bef1de080004f59b4bcc4572cf",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "c9cffa146c17b277f0ddf43e901c0d4074ad14ae6ddb48f5377a9de949d2d92a",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Документы",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/kumi/docs/",
-                "step": "declarations",
-                "title": "Документы",
-                "anchor_text": "Сведения о доходах муниципальных служащих за 2012 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/docs/kumi/dohodMS2012.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2012.doc/dlrobot_data",
-        "sha256": "cdaed4ecc029f2cf85cf581eaf93f4e1bf1f4c822bdb4edc1f33044b2bef05bd",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "d3ec040434f3e0e3040c642947cee3521f80acdd709ed7ecaeb918ef36588257",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "d667c753587046ba902b9faee100a80007da24eccc0e568de3e3e8bfd4454134",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "d93d8cbde6225e32481696b5f1797f3c73566e641a28fc290f83c6da411d0b6f",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "d9d363e7094a2d90e8905578b336c4c41953031f09f7e42c22043941600d58bc",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Сведения о доходах и расходах руководителей муниципальных учреждений, предприятий и ООО за 2018 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B8%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%20%D0%BC%D1%83%D0%BD%D0%B8%D1%86%D0%B8%D0%BF%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85%20%D1%83%D1%87%D1%80%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B9%2C%20%D0%BF%D1%80%D0%B5%D0%B4%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B9%20%D0%B8%20%D0%9E%D0%9E%D0%9E%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.PDF",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/administration/Svedeniia_o_dokhodakh_i_raskhodakh_rukovoditelei_munitsipal_nykh_u_cfa81afb23edc5077986b30851bec413/dlrobot_data",
-        "sha256": "db8bd9d0e00316507427bc7f4a119c6192bd44b73fd0d1b63e13cc9c6d876208",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2017 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
-        "sha256": "dfb90b1cf9aed4c803972b1eb11a919b8e0f765cd1d1b17095d56d90a8bac02a",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2019 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
-        "sha256": "e830da3f41ef54f3a1c6895a57a5d2ace7e5bdf9c81fb521f0925e817e1c715a",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "e86357836ba678b420334b139cbd957aa9c6f0dffb75243327b7b0a101cda1e8",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "e8b2722e3eaea8a055e984c4cba3724a415c0b084f5b4e38d562b991a4f6921e",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/administration/",
-                "step": "declarations",
-                "title": "Администрация ЗАТО Озерный",
-                "anchor_text": "Документы",
-                "engine": "urllib"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/kumi/docs/",
-                "step": "declarations",
-                "title": "Документы",
-                "anchor_text": "Сведения о доходах муниципальных служащих за 2014 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/docs/kumi/dohodMS2014.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2014.doc/dlrobot_data",
-        "sha256": "f1dba26bd2bec866c6ba99114214a66f5d4534697dcf8dd49782853d05df6449",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "8 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
-        "sha256": "f7426e65154c697d1ada65b9817c3414056715c2c24c4b24d2eed3b0b4c44416",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://ozerny.ru",
-                "step": null,
-                "title": "ЗАТО Озерный - Закрытое Административно-Территориальное Образование ОЗЁРНЫЙ Тверской Области",
-                "anchor_text": "\"сведения о доходах\"",
-                "engine": "google"
-            },
-            {
-                "url": "http://www.ozerny.ru/city/deputaty/",
-                "step": "declarations",
-                "title": "Депутаты",
-                "anchor_text": "Сведения о доходах за 2016 год",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%94%D1%83%D0%BC%D1%8B%20%D0%97%D0%90%D0%A2%D0%9E%20%D0%9E%D0%B7%D0%B5%D1%80%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B0%202016%20%D0%B3%D0%BE%D0%B4.doc",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_Dumy_ZATO_Ozernyi_za_2016_god.doc/dlrobot_data",
-        "sha256": "fb46b38666f7927738351c45ca1fbe035fe9f79491ad268ac221461e76aa8228",
-        "dl_recognizer_result": "declaration_result"
-    }
-]
+{
+    "files_count": 68,
+    "files_sorted (short report)": [
+        "cached/www.ozerny.ru/city/administration/Svedeniia_o_dokhodakh_i_raskhodakh_rukovoditelei_munitsipal_nykh_u_cfa81afb23edc5077986b30851bec413/dlrobot_data -1",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 1",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 10",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 11",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 12",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 13",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 14",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 15",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 2",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 3",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 4",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 5",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 6",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 7",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 8",
+        "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data 9",
+        "cached/www.ozerny.ru/city/deputaty/svedeniia_o_dokhodakh_apparat_Dumy.7z/dlrobot_data 1",
+        "cached/www.ozerny.ru/docs/kumi/dohodMS2012.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/docs/kumi/dohodMS2013.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/docs/kumi/dohodMS2014.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/docs/kumi/dohodMS2015.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/kumi/2016.02.29/Svedeniia_o_dokhodakh_i_raskhodakh_administratsii_ZATO_Oziornyi_za_201_6f87c27d2b76a27b8b8848bb83a62bab/dlrobot_data -1",
+        "cached/www.ozerny.ru/kumi/2017/dohodMS2016.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 0",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 1",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 10",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 11",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 12",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 13",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 2",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 3",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 4",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 5",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 6",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 7",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 8",
+        "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data 9",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_Dumy_ZATO_Ozernyi_za_2016_god.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 1",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 10",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 11",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 12",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 13",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 14",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 15",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 2",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 3",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 4",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 5",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 6",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 7",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 8",
+        "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data 9",
+        "cached/www.ozerny.ru/kumi/Dokument/duma2016.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/kumi/Dokument/svedeniia_o_dokhodakh_na_sait__apparat_2017.doc/dlrobot_data -1",
+        "cached/www.ozerny.ru/ssyilki/Administratsiia_ZATO_Ozernyi_2017_god.pdf/dlrobot_data -1",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 1",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 10",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 11",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 2",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 3",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 4",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 5",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 6",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 7",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 8",
+        "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data 9",
+        "cached/www.ozerny.ru/ssyilki/rukovoditeli_munitsipalnyih_uchrezhdeniy_i_predpriyatiy_2017_god.pdf.pdf/dlrobot_data -1"
+    ],
+    "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "01293e3d95e7ee432148772b4f15b51878d70ea4d0bb5a9214310a32702ab0b1",
+            "archive_index": 12
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/glava/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 201",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B0%D0%BF%D0%BF%D0%B0%D1%80%D0%B0%D1%82%20%D0%94%D1%83%D0%BC%D1%8B.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/svedeniia_o_dokhodakh_apparat_Dumy.7z/dlrobot_data",
+            "sha256": "01fb677e3741c3341268deadd5adb1c5a3ffb3605291816f056535c6f4163d8c",
+            "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "058d8fe96a9e13a54dad50c08cd59e63cd7345fdbbffa21acf50c70cab468a84",
+            "archive_index": 0
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "0870e9f6b6a58e2ed8f140e9ad07dc3d01938a499daf0cd5782c344363a97273",
+            "archive_index": 13
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "0c0967367c99e422106a4d8e6dbb259a0fc9b6ee10db31a2f36b005fe21e1142",
+            "archive_index": 2
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "0d2b101759a7a74a74bab84b909a4cd2c3690e653462ace334b8299cdb7aca29",
+            "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "12cc4735e8c27c9ec165b7bc90bf578746f7e3bcbe444ca60a34132ced63313d",
+            "archive_index": 11
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "1d730a8f46653269bffcd2ee82a16f8e76e09022c971551ea0b2b4a10414f3a0",
+            "archive_index": 2
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "2156dbe27c9da59b7218be75fff3814609c88e84e9017f147397ff7f15a428bb",
+            "archive_index": 14
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "233dfbc21fe13e73e4e6f3b9205d1cf92dffbb250aa68a52a56deda63df74ecf",
+            "archive_index": 8
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "28d44731a6a44dc426ac8c3e9dedc2d13f18e13bddaa23bf3173a9e1ed6c7b62",
+            "archive_index": 14
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/%D0%90%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F%20%D0%97%D0%90%D0%A2%D0%9E%20%D0%9E%D0%B7%D0%B5%D1%80%D0%BD%D1%8B%D0%B9%202017%20%D0%B3%D0%BE%D0%B4.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/Administratsiia_ZATO_Ozernyi_2017_god.pdf/dlrobot_data",
+            "sha256": "295d14207ddf1e0370906825890e09f3650c7f9e5b8a904d4f7aebf0a925066c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/kumi/docs/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах муниципальных служащих за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/docs/kumi/dohodMS2013.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2013.doc/dlrobot_data",
+            "sha256": "29b7f5a266971eeeadf8333c4360c4de450b8ce491b8e7337f63332865058138"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "29d7762cd9dafc8784a13661ea81dac36155413d30ce30c80ff6dbcb5bb3c3b4",
+            "archive_index": 10
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "2b671a4e8f8e87ee89c42243fbb8356fa11a0b369790ac1a3b87b115cdfb7e55",
+            "archive_index": 6
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "33422041edc1da7f46dca311ef012a80b157ac89a779fc84349d9d73d5bc2b4d",
+            "archive_index": 3
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "352073a7239f113055a58b6691e91cd74656546aacc91e66a9ef77c603efb8e1",
+            "archive_index": 3
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "3d7fbad4ec1aeee3e8c2ff4bbac8a02d4603715fff1f4e79e1c6d7ba98549724",
+            "archive_index": 5
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "4052b1f2f7a9d715d00b85f3d1fe12dfe6ba5e1e5944b9fe77bca0364b2f15f9",
+            "archive_index": 10
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах и расходах администрации ЗАТО Озёрный за 2018 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/2016.02.29/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B8%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8%20%D0%97%D0%90%D0%A2%D0%9E%20%D0%9E%D0%B7%D1%91%D1%80%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.PDF",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/2016.02.29/Svedeniia_o_dokhodakh_i_raskhodakh_administratsii_ZATO_Oziornyi_za_201_6f87c27d2b76a27b8b8848bb83a62bab/dlrobot_data",
+            "sha256": "43808949a3374baf81d652f1f03eedd96eb7e28182dfc8e75dd1432f5877de32"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "43f7be9e5a62c8536b2977d321f90459e2b162ce0450b2bcd084f24e3f938bb1",
+            "archive_index": 7
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "4f22b301d655a4648e3e28b938b9d952bbbe29faca1455990f28098df56c4e8b",
+            "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "59759b9d7ef52c197ce647caf2fcf05ad6ff433be77e77a60ac567ce3f40297f",
+            "archive_index": 3
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "65296c7dcba8cf1362e212dce10df208f77c4723602d3018418924101585ce8a",
+            "archive_index": 9
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "65e0cae6fd81dea158913ea5d2a9f7193ebc2d23f3e7d5adc607679951704872",
+            "archive_index": 5
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "6673f52c7a98c5891dcd6817246cc6035aefea105f6b84b97aaffcbee25e31e6",
+            "archive_index": 13
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "6722bdf26544f2c986739dc31e2df4c8958635019fe1bece346296f008ed8513",
+            "archive_index": 9
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "6e552805d8ebf2c27176f7ab199d823e84ca0097078df28debfdd002d220f0b6",
+            "archive_index": 6
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "6ffb2df729e2a398bbc0c1b2c015b7c16dda8982f7edca04d2c21066b947a655",
+            "archive_index": 6
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/glava/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2016 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/duma2016.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/duma2016.doc/dlrobot_data",
+            "sha256": "7643c8034ecc148fb959307a9f22d54b7be85edbdca16e2d5ad76e43be04e6cd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "77e0f7679c0216bf02c836594625dd27a6b2f697b278945c925d957edce23047",
+            "archive_index": 6
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "7d08b2f0dba2ada00a5726366decce70848eff131a3b4b9e2ba083cb39357fc7",
+            "archive_index": 11
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "827320ded72ea9d380f8ac5ea20127c48523421dc14570018970425c7c93f0b7",
+            "archive_index": 4
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "8c6ac31d504c33377c531476364ab5a78ce944af8fb0134c0a801acc1ca06581",
+            "archive_index": 4
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "8ca21024eb8087edeeaaad08fb7ba9ed059c96d265fc94c87de836fc329f5f95",
+            "archive_index": 2
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "8d3e31e6ffad9829eb6a5c4167e257f3fb7d5767052df95a196e135014eb0aed",
+            "archive_index": 12
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/rukovoditeli_munitsipalnyih_uchrezhdeniy_i_predpriyatiy_2017_god.pdf.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/rukovoditeli_munitsipalnyih_uchrezhdeniy_i_predpriyatiy_2017_god.pdf.pdf/dlrobot_data",
+            "sha256": "9191dcdd6b50b35a0f91be5c4b2fdca5e6332ddecfa418c32d27547409f4a867"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "9218114979cfee8ee86fc01f33d22b4122e6878bead89232fbde4243adff0f2e",
+            "archive_index": 11
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "937a70af1df7c32e0c53e162cd873b6e2aeb181a7958be06ef7210d2ed2066a7",
+            "archive_index": 15
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "954a24501accbe423461151c38467dd8b8a2d0b71aafb7cf6854f3a7c89181c0",
+            "archive_index": 9
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/kumi/docs/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах муниципальных служащих за 2015 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/docs/kumi/dohodMS2015.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2015.doc/dlrobot_data",
+            "sha256": "9b5d4ee70b7d9e941b760740bc0bf33ad061f20632a8e9b2881f7e0be407f5e8"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/glava/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82%20(%D0%B0%D0%BF%D0%BF%D0%B0%D1%80%D0%B0%D1%82)2017.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/svedeniia_o_dokhodakh_na_sait__apparat_2017.doc/dlrobot_data",
+            "sha256": "9f4c11de5ccaf836350e1d4559b11efe7b2df270b575e80eead47d0e8b0ec656"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "a88f4ceb1b5cad5322908ca7e187c33629032b5b60da7d855f82ff4bdae49390",
+            "archive_index": 3
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "b0dfb0d5d59e01b524e935760d973bfe282483bb56e9c5c68c1bdfaf8924ff01",
+            "archive_index": 13
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "b10cfb9b12d451a43049989c56aa5742611ebaf09e3c6375d896f8dac0a061cd",
+            "archive_index": 8
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/kumi/docs/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах муниципальных служащих за 2016 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/2017/dohodMS2016.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/2017/dohodMS2016.doc/dlrobot_data",
+            "sha256": "b34df7d54313c292285a044d3e306c8ab1090f12cbabc2769dc9eb5cddda0e78"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "b43dc3f8de278bec9c024f18c5d9155b0a6cf2e4e8ab7d1fe82c4703513f6ef5",
+            "archive_index": 8
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "b88dfc57df188f282f121589951203c545ab49d7ac5549bc666b42439ad1a6f3",
+            "archive_index": 9
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "c6b3b55fb3b9d91b8c3d7411e7912f53892cc985fff8e36d45a1ab5ffc6ec347",
+            "archive_index": 2
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "c708ad420a014bc4fef966ad7cf2777eb31a5721e6e6353c5837f4c2f654cc8b",
+            "archive_index": 4
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "c99425fba38ac584adf3fd8ae282bce1137d37bef1de080004f59b4bcc4572cf",
+            "archive_index": 15
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "c9cffa146c17b277f0ddf43e901c0d4074ad14ae6ddb48f5377a9de949d2d92a",
+            "archive_index": 8
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/kumi/docs/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах муниципальных служащих за 2012 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/docs/kumi/dohodMS2012.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2012.doc/dlrobot_data",
+            "sha256": "cdaed4ecc029f2cf85cf581eaf93f4e1bf1f4c822bdb4edc1f33044b2bef05bd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "d3ec040434f3e0e3040c642947cee3521f80acdd709ed7ecaeb918ef36588257",
+            "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "d667c753587046ba902b9faee100a80007da24eccc0e568de3e3e8bfd4454134",
+            "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "d93d8cbde6225e32481696b5f1797f3c73566e641a28fc290f83c6da411d0b6f",
+            "archive_index": 10
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "d9d363e7094a2d90e8905578b336c4c41953031f09f7e42c22043941600d58bc",
+            "archive_index": 5
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах и расходах руководителей муниципальных учреждений, предприятий и ООО за 2018 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B8%20%D1%80%D0%B0%D1%81%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%20%D0%BC%D1%83%D0%BD%D0%B8%D1%86%D0%B8%D0%BF%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85%20%D1%83%D1%87%D1%80%D0%B5%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B9,%20%D0%BF%D1%80%D0%B5%D0%B4%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B9%20%D0%B8%20%D0%9E%D0%9E%D0%9E%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.PDF",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/administration/Svedeniia_o_dokhodakh_i_raskhodakh_rukovoditelei_munitsipal_nykh_u_cfa81afb23edc5077986b30851bec413/dlrobot_data",
+            "sha256": "db8bd9d0e00316507427bc7f4a119c6192bd44b73fd0d1b63e13cc9c6d876208"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%20%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.rar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/_deputaty_na_sait.rar/dlrobot_data",
+            "sha256": "dfb90b1cf9aed4c803972b1eb11a919b8e0f765cd1d1b17095d56d90a8bac02a",
+            "archive_index": 5
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "e7b8e092ef2111bd9167fea50244ca802cfa09670b5b22719181ebee866f7808",
+            "archive_index": 10
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%81%D0%B0%D0%B9%D1%82.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_na_sait.7z/dlrobot_data",
+            "sha256": "e830da3f41ef54f3a1c6895a57a5d2ace7e5bdf9c81fb521f0925e817e1c715a",
+            "archive_index": 7
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "e86357836ba678b420334b139cbd957aa9c6f0dffb75243327b7b0a101cda1e8",
+            "archive_index": 11
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "e8b2722e3eaea8a055e984c4cba3724a415c0b084f5b4e38d562b991a4f6921e",
+            "archive_index": 7
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/administration/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/kumi/docs/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах муниципальных служащих за 2014 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/docs/kumi/dohodMS2014.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/docs/kumi/dohodMS2014.doc/dlrobot_data",
+            "sha256": "f1dba26bd2bec866c6ba99114214a66f5d4534697dcf8dd49782853d05df6449"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "8 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/%D0%A1%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%BE%20%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85%20%D0%B7%D0%B0%202018%20%D0%B3%D0%BE%D0%B4.7z",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/city/deputaty/Svedeniia_o_dokhodakh_za_2018_god.7z/dlrobot_data",
+            "sha256": "f7426e65154c697d1ada65b9817c3414056715c2c24c4b24d2eed3b0b4c44416",
+            "archive_index": 12
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/city/deputaty/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2016 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/kumi/Dokument/%D0%B4%D0%B5%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8B%20%D0%94%D1%83%D0%BC%D1%8B%20%D0%97%D0%90%D0%A2%D0%9E%20%D0%9E%D0%B7%D0%B5%D1%80%D0%BD%D1%8B%D0%B9%20%D0%B7%D0%B0%202016%20%D0%B3%D0%BE%D0%B4.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/kumi/Dokument/deputaty_Dumy_ZATO_Ozernyi_za_2016_god.doc/dlrobot_data",
+            "sha256": "fb46b38666f7927738351c45ca1fbe035fe9f79491ad268ac221461e76aa8228"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "fb5624293f7fa54d23724353158a46fed511f3f3215e9e09a4012a501870b4a7",
+            "archive_index": 7
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ekonomika-i-sotsialnaja-sfera/10/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах руководителей учреждений образования ЗАТО Озерный за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.ozerny.ru/ssyilki/deklaracii_oy.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.ozerny.ru/ssyilki/deklaracii_oy.zip/dlrobot_data",
+            "sha256": "ff2731153d4bb28f9f50a02b0f1eaf5c2b575dbba98dad599dc21ca69659ea0d",
+            "archive_index": 4
+        }
+    ]
+}

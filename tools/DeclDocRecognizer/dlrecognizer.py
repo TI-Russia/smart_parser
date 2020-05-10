@@ -5,7 +5,8 @@ import os
 import hashlib
 import shutil
 import sys
-from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify
+from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
+        get_russian_normal_text_ratio
 from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
@@ -115,6 +116,7 @@ class TClassificationVerdict:
         self.input_text = input_text
         self.text_features = defaultdict(TTextFeature)
         self.description = ""
+        self.normal_russian_text_coef = get_russian_normal_text_ratio(self.input_text)
         self.find_other_document_types()
         self.find_header()
 
@@ -125,6 +127,7 @@ class TClassificationVerdict:
             "start_text": self.start_text,
             "text_len": len(self.input_text),
             "description": self.description,
+            "normal_russian_text_coef": self.normal_russian_text_coef,
             "text_features": dict((k, v.to_json()) for k, v in self.text_features.items()),
         }
         return rec
@@ -252,12 +255,16 @@ def apply_first_rules(source_file, verdict):
     elif TCharCategory.get_most_popular_char_category(verdict.start_text) != 'RUSSIAN_CHAR':
         verdict.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
         verdict.description = "cannot find Russian chars, may be encoding problems"
-    elif verdict.get_first_features_match('other_document_type') < 400:
+    elif verdict.get_first_features_match('other_document_type') < 400 and \
+                verdict.input_text.lower().find('сведения о доходах и имуществе за период') == -1:
         verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
         verdict.description = "other_document_type<400"
     elif verdict.smart_parser_person_count > 0 and len(verdict.input_text) / verdict.smart_parser_person_count < 2048:
         verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
         verdict.description = "found smart_parser results"
+    elif verdict.normal_russian_text_coef > 0.19:
+        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+        verdict.description = "normal_russian_text_coef > 0.19"
     else:
         return False
     return True
