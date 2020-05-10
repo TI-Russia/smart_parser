@@ -12,10 +12,10 @@ from selenium.common.exceptions import WebDriverException, InvalidSwitchToTarget
 
 
 class TRobotProject:
-    selenium_driver = TSeleniumDriver()
 
     def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
+        self.selenium_driver = TSeleniumDriver(logger)
         self.project_file = filename + ".clicks"
         if not os.path.exists(self.project_file):
             shutil.copy2(filename, self.project_file)
@@ -31,14 +31,14 @@ class TRobotProject:
 
     def __enter__(self):
         if self.enable_selenium:
-            TRobotProject.selenium_driver.download_folder = tempfile.mkdtemp()
-            TRobotProject.selenium_driver.start_executable()
+            self.selenium_driver.download_folder = tempfile.mkdtemp()
+            self.selenium_driver.start_executable()
         return self
 
     def __exit__(self, type, value, traceback):
         if self.enable_selenium:
-            TRobotProject.selenium_driver.stop_executable()
-            shutil.rmtree(TRobotProject.selenium_driver.download_folder)
+            self.selenium_driver.stop_executable()
+            shutil.rmtree(self.selenium_driver.download_folder)
 
     def write_project(self):
         with open(self.project_file, "w", encoding="utf8") as outf:
@@ -134,7 +134,7 @@ class TRobotProject:
         serp_urls = list()
         for retry in range(3):
             try:
-                serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
+                serp_urls = GoogleSearch.site_search(site, request, self.selenium_driver)
                 break
             except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
                 self.logger.error('cannot request search engine, exception {}'.format(err))

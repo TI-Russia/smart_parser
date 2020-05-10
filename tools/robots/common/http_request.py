@@ -40,21 +40,20 @@ def get_request_rate(min_time=0):
     }
 
 
-def wait_until_policy_compliance(policy_name, max_policy_value):
+def wait_until_policy_compliance(logger, policy_name, max_policy_value):
     request_rates = get_request_rate()
     sleep_sec = max_policy_value / 10
     while request_rates[policy_name] > max_policy_value:
-        logger = logging.getLogger("dlrobot_logger")
         logger.debug("wait {} seconds to comply {} (max value={})".format(sleep_sec, policy_name, max_policy_value))
         time.sleep(sleep_sec)
         request_rates = get_request_rate()
 
 
-def consider_request_policy(url, method):
+def consider_request_policy(logger, url, method):
     global ALL_HTTP_REQUEST
     if len(ALL_HTTP_REQUEST) > 80:
-        wait_until_policy_compliance("request_rate_1_min", TRequestPolicy.REQUEST_RATE_1_MIN)
-        wait_until_policy_compliance("request_rate_10_min", TRequestPolicy.REQUEST_RATE_10_MIN)
+        wait_until_policy_compliance(logger, "request_rate_1_min", TRequestPolicy.REQUEST_RATE_1_MIN)
+        wait_until_policy_compliance(logger, "request_rate_10_min", TRequestPolicy.REQUEST_RATE_10_MIN)
 
     ALL_HTTP_REQUEST[(url, method)] = time.time()
 
@@ -108,7 +107,7 @@ def convert_russian_web_domain_if_needed(url):
     return url
 
 
-def _prepare_url_before_http_request(url, method):
+def _prepare_url_before_http_request(logger, url, method):
     global HTTP_EXCEPTION_COUNTER
 
     if url.find('://') == -1:
@@ -117,7 +116,7 @@ def _prepare_url_before_http_request(url, method):
     if HTTP_EXCEPTION_COUNTER[(url, method)] > 2:
         raise RobotHttpException("stop requesting the same url", url, 429, method)
 
-    consider_request_policy(url, method)
+    consider_request_policy(logger, url, method)
 
     return convert_russian_web_domain_if_needed(url)
 
@@ -129,7 +128,8 @@ def get_user_agent():
 def make_http_request_urllib(url, method, timeout=30.0):
     global HTTP_503_ERRORS_COUNT
 
-    url = _prepare_url_before_http_request(url, method)
+    logger = logging.getLogger("dlrobot_logger")
+    url = _prepare_url_before_http_request(logger, url, method)
 
     context = ssl._create_unverified_context()
     redirect_handler = urllib.request.HTTPRedirectHandler()
@@ -144,7 +144,6 @@ def make_http_request_urllib(url, method, timeout=30.0):
         method=method
     )
 
-    logger = logging.getLogger("dlrobot_logger")
     logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     try:
         with urllib.request.urlopen(req, context=context, timeout=timeout) as request:
@@ -195,8 +194,9 @@ def collect_http_headers_for_curl(header_line):
 def make_http_request_curl(url, method, timeout=30.0):
     global HTTP_503_ERRORS_COUNT
     global LAST_HTTP_HEADERS_FOR_CURL
+    logger = logging.getLogger("dlrobot_logger")
 
-    url = _prepare_url_before_http_request(url, method)
+    url = _prepare_url_before_http_request(logger, url, method)
 
     buffer = BytesIO()
     curl = pycurl.Curl()
@@ -214,7 +214,6 @@ def make_http_request_curl(url, method, timeout=30.0):
     curl.setopt(curl.CAINFO, certifi.where())
     user_agent = get_user_agent()
     curl.setopt(curl.USERAGENT, user_agent)
-    logger = logging.getLogger("dlrobot_logger")
     logger.debug("curl ({}) method={}".format(url, method))
     try:
         LAST_HTTP_HEADERS_FOR_CURL = dict()

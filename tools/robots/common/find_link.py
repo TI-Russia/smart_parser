@@ -122,7 +122,7 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     tag_name = element.tag_name
     link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
     page_html = driver_holder.the_driver.page_source
-    consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
+    consider_request_policy(step_info.logger, main_url + " elem_index=" + str(element_index), "click_selenium")
 
     link_info = TLinkInfo(TClickEngine.selenium, main_url, None,
                           page_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index)
@@ -139,7 +139,7 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
 def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={}".format(main_url))
-    consider_request_policy(main_url, "GET_selenium")
+    consider_request_policy(step_info.logger, main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
     page_html = driver_holder.the_driver.page_source
     for element_index in range(len(elements)):

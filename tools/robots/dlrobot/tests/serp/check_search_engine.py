@@ -1,12 +1,14 @@
 import sys
 import random
+import logging
 
 from robots.common.serp_parser import GoogleSearch
 from robots.common.selenium_driver import TSeleniumDriver
 
+
 if __name__ == "__main__":
     try:
-        driver_holder = TSeleniumDriver(True)
+        driver_holder = TSeleniumDriver(logging, headless=True)
         driver_holder.start_executable()
     except Exception as exp:
         print(exp)
