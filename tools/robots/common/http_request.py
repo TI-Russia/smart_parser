@@ -17,6 +17,11 @@ import pycurl
 from io import BytesIO
 import certifi
 
+class TRequestPolicy:
+    SECONDS_BETWEEN_HEAD_REQUESTS = 1.0
+    REQUEST_RATE_1_MIN = 50
+    REQUEST_RATE_10_MIN = 300
+
 ALL_HTTP_REQUEST = dict()  # (url, method) -> time
 HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
 LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
@@ -48,8 +53,8 @@ def wait_until_policy_compliance(policy_name, max_policy_value):
 def consider_request_policy(url, method):
     global ALL_HTTP_REQUEST
     if len(ALL_HTTP_REQUEST) > 80:
-        wait_until_policy_compliance("request_rate_1_min", 50)
-        wait_until_policy_compliance("request_rate_10_min", 300)
+        wait_until_policy_compliance("request_rate_1_min", TRequestPolicy.REQUEST_RATE_1_MIN)
+        wait_until_policy_compliance("request_rate_10_min", TRequestPolicy.REQUEST_RATE_10_MIN)
 
     ALL_HTTP_REQUEST[(url, method)] = time.time()
 
@@ -74,9 +79,8 @@ class RobotHttpException(Exception):
             self.http_method, self.url, self.http_code, self.value)
 
 
-def deal_with_http_code_503():
+def deal_with_http_code_503(logger):
     global HTTP_503_ERRORS_COUNT
-    logger = logging.getLogger("dlrobot_logger")
     request_rates = get_request_rate()
     logger.error("got HTTP-503 got, request_rate={}".format(json.dumps(request_rates)))
     max_http_503_errors_count = 20
@@ -89,11 +93,22 @@ def deal_with_http_code_503():
         logger.error("wait 1 minute after HTTP-503 N {}".format(HTTP_503_ERRORS_COUNT))
         time.sleep(60)
         if HTTP_503_ERRORS_COUNT + 1 > max_http_503_errors_count:
-            time.sleep(20 * 60)  # last chance, wait 20 minutes
+            logger.error("last chance before exit, wait 20 minutes")
+            time.sleep(20 * 60)
 
 
-def make_http_request_urllib(url, method):
-    global HTTP_503_ERRORS_COUNT
+def convert_russian_web_domain_if_needed(url):
+    o = list(urllib.parse.urlparse(url)[:])
+    if has_cyrillic(o[1]):
+        o[1] = o[1].encode('idna').decode('latin')
+
+    o[2] = urllib.parse.unquote(o[2])
+    o[2] = urllib.parse.quote(o[2])
+    url = urllib.parse.urlunparse(o)
+    return url
+
+
+def _prepare_url_before_http_request(url, method):
     global HTTP_EXCEPTION_COUNTER
 
     if url.find('://') == -1:
@@ -104,13 +119,18 @@ def make_http_request_urllib(url, method):
 
     consider_request_policy(url, method)
 
-    o = list(urllib.parse.urlparse(url)[:])
-    if has_cyrillic(o[1]):
-        o[1] = o[1].encode('idna').decode('latin')
+    return convert_russian_web_domain_if_needed(url)
 
-    o[2] = urllib.parse.unquote(o[2])
-    o[2] = urllib.parse.quote(o[2])
-    url = urllib.parse.urlunparse(o)
+
+def get_user_agent():
+    return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+
+
+def make_http_request_urllib(url, method, timeout=30.0):
+    global HTTP_503_ERRORS_COUNT
+
+    url = _prepare_url_before_http_request(url, method)
+
     context = ssl._create_unverified_context()
     redirect_handler = urllib.request.HTTPRedirectHandler()
     redirect_handler.max_redirections = 5
@@ -120,16 +140,14 @@ def make_http_request_urllib(url, method):
     req = urllib.request.Request(
         url,
         data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        },
+        headers={'User-Agent': get_user_agent()},
         method=method
     )
 
     logger = logging.getLogger("dlrobot_logger")
     logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     try:
-        with urllib.request.urlopen(req, context=context, timeout=30.0) as request:
+        with urllib.request.urlopen(req, context=context, timeout=timeout) as request:
             data = '' if method == "HEAD" else request.read()
             headers = request.info()
             if HTTP_503_ERRORS_COUNT > 0:
@@ -149,11 +167,13 @@ def make_http_request_urllib(url, method):
         raise RobotHttpException(str(exp), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
-            deal_with_http_code_503()
+            deal_with_http_code_503(logger)
         raise RobotHttpException(str(e), url, e.code, method)
 
 
 LAST_HTTP_HEADERS_FOR_CURL = None
+
+
 def collect_http_headers_for_curl(header_line):
     global LAST_HTTP_HEADERS_FOR_CURL
     header_line = header_line.decode('iso-8859-1')
@@ -172,14 +192,11 @@ def collect_http_headers_for_curl(header_line):
     LAST_HTTP_HEADERS_FOR_CURL[h_name] = h_value # Header name and value.
 
 
-def make_http_request_curl(url, method):
+def make_http_request_curl(url, method, timeout=30.0):
     global HTTP_503_ERRORS_COUNT
-    global HTTP_EXCEPTION_COUNTER
     global LAST_HTTP_HEADERS_FOR_CURL
-    if HTTP_EXCEPTION_COUNTER[(url, method)] > 2:
-        raise RobotHttpException("stop requesting the same url", url, 429, method)
 
-    consider_request_policy(url, method)
+    url = _prepare_url_before_http_request(url, method)
 
     buffer = BytesIO()
     curl = pycurl.Curl()
@@ -190,10 +207,12 @@ def make_http_request_curl(url, method):
     else:
         curl.setopt(curl.WRITEDATA, buffer)
     curl.setopt(curl.FOLLOWLOCATION, True)
+    assert timeout > 20
     curl.setopt(curl.CONNECTTIMEOUT, 20)
-    curl.setopt(curl.TIMEOUT, 60)
+    curl.setopt(curl.TIMEOUT, int(timeout))
+
     curl.setopt(curl.CAINFO, certifi.where())
-    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+    user_agent = get_user_agent()
     curl.setopt(curl.USERAGENT, user_agent)
     logger = logging.getLogger("dlrobot_logger")
     logger.debug("curl ({}) method={}".format(url, method))
@@ -206,7 +225,7 @@ def make_http_request_curl(url, method):
 
         if http_code < 200 or http_code >= 300:
             if http_code == 503:
-                deal_with_http_code_503()
+                deal_with_http_code_503(logger)
             raise RobotHttpException("curl failed", url, http_code, method)
         data = b"" if method == "HEAD" else buffer.getvalue()
         headers = dict(LAST_HTTP_HEADERS_FOR_CURL)
@@ -224,8 +243,8 @@ def request_url_headers(url):
         return HEADER_MEMORY_CACHE[url]
     # do not ddos sites
     elapsed_time = datetime.datetime.now() - LAST_HEAD_REQUEST_TIME
-    if elapsed_time.total_seconds() < 1:
-        time.sleep(1)
+    if elapsed_time.total_seconds() < TRequestPolicy.SECONDS_BETWEEN_HEAD_REQUESTS:
+        time.sleep(TRequestPolicy.SECONDS_BETWEEN_HEAD_REQUESTS - elapsed_time.total_seconds())
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
 
     redirected_url, headers, _ = make_http_request(url, "HEAD")

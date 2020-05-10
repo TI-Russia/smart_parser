@@ -30,8 +30,9 @@ if [ -d $HTML_FOLDER ]; then
 	WEB_SERVER_PID=$!
 	disown
     cd $TEST_FOLDER
-    echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 fi
+
+echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 
 bash -x run.sh $PROJECT $WEB_ADDR &>test_log.out
 
