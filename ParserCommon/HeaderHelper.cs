@@ -80,6 +80,7 @@ namespace TI.Declarator.ParserCommon
             if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
 
             if (str.IsAcquiredProperty()) { return DeclarationField.AcquiredProperty; }
+            if (str.IsTransactionSubject()) { return DeclarationField.TransactionSubject; }
             if (str.IsMoneySources()) { return DeclarationField.MoneySources; }
 
 
@@ -348,13 +349,18 @@ namespace TI.Declarator.ParserCommon
             string strLower = s.Replace(" ", "").Replace("-", "");
             return strLower.Contains("приобретенногоимущества");
         }
-
+        
         private static bool IsMoneySources(this string s)
         {
             string strLower = s.Replace(" ", "").Replace("-", "");
-            return strLower.Contains("источникполучениясредств");
+            return strLower.Contains("источникполучениясредств") || strLower.Contains("сточникиполучениясредств");
         }
 
+        private static bool IsTransactionSubject(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("предметсделки");
+        }
         
     }
 }

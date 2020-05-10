@@ -82,6 +82,7 @@ namespace TI.Declarator.ParserCommon
         AcquiredProperty = 101,
         MoneySources = 102,
         Comments = 103,
+        TransactionSubject = 104,
     }
 
 }
