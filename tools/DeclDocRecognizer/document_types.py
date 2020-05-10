@@ -95,3 +95,5 @@ def get_russian_normal_text_ratio(text):
             stop_words_count += 1
         words_count += 1
     return stop_words_count / (words_count + 0.00000001)
+
+

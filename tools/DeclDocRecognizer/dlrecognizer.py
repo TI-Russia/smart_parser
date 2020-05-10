@@ -255,8 +255,7 @@ def apply_first_rules(source_file, verdict):
     elif TCharCategory.get_most_popular_char_category(verdict.start_text) != 'RUSSIAN_CHAR':
         verdict.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
         verdict.description = "cannot find Russian chars, may be encoding problems"
-    elif verdict.get_first_features_match('other_document_type') < 400 and \
-                verdict.input_text.lower().find('сведения о доходах и имуществе за период') == -1:
+    elif file_extension not in {".html", ".htm"} and verdict.get_first_features_match('other_document_type') < 400:
         verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
         verdict.description = "other_document_type<400"
     elif verdict.smart_parser_person_count > 0 and len(verdict.input_text) / verdict.smart_parser_person_count < 2048:
