@@ -7,6 +7,7 @@
 6. pip3 install -r requirements.txt
 7. install soffice
 8. sudo apt install   unrar
+8.1. sudo apt install  curl
 9. go to ../../DeclDocRecognizer and run tests
 10. 
      cd test

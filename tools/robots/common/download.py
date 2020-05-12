@@ -7,7 +7,7 @@ import logging
 from unidecode import unidecode
 import os
 import shutil
-from robots.common.http_request import make_http_request, request_url_headers
+from robots.common.http_request import make_http_request, request_url_headers_with_global_cache
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
 from robots.common.http_request import RobotHttpException
@@ -61,8 +61,8 @@ def get_content_charset(headers):
         return params.get('charset')
 
 
-def http_get_request_with_simple_js_redirect(url):
-    redirected_url, headers, data = make_http_request(url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+def http_get_request_with_simple_js_redirect(logger, url):
+    redirected_url, headers, data = make_http_request(logger, url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
 
     try:
         if get_content_type_from_headers(headers).lower().startswith('text'):
@@ -72,7 +72,7 @@ def http_get_request_with_simple_js_redirect(url):
                 if match:
                     redirect_url = match.group(3)
                     if redirect_url != url:
-                        return make_http_request(redirect_url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+                        return make_http_request(logger, redirect_url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
             except (RobotHttpException, ValueError) as err:
                 pass
     except AttributeError:
@@ -205,7 +205,8 @@ class TDownloadedFile:
             self.redirected_url = self.page_info.get('redirected_url', self.original_url)
             self.file_extension = self.page_info.get('file_extension')
         else:
-            redirected_url, info, data = http_get_request_with_simple_js_redirect(original_url)
+            logger = logging.getLogger("dlrobot_logger")
+            redirected_url, info, data = http_get_request_with_simple_js_redirect(logger, original_url)
             self.redirected_url = redirected_url
             self.data = data
             if hasattr(info, "_headers"):
@@ -255,7 +256,8 @@ class TDownloadedFile:
 
 # use it preliminary, because ContentDisposition and Content-type often contain errors
 def get_file_extension_only_by_headers(url):
-    _, headers = request_url_headers(url)
+    logger = logging.getLogger("dlrobot_logger")
+    _, headers = request_url_headers_with_global_cache(logger, url)
     ext = get_file_extension_by_content_type(headers)
     return ext
 

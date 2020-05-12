@@ -99,8 +99,7 @@ if __name__ == '__main__':
     assert os.path.exists(args.start_page)
     THttpServer.INIT_PAGE_FILE_PATH = args.start_page
     TDownloadEnv.clear_cache_folder()
-    TRequestPolicy.SECONDS_BETWEEN_HEAD_REQUESTS = 0
-    TRequestPolicy.REQUEST_RATE_1_MIN = 1000
+    TRequestPolicy.ENABLE = False
     host, port = args.web_addr.split(":")
     server_thread = threading.Thread(target=start_server, args=(host, port))
     server_thread.start()

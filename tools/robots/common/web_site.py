@@ -5,7 +5,7 @@ import os
 import shutil
 import time
 import datetime
-from robots.common.http_request import get_request_rate
+from robots.common.http_request import TRequestPolicy
 import hashlib
 import re
 from robots.common.link_info import TLinkInfo, TClickEngine
@@ -200,8 +200,8 @@ class TRobotWebSite:
 
         target.profiler = {
             "elapsed_time":  time.time() - start_time,
-            "step_request_rate": get_request_rate(start_time),
-            "site_request_rate": get_request_rate()
+            "step_request_rate": TRequestPolicy.get_request_rate(start_time),
+            "site_request_rate": TRequestPolicy.get_request_rate()
         }
         self.logger.debug("{}".format(str(target.profiler)))
         target.delete_url_mirrors_by_www_and_protocol_prefix()
