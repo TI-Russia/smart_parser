@@ -10,6 +10,7 @@ from robots.dlrobot.declaration_link import looks_like_a_declaration_link
 from robots.common.http_request import TRequestPolicy
 import logging
 import argparse
+import time
 
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
@@ -110,3 +111,4 @@ if __name__ == '__main__':
     finally:
         HTTP_SERVER.shutdown()
         server_thread.join(1)
+        time.sleep(1)  #

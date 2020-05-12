@@ -1,5 +1,4 @@
 import ssl
-import logging
 import urllib.error
 import urllib.request
 import urllib.parse
@@ -174,13 +173,13 @@ def make_http_request_urllib(logger, url, method, timeout=30.0):
         code = -1
         if hasattr(exp, 'code'):
             code = exp.code
-        raise RobotHttpException(str(exp), url, code, method) #
+        raise RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
             TRequestPolicy.deal_with_http_code_503(logger)
         if e.code == 405 and method == "HEAD":
             return make_http_request_urllib(logger, url, "GET")
-        raise RobotHttpException(str(e), url, e.code, method)
+        raise RobotHttpException("{} extype:{}".format(str(e), type(e)), url, e.code, method)
 
 
 

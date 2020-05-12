@@ -56,7 +56,7 @@ class TExternalConverters:
         else:
             self.xlsx2csv = shutil.which('xlsx2csv')
         if self.xlsx2csv is None or not os.path.exists(self.xlsx2csv):
-            raise FileNotFoundError("cannot find xls2csv, install it")
+            raise FileNotFoundError("cannot find xlsx2csv, install it")
 
     smart_parser_default = os.path.join(
         os.path.dirname(os.path.realpath(__file__)),
