@@ -7,9 +7,33 @@ conv_server_pid=$!
 disown
 sleep 2
 python ../../scripts/convert_pdf.py  $INPUT_FILE
-kill $conv_server_pid >/dev/null
-if [ ! -f $INPUT_FILE.docx ]; then
-  echo "cannot get converted file"
+if [ $? != "0" ]; then
+  echo "convert_pdf return non-zero exit code on $INPUT_FILE"
+  kill $conv_server_pid >/dev/null
   exit  1
 fi
+if [ ! -f $INPUT_FILE.docx ]; then
+  echo "cannot get converted file $INPUT_FILE.docx"
+  kill $conv_server_pid >/dev/null
+  exit  1
+fi
+
+rm -rf convert_pdf.log
+BROKEN_PDF=broken.pdf
+python ../../scripts/convert_pdf.py  $BROKEN_PDF
+if [ $? == "0" ]; then
+  echo "convert_pdf return zero exit code on $BROKEN_PDF"
+  kill $conv_server_pid >/dev/null 
+  exit  1
+fi
+
+lines_count=`grep 'register conversion task' convert_pdf.log | wc -l`
+if [ $lines_count != 0 ]; then
+  echo "$BROKEN_PDF should not even be sent to server"
+  kill $conv_server_pid >/dev/null 
+  exit  1
+fi
+
+kill $conv_server_pid >/dev/null
+
 

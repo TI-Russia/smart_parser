@@ -94,6 +94,10 @@ class TDocConversionClient(object):
         try:
             with open(filename, "rb") as f:
                 file_contents = f.read()
+                starter = file_contents[:5].decode('latin', errors="ignore")
+                if starter != '%PDF-':
+                    self.logger.debug("{} has bad pdf starter, do  not send it".format(filename))
+                    return
                 hashcode = hashlib.sha256(file_contents).hexdigest()
 
             if hashcode in self._sent_tasks:
