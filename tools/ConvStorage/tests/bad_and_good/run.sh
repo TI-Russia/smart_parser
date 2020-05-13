@@ -4,7 +4,7 @@ source ../setup_tests.sh
 python ../../create_json.py
 
 python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json \
-	--ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out &
+	--ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out --ocr-logs-folder  ../ocr.logs &
 conv_server_pid=$!
 disown
 
@@ -52,3 +52,8 @@ if [ ! -f $INPUT_FILE.docx ]; then
   exit  1
 fi
 
+files_count=`/usr/bin/find  ../pdf.ocr -type f | wc -l`
+if [ $files_count != "0" ]; then
+  echo "left files in ../pdf.ocr"
+  exit  1
+fi

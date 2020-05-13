@@ -12,30 +12,33 @@ from selenium.common.exceptions import WebDriverException, InvalidSwitchToTarget
 
 
 class TRobotProject:
-    selenium_driver = TSeleniumDriver()
 
-    def __init__(self, logger, filename, robot_step_passports, export_folder):
+    def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
+        self.selenium_driver = TSeleniumDriver(logger)
         self.project_file = filename + ".clicks"
         if not os.path.exists(self.project_file):
             shutil.copy2(filename, self.project_file)
         self.offices = list()
         self.human_files = list()
         self.robot_step_passports = robot_step_passports
-        self.enable_search_engine = True  #switched off in tests, otherwize google shows captcha
+        self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
+        self.enable_selenium = enable_selenium
 
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.robot_step_passports)
 
     def __enter__(self):
-        TRobotProject.selenium_driver.download_folder = tempfile.mkdtemp()
-        TRobotProject.selenium_driver.start_executable()
+        if self.enable_selenium:
+            self.selenium_driver.download_folder = tempfile.mkdtemp()
+            self.selenium_driver.start_executable()
         return self
 
     def __exit__(self, type, value, traceback):
-        TRobotProject.selenium_driver.stop_executable()
-        shutil.rmtree(TRobotProject.selenium_driver.download_folder)
+        if self.enable_selenium:
+            self.selenium_driver.stop_executable()
+            shutil.rmtree(self.selenium_driver.download_folder)
 
     def write_project(self):
         with open(self.project_file, "w", encoding="utf8") as outf:
@@ -46,6 +49,11 @@ class TRobotProject:
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
+
+    def add_office(self, morda_url):
+        office_info = TRobotWebSite(self)
+        office_info.morda_url = morda_url
+        self.offices.append(office_info)
 
     def read_project(self):
         self.offices = list()
@@ -126,7 +134,7 @@ class TRobotProject:
         serp_urls = list()
         for retry in range(3):
             try:
-                serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
+                serp_urls = GoogleSearch.site_search(site, request, self.selenium_driver)
                 break
             except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
                 self.logger.error('cannot request search engine, exception {}'.format(err))

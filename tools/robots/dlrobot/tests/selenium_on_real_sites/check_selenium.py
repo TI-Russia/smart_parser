@@ -7,9 +7,9 @@ import argparse
 import shutil
 
 
-def setup_logging( logger, logfilename):
+def setup_logging(logfilename):
+    logger = logging.getLogger("dlrobot_logger")
     logger.setLevel(logging.DEBUG)
-
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     if os.path.exists(logfilename):
@@ -19,6 +19,7 @@ def setup_logging( logger, logfilename):
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
+    return logger
 
 
 def parse_args():
@@ -33,11 +34,14 @@ def parse_args():
 
 def get_links(logger, links,  start_anchor_text):
     urls =  set()
+    element_index = 0
     for e in links:
+        element_index += 1
         try:
             if e.text is None:
                 continue
             link_text = e.text.strip('\n\r\t ')
+            logger.debug("check link anchor={}, element_index={}".format(link_text, element_index))
             if link_text.lower().startswith(start_anchor_text):
                 logger.debug("found link anchor={}".format(link_text))
                 href = e.get_attribute('href')
@@ -51,7 +55,8 @@ def get_links(logger, links,  start_anchor_text):
             logger.error(exp)
     return urls
 
-def start_selenium_for_tests(args):
+
+def start_selenium_for_tests(logger, args):
     if os.path.exists("geckodriver.log"):
         os.unlink("geckodriver.log")
 
@@ -60,7 +65,7 @@ def start_selenium_for_tests(args):
             shutil.rmtree(args.download_folder, ignore_errors=True)
         os.mkdir(args.download_folder)
     try:
-        driver_holder = TSeleniumDriver(headless=args.headless,
+        driver_holder = TSeleniumDriver(logger, headless=args.headless,
                                         download_folder=args.download_folder,
                                         loglevel="trace")
         driver_holder.start_executable()
@@ -72,9 +77,8 @@ def start_selenium_for_tests(args):
 
 if __name__ == "__main__":
     args = parse_args()
-    logger = logging.getLogger("dlrobot_logger")
-    setup_logging(logger, "check_selenium.log")
-    driver_holder = start_selenium_for_tests(args)
+    logger = setup_logging("check_selenium.log")
+    driver_holder = start_selenium_for_tests(logger, args)
     logger.info("navigate to {}\n".format(args.source_url))
     links = driver_holder.navigate_and_get_links(args.source_url)
     logger.info("Title:{}, type={}\n".format(driver_holder.the_driver.title, type(driver_holder.the_driver.title)))

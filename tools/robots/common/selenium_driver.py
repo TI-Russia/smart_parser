@@ -7,7 +7,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from selenium.webdriver.common.action_chains import ActionChains
 
-import logging
 import os
 import shutil
 from pathlib import Path
@@ -27,9 +26,10 @@ def make_folder_empty(folder):
 
 
 class TSeleniumDriver:
-    def __init__(self, headless=True, download_folder=None, loglevel=None):
+    def __init__(self, logger, headless=True, download_folder=None, loglevel=None):
+        self.logger = logger
         self.the_driver = None
-        self.driver_processed_urls_count  = 0
+        self.driver_processed_urls_count = 0
         self.download_folder = download_folder
         assert download_folder != "."
         self.headless = headless
@@ -56,8 +56,7 @@ class TSeleniumDriver:
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == 2:
                     raise
-                logger = logging.getLogger("dlrobot_logger")
-                logger.error("Exception:{}, sleep and retry...".format(str(exp)))
+                self.logger.error("Exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
 
 
@@ -98,7 +97,7 @@ class TSeleniumDriver:
             return self.get_buttons_and_links()
 
     def restart(self):
-        logging.getLogger("dlrobot_logger").error("restart selenium")
+        self.logger.error("restart selenium")
         self.stop_executable()
         self.start_executable()
         time.sleep(10)
@@ -107,8 +106,7 @@ class TSeleniumDriver:
         try:
             return self._navigate_and_get_links(url, timeout)
         except (WebDriverException, InvalidSwitchToTargetException) as exp:
-            logger = logging.getLogger("dlrobot_logger")
-            logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
+            self.logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
             self.restart()
             return self._navigate_and_get_links(url, timeout)
 
@@ -151,8 +149,7 @@ class TSeleniumDriver:
         if self.the_driver.current_url != save_current_url:
             self.the_driver.get(link_info.source_url)  # hope it leads to save_current_url
             if save_current_url != link_info.source_url:
-                logger = logging.getLogger("dlrobot_logger")
-                logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
+                self.logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
                     save_current_url, self.the_driver.current_url))
 
 

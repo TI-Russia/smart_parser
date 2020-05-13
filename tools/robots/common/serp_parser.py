@@ -1,6 +1,6 @@
 import urllib.parse
 import json
-import sys
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import time
 import os
 import random
@@ -8,6 +8,7 @@ from unidecode import unidecode
 from robots.common.download import TDownloadEnv
 from selenium.webdriver.common.keys import Keys
 from robots.common.primitives import get_site_domain_wo_www
+from robots.common.selenium_driver import TSeleniumDriver
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/ 58.0.3029.81 Safari/537.36",
@@ -48,12 +49,6 @@ class GoogleSearch:
         return html
 
     @staticmethod
-    def _request_selenium(url, driver_holder):
-        driver_holder.navigate(url)
-        time.sleep(6)
-        return driver_holder.the_driver.page_source
-
-    @staticmethod
     def get_cached_file_name(site_url, query):
         filename = unidecode(site_url + " " + query)
         filename = filename.replace(' ', '_')
@@ -85,7 +80,7 @@ class GoogleSearch:
         return dict()
 
     @staticmethod
-    def write_cache(site_url,  query, urls):
+    def _write_cache(logger, site_url,  query, urls):
         filename = GoogleSearch.get_cached_file_name(site_url, query)
         cache = {
             'urls': urls,
@@ -96,32 +91,40 @@ class GoogleSearch:
             with open(filename, "w", encoding="utf8") as outp:
                 json.dump(cache, outp, ensure_ascii=False, indent=4)
         except IOError as err:
-            sys.stderr("cannot write file {}".format(filename))
+            logger.error("cannot write file {}".format(filename))
             pass
 
 
     @staticmethod
-    def site_search(site_url, query, selenium_holder, enable_cache=True):
+    def site_search(site_url, query, selenium_holder: TSeleniumDriver, enable_cache=True):
         if enable_cache:
             cached_results = GoogleSearch.read_cache(site_url, query)
             if len(cached_results) > 0:
                 return cached_results['urls']
         assert get_site_domain_wo_www(site_url) == site_url
+        if "google" in query or "google" in site_url:
+            selenium_holder.logger.error("Warning! we use keyword 'google' to filter results out, search would yield no results")
         request_parts = ["site:{}".format(site_url), query]
         random.shuffle(request_parts)  # more random
         site_req = " ".join(request_parts)
-
-        GoogleSearch._request_selenium(random.choice(SEARCH_URLS), selenium_holder)
-        time.sleep(4)
+        google_url = random.choice(SEARCH_URLS)
+        selenium_holder.logger.debug("try to open {}".format(google_url))
+        try:
+            selenium_holder.navigate(google_url)
+            time.sleep(6)
+        except (WebDriverException, InvalidSwitchToTargetException) as exp:
+            selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry".format(exp))
+            time.sleep(10)
+            selenium_holder.navigate(google_url)
+            time.sleep(10)
         element = selenium_holder.the_driver.switch_to.active_element
         element.send_keys(site_req)
         time.sleep(1)
         element.send_keys(Keys.RETURN)
-        time.sleep(6)
-        if "google" in query or "google" in site_url:
-            print("Warning! we use keyword 'google' to filter results out, search would yield no results")
+        time.sleep(8)
         site_search_results = []
         search_results_count = 0
+        selenium_holder.logger.debug("start reading serp")
         elements = list()
         for element in selenium_holder.the_driver.find_elements_by_tag_name("a"):
             url = element.get_attribute("href")
@@ -134,11 +137,14 @@ class GoogleSearch:
 
         if enable_cache:
             if search_results_count > 0:
-                GoogleSearch.write_cache(site_url, query, site_search_results)
+                GoogleSearch._write_cache(selenium_holder.logger, site_url, query, site_search_results)
 
         #click on a serp item to make google happy
-        if len(elements) > 0:
-            random.choice(elements).click()
+        try:
+            if len(elements) > 0:
+                random.choice(elements).click()
+        except Exception as exp:
+            selenium_holder.logger.debug("cannot click random item on serp ({}), keep going...".format(exp))
 
         return site_search_results
 

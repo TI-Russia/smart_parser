@@ -409,26 +409,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах - 2015 год",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/content/view/1042/",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
-            "sha256": "75ee920020d53a89a3cdf09eece71ba7750835471a25a7a6c0055f4aa1352c80"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                     "source:step": "anticorruption_div",
                     "source:title": "",
@@ -904,6 +884,26 @@
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "e765fb0458e8684603be72bc89159e94fb499889ef6c82d645fffa7230664e31",
             "archive_index": 1
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах - 2015 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/1042/",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
+            "sha256": "eb4b86d823b578185de177ac79e709d364f1258dab2b141509f99d24717d90fd"
         },
         {
             "click_path": [

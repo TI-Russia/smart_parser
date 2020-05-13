@@ -6,13 +6,22 @@ import logging
 from ConvStorage.conversion_client import TDocConversionClient
 
 
-def setup_logging(logger):
+def setup_logging():
+    logger = logging.getLogger("convert_pdf")
     logger.setLevel(logging.DEBUG)
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    fh = logging.FileHandler("convert_pdf.log", encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # create console handler with a higher log level
     ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+    ch.setLevel(logging.INFO)
     logger.addHandler(ch)
+    return logger
 
 
 def parse_args():
@@ -22,40 +31,52 @@ def parse_args():
     return parser.parse_args()
 
 
-def download_converted_file_for(conv_tasks, filename):
-    with open(filename, "rb") as f:
-        sha256hash = hashlib.sha256(f.read()).hexdigest()
-    outfile = filename + ".docx"
-    if conv_tasks.retrieve_document(sha256hash, outfile):
-        print ("save {}".format(outfile))
+def send_files(args, logger, conv_tasks):
+    sent_files = set()
+    for filepath in args.input:
+        _, extension = os.path.splitext(filepath)
+        if conv_tasks.start_conversion_task_if_needed(filepath, extension.lower(), args.rebuild_pdf):
+            logger.debug("send {}".format(filepath))
+            sent_files.add(filepath)
+    return sent_files
 
+
+def receive_files(logger, conv_tasks, sent_files):
+    errors_count = 0
+    for filepath in sent_files:
+        logger.debug("download docx for {}".format(filepath))
+        with open(filepath, "rb") as f:
+            sha256hash = hashlib.sha256(f.read()).hexdigest()
+        outfile = filepath + ".docx"
+        if conv_tasks.retrieve_document(sha256hash, outfile):
+            logger.debug("save {}".format(outfile))
+        else:
+            logger.error("cannot download docx for file {}".format(filepath))
+            errors_count += 1
+    return errors_count == 0
+
+
+def main (args, logger):
+    conv_tasks = TDocConversionClient(logger)
+    conv_tasks.start_conversion_thread()
+
+    try:
+        sent_files = send_files(args, logger, conv_tasks)
+        if len(sent_files) > 0:
+            logger.debug("wait conversion finished")
+            conv_tasks.wait_doc_conversion_finished()
+        else:
+            logger.debug("stop conversion finished")
+            conv_tasks.stop_conversion_thread()
+    except Exception as exp:
+        logger.error("exception: {}, stop_conversion_thread".format(exp))
+        conv_tasks.stop_conversion_thread()
+    if not receive_files(logger, conv_tasks, sent_files):
+        return 1
+    return 0
 
 if __name__ == '__main__':
     args = parse_args()
-    for filepath in args.input:
-        if not os.path.exists(filepath):
-            sys.stderr.write("{} does not exists\n".format(filepath))
-            sys.exit(1)
-    logger = logging.getLogger("stderr_logger")
-    setup_logging(logger)
-    conv_tasks = TDocConversionClient(logger)
-    sent_files = set()
-    try:
-        conv_tasks.start_conversion_thread()
-        for filepath in args.input:
-            _, extension = os.path.splitext(filepath)
-            if conv_tasks.start_conversion_task_if_needed(filepath, extension.lower(), args.rebuild_pdf):
-                sys.stderr.write("send {}\n".format(filepath))
-                sent_files.add(filepath)
-        if len(sent_files) > 0:
-            sys.stderr.write("wait conversion finished\n")
-            conv_tasks.wait_doc_conversion_finished()
-        else:
-            conv_tasks.stop_conversion_thread()
-    except Exception as exp:
-        sys.stderr.write("exception: {}, stop_conversion_thread\n".format(exp))
-        conv_tasks.stop_conversion_thread()
-
-    for filepath in sent_files:
-        sys.stderr.write("download docx for {}\n".format(filepath))
-        download_converted_file_for(conv_tasks, filepath)
+    logger = setup_logging()
+    exit_code = main(args, logger)
+    sys.exit(exit_code)

@@ -7,16 +7,17 @@ import logging
 from unidecode import unidecode
 import os
 import shutil
-from robots.common.http_request import make_http_request, request_url_headers
+from robots.common.http_request import make_http_request, request_url_headers_with_global_cache
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
 from robots.common.http_request import RobotHttpException
+import cgi
 
 
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
     CONVERSION_CLIENT = None
-
+    HTTP_TIMEOUT = 30
     @staticmethod
     def clear_cache_folder():
         if os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
@@ -28,14 +29,6 @@ class TDownloadEnv:
     def init_conversion():
         TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient()
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
-
-
-def find_simple_js_redirect(data):
-    res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data)
-    if res:
-        url = res.group(3)
-        return url
-    return None
 
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
@@ -53,20 +46,35 @@ def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     return html_data.decode(encoding, errors="ignore")
 
 
-def http_get_with_urllib(url, search_for_js_redirect=True):
-    redirected_url, headers, data = make_http_request(url, "GET")
+def get_content_type_from_headers(headers, default_value="text"):
+    return headers.get('Content-Type', headers.get('Content-type', headers.get('content-type', default_value)))
+
+
+def get_content_charset(headers):
+    if hasattr(headers, "_headers"):
+        # from urllib, headers is class Message
+        return headers.get_content_charset()
+    else:
+        # from curl, headers is a dict
+        content_type = get_content_type_from_headers(headers).lower()
+        _, params = cgi.parse_header(content_type)
+        return params.get('charset')
+
+
+def http_get_request_with_simple_js_redirect(logger, url):
+    redirected_url, headers, data = make_http_request(logger, url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
 
     try:
-        if headers.get('Content-Type', "text").lower().startswith('text'):
-            if search_for_js_redirect:
-                try:
-                    data_utf8 = convert_html_to_utf8_using_content_charset(headers.get_content_charset(), data)
-                    redirect_url = find_simple_js_redirect(data_utf8)
-                    if redirect_url is not None and redirect_url != url:
-                        return http_get_with_urllib(redirect_url, search_for_js_redirect=False)
-                except (RobotHttpException, ValueError) as err:
-                    pass
-
+        if get_content_type_from_headers(headers).lower().startswith('text'):
+            try:
+                data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
+                match = re.search('((window|document).location\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data_utf8)
+                if match:
+                    redirect_url = match.group(3)
+                    if redirect_url != url:
+                        return make_http_request(logger, redirect_url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+            except (RobotHttpException, ValueError) as err:
+                pass
     except AttributeError:
         pass
     return redirected_url, headers, data
@@ -124,7 +132,7 @@ def get_local_file_name_by_url(url):
 
 
 def get_file_extension_by_content_type(headers):
-    content_type = headers.get('Content-Type', headers.get('Content-type', "text"))
+    content_type = get_content_type_from_headers(headers)
     content_disposition = headers.get('Content-Disposition')
     if content_disposition is not None:
         found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
@@ -197,12 +205,16 @@ class TDownloadedFile:
             self.redirected_url = self.page_info.get('redirected_url', self.original_url)
             self.file_extension = self.page_info.get('file_extension')
         else:
-            redirected_url, info, data = http_get_with_urllib(original_url)
+            logger = logging.getLogger("dlrobot_logger")
+            redirected_url, info, data = http_get_request_with_simple_js_redirect(logger, original_url)
             self.redirected_url = redirected_url
             self.data = data
-            assert hasattr(info, "_headers")
-            self.page_info['headers'] = dict(info._headers)
-            self.page_info['charset'] = info.get_content_charset()
+            if hasattr(info, "_headers"):
+                self.page_info['headers'] = dict(info._headers)
+            else:
+                assert type(info) == dict
+                self.page_info['headers'] = info
+            self.page_info['charset'] = get_content_charset(info)
             self.page_info['redirected_url'] = redirected_url
             self.page_info['original_url'] = original_url
             if len(self.data) > 0:
@@ -241,11 +253,14 @@ class TDownloadedFile:
     def get_file_extension_only_by_headers(self):
         return get_file_extension_by_content_type(self.get_http_headers())
 
+
 # use it preliminary, because ContentDisposition and Content-type often contain errors
 def get_file_extension_only_by_headers(url):
-    _, headers = request_url_headers(url)
+    logger = logging.getLogger("dlrobot_logger")
+    _, headers = request_url_headers_with_global_cache(logger, url)
     ext = get_file_extension_by_content_type(headers)
     return ext
+
 
 def are_web_mirrors(domain1, domain2):
     try:

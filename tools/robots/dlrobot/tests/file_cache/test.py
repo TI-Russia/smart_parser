@@ -42,7 +42,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.build_headers()
             self.wfile.write("<html> aaaaaaa </html>".encode("latin"))
         elif self.path == "/very_long":
-            time.sleep(40)
+            time.sleep(TDownloadEnv.HTTP_TIMEOUT + 10)   # more than HTTP_TIMEOUT
             self.build_headers()
             self.wfile.write("<html> bbbb </html>".encode("latin"))
         else:
@@ -90,6 +90,7 @@ def request_too_many_404(url):
             codes.append(exp.http_code)
     assert codes == [404, 404, 404, 429]
 
+
 if __name__ == '__main__':
     TDownloadEnv.clear_cache_folder()
     logger = setup_logging('file_cache.log')
@@ -109,8 +110,8 @@ if __name__ == '__main__':
     logger.debug("request_timeouted")
     request_timeouted(web_addr + "/very_long")
 
-    logger.debug("sleep 20")
-    time.sleep(20)
+    logger.debug("sleep {}".format(TDownloadEnv.HTTP_TIMEOUT))
+    time.sleep(TDownloadEnv.HTTP_TIMEOUT)
 
     logger.debug("shutdown http server")
     HTTP_SERVER.shutdown()

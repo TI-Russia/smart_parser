@@ -3,6 +3,7 @@ import json
 import time
 import http.server
 import os
+import re
 import urllib
 import hashlib
 import shutil
@@ -25,6 +26,7 @@ def parse_args():
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
     parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
     parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
+    parser.add_argument("--ocr-logs-folder", dest='ocr_logs_folder', required=False, default="ocr.logs")
     parser.add_argument("--microsoft-pdf-2-docx",
                         dest='microsoft_pdf_2_docx',
                         required=False,
@@ -157,7 +159,6 @@ def convert_with_microsoft_word(logger, microsoft_pdf_2_docx, filename):
         except Exception as exp:
             pass
 
-
     taskkill_windows('winword.exe')
     taskkill_windows('pdfreflow.exe')
 
@@ -267,6 +268,8 @@ class TConvDatabase:
             shutil.rmtree(self.args.input_folder, ignore_errors=True)
         if not os.path.exists(self.args.input_folder):
             os.mkdir(self.args.input_folder)
+        if not os.path.exists(self.args.ocr_logs_folder):
+            os.mkdir(self.args.ocr_logs_folder)
         self.logger.debug("input folder for new files: {} ".format(self.args.input_folder))
 
         if not os.path.exists(self.args.ocr_output_folder):
@@ -295,38 +298,77 @@ class TConvDatabase:
         with open(self.conv_db_json_file_name, "w") as outf:
             json.dump(self.conv_db_json, outf, indent=4)
 
+    def process_ocr_logs(self):
+        for log_file in os.listdir(self.args.ocr_output_folder):
+            if not log_file.endswith(".txt"):
+                continue
+            broken_files = list()
+            log_is_completed = False
+            log_file_full_path = os.path.join(self.args.ocr_output_folder, log_file)
+            try:
+                with open(log_file_full_path, "r", encoding="utf-16-le", errors="ignore") as inp:
+                    for line in inp:
+                        m = re.match('.*Error:.*: ([^ ]+.pdf)$', line)
+                        if m is not None:
+                            broken_files.append(m.group(1))
+                        if line.find('Pages processed') != -1:
+                            log_is_completed = True
+            except Exception as exp:
+                self.logger.error("fail to read \"{}\", exception: {}".format(log_file, exp))
+                continue
+
+            if not log_is_completed:
+                self.logger.debug("skip incompleted log_file \"{}\"".format(log_file))
+                continue
+            self.logger.debug("process log_file \"{}\" with {} broken files".format(log_file, len(broken_files)))
+            try:
+                shutil.move(log_file_full_path, os.path.join(self.args.ocr_logs_folder, log_file + "." + str(time.time())))
+            except Exception as exp:
+                self.logger.error("exception: {}".format(exp))
+            for filename in broken_files:
+                if os.path.exists(filename):
+                    self.logger.debug("remove {}, since ocr cannot process it (\"{}\")".format(filename, log_file))
+                    delete_file_if_exists(self.logger, filename)
+
+    def process_docx_from_winword(self):
+        new_files_in_db = False
+        while not self.input_task_queue.empty():
+            task = self.input_task_queue.get()
+            try:
+                self.process_one_input_file(task.file_path)
+                new_files_in_db = True
+            except Exception as exp:
+                self.logger.error("Exception: {}".format(exp))
+                if os.path.exists(task.file_path):
+                    self.logger.error("delete {}".format(task.file_path))
+                    os.unlink(task.file_path)
+        return new_files_in_db
+
+    def process_docx_from_ocr(self):
+        new_files_in_db = False
+        for some_file in os.listdir(self.args.ocr_output_folder):
+            if not some_file.endswith(".docx"):
+                continue
+            for try_index in [1, 2, 3]:
+                self.logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
+                try:
+                    self.move_one_ocred_file(some_file)
+                    new_files_in_db = True
+                    break
+                except Exception as exp:
+                    self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
+                    time.sleep(60)
+            delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
+        return new_files_in_db
+
     def process_input_tasks(self):
         while not self.stop_input_thread:
             time.sleep(10)
-            new_files_in_db = False
-            while not self.input_task_queue.empty():
-                task = self.input_task_queue.get()
-                try:
-                    self.process_one_input_file(task.file_path)
-                    new_files_in_db = True
-                except Exception as exp:
-                    self.logger.error("Exception: {}".format(exp))
-                    if os.path.exists(task.file_path):
-                        self.logger.error("delete {}".format(task.file_path))
-                        os.unlink(task.file_path)
-
-            for some_file in os.listdir(self.args.ocr_output_folder):
-                if not some_file.endswith(".docx"):
-                    continue
-                for try_index in [1, 2, 3]:
-                    self.logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
-                    try:
-                        self.move_one_ocred_file(some_file)
-                        new_files_in_db = True
-                        break
-                    except Exception as exp:
-                        self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
-                        time.sleep(60)
-
-                delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
-
-            if new_files_in_db:
+            new_files_from_winword = self.process_docx_from_winword()
+            new_files_from_ocr = self.process_docx_from_ocr()
+            if new_files_from_winword or new_files_from_ocr:
                 self.rebuild_json_wrapper()
+            self.process_ocr_logs()
 
     def start_input_files_thread(self):
         self.input_thread = threading.Thread(target=self.process_input_tasks, args=())
@@ -363,7 +405,7 @@ class TConvDatabase:
 
 
 CONV_DATABASE = None
-
+ALLOWED_FILE_EXTENSTIONS={'.pdf'}
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
@@ -425,12 +467,13 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
     def do_PUT(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
-        global CONV_DATABASE
+        global CONV_DATABASE, ALLOWED_FILE_EXTENSTIONS
         CONV_DATABASE.input_files_thread_is_alive()
         if self.path is None:
             send_error("no file specified")
             return
-        action, file_extension = os.path.split(self.path)
+        action = os.path.dirname(self.path)
+        _, file_extension = os.path.splitext(os.path.basename(self.path))
         action = action.strip('//')
         if action == "convert_if_absent":
             rebuild = False
@@ -439,8 +482,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         else:
             send_error("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
             return
-        if len(file_extension) <= 3:
-            send_error("bad file extension")
+        if file_extension not in ALLOWED_FILE_EXTENSTIONS:
+            send_error("bad file extension, can be {}".format(ALLOWED_FILE_EXTENSTIONS))
             return
         file_length = int(self.headers['Content-Length'])
         CONV_DATABASE.logger.debug("receive file {} length {}".format(self.path, file_length))
