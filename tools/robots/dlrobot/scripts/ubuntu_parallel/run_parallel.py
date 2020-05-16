@@ -32,6 +32,11 @@ def setup_logging(logfilename):
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    if os.name == "nt":
+        pkey_default = "C:/Users/sokirko/.ssh/id_rsa"
+    else:
+        pkey_default = "/home/sokirko/.ssh/id_rsa"
+
     parser.add_argument("--hosts",  dest='hosts', required=True)
     parser.add_argument("--remote-folder", dest='remote_folder', default='/home/sokirko', required=False)
     parser.add_argument("--declarator-hdd-folder",  dest='declarator_hdd_folder', required=False, default="/home/sokirko/declarator_hdd")
@@ -41,7 +46,7 @@ def parse_args():
     parser.add_argument("--input-folder",  dest='input_folder', required=False, default="input_projects")
     parser.add_argument("--result-folder",  dest='result_folder', required=True)
     parser.add_argument("--username",  dest='username', required=False, default="sokirko")
-    parser.add_argument("--pkey", dest='pkey', required=False, default="C:/Users/sokirko/.ssh/id_rsa")
+    parser.add_argument("--pkey", dest='pkey', required=False, default=pkey_default)
     parser.add_argument("--retries-count", dest='retries_count', required=False, default=2, type=int)
     parser.add_argument("--initialize-worker", dest='initialize_worker', required=False,
                         default=os.path.join( os.path.dirname(__file__), "initialize_worker.py"))
