@@ -2,7 +2,7 @@ PROCESSED_FOLDER=$1
 project_file=$2
 basename_project_file=`basename $project_file`
 folder=${basename_project_file%.txt} 
-
+date
 echo 'process $project_file'
 mkdir $folder
 cd $folder
@@ -12,7 +12,8 @@ rm -rf cached
 rm -rf geckodriver.log
 exit_code=0
 if [ ! -f $basename_project_file.clicks.stats ]; then
-    echo "cannot find clicks.stats file, dlrobot.py failed "
+    echo "cannot find clicks.stats file, dlrobot.py failed, delete result folder "
+    rm -rf result
     exit_code=1
 fi
 cd -

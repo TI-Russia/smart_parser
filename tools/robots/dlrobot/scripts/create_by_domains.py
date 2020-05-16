@@ -15,7 +15,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     domains = list()
-    with open(args.domains, "r", encoding="utf8") as inpf:
+    with open(args.domains_file, "r", encoding="utf8") as inpf:
         for x in inpf:
             x = x.strip(" \r\n")
             if len(x) > 0:
