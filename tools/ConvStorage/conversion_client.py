@@ -10,6 +10,7 @@ import queue
 from robots.common.archives import dearchive_one_archive, is_archive_extension
 from robots.common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
+from pathlib import Path
 
 DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
 if DECLARATOR_CONV_URL is None:
@@ -144,6 +145,11 @@ class TDocConversionClient(object):
 
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):
         if file_extension == DEFAULT_PDF_EXTENSION or is_archive_extension(file_extension):
+            max_file_size = 2 ** 25
+            if Path(filename).stat().st_size  > max_file_size:
+                self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
+                    filename, max_file_size))
+                return False
             assert self.conversion_thread is not None
             self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
             return True

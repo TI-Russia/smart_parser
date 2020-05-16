@@ -14,6 +14,8 @@ import tempfile
 import sys
 import queue
 from DeclDocRecognizer.document_types import TCharCategory
+from pathlib import Path
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -51,6 +53,13 @@ def setup_logging(logger, logfilename):
     #ch = logging.StreamHandler()
     #ch.setLevel(logging.INFO)
     #logger.addHandler(ch)
+
+
+def get_directory_size(dir):
+    dir_size = 0
+    for x in os.listdir(dir):
+        dir_size += Path(x).stat()
+    return dir_size
 
 
 def find_new_files_and_add_them_to_json(conv_db_json, converted_files_folder, output_file):
@@ -195,6 +204,7 @@ class TConvDatabase:
         self.input_thread = None
         self.stop_input_thread = False
         self.input_task_queue = queue.Queue()
+        self.all_put_files_count = 0
 
     def get_converted_file_name(self, sha256):
         value = self.conv_db_json['files'].get(sha256)
@@ -361,6 +371,15 @@ class TConvDatabase:
             delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
         return new_files_in_db
 
+    def get_stats(self):
+        return {
+            'all_put_files_count': self.all_put_files_count,
+            'input_task_queue(not classified documents)': self.input_task_queue.qsize(),
+            'ocr_input_queue_size': len(os.listdir(self.args.ocr_input_folder)),
+            'ocr_input_file_size': get_directory_size(self.args.ocr_input_folder),
+            'winword_input_queue_size': len(os.listdir(self.args.input_folder)),
+        }
+
     def process_input_tasks(self):
         while not self.stop_input_thread:
             time.sleep(10)
@@ -368,7 +387,11 @@ class TConvDatabase:
             new_files_from_ocr = self.process_docx_from_ocr()
             if new_files_from_winword or new_files_from_ocr:
                 self.rebuild_json_wrapper()
+
             self.process_ocr_logs()
+            files_count = len(os.listdir(self.args.ocr_input_folder))
+            if files_count > 0:
+                self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
 
     def start_input_files_thread(self):
         self.input_thread = threading.Thread(target=self.process_input_tasks, args=())
@@ -436,6 +459,11 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b"yes")
             return
+        if self.path == "/stat":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(str(CONV_DATABASE.get_stats()).encode("utf8"))
+            return
 
         query_components = dict()
         if not self.parse_cgi(query_components):
@@ -486,6 +514,10 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             send_error("bad file extension, can be {}".format(ALLOWED_FILE_EXTENSTIONS))
             return
         file_length = int(self.headers['Content-Length'])
+        max_file_size = 2**25
+        if file_length > max_file_size:
+            send_error("file is too large (size must less than {} bytes ".format(max_file_size))
+            return
         CONV_DATABASE.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
         sha256 = hashlib.sha256(file_bytes).hexdigest()
@@ -500,6 +532,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.send_response(201, 'Already registered as a conversion task, wait ')
             self.end_headers()
             return
+
+        CONV_DATABASE.all_put_files_count += 1
 
         self.send_response(201, 'Created')
         self.end_headers()
