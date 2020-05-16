@@ -7,6 +7,7 @@ import threading
 import hashlib
 import os
 import queue
+import json
 from robots.common.archives import dearchive_one_archive, is_archive_extension
 from robots.common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
@@ -136,6 +137,17 @@ class TDocConversionClient(object):
         conn = http.client.HTTPConnection(self.db_conv_url)
         conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
         return conn.getresponse().code == 200
+
+    def get_pending_all_file_size(self):
+        try:
+            conn = http.client.HTTPConnection(self.db_conv_url)
+            conn.request("GET", "/stat")
+            response = conn.getresponse()
+            js = json.loads(response.read().decode('utf8'))
+            return js['ocr_pending_all_file_size']
+        except Exception as exp:
+            self.logger.error("conversion_client, get_pending_all_file_size failed: {}".format(exp))
+            return 0
 
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url)

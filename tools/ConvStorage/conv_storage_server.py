@@ -374,9 +374,9 @@ class TConvDatabase:
     def get_stats(self):
         return {
             'all_put_files_count': self.all_put_files_count,
-            'input_task_queue(not classified documents)': self.input_task_queue.qsize(),
-            'ocr_input_queue_size': len(os.listdir(self.args.ocr_input_folder)),
-            'ocr_input_file_size': get_directory_size(self.args.ocr_input_folder),
+            'input_task_queue': self.input_task_queue.qsize(),
+            'ocr_pending_files_count': len(os.listdir(self.args.ocr_input_folder)),
+            'ocr_pending_all_file_size': get_directory_size(self.args.ocr_input_folder),
             'winword_input_queue_size': len(os.listdir(self.args.input_folder)),
         }
 
@@ -447,6 +447,21 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         global CONV_DATABASE
         CONV_DATABASE.logger.debug(msg_format % args)
 
+    def process_special_commands(self):
+        global CONV_DATABASE
+        if self.path == "/ping":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"yes")
+            return True
+        if self.path == "/stat":
+            self.send_response(200)
+            self.end_headers()
+            stats = json.dumps(CONV_DATABASE.get_stats())
+            self.wfile.write(stats.encode("utf8"))
+            return True
+        return False
+
     def do_GET(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
@@ -454,15 +469,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         global CONV_DATABASE
         CONV_DATABASE.input_files_thread_is_alive()
         CONV_DATABASE.logger.debug(self.path)
-        if self.path == "/ping":
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(b"yes")
-            return
-        if self.path == "/stat":
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(str(CONV_DATABASE.get_stats()).encode("utf8"))
+        if self.process_special_commands():
             return
 
         query_components = dict()

@@ -7,6 +7,7 @@ from collections import defaultdict
 import threading
 import time
 import queue
+from  ConvStorage.conversion_client import TDocConversionClient
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -103,6 +104,7 @@ def prepare_hosts(args, logger):
 
 class TJobTasks:
     def __init__(self, args, logger):
+        self.conversion_client =  TDocConversionClient(logger)
         self.args = args
         self.logger = logger
         self.host_tasks = defaultdict(set)
@@ -183,6 +185,10 @@ class TJobTasks:
             t.join(1)
         self.threads = []
 
+    def wait_conversion_pdf(self):
+        while self.conversion_client.get_pending_all_file_size() > 100 * 2**20:
+            time.sleep(60 * 3)
+
     def run_jobs(self):
         count = 0
         while True:
@@ -196,6 +202,7 @@ class TJobTasks:
                     return False
                 break
             host = self.get_free_host()
+            self.wait_conversion_pdf()
             count += 1
             self.logger.info("start job: {}, left jobs: {}, running jobs: {}".format(count, \
                 self.input_files.qsize(), self.running_jobs_count()))
