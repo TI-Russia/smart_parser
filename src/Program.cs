@@ -463,7 +463,7 @@ namespace Smart.Parser
                     {
                         ParseDocumentSheet(adapter, curOutFile, declarationFile);
                     }
-                    catch (ColumnDetectorException e) {
+                    catch (ColumnDetectorException) {
                         Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)", sheetIndex));
                     }
                 }

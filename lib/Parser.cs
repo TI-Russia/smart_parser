@@ -239,7 +239,7 @@ namespace Smart.Parser.Lib
 
             public void InitDeclarantProperties(DataRow row)
             {
-                CurrentDeclarant.NameRaw = row.PersonName;
+                CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit();
                 CurrentDeclarant.Occupation = row.Occupation;
                 CurrentDeclarant.Department = row.Department;
                 CurrentDeclarant.Ordering = row.ColumnOrdering;
