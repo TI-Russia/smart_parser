@@ -113,8 +113,11 @@ class GoogleSearch:
             selenium_holder.navigate(google_url)
             time.sleep(6)
         except (WebDriverException, InvalidSwitchToTargetException) as exp:
-            selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry".format(exp))
+            message = str(exp).strip(" \n\r")
+            selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry".format(message))
             time.sleep(10)
+            google_url = random.choice(SEARCH_URLS)
+            selenium_holder.logger.debug("try to open {}".format(google_url))
             selenium_holder.navigate(google_url)
             time.sleep(10)
         element = selenium_holder.the_driver.switch_to.active_element

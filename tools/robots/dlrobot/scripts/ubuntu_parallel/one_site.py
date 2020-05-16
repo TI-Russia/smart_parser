@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     if os.path.exists("cached"):
         shutil.rmtree("cached", ignore_errors=True)
-    if os.path.exists("geckodriver.log"):
+    if exit_code == 0 and os.path.exists("geckodriver.log"):
         os.unlink("geckodriver.log")
     if not os.path.exists(goal_file):
         print("cannot find {}, dlrobot.py failed, delete result folder".format(goal_file))
