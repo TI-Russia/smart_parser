@@ -108,7 +108,6 @@ class GoogleSearch:
         random.shuffle(request_parts)  # more random
         site_req = " ".join(request_parts)
         google_url = random.choice(SEARCH_URLS)
-        selenium_holder.logger.debug("try to open {}".format(google_url))
         try:
             selenium_holder.navigate(google_url)
             time.sleep(6)
@@ -117,7 +116,6 @@ class GoogleSearch:
             selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry".format(message))
             time.sleep(10)
             google_url = random.choice(SEARCH_URLS)
-            selenium_holder.logger.debug("try to open {}".format(google_url))
             selenium_holder.navigate(google_url)
             time.sleep(10)
         element = selenium_holder.the_driver.switch_to.active_element
