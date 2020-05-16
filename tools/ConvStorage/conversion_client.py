@@ -51,6 +51,7 @@ class TDocConversionClient(object):
         self.db_conv_url = DECLARATOR_CONV_URL
         self.input_task_timeout = 5
         self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
+        self.all_pdf_size_sent_to_conversion  = 0
 
     def start_conversion_thread(self):
         self.conversion_thread = threading.Thread(target=self._process_files_to_convert_in_a_separate_thread, args=())
@@ -84,12 +85,14 @@ class TDocConversionClient(object):
         response = conn.getresponse()
         if response.code != 201:
             self.logger.error("could not put a task to conversion queue")
+            return False
         else:
             self.lock.acquire()
             try:
                 self._sent_tasks.append(sha256)
             finally:
                 self.lock.release()
+        return True
 
     def _send_file_to_conversion_db(self, filename, file_extension, rebuild):
         try:
@@ -107,7 +110,9 @@ class TDocConversionClient(object):
                 if self.check_file_was_converted(hashcode):
                     return
             self.logger.debug("register conversion task for {}".format(filename))
-            self._register_task(file_extension, file_contents, hashcode, rebuild)
+            if self._register_task(file_extension, file_contents, hashcode, rebuild):
+                self.all_pdf_size_sent_to_conversion += Path(filename).stat().st_size
+
         except Exception as exp:
             self.logger.error("cannot process {}: {}".format(filename, exp))
 
