@@ -33,7 +33,7 @@ if __name__ == "__main__":
         raise Exception("cannot copy {}".format(args.project_file))
     dlrobot = os.path.join(args.smart_parser_folder, "tools/robots/dlrobot/dlrobot.py")
     goal_file = basename_project_file + ".clicks.stats"
-    cmd = "python3 {} --project  {}".format(dlrobot, basename_project_file)
+    cmd = "timeout 3h python3 {} --project  {}".format(dlrobot, basename_project_file)
     exit_code = os.system(cmd)
 
     #exit_code = 1
