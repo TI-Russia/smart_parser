@@ -19,6 +19,9 @@ if __name__ == "__main__":
             domain = domain.strip(" \r\n")
             if len(domain) == 0:
                 continue
+            if domain.find('google.com') != -1 or domain.find('dropbox.com') != -1 or domain.find('yandex.ru') != -1 \
+                or domain.find('yandex.net') != -1:
+                continue
             with open(os.path.join(args.folder, domain + ".txt"), "w") as outf:
                 record = {"sites": [{"morda_url": "http://" + domain}]}
                 json.dump(record, outf, indent=4)

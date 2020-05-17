@@ -63,10 +63,10 @@ class TRobotWebSite:
     def check_crawling_timeouts(self, enough_crawled_urls):
         current_time = time.time()
         if enough_crawled_urls and current_time - self.export_env.last_found_declaration_time > TRobotWebSite.SINGLE_DECLARATION_TIMEOUT:
-            self.website.logger.error("timeout stop crawling: TRobotWebSite.SINGLE_DECLARATION_TIMEOUT")
+            self.logger.error("timeout stop crawling: TRobotWebSite.SINGLE_DECLARATION_TIMEOUT")
             return False
         if current_time - self.start_crawling_time > TRobotWebSite.CRAWLING_TIMEOUT:
-            self.website.logger.error("timeout stop crawling: TRobotWebSite.CRAWLING_TIMEOUT")
+            self.logger.error("timeout stop crawling: TRobotWebSite.CRAWLING_TIMEOUT")
             return False
         return True
 

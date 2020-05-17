@@ -172,7 +172,7 @@ class TJobTasks:
             remote_path(args, self.args.job_script),
             remote_project_path,
             self.args.smart_parser_folder,
-            self.args.result_folder
+            self.args.result_folder,
             self.args.crawling_timeout
         )
         self.logger.debug('{}: {}'.format(host, cmd))
