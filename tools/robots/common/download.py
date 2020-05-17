@@ -17,7 +17,8 @@ import cgi
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
     CONVERSION_CLIENT = None
-    HTTP_TIMEOUT = 30
+    HTTP_TIMEOUT = 30  # in seconds
+    LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
 
     @staticmethod
     def clear_cache_folder():
@@ -36,7 +37,7 @@ class TDownloadEnv:
         if TDownloadEnv.CONVERSION_CLIENT is None:
             return
         if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < 50 * 2**20:
-            # no sense to send more than 50 Mb, other clients will suffer
+            # if we  send more than 50 Mb, other clients will suffer
             TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(filename, file_extension)
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):

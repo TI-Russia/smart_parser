@@ -53,8 +53,12 @@ def parse_args():
     parser.add_argument("--job-script", dest='job_script',
                                     required=False,
                                     default=os.path.join(os.path.dirname(__file__), "one_site.py"))
+    parser.add_argument("--crawling-timeout", dest='crawling_timeout',
+                            default="3h",
+                            help="crawling timeout in seconds (there is also conversion step after crawling)")
 
     args = parser.parse_args()
+    assert os.path.exists(args.pkey)
     return args
 
 
@@ -76,7 +80,7 @@ def remote_path(args, filename):
 
 
 def prepare_hosts(args, logger):
-    pssh_client = ParallelSSHClient(args.hosts.split(','), user="sokirko", pkey="C:/Users/sokirko/.ssh/id_rsa")
+    pssh_client = ParallelSSHClient(args.hosts.split(','), user=args.username, pkey=args.pkey)
 
     if not copy_file(pssh_client, args.initialize_worker, remote_path(args, args.initialize_worker) ):
         return False
@@ -164,11 +168,12 @@ class TJobTasks:
         if not copy_file(pssh_client, project_file, remote_project_path):
             return False
 
-        cmd = "python3 {} --project-file {} --smart-parser-folder {} --result-folder {}".format(
+        cmd = "python3 {} --project-file {} --smart-parser-folder {} --result-folder {} --crawling-timeout {}".format(
             remote_path(args, self.args.job_script),
             remote_project_path,
             self.args.smart_parser_folder,
             self.args.result_folder
+            self.args.crawling_timeout
         )
         self.logger.debug('{}: {}'.format(host, cmd))
         output = pssh_client.run_command(cmd)

@@ -113,10 +113,6 @@ class TExportEnvironment:
         self.exported_urls = set()
         self.last_found_declaration_time = time.time()
 
-    def waiting_too_long(self):
-        # last half hour no declaration found
-        return time.time() - self.last_found_declaration_time > 60 * 30
-
     def to_json(self):
         return list(x.to_json() for x in self.exported_files)
 

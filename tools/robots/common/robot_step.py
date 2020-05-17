@@ -97,6 +97,7 @@ class TRobotStep:
     def is_last_step(self):
         return self.get_step_name() == self.website.parent_project.robot_step_passports[-1]['step_name']
 
+
     def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
         for u in self.step_urls:
@@ -208,11 +209,9 @@ class TRobotStep:
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
-        if url_index > 100:
-            if url_index > 200 or max(self.url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT:
-                if self.website.export_env.waiting_too_long():
-                    self.website.logger.error("stop crawling since last time no declaration found")
-                    return None
+        enough_crawled_urls = url_index > 200 or (url_index > 100 and max(self.url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
+        if not self.website.check_crawling_timeouts(enough_crawled_urls):
+            return None
         max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
         best_url = None
         for url, weight in self.pages_to_process.items():

@@ -117,7 +117,7 @@ class TDocConversionClient(object):
         except Exception as exp:
             self.logger.error("cannot process {}: {}".format(filename, exp))
 
-    def _wait_conversion_tasks(self, timeout_in_seconds=60*30):
+    def _wait_conversion_tasks(self, timeout_in_seconds):
         start_time = time.time()
         while len(self._sent_tasks) > 0:
             time.sleep(10)
@@ -176,7 +176,7 @@ class TDocConversionClient(object):
         self.wait_new_tasks = False
         self.conversion_thread.join(1)
 
-    def wait_doc_conversion_finished(self):
+    def wait_doc_conversion_finished(self, timeout_in_seconds):
         try:
             if not self._input_tasks.empty():
                 self.logger.debug("wait all conversion tasks to be sent to the server")
@@ -188,6 +188,6 @@ class TDocConversionClient(object):
             self.conversion_thread.join(self.input_task_timeout + 1)
 
             self.logger.debug("wait the conversion server convert all files")
-            self._wait_conversion_tasks()
+            self._wait_conversion_tasks(timeout_in_seconds)
         except Exception as exp:
             self.logger.error("wait_doc_conversion_finished: exception {}".format(exp))

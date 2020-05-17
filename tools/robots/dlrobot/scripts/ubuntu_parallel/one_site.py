@@ -10,6 +10,9 @@ def parse_args():
     parser.add_argument("--project-file",  dest='project_file',  required=True)
     parser.add_argument("--smart-parser-folder",  dest='smart_parser_folder', required=True)
     parser.add_argument("--result-folder", dest='result_folder', required=True)
+    parser.add_argument("--crawling-timeout", dest='crawling_timeout',
+                            default="3h",
+                            help="crawling timeout in seconds (there is also conversion step after crawling)")
     args = parser.parse_args()
     try:
         if not os.path.exists(args.result_folder):
@@ -33,12 +36,9 @@ if __name__ == "__main__":
         raise Exception("cannot copy {}".format(args.project_file))
     dlrobot = os.path.join(args.smart_parser_folder, "tools/robots/dlrobot/dlrobot.py")
     goal_file = basename_project_file + ".clicks.stats"
-    cmd = "timeout 3h python3 {} --project  {}".format(dlrobot, basename_project_file)
+    cmd = "timeout 4h python3 {} --project  {} --crawling-timeout {} --last-conversion-timeout 30m".format(
+        dlrobot, basename_project_file, args.crawling_timeout)
     exit_code = os.system(cmd)
-
-    #exit_code = 1
-    #with open(goal_file, 'w') as outf:
-    #    outf.write("1")
 
     if os.path.exists("cached"):
         shutil.rmtree("cached", ignore_errors=True)
