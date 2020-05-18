@@ -55,10 +55,15 @@ def setup_logging(logger, logfilename):
     #logger.addHandler(ch)
 
 
-def get_directory_size(dir):
+def get_directory_size(logger, dir):
     dir_size = 0
     for x in os.listdir(dir):
-        dir_size += Path(x).stat()
+        try:
+            if os.path.exists(x):
+                dir_size += Path(x).stat()
+        except Exception as exp:
+            logger.error(exp)
+
     return dir_size
 
 
@@ -372,13 +377,16 @@ class TConvDatabase:
         return new_files_in_db
 
     def get_stats(self):
-        return {
-            'all_put_files_count': self.all_put_files_count,
-            'input_task_queue': self.input_task_queue.qsize(),
-            'ocr_pending_files_count': len(os.listdir(self.args.ocr_input_folder)),
-            'ocr_pending_all_file_size': get_directory_size(self.args.ocr_input_folder),
-            'winword_input_queue_size': len(os.listdir(self.args.input_folder)),
-        }
+        try:
+            return {
+                'all_put_files_count': self.all_put_files_count,
+                'input_task_queue': self.input_task_queue.qsize(),
+                'ocr_pending_files_count': len(os.listdir(self.args.ocr_input_folder)),
+                'ocr_pending_all_file_size': get_directory_size(self.logger, self.args.ocr_input_folder),
+                'winword_input_queue_size': len(os.listdir(self.args.input_folder)),
+            }
+        except Exception as exp:
+            return {"exception": str(exp)}
 
     def process_input_tasks(self):
         while not self.stop_input_thread:

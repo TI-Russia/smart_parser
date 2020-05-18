@@ -139,14 +139,18 @@ class TDocConversionClient(object):
         return conn.getresponse().code == 200
 
     def get_pending_all_file_size(self):
+        data = None
         try:
             conn = http.client.HTTPConnection(self.db_conv_url)
             conn.request("GET", "/stat")
             response = conn.getresponse()
-            js = json.loads(response.read().decode('utf8'))
-            return js['ocr_pending_all_file_size']
+            data = response.read().decode('utf8')
+            return json.loads(data)['ocr_pending_all_file_size']
         except Exception as exp:
-            self.logger.error("conversion_client, get_pending_all_file_size failed: {}".format(exp))
+            message = "conversion_client, get_pending_all_file_size failed: {}".format(exp)
+            if data is not None:
+                message += "; conversion server answer was {}".format(data)
+            self.logger.error(message)
             return 0
 
     def retrieve_document(self, sha256, output_file_name):
