@@ -7,9 +7,11 @@ import threading
 import hashlib
 import os
 import queue
+import json
 from robots.common.archives import dearchive_one_archive, is_archive_extension
 from robots.common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
+from pathlib import Path
 
 DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
 if DECLARATOR_CONV_URL is None:
@@ -50,6 +52,7 @@ class TDocConversionClient(object):
         self.db_conv_url = DECLARATOR_CONV_URL
         self.input_task_timeout = 5
         self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
+        self.all_pdf_size_sent_to_conversion  = 0
 
     def start_conversion_thread(self):
         self.conversion_thread = threading.Thread(target=self._process_files_to_convert_in_a_separate_thread, args=())
@@ -83,12 +86,14 @@ class TDocConversionClient(object):
         response = conn.getresponse()
         if response.code != 201:
             self.logger.error("could not put a task to conversion queue")
+            return False
         else:
             self.lock.acquire()
             try:
                 self._sent_tasks.append(sha256)
             finally:
                 self.lock.release()
+        return True
 
     def _send_file_to_conversion_db(self, filename, file_extension, rebuild):
         try:
@@ -106,11 +111,13 @@ class TDocConversionClient(object):
                 if self.check_file_was_converted(hashcode):
                     return
             self.logger.debug("register conversion task for {}".format(filename))
-            self._register_task(file_extension, file_contents, hashcode, rebuild)
+            if self._register_task(file_extension, file_contents, hashcode, rebuild):
+                self.all_pdf_size_sent_to_conversion += Path(filename).stat().st_size
+
         except Exception as exp:
             self.logger.error("cannot process {}: {}".format(filename, exp))
 
-    def _wait_conversion_tasks(self, timeout_in_seconds=60*30):
+    def _wait_conversion_tasks(self, timeout_in_seconds):
         start_time = time.time()
         while len(self._sent_tasks) > 0:
             time.sleep(10)
@@ -131,6 +138,21 @@ class TDocConversionClient(object):
         conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
         return conn.getresponse().code == 200
 
+    def get_pending_all_file_size(self):
+        data = None
+        try:
+            conn = http.client.HTTPConnection(self.db_conv_url)
+            conn.request("GET", "/stat")
+            response = conn.getresponse()
+            data = response.read().decode('utf8')
+            return json.loads(data)['ocr_pending_all_file_size']
+        except Exception as exp:
+            message = "conversion_client, get_pending_all_file_size failed: {}".format(exp)
+            if data is not None:
+                message += "; conversion server answer was {}".format(data)
+            self.logger.error(message)
+            return 0
+
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url)
         conn.request("GET", "?sha256=" + sha256)
@@ -144,6 +166,11 @@ class TDocConversionClient(object):
 
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):
         if file_extension == DEFAULT_PDF_EXTENSION or is_archive_extension(file_extension):
+            max_file_size = 2 ** 25
+            if Path(filename).stat().st_size  > max_file_size:
+                self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
+                    filename, max_file_size))
+                return False
             assert self.conversion_thread is not None
             self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
             return True
@@ -153,7 +180,7 @@ class TDocConversionClient(object):
         self.wait_new_tasks = False
         self.conversion_thread.join(1)
 
-    def wait_doc_conversion_finished(self):
+    def wait_doc_conversion_finished(self, timeout_in_seconds):
         try:
             if not self._input_tasks.empty():
                 self.logger.debug("wait all conversion tasks to be sent to the server")
@@ -165,6 +192,6 @@ class TDocConversionClient(object):
             self.conversion_thread.join(self.input_task_timeout + 1)
 
             self.logger.debug("wait the conversion server convert all files")
-            self._wait_conversion_tasks()
+            self._wait_conversion_tasks(timeout_in_seconds)
         except Exception as exp:
             self.logger.error("wait_doc_conversion_finished: exception {}".format(exp))

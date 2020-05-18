@@ -17,7 +17,9 @@ import cgi
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
     CONVERSION_CLIENT = None
-    HTTP_TIMEOUT = 30
+    HTTP_TIMEOUT = 30  # in seconds
+    LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
+
     @staticmethod
     def clear_cache_folder():
         if os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
@@ -30,20 +32,31 @@ class TDownloadEnv:
         TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient()
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
+    @staticmethod
+    def send_pdf_to_conversion(filename, file_extension):
+        if TDownloadEnv.CONVERSION_CLIENT is None:
+            return
+        if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < 50 * 2**20:
+            # if we  send more than 50 Mb, other clients will suffer
+            TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(filename, file_extension)
+
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     if content_charset is not None:
         encoding = content_charset
     else: # todo: use BeautifulSoup here
-        match = re.search('charset\s*=\s*"?([^"\']+)', html_data.decode('latin', errors="ignore"))
+        match = re.search('charset\s*=\s*"?([^"\'>]+)', html_data.decode('latin', errors="ignore"))
         if match:
             encoding = match.group(1).strip()
         else:
             raise ValueError('unable to find encoding')
     if encoding.lower().startswith('cp-'):
         encoding = 'cp' + encoding[3:]
-
-    return html_data.decode(encoding, errors="ignore")
+    try:
+        encoded_data = html_data.decode(encoding, errors="ignore")
+        return encoded_data
+    except Exception as exp:
+        raise ValueError('unable to find encoding')
 
 
 def get_content_type_from_headers(headers, default_value="text"):
@@ -96,8 +109,7 @@ def save_downloaded_file(filename):
         logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
-    if TDownloadEnv.CONVERSION_CLIENT is not None:
-        TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(saved_filename, file_extension)
+    TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension)
     return saved_filename
 
 
@@ -221,8 +233,7 @@ class TDownloadedFile:
                 self.file_extension = self.calc_file_extension_by_data_and_headers()
                 self.page_info['file_extension'] = self.file_extension
                 self.write_file_to_cache()
-                if TDownloadEnv.CONVERSION_CLIENT is not None:
-                    TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(self.data_file_path, self.file_extension)
+                TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension)
 
     def write_file_to_cache(self):
         with open(self.data_file_path, "wb") as f:

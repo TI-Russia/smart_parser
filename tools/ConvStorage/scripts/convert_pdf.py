@@ -64,7 +64,7 @@ def main (args, logger):
         sent_files = send_files(args, logger, conv_tasks)
         if len(sent_files) > 0:
             logger.debug("wait conversion finished")
-            conv_tasks.wait_doc_conversion_finished()
+            conv_tasks.wait_doc_conversion_finished(60*30)
         else:
             logger.debug("stop conversion finished")
             conv_tasks.stop_conversion_thread()

@@ -6,6 +6,7 @@ import traceback
 from robots.common.download import TDownloadEnv
 from robots.common.robot_project import TRobotProject
 from robots.common.robot_step import TRobotStep
+from robots.common.web_site import TRobotWebSite
 from robots.common.primitives import  check_link_sitemap, check_anticorr_link_text
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
 
@@ -61,6 +62,15 @@ ROBOT_STEPS = [
 ]
 
 
+def convert_to_seconds(s):
+    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
+    if s is None or len(s) == 0:
+        return 0
+    if seconds_per_unit.get(s[-1]) is not None:
+        return int(s[:-1]) * seconds_per_unit[s[-1]]
+    else:
+        return int(s)
+
 def parse_args():
     global ROBOT_STEPS
     parser = argparse.ArgumentParser()
@@ -74,6 +84,12 @@ def parse_args():
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
     parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
+    parser.add_argument("--crawling-timeout", dest='crawling_timeout',
+                            default="3h",
+                            help="crawling timeout in seconds (there is also conversion step after crawling)")
+    parser.add_argument("--last-conversion-timeout", dest='last_conversion_timeout',
+                            default="30m",
+                            help="pdf conversion timeout after crawling")
     args = parser.parse_args()
     TRobotStep.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
@@ -81,6 +97,8 @@ def parse_args():
         args.stop_after = args.step
     if args.logfile is None:
         args.logfile = args.project + ".log"
+    TRobotWebSite.CRAWLING_TIMEOUT = convert_to_seconds(args.crawling_timeout)
+    TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_to_seconds(args.last_conversion_timeout)
     return args
 
 
@@ -107,7 +125,7 @@ def make_steps(args, project):
             return
 
     project.logger.info("=== wait for all document conversion finished =========")
-    TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished()
+    TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished(TDownloadEnv.LAST_CONVERSION_TIMEOUT)
 
     project.logger.info("=== export_files_to_folder =========")
     project.export_files_to_folder()

@@ -73,6 +73,7 @@ class TSeleniumDriver:
         self.driver_processed_urls_count += 1
         while len(self.the_driver.window_handles) > 1:
             self.the_driver.close()
+        self.logger.debug("selenium navigate to {}, window tabs count={}".format(url, len(self.the_driver.window_handles)))
         self.the_driver.get(url)
 
     def get_buttons_and_links(self):

@@ -23,8 +23,11 @@ FIXLIST = {
 
 
 class TRobotWebSite:
+    SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
+    CRAWLING_TIMEOUT = 60 * 60 * 3       # 3 hours
 
     def __init__(self, project, init_json=None):
+        self.start_crawling_time = time.time()
         self.parent_project = project
         self.url_nodes = dict()
         self.logger = project.logger
@@ -56,6 +59,16 @@ class TRobotWebSite:
 
     def get_domain_name(self):
         return get_site_domain_wo_www(self.morda_url)
+
+    def check_crawling_timeouts(self, enough_crawled_urls):
+        current_time = time.time()
+        if enough_crawled_urls and current_time - self.export_env.last_found_declaration_time > TRobotWebSite.SINGLE_DECLARATION_TIMEOUT:
+            self.logger.error("timeout stop crawling: TRobotWebSite.SINGLE_DECLARATION_TIMEOUT")
+            return False
+        if current_time - self.start_crawling_time > TRobotWebSite.CRAWLING_TIMEOUT:
+            self.logger.error("timeout stop crawling: TRobotWebSite.CRAWLING_TIMEOUT")
+            return False
+        return True
 
     def to_json(self):
         return {
