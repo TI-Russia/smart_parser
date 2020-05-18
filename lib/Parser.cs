@@ -544,7 +544,8 @@ namespace Smart.Parser.Lib
                 AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
                 return;
             }
-            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
+            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false);
+            string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false);
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false);
 
@@ -552,11 +553,20 @@ namespace Smart.Parser.Lib
             {
                 if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
                 {
-                    ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropSquareStr, statePropCountryStr, person);
+                    ParseStatePropertyManyValuesInOneCell(
+                        statePropTypeStr, 
+                        statePropOwnershipTypeStr,
+                        statePropSquareStr, 
+                        statePropCountryStr, 
+                        person);
                 }
                 else
                 {
-                    ParseStatePropertySingleRow(statePropTypeStr, statePropSquareStr, statePropCountryStr, person);
+                    ParseStatePropertySingleRow(statePropTypeStr, 
+                        statePropOwnershipTypeStr, 
+                        statePropSquareStr, 
+                        statePropCountryStr, 
+                        person);
                 }
             }
             catch (Exception e)
@@ -731,7 +741,11 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
+        static public void ParseStatePropertySingleRow(string statePropTypeStr,
+            string statePropOwnershipTypeStr,
+            string statePropSquareStr,
+            string statePropCountryStr,
+            Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
             if (DataHelper.IsEmptyValue(statePropTypeStr))
@@ -746,6 +760,8 @@ namespace Smart.Parser.Lib
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
             stateProperty.square_raw = NormalizeRawDecimalForTest(statePropSquareStr);
             stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
+            if (statePropOwnershipTypeStr != "")
+                stateProperty.own_type_raw = statePropOwnershipTypeStr;
             stateProperty.own_type_by_column = StateString;
             CheckProperty(stateProperty);
             person.RealEstateProperties.Add(stateProperty);
@@ -881,16 +897,22 @@ namespace Smart.Parser.Lib
                 );
             }
         }
-        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr, string areaStr, string countryStr, Person person)
+        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr,
+            string ownTypeStr,
+            string areaStr,
+            string countryStr,
+            Person person)
         {
             List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
             List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
+            List<string> estateOwnTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
             List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
             List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
             for (int i = 0; i < areas.Count; ++i)
             {
                 ParseStatePropertySingleRow(
                     GetListValueOrDefault(estateTypes, i, ""),
+                    GetListValueOrDefault(estateOwnTypes, i, ""),
                     GetListValueOrDefault(areas, i, ""),
                     GetListValueOrDefault(countries, i, ""),
                     person

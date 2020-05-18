@@ -53,7 +53,7 @@ namespace Smart.Parser
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
-            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8091, the defaul value is read from env variable DECLARATOR_CONV_URL", false);
+            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8091, the default value is read from env variable DECLARATOR_CONV_URL", false);
             CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
             CMDLineParser.Option useDecimalRawNormalizationOpt = parser.AddBoolSwitch("-decimal-raw-normalization", "print raw floats in Russian traditional format");
             parser.AddHelpOption();

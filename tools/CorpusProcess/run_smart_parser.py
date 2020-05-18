@@ -37,7 +37,7 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?office=5299", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?queue=empty", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -201,12 +201,17 @@ def post_results(sourcefile, job, time_delta=None, parser_log=None):
             # logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
             #     df_id, len(data['persons']), len(json_list), data['document']['file_size']))
 
-            response = client.post(declarator_domain +
-                                   '/api/jsonfile/validate/', data=body)
+            response = None
+            while response is None:
+                try:
+                    response = client.post(declarator_domain +
+                                           '/api/jsonfile/validate/', data=body)
+                except requests.exceptions.ConnectionError:
+                    logger.error("requests.exceptions.ConnectionError, retrying...")
 
-            # if response.status_code != requests.codes.ok:
-            #     logger.error(response)
-            #     logger.error(response.text)
+            if response.status_code != requests.codes.ok:
+                logger.error(response)
+                logger.error(response.text)
 
     return result
 
@@ -265,7 +270,19 @@ def download_jobs(url=None, stop=False):
     next_url = url
     while next_url:
         logger.info("GET Joblist URL: %s" % next_url)
-        result = json.loads(client.get(next_url).content.decode('utf-8'))
+
+        response = None
+        while response is None:
+            try:
+                response = client.get(next_url)
+            except requests.exceptions.ConnectionError:
+                logger.error("requests.exceptions.ConnectionError, retrying...")
+        try:
+            result = json.loads(response.content.decode('utf-8'))
+        except Exception as e:
+            logger.error(response.content)
+            raise e
+
         next_url = result['next']
         if stop:
             next_url = None
