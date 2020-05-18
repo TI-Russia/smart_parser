@@ -197,7 +197,8 @@ class TJobTasks:
 
     def wait_conversion_pdf(self):
         while self.conversion_client.get_pending_all_file_size() > 100 * 2**20:
-            time.sleep(60 * 3)
+            self.logger.debug("wait 5 minutes till the conversion server finish its work")
+            time.sleep(60 * 5)
 
     def run_jobs(self):
         count = 0

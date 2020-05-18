@@ -10,43 +10,24 @@ from selenium.webdriver.common.keys import Keys
 from robots.common.primitives import get_site_domain_wo_www
 from robots.common.selenium_driver import TSeleniumDriver
 
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/ 58.0.3029.81 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 YaBrowser/20.2.0.1043 Yowser/2.5 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 YaBrowser/19.12.3.320 Yowser/2.5 Safari/537.36"
-]
-SEARCH_URLS = [
+GOOGLE_SEARCH_URLS = [
     "https://google.com/search",
     "https://google.ru/search",
     "https://google.nl/search"
 ]
 
-ACCEPT_LANGUAGES = [
-    "ru-RU, ru;q=0.5",
-    "en-US,en;q=0.5"
+YANDEX_SEARCH_URLS = [
+    "https://ya.ru",
+    "https://yandex.by",
+    "https://yandex.ru"
 ]
-RESULT_SELECTOR = ".srg .g .rc .r a"
 
 REQUEST_CACHE_FOLDER = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "search_engine_requests")
 if not os.path.exists(REQUEST_CACHE_FOLDER):
     os.makedirs(REQUEST_CACHE_FOLDER)
 
 
-class GoogleSearch:
-
-    @staticmethod
-    def _request_urllib(url):
-        opener = urllib.parse.build_opener()
-        opener.addheaders = [
-            ('User-Agent', random.choice(USER_AGENTS)),
-            ("Accept-Language", random.choice(ACCEPT_LANGUAGES))
-        ]
-        response = opener.open(url)
-        html = response.read().decode('utf8')
-        response.close()
-        return html
+class SearchEngine:
 
     @staticmethod
     def get_cached_file_name(site_url, query):
@@ -60,7 +41,7 @@ class GoogleSearch:
 
     @staticmethod
     def read_cache(site_url,  query):
-        filename = GoogleSearch.get_cached_file_name(site_url,  query)
+        filename = SearchEngine.get_cached_file_name(site_url, query)
         try:
             if os.path.exists(filename):
                 create_time = os.path.getmtime(filename)
@@ -81,7 +62,7 @@ class GoogleSearch:
 
     @staticmethod
     def _write_cache(logger, site_url,  query, urls):
-        filename = GoogleSearch.get_cached_file_name(site_url, query)
+        filename = SearchEngine.get_cached_file_name(site_url, query)
         cache = {
             'urls': urls,
             'site': site_url,
@@ -94,29 +75,48 @@ class GoogleSearch:
             logger.error("cannot write file {}".format(filename))
             pass
 
+    @staticmethod
+    def is_search_engine_ref(href):
+        # to do: we don't need use this function, since we check if curr_site.lower() == site_url.lower():
+        return ("google" in href) or ("yandex" in href)
 
     @staticmethod
-    def site_search(site_url, query, selenium_holder: TSeleniumDriver, enable_cache=True):
+    def get_search_engine_url(prefer_foreign_search_engine):
+        if prefer_foreign_search_engine:
+            return random.choice(GOOGLE_SEARCH_URLS)
+        else:
+            return random.choice(YANDEX_SEARCH_URLS)
+
+    @staticmethod
+    def site_search(site_url, query, selenium_holder: TSeleniumDriver,
+                    enable_cache=True,
+                    prefer_foreign_search_engine=True,
+                    user_search_engine_url=None):
         if enable_cache:
-            cached_results = GoogleSearch.read_cache(site_url, query)
+            cached_results = SearchEngine.read_cache(site_url, query)
             if len(cached_results) > 0:
                 return cached_results['urls']
         assert get_site_domain_wo_www(site_url) == site_url
-        if "google" in query or "google" in site_url:
+        if SearchEngine.is_search_engine_ref(query) or SearchEngine.is_search_engine_ref(site_url):
             selenium_holder.logger.error("Warning! we use keyword 'google' to filter results out, search would yield no results")
         request_parts = ["site:{}".format(site_url), query]
         random.shuffle(request_parts)  # more random
         site_req = " ".join(request_parts)
-        google_url = random.choice(SEARCH_URLS)
+        if user_search_engine_url is not None:
+            search_engine_url = user_search_engine_url
+        else:
+            search_engine_url = SearchEngine.get_search_engine_url(prefer_foreign_search_engine)
         try:
-            selenium_holder.navigate(google_url)
+            selenium_holder.navigate(search_engine_url)
             time.sleep(6)
         except (WebDriverException, InvalidSwitchToTargetException) as exp:
+            if user_search_engine_url is not None:
+                raise
             message = str(exp).strip(" \n\r")
-            selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry".format(message))
+            selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry other search engine".format(message))
             time.sleep(10)
-            google_url = random.choice(SEARCH_URLS)
-            selenium_holder.navigate(google_url)
+            search_engine_url = SearchEngine.get_search_engine_url(not prefer_foreign_search_engine)
+            selenium_holder.navigate(search_engine_url)
             time.sleep(10)
         element = selenium_holder.the_driver.switch_to.active_element
         element.send_keys(site_req)
@@ -130,15 +130,17 @@ class GoogleSearch:
         for element in selenium_holder.the_driver.find_elements_by_tag_name("a"):
             url = element.get_attribute("href")
             search_results_count += 1
-            if url is not None and 'google' not in url and url != '#' and url.startswith('http'):
-                curr_site = get_site_domain_wo_www(url)
-                if curr_site.lower() == site_url.lower():
-                    site_search_results.append(url)
-                    elements.append (element)
+            if url is not None  and url != '#' and url.startswith('http'):
+                if not SearchEngine.is_search_engine_ref(url):
+                    curr_site = get_site_domain_wo_www(url)
+                    if curr_site.lower() == site_url.lower():
+                        if url not in site_search_results:
+                            site_search_results.append(url)
+                        elements.append(element)
 
         if enable_cache:
             if search_results_count > 0:
-                GoogleSearch._write_cache(selenium_holder.logger, site_url, query, site_search_results)
+                SearchEngine._write_cache(selenium_holder.logger, site_url, query, site_search_results)
 
         #click on a serp item to make google happy
         try:
@@ -148,7 +150,3 @@ class GoogleSearch:
             selenium_holder.logger.debug("cannot click random item on serp ({}), keep going...".format(exp))
 
         return site_search_results
-
-#urls = GoogleSearch().search("site:arshush.ru противодействие коррупции")
-#for url in urls:
-#    print(url)

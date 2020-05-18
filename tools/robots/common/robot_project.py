@@ -5,7 +5,7 @@ import tempfile
 import time
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
-from robots.common.serp_parser import GoogleSearch
+from robots.common.serp_parser import SearchEngine
 from robots.common.web_site import TRobotWebSite, TRobotStep
 from robots.common.http_request import RobotHttpException
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
@@ -134,7 +134,7 @@ class TRobotProject:
         serp_urls = list()
         for retry in range(3):
             try:
-                serp_urls = GoogleSearch.site_search(site, request, self.selenium_driver)
+                serp_urls = SearchEngine.site_search(site, request, self.selenium_driver)
                 break
             except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
                 self.logger.error('cannot request search engine, exception {}'.format(err))

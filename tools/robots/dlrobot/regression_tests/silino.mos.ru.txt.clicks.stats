@@ -1,0 +1,1022 @@
+{
+    "files_count": 22,
+    "files_sorted (short report)": [
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_19e2a2434c570da4280c66137c74c446/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_315c38cfa3b75ef000699590d3dd4b39/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_3496904bc72d6e38a2621324ddd0e06f/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_3753c8716d4a3b8e80975804b33a5e97/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_3c2644f5677f8e0e4fa5c35e81f5f2bc/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_422783380cb36e0f991aa7aec5a410fd/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_439c78b2e796439d3f822425dddd8209/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_47807eaa57580482955ecba52333b4ba/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_4aba33400a76912f2ed2ac168288226f/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_59b3ac1a35628f6ccf0e2f178bdd7acb/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_933966ddf8695ace0ccf0b85b608b6a2/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_a0401d4eecd8bd2eea9b4a5a456c0c41/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_a0989dae2d4bc6554f1c4e3ca7cef40c/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_a34abc642a9236bbfed017cf25aaec78/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_c1c944c5fc80ba11539e6362c78fa10a/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_c461404617d899cc734bb81afe2fedbb/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_d6a0dff2ed4bf5a95f0925aac1ec7018/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_dfbf7ecda2f97af3ce6768a757d5f145/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_eb5adfdd542ccef1d69bde0a106cb982/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_edc849e1f25074f82fd86ef92584818f/dlrobot_data -1",
+        "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_f6f1b6053066a85f5e52fcd04c3309bf/dlrobot_data -1",
+        "cached/silino.mos.ru/information_on_public_service/documents_on_public_service/O_gosudarstvennoi_grazhdansk_d56f7a11e8bf9544f93f098816b70917/dlrobot_data -1"
+    ],
+    "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1034368.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1034368.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_a0401d4eecd8bd2eea9b4a5a456c0c41/dlrobot_data",
+            "sha256": "1e412a88f77e561ec50a6c7506bb4c5fdfbd54a6c79367038386347f34444a69"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/5890730.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/5890730.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_439c78b2e796439d3f822425dddd8209/dlrobot_data",
+            "sha256": "43859f49be53c5707b11b52bb1d17e782536234186f192d4a51e1b575962a2f0"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы о государственной службе",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/information_on_public_service/documents_on_public_service/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "О государственной гражданской службе города Москвы (с изменениями на 30 января 2019 года)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/information_on_public_service/documents_on_public_service/%D0%9E%20%D0%B3%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%BE%D0%B9%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B5%20%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D1%8B%20(%D1%81%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D0%BC%D0%B8%20%D0%BD%D0%B0%2030%20%D1%8F%D0%BD%D0%B2%D0%B0%D1%80%D1%8F%202019%20%D0%B3%D0%BE%D0%B4%D0%B0)_%D0%A2%D0%B5%D0%BA%D1%81%D1%82.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/information_on_public_service/documents_on_public_service/O_gosudarstvennoi_grazhdansk_d56f7a11e8bf9544f93f098816b70917/dlrobot_data",
+            "sha256": "4a3da613bcc57daaefa371dde0162ae77396ff154c0d5c98bc265c9524d4360a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1817901.html",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_19e2a2434c570da4280c66137c74c446/dlrobot_data",
+            "sha256": "5778d0832fd2bf6d0f4db6416ac3b042eae8ce169bf3015a3332864b2b278dc1"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/7297170.html",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_d6a0dff2ed4bf5a95f0925aac1ec7018/dlrobot_data",
+            "sha256": "6337c420d7a1bc93ba16911a3601a19c4dde056fb937399b297c7286e4c4d7fb"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2011 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037892.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037892.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_eb5adfdd542ccef1d69bde0a106cb982/dlrobot_data",
+            "sha256": "6daf1c200e4b5e93308a09439f712f75b5c85a0078772be38ee286adc314a332"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государ-ственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/8083633.html",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_4aba33400a76912f2ed2ac168288226f/dlrobot_data",
+            "sha256": "77425baa262e3307c0145de7dda2963e4ceb0da1231c4f2b916a43ae94d28f2d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/5890730.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/5890730.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_3496904bc72d6e38a2621324ddd0e06f/dlrobot_data",
+            "sha256": "8424074d00676c1f2a6a604370677b7ba1bcfa75686e91c09059b3c9f07750ab"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государ-ственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/8083633.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/8083633.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_422783380cb36e0f991aa7aec5a410fd/dlrobot_data",
+            "sha256": "975a85f962fcc12b1c82520383d9b75ed996560dd221549e1ea9d211210bf367"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1817901.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1817901.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_3c2644f5677f8e0e4fa5c35e81f5f2bc/dlrobot_data",
+            "sha256": "9de6c5593448dc295e751f2c49e262520be1cebda22a79677d6de89a762ee30e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государ-ственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/8083633.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/8083633.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_59b3ac1a35628f6ccf0e2f178bdd7acb/dlrobot_data",
+            "sha256": "ab5a28cfadad51e0701ec15b4764152c5b43932cfd7906b4cda45e5af35efa4d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/2923374.html",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_3753c8716d4a3b8e80975804b33a5e97/dlrobot_data",
+            "sha256": "ad87d2ad5c397d73965510198b62d054c129ec2598feb3d8566afc7406cc3f60"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/5890730.html",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_933966ddf8695ace0ccf0b85b608b6a2/dlrobot_data",
+            "sha256": "ae1a0baa348388ceb4b788dbeaccc52103bbfe5ae6c59b00ed013d9da8a0e3cf"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/7297170.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/7297170.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_c461404617d899cc734bb81afe2fedbb/dlrobot_data",
+            "sha256": "b45e534d5ff3408e22986df3cad4f0e7fcb913ed4dcbf27affd5b9d0748cb986"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/2923374.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/2923374.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_c1c944c5fc80ba11539e6362c78fa10a/dlrobot_data",
+            "sha256": "b7f569928b9d8d5c3d2d917fda178897a0f31bb994c897a2133d640aface62a6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2012 года.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037916.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037916.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_edc849e1f25074f82fd86ef92584818f/dlrobot_data",
+            "sha256": "c777f26b55d920589a1bb73e09c1fc9ea608f02beae175f6f394d39fd7823aee"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2012 года.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037916.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037916.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_a34abc642a9236bbfed017cf25aaec78/dlrobot_data",
+            "sha256": "ca8fed0bf25f6664425953a441d42a1f8a2c84fae0f272c30330382e0ecbf700"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/7297170.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/7297170.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_dfbf7ecda2f97af3ce6768a757d5f145/dlrobot_data",
+            "sha256": "cd73621fd4d7b874a6219748074cf0d2ed3945bc9a353367d7191df00a8ca657"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2011 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037892.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1037892.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_a0989dae2d4bc6554f1c4e3ca7cef40c/dlrobot_data",
+            "sha256": "d01ea6793b6c9d17b0cd99fab31f1691f04473c08a225d9852404df5fbe5aced"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/2923374.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "doc",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/2923374.html?word_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_f6f1b6053066a85f5e52fcd04c3309bf/dlrobot_data",
+            "sha256": "dc974aaa1ccf1a49ca591d3531240ae19ea1c7019ac74251270b249dbe89e350"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1034368.html",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_315c38cfa3b75ef000699590d3dd4b39/dlrobot_data",
+            "sha256": "ee80bb6286b48ac21461971e66faaf9b1e574a2b475499e43ee88996e8f87256"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://silino.mos.ru/consumer_market_and_the_economy/information_for_entrepreneurs/20.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Настройки",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/city-parking/paid-city-parking-on-the-street/documents/#",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Управа района Силино города Москвы Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих города Москвы и членов их семей за период с 1 января по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1034368.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "pdf",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-property-character/detail/1034368.html?pdf_file=y#toolbar",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/silino.mos.ru/anti-corruption/information-on-income-expenses-about-property-and-obligations-of-prope_47807eaa57580482955ecba52333b4ba/dlrobot_data",
+            "sha256": "f9eb08d72eb997df652ab32e236e0732ab57d350755bea0664486ae333fd7f0e"
+        }
+    ]
+}

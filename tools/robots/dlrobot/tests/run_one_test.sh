@@ -34,7 +34,7 @@ fi
 
 echo "{\"sites\":[{\"morda_url\":\"http://$WEB_ADDR\"}],\"disable_search_engine\": true}"  > $PROJECT
 
-timeout 5m bash -x run.sh $PROJECT $WEB_ADDR &>test_log.out
+/usr/bin/timeout 5m bash -x run.sh $PROJECT $WEB_ADDR &>test_log.out
 
 if [ $? -eq 0 ]; then
      echo "$TEST_NAME succeeded"
