@@ -45,7 +45,7 @@ def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     if content_charset is not None:
         encoding = content_charset
     else: # todo: use BeautifulSoup here
-        match = re.search('charset\s*=\s*"?([^"\>']+)', html_data.decode('latin', errors="ignore"))
+        match = re.search('charset\s*=\s*"?([^"\'>]+)', html_data.decode('latin', errors="ignore"))
         if match:
             encoding = match.group(1).strip()
         else:
