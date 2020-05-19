@@ -33,12 +33,23 @@ while true; do
     fi
 done
 
+
 sleep 10 # to update json
 
 
 [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
 sha256=`sha256sum $INPUT_FILE | awk '{print $1}'`
 http_code=`curl -s -w '%{http_code}'  "$DECLARATOR_CONV_URL?sha256=$sha256" --output $INPUT_FILE.docx`
+
+
+#wait ocr files processed
+while true; do 
+    files_count=`ls ../pdf.ocr/*.pdf | wc -l`
+    if [ "$files_count" == "0" ]; then
+       break
+    fi
+    sleep 10
+done
 
 kill $conv_server_pid >/dev/null
 
@@ -52,8 +63,3 @@ if [ ! -f $INPUT_FILE.docx ]; then
   exit  1
 fi
 
-files_count=`/usr/bin/find  ../pdf.ocr -type f | wc -l`
-if [ $files_count != "0" ]; then
-  echo "left files in ../pdf.ocr"
-  exit  1
-fi

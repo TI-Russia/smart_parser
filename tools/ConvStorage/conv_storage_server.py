@@ -105,38 +105,6 @@ def find_new_files_and_add_them_to_json(conv_db_json, converted_files_folder, ou
         json.dump(conv_db_json, outf, indent=4)
 
 
-def check_pdf_has_text(logger, filename):
-    text_file_name = "dummy.txt"
-    log_file_name = "pdftotext.log"
-    with open(log_file_name, "w", encoding="utf8") as log_file:
-        logger.info("pdftotext {} {}".format(filename, text_file_name))
-        subprocess.run(['pdftotext', filename, text_file_name], stderr=log_file, stdout=subprocess.DEVNULL)
-    logdata = ""
-    textdata = ""
-    try:
-        if not os.path.exists(log_file_name):
-            return False
-        with open(log_file_name, "r") as inpf:
-            logdata = inpf.read()
-        os.unlink(log_file_name)
-
-        if not os.path.exists(text_file_name):
-            return False
-        with open(text_file_name, "r", encoding="utf8") as inpf:
-            textdata = inpf.read()
-        os.unlink(text_file_name)
-    except Exception as exp:
-        logger.info("Exception {}: {}".format(exp, filename))
-
-    if logdata.find("PDF file is damaged") != -1:
-        return False  # "complicated_pdf" test case
-    if len(textdata) < 500:
-        return False
-    if TCharCategory.get_most_popular_char_category(textdata[:500]) != 'RUSSIAN_CHAR':
-        return False  # "must_be_ocred" test case
-    return True
-
-
 def strip_drm(logger, filename, stripped_file):
     with open("crack.info", "w", encoding="utf8") as outf:
         subprocess.run(['pdfcrack', filename], stderr=subprocess.DEVNULL, stdout=outf)
@@ -257,24 +225,23 @@ class TConvDatabase:
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
-        if not self.args.enable_ocr or check_pdf_has_text(self.logger, stripped_file):
-            self.logger.info("convert {} with microsoft word".format(input_file))
-            convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
-            docxfile = stripped_file + ".docx"
-            if not os.path.exists(docxfile):
+        self.logger.info("convert {} with microsoft word".format(input_file))
+        convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
+        docxfile = stripped_file + ".docx"
+        if os.path.exists(docxfile):
+            self.logger.info("move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
+            shutil.move(docxfile, os.path.join(self.converted_files_folder, basename + ".docx"))
+            shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
+            os.unlink(stripped_file)
+        else:
+            if not self.args.enable_ocr:
                 self.logger.info("cannot process {}, delete it".format(input_file))
                 os.unlink(input_file)
                 os.unlink(stripped_file)
             else:
-                self.logger.info(
-                    "move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
-                shutil.move(docxfile, os.path.join(self.converted_files_folder, basename + ".docx"))
+                self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
+                shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, basename))
                 shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
-                os.unlink(stripped_file)
-        else:
-            self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
-            shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, basename))
-            shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
 
     def create_folders(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
@@ -389,6 +356,7 @@ class TConvDatabase:
             return {"exception": str(exp)}
 
     def process_input_tasks(self):
+        save_files_count = -1
         while not self.stop_input_thread:
             time.sleep(10)
             new_files_from_winword = self.process_docx_from_winword()
@@ -398,7 +366,8 @@ class TConvDatabase:
 
             self.process_ocr_logs()
             files_count = len(os.listdir(self.args.ocr_input_folder))
-            if files_count > 0:
+            if save_files_count != files_count:
+                save_files_count = files_count
                 self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
 
     def start_input_files_thread(self):
@@ -559,7 +528,6 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
 if __name__ == '__main__':
     assert shutil.which("qpdf") is not None # sudo apt install qpdf
     assert shutil.which("pdfcrack") is not None #https://sourceforge.net/projects/pdfcrack/files/
-    assert shutil.which("pdftotext") is not None #http://www.xpdfreader.com/download.html
 
     args = parse_args()
     if args.server_address is None:
