@@ -8,8 +8,12 @@ import threading
 import time
 import queue
 from  ConvStorage.conversion_client import TDocConversionClient
+from pssh.utils import logger as pssh_logger
+
 
 def setup_logging(logfilename):
+    global pssh_logger
+
     logger = logging.getLogger("dlrobot_parallel")
     logger.setLevel(logging.DEBUG)
 
@@ -23,11 +27,18 @@ def setup_logging(logfilename):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
+    pssh_logger.setLevel(logging.DEBUG)
+    pssh_logger.addHandler(fh)
+
     # create console handler with a higher log level
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
+
     logger.addHandler(ch)
+
+
     return logger
+
 
 
 def parse_args():
@@ -62,8 +73,10 @@ def parse_args():
     return args
 
 
-def copy_file(pssh_client, filename, remote_path):
-    assert os.path.exists(filename)
+def copy_file(logger, pssh_client, filename, remote_path):
+    if not os.path.exists(filename):
+        logger.error("cannot find {}".format(filename))
+        assert os.path.exists(filename)
 
     greenlets = pssh_client.copy_file(filename, remote_path)
     for g in greenlets:
@@ -82,24 +95,24 @@ def remote_path(args, filename):
 def prepare_hosts(args, logger):
     pssh_client = ParallelSSHClient(args.hosts.split(','), user=args.username, pkey=args.pkey)
 
-    if not copy_file(pssh_client, args.initialize_worker, remote_path(args, args.initialize_worker) ):
+    if not copy_file(logger, pssh_client, args.initialize_worker, remote_path(args, args.initialize_worker) ):
         return False
 
-    if not copy_file(pssh_client, args.job_script, remote_path(args, args.job_script) ):
+    if not copy_file(logger, pssh_client, args.job_script, remote_path(args, args.job_script) ):
         return False
 
     try:
-        output = pssh_client.run_command(
-            "python {} --declarator-hdd-folder {} --smart-parser-folder {}".format(
+        cmd = "python {} --declarator-hdd-folder {} --smart-parser-folder {}".format(
                 remote_path(args, args.initialize_worker),
                 args.declarator_hdd_folder,
-                args.smart_parser_folder),
-            stop_on_errors=True)
+                args.smart_parser_folder)
+        logger.debug(cmd)
+        output = pssh_client.run_command(cmd)
         pssh_client.join(output)
     except Exception as exp:
         logger.error("type(exception)={} exception={}".format(type(exp), exp))
         return False
-
+    logger.error("read output")
     for host, host_output in output.items():
         logger.debug("host={}, exit code={}".format(host, host_output.exit_code))
         for line in host_output.stderr:
@@ -165,7 +178,7 @@ class TJobTasks:
     def run_job(self, host, project_file):
         pssh_client = ParallelSSHClient([host], user=self.args.username, pkey=self.args.pkey)
         remote_project_path = remote_path(args, project_file)
-        if not copy_file(pssh_client, project_file, remote_project_path):
+        if not copy_file(self.logger, pssh_client, project_file, remote_project_path):
             return False
 
         cmd = "python3 {} --project-file {} --smart-parser-folder {} --result-folder {} --crawling-timeout {}".format(
@@ -232,6 +245,7 @@ if __name__ == "__main__":
     logger = setup_logging("dlrobot_parallel.log")
     if not prepare_hosts(args, logger):
         sys.exit(1)
+
     job_tasks = TJobTasks(args, logger)
     try:
         job_tasks.run_jobs()

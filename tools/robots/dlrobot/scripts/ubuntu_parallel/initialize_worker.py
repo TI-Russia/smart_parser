@@ -27,7 +27,7 @@ def setup_declarator_hdd(declarator_hdd_folder):
 def kill_firefox():
     os.system("pkill -f firefox")
     os.system("pkill -f geckodriver")
-    os.system("pkill -f dlrobot")
+    os.system("pkill -f dlrobot.py")
 
 
 def check_dlrobot_path(path):
@@ -45,6 +45,7 @@ def git_pull(path):
     cmd = "git -C {} pull".format(path)
     exit_code = os.system(cmd)
     if exit_code != 0:
+        print ("cannot git pull")
         raise Exception(cmd + " failed")
 
 
