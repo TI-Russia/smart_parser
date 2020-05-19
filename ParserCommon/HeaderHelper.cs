@@ -97,10 +97,11 @@ namespace TI.Declarator.ParserCommon
 
         public static bool IsNumber(this string str)
         {
+            str = str.Replace(" ", "");
             return str.StartsWith("№") || 
-                   str.ToLower().Contains("n п/п") || 
+                   str.ToLower().Contains("nп/п") || 
                    str.ToLower().Replace("\\", "/").Equals("п/п") || 
-                   str.ToLower().Contains("n пп");
+                   str.ToLower().Contains("nпп");
         }
 
         public static bool IsName(this string s)

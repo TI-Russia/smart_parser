@@ -717,8 +717,8 @@ namespace Smart.Parser.Lib
             }
             else
             {
-                var m = r.GetContents(DeclarationField.VehicleModel);
                 var t = r.GetContents(DeclarationField.VehicleType);
+                var m = r.GetContents(DeclarationField.VehicleModel, false);
                 var text = t + " " + m;
                 if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
                     person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
