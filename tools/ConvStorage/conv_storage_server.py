@@ -13,7 +13,6 @@ import threading
 import tempfile
 import sys
 import queue
-from DeclDocRecognizer.document_types import TCharCategory
 from pathlib import Path
 
 
@@ -62,7 +61,7 @@ def get_directory_size(logger, dir):
             if os.path.exists(x):
                 dir_size += Path(x).stat()
         except Exception as exp:
-            logger.error(exp)
+            logger.error("get_directory_size fails: {}".format(exp))
 
     return dir_size
 
