@@ -124,7 +124,8 @@ class TJobTasks:
         scp_args += [filename, remote_file_path]
         self.logger.debug(" ".join(scp_args))
         try:
-            child = subprocess.run(scp_args, encoding="utf8", timeout=timeout, check=True, capture_output=True)
+            child = subprocess.run(scp_args, encoding="utf8", timeout=timeout, check=True,
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             return True
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exp:
             self.logger.error("copy task {} failed, exception {}".format(" ".join(scp_args), exp))
@@ -136,11 +137,11 @@ class TJobTasks:
         if args.ssh_port is not None:
             ssh_args += ['-p', args.ssh_port]
         assert command.find('"') == -1
-        #ssh_args += [hostname, '"{}"'.format(command)]
         ssh_args += [hostname, command]
         self.logger.debug(" ".join(ssh_args))
         try:
-            child = subprocess.run(ssh_args, encoding="utf8", errors="ignore", check=True, capture_output=True)
+            child = subprocess.run(ssh_args, encoding="utf8", errors="ignore", check=True,
+                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             if log_output:
                 self.log_process_result(child)
             return child.returncode
