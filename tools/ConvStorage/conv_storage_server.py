@@ -14,6 +14,16 @@ import tempfile
 import sys
 import queue
 from pathlib import Path
+from logging.handlers import RotatingFileHandler
+
+def convert_to_seconds(s):
+    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
+    if s is None or len(s) == 0:
+        return 0
+    if seconds_per_unit.get(s[-1]) is not None:
+        return int(s[:-1]) * seconds_per_unit[s[-1]]
+    else:
+        return int(s)
 
 
 def parse_args():
@@ -28,30 +38,27 @@ def parse_args():
     parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
     parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
     parser.add_argument("--ocr-logs-folder", dest='ocr_logs_folder', required=False, default="ocr.logs")
+    parser.add_argument("--ocr-timeout", dest='ocr_timeout', required=False,
+                        help="delete file if ocr cannot process it in this timeout, default 3h", default="3h")
     parser.add_argument("--microsoft-pdf-2-docx",
                         dest='microsoft_pdf_2_docx',
                         required=False,
                         default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
-    return parser.parse_args()
+    args = parser.parse_args()
+    TConvDatabase.ocr_timeout = convert_to_seconds(args.ocr_timeout)
+    return args
 
 
 def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     if os.path.exists(logfilename):
         os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh = RotatingFileHandler(logfilename, encoding="utf8", maxBytes=1024*1024*1024, backupCount=2)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
-    # create console handler with a higher log level
-    #ch = logging.StreamHandler()
-    #ch.setLevel(logging.INFO)
-    #logger.addHandler(ch)
 
 
 def get_directory_size(logger, dir):
@@ -160,6 +167,8 @@ class TInputTask:
 
 
 class TConvDatabase:
+    ocr_timeout = 60*60*3 #3 hours
+
     def __init__(self, args):
         self.args = args
         self.conv_db_json_file_name = args.db_json
@@ -354,20 +363,37 @@ class TConvDatabase:
         except Exception as exp:
             return {"exception": str(exp)}
 
+    def process_stalled_files(self):
+        current_time = time.time()
+        for file in os.listdir(self.args.ocr_input_folder):
+            fpath = os.path.join(self.args.ocr_input_folder, file)
+            timestamp = Path(fpath).stat().st_mtime
+            if current_time - timestamp > TConvDatabase.ocr_timeout:
+                self.logger.error("delete orphan file {} after stalling {} secongs".format(
+                    fpath, TConvDatabase.ocr_timeout))
+                os.unlink(fpath)
+
     def process_input_tasks(self):
         save_files_count = -1
+        file_garbage_collection_timestamp = 0
+        sleep_seconds = 10
         while not self.stop_input_thread:
-            time.sleep(10)
+            time.sleep(sleep_seconds)
             new_files_from_winword = self.process_docx_from_winword()
             new_files_from_ocr = self.process_docx_from_ocr()
             if new_files_from_winword or new_files_from_ocr:
                 self.rebuild_json_wrapper()
 
-            self.process_ocr_logs()
-            files_count = len(os.listdir(self.args.ocr_input_folder))
-            if save_files_count != files_count:
-                save_files_count = files_count
-                self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
+            current_time = time.time()
+            if current_time - file_garbage_collection_timestamp >= 30:  # just not too often
+                file_garbage_collection_timestamp = current_time
+                self.process_ocr_logs()
+                self.process_stalled_files()
+                files_count = len(os.listdir(self.args.ocr_input_folder))
+                if save_files_count != files_count:
+                    save_files_count = files_count
+                    self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
+                    
 
     def start_input_files_thread(self):
         self.input_thread = threading.Thread(target=self.process_input_tasks, args=())
