@@ -90,6 +90,10 @@ def parse_args():
     parser.add_argument("--last-conversion-timeout", dest='last_conversion_timeout',
                             default="30m",
                             help="pdf conversion timeout after crawling")
+    parser.add_argument("--pdf-quota-conversion", dest='pdf_quota_conversion',
+                            default=20 * 2**20,
+                            type=int,
+                            help="max sum pdf size to end ")
     args = parser.parse_args()
     TRobotStep.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
@@ -99,6 +103,7 @@ def parse_args():
         args.logfile = args.project + ".log"
     TRobotWebSite.CRAWLING_TIMEOUT = convert_to_seconds(args.crawling_timeout)
     TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_to_seconds(args.last_conversion_timeout)
+    TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
     return args
 
 

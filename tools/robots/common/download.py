@@ -19,6 +19,7 @@ class TDownloadEnv:
     CONVERSION_CLIENT: TDocConversionClient = None
     HTTP_TIMEOUT = 30  # in seconds
     LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
+    PDF_QUOTA_CONVERSION = 20 * 2**20 # in bytes
 
     @staticmethod
     def clear_cache_folder():
@@ -36,12 +37,11 @@ class TDownloadEnv:
     def send_pdf_to_conversion(filename, file_extension):
         if TDownloadEnv.CONVERSION_CLIENT is None:
             return
-        max_sent_size = 30 * 2**20
-        if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < max_sent_size:
-            # if we  send more than 30 Mb, other clients will suffer
+        if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < TDownloadEnv.PDF_QUOTA_CONVERSION:
             TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(filename, file_extension)
         else:
-            TDownloadEnv.CONVERSION_CLIENT.logger.debug('skip sending a pdf to conversion (sum sent size exceeds {})'.format(max_sent_size))
+            TDownloadEnv.CONVERSION_CLIENT.logger.debug('skip sending a pdf to conversion (sum sent size exceeds {})'.format(
+                TDownloadEnv.PDF_QUOTA_CONVERSION))
 
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
