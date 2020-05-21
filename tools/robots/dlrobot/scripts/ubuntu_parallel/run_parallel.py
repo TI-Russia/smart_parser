@@ -10,7 +10,7 @@ import queue
 from  ConvStorage.conversion_client import TDocConversionClient
 from pssh.utils import logger as pssh_logger
 import psutil
-
+import re
 
 def log_open_file_count(logger, step):
     logger.debug("{} open file count (should be less than 1024): {}".format(
@@ -61,6 +61,8 @@ def parse_args():
     parser.add_argument("--username",  dest='username', required=False, default="sokirko")
     parser.add_argument("--pkey", dest='pkey', required=False, default=pkey_default)
     parser.add_argument("--retries-count", dest='retries_count', required=False, default=2, type=int)
+    parser.add_argument("--exclude-from-log", dest='old_log_file_list', action='append', required=False,
+                        help="read this log file and exclude succeeded tasks from the imput tasks")
     parser.add_argument("--initialize-worker", dest='initialize_worker', required=False,
                         default=os.path.join( os.path.dirname(__file__), "initialize_worker.py"))
     parser.add_argument("--job-script", dest='job_script',
@@ -69,6 +71,7 @@ def parse_args():
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
                             default="3h",
                             help="crawling timeout in seconds (there is also conversion step after crawling)")
+
 
     args = parser.parse_args()
     assert os.path.exists(args.pkey)
@@ -149,7 +152,7 @@ class TJobTasks:
         self.tries_count = defaultdict(int)
         self.lock = threading.Lock()
         self.input_files = queue.Queue()
-        for x in os.listdir(args.input_folder):
+        for x in self.get_input_files():
             self.input_files.put(os.path.join(args.input_folder, x))
         logger.debug("we are going to process {} files".format(self.input_files.qsize()))
         self.threads = list()
@@ -163,6 +166,22 @@ class TJobTasks:
             if best_host_tasks < self.args.jobs_per_host:
                 return best_host
             time.sleep(20)
+
+    def get_input_files(self):
+        already_processed = set()
+        for  old_log_file in args.old_log_file_list:
+            with open(old_log_file, "r", encoding="utf8") as inp:
+                for line in inp:
+                    line= line.strip(" \n\r")
+                    m = re.search('success on (.+txt)$', line)
+                    if m:
+                        filename = os.path.basename(m.group(1))
+                        already_processed.add(filename)
+        for x in os.listdir(self.args.input_folder):
+            if x in already_processed:
+                self.logger.debug("exclude {}, already processed".format(x))
+            else:
+                yield x
 
     def running_jobs_count(self):
         return sum(len(w.tasks) for w in self.host_workers.values())
