@@ -9,10 +9,15 @@ import time
 import queue
 from  ConvStorage.conversion_client import TDocConversionClient
 from pssh.utils import logger as pssh_logger
+import psutil
+
+
+def log_open_file_count(logger, step):
+    logger.debug("{} open file count (should be less than 1024): {}".format(
+        step, len(psutil.Process().open_files())))
 
 
 def setup_logging(logfilename):
-    global pssh_logger
 
     logger = logging.getLogger("dlrobot_parallel")
     logger.setLevel(logging.DEBUG)
@@ -33,10 +38,7 @@ def setup_logging(logfilename):
     # create console handler with a higher log level
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)
-
     logger.addHandler(ch)
-
-
     return logger
 
 
@@ -88,14 +90,18 @@ def copy_file(logger, pssh_client, filename, remote_path):
             return False
     return True
 
+
 def remote_path(args, filename):
     return os.path.join(args.remote_folder, os.path.basename(filename)).replace('\\', '/')
 
 
 def prepare_hosts(args, logger):
+    log_open_file_count(logger, "a4")
+
+
     pssh_client = ParallelSSHClient(args.hosts.split(','), user=args.username, pkey=args.pkey)
 
-    if not copy_file(logger, pssh_client, args.initialize_worker, remote_path(args, args.initialize_worker) ):
+    if not copy_file(logger, pssh_client, args.initialize_worker, remote_path(args, args.initialize_worker)):
         return False
 
     if not copy_file(logger, pssh_client, args.job_script, remote_path(args, args.job_script) ):
@@ -121,7 +127,16 @@ def prepare_hosts(args, logger):
             logger.debug(host + " " + line)
         if host_output.exit_code != 0:
             return False
+    log_open_file_count(logger, "a5")
     return True
+
+
+class TWorkerHost:
+    def __init__(self, args, logger, hostname):
+        self.logger = logger
+        self.hostname = hostname
+        self.tasks = set()
+        self.pssh_client = ParallelSSHClient([hostname], user=args.username, pkey=args.pkey)
 
 
 class TJobTasks:
@@ -129,10 +144,8 @@ class TJobTasks:
         self.conversion_client =  TDocConversionClient(logger)
         self.args = args
         self.logger = logger
-        self.host_tasks = defaultdict(set)
-        for host in args.hosts.split(","):
-            self.host_tasks[host] = set()
-        assert len(self.host_tasks) > 0
+        self.host_workers = dict((hostname, TWorkerHost(args, logger, hostname)) for hostname in args.hosts.split(","))
+        assert len(self.host_workers) > 0
         self.tries_count = defaultdict(int)
         self.lock = threading.Lock()
         self.input_files = queue.Queue()
@@ -143,7 +156,7 @@ class TJobTasks:
 
     def get_free_host(self):
         while True:
-            tasks = list( (len(v), k) for k, v in  self.host_tasks.items())
+            tasks = list( (len(host_worker.tasks), hostname) for hostname, host_worker in self.host_workers.items())
             tasks.sort()
             best_host_tasks = tasks[0][0]
             best_host = tasks[0][1]
@@ -152,19 +165,19 @@ class TJobTasks:
             time.sleep(20)
 
     def running_jobs_count(self):
-        return sum(len(v) for v in self.host_tasks.values())
+        return sum(len(w.tasks) for w in self.host_workers.values())
 
     def register_task(self, host, project_file):
         self.lock.acquire()
         try:
-            self.host_tasks[host].add(project_file)
+            self.host_workers[host].tasks.add(project_file)
         finally:
             self.lock.release()
 
     def register_task_result(self, host, project_file, exit_code):
         self.lock.acquire()
         try:
-            self.host_tasks[host].remove(project_file)
+            self.host_workers[host].tasks.remove(project_file)
             self.tries_count[project_file] += 1
             if exit_code != 0:
                 if self.tries_count[project_file] < args.retries_count:
@@ -176,10 +189,12 @@ class TJobTasks:
             self.lock.release()
 
     def run_job(self, host, project_file):
-        pssh_client = ParallelSSHClient([host], user=self.args.username, pkey=self.args.pkey)
+        log_open_file_count(logger, "a6")
+        pssh_client = self.host_workers[host].pssh_client
         remote_project_path = remote_path(args, project_file)
         if not copy_file(self.logger, pssh_client, project_file, remote_project_path):
             return False
+        log_open_file_count(logger, "a7")
 
         cmd = "python3 {} --project-file {} --smart-parser-folder {} --result-folder {} --crawling-timeout {}".format(
             remote_path(args, self.args.job_script),
@@ -202,6 +217,7 @@ class TJobTasks:
                 for line in host_output.stdout:
                     self.logger.debug(host + " " + line)
                 self.register_task_result(host, project_file, host_output.exit_code)
+        log_open_file_count(logger, "a8")
 
     def stop_all_threads(self):
         for t in self.threads:
@@ -232,10 +248,12 @@ class TJobTasks:
                 self.input_files.qsize(), self.running_jobs_count()))
             self.logger.info("process {} on {}".format(project_file, host))
             self.register_task(host, project_file)
+            log_open_file_count(logger, "a_before_thread")
             thread = threading.Thread(target=self.run_job, args=(host, project_file))
             thread.start()
             self.threads.append(thread)
             time.sleep(5)
+            log_open_file_count(logger, "a_thread_started")
 
         self.stop_all_threads()
 
@@ -249,6 +267,7 @@ if __name__ == "__main__":
     job_tasks = TJobTasks(args, logger)
     try:
         job_tasks.run_jobs()
+        log_open_file_count(logger, "a_last")
     except KeyboardInterrupt:
         print("ctrl+c received")
         sys.exit(1)
