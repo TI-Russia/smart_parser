@@ -1,4 +1,3 @@
-from pssh.clients import ParallelSSHClient
 import argparse
 import sys
 import logging
@@ -9,12 +8,8 @@ import time
 import queue
 from  ConvStorage.conversion_client import TDocConversionClient
 from pssh.utils import logger as pssh_logger
-import psutil
 import re
-
-def log_open_file_count(logger, step):
-    logger.debug("{} open file count (should be less than 1024): {}".format(
-        step, len(psutil.Process().open_files())))
+import subprocess
 
 
 def setup_logging(logfilename):
@@ -60,6 +55,7 @@ def parse_args():
     parser.add_argument("--result-folder",  dest='result_folder', required=True)
     parser.add_argument("--username",  dest='username', required=False, default="sokirko")
     parser.add_argument("--pkey", dest='pkey', required=False, default=pkey_default)
+    parser.add_argument("--ssh-port", dest='ssh_port', required=False, default=None)
     parser.add_argument("--retries-count", dest='retries_count', required=False, default=2, type=int)
     parser.add_argument("--exclude-from-log", dest='old_log_file_list', action='append', required=False,
                         help="read this log file and exclude succeeded tasks from the imput tasks")
@@ -78,60 +74,8 @@ def parse_args():
     return args
 
 
-def copy_file(logger, pssh_client, filename, remote_path):
-    if not os.path.exists(filename):
-        logger.error("cannot find {}".format(filename))
-        assert os.path.exists(filename)
-
-    greenlets = pssh_client.copy_file(filename, remote_path)
-    for g in greenlets:
-        try:
-            logger.debug("copy task {}".format(" ".join(g.args[0:3])))
-            res = g.get(10)
-        except Exception as exp:
-            logger.error("type(exception)={} exception={}".format(type(exp), exp))
-            return False
-    return True
 
 
-def remote_path(args, filename):
-    return os.path.join(args.remote_folder, os.path.basename(filename)).replace('\\', '/')
-
-
-def prepare_hosts(args, logger):
-    log_open_file_count(logger, "a4")
-
-
-    pssh_client = ParallelSSHClient(args.hosts.split(','), user=args.username, pkey=args.pkey)
-
-    if not copy_file(logger, pssh_client, args.initialize_worker, remote_path(args, args.initialize_worker)):
-        return False
-
-    if not copy_file(logger, pssh_client, args.job_script, remote_path(args, args.job_script) ):
-        return False
-
-    try:
-        cmd = "python {} --declarator-hdd-folder {} --smart-parser-folder {}".format(
-                remote_path(args, args.initialize_worker),
-                args.declarator_hdd_folder,
-                args.smart_parser_folder)
-        logger.debug(cmd)
-        output = pssh_client.run_command(cmd)
-        pssh_client.join(output)
-    except Exception as exp:
-        logger.error("type(exception)={} exception={}".format(type(exp), exp))
-        return False
-    logger.error("read output")
-    for host, host_output in output.items():
-        logger.debug("host={}, exit code={}".format(host, host_output.exit_code))
-        for line in host_output.stderr:
-            logger.debug(host + " " + line)
-        for line in host_output.stdout:
-            logger.debug(host + " " + line)
-        if host_output.exit_code != 0:
-            return False
-    log_open_file_count(logger, "a5")
-    return True
 
 
 class TWorkerHost:
@@ -139,12 +83,11 @@ class TWorkerHost:
         self.logger = logger
         self.hostname = hostname
         self.tasks = set()
-        self.pssh_client = ParallelSSHClient([hostname], user=args.username, pkey=args.pkey)
 
 
 class TJobTasks:
     def __init__(self, args, logger):
-        self.conversion_client =  TDocConversionClient(logger)
+        self.conversion_client = TDocConversionClient(logger)
         self.args = args
         self.logger = logger
         self.host_workers = dict((hostname, TWorkerHost(args, logger, hostname)) for hostname in args.hosts.split(","))
@@ -156,6 +99,73 @@ class TJobTasks:
             self.input_files.put(os.path.join(args.input_folder, x))
         logger.debug("we are going to process {} files".format(self.input_files.qsize()))
         self.threads = list()
+
+    def remote_path(self, filename):
+        return os.path.join(self.args.remote_folder, os.path.basename(filename)).replace('\\', '/')
+
+    def log_process_result(self, process_result):
+        s = process_result.stdout.strip("\n\r ")
+        if len(s) > 0:
+            for line in s.split("\n"):
+                self.logger.error("task stderr: {}".format(line))
+        s = process_result.stderr.strip("\n\r ")
+        if len(s) > 0:
+            for line in s.split("\n"):
+                self.logger.error("task stderr: {}".format(line))
+
+    def copy_file(self, filename, hostname, timeout=20):
+        if not os.path.exists(filename):
+            self.logger.error("cannot find {}".format(filename))
+            assert os.path.exists(filename)
+        remote_file_path = "{}:{}".format(hostname, self.remote_path(filename))
+        scp_args = ['scp', '-i', args.pkey]
+        if args.ssh_port is not None:
+            scp_args += ['-P', args.ssh_port]
+        scp_args += [filename, remote_file_path]
+        self.logger.debug(" ".join(scp_args))
+        try:
+            child = subprocess.run(scp_args, encoding="utf8", timeout=timeout, check=True, capture_output=True)
+            return True
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exp:
+            self.logger.error("copy task {} failed, exception {}".format(" ".join(scp_args), exp))
+            self.log_process_result(exp)
+            return False
+
+    def run_remote_command(self, hostname, command, log_output=False):
+        ssh_args = ['ssh', '-i', args.pkey]
+        if args.ssh_port is not None:
+            ssh_args += ['-p', args.ssh_port]
+        assert command.find('"') == -1
+        #ssh_args += [hostname, '"{}"'.format(command)]
+        ssh_args += [hostname, command]
+        self.logger.debug(" ".join(ssh_args))
+        try:
+            child = subprocess.run(ssh_args, encoding="utf8", errors="ignore", check=True, capture_output=True)
+            if log_output:
+                self.log_process_result(child)
+            return child.returncode
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exp:
+            self.logger.error("task {} failed, exception {}".format(" ".join(ssh_args), exp))
+            self.log_process_result(exp)
+            if hasattr(exp, "returncode"):
+                return exp.returncode
+            else:
+                return 1
+
+    def prepare_hosts(self):
+        for hostname in self.host_workers.keys():
+            if not self.copy_file(args.initialize_worker, hostname):
+                return False
+            if not self.copy_file(args.job_script, hostname):
+                return False
+
+            cmd = "python {} --declarator-hdd-folder {} --smart-parser-folder {}".format(
+                self.remote_path(args.initialize_worker),
+                args.declarator_hdd_folder,
+                args.smart_parser_folder)
+            if self.run_remote_command(hostname, cmd) != 0:
+                return False
+        return True
 
     def get_free_host(self):
         while True:
@@ -169,14 +179,15 @@ class TJobTasks:
 
     def get_input_files(self):
         already_processed = set()
-        for  old_log_file in args.old_log_file_list:
-            with open(old_log_file, "r", encoding="utf8") as inp:
-                for line in inp:
-                    line= line.strip(" \n\r")
-                    m = re.search('success on (.+txt)$', line)
-                    if m:
-                        filename = os.path.basename(m.group(1))
-                        already_processed.add(filename)
+        if args.old_log_file_list is not None:
+            for  old_log_file in args.old_log_file_list:
+                with open(old_log_file, "r", encoding="utf8") as inp:
+                    for line in inp:
+                        line= line.strip(" \n\r")
+                        m = re.search('success on (.+txt)$', line)
+                        if m:
+                            filename = os.path.basename(m.group(1))
+                            already_processed.add(filename)
         for x in os.listdir(self.args.input_folder):
             if x in already_processed:
                 self.logger.debug("exclude {}, already processed".format(x))
@@ -207,36 +218,19 @@ class TJobTasks:
         finally:
             self.lock.release()
 
-    def run_job(self, host, project_file):
-        log_open_file_count(logger, "a6")
-        pssh_client = self.host_workers[host].pssh_client
-        remote_project_path = remote_path(args, project_file)
-        if not copy_file(self.logger, pssh_client, project_file, remote_project_path):
+    def run_job(self, hostname, project_file):
+        if not self.copy_file(project_file, hostname):
             return False
-        log_open_file_count(logger, "a7")
 
         cmd = "python3 {} --project-file {} --smart-parser-folder {} --result-folder {} --crawling-timeout {}".format(
-            remote_path(args, self.args.job_script),
-            remote_project_path,
+            self.remote_path(self.args.job_script),
+            self.remote_path(project_file),
             self.args.smart_parser_folder,
             self.args.result_folder,
             self.args.crawling_timeout
         )
-        self.logger.debug('{}: {}'.format(host, cmd))
-        output = pssh_client.run_command(cmd)
-        pssh_client.join(output)
-        if len(output.items()) == 0:
-            self.register_task_result(host, project_file, 0)
-            self.logger.error("no result for {} {}".format(host, project_file))
-        else:
-            for host, host_output in output.items():
-                self.logger.debug("host={}, exit code={}".format(host, host_output.exit_code))
-                for line in host_output.stderr:
-                    self.logger.debug(host + " " + line)
-                for line in host_output.stdout:
-                    self.logger.debug(host + " " + line)
-                self.register_task_result(host, project_file, host_output.exit_code)
-        log_open_file_count(logger, "a8")
+        exit_code = self.run_remote_command(hostname, cmd, log_output=True)
+        self.register_task_result(hostname, project_file, exit_code)
 
     def stop_all_threads(self):
         for t in self.threads:
@@ -267,26 +261,24 @@ class TJobTasks:
                 self.input_files.qsize(), self.running_jobs_count()))
             self.logger.info("process {} on {}".format(project_file, host))
             self.register_task(host, project_file)
-            log_open_file_count(logger, "a_before_thread")
             thread = threading.Thread(target=self.run_job, args=(host, project_file))
             thread.start()
             self.threads.append(thread)
             time.sleep(5)
-            log_open_file_count(logger, "a_thread_started")
 
         self.stop_all_threads()
+
 
 
 if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging("dlrobot_parallel.log")
-    if not prepare_hosts(args, logger):
-        sys.exit(1)
 
     job_tasks = TJobTasks(args, logger)
+    if not job_tasks.prepare_hosts():
+        sys.exit(1)
     try:
         job_tasks.run_jobs()
-        log_open_file_count(logger, "a_last")
     except KeyboardInterrupt:
         print("ctrl+c received")
         sys.exit(1)
