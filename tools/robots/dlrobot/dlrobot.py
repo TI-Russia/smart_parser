@@ -9,7 +9,7 @@ from robots.common.robot_step import TRobotStep
 from robots.common.web_site import TRobotWebSite
 from robots.common.primitives import  check_link_sitemap, check_anticorr_link_text
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
-
+import platform
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_logger")
@@ -137,9 +137,10 @@ def make_steps(args, project):
     project.write_project()
 
 
-
 def open_project(args):
     logger = setup_logging(args.logfile)
+    logger.debug("hostname={}".format(platform.node()))
+
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
         if args.only_click_stats:

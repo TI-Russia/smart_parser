@@ -10,19 +10,14 @@ from  ConvStorage.conversion_client import TDocConversionClient
 from pssh.utils import logger as pssh_logger
 import re
 import subprocess
-
+import tempfile
 
 def setup_logging(logfilename):
-
     logger = logging.getLogger("dlrobot_parallel")
     logger.setLevel(logging.DEBUG)
 
-    # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
@@ -37,7 +32,6 @@ def setup_logging(logfilename):
     return logger
 
 
-
 def parse_args():
     parser = argparse.ArgumentParser()
     if os.name == "nt":
@@ -46,6 +40,7 @@ def parse_args():
         pkey_default = "/home/sokirko/.ssh/id_rsa"
 
     parser.add_argument("--hosts",  dest='hosts', required=True)
+    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="dlrobot_parallel.log")
     parser.add_argument("--remote-folder", dest='remote_folder', default='/home/sokirko', required=False)
     parser.add_argument("--declarator-hdd-folder",  dest='declarator_hdd_folder', required=False, default="/home/sokirko/declarator_hdd")
     parser.add_argument("--smart-parser-folder", dest='smart_parser_folder', default='/home/sokirko/smart_parser',
@@ -57,8 +52,8 @@ def parse_args():
     parser.add_argument("--pkey", dest='pkey', required=False, default=pkey_default)
     parser.add_argument("--ssh-port", dest='ssh_port', required=False, default=None)
     parser.add_argument("--retries-count", dest='retries_count', required=False, default=2, type=int)
-    parser.add_argument("--exclude-from-log", dest='old_log_file_list', action='append', required=False,
-                        help="read this log file and exclude succeeded tasks from the imput tasks")
+    parser.add_argument("--skip-already-processed", dest='skip_already_processed', default=False, action='store_true',
+                        required=False, help="read the log file and exclude succeeded tasks from the input tasks")
     parser.add_argument("--initialize-worker", dest='initialize_worker', required=False,
                         default=os.path.join( os.path.dirname(__file__), "initialize_worker.py"))
     parser.add_argument("--job-script", dest='job_script',
@@ -68,14 +63,9 @@ def parse_args():
                             default="3h",
                             help="crawling timeout in seconds (there is also conversion step after crawling)")
 
-
     args = parser.parse_args()
     assert os.path.exists(args.pkey)
     return args
-
-
-
-
 
 
 class TWorkerHost:
@@ -133,17 +123,25 @@ class TJobTasks:
             return False
 
     def run_remote_command(self, hostname, command, log_output=False):
-        ssh_args = ['ssh', '-i', args.pkey]
+        handle, ssh_log = tempfile.mkstemp(dir=".", suffix=".{}.ssh.log".format(hostname))
+        os.close(handle)
+        ssh_args = ['ssh', '-i', args.pkey, '-vvv', '-E', ssh_log]
         if args.ssh_port is not None:
             ssh_args += ['-p', args.ssh_port]
         assert command.find('"') == -1
         ssh_args += [hostname, command]
         self.logger.debug(" ".join(ssh_args))
         try:
-            child = subprocess.run(ssh_args, encoding="utf8", errors="ignore", check=True,
+            child = subprocess.run(ssh_args, encoding="utf8", timeout=5*60*60, errors="ignore", check=True,
                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.logger.debug("process exit without exceptions: {}".format(" ".join(ssh_args)))
             if log_output:
                 self.log_process_result(child)
+            if os.path.exists(ssh_log):
+                try:
+                    os.unlink(ssh_log)
+                except Exception as exp:
+                    pass
             return child.returncode
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exp:
             self.logger.error("task {} failed, exception {}".format(" ".join(ssh_args), exp))
@@ -180,15 +178,13 @@ class TJobTasks:
 
     def get_input_files(self):
         already_processed = set()
-        if args.old_log_file_list is not None:
-            for  old_log_file in args.old_log_file_list:
-                with open(old_log_file, "r", encoding="utf8") as inp:
-                    for line in inp:
-                        line= line.strip(" \n\r")
-                        m = re.search('success on (.+txt)$', line)
-                        if m:
-                            filename = os.path.basename(m.group(1))
-                            already_processed.add(filename)
+        if args.skip_already_processed:
+            with open(args.log_file_name, "r", encoding="utf8") as inp:
+                for line in inp:
+                    m = re.search('success on (.+txt)\s*$', line)
+                    if m:
+                        filename = os.path.basename(m.group(1))
+                        already_processed.add(filename)
         for x in os.listdir(self.args.input_folder):
             if x in already_processed:
                 self.logger.debug("exclude {}, already processed".format(x))
@@ -270,18 +266,18 @@ class TJobTasks:
         self.stop_all_threads()
 
 
-
 if __name__ == "__main__":
     args = parse_args()
-    logger = setup_logging("dlrobot_parallel.log")
+    logger = setup_logging(args.log_file_name)
 
     job_tasks = TJobTasks(args, logger)
     if not job_tasks.prepare_hosts():
         sys.exit(1)
     try:
         job_tasks.run_jobs()
+        logger.info("all jobs are done")
     except KeyboardInterrupt:
-        print("ctrl+c received")
+        logger.info("ctrl+c received")
         sys.exit(1)
     finally:
         job_tasks.stop_all_threads()
