@@ -2,32 +2,30 @@ import argparse
 import re
 import plotly.express as px
 import pandas as pd
-from pathlib import Path
 import datetime
 import os
+from glob import glob
+from pathlib import Path
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--monitoring-folder", dest='monitoring_folder', required=True)
-    parser.add_argument("--port", dest='port')
+    parser.add_argument("--monitoring-glob", dest='monitoring_glob', required=True,
+                        help="for example /home/sokirko/declarator_hdd/processed_projects.[0-9][0-9]/*/*.clicks.stats")
     args = parser.parse_args()
     return args
 
 
-def get_data(already_processed, folder):
-    files = sorted(Path(folder).glob('*/*.clicks.stats'))
+def get_data(monitoring_glob):
+    files = glob(monitoring_glob)
     result = []
     for f in files:
-        if str(f) in already_processed:
-            continue
         try:
             with open(str(f), encoding="utf8") as inp:
                 m = re.search('"files_count": ([0-9]+),', inp.read())
                 if m:
                     files_count = int(m.group(1))
-                    mtime = datetime.datetime.fromtimestamp(f.stat().st_mtime)
+                    mtime = datetime.datetime.fromtimestamp(Path(f).stat().st_mtime)
                     result.append((mtime,  files_count, str(f)))
-                    already_processed.add(str(f))
                 else:
                     continue
         except Exception as exp:
@@ -38,41 +36,31 @@ def get_data(already_processed, folder):
 
 
 def main(args):
-    already = set()
-    declatations_count = []
+    declarations_count = []
     processed_files_count = []
     timestamps = []
-    texts = []
-    hover_texts = []
-    while True:
-        new = get_data(already, args.monitoring_folder)
-        if len(new) == 0:
-            break
-        sum = 0
-        file_count = 0
-        for mtime, value, file_name in new:
-            timestamps.append(pd.Timestamp(mtime))
-            fname = os.path.basename(file_name)
-            if fname.endswith(".txt.clicks.stats"):
-                fname = fname[:-len(".txt.clicks.stats")]
-            if value > 100:
-                texts.append(fname)
-            else:
-                texts.append("")
-            hover_texts.append(fname)
-            sum += value
-            file_count += 1
-            declatations_count.append(sum)
-            processed_files_count.append(file_count)
-    #dates = list(pd.Timestamp(d) for d in ['2020-05-19 14:30', '2020-05-19 15:30', '2020-05-20 1:00'])
-    #values = [1, 2, 3]
+    website = []
+    sum = 0
+    file_count = 0
+    for mtime, value, file_name in get_data(args.monitoring_glob):
+        timestamps.append(pd.Timestamp(mtime))
+        fname = os.path.basename(file_name)
+        if fname.endswith(".txt.clicks.stats"):
+            fname = fname[:-len(".txt.clicks.stats")]
+        website.append(fname)
+        sum += value
+        file_count += 1
+        declarations_count.append(sum)
+        processed_files_count.append(file_count)
 
-    df = pd.DataFrame({'Date': timestamps, "DeclarationCount": declatations_count, "text": texts} )
-    fig = px.line(df, x='Date', y='DeclarationCount', text="text",  title='Declaration Crawling Progress')
+    df = pd.DataFrame({'Date': timestamps, "DeclarationCount": declarations_count, "website": website})
+    fig = px.line(df, x='Date', y='DeclarationCount',
+                        hover_data=["website"],
+                        title='Declaration Crawling Progress')
     fig.write_html('declaration_crawling_stats.html')
 
-    df = pd.DataFrame({'Date': timestamps, "FilesCount": processed_files_count, "text": texts} )
-    fig = px.line(df, x='Date', y='FilesCount',  title='File Progress')
+    df = pd.DataFrame({'Date': timestamps, "FilesCount": processed_files_count, "website": website} )
+    fig = px.line(df, x='Date', y='FilesCount',  title='File Progress', hover_data=["website"])
     fig.write_html('file_progress.html')
 
 
