@@ -6,7 +6,7 @@ import datetime
 import os
 from glob import glob
 from pathlib import Path
-
+import sys
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -82,8 +82,6 @@ def get_dlrobot_log_squeezes(glob_pattern):
             with open(str(f), encoding="utf8") as inp:
                 hostname = 'unknown'
                 first_time_stamp = None
-                last_time_stamp = None
-                total_minutes = None
                 last_not_empty_line = None
                 exported_files_count = 0
                 for line in inp:
@@ -116,16 +114,20 @@ def process_dlrobot_logs(glob):
     websites = []
     hostnames = []
     exported_files_counts = []
+    start_time_stamps = []
     for start_time, host_name, total_minutes, website, exported_files_count in get_dlrobot_log_squeezes(glob):
-        minutes.append(total_minutes)
-        websites.append(website)
-        hostnames.append(host_name)
-        exported_files_counts.append(exported_files_count)
+        if total_minutes > 10:
+            minutes.append(total_minutes)
+            websites.append(website)
+            hostnames.append(host_name)
+            exported_files_counts.append(exported_files_count)
+            start_time_stamps.append(start_time.strftime("%Y-%m-%d %H:%M:%S"))
 
     df = pd.DataFrame({'Minutes': minutes, "Websites": websites,
-                       "hostnames": hostnames, "exported_files_counts": exported_files_counts})
-    fig = px.line(df, x='Websites', y='Minutes',
-                        hover_data=["hostnames", "exported_files_counts"],
+                       "hostnames": hostnames, "exported_files_counts": exported_files_counts,
+                       'start_times': start_time_stamps})
+    fig = px.line(df, x='start_times', y='Minutes',
+                        hover_data=['Websites', "hostnames", "exported_files_counts", "start_times"],
                         title='Crawl Website Speed')
     fig.write_html('web_site_speed.html')
 
@@ -141,3 +143,4 @@ def main(args):
 if __name__ == "__main__":
     args = parse_args()
     main(args)
+    sys.exit(0)
