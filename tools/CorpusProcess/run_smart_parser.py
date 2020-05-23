@@ -37,7 +37,7 @@ def parse_args():
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?queue=empty", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?office=473", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -92,7 +92,6 @@ def download_file(file_url, filename):
 
     return filename
 
-
 def run_smart_parser(filepath, args):
     """start SmartParser for one file"""
     start_time = datetime.now()
@@ -108,7 +107,7 @@ def run_smart_parser(filepath, args):
             # logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return 1, ""
 
-    smart_parser_options = "-adapter prod -converted-storage-url http://declarator.zapto.org:8091"
+    smart_parser_options = "-adapter prod -converted-storage-url http://disclosures.ru:8091"
 
     log = filepath + ".log"
     if os.path.exists(log):
@@ -117,7 +116,7 @@ def run_smart_parser(filepath, args):
     cmd = "{} {} \"{}\"".format(
         SMART_PARSER,
         smart_parser_options,
-        filepath)
+        filepath.replace("`", "\`"))
     result = os.popen(cmd).read()
     return (datetime.now() - start_time).total_seconds(), result
 
@@ -244,9 +243,13 @@ class ProcessOneFile(object):
         filename, ext = os.path.splitext(filename)
 
         if archive_file:
+            _, archive_ext = os.path.splitext(archive_file)
             file_path = os.path.join(
                 self.args.output, str(df_id), archive_file)
+            if archive_ext != ext:
+                file_path += ext
         elif not df_id:
+            # file_url is local path to file
             file_path = file_url
         else:
             file_path = os.path.join(self.args.output, "%i%s" % (df_id, ext))
@@ -351,8 +354,8 @@ if __name__ == '__main__':
     logger.info("Header_recall was before re-parse: %f" %
                 (float(len(list(filter(lambda x: x['status'] == 'ok', results)))) / float(total)))
 
-    logger.info("Upgraded: %i" % (upgraded, ))
-    logger.info("Degraded: %i" % (degraded, ))
+    logger.info("Upgraded: %i" % (upgraded,))
+    logger.info("Degraded: %i" % (degraded,))
 
     logger.info("Degraded list")
     for job in degraded_list:

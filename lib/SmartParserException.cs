@@ -10,4 +10,8 @@ namespace Parser.Lib
     {
         public SmartParserException(string message) : base(message) { }
     }
+    public class SmartParserFieldNotFoundException : Exception
+    {
+        public SmartParserFieldNotFoundException(string message) : base(message) { }
+    }
 }
