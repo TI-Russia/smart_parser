@@ -4,4 +4,6 @@ bs4
 lxml
 pycurl
 certifi
-parallel-ssh
+plotly
+pandas
+psutil

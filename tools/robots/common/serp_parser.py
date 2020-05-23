@@ -114,7 +114,8 @@ class SearchEngine:
                 raise
             message = str(exp).strip(" \n\r")
             selenium_holder.logger.debug("got exception {}, sleep 10 seconds and retry other search engine".format(message))
-            time.sleep(10)
+            selenium_holder.restart()
+            time.sleep(5)
             search_engine_url = SearchEngine.get_search_engine_url(not prefer_foreign_search_engine)
             selenium_holder.navigate(search_engine_url)
             time.sleep(10)

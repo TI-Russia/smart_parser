@@ -3,6 +3,7 @@ import sys
 import os
 import shutil
 import time
+import platform
 
 
 def parse_args():
@@ -54,6 +55,7 @@ if __name__ == "__main__":
         output_folder += ".{}".format(int(time.time()))
     shutil.copytree(base_folder, output_folder)
     shutil.rmtree(base_folder, ignore_errors=True)
+    print("exit with code={}, hostname={}".format(exit_code, platform.node()))
     sys.exit(exit_code)
 
 
