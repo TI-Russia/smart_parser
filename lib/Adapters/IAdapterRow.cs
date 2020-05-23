@@ -288,7 +288,19 @@ namespace Smart.Parser.Adapters
                 if (!except)
                     return "";
             }
-            var c = GetDeclarationField(field);
+
+            Cell c;
+            try
+            {
+                c = GetDeclarationField(field);
+            }
+            catch (SmartParserFieldNotFoundException e)
+            {
+                if (!except)
+                    return "";
+                throw e; 
+            }
+
             if (c == null)
             {
                 return "";
@@ -345,16 +357,22 @@ namespace Smart.Parser.Adapters
             }
             else
             {
-                string pattern = @"\p{Pd}"; //UnicodeCategory.DashPunctuation
+                string pattern = @"\s+\p{Pd}\s+"; // UnicodeCategory.DashPunctuation
                 string[] result = Regex.Split(v, pattern);
                 if (result.Length < 2)
                 {
                     string[] words = Regex.Split(v, @"[\,\s\n]+");
                     if (words.Length >= 3 && TextHelpers.CanBePatronymic(words[2]))
                     {
+                        // ex: "Рутенберг Дмитрий Анатольевич начальник управления"
                         PersonName = String.Join(" ", words.Take(3)).Trim();
                         Occupation = String.Join(" ", words.Skip(3)).Trim();
-
+                    }
+                    else if (TextHelpers.CanBePatronymic(words.Last()))
+                    {
+                        // ex: "начальник управления Рутенберг Дмитрий Анатольевич"
+                        PersonName = String.Join(" ", words.Skip(words.Length - 3)).Trim();
+                        Occupation = String.Join(" ", words.Take(words.Length - 3)).Trim();
                     }
                     else
                     {
@@ -365,7 +383,7 @@ namespace Smart.Parser.Adapters
                 else
                 {
                     PersonName = result[0].Trim();
-                    Occupation = String.Join("-", result.Skip(1)).Trim();
+                    Occupation = String.Join(" - ", result.Skip(1)).Trim();
                 }
             }
         }
@@ -382,7 +400,17 @@ namespace Smart.Parser.Adapters
             {
                 if (!ColumnOrdering.SearchForFioColumnOnly)
                 {
-                    DivideNameAndOccupation();
+                    try
+                    {
+                        DivideNameAndOccupation();    
+                    }
+                    catch (SmartParserException) {
+                        // maybe PDF has split cells (table on different pages)
+                        // example file: "5966/14 Upravlenie delami.pdf" converted to docx
+                        var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
+                        Logger.Error("ignore bad person name " + nameCell);
+                        return false;
+                    }
                 }
             }
             else

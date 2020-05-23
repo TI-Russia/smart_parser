@@ -94,6 +94,7 @@ namespace TI.Declarator.ParserCommon
             if (!Char.IsUpper(s[0])) return false;
             return s.EndsWith("вич") ||
                     s.EndsWith("вна") ||
+                    s.EndsWith("внва") ||
                     s.EndsWith("вны") ||
                     (s.Length <=4  && s.EndsWith(".")) || // "В." "В.П." "Вяч."
                     s.EndsWith("тич") ||

@@ -176,11 +176,12 @@ namespace Smart.Parser.Lib
             var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.Vehicle,out dummy);
             if (headerCell.MergedColsCount != 2)
                 return;
+
             var subCells = FindSubcellsUnder(adapter, headerCell);
             if (subCells.Count == 1)
                 return;
+
             string cleanHeader = headerCell.Text.ToLower().Replace(" ", "");
-            
             if (cleanHeader.Contains("транспортныесредства") && cleanHeader.Contains("марка") && cleanHeader.Contains("вид"))
             {
 

@@ -340,7 +340,8 @@ namespace Smart.Parser.Lib
             {
                 borderFinder.CreateNewSection(rowOffset, columnOrdering.Section);
             }
-            
+
+            bool skipEmptyPerson = false;
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -382,19 +383,25 @@ namespace Smart.Parser.Lib
                 if (currRow.PersonName != String.Empty)
                 {
                     borderFinder.CreateNewDeclarant(Adapter, currRow);
+                    if (borderFinder.CurrentPerson != null)
+                        skipEmptyPerson = false;
                 }
-                else if  (currRow.RelativeType !=  String.Empty)
+                else if  (currRow.RelativeType != String.Empty)
                 {
-                    borderFinder.CreateNewRelative(currRow);
+                    if (!skipEmptyPerson)
+                        borderFinder.CreateNewRelative(currRow);
                 }
                 else 
                 {
                     if (borderFinder.CurrentPerson == null && FailOnRelativeOrphan)
                     {
-                        throw new SmartParserException("No person to attach info");
+                        skipEmptyPerson = true;
+                        continue;
+                        // throw new SmartParserEmptyPersonException(String.Format("No person to attach info on row={0}", row));
                     }
                 }
-                borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
+                if (!skipEmptyPerson)
+                    borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
 
@@ -639,7 +646,7 @@ namespace Smart.Parser.Lib
                 {
                     if (person is PublicServant)
                     {
-                        Logger.Debug(((PublicServant)person).NameRaw.ReplaceEolnWithSpace());
+                        Logger.Debug("PublicServant: " + ((PublicServant)person).NameRaw.ReplaceEolnWithSpace());
                     }
                     bool foundIncomeInfo = false;
                     
@@ -717,9 +724,14 @@ namespace Smart.Parser.Lib
             }
             else
             {
-                var m = r.GetContents(DeclarationField.VehicleModel);
                 var t = r.GetContents(DeclarationField.VehicleType);
+                var m = r.GetContents(DeclarationField.VehicleModel, false);
                 var text = t + " " + m;
+                if (t == m)
+                {
+                    text = t;
+                    m = "";
+                }
                 if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
                     person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
             }

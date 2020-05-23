@@ -50,13 +50,19 @@ namespace Smart.Parser.Adapters
         {
             if (!columnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
-                throw new SystemException(String.Format("Field {0} not found, row={1}", field.ToString(), row));
+                throw new SmartParserFieldNotFoundException(String.Format("Field {0} not found, row={1}", field.ToString(), row));
             }
 
             var exactCell = GetCell(row, colSpan.BeginColumn);
             if (exactCell == null)
             {
-                throw new SystemException(String.Format("Field {0} not found, row={1}, col={2}", field.ToString(), row, colSpan.BeginColumn));
+                var rowData = GetCells(row);
+                throw new SmartParserFieldNotFoundException(String.Format("Field {0} not found, row={1}, col={2}. Row.Cells.Count = {3}",
+                    field.ToString(),
+                    row,
+                    colSpan.BeginColumn,
+                    rowData.Count
+                    ));
             }
             return exactCell;
         }
