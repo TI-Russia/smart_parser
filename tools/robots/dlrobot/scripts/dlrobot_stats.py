@@ -12,7 +12,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--clicks-stats-glob", dest='clicks_stats_glob', required=False,
                         help="for example /home/sokirko/declarator_hdd/processed_projects.[0-9][0-9]/*/*.clicks.stats")
-    parser.add_argument("--dlrobot-log-glob", dest='dlrobot_log_glob', required=True,
+    parser.add_argument("--dlrobot-log-glob", dest='dlrobot_log_glob', required=False,
                         help="for example /home/sokirko/declarator_hdd/processed_projects.[0-9][0-9]/*/*.txt.log")
     args = parser.parse_args()
     return args
