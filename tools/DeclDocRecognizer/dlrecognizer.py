@@ -304,15 +304,15 @@ def apply_second_rules(verdict):
             verdict.description = "headers and vehicles and surnames_word"
 
 
-def external_convert(source_file, keep_txt=False, reuse_txt=False):
+def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
     global EXTERNAl_CONVERTORS
     ec = EXTERNAl_CONVERTORS
     _, file_extension = os.path.splitext(source_file)
     file_extension = file_extension.lower()
     txt_file = source_file + ".txt"
     if reuse_txt and os.path.exists(txt_file):
-        return txt_file
-    if file_extension == ".xlsx":
+        pass
+    elif file_extension == ".xlsx":
         ec.run_xlsx2csv(source_file, txt_file)
     elif file_extension == ".xls":
         res = ec.run_xls2csv(source_file, txt_file)
@@ -355,7 +355,7 @@ def external_convert(source_file, keep_txt=False, reuse_txt=False):
 
 
 def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
-    input_text = external_convert(source_file, keep_txt, reuse_txt)
+    input_text = get_text_of_a_document(source_file, keep_txt, reuse_txt)
     if input_text is None:
         v = TClassificationVerdict("", 0)
         v.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
