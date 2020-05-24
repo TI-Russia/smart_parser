@@ -304,7 +304,7 @@ def apply_second_rules(verdict):
             verdict.description = "headers and vehicles and surnames_word"
 
 
-def external_convert(source_file, reuse_txt=False):
+def external_convert(source_file, keep_txt=False, reuse_txt=False):
     global EXTERNAl_CONVERTORS
     ec = EXTERNAl_CONVERTORS
     _, file_extension = os.path.splitext(source_file)
@@ -344,29 +344,28 @@ def external_convert(source_file, reuse_txt=False):
             ec.run_office2txt(temp_fname, txt_file)
             os.unlink(temp_fname)
     else:
-        ec.run_soffice(source_file, txt_file)
-    return txt_file
+        return None
+    if os.path.exists(txt_file):
+        doc_text = read_input_text(txt_file)
+        if not keep_txt:
+            os.unlink(txt_file)
+        return doc_text
+    else:
+        return None
 
 
-def get_classification_verdict(source_file, txt_file):
-    if not os.path.exists(txt_file):
+def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
+    input_text = external_convert(source_file, keep_txt, reuse_txt)
+    if input_text is None:
         v = TClassificationVerdict("", 0)
         v.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
         v.description = "cannot parse document"
         return v
     else:
-        input_text = read_input_text(txt_file)
         verdict = initialize_classification_vedict(source_file, input_text)
         if not apply_first_rules(source_file, verdict):
             apply_second_rules(verdict)
         return verdict
-
-
-def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
-    txt_file = external_convert(source_file, reuse_txt)
-    verdict = get_classification_verdict(source_file, txt_file)
-    if not keep_txt and os.path.exists(txt_file):
-        os.unlink(txt_file)
     return verdict
 
 

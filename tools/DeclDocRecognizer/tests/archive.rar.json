@@ -1,0 +1,9 @@
+{
+    "verdict": "some_other_document_result",
+    "smart_parser_person_count": 0,
+    "start_text": "",
+    "text_len": 0,
+    "description": "cannot parse document",
+    "normal_russian_text_coef": 0.0,
+    "text_features": {}
+}
