@@ -579,10 +579,11 @@ namespace Smart.Parser
             }
 
             if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) || 
-                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) || 
-                  columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands)))
+                  columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
+                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
+                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
             {
-                Logger.Error("Insufficient fields: No Declarant Income fields found.");
+                Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
                 return 0;
             }
 
