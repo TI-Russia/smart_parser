@@ -131,6 +131,19 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=934",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_934/dlrobot_data",
+            "sha256": "8336326b372a2d8a1d2a1f9c053b4b63492c4f603c0155529a008d5a0d84debc"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.gorsovet-podolsk.ru/otchety",
                     "source:step": "declarations",
                     "source:title": "",
@@ -151,17 +164,11 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=934",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_934/dlrobot_data",
-            "sha256": "eec18bc48c7ba8d245e88603c855e2de57358ad944f5fd04f21a93d748ab8b77"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
+                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Скачать документ ( pdf, 96.74 KB )",
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=62",
