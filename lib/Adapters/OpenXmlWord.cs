@@ -643,12 +643,12 @@ namespace Smart.Parser.Adapters
             else if (table.InnerText.Length < 30)
             {
                 Logger.Debug(String.Format("ignore table {0}, it is too short", tableIndex));
-
             }
             else 
             {
                 ProcessWordTable(docHolder, table, maxRowsToProcess);
             }
+
             if (TableRows.Count > debugSaveRowCount)
             {
                 string tableText = table.InnerText.Length > 30  ? table.InnerText.Substring(0, 30) : table.InnerText;

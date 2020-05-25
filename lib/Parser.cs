@@ -456,7 +456,7 @@ namespace Smart.Parser.Lib
             }
         }
 
-        void AddRealEstateWithNaturalText (DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
+        void AddRealEstateWithNaturalText(DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(fieldName))
             {
@@ -838,10 +838,7 @@ namespace Smart.Parser.Lib
             {
                 return result;
             }
-            string[] lines = value.Trim(' ', ';').Split(';');
-            if (lines.Length != linesWithNumbers.Count) {
-                lines = value.Split('\n');
-            }
+            var lines = SplitJoinedLinesByFuzzySeparator(value, linesWithNumbers);
             Debug.Assert(linesWithNumbers.Count > 1);
             int startLine = linesWithNumbers[0];
             int numberIndex = 1;
@@ -876,6 +873,33 @@ namespace Smart.Parser.Lib
             }
     
             return result;
+        }
+
+        private static string[] SplitJoinedLinesByFuzzySeparator(string value, List<int> linesWithNumbers)
+        {
+            string[] lines;
+
+            // Eg: "1. Квартира\n2. Квартира"
+            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s").Count > 0)
+            {
+                lines = (string[]) Regex.Split(value, @"\d\.\s").Skip(1).ToArray();
+                return lines;
+            }
+
+            // Eg: "- Квартира\n- Квартира"
+            if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s").Count > 0)
+            {
+                lines = (string[]) Regex.Split(value, @"\n\p{Pd}");
+                return lines;
+            }
+
+            lines = value.Trim(' ', ';').Split(';');
+            if (lines.Length != linesWithNumbers.Count)
+            {
+                lines = value.Split('\n');
+            }
+
+            return lines;
         }
 
         static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
