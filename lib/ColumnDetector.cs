@@ -48,6 +48,13 @@ namespace Smart.Parser.Lib
                     year = int.Parse(commonYearMatches[0].Value);
                 }
             }
+            
+            var specificYearMatches = Regex.Matches(text, @"за(20\d\d)\b");
+            if (specificYearMatches.Count > 0)
+            {
+                year = int.Parse(specificYearMatches[0].Groups[1].Value);
+            }
+
             var minMatch = Regex.Match(text, @"Министерства(.+)Российской Федерации", RegexOptions.IgnoreCase);
             if (minMatch.Success)
             {

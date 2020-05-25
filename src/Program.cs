@@ -439,6 +439,14 @@ namespace Smart.Parser
                 return 0;
 
             }
+
+            if (!File.Exists(declarationFile))
+            {
+                Logger.Info("ERROR: {0} file NOT exists", declarationFile);
+                return 0;
+            }
+                
+            
             ColumnPredictor.InitializeIfNotAlready();
 
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
@@ -530,12 +538,12 @@ namespace Smart.Parser
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
             var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
+
             // Try to extract declaration year from file name if we weren't able to get it from document title
             if (!columnOrdering.Year.HasValue)
             {
                 columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
             }
-            
 
             Logger.Info("Column ordering: ");
             foreach (var ordering in columnOrdering.ColumnOrder)
@@ -543,9 +551,10 @@ namespace Smart.Parser
                 Logger.Info(ordering.ToString());
             } 
             Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
-//            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
+            
             if (ColumnsOnly)
                 return 0;
+
             if (ColumnToDump != DeclarationField.None)
             {
                 DumpColumn(adapter, columnOrdering, ColumnToDump);
@@ -565,6 +574,13 @@ namespace Smart.Parser
                 Logger.Info("Declaration Ministry: {0} ", columnOrdering.MinistryName);
             }
 
+            if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) || 
+                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) || 
+                  columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands)))
+            {
+                Logger.Error("Insufficient fields: No Declarant Income fields found.");
+                return 0;
+            }
 
             Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);
             SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);
