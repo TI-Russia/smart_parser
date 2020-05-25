@@ -123,6 +123,13 @@ class TJobTasks:
             return False
 
     def run_remote_command(self, hostname, command, log_output=False):
+        def delete_ssh_log():
+            if os.path.exists(ssh_log):
+                try:
+                    os.unlink(ssh_log)
+                except Exception as exp:
+                    pass
+
         handle, ssh_log = tempfile.mkstemp(dir=".", suffix=".{}.ssh.log".format(hostname))
         os.close(handle)
         ssh_args = ['ssh', '-i', args.pkey, '-vvv', '-E', ssh_log]
@@ -137,19 +144,17 @@ class TJobTasks:
             self.logger.debug("process exit without exceptions: {}".format(" ".join(ssh_args)))
             if log_output:
                 self.log_process_result(child)
-            if os.path.exists(ssh_log):
-                try:
-                    os.unlink(ssh_log)
-                except Exception as exp:
-                    pass
+            delete_ssh_log()
             return child.returncode
-        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exp:
+        except subprocess.TimeoutExpired as exp:
+            self.logger.error("task {} timeouted, exception {}".format(" ".join(ssh_args), exp))
+            self.log_process_result(exp)
+            delete_ssh_log()
+            return 1
+        except subprocess.CalledProcessError as exp:
             self.logger.error("task {} failed, exception {}".format(" ".join(ssh_args), exp))
             self.log_process_result(exp)
-            if hasattr(exp, "returncode"):
-                return exp.returncode
-            else:
-                return 1
+            return exp.returncode
 
     def prepare_hosts(self):
         for hostname in self.host_workers.keys():
