@@ -1,0 +1,3164 @@
+{
+    "files_count": 120,
+    "files_sorted (short report)": [
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10016/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10017/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10021/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10066/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10068/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10072/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10076/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10077/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10078/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10079/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10082/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10083/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10084/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10085/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10087/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10088/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10089/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10090/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10094/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_10100/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13164/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13165/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13166/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13167/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13215/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13216/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13217/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13218/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13219/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13220/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13221/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13230/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13235/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13288/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13289/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13294/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13295/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13296/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13297/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13298/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13299/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13300/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13301/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13304/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13306/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13373/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13387_Itemid_81/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_13725/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_15189/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_15190/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17361/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17362/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17363/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17364/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17401/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17402/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17403/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17405/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17406/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17407/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17408/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17409/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17410/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17447/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17448/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17449/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17451/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17452/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17453/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17457/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17458/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17488/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17489/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17493/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17495/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17504/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17656/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_17748/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_21363/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_21427/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_21428/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_21429/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_4679/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6779/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6791/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6813/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6814/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6815/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6816/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6833/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6834/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6836/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6843/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6844/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6846/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6867/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6869/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6878/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6879/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6882/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_6883/dlrobot_data -1",
+        "cached/akrvo.ru/index.php_option_com_content_view_article_id_7614/dlrobot_data -1",
+        "cached/www.akrvo.ru/images/stories/ISP/2012/sved_o_doxod.doc/dlrobot_data -1",
+        "cached/www.akrvo.ru/images/stories/ISP/2017/doxod_za_2016.pdf/dlrobot_data -1",
+        "cached/www.akrvo.ru/images/stories/ISP/2020/doxod_snd_za_2019.pdf/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_10022_Itemid_39/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_1094/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_13154/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_13388_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_17505_Itemid_176/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_17506_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_17507_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_2633_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_3582_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_4654_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_6712/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_6849_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_6850_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_9938_Itemid_81/dlrobot_data -1",
+        "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_9939_Itemid_81/dlrobot_data -1"
+    ],
+    "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20052",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17447",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17447/dlrobot_data",
+            "sha256": "00d22e39c841c95ff6d8dd8a13ae1d8b08fb2e2d65f97017cc9b9b191418cdce"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19910",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя начальника управления образования администрации Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13235",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13235/dlrobot_data",
+            "sha256": "0276b6beafaa6545d4e0bbffeb244322642692df8f0f0ad79e95098bc6b242cd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19910",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Чернышевой Светланы Викторовны и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=7614",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_7614/dlrobot_data",
+            "sha256": "03ce9ca29ec0bedc4bc42ff2783dc268e65ac76820f73d31a2ffc7c11e9b0983"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы Ивановского сельского поселения, заместителя главы администрации и зав. финансовым отделом, главного бухгалтера администрации Ивановского сельского поселения за период с 01.01.2013г. по 31.12.2013г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=3582&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_3582_Itemid_81/dlrobot_data",
+            "sha256": "04a80757a781e5ac217156382fb0bf95c408bb8d8c66665c05d6a5e3984da4bb"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Зам.начальника управления, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19908",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10100",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10100/dlrobot_data",
+            "sha256": "06fca7f962f91a22970857299644f7d85efb06725f803f1970d19ee48419f4c3"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант муниципального контроля",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20048",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17656",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17656/dlrobot_data",
+            "sha256": "07afb8161ce4bae4c362a3be02ac4bf2f54a7f603cf0f9287128bf74a919607d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующая бюджетным отделом",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20034",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6814",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6814/dlrobot_data",
+            "sha256": "0bfe5a2c4717f2d710228cfd960ed719c58edb1d8a24259dbc7164a748b091dd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=10022&Itemid=39",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_10022_Itemid_39/dlrobot_data",
+            "sha256": "0d64196843555d27f7501308256bd6f3e8bfa747877e153cabf2e61b19ac43fe"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом муниципального контроля",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20047",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13218",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13218/dlrobot_data",
+            "sha256": "0dbc6842805d22444530a5e02375bbeb404fab6e66b44a3d41c5c2ac881edc83"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом регламентации образовательной деятельности и кадрового обеспечения управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19911",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующего отделом регламентации образовательной деятельности и кадрового обеспечения управления образования администрации Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13230",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13230/dlrobot_data",
+            "sha256": "0ded7e85a21931efd55635be7c647a21befb52d0a4a871a887d166cdcdb475be"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19902",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Брусенцевой Татьяны Алексеевны и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10068",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10068/dlrobot_data",
+            "sha256": "0edfa69c17360c45396fdd9edcc9e1a0108430aa5278c52e39937b788984da70"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующая бюджетным отделом",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20034",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13165",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13165/dlrobot_data",
+            "sha256": "110eb95ca53889f5d0a23992946f92269df0e78ff9bc336cd3764dc606678690"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом ЗАГС",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20054",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующего отделом ЗАГС администрации Ковровского района М.И. Лазаревой и членов семьи за период с 01.01.2014 по 31.12.2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4679",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_4679/dlrobot_data",
+            "sha256": "115df16498afbf2072f41539738510d8a5634fe0de3d93dfbf324bfe0d8893fc"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующая отделом доходов и финансирования производственных отраслей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20037",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6815",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6815/dlrobot_data",
+            "sha256": "180c11772ff2cea3bf839410e3f18f65eff13eda45a370a6759198795c6a8dfb"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник финансового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20033",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10082",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10082/dlrobot_data",
+            "sha256": "19e354f5d30c89da593436816436b7272123a217b9607fe12c821e3f3cb89714"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант муниципального контроля",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20049",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Буров Александр Владимирович и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=15189",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_15189/dlrobot_data",
+            "sha256": "1a6a2df32e78a6ad59dfb4f3ed61048dceac7a5da09b939840b4d8f1494e91cc"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Зам.начальника управления, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19908",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17453",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17453/dlrobot_data",
+            "sha256": "1f2789b213e40481c3a871352f4434c4d882d1170d6bfa00bc91424213f36616"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом ЗАГС",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20054",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующего отделом ЗАГС администрации Ковровского района М.И. Лазаревой и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10072",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10072/dlrobot_data",
+            "sha256": "1f783d55b737feb45dbf1ff1298f30e8909743add0a24d3229185f197041185b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник финансового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20033",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2019 по 31.12.2019 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=21363",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_21363/dlrobot_data",
+            "sha256": "20a4980cf40f14266c7898c866c7fba517d1837470ec6c34e01eba7e6ae1276d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант, инспектор по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19906",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера консультанта по делам строительства и архитектуры администрации Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6791",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6791/dlrobot_data",
+            "sha256": "20adca322ccf0abda465967b48e6d3f0eedcf4253f19cce7c9c329055ec2eca7"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20053",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17448",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17448/dlrobot_data",
+            "sha256": "278d0f0f8d61d9ec4af0c3c72fd1b57ead39ec9fd69c19bf8c52e2853483873e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19910",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя начальника управления образования администрации Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17410",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17410/dlrobot_data",
+            "sha256": "27cd3639edbc00ff883452af5cbf7e76e2bd3006d25879ee76c47cb082ecf491"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=17505&Itemid=176",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_17505_Itemid_176/dlrobot_data",
+            "sha256": "2a4e5afa097f7f6330ee9aaf270180db70149138eb79aed1d409b36def157d9f"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20053",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13301",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13301/dlrobot_data",
+            "sha256": "2b7d6fb4e691917efd6e2979d5bd5070dbf2c921b1f887e3ba156c53e8b628ce"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=6712",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_6712/dlrobot_data",
+            "sha256": "2cb8e04597f0383ac343a9af49c9a13c79f385b6a253d4d76f4b173c2435ec24"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Глава администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19900",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Главы администрации Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13294",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13294/dlrobot_data",
+            "sha256": "2e20c1fce01d02ee043f0c7c0d9de4080aaabe299d1d5cf9abf931a156abd80d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера муниципальных служащих за период с 01.01.2018 по 31.12.2018 год.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=17507&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_17507_Itemid_81/dlrobot_data",
+            "sha256": "2f8de6aa46c095c716685a70835b00ae1f4768a89b7c9d8227fa8e7ba5639a63"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом регламентации образовательной деятельности и кадрового обеспечения управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19911",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующего отделом регламентации образовательной деятельности и кадрового обеспечения управления образования администрации Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17409",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17409/dlrobot_data",
+            "sha256": "32d426bfc5c4450a02a02142bcf384b961f8c223e3273fdaa5fdc9a39b5f1301"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20045",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района Спиридонова Екатерина Владимировна и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13220",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13220/dlrobot_data",
+            "sha256": "33b8ba5adb0b9955c46eef82953f4a52a8e5920c528ccd41a37e1b159f1ecb61"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом муниципального контроля",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20047",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17405",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17405/dlrobot_data",
+            "sha256": "34310148f49050581c2483957107c16a9c3fedb0b7382418b0aec9d032143471"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом имущественных отношений",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20040",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13215",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13215/dlrobot_data",
+            "sha256": "34e1ec285e4a6e9368f54a6d4b11a30895ae3892b1d98f87ab8592539f698983"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы Ивановского сельского поселения, зав. финансовым отделом, гл.бухгалтер, заместитель главы администрации Ивановского сельского поселения за период с 01.01.2011г. по 31.12.2011г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/images/stories/ISP/2012/sved_o_doxod.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/images/stories/ISP/2012/sved_o_doxod.doc/dlrobot_data",
+            "sha256": "3544ad549c6c6403244513947c859b91eae1312910939a8fab32b3c0fe08c011"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом закупок",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20051",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13219",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13219/dlrobot_data",
+            "sha256": "35571b4b9c88082e9a1cf7dec6ba079aa2c69a81b47b5c0425475fbf04250de1"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Глава администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19900",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Главы администрации Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17488",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17488/dlrobot_data",
+            "sha256": "377e207ce8f827d999efc56d05e1395164e6ed4c9d1413e1c54a6a0070427213"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом ЗАГС",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20054",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17457",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17457/dlrobot_data",
+            "sha256": "39e5eae0c3907439dc85a213e86b69050bc6b912bb6585746a8820cbe9c37708"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом экономики управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20050",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующий отделом экономики управления экономики, имущественных и земельных отношений администрации Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10017",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10017/dlrobot_data",
+            "sha256": "3d02d6e12614061a5b87600fbf9389ceeba22a8780ad2bc415147f7108a5cb99"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих муниципальные должности в Совете народных депутатов Ивановского сельского поселения Ковровского района Владимирской области за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/images/stories/ISP/2017/doxod_za_2016.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/images/stories/ISP/2017/doxod_za_2016.pdf/dlrobot_data",
+            "sha256": "3e78166d2d59f7b42aea8c0a761e27b0a767b4d3de23b6940714d2d514cf3e55"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20052",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13300",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13300/dlrobot_data",
+            "sha256": "406f35bc84f99751f6c0ec67fb24744c2480acdc15c8a901cd613436fb4c4610"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20039",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителей главы Ковровского района и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13298",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13298/dlrobot_data",
+            "sha256": "451cbcb0c113503e336b2f7ac850c5ae8cf8f743219514c32194768931c2a2a8"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20042",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района Спиридонова Екатерина Владимировна и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17406",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17406/dlrobot_data",
+            "sha256": "496c9a7e0a1fa6b006822564579afba72a0c1ad38f032747b8e1e74a31b1a396"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом экономики управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20050",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17402",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17402/dlrobot_data",
+            "sha256": "4c0007b3cd745458e0042c688b809dda968820e561246a77cb02d5b18d5967f9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19909",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Медведевой Ирины Евгеньевны, начальника управления образования администрации Ковровского района, и членов её семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10088",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10088/dlrobot_data",
+            "sha256": "4cbc2a2e596396a8e1f15656a9b402fe9914088782f310c25c6c9eb649fb29e2"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом экономики управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20050",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13217",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13217/dlrobot_data",
+            "sha256": "4d368ac6d041891927db8a16ddab9966a7ad4731a24047693867b07442e86572"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19913",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6843",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6843/dlrobot_data",
+            "sha256": "4e76bb6b51a7f4b9ea6429344118f8afe95ef32442aab3fbd454e972a1e389c6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Зам.начальника управления, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19908",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13288",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13288/dlrobot_data",
+            "sha256": "4f35c5f947d72bec39ea652787d7a4ad0495e1bbc39421a5ec72c03f9fe11e9d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующая бюджетным отделом",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20034",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10083",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10083/dlrobot_data",
+            "sha256": "52e29e212da7d6049e771f0ed92e4ca1fe46be7ee0b7b4f3cb3e1a90df10f2d4"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник финансового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20033",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13164",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13164/dlrobot_data",
+            "sha256": "53180d149d18a97ad5a5302c46f3af0d8aa2537fde85d4451552350c9bfe245d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20031",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера заместителя начальника правового управления Лупандиной Анастасии Андреевны за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6844",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6844/dlrobot_data",
+            "sha256": "53ca55476a9cee7c32d8380c483d31b242f7c0fc10b0a9a42825a2237788263d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом закупок",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20051",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместитель начальника управления, заведующий отделом закупок управления экономики, имущественных и земельных отношений администрации Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6869",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6869/dlrobot_data",
+            "sha256": "552b4080d1805d856ebf19b97ef6f30d81c141ac631952dcc8408bc0283d7ef0"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник финансового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20033",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6813",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6813/dlrobot_data",
+            "sha256": "611802c97584c4b4c1f3ccc50741a0ee6d810c0877d78a94c7e6c2243875dbb0"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник финансового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20033",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17361",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17361/dlrobot_data",
+            "sha256": "63307891a8f940ee19ff62603273e7ce9a7abfd59b6952ed2610dee9617a81cc"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом закупок",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20051",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместитель начальника управления, заведующий отделом закупок управления экономики, имущественных и земельных отношений администрации Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10021",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10021/dlrobot_data",
+            "sha256": "648869ba8be7b00ad714d51b20525dee7d47f503006969e90310e5405d8a63e9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Глава администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19900",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы администрации Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6879",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6879/dlrobot_data",
+            "sha256": "64a7c7e5b3f039cd79e21deacfc5a19d4b791e13aa4abf74e6efd4df2df07c1c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20052",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6846",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6846/dlrobot_data",
+            "sha256": "64dc062ddb5b02d4fd8878edc8790b01a76e8dc588d05449de0d31bb7a4d077b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19913",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17458",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17458/dlrobot_data",
+            "sha256": "6cb6becfa54ae7e5cafa3082ed60ef3286268d7380c3cc9aa566e09da2e49f72"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20039",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя главы, начальник управления экономики, имущественных и земельных отношений администрации Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6816",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6816/dlrobot_data",
+            "sha256": "6ec730c7bdc067ae2618b4223ea840c3b39e913ba15b8df66a70565eec844b92"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19903",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя главы администрации Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13304",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13304/dlrobot_data",
+            "sha256": "707cb1e37a8225844b041edd26f834dcd64a83465498d9deb1470f4819e04bd9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом по опеке и попечительству несовершеннолетних",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19912",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Боровенской Ольги Николаевны и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17408",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17408/dlrobot_data",
+            "sha256": "71c7f163d7eac292eda7f261073521ae21122de4f443d8a6097d158e4e52a59a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=1094",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_1094/dlrobot_data",
+            "sha256": "74647b124b5fd51459d7a64e88c4a68ec1defa09e52d6d227996d199b9a77daa"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующая отделом доходов и финансирования производственных отраслей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20037",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17363",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17363/dlrobot_data",
+            "sha256": "75d44feb3ba80cec34742b4abdc61ea0eb115d41c5d538bc86e1fd057e98c148"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20041",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=15190",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_15190/dlrobot_data",
+            "sha256": "78e23bb5d77484895d5cedd46cefaaeddd869fdd2347da9b42bdcffe54f28fb9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=9938&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_9938_Itemid_81/dlrobot_data",
+            "sha256": "79240a35213e895563df8df9101ae81f6c9c738c13962dc25d57f13bfab0b49d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующая отделом доходов и финансирования производственных отраслей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20037",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10084",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10084/dlrobot_data",
+            "sha256": "795b2649929e16d8e437719898fec87307476ea5ab5749a5cf891c519dcf9f3c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант, инспектор по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19906",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Фадиной Александры Владимировны, консультанта инспектора по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры администрации Ковровского района и членов её семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10094",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10094/dlrobot_data",
+            "sha256": "7ce4d605b5dbf38001647e0a80baef55a2df92ce46741e80f689b5f51551ef2e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20031",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13296",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13296/dlrobot_data",
+            "sha256": "82c5c9823a68f21c551131371b414e4d09f47601e1f151112645168fda1d64c8"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом имущественных отношений",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20040",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17401",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17401/dlrobot_data",
+            "sha256": "832f0d35cf9b842d83b910281508c83388c78f67ac6ca70a1f03a0896b659ec6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=6849&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_6849_Itemid_81/dlrobot_data",
+            "sha256": "84b62eb2ae9d8d568062ed96cc70de224984644d6049ac021880424dfbeb705e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20029",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера заместителя начальника правового управления Абрамовой Ольги Валерьевны за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17493",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17493/dlrobot_data",
+            "sha256": "85add55b726ca67329065b1c9810276e468cd05b210ba41c3e6fc57af7b54d52"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Глава администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19900",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы администрации Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10085",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10085/dlrobot_data",
+            "sha256": "87c21388a9988f527a5e32f43887b976f928b1167cb41afec36873ca31667e32"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант, инспектор по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19906",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Фадиной Александры Владимировны, консультанта инспектора по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры администрации Ковровского района и членов её семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13289",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13289/dlrobot_data",
+            "sha256": "8860814a3044e646ea3b251d680d99f799a269c7ec9bcb12e7358968b21d4395"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом ЗАГС",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20054",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующего отделом ЗАГС администрации Ковровского района М.И. Лазаревой и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13306",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13306/dlrobot_data",
+            "sha256": "8bde12fba9ba18b8be538ff07946e2bf8c64fb54a303e2e1a40fcde5c5b3d398"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19909",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Медведевой Ирины Евгеньевны и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6833",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6833/dlrobot_data",
+            "sha256": "8deb0959f63d1fcb19c008bc620ceb88d5d8d96d0a148864d3a0d528a0da914b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20030",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера заместителя начальника правового управления Помеловой Ольге Алексеевны за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13297",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13297/dlrobot_data",
+            "sha256": "92b6f845bc751a86b95716c31698b1c28048e117a3b333808fe698e2fa083f42"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20031",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера заместителя начальника правового управления Лупандиной Анастасии Андреевны за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10079",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10079/dlrobot_data",
+            "sha256": "94049c832ce372f0b52b36ff5164101a1e5e231d986c4f4abf05cb563f8d17cd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант, инспектор по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19905",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Царана Сергея Денисовича и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13725",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13725/dlrobot_data",
+            "sha256": "9446bfeb890ba9d6a525abf383ab68eec210c1b40ced1b6cedbe14ce12bf8c63"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующая отделом доходов и финансирования производственных отраслей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20037",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2019 по 31.12.2019 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=21429",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_21429/dlrobot_data",
+            "sha256": "9478081e1b7e7a9a444bb2d3c24da2ad4c55c31761cafbeea639d54180a7c05a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19913",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13295",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13295/dlrobot_data",
+            "sha256": "9bd63187e44c8f0c2240efd8830b9d1e6d2b145a0d7b079ac4a51bce00d08efb"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20043",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района Кузьминова Марина Игоревна и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17403",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17403/dlrobot_data",
+            "sha256": "9edb1d82dab47138fddae4c2e9c59e2a657127d4f491309f54401e7d34c057bf"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19909",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Медведевой Ирины Евгеньевны, начальника управления образования администрации Ковровского района, и членов её семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17504",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17504/dlrobot_data",
+            "sha256": "9fb81a7f0426c968dde9f7447e1fc7a1bb99dc39dfe0e73e3f63ce3f759a32e3"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Зам.начальника управления, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19908",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры, заведующий отделом природопользования и охраны окружающей среды администрации Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6883",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6883/dlrobot_data",
+            "sha256": "a09863560bd56972e2daec6410045e23026a6e93671ec303b6d9b72250902fc1"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17748",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17748/dlrobot_data",
+            "sha256": "a2e1fbce089351bbca13ca2ad787c05694702aa2173c8c67a40186af8739013e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19902",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Брусенцевой Татьяны Алексеевны и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6882",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6882/dlrobot_data",
+            "sha256": "a3815c8ebf9f1851733dab730c2c798f9c98833f2d30bfb0f63e22cd76a8e084"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы Ивановского сельского поселения, заместителя главы администрации и зав. финансовым отделом, главного бухгалтера администрации Ивановского сельского поселения за период с 01.01.2014г. по 31.12.2014г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4654&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_4654_Itemid_81/dlrobot_data",
+            "sha256": "a6da6abbc44817b2021795d0d24eaee42bb410069e2273f42b67e478da28c378"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19909",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Медведевой Ирины Евгеньевны, начальника управления образования администрации Ковровского района, и членов её семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13299",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13299/dlrobot_data",
+            "sha256": "a85107df66cd0da1b93dfd4b67a60be0eacf902399f85016ae7febd293c38238"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20044",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Гожая Елена Александровна и их членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13216",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13216/dlrobot_data",
+            "sha256": "ae8befb746dd9e5e6a31b521af8701c96ce69e640c532119bb3bf943ea94d5c6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20053",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10077",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10077/dlrobot_data",
+            "sha256": "aebb7587096e998e8c738b986715ed9fd1a313664a89bed2ae9966b9bec8f904"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=9939&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_9939_Itemid_81/dlrobot_data",
+            "sha256": "b0b37550b83987d8177df78a5927cb61a1ca1d2eda96d334dc039461eb5d4568"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20046",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района Кузьминова Марина Игоревна и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13221",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13221/dlrobot_data",
+            "sha256": "b99dc267346e75a5afc9ef19d0046ebea40136b9209c2360fa37c82dfcddd7c7"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующая отделом доходов и финансирования производственных отраслей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20037",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13166",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13166/dlrobot_data",
+            "sha256": "bc8ec7c2f82f8710879118c33c4ed18b4496827b7635dacb9994471726407f91"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера директора МБУ «Ивановское» Ивановского сельского поселения, за период с 01.01.2015г. по 31.12.2015г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=6850&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_6850_Itemid_81/dlrobot_data",
+            "sha256": "bcb8c6ec4993201376335d2d823e9263448089cc90a7a8cb24db82f5fd66b92b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19910",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Чернышевой Светланы Викторовны и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10089",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10089/dlrobot_data",
+            "sha256": "bcc5de78b0059e540e2385fb06911c315c064cdd6810c8def67225124742c55d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующая бюджетным отделом",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20034",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17362",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17362/dlrobot_data",
+            "sha256": "bdb151dc06c0791c635684efee07f52265a3115ea5dc5599bfa61bb0ef188170"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующая бюджетным отделом",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20034",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2019 по 31.12.2019 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=21427",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_21427/dlrobot_data",
+            "sha256": "bdc47d12d0801af1bc9144911fca971fcf04fadac6760f1233ff0572fac5ca3e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы Ивановского сельского поселения, заместителя главы администрации и зав. финансовым отделом, главного бухгалтера администрации Ивановского сельского поселения за период с 01.01.2012г. по 31.12.2012г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=2633&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_2633_Itemid_81/dlrobot_data",
+            "sha256": "bed29e8fe4e1a9cc99b79dd107083d9a8496261679d2267dd1c7d12a7e085836"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник управления культуры, молодежной политики и туризма администрации Ковровского района обеспечивает реализацию вопросов местного значения в области культуры, молодежной политики и туризма",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20038",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17495",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17495/dlrobot_data",
+            "sha256": "c0b47db0c96564ede5de821cbe3a740d1686a50556887fd7efa656db041642e8"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19903",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя главы администрации Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10066",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10066/dlrobot_data",
+            "sha256": "c1116f650a63d9b1805a01f8b4713025b9ba7f54f9474538252b51ca4d80dfd1"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант отдела имущественных отношений управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20041",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и их членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17407",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17407/dlrobot_data",
+            "sha256": "c52c929d765bd6153abc8970fd208b1b2ba1502e16974e0d9823d409a693f144"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник правового управления",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19913",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10078",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10078/dlrobot_data",
+            "sha256": "cb875b461c94a22863334a14e1d6aa7c9bced673c95ca1fbeb76b2493fbe7526"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20039",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителей главы Ковровского района и их членов семьи за период с 01.01.2016 по 31.12.2016года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10087",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10087/dlrobot_data",
+            "sha256": "cfd84700cd64dd29d1d1ccdd89333c0a8febd00ab3bcc1eaebb05b6075574112"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом регламентации образовательной деятельности и кадрового обеспечения управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19911",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Здорововой Марины Олеговны и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6834",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6834/dlrobot_data",
+            "sha256": "d1abaa6622f456971aafdfbda9659973c9f03ecdf652f244d6d1d43a94596f45"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом регламентации образовательной деятельности и кадрового обеспечения управления образования",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19911",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера и.о. заведующего отделом регламентации образовательной деятельности и кадрового обеспечения управления образования администрации Ковровского района и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10090",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10090/dlrobot_data",
+            "sha256": "d344f277901a3b48a8dfcf2cea6bde6f060a4ffe02c347a1a041cfa31189d47b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера директора МБУ «Ивановское» за период с 01.01.2017 по 31.12.2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=13388&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_13388_Itemid_81/dlrobot_data",
+            "sha256": "d44a8a50dae6267e336a624df33c6b891ac53a7e8ff4c7e32fe68749397d3288"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=13154",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_13154/dlrobot_data",
+            "sha256": "d62b2349c16079074eff58ac39f7f14b2c678a3e038336f54f295ceadad60d9e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Начальник отдела организационной и кадровой работы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20052",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10076",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10076/dlrobot_data",
+            "sha256": "d7106a5530b84f6938d31313fc5e6f19ea1c853c7cf69f0ef3756f03cba15445"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления экономики, имущественных и земельных отношений администрации Ковровского района",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20039",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителей главы Ковровского района и их членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17489",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17489/dlrobot_data",
+            "sha256": "d71f628f7db195a9e5bb6637d8e8f880529bdc7ab67cd7639d39289b2ce176d4"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника финансового управления, заведующий отделом бюджетного учета и отчетности, главный бухгалтер",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20035",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2019 по 31.12.2019 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=21428",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_21428/dlrobot_data",
+            "sha256": "dc1102de6525f6a94619872fb3d6276244f6c456b7306d8ec6e83813c2c4453b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант, инспектор по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19906",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Фадиной Александры Владимировны, консультанта инспектора по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры администрации Ковровского района и членов её семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17451",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17451/dlrobot_data",
+            "sha256": "dd54185138e84f6b9671c4a43a3597b2b4d4abcfe9784bddae2dfe0081ae7106"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера директора МБУ «Ивановское» за период с 01.01.2018 по 31.12.2018 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=17506&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/index.php_option_com_content_view_article_id_17506_Itemid_81/dlrobot_data",
+            "sha256": "dd8abe48993c20bd2ee4c80675f7b8d5b11da1094ffd6496c9dd43e8f3c9a78c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19902",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Брусенцевой Татьяны Алексеевны и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13373",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13373/dlrobot_data",
+            "sha256": "e1f58335427c2eb578143a04903fc540b350342772e4d0efecd0f2a751b0e28a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель главы, начальник управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19903",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя главы администрации Ковровского района и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6779",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6779/dlrobot_data",
+            "sha256": "e687379d13bf5357852ff2d6de9d992bd68ec69fdaa9f730f8d5cd536c363b91"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19902",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Брусенцевой Татьяны Алексеевны и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17449",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17449/dlrobot_data",
+            "sha256": "ea9eccd94dff3dc15319faa77445c6980b7561856afd02231477d4ce7883831a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом имущественных отношений",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20040",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя начальника управления, заведующий отделом имущественных отношений и членов семьи за период с 01.01.2016 по 31.12.2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=10016",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_10016/dlrobot_data",
+            "sha256": "ec4dea7972289122b6360284a793250e7048ff26f9bbc7cbc34882fd32940949"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника управления, заведующий отделом имущественных отношений",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20040",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заместителя начальника управления, заведующий отделом имущественных отношений и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6867",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6867/dlrobot_data",
+            "sha256": "ef8538fb268040a61fa75b11109016e4b332ad569f940fab402d453a9d5751c4"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Консультант, инспектор по жилищному контролю управления жизнеобеспечения, гражданской обороны, строительства и архитектуры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=19907",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Камыш Лады Сергеевны и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17452",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17452/dlrobot_data",
+            "sha256": "f439dcd3cb299e5dff589577252ad28cae3d9c85a6e57524a8a6c30427d46a27"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника финансового управления, заведующий отделом бюджетного учета и отчетности, главный бухгалтер",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20036",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2017 по 31.12.2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13167",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13167/dlrobot_data",
+            "sha256": "f547f5babbaf2cd46d7787daca06dea76a8ad223d3a2b7a273e0dd1411430cbb"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=13387&Itemid=81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_13387_Itemid_81/dlrobot_data",
+            "sha256": "f5e79ca9d71639e04897c9306793ea1c2c4787a9754e4703992fc9ce77659b0d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6878",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6878/dlrobot_data",
+            "sha256": "f733fef6723360d2c967a79ca2e45bfca44ee4038d101edaa7b4f56d0d2dee5a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/index.php?option=com_content&view=article&id=4621&Itemid=81",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера лиц, замещающих муниципальные должности в Совете народных депутатов Ивановского сельского поселения Ковровского района Владимирской области за период с 01.01.2019 по 31.12.2019 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.akrvo.ru/images/stories/ISP/2020/doxod_snd_za_2019.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.akrvo.ru/images/stories/ISP/2020/doxod_snd_za_2019.pdf/dlrobot_data",
+            "sha256": "f78498a33446c6d01cadff41cece4b5200ff3396483c9cf4830f0a08cff19e91"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заместитель начальника финансового управления, заведующий отделом бюджетного учета и отчетности, главный бухгалтер",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20035",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера Ковровского района и членов семьи за период с 01.01.2018 по 31.12.2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=17364",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_17364/dlrobot_data",
+            "sha256": "f7a0f779450fa6bec25849d4070d2f8e2dac4d391d5eb5fd3b29bd6b98b9e896"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "противодействие коррупции"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=4407",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Заведующий отделом ЗАГС",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=20054",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера заведующего отделом ЗАГС администрации Ковровского района М.И. Лазаревой и членов семьи за период с 01.01.2015 по 31.12.2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://akrvo.ru/index.php?option=com_content&view=article&id=6836",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/akrvo.ru/index.php_option_com_content_view_article_id_6836/dlrobot_data",
+            "sha256": "fcf805e9b1f92cd77ddbcbfaa055d91eb599e1577aa76491f7540807fc2f2438"
+        }
+    ]
+}

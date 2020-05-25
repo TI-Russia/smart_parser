@@ -5,7 +5,8 @@ import os
 import hashlib
 import shutil
 import sys
-from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify
+from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
+        get_russian_normal_text_ratio
 from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
@@ -115,6 +116,7 @@ class TClassificationVerdict:
         self.input_text = input_text
         self.text_features = defaultdict(TTextFeature)
         self.description = ""
+        self.normal_russian_text_coef = get_russian_normal_text_ratio(self.input_text)
         self.find_other_document_types()
         self.find_header()
 
@@ -125,6 +127,7 @@ class TClassificationVerdict:
             "start_text": self.start_text,
             "text_len": len(self.input_text),
             "description": self.description,
+            "normal_russian_text_coef": self.normal_russian_text_coef,
             "text_features": dict((k, v.to_json()) for k, v in self.text_features.items()),
         }
         return rec
@@ -252,12 +255,15 @@ def apply_first_rules(source_file, verdict):
     elif TCharCategory.get_most_popular_char_category(verdict.start_text) != 'RUSSIAN_CHAR':
         verdict.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
         verdict.description = "cannot find Russian chars, may be encoding problems"
-    elif verdict.get_first_features_match('other_document_type') < 400:
+    elif file_extension not in {".html", ".htm"} and verdict.get_first_features_match('other_document_type') < 400:
         verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
         verdict.description = "other_document_type<400"
     elif verdict.smart_parser_person_count > 0 and len(verdict.input_text) / verdict.smart_parser_person_count < 2048:
         verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
         verdict.description = "found smart_parser results"
+    elif verdict.normal_russian_text_coef > 0.19:
+        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+        verdict.description = "normal_russian_text_coef > 0.19"
     else:
         return False
     return True
@@ -298,15 +304,15 @@ def apply_second_rules(verdict):
             verdict.description = "headers and vehicles and surnames_word"
 
 
-def external_convert(source_file, reuse_txt=False):
+def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
     global EXTERNAl_CONVERTORS
     ec = EXTERNAl_CONVERTORS
     _, file_extension = os.path.splitext(source_file)
     file_extension = file_extension.lower()
     txt_file = source_file + ".txt"
     if reuse_txt and os.path.exists(txt_file):
-        return txt_file
-    if file_extension == ".xlsx":
+        pass
+    elif file_extension == ".xlsx":
         ec.run_xlsx2csv(source_file, txt_file)
     elif file_extension == ".xls":
         res = ec.run_xls2csv(source_file, txt_file)
@@ -338,29 +344,28 @@ def external_convert(source_file, reuse_txt=False):
             ec.run_office2txt(temp_fname, txt_file)
             os.unlink(temp_fname)
     else:
-        ec.run_soffice(source_file, txt_file)
-    return txt_file
+        return None
+    if os.path.exists(txt_file):
+        doc_text = read_input_text(txt_file)
+        if not keep_txt:
+            os.unlink(txt_file)
+        return doc_text
+    else:
+        return None
 
 
-def get_classification_verdict(source_file, txt_file):
-    if not os.path.exists(txt_file):
+def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
+    input_text = get_text_of_a_document(source_file, keep_txt, reuse_txt)
+    if input_text is None:
         v = TClassificationVerdict("", 0)
         v.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
         v.description = "cannot parse document"
         return v
     else:
-        input_text = read_input_text(txt_file)
         verdict = initialize_classification_vedict(source_file, input_text)
         if not apply_first_rules(source_file, verdict):
             apply_second_rules(verdict)
         return verdict
-
-
-def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
-    txt_file = external_convert(source_file, reuse_txt)
-    verdict = get_classification_verdict(source_file, txt_file)
-    if not keep_txt and os.path.exists(txt_file):
-        os.unlink(txt_file)
     return verdict
 
 

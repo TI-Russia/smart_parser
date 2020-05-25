@@ -5,3 +5,9 @@ if [ $? != 0 ]; then
     exit 1
 fi
 
+python check_search_engine.py --prefer-russian-search-engine
+
+if [ $? != 0 ]; then
+    echo "yandex banned us, captcha?"
+    exit 1
+fi

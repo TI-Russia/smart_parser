@@ -48,6 +48,13 @@ namespace Smart.Parser.Lib
                     year = int.Parse(commonYearMatches[0].Value);
                 }
             }
+            
+            var specificYearMatches = Regex.Matches(text, @"за(20\d\d)\b");
+            if (specificYearMatches.Count > 0)
+            {
+                year = int.Parse(specificYearMatches[0].Groups[1].Value);
+            }
+
             var minMatch = Regex.Match(text, @"Министерства(.+)Российской Федерации", RegexOptions.IgnoreCase);
             if (minMatch.Success)
             {
@@ -176,11 +183,12 @@ namespace Smart.Parser.Lib
             var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.Vehicle,out dummy);
             if (headerCell.MergedColsCount != 2)
                 return;
+
             var subCells = FindSubcellsUnder(adapter, headerCell);
             if (subCells.Count == 1)
                 return;
+
             string cleanHeader = headerCell.Text.ToLower().Replace(" ", "");
-            
             if (cleanHeader.Contains("транспортныесредства") && cleanHeader.Contains("марка") && cleanHeader.Contains("вид"))
             {
 

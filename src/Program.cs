@@ -54,7 +54,7 @@ namespace Smart.Parser
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
             CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
-            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://declarator.zapto.org:8091, the defaul value is read from env variable DECLARATOR_CONV_URL", false);
+            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://disclosures.ru:8091, the default value is read from env variable DECLARATOR_CONV_URL", false);
             CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
             CMDLineParser.Option useDecimalRawNormalizationOpt = parser.AddBoolSwitch("-decimal-raw-normalization", "print raw floats in Russian traditional format");
             parser.AddHelpOption();
@@ -441,6 +441,14 @@ namespace Smart.Parser
                 return 0;
 
             }
+
+            if (!File.Exists(declarationFile))
+            {
+                Logger.Info("ERROR: {0} file NOT exists", declarationFile);
+                return 0;
+            }
+                
+            
             ColumnPredictor.InitializeIfNotAlready();
 
             string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
@@ -467,7 +475,7 @@ namespace Smart.Parser
                     {
                         ParseDocumentSheet(adapter, curOutFile, declarationFile);
                     }
-                    catch (ColumnDetectorException e) {
+                    catch (ColumnDetectorException) {
                         Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)", sheetIndex));
                     }
                 }
@@ -534,12 +542,12 @@ namespace Smart.Parser
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
             var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
+
             // Try to extract declaration year from file name if we weren't able to get it from document title
             if (!columnOrdering.Year.HasValue)
             {
                 columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
             }
-            
 
             Logger.Info("Column ordering: ");
             foreach (var ordering in columnOrdering.ColumnOrder)
@@ -547,9 +555,10 @@ namespace Smart.Parser
                 Logger.Info(ordering.ToString());
             } 
             Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
-//            Logger.Info(String.Format("Parsing {0} Rows {1}", declarationFile, adapter.GetRowsCount()));
+            
             if (ColumnsOnly)
                 return 0;
+
             if (ColumnToDump != DeclarationField.None)
             {
                 DumpColumn(adapter, columnOrdering, ColumnToDump);
@@ -569,6 +578,13 @@ namespace Smart.Parser
                 Logger.Info("Declaration Ministry: {0} ", columnOrdering.MinistryName);
             }
 
+            if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) || 
+                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) || 
+                  columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands)))
+            {
+                Logger.Error("Insufficient fields: No Declarant Income fields found.");
+                return 0;
+            }
 
             Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);
             SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);

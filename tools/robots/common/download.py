@@ -7,15 +7,19 @@ import logging
 from unidecode import unidecode
 import os
 import shutil
-from robots.common.http_request import make_http_request, request_url_headers
+from robots.common.http_request import make_http_request, request_url_headers_with_global_cache
 from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from ConvStorage.conversion_client import TDocConversionClient
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
+import cgi
 
 
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
-    CONVERSION_CLIENT = None
+    CONVERSION_CLIENT: TDocConversionClient = None
+    HTTP_TIMEOUT = 30  # in seconds
+    LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
+    PDF_QUOTA_CONVERSION = 20 * 2**20 # in bytes
 
     @staticmethod
     def clear_cache_folder():
@@ -29,44 +33,64 @@ class TDownloadEnv:
         TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient()
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
-
-def find_simple_js_redirect(data):
-    res = re.search('((window|document).location\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data)
-    if res:
-        url = res.group(3)
-        return url
-    return None
+    @staticmethod
+    def send_pdf_to_conversion(filename, file_extension):
+        if TDownloadEnv.CONVERSION_CLIENT is None:
+            return
+        if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < TDownloadEnv.PDF_QUOTA_CONVERSION:
+            TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(filename, file_extension)
+        else:
+            TDownloadEnv.CONVERSION_CLIENT.logger.debug('skip sending a pdf to conversion (sum sent size exceeds {})'.format(
+                TDownloadEnv.PDF_QUOTA_CONVERSION))
 
 
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     if content_charset is not None:
         encoding = content_charset
     else: # todo: use BeautifulSoup here
-        match = re.search('charset\s*=\s*"?([^"\']+)', html_data.decode('latin', errors="ignore"))
+        match = re.search('charset\s*=\s*"?([^"\'>]+)', html_data.decode('latin', errors="ignore"))
         if match:
             encoding = match.group(1).strip()
         else:
             raise ValueError('unable to find encoding')
     if encoding.lower().startswith('cp-'):
         encoding = 'cp' + encoding[3:]
+    try:
+        encoded_data = html_data.decode(encoding, errors="ignore")
+        return encoded_data
+    except Exception as exp:
+        raise ValueError('unable to find encoding')
 
-    return html_data.decode(encoding, errors="ignore")
+
+def get_content_type_from_headers(headers, default_value="text"):
+    return headers.get('Content-Type', headers.get('Content-type', headers.get('content-type', default_value)))
 
 
-def http_get_with_urllib(url, search_for_js_redirect=True):
-    redirected_url, headers, data = make_http_request(url, "GET")
+def get_content_charset(headers):
+    if hasattr(headers, "_headers"):
+        # from urllib, headers is class Message
+        return headers.get_content_charset()
+    else:
+        # from curl, headers is a dict
+        content_type = get_content_type_from_headers(headers).lower()
+        _, params = cgi.parse_header(content_type)
+        return params.get('charset')
+
+
+def http_get_request_with_simple_js_redirect(logger, url):
+    redirected_url, headers, data = make_http_request(logger, url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
 
     try:
-        if headers.get('Content-Type', "text").lower().startswith('text'):
-            if search_for_js_redirect:
-                try:
-                    data_utf8 = convert_html_to_utf8_using_content_charset(headers.get_content_charset(), data)
-                    redirect_url = find_simple_js_redirect(data_utf8)
-                    if redirect_url is not None and redirect_url != url:
-                        return http_get_with_urllib(redirect_url, search_for_js_redirect=False)
-                except (HttpException, ValueError) as err:
-                    pass
-
+        if get_content_type_from_headers(headers).lower().startswith('text'):
+            try:
+                data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
+                match = re.search('((window|document).location\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data_utf8)
+                if match:
+                    redirect_url = match.group(3)
+                    if redirect_url != url:
+                        return make_http_request(logger, redirect_url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+            except (RobotHttpException, ValueError) as err:
+                pass
     except AttributeError:
         pass
     return redirected_url, headers, data
@@ -88,8 +112,7 @@ def save_downloaded_file(filename):
         logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
-    if TDownloadEnv.CONVERSION_CLIENT is not None:
-        TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(saved_filename, file_extension)
+    TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension)
     return saved_filename
 
 
@@ -116,14 +139,15 @@ def get_local_file_name_by_url(url):
         if not os.path.exists(folder):
             os.makedirs(folder)
     except FileNotFoundError as exp:
-        #logging.getLogger("dlrobot_logger").error("cannot create verbose path for {}, hash it".format(url))
         hashcode = hashlib.sha256(url.encode('latin', errors="ignore")).hexdigest()
         folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, hashcode)
+        if not os.path.exists(folder):
+            os.makedirs(folder)
     return os.path.join(folder, "dlrobot_data")
 
 
 def get_file_extension_by_content_type(headers):
-    content_type = headers.get('Content-Type', headers.get('Content-type', "text"))
+    content_type = get_content_type_from_headers(headers)
     content_disposition = headers.get('Content-Disposition')
     if content_disposition is not None:
         found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
@@ -196,20 +220,23 @@ class TDownloadedFile:
             self.redirected_url = self.page_info.get('redirected_url', self.original_url)
             self.file_extension = self.page_info.get('file_extension')
         else:
-            redirected_url, info, data = http_get_with_urllib(original_url)
+            logger = logging.getLogger("dlrobot_logger")
+            redirected_url, info, data = http_get_request_with_simple_js_redirect(logger, original_url)
             self.redirected_url = redirected_url
             self.data = data
-            assert hasattr(info, "_headers")
-            self.page_info['headers'] = dict(info._headers)
-            self.page_info['charset'] = info.get_content_charset()
+            if hasattr(info, "_headers"):
+                self.page_info['headers'] = dict(info._headers)
+            else:
+                assert type(info) == dict
+                self.page_info['headers'] = info
+            self.page_info['charset'] = get_content_charset(info)
             self.page_info['redirected_url'] = redirected_url
             self.page_info['original_url'] = original_url
             if len(self.data) > 0:
                 self.file_extension = self.calc_file_extension_by_data_and_headers()
                 self.page_info['file_extension'] = self.file_extension
                 self.write_file_to_cache()
-                if TDownloadEnv.CONVERSION_CLIENT is not None:
-                    TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(self.data_file_path, self.file_extension)
+                TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension)
 
     def write_file_to_cache(self):
         with open(self.data_file_path, "wb") as f:
@@ -240,11 +267,14 @@ class TDownloadedFile:
     def get_file_extension_only_by_headers(self):
         return get_file_extension_by_content_type(self.get_http_headers())
 
+
 # use it preliminary, because ContentDisposition and Content-type often contain errors
 def get_file_extension_only_by_headers(url):
-    _, headers = request_url_headers(url)
+    logger = logging.getLogger("dlrobot_logger")
+    _, headers = request_url_headers_with_global_cache(logger, url)
     ext = get_file_extension_by_content_type(headers)
     return ext
+
 
 def are_web_mirrors(domain1, domain2):
     try:
@@ -253,5 +283,5 @@ def are_web_mirrors(domain1, domain2):
         html2 = TDownloadedFile(domain2).data
         res = len(html1) == len(html2)  # it is enough
         return res
-    except HttpException as exp:
+    except RobotHttpException as exp:
         return False

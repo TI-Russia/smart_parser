@@ -1,313 +1,262 @@
-[
-    {
-        "files_count": 7
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Областные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/11",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Муниципальные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/4",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/38",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах за 2017 год.docx",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/371",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/371/dlrobot_data",
-        "sha256": "111aec95718ed59910020522d0bf2e33b04c69cffb9b52355a4664939ddd8bcc",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Областные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/11",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Муниципальные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/4",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/38",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах за 2016 год.docx",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/320",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/320/dlrobot_data",
-        "sha256": "19b1eb56ec024c19da50b7bc0f351211e6c969c1ff7328fcb9f4bf9bb254bc2f",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Областные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/11",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Муниципальные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/4",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/38",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах за 2018 год.docx",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/523",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/523/dlrobot_data",
-        "sha256": "42ee4888cd6cfc0cb1760087799419fe1be6e8c77e2012fa8d06b02088971308",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Областные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/11",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Муниципальные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/4",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/38",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах за 2013 год.docx",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/317",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/317/dlrobot_data",
-        "sha256": "7c736c7bd429a15574f6115cf76bad9193fd47e2f4af5105b1c8abf38ebb838b",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Областные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/11",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Муниципальные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/4",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/38",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах за 2014 год.docx",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/318",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/318/dlrobot_data",
-        "sha256": "8991d724cb1f15c57ce27e005025e19adb4073fc9b90b70be8012463dc5b4b9f",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Комиссия по соблюдению требований к служебному поведению и урегулированию конфликта интересов",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/27",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Комиссия по соблюдению требований к служебному поведению муниципальных служащих городского округа Богданович и урегулированию конфликта интересов.pdf",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/198",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/198/dlrobot_data",
-        "sha256": "e0f9a9a9018929ed332ca30deebbb6f7b973bffda143d56e3b89e93ad9d2121b",
-        "dl_recognizer_result": "declaration_result"
-    },
-    {
-        "click_path": [
-            {
-                "url": "http://spbogdo.ru",
-                "step": null,
-                "title": "Счетная палата",
-                "anchor_text": "Противодействие коррупции",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt",
-                "step": "anticorruption_div",
-                "title": "Счетная палата",
-                "anchor_text": "Областные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/11",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Муниципальные",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/documents/4",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/corrupt/38",
-                "step": "declarations",
-                "title": "Счетная палата",
-                "anchor_text": "Сведения о доходах за 2015 год.docx",
-                "engine": "selenium"
-            },
-            {
-                "url": "http://spbogdo.ru/file/download/319",
-                "step": "declarations"
-            }
-        ],
-        "cached_file": "cached/spbogdo.ru/file/download/319/dlrobot_data",
-        "sha256": "ecbd8d88181bdc29373c4de002649338b62a0d246e9a49ec0c1e64b77cd7f544",
-        "dl_recognizer_result": "declaration_result"
-    }
-]
+{
+    "files_count": 7,
+    "files_sorted (short report)": [
+        "cached/spbogdo.ru/file/download/317/dlrobot_data -1",
+        "cached/spbogdo.ru/file/download/318/dlrobot_data -1",
+        "cached/spbogdo.ru/file/download/319/dlrobot_data -1",
+        "cached/spbogdo.ru/file/download/320/dlrobot_data -1",
+        "cached/spbogdo.ru/file/download/371/dlrobot_data -1",
+        "cached/spbogdo.ru/file/download/523/dlrobot_data -1",
+        "cached/www.spbogdo.ru/file/download/198/dlrobot_data -1"
+    ],
+    "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "source:url": "http://spbogdo.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Ограничения",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/40",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/38",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2017 год.docx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/file/download/371",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/spbogdo.ru/file/download/371/dlrobot_data",
+            "sha256": "111aec95718ed59910020522d0bf2e33b04c69cffb9b52355a4664939ddd8bcc"
+        },
+        {
+            "click_path": [
+                {
+                    "source:url": "http://spbogdo.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Ограничения",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/40",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/38",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2016 год.docx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/file/download/320",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/spbogdo.ru/file/download/320/dlrobot_data",
+            "sha256": "19b1eb56ec024c19da50b7bc0f351211e6c969c1ff7328fcb9f4bf9bb254bc2f"
+        },
+        {
+            "click_path": [
+                {
+                    "source:url": "http://spbogdo.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Ограничения",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/40",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/38",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2018 год.docx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/file/download/523",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/spbogdo.ru/file/download/523/dlrobot_data",
+            "sha256": "42ee4888cd6cfc0cb1760087799419fe1be6e8c77e2012fa8d06b02088971308"
+        },
+        {
+            "click_path": [
+                {
+                    "source:url": "http://spbogdo.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Ограничения",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/40",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/38",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2013 год.docx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/file/download/317",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/spbogdo.ru/file/download/317/dlrobot_data",
+            "sha256": "7c736c7bd429a15574f6115cf76bad9193fd47e2f4af5105b1c8abf38ebb838b"
+        },
+        {
+            "click_path": [
+                {
+                    "source:url": "http://spbogdo.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Ограничения",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/40",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/38",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2014 год.docx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/file/download/318",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/spbogdo.ru/file/download/318/dlrobot_data",
+            "sha256": "8991d724cb1f15c57ce27e005025e19adb4073fc9b90b70be8012463dc5b4b9f"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.spbogdo.ru/corrupt/27",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Комиссия по соблюдению требований к служебному поведению муниципальных служащих городского округа Богданович и урегулированию конфликта интересов.pdf",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.spbogdo.ru/file/download/198",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.spbogdo.ru/file/download/198/dlrobot_data",
+            "sha256": "e0f9a9a9018929ed332ca30deebbb6f7b973bffda143d56e3b89e93ad9d2121b"
+        },
+        {
+            "click_path": [
+                {
+                    "source:url": "http://spbogdo.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Ограничения",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/40",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/corrupt/38",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2015 год.docx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://spbogdo.ru/file/download/319",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/spbogdo.ru/file/download/319/dlrobot_data",
+            "sha256": "ecbd8d88181bdc29373c4de002649338b62a0d246e9a49ec0c1e64b77cd7f544"
+        }
+    ]
+}

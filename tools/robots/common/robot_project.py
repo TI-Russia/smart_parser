@@ -2,38 +2,43 @@ import json
 import shutil
 import os
 import tempfile
+import time
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
-from robots.common.serp_parser import GoogleSearch
+from robots.common.serp_parser import SearchEngine
 from robots.common.web_site import TRobotWebSite, TRobotStep
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 
 
 class TRobotProject:
-    selenium_driver = TSeleniumDriver()
 
-    def __init__(self, logger, filename, robot_step_passports, export_folder):
+    def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
+        self.selenium_driver = TSeleniumDriver(logger)
         self.project_file = filename + ".clicks"
         if not os.path.exists(self.project_file):
             shutil.copy2(filename, self.project_file)
         self.offices = list()
         self.human_files = list()
         self.robot_step_passports = robot_step_passports
-        self.enable_search_engine = True  #switched off in tests, otherwize google shows captcha
+        self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
+        self.enable_selenium = enable_selenium
 
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.robot_step_passports)
 
     def __enter__(self):
-        TRobotProject.selenium_driver.download_folder = tempfile.mkdtemp()
-        TRobotProject.selenium_driver.start_executable()
+        if self.enable_selenium:
+            self.selenium_driver.download_folder = tempfile.mkdtemp()
+            self.selenium_driver.start_executable()
         return self
 
     def __exit__(self, type, value, traceback):
-        TRobotProject.selenium_driver.stop_executable()
-        shutil.rmtree(TRobotProject.selenium_driver.download_folder)
+        if self.enable_selenium:
+            self.selenium_driver.stop_executable()
+            shutil.rmtree(self.selenium_driver.download_folder)
 
     def write_project(self):
         with open(self.project_file, "w", encoding="utf8") as outf:
@@ -44,6 +49,11 @@ class TRobotProject:
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
+
+    def add_office(self, morda_url):
+        office_info = TRobotWebSite(self)
+        office_info.morda_url = morda_url
+        self.offices.append(office_info)
 
     def read_project(self):
         self.offices = list()
@@ -91,7 +101,7 @@ class TRobotProject:
             json.dump(result, outf, ensure_ascii=False, indent=4)
 
     def write_export_stats(self):
-        result = list()
+        files_with_click_path = list()
         for office_info in self.offices:
             for export_record in office_info.export_env.exported_files:
                 path = office_info.get_shortest_path_to_root(export_record.url)
@@ -100,16 +110,20 @@ class TRobotProject:
                     'cached_file': export_record.cached_file.replace('\\', '/'),
                     'sha256': export_record.sha256
                 }
-                if export_record.name_in_archive is not None:
-                    rec['name_in_archive'] = export_record.name_in_archive
-                result.append(rec)
-        result = sorted(result, key=(lambda x: x['sha256']))
+                if export_record.archive_index != -1:
+                    rec['archive_index'] = export_record.archive_index
+                files_with_click_path.append(rec)
+        files_with_click_path.sort(key=(lambda x: x['sha256']))
+        cached_files = list("{} {}".format(x['cached_file'], x.get('archive_index', -1)) for x in files_with_click_path)
+        cached_files.sort()
         with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
-            summary = {
-                "files_count": len(result)
+            report = {
+                "files_count": len(cached_files),
+                "files_sorted (short report)": cached_files,
+                "files_with_click_path (full report)": files_with_click_path
             }
-            result.insert(0, summary)
-            json.dump(result, outf, ensure_ascii=False, indent=4)
+            json.dump(report, outf, ensure_ascii=False, indent=4)
+
 
     def use_search_engine(self, step_info):
         request = step_info.step_passport['search_engine']['request']
@@ -117,20 +131,27 @@ class TRobotProject:
         self.logger.info('search engine request: {}'.format(request))
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
-        links_count = 0
-        try:
-            serp_urls = GoogleSearch.site_search(site, request, TRobotProject.selenium_driver)
-        except HttpException as err:
-            self.logger.error('cannot request search engine, exception {}'.format(err))
-            return
+        serp_urls = list()
+        for retry in range(3):
+            try:
+                serp_urls = SearchEngine.site_search(site, request, self.selenium_driver)
+                break
+            except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
+                self.logger.error('cannot request search engine, exception {}'.format(err))
+                if retry == 2:
+                    return
+                else:
+                    time.sleep(5)
+                    self.logger.error('retry...')
 
+        links_count = 0
         for url in serp_urls:
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
-            link_info.weight = TLinkInfo.MINIMAL_LINK_WEIGHT + 1  # > 0
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             step_info.add_link_wrapper(link_info)
+            links_count += 1
             if max_results == 1:
                 break  # one  link found
-            links_count += 1
         self.logger.info('found {} links using search engine'.format(links_count))
 
     def need_search_engine_before(self, step_info: TRobotStep):

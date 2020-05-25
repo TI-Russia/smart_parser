@@ -3,12 +3,12 @@ from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from collections import defaultdict
 from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
 from bs4 import BeautifulSoup
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException,InvalidSwitchToTargetException
 from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
                     web_link_is_absolutely_prohibited
 from robots.common.link_info import TLinkInfo
 from robots.common.primitives import get_html_title
-from robots.common.http_request import HttpException
+from robots.common.http_request import RobotHttpException
 
 
 class TUrlMirror:
@@ -97,6 +97,7 @@ class TRobotStep:
     def is_last_step(self):
         return self.get_step_name() == self.website.parent_project.robot_step_passports[-1]['step_name']
 
+
     def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
         for u in self.step_urls:
@@ -136,10 +137,7 @@ class TRobotStep:
         assert link_info.target_url is not None
         try:
             downloaded_file = TDownloadedFile(link_info.target_url)
-        except UnicodeEncodeError as err:
-            self.logger.error('cannot download page url={} while add_links, exception={}'.format(link_info.target_url, err))
-            return
-        except HttpException as err:
+        except RobotHttpException as err:
             self.logger.error(err)
             return
 
@@ -177,7 +175,7 @@ class TRobotStep:
     def add_page_links(self, url, fallback_to_selenium=True):
         try:
             downloaded_file = TDownloadedFile(url)
-        except (HttpException, UnicodeEncodeError) as err:
+        except RobotHttpException as err:
             self.logger.error(err)
             return
         if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
@@ -192,29 +190,28 @@ class TRobotStep:
             if already_processed is None:
                 find_links_in_html_by_text(self, url, soup)
             else:
-                self.logger.error(
+                self.logger.debug(
                     'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed))
 
                 if not fallback_to_selenium and len(list(soup.findAll('a'))) < 10:
-                    self.website.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
+                    self.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
                     fallback_to_selenium = True
 
             if fallback_to_selenium:  # switch off selenium is almost a panic mode (too many links)
                 if downloaded_file.get_file_extension_only_by_headers() != DEFAULT_HTML_EXTENSION:
                     # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
-                    self.website.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
+                    self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
                     click_all_selenium(self, url, self.website.parent_project.selenium_driver)
-        except (HttpException, WebDriverException) as e:
-            self.websiterlogger.error('add_links failed on url={}, exception: {}'.format(url, e))
+        except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as e:
+            self.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
-        if url_index > 300:  # and max(self.url_weights[-10:]) < 10:
-            if self.website.export_env.waiting_too_long():
-                self.website.logger.error("stop crawling since last time no declaration found")
-                return None
+        enough_crawled_urls = url_index > 200 or (url_index > 100 and max(self.url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
+        if not self.website.check_crawling_timeouts(enough_crawled_urls):
+            return None
         max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
         best_url = None
         for url, weight in self.pages_to_process.items():

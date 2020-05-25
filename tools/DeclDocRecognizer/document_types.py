@@ -1,5 +1,5 @@
 from collections import defaultdict
-from collections import defaultdict
+import re
 
 SOME_OTHER_DOCUMENTS = [
     'шаблоны',
@@ -16,6 +16,8 @@ SOME_OTHER_DOCUMENTS = [
     'распоряжение',
     'российская федерация федеральный закон',
     'приказ',
+    'методические рекомендации',
+    'график'
 ]
 
 
@@ -78,3 +80,20 @@ def russify(s):
     s = s.replace('o', 'о').replace('x', 'х').replace('e', 'е').replace('c', 'с').replace('p', 'р').replace('a', 'а')
     s = s.replace('k', 'к')
     return s
+
+
+def get_russian_normal_text_ratio(text):
+    russian_stop_words = {
+        'а', 'в', 'все', 'для', 'до', 'его', 'если', 'еще', 'же', 'за', 'и', 'из', 'или', 'иных', 'их', 'к', 'как',
+        'который', 'которых', 'мы', 'на', 'не', 'о', 'об', 'он', 'от', 'по', 'при', 'при', 'с', 'свой', 'собой',
+        'также', 'то', 'ты', 'у', 'этот', 'я'}
+    words_count = 0.0
+    stop_words_count = 0.0
+    # no lower, remember initials
+    for word in re.split('[^\w]+', text):
+        if word in russian_stop_words:
+            stop_words_count += 1
+        words_count += 1
+    return stop_words_count / (words_count + 0.00000001)
+
+

@@ -4,7 +4,7 @@ source ../setup_tests.sh
 python ../../create_json.py
 
 python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json \
-	--ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out &
+	--ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out --ocr-logs-folder  ../ocr.logs &
 conv_server_pid=$!
 disown
 
@@ -33,12 +33,23 @@ while true; do
     fi
 done
 
+
 sleep 10 # to update json
 
 
 [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
 sha256=`sha256sum $INPUT_FILE | awk '{print $1}'`
 http_code=`curl -s -w '%{http_code}'  "$DECLARATOR_CONV_URL?sha256=$sha256" --output $INPUT_FILE.docx`
+
+
+#wait ocr files processed
+while true; do 
+    files_count=`ls ../pdf.ocr/*.pdf | wc -l`
+    if [ "$files_count" == "0" ]; then
+       break
+    fi
+    sleep 10
+done
 
 kill $conv_server_pid >/dev/null
 

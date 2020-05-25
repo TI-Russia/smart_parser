@@ -3,6 +3,7 @@ import json
 import time
 import http.server
 import os
+import re
 import urllib
 import hashlib
 import shutil
@@ -12,7 +13,18 @@ import threading
 import tempfile
 import sys
 import queue
-from DeclDocRecognizer.document_types import TCharCategory
+from pathlib import Path
+from logging.handlers import RotatingFileHandler
+
+def convert_to_seconds(s):
+    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
+    if s is None or len(s) == 0:
+        return 0
+    if seconds_per_unit.get(s[-1]) is not None:
+        return int(s[:-1]) * seconds_per_unit[s[-1]]
+    else:
+        return int(s)
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -25,30 +37,40 @@ def parse_args():
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
     parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
     parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
+    parser.add_argument("--ocr-logs-folder", dest='ocr_logs_folder', required=False, default="ocr.logs")
+    parser.add_argument("--ocr-timeout", dest='ocr_timeout', required=False,
+                        help="delete file if ocr cannot process it in this timeout, default 3h", default="3h")
     parser.add_argument("--microsoft-pdf-2-docx",
                         dest='microsoft_pdf_2_docx',
                         required=False,
                         default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
-    return parser.parse_args()
+    args = parser.parse_args()
+    TConvDatabase.ocr_timeout = convert_to_seconds(args.ocr_timeout)
+    return args
 
 
 def setup_logging(logger, logfilename):
     logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     if os.path.exists(logfilename):
         os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh = RotatingFileHandler(logfilename, encoding="utf8", maxBytes=1024*1024*1024, backupCount=2)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
-    # create console handler with a higher log level
-    #ch = logging.StreamHandler()
-    #ch.setLevel(logging.INFO)
-    #logger.addHandler(ch)
+
+
+def get_directory_size(logger, dir):
+    dir_size = 0
+    for x in os.listdir(dir):
+        try:
+            if os.path.exists(x):
+                dir_size += Path(x).stat()
+        except Exception as exp:
+            logger.error("get_directory_size fails: {}".format(exp))
+
+    return dir_size
 
 
 def find_new_files_and_add_them_to_json(conv_db_json, converted_files_folder, output_file):
@@ -89,38 +111,6 @@ def find_new_files_and_add_them_to_json(conv_db_json, converted_files_folder, ou
         json.dump(conv_db_json, outf, indent=4)
 
 
-def check_pdf_has_text(logger, filename):
-    text_file_name = "dummy.txt"
-    log_file_name = "pdftotext.log"
-    with open(log_file_name, "w", encoding="utf8") as log_file:
-        logger.info("pdftotext {} {}".format(filename, text_file_name))
-        subprocess.run(['pdftotext', filename, text_file_name], stderr=log_file, stdout=subprocess.DEVNULL)
-    logdata = ""
-    textdata = ""
-    try:
-        if not os.path.exists(log_file_name):
-            return False
-        with open(log_file_name, "r") as inpf:
-            logdata = inpf.read()
-        os.unlink(log_file_name)
-
-        if not os.path.exists(text_file_name):
-            return False
-        with open(text_file_name, "r", encoding="utf8") as inpf:
-            textdata = inpf.read()
-        os.unlink(text_file_name)
-    except Exception as exp:
-        logger.info("Exception {}: {}".format(exp, filename))
-
-    if logdata.find("PDF file is damaged") != -1:
-        return False  # "complicated_pdf" test case
-    if len(textdata) < 500:
-        return False
-    if TCharCategory.get_most_popular_char_category(textdata[:500]) != 'RUSSIAN_CHAR':
-        return False  # "must_be_ocred" test case
-    return True
-
-
 def strip_drm(logger, filename, stripped_file):
     with open("crack.info", "w", encoding="utf8") as outf:
         subprocess.run(['pdfcrack', filename], stderr=subprocess.DEVNULL, stdout=outf)
@@ -157,7 +147,6 @@ def convert_with_microsoft_word(logger, microsoft_pdf_2_docx, filename):
         except Exception as exp:
             pass
 
-
     taskkill_windows('winword.exe')
     taskkill_windows('pdfreflow.exe')
 
@@ -178,6 +167,8 @@ class TInputTask:
 
 
 class TConvDatabase:
+    ocr_timeout = 60*60*3 #3 hours
+
     def __init__(self, args):
         self.args = args
         self.conv_db_json_file_name = args.db_json
@@ -194,6 +185,7 @@ class TConvDatabase:
         self.input_thread = None
         self.stop_input_thread = False
         self.input_task_queue = queue.Queue()
+        self.all_put_files_count = 0
 
     def get_converted_file_name(self, sha256):
         value = self.conv_db_json['files'].get(sha256)
@@ -241,24 +233,23 @@ class TConvDatabase:
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
-        if not self.args.enable_ocr or check_pdf_has_text(self.logger, stripped_file):
-            self.logger.info("convert {} with microsoft word".format(input_file))
-            convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
-            docxfile = stripped_file + ".docx"
-            if not os.path.exists(docxfile):
+        self.logger.info("convert {} with microsoft word".format(input_file))
+        convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
+        docxfile = stripped_file + ".docx"
+        if os.path.exists(docxfile):
+            self.logger.info("move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
+            shutil.move(docxfile, os.path.join(self.converted_files_folder, basename + ".docx"))
+            shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
+            os.unlink(stripped_file)
+        else:
+            if not self.args.enable_ocr:
                 self.logger.info("cannot process {}, delete it".format(input_file))
                 os.unlink(input_file)
                 os.unlink(stripped_file)
             else:
-                self.logger.info(
-                    "move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
-                shutil.move(docxfile, os.path.join(self.converted_files_folder, basename + ".docx"))
+                self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
+                shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, basename))
                 shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
-                os.unlink(stripped_file)
-        else:
-            self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
-            shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, basename))
-            shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
 
     def create_folders(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
@@ -267,6 +258,8 @@ class TConvDatabase:
             shutil.rmtree(self.args.input_folder, ignore_errors=True)
         if not os.path.exists(self.args.input_folder):
             os.mkdir(self.args.input_folder)
+        if not os.path.exists(self.args.ocr_logs_folder):
+            os.mkdir(self.args.ocr_logs_folder)
         self.logger.debug("input folder for new files: {} ".format(self.args.input_folder))
 
         if not os.path.exists(self.args.ocr_output_folder):
@@ -295,38 +288,112 @@ class TConvDatabase:
         with open(self.conv_db_json_file_name, "w") as outf:
             json.dump(self.conv_db_json, outf, indent=4)
 
-    def process_input_tasks(self):
-        while not self.stop_input_thread:
-            time.sleep(10)
-            new_files_in_db = False
-            while not self.input_task_queue.empty():
-                task = self.input_task_queue.get()
+    def process_ocr_logs(self):
+        for log_file in os.listdir(self.args.ocr_output_folder):
+            if not log_file.endswith(".txt"):
+                continue
+            broken_files = list()
+            log_is_completed = False
+            log_file_full_path = os.path.join(self.args.ocr_output_folder, log_file)
+            try:
+                with open(log_file_full_path, "r", encoding="utf-16-le", errors="ignore") as inp:
+                    for line in inp:
+                        m = re.match('.*Error:.*: ([^ ]+.pdf)$', line)
+                        if m is not None:
+                            broken_files.append(m.group(1))
+                        if line.find('Pages processed') != -1:
+                            log_is_completed = True
+            except Exception as exp:
+                self.logger.error("fail to read \"{}\", exception: {}".format(log_file, exp))
+                continue
+
+            if not log_is_completed:
+                self.logger.debug("skip incompleted log_file \"{}\"".format(log_file))
+                continue
+            self.logger.debug("process log_file \"{}\" with {} broken files".format(log_file, len(broken_files)))
+            try:
+                shutil.move(log_file_full_path, os.path.join(self.args.ocr_logs_folder, log_file + "." + str(time.time())))
+            except Exception as exp:
+                self.logger.error("exception: {}".format(exp))
+            for filename in broken_files:
+                if os.path.exists(filename):
+                    self.logger.debug("remove {}, since ocr cannot process it (\"{}\")".format(filename, log_file))
+                    delete_file_if_exists(self.logger, filename)
+
+    def process_docx_from_winword(self):
+        new_files_in_db = False
+        while not self.input_task_queue.empty():
+            task = self.input_task_queue.get()
+            try:
+                self.process_one_input_file(task.file_path)
+                new_files_in_db = True
+            except Exception as exp:
+                self.logger.error("Exception: {}".format(exp))
+                if os.path.exists(task.file_path):
+                    self.logger.error("delete {}".format(task.file_path))
+                    os.unlink(task.file_path)
+        return new_files_in_db
+
+    def process_docx_from_ocr(self):
+        new_files_in_db = False
+        for some_file in os.listdir(self.args.ocr_output_folder):
+            if not some_file.endswith(".docx"):
+                continue
+            for try_index in [1, 2, 3]:
+                self.logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
                 try:
-                    self.process_one_input_file(task.file_path)
+                    self.move_one_ocred_file(some_file)
                     new_files_in_db = True
+                    break
                 except Exception as exp:
-                    self.logger.error("Exception: {}".format(exp))
-                    if os.path.exists(task.file_path):
-                        self.logger.error("delete {}".format(task.file_path))
-                        os.unlink(task.file_path)
+                    self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
+                    time.sleep(60)
+            delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
+        return new_files_in_db
 
-            for some_file in os.listdir(self.args.ocr_output_folder):
-                if not some_file.endswith(".docx"):
-                    continue
-                for try_index in [1, 2, 3]:
-                    self.logger.info("got file {} from finereader try to move it, trial No {}".format(some_file, try_index))
-                    try:
-                        self.move_one_ocred_file(some_file)
-                        new_files_in_db = True
-                        break
-                    except Exception as exp:
-                        self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
-                        time.sleep(60)
+    def get_stats(self):
+        try:
+            return {
+                'all_put_files_count': self.all_put_files_count,
+                'input_task_queue': self.input_task_queue.qsize(),
+                'ocr_pending_files_count': len(os.listdir(self.args.ocr_input_folder)),
+                'ocr_pending_all_file_size': get_directory_size(self.logger, self.args.ocr_input_folder),
+                'winword_input_queue_size': len(os.listdir(self.args.input_folder)),
+            }
+        except Exception as exp:
+            return {"exception": str(exp)}
 
-                delete_file_if_exists(logger, os.path.join(args.ocr_output_folder, some_file))
+    def process_stalled_files(self):
+        current_time = time.time()
+        for file in os.listdir(self.args.ocr_input_folder):
+            fpath = os.path.join(self.args.ocr_input_folder, file)
+            timestamp = Path(fpath).stat().st_mtime
+            if current_time - timestamp > TConvDatabase.ocr_timeout:
+                self.logger.error("delete orphan file {} after stalling {} secongs".format(
+                    fpath, TConvDatabase.ocr_timeout))
+                os.unlink(fpath)
 
-            if new_files_in_db:
+    def process_input_tasks(self):
+        save_files_count = -1
+        file_garbage_collection_timestamp = 0
+        sleep_seconds = 10
+        while not self.stop_input_thread:
+            time.sleep(sleep_seconds)
+            new_files_from_winword = self.process_docx_from_winword()
+            new_files_from_ocr = self.process_docx_from_ocr()
+            if new_files_from_winword or new_files_from_ocr:
                 self.rebuild_json_wrapper()
+
+            current_time = time.time()
+            if current_time - file_garbage_collection_timestamp >= 30:  # just not too often
+                file_garbage_collection_timestamp = current_time
+                self.process_ocr_logs()
+                self.process_stalled_files()
+                files_count = len(os.listdir(self.args.ocr_input_folder))
+                if save_files_count != files_count:
+                    save_files_count = files_count
+                    self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
+                    
 
     def start_input_files_thread(self):
         self.input_thread = threading.Thread(target=self.process_input_tasks, args=())
@@ -363,7 +430,7 @@ class TConvDatabase:
 
 
 CONV_DATABASE = None
-
+ALLOWED_FILE_EXTENSTIONS={'.pdf'}
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
@@ -382,6 +449,21 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         global CONV_DATABASE
         CONV_DATABASE.logger.debug(msg_format % args)
 
+    def process_special_commands(self):
+        global CONV_DATABASE
+        if self.path == "/ping":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"yes")
+            return True
+        if self.path == "/stat":
+            self.send_response(200)
+            self.end_headers()
+            stats = json.dumps(CONV_DATABASE.get_stats())
+            self.wfile.write(stats.encode("utf8"))
+            return True
+        return False
+
     def do_GET(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
@@ -389,10 +471,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         global CONV_DATABASE
         CONV_DATABASE.input_files_thread_is_alive()
         CONV_DATABASE.logger.debug(self.path)
-        if self.path == "/ping":
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(b"yes")
+        if self.process_special_commands():
             return
 
         query_components = dict()
@@ -425,12 +504,13 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
     def do_PUT(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
-        global CONV_DATABASE
+        global CONV_DATABASE, ALLOWED_FILE_EXTENSTIONS
         CONV_DATABASE.input_files_thread_is_alive()
         if self.path is None:
             send_error("no file specified")
             return
-        action, file_extension = os.path.split(self.path)
+        action = os.path.dirname(self.path)
+        _, file_extension = os.path.splitext(os.path.basename(self.path))
         action = action.strip('//')
         if action == "convert_if_absent":
             rebuild = False
@@ -439,10 +519,14 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         else:
             send_error("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
             return
-        if len(file_extension) <= 3:
-            send_error("bad file extension")
+        if file_extension not in ALLOWED_FILE_EXTENSTIONS:
+            send_error("bad file extension, can be {}".format(ALLOWED_FILE_EXTENSTIONS))
             return
         file_length = int(self.headers['Content-Length'])
+        max_file_size = 2**25
+        if file_length > max_file_size:
+            send_error("file is too large (size must less than {} bytes ".format(max_file_size))
+            return
         CONV_DATABASE.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
         sha256 = hashlib.sha256(file_bytes).hexdigest()
@@ -458,6 +542,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             return
 
+        CONV_DATABASE.all_put_files_count += 1
+
         self.send_response(201, 'Created')
         self.end_headers()
         #reply_body = 'Saved file {} (file length={})\n'.format(self.path, file_length)
@@ -467,7 +553,6 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
 if __name__ == '__main__':
     assert shutil.which("qpdf") is not None # sudo apt install qpdf
     assert shutil.which("pdfcrack") is not None #https://sourceforge.net/projects/pdfcrack/files/
-    assert shutil.which("pdftotext") is not None #http://www.xpdfreader.com/download.html
 
     args = parse_args()
     if args.server_address is None:

@@ -4,10 +4,9 @@ from robots.common.content_types import ALL_CONTENT_TYPES
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from selenium.webdriver.common.action_chains import ActionChains
 
-import logging
 import os
 import shutil
 from pathlib import Path
@@ -27,9 +26,10 @@ def make_folder_empty(folder):
 
 
 class TSeleniumDriver:
-    def __init__(self, headless=True, download_folder=None, loglevel=None):
+    def __init__(self, logger, headless=True, download_folder=None, loglevel=None):
+        self.logger = logger
         self.the_driver = None
-        self.driver_processed_urls_count  = 0
+        self.driver_processed_urls_count = 0
         self.download_folder = download_folder
         assert download_folder != "."
         self.headless = headless
@@ -49,7 +49,16 @@ class TSeleniumDriver:
             options.set_preference("browser.download.manager.showAlertOnComplete", False)
             options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
-        self.the_driver = webdriver.Firefox(firefox_options=options)
+        for retry in range(3):
+            try:
+                self.the_driver = webdriver.Firefox(firefox_options=options)
+                break
+            except (WebDriverException, InvalidSwitchToTargetException) as exp:
+                if retry == 2:
+                    raise
+                self.logger.error("Exception:{}, sleep and retry...".format(str(exp)))
+                time.sleep(10)
+
 
     def stop_executable(self):
         if self.the_driver is not None:
@@ -64,14 +73,20 @@ class TSeleniumDriver:
         self.driver_processed_urls_count += 1
         while len(self.the_driver.window_handles) > 1:
             self.the_driver.close()
+        self.logger.debug("selenium navigate to {}, window tabs count={}".format(url, len(self.the_driver.window_handles)))
         self.the_driver.get(url)
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
-    def _navigate_and_get_links(self, url, timeout=6):
+    def _navigate_and_get_links(self, url, timeout=4):
         self.navigate(url)
         time.sleep(timeout)
+        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(1)
+        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(1)
+
         links = self.get_buttons_and_links()
         try:
             for link in links:
@@ -83,7 +98,7 @@ class TSeleniumDriver:
             return self.get_buttons_and_links()
 
     def restart(self):
-        logging.getLogger("dlrobot_logger").error("restart selenium")
+        self.logger.error("restart selenium")
         self.stop_executable()
         self.start_executable()
         time.sleep(10)
@@ -91,9 +106,8 @@ class TSeleniumDriver:
     def navigate_and_get_links(self, url, timeout=6):
         try:
             return self._navigate_and_get_links(url, timeout)
-        except WebDriverException as exp:
-            logger = logging.getLogger("dlrobot_logger")
-            logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
+        except (WebDriverException, InvalidSwitchToTargetException) as exp:
+            self.logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
             self.restart()
             return self._navigate_and_get_links(url, timeout)
 
@@ -136,8 +150,7 @@ class TSeleniumDriver:
         if self.the_driver.current_url != save_current_url:
             self.the_driver.get(link_info.source_url)  # hope it leads to save_current_url
             if save_current_url != link_info.source_url:
-                logger = logging.getLogger("dlrobot_logger")
-                logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
+                self.logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
                     save_current_url, self.the_driver.current_url))
 
 

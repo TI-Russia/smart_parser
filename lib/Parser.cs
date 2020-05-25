@@ -239,7 +239,7 @@ namespace Smart.Parser.Lib
 
             public void InitDeclarantProperties(DataRow row)
             {
-                CurrentDeclarant.NameRaw = row.PersonName;
+                CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit();
                 CurrentDeclarant.Occupation = row.Occupation;
                 CurrentDeclarant.Department = row.Department;
                 CurrentDeclarant.Ordering = row.ColumnOrdering;
@@ -340,7 +340,8 @@ namespace Smart.Parser.Lib
             {
                 borderFinder.CreateNewSection(rowOffset, columnOrdering.Section);
             }
-            
+
+            bool skipEmptyPerson = false;
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -382,19 +383,25 @@ namespace Smart.Parser.Lib
                 if (currRow.PersonName != String.Empty)
                 {
                     borderFinder.CreateNewDeclarant(Adapter, currRow);
+                    if (borderFinder.CurrentPerson != null)
+                        skipEmptyPerson = false;
                 }
-                else if  (currRow.RelativeType !=  String.Empty)
+                else if  (currRow.RelativeType != String.Empty)
                 {
-                    borderFinder.CreateNewRelative(currRow);
+                    if (!skipEmptyPerson)
+                        borderFinder.CreateNewRelative(currRow);
                 }
                 else 
                 {
                     if (borderFinder.CurrentPerson == null && FailOnRelativeOrphan)
                     {
-                        throw new SmartParserException("No person to attach info");
+                        skipEmptyPerson = true;
+                        continue;
+                        // throw new SmartParserEmptyPersonException(String.Format("No person to attach info on row={0}", row));
                     }
                 }
-                borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
+                if (!skipEmptyPerson)
+                    borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
 
@@ -449,7 +456,7 @@ namespace Smart.Parser.Lib
             }
         }
 
-        void AddRealEstateWithNaturalText (DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
+        void AddRealEstateWithNaturalText(DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(fieldName))
             {
@@ -544,7 +551,8 @@ namespace Smart.Parser.Lib
                 AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
                 return;
             }
-            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType);
+            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false);
+            string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false);
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false);
 
@@ -552,11 +560,20 @@ namespace Smart.Parser.Lib
             {
                 if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
                 {
-                    ParseStatePropertyManyValuesInOneCell(statePropTypeStr, statePropSquareStr, statePropCountryStr, person);
+                    ParseStatePropertyManyValuesInOneCell(
+                        statePropTypeStr, 
+                        statePropOwnershipTypeStr,
+                        statePropSquareStr, 
+                        statePropCountryStr, 
+                        person);
                 }
                 else
                 {
-                    ParseStatePropertySingleRow(statePropTypeStr, statePropSquareStr, statePropCountryStr, person);
+                    ParseStatePropertySingleRow(statePropTypeStr, 
+                        statePropOwnershipTypeStr, 
+                        statePropSquareStr, 
+                        statePropCountryStr, 
+                        person);
                 }
             }
             catch (Exception e)
@@ -629,7 +646,7 @@ namespace Smart.Parser.Lib
                 {
                     if (person is PublicServant)
                     {
-                        Logger.Debug(((PublicServant)person).NameRaw.ReplaceEolnWithSpace());
+                        Logger.Debug("PublicServant: " + ((PublicServant)person).NameRaw.ReplaceEolnWithSpace());
                     }
                     bool foundIncomeInfo = false;
                     
@@ -707,9 +724,14 @@ namespace Smart.Parser.Lib
             }
             else
             {
-                var m = r.GetContents(DeclarationField.VehicleModel);
                 var t = r.GetContents(DeclarationField.VehicleType);
+                var m = r.GetContents(DeclarationField.VehicleModel, false);
                 var text = t + " " + m;
+                if (t == m)
+                {
+                    text = t;
+                    m = "";
+                }
                 if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
                     person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
             }
@@ -731,7 +753,11 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static public void ParseStatePropertySingleRow(string statePropTypeStr, string statePropSquareStr, string statePropCountryStr, Person person)
+        static public void ParseStatePropertySingleRow(string statePropTypeStr,
+            string statePropOwnershipTypeStr,
+            string statePropSquareStr,
+            string statePropCountryStr,
+            Person person)
         {
             statePropTypeStr = statePropTypeStr.Trim();
             if (DataHelper.IsEmptyValue(statePropTypeStr))
@@ -746,6 +772,8 @@ namespace Smart.Parser.Lib
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
             stateProperty.square_raw = NormalizeRawDecimalForTest(statePropSquareStr);
             stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
+            if (statePropOwnershipTypeStr != "")
+                stateProperty.own_type_raw = statePropOwnershipTypeStr;
             stateProperty.own_type_by_column = StateString;
             CheckProperty(stateProperty);
             person.RealEstateProperties.Add(stateProperty);
@@ -810,10 +838,7 @@ namespace Smart.Parser.Lib
             {
                 return result;
             }
-            string[] lines = value.Trim(' ', ';').Split(';');
-            if (lines.Length != linesWithNumbers.Count) {
-                lines = value.Split('\n');
-            }
+            var lines = SplitJoinedLinesByFuzzySeparator(value, linesWithNumbers);
             Debug.Assert(linesWithNumbers.Count > 1);
             int startLine = linesWithNumbers[0];
             int numberIndex = 1;
@@ -850,6 +875,33 @@ namespace Smart.Parser.Lib
             return result;
         }
 
+        private static string[] SplitJoinedLinesByFuzzySeparator(string value, List<int> linesWithNumbers)
+        {
+            string[] lines;
+
+            // Eg: "1. Квартира\n2. Квартира"
+            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s").Count > 0)
+            {
+                lines = (string[]) Regex.Split(value, @"\d\.\s").Skip(1).ToArray();
+                return lines;
+            }
+
+            // Eg: "- Квартира\n- Квартира"
+            if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s").Count > 0)
+            {
+                lines = (string[]) Regex.Split(value, @"\n\p{Pd}");
+                return lines;
+            }
+
+            lines = value.Trim(' ', ';').Split(';');
+            if (lines.Length != linesWithNumbers.Count)
+            {
+                lines = value.Split('\n');
+            }
+
+            return lines;
+        }
+
         static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
         {
             if (index >= body.Count)
@@ -881,16 +933,22 @@ namespace Smart.Parser.Lib
                 );
             }
         }
-        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr, string areaStr, string countryStr, Person person)
+        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr,
+            string ownTypeStr,
+            string areaStr,
+            string countryStr,
+            Person person)
         {
             List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
             List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
+            List<string> estateOwnTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
             List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
             List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
             for (int i = 0; i < areas.Count; ++i)
             {
                 ParseStatePropertySingleRow(
                     GetListValueOrDefault(estateTypes, i, ""),
+                    GetListValueOrDefault(estateOwnTypes, i, ""),
                     GetListValueOrDefault(areas, i, ""),
                     GetListValueOrDefault(countries, i, ""),
                     person

@@ -82,12 +82,21 @@ class TExportFileSet:
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
         self.waiting_conversion = False
 
-    def run_dl_recognizer_wrapper(self):
-        self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
+    def run_dl_recognizer_wrapper(self, logger):
+        try:
+            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
+            self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
+        except Exception as exp:
+            logger.error(exp)
 
 
-def check_html_can_be_declaration_preliminary(html):
+def check_html_can_be_declaration_preliminary(downloaded_file):
     # dl_recognizer is called afterwards
+    try:
+        html = downloaded_file.convert_html_to_utf8()
+    except ValueError as exp:
+        # cannot find encoding
+        return False
     html = html.lower()
     words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
     numbers = re.search('[0-9]{6}', html) is not None # доход
@@ -104,10 +113,6 @@ class TExportEnvironment:
         self.exported_urls = set()
         self.last_found_declaration_time = time.time()
 
-    def waiting_too_long(self):
-        # last half hour no declaration found
-        return time.time() - self.last_found_declaration_time > 60 * 30
-
     def to_json(self):
         return list(x.to_json() for x in self.exported_files)
 
@@ -116,6 +121,7 @@ class TExportEnvironment:
         if rec is not None:
             self.exported_files = list(TExportFile(init_json=x) for x in rec)
 
+    # todo: do not save file copies
     def export_one_file_tmp(self, url, cached_file, extension, parent_record):
         if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             return
@@ -146,10 +152,10 @@ class TExportEnvironment:
                     not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
                     file_set.waiting_conversion = True
                 else:
-                    file_set.run_dl_recognizer_wrapper()
+                    file_set.run_dl_recognizer_wrapper(self.logger)
                     if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
                         self.last_found_declaration_time = time.time()
-                        self.logger.debug("found declaration")
+                        self.logger.debug("found a declaration")
                 self.export_files_by_sha256[new_file.sha256] = file_set
             else:
                 found_file.file_copies.append(new_file)
@@ -161,7 +167,7 @@ class TExportEnvironment:
         self.exported_urls.add(url)
 
         if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-            if not check_html_can_be_declaration_preliminary(downloaded_file.convert_html_to_utf8()):
+            if not check_html_can_be_declaration_preliminary(downloaded_file):
                 self.logger.debug("do not export {} because of preliminary check".format(url))
                 return
 
@@ -192,7 +198,7 @@ class TExportEnvironment:
     def run_postponed_dl_recognizers(self):
         for sha256, file_set in self.export_files_by_sha256.items():
             if file_set.waiting_conversion:
-                file_set.run_dl_recognizer_wrapper()
+                file_set.run_dl_recognizer_wrapper(self.logger)
                 file_set.waiting_conversion = False
 
     def reorder_export_files_and_delete_non_declarations(self):
@@ -203,7 +209,7 @@ class TExportEnvironment:
         for sha256, file_set in self.export_files_by_sha256.items():
             # make test results stable
             if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
-                file_set.file_copies.sort(key=(lambda x: (len(x.url), x.url, x.archive_index)), reverse=True)
+                file_set.file_copies.sort(key=(lambda x: (len(x.url), x.url, x.archive_index)))
                 chosen_file = copy.copy(file_set.file_copies[0])
                 self.logger.debug("export url: {} cached: {}".format(chosen_file.url, chosen_file.cached_file))
                 old_file_name = chosen_file.export_path

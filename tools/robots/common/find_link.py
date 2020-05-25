@@ -3,9 +3,9 @@ import urllib.error
 import urllib.parse
 from robots.common.download import are_web_mirrors
 from robots.common.popular_sites import is_super_popular_domain
-from robots.common.http_request import consider_request_policy
+from robots.common.http_request import TRequestPolicy
 from robots.common.primitives import get_site_domain_wo_www
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import re
 from robots.common.link_info import TLinkInfo, TClickEngine
 
@@ -38,8 +38,12 @@ def check_href_elementary(href):
 def web_link_is_absolutely_prohibited(source, href):
     if len(href) == 0:
         return True
-    if href.find('redirect') != -1:
-        return True
+
+    #http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
+    #href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
+    #if href.find('redirect') != -1:
+    #    return True
+
     if not check_href_elementary(href):
         return True
     if source.strip('/') == href.strip('/'):
@@ -118,7 +122,7 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     tag_name = element.tag_name
     link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
     page_html = driver_holder.the_driver.page_source
-    consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
+    TRequestPolicy.consider_request_policy(step_info.logger, main_url + " elem_index=" + str(element_index), "click_selenium")
 
     link_info = TLinkInfo(TClickEngine.selenium, main_url, None,
                           page_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index)
@@ -135,7 +139,7 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
 def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={}".format(main_url))
-    consider_request_policy(main_url, "GET_selenium")
+    TRequestPolicy.consider_request_policy(step_info.logger, main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
     page_html = driver_holder.the_driver.page_source
     for element_index in range(len(elements)):
@@ -157,7 +161,7 @@ def click_all_selenium(step_info, main_url, driver_holder):
                 try:
                     click_selenium_if_no_href(step_info, main_url, driver_holder,  element, element_index)
                     elements = driver_holder.get_buttons_and_links()
-                except WebDriverException as exp:
+                except (WebDriverException, InvalidSwitchToTargetException) as exp:
                     logger.error("exception: {}, try restart and get the next element".format(str(exp)))
                     driver_holder.restart()
                     elements = driver_holder.navigate_and_get_links(main_url)

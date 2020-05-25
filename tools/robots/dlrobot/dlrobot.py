@@ -1,19 +1,15 @@
-﻿import re
-import os
+﻿import os
 import argparse
 import logging
 import sys
 import traceback
-from robots.common.download import get_file_extension_only_by_headers, TDownloadEnv
+from robots.common.download import TDownloadEnv
 from robots.common.robot_project import TRobotProject
 from robots.common.robot_step import TRobotStep
-from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
-from robots.common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from robots.common.primitives import normalize_and_russify_anchor_text, check_link_sitemap, check_anticorr_link_text, \
-                                    check_sub_page_or_iframe
-from robots.common.http_request import HttpException
-from robots.common.find_link import TLinkInfo
-
+from robots.common.web_site import TRobotWebSite
+from robots.common.primitives import  check_link_sitemap, check_anticorr_link_text
+from robots.dlrobot.declaration_link import looks_like_a_declaration_link
+import platform
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_logger")
@@ -34,140 +30,6 @@ def setup_logging(logfilename):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
     return logger
-
-NEGATIVE_WORDS = [
-    'координат',  'заседании',
-    #'должност', # замещающих должности
-    'выборы',    'памятка',    'доклад',
-    'конкурс',    'пресс-релиз',    'правила',
-    'положение',    'методические',    'заявление',
-    'схема',    'концепция',    'доктрина',
-    'технические',    '^федеральный',    '^историческ',
-    '^закон',    'новости', "^формы", "обратная", "обращения",
-    "^перечень", "прочие", "слабовидящих"
-] + ['^{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
-# document type  (указ, утверждена) can be inside the title, for example:
-#сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении министерства здравоохранения российской федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте министерства здравоохранения российской федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным указом президента российской федерации от 8 июля 2013 г. № 613
-
-NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WORDS)))
-
-
-def has_negative_words(anchor_text):
-    global NEGATIVE_REGEXP
-    return NEGATIVE_REGEXP.search(anchor_text) is not None
-
-
-def looks_like_a_document_link(link_info: TLinkInfo):
-    global ACCEPTED_DECLARATION_FILE_EXTENSIONS
-
-    # check anchor text
-    anchor_text_ru = normalize_and_russify_anchor_text(link_info.anchor_text)
-    anchor_text_en = link_info.anchor_text.lower()
-    if re.search('(скачать)|(загрузить)', anchor_text_ru) is not None:
-        return True
-    if anchor_text_en.find("download") != -1:
-        return True
-    for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
-        if e == DEFAULT_HTML_EXTENSION:
-            continue
-        # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
-        if anchor_text_en.find(e[1:]) != -1:
-            return True
-
-    # check url path or make http head request
-    if link_info.target_url is not None:
-        target = link_info.target_url.lower()
-        if re.search('(docs)|(documents)|(files)|(download)', target):
-            return True
-        if target.endswith('html') or target.endswith('htm'):
-            return False
-        if target.endswith('.jpg') or target.endswith('.png'):
-            return False
-        try:
-            ext = get_file_extension_only_by_headers(link_info.target_url)
-            return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except HttpException as err:
-            if err.count == 1:
-                logging.getLogger("dlrobot_logger").error(err)
-            return False
-
-    return False
-
-
-def looks_like_a_declaration_link(link_info: TLinkInfo):
-    # here is a place for ML
-    anchor_text = normalize_and_russify_anchor_text(link_info.anchor_text)
-    if re.search('^(сведения)|(справк[аи]) о доходах', anchor_text):
-        link_info.weight = 50
-        logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
-        return True
-    page_html = normalize_and_russify_anchor_text(link_info.page_html)
-    if has_negative_words(anchor_text):
-        return False
-    income_regexp = '(доход((ах)|(е)))|(коррупц)'
-
-    good_doc_type_anchor = re.search('(сведения)|(справк[аи])', anchor_text) is not None
-    year_found_anchor = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
-    income_page = re.search(income_regexp, page_html) is not None
-    income_anchor = re.search(income_regexp, anchor_text) is not None
-    document_link = None
-    sub_page = check_sub_page_or_iframe(link_info)
-    income_path = False
-    good_doc_type_path = False
-    if link_info.target_url is not None:
-        target = link_info.target_url.lower()
-        if re.search('(^sved)|(sveodoh)', target):
-            good_doc_type_path = True
-        if re.search('(do[ck]?[hx]od)|(income)', target):
-            income_path = True
-    positive_case = None
-
-    if positive_case is None:
-        if income_page or income_path:
-            if good_doc_type_anchor or year_found_anchor or sub_page:
-                positive_case = "case 1"
-            else:
-                if document_link is None:
-                    document_link = looks_like_a_document_link(link_info)  #lazy calculaiton since it has a time-consuming head http-request
-                if document_link:
-                    positive_case = "case 1"
-
-    # http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
-    # "Сведения за 2018 год" - no topic word
-    if positive_case is None:
-        if good_doc_type_anchor or good_doc_type_path:
-            if year_found_anchor:
-                positive_case = "case 2"
-            else:
-                if document_link is None:
-                    document_link = looks_like_a_document_link(link_info)
-                if document_link:
-                    positive_case = "case 2"
-
-    if positive_case is not None:
-        weight = TLinkInfo.MINIMAL_LINK_WEIGHT
-        if income_anchor:
-            weight += 50
-        if income_path:
-            weight += 50
-        if good_doc_type_anchor:
-            weight += 10
-        if good_doc_type_path:
-            weight += 10
-        if year_found_anchor:
-            weight += 5  # better than sub_page
-
-        all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
-                        ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
-                        ("document_link", document_link),
-                        ("sub_page", sub_page),
-                        ("year_found_anchor", year_found_anchor),)
-
-        all_features_str = ";".join(k for k, v in all_features if v)
-        logging.getLogger("dlrobot_logger").debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
-        link_info.weight = weight
-        return True
-    return False
 
 
 ROBOT_STEPS = [
@@ -200,6 +62,15 @@ ROBOT_STEPS = [
 ]
 
 
+def convert_to_seconds(s):
+    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
+    if s is None or len(s) == 0:
+        return 0
+    if seconds_per_unit.get(s[-1]) is not None:
+        return int(s[:-1]) * seconds_per_unit[s[-1]]
+    else:
+        return int(s)
+
 def parse_args():
     global ROBOT_STEPS
     parser = argparse.ArgumentParser()
@@ -212,6 +83,17 @@ def parse_args():
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
+    parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
+    parser.add_argument("--crawling-timeout", dest='crawling_timeout',
+                            default="3h",
+                            help="crawling timeout in seconds (there is also conversion step after crawling)")
+    parser.add_argument("--last-conversion-timeout", dest='last_conversion_timeout',
+                            default="30m",
+                            help="pdf conversion timeout after crawling")
+    parser.add_argument("--pdf-quota-conversion", dest='pdf_quota_conversion',
+                            default=20 * 2**20,
+                            type=int,
+                            help="max sum pdf size to end ")
     args = parser.parse_args()
     TRobotStep.max_step_url_count = args.max_step_url_count
     if args.step is  not None:
@@ -219,6 +101,9 @@ def parse_args():
         args.stop_after = args.step
     if args.logfile is None:
         args.logfile = args.project + ".log"
+    TRobotWebSite.CRAWLING_TIMEOUT = convert_to_seconds(args.crawling_timeout)
+    TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_to_seconds(args.last_conversion_timeout)
+    TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
     return args
 
 
@@ -245,21 +130,26 @@ def make_steps(args, project):
             return
 
     project.logger.info("=== wait for all document conversion finished =========")
-    TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished()
+    TDownloadEnv.CONVERSION_CLIENT.wait_doc_conversion_finished(TDownloadEnv.LAST_CONVERSION_TIMEOUT)
 
     project.logger.info("=== export_files_to_folder =========")
     project.export_files_to_folder()
-    project.write_export_stats()
     project.write_project()
 
 
 def open_project(args):
     logger = setup_logging(args.logfile)
+    logger.debug("hostname={}".format(platform.node()))
+
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
-        make_steps(args, project)
-        if args.click_features_file:
-            project.write_click_features(args.click_features_file)
+        if args.only_click_stats:
+            project.write_export_stats()
+        else:
+            make_steps(args, project)
+            project.write_export_stats()
+            if args.click_features_file:
+                project.write_click_features(args.click_features_file)
 
 
 if __name__ == "__main__":

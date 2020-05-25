@@ -2,3 +2,8 @@
 selenium
 bs4
 lxml
+pycurl
+certifi
+plotly
+pandas
+psutil

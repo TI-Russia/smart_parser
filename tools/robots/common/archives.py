@@ -47,7 +47,7 @@ def unrar_one_archive(input_file, main_index, outfolder):
     os.mkdir(temp_folder)
     handle, logfile = tempfile.mkstemp(prefix='unrar')
     os.close(handle)
-    cmd = "unrar e {} {} >{}".format(input_file, temp_folder, logfile)
+    cmd = "unrar e -o+ -y {} {} >{}".format(input_file, temp_folder, logfile)
     logger.debug(cmd)
     os.system(cmd)
     for x in process_temp_folder(temp_folder, main_index, outfolder):

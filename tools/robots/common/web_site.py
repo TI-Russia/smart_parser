@@ -5,7 +5,7 @@ import os
 import shutil
 import time
 import datetime
-from robots.common.http_request import get_request_rate
+from robots.common.http_request import TRequestPolicy
 import hashlib
 import re
 from robots.common.link_info import TLinkInfo, TClickEngine
@@ -23,8 +23,11 @@ FIXLIST = {
 
 
 class TRobotWebSite:
+    SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
+    CRAWLING_TIMEOUT = 60 * 60 * 3       # 3 hours
 
     def __init__(self, project, init_json=None):
+        self.start_crawling_time = time.time()
         self.parent_project = project
         self.url_nodes = dict()
         self.logger = project.logger
@@ -57,6 +60,16 @@ class TRobotWebSite:
     def get_domain_name(self):
         return get_site_domain_wo_www(self.morda_url)
 
+    def check_crawling_timeouts(self, enough_crawled_urls):
+        current_time = time.time()
+        if enough_crawled_urls and current_time - self.export_env.last_found_declaration_time > TRobotWebSite.SINGLE_DECLARATION_TIMEOUT:
+            self.logger.error("timeout stop crawling: TRobotWebSite.SINGLE_DECLARATION_TIMEOUT")
+            return False
+        if current_time - self.start_crawling_time > TRobotWebSite.CRAWLING_TIMEOUT:
+            self.logger.error("timeout stop crawling: TRobotWebSite.CRAWLING_TIMEOUT")
+            return False
+        return True
+
     def to_json(self):
         return {
             'morda_url': self.morda_url,
@@ -66,8 +79,7 @@ class TRobotWebSite:
             'exported_files': self.export_env.to_json()
         }
 
-    def get_parents(self, record):
-        url = record['url']
+    def get_parents(self, url):
         parents = self.url_nodes[url].parent_nodes
         if len(parents) == 0:
             raise Exception("cannot find parent for {}".format(url))
@@ -77,42 +89,41 @@ class TRobotWebSite:
     def get_path_to_root_recursive(self, path, all_paths):
         assert len(path) >= 1
         assert type(all_paths) is list
-        tail_node = path[-1]
-        url = tail_node.get('url', '')
-        if url == self.morda_url:
-            new_path = list(path)
-            new_path.reverse()
-            all_paths.append(new_path)
+        top_node = path[-1]
+        top_url = top_node['source:url']
+        if top_url == self.morda_url:
+            all_paths.append(list(path))
             return
         start = datetime.datetime.now()
-        for parent_url in self.get_parents(tail_node):
+        for parent_url in self.get_parents(top_url):
+            if parent_url in (u['source:url'] for u in path):  # prevent cycles:
+                continue
             parent_url_info = self.url_nodes[parent_url]
-            if url != '':
-                link_info = parent_url_info.linked_nodes[url]
+            link_info = parent_url_info.linked_nodes[top_url]
+            engine = link_info.get('engine', '')
+            if TClickEngine.is_search_engine(engine):
+                record = {
+                    'search_query': link_info['text'],
+                }
+                all_paths.append(list(path) + [record])
             else:
-                link_info = tail_node['text']
-
-            record = {
-                'url': parent_url,
-                'step': parent_url_info.step_name,
-                'title': parent_url_info.title,
-                'anchor_text': link_info['text'],
-                'engine': link_info.get('engine', '')
-            }
-            found_in_path = False
-            for u in path:
-                if u['url'] == parent_url:
-                    found_in_path = True
-            if not found_in_path:
+                record = {
+                    'source:url': parent_url,
+                    'source:step': parent_url_info.step_name,
+                    'source:title': parent_url_info.title,
+                    'target:anchor_text': link_info['text'],
+                    'target:engine': engine
+                }
                 self.get_path_to_root_recursive(list(path) + [record], all_paths)
             if (datetime.datetime.now() - start).total_seconds() > 2:
                 break
 
     def get_shortest_path_to_root(self, url):
         def get_joined_path(path):
-            return " ".join(u['url'] for u in path)
+            return " ".join(u.get('source:url', '') for u in path)
         url_info = self.url_nodes[url]
-        path = [{'url': url, 'step': url_info.step_name}]
+        record = {'source:url': url, 'step': url_info.step_name}
+        path = [record]
         all_paths = list()
         self.get_path_to_root_recursive(path, all_paths)
         if len(all_paths) == 0:
@@ -120,6 +131,7 @@ class TRobotWebSite:
         all_paths = sorted(all_paths, key=get_joined_path)
         path_lens = list(len(p) for p in all_paths)
         min_path = all_paths[path_lens.index(min(path_lens))]
+        min_path.reverse()
         return min_path
 
     def get_export_folder(self):
@@ -201,8 +213,8 @@ class TRobotWebSite:
 
         target.profiler = {
             "elapsed_time":  time.time() - start_time,
-            "step_request_rate": get_request_rate(start_time),
-            "site_request_rate": get_request_rate()
+            "step_request_rate": TRequestPolicy.get_request_rate(start_time),
+            "site_request_rate": TRequestPolicy.get_request_rate()
         }
         self.logger.debug("{}".format(str(target.profiler)))
         target.delete_url_mirrors_by_www_and_protocol_prefix()
