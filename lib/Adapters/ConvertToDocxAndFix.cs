@@ -14,6 +14,15 @@ using System.Runtime.InteropServices;
 namespace Smart.Parser.Adapters
 {
 
+    public class ConversionServerClient : WebClient
+    {
+        protected override WebRequest GetWebRequest(Uri uri)
+        {
+            WebRequest w = base.GetWebRequest(uri);
+            w.Timeout = 5 * 60 *  1000; // 5 minutes
+            return w;
+        }
+    }
     public static class UriFixer
     {
         public static void FixInvalidUri(Stream fs, Func<string, Uri> invalidUriHandler)
@@ -102,7 +111,7 @@ namespace Smart.Parser.Adapters
                 {
                     hashValue = ToHex(mySHA256.ComputeHash(fileStream));
                 }
-                using (var client = new WebClient())
+                using (var client = new ConversionServerClient())
                 {
                     string url = DeclaratorConversionServerUrl + "?sha256=" + hashValue;
                     if (!url.StartsWith("http://"))
@@ -111,7 +120,19 @@ namespace Smart.Parser.Adapters
                     }
                     string docXPath = Path.GetTempFileName();
                     Logger.Debug(String.Format("try to download docx from {0} to {1}", url, docXPath));
-                    client.DownloadFile(url, docXPath);
+
+                    try
+                    {
+                        client.DownloadFile(url, docXPath);
+                    }
+                    catch (WebException exp)
+                    {
+                        if (exp.Status == WebExceptionStatus.Timeout)
+                        {
+                            Logger.Debug("Cannot get docx from conversion server in  5 minutes, retry");
+                            client.DownloadFile(url, docXPath);
+                        }
+                    }
 
                     return docXPath;
                 }
@@ -129,8 +150,9 @@ namespace Smart.Parser.Adapters
                     {
                         return DowloadFromConvertedStorage(filename);
                     }
-                    catch (Exception)
+                    catch (Exception exp)
                     {
+                        var t = exp.GetType();
                         Logger.Debug("the file cannot be found in conversion server db, try to process this file in place");
                     }
                 } 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using static Algorithms.LevenshteinDistance;
 
 namespace TI.Declarator.ParserCommon
@@ -46,8 +47,11 @@ namespace TI.Declarator.ParserCommon
             if (str.IsStatePropertyCountry()) { return DeclarationField.StatePropertyCountry; }
             if (str.IsStatePropertyOwnershipType()) { return DeclarationField.StatePropertyOwnershipType; }
 
-            if (str.HasChild() && str.IsVehicle()) { return DeclarationField.ChildVehicle; }
-            if (str.HasSpouse() && str.IsVehicle()) { return DeclarationField.SpouseVehicle; }
+            if (str.HasChild() && str.IsVehicle() && !(str.HasMainDeclarant() || str.HasSpouse())) {
+                return DeclarationField.ChildVehicle; }
+
+            if (str.HasSpouse() && str.IsVehicle() && !(str.HasMainDeclarant() || str.HasChild()))  {
+                return DeclarationField.SpouseVehicle; }
             if (str.HasMainDeclarant() && str.IsVehicle()) { return DeclarationField.DeclarantVehicle; }
 
             if (str.IsVehicleType()) { return DeclarationField.VehicleType; }
@@ -62,8 +66,8 @@ namespace TI.Declarator.ParserCommon
 
             if (str.IsDeclaredYearlyIncome())
             {
-                if (str.HasChild()) { return DeclarationField.ChildIncome; }
-                if (str.HasSpouse()) { return DeclarationField.SpouseIncome; }
+                if (str.HasChild() && !(str.HasMainDeclarant() || str.HasSpouse())) { return DeclarationField.ChildIncome; }
+                if (str.HasSpouse() && !(str.HasMainDeclarant() || str.HasChild())) { return DeclarationField.SpouseIncome; }
                 if (str.HasMainDeclarant()) { return DeclarationField.DeclarantIncome; }
                 return DeclarationField.DeclaredYearlyIncome;
             }
