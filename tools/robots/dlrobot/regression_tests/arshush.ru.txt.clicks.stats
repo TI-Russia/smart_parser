@@ -1,7 +1,8 @@
 {
-    "files_count": 45,
+    "files_count": 46,
     "files_sorted (short report)": [
         "cached/arshush.ru/content/view/1042/dlrobot_data -1",
+        "cached/arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx/dlrobot_data -1",
         "cached/arshush.ru/downloads/2016/ruk_li_mu.zip/dlrobot_data 0",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 0",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 1",
@@ -88,7 +89,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "01abbd8d2f118bfd1d33e13770e30785a929bf6d535d280e63d8a73f55de527c",
-            "archive_index": 4
+            "archive_index": 6
         },
         {
             "click_path": [
@@ -130,7 +131,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "099adc7fb05a84b6875c4eea2a144fafc2f635fff9f50fbbd76713cd586ef5d6",
-            "archive_index": 6
+            "archive_index": 5
         },
         {
             "click_path": [
@@ -152,6 +153,26 @@
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "0ae1ded6e4dd9a0d6eaefa63f90f82915f7a53c07f42cae8b87f1b51171f12df",
             "archive_index": 8
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.arshush.ru/content/view/109/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера главы муниципального образования Шушенский район, главы администрации Шушенского района и муниципальных служащих, замещающих должности муниципальной службы категории «руководители» за 2010 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx/dlrobot_data",
+            "sha256": "1167c8b5dad8481b36f118ada5b4b7607b512c16136d7d5bcc8b60bdd5421dc6"
         },
         {
             "click_path": [
@@ -214,7 +235,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "150183dd84e49d51b576312861b8c322f730860c5d7a6d0ff45f37080b7ed3b1",
-            "archive_index": 3
+            "archive_index": 4
         },
         {
             "click_path": [
@@ -318,7 +339,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "39c53ffdc36db03edf28e10a0c759fb32cfb7f4f61a34bb817c60d78357b465a",
-            "archive_index": 4
+            "archive_index": 6
         },
         {
             "click_path": [
@@ -339,7 +360,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "4fde9dbb375adf9046651dbeeed1777c886c3c974088c328043d90f9d3ad2a97",
-            "archive_index": 9
+            "archive_index": 4
         },
         {
             "click_path": [
@@ -381,7 +402,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "56d30c3408b9e8265809f669020661a6ea78135ee1b992af7737faaa39934488",
-            "archive_index": 0
+            "archive_index": 1
         },
         {
             "click_path": [
@@ -422,7 +443,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "76d86d3983bf0dc891a381b67c0e665ce61ad41b42903e5d54a9b3bc98ae6b52",
-            "archive_index": 3
+            "archive_index": 1
         },
         {
             "click_path": [
@@ -464,7 +485,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "7d516cb1bfec3b81c9c0c03184d1b4d101bfb60e70da3ddbee8d712a9e909e95",
-            "archive_index": 5
+            "archive_index": 9
         },
         {
             "click_path": [
@@ -549,6 +570,26 @@
             "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
             "sha256": "8ef23ef463c79baed18a059bf74d345acf553e6009801de6d159149e13c8042e",
             "archive_index": 7
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах - 2015 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/1042/",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
+            "sha256": "936ae64ebfe3b882fd57eebdb152e09373e8d047a5deba8c213dd36d1ffe3fe4"
         },
         {
             "click_path": [
@@ -674,7 +715,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "aae524a047dcd8111dd63b18c7adec2c156d6054d23429f12b62b0b24ff6c1dc",
-            "archive_index": 1
+            "archive_index": 0
         },
         {
             "click_path": [
@@ -695,7 +736,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "ac5363ec4b7edbd3088b0b7e753cae3d4114a7fbbac5c64ef08d1c3eb5596dce",
-            "archive_index": 6
+            "archive_index": 3
         },
         {
             "click_path": [
@@ -820,7 +861,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "da6f848f381257cdc27d4df0a57ce173493395c32255e0cd9f91e03c5e976da6",
-            "archive_index": 5
+            "archive_index": 3
         },
         {
             "click_path": [
@@ -883,27 +924,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
             "sha256": "e765fb0458e8684603be72bc89159e94fb499889ef6c82d645fffa7230664e31",
-            "archive_index": 1
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах - 2015 год",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/content/view/1042/",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
-            "sha256": "eb4b86d823b578185de177ac79e709d364f1258dab2b141509f99d24717d90fd"
+            "archive_index": 5
         },
         {
             "click_path": [

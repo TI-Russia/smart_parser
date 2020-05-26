@@ -283,25 +283,7 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://voronovskoe.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "3",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42?page=2",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2014 год",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/node/1377",
@@ -583,25 +565,7 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://voronovskoe.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "3",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42?page=2",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2014 год",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/node/1377",

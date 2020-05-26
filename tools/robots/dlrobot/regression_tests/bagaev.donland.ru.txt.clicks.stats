@@ -208,10 +208,24 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2014 год",
+                    "target:anchor_text": "Май, 2018 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Апрель, 2016 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=4&year=2016&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5 апреля 2016 г. 17:18:00",
                     "target:engine": "selenium"
                 },
                 {
@@ -255,10 +269,24 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и несовершеннолетних детей за 2016 год.",
+                    "target:anchor_text": "Май, 2018 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Май, 2017 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2017&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 мая 2017 г. 17:41:00",
                     "target:engine": "selenium"
                 },
                 {
@@ -302,10 +330,24 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2015 год",
+                    "target:anchor_text": "Май, 2018 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Май, 2016 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2016&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "6 мая 2016 г. 11:47:00",
                     "target:engine": "selenium"
                 },
                 {

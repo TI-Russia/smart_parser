@@ -164,14 +164,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Скачать документ ( pdf, 96.74 KB )",
-                    "target:engine": "urllib"
-                },
-                {
-                    "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=62",
+                    "source:url": "http://www.gorsovet-podolsk.ru/getfile.php?fid=62",
                     "step": "declarations"
                 }
             ],

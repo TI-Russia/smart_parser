@@ -135,15 +135,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -173,15 +169,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -211,15 +203,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -249,15 +237,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -287,15 +271,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -325,15 +305,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -383,15 +359,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -421,15 +393,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -459,15 +427,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -497,15 +461,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -535,15 +495,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -573,15 +529,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -611,15 +563,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -649,15 +597,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -687,15 +631,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -725,15 +665,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -783,15 +719,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -821,15 +753,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -859,15 +787,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -897,15 +821,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -935,15 +855,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -973,15 +889,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1011,15 +923,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1049,15 +957,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1087,15 +991,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1125,15 +1025,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1163,15 +1059,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1201,15 +1093,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1239,15 +1127,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1277,15 +1161,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1335,15 +1215,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1373,15 +1249,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1411,15 +1283,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1449,15 +1317,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1487,15 +1351,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1525,15 +1385,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1563,15 +1419,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1601,15 +1453,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1639,15 +1487,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1677,15 +1521,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1715,15 +1555,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1753,15 +1589,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1791,15 +1623,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1829,15 +1657,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1867,15 +1691,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1905,15 +1725,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1943,15 +1759,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -1981,15 +1793,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2019,15 +1827,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2057,15 +1861,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2095,15 +1895,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2133,15 +1929,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2171,15 +1963,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2209,15 +1997,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2247,15 +2031,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2285,15 +2065,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2323,15 +2099,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2381,15 +2153,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2419,15 +2187,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2457,15 +2221,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2495,15 +2255,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2533,15 +2289,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2571,15 +2323,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2609,15 +2357,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2647,15 +2391,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2705,15 +2445,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2743,15 +2479,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2781,15 +2513,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2819,15 +2547,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2877,15 +2601,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2915,15 +2635,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2953,15 +2669,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -2991,15 +2703,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3029,15 +2737,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3067,15 +2771,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3105,15 +2805,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3143,15 +2839,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3181,15 +2873,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3219,15 +2907,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3257,15 +2941,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3295,15 +2975,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3353,15 +3029,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3391,15 +3063,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3429,15 +3097,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3467,15 +3131,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3505,15 +3165,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3543,15 +3199,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3581,15 +3233,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3619,15 +3267,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3657,15 +3301,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3695,15 +3335,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3733,15 +3369,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3771,15 +3403,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3809,15 +3437,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3847,15 +3471,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3905,15 +3525,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -3943,15 +3559,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -4001,15 +3613,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
@@ -4039,15 +3647,11 @@
         {
             "click_path": [
                 {
-                    "source:url": "https://oren-rshn.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "anticorruption_div",
+                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
                     "target:engine": "selenium"
