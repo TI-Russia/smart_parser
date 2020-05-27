@@ -9,6 +9,7 @@ from functools import partial
 import logging
 import os
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--human-files", help='a file from ../../disclosures/scripts/create_json_by_human_files.py',

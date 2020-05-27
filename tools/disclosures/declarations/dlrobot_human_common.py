@@ -9,3 +9,4 @@ class dhjs:
     link = 'link'
     filepath = 'filepath'
     office_id = 'office_id'
+    income_year = 'income_year'
