@@ -12,6 +12,7 @@ import re
 import subprocess
 import tempfile
 
+
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
     logger.setLevel(logging.DEBUG)
@@ -73,6 +74,17 @@ class TWorkerHost:
         self.logger = logger
         self.hostname = hostname
         self.tasks = set()
+        self.exit_statuses = list()
+        self.last_result_time_stamp = time.time()
+
+    def worker_is_alive(self):
+        tail_len = 3
+        if len(self.exit_statuses) < tail_len:
+            return True # not enough statistics
+        else:
+            if time.time() - self.last_result_time_stamp > 60*30: # try each half an hour even a dead host
+                return True
+            return 0 in self.exit_statuses[-tail_len:]
 
 
 class TJobTasks:
@@ -173,12 +185,12 @@ class TJobTasks:
 
     def get_free_host(self):
         while True:
-            tasks = list( (len(host_worker.tasks), hostname) for hostname, host_worker in self.host_workers.items())
+            tasks = list( (len(host_worker.tasks), host_worker) for hostname, host_worker in self.host_workers.items())
             tasks.sort()
-            best_host_tasks = tasks[0][0]
-            best_host = tasks[0][1]
-            if best_host_tasks < self.args.jobs_per_host:
-                return best_host
+            for (host_tasks_count, host_worker) in tasks:
+                if host_tasks_count < self.args.jobs_per_host:
+                    if host_worker.worker_is_alive():
+                        return host_worker.hostname
             time.sleep(20)
 
     def get_input_files(self):
@@ -209,8 +221,13 @@ class TJobTasks:
     def register_task_result(self, host, project_file, exit_code):
         self.lock.acquire()
         try:
-            self.host_workers[host].tasks.remove(project_file)
+            host_worker = self.host_workers[host]
+            host_worker.tasks.remove(project_file)
             self.tries_count[project_file] += 1
+            was_alive = host_worker.worker_is_alive()
+            host_worker.exit_statuses.append(exit_code)
+            if was_alive and not host_worker.worker_is_alive():
+                self.logger.error("logger host {} looks like be dead, do not send tasks to it".format(host_worker.hostname))
             if exit_code != 0:
                 if self.tries_count[project_file] < args.retries_count:
                     self.input_files.put(project_file)

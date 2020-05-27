@@ -1,8 +1,7 @@
 {
-    "files_count": 15,
+    "files_count": 13,
     "files_sorted (short report)": [
         "cached/files.sudrf.ru/991/anticorruption/doc20160524-032423.xls/dlrobot_data -1",
-        "cached/files.sudrf.ru/991/anticorruption/doc20170214-023259.doc/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20170627-050331.xls/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20170912-030110.xls/dlrobot_data -1",
@@ -14,7 +13,6 @@
         "cached/files.sudrf.ru/991/anticorruption/doc20180606-025054.xlsx/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20190530-092749.xlsx/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20190530-092820.xlsx/dlrobot_data -1",
-        "cached/files.sudrf.ru/991/anticorruption/doc20200316-054222.pdf/dlrobot_data -1",
         "cached/kraevoy.hbr.sudrf.ru/modules.php_name_norm_akt_id_28/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
@@ -24,7 +22,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2015",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018",
@@ -95,13 +100,6 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2016",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
-                    "source:step": "declarations",
-                    "source:title": "",
                     "target:anchor_text": "2014",
                     "target:engine": "selenium"
                 },
@@ -126,26 +124,6 @@
             ],
             "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170912-030110.xls/dlrobot_data",
             "sha256": "2c7cbee0f0d4e274991bc54c02286feae04f19bb6a3a96c7e38a34975f62aba0"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=139",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Скачать документ",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://files.sudrf.ru/991/anticorruption/doc20200316-054222.pdf",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20200316-054222.pdf/dlrobot_data",
-            "sha256": "2fc921680e6a5682921bf0db3653f15370ab5905966de44d9e922d6be68445fa"
         },
         {
             "click_path": [
@@ -190,13 +168,6 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2016",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
-                    "source:step": "declarations",
-                    "source:title": "",
                     "target:anchor_text": "2014",
                     "target:engine": "selenium"
                 },
@@ -228,7 +199,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2015",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018",
@@ -275,21 +253,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2017",
+                    "target:anchor_text": "2015",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=15",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016",
@@ -323,14 +294,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2016",
+                    "target:anchor_text": "2015",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017",
@@ -364,14 +335,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2016",
+                    "target:anchor_text": "2015",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017",
@@ -406,13 +377,6 @@
                 },
                 {
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2016",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014",
@@ -480,21 +444,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2017",
+                    "target:anchor_text": "2015",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=15",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016",
@@ -521,33 +478,6 @@
             ],
             "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data",
             "sha256": "c71d05b6ea91ac78dc8818cb6049b0921d1ba3421d83916bcb12a8e3594bb864"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=8",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Методичесикие рекомендации по вопросам представления сведений о доходах, расходах, об имуществе и обязательствах имущественного характера и заполнения соответствующей формы справки",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=47",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Скачать документ",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://files.sudrf.ru/991/anticorruption/doc20170214-023259.doc",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170214-023259.doc/dlrobot_data",
-            "sha256": "d012a03de45207a7479df7f1488e66f982ac313cb1a8af7e985d77dd822170b6"
         }
     ]
 }

@@ -1,11 +1,12 @@
 {
-    "files_count": 10,
+    "files_count": 11,
     "files_sorted (short report)": [
         "cached/www.mid.ru/documents/10180/1569528/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_105f2c286e37a4fbaa99390bfaf5caa6/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/2288000/Svedeniia_o_dokhodakh,_raskhodakh,_ob_imushchestve_i_obiazatel_st_9a06755f2c9f87b4c2c13f3938edc6da/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/2755679/spisok_na_sait.doc/11aba85b-dc20-4352-bea1-37fd8b6946fa/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/3189816/Svod_dlia_DIP_na_sait_MID_2017.xlsx/4239019c-0fb7-40e8-806a-f8cc2_34293220c81bb2ef1d405e95a216813c/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/3210531/dokhody_2017.pdf/7aa26525-1f36-4cdd-827d-69b40f077eb4/dlrobot_data -1",
+        "cached/www.mid.ru/documents/10180/3468401/Metodicheskie_rekomendatsii_po_zapolneniiu_spravok_o_dokhodakh_za_75b7c821afd96b1fc97d67ab7195f90c/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/3583717/Svod_dlia_DIP_na_sait_MID_2018.xlsx/4e37c7d5-7962-4288-8033-88534_3cd36b6189e593dd19e9409c5a46f603/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/3636043/Tablitsa_svedenii_o_dokhodakh_rukovodstva_Ministerstva_za_2018_go_9aa25e85713a79d91ac907f36b52e698/dlrobot_data -1",
         "cached/www.mid.ru/documents/10180/4c371f18-6a60-45cd-8163-dea248102331_t_1406685873147/dlrobot_data -1",
@@ -93,6 +94,26 @@
             ],
             "cached_file": "cached/www.mid.ru/documents/10180/4c371f18-6a60-45cd-8163-dea248102331_t_1406685873147/dlrobot_data",
             "sha256": "748d57961da906ae7676cc7f002ea35e09e99ad56d7ea7f3fc4449bdb37bd1a3"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/3469075",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Скачать файл",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mid.ru/documents/10180/3468401/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8+%D0%BF%D0%BE+%D0%B7%D0%B0%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8E+%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BE%D0%BA+%D0%BE+%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85+%D0%B7%D0%B0+2018+%D0%B3%D0%BE%D0%B4.pdf/c753f05e-948a-4f4a-ae22-0e45392eba81",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mid.ru/documents/10180/3468401/Metodicheskie_rekomendatsii_po_zapolneniiu_spravok_o_dokhodakh_za_75b7c821afd96b1fc97d67ab7195f90c/dlrobot_data",
+            "sha256": "83f2d82758c1a69b301182a862199f5d01a307ab65f8773b823925f9ec078aa0"
         },
         {
             "click_path": [
