@@ -1,12 +1,6 @@
-portion=$1
-if [ -z $1  ]; then
-    echo "specify portion index"
-    exit 1
-fi
+INPUT_FOLDER=$1
+RESULT_FOLDER=$2
 
-
-INPUT_FOLDER=/home/sokirko/declarator_hdd/declarator/2020-05-15/input_projects.$portion
-RESULT_FOLDER=/home/sokirko/declarator_hdd/declarator/2020-05-15/processed_projects.$portion
 if [ ! -d $INPUT_FOLDER ]; then
     echo "$INPUT_FOLDER does not exist"
     exit 1

@@ -109,5 +109,15 @@ namespace TI.Declarator.ParserCommon
                     s.EndsWith("чна");
         }
 
+        public static bool MayContainsRole(string s)
+        {
+            s = s.Replace("-", "");
+            if (s.Length == 0) return false;
+            return s.EndsWith("заместител") ||
+                   s.EndsWith("начальник") ||
+                   s.EndsWith("руководител")
+                ;
+        }
+
     }
 }

@@ -154,13 +154,14 @@ namespace Smart.Parser.Lib
                 for (int k = 0; k < borders.Count; ++k)
                 {
                     DataRow currRow = dividedLines[k];
-                    var nameOrRelativeType = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType).Text;
+                    var nameOrRelativeType = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType).Text.Replace("не имеет", "");
                     if (k == 0)
                     {
                         currRow.PersonName = nameOrRelativeType;
-                        currRow.Occupation = row.Occupation;
+                        currRow.Occupation = row.Occupation.Replace("не имеет", "");
                         currRow.Department = row.Department;
-
+                        if (currRow.Department != null)
+                            currRow.Department = currRow.Department.Replace("не имеет", "");
                         InitDeclarantProperties(currRow);
                     }
                     else
@@ -239,8 +240,8 @@ namespace Smart.Parser.Lib
 
             public void InitDeclarantProperties(DataRow row)
             {
-                CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit();
-                CurrentDeclarant.Occupation = row.Occupation;
+                CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit().Replace("не имеет", "");
+                CurrentDeclarant.Occupation = row.Occupation.Replace("не имеет", "");
                 CurrentDeclarant.Department = row.Department;
                 CurrentDeclarant.Ordering = row.ColumnOrdering;
             }
@@ -269,7 +270,7 @@ namespace Smart.Parser.Lib
                 {
                     if (FailOnRelativeOrphan)
                     {
-                        throw new SmartParserException(
+                        throw new SmartParserRelativeWithoutPersonException(
                             string.Format("Relative {0} at row {1} without main Person", row.RelativeType, row.GetRowIndex()));
                     }
                     else
@@ -354,7 +355,7 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
-                Logger.Debug(currRow.DebugString());
+                Logger.Debug(String.Format("currRow {1}: {0}", currRow.DebugString(), row));
 
                 string sectionName;
                 if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))
@@ -389,15 +390,26 @@ namespace Smart.Parser.Lib
                 else if  (currRow.RelativeType != String.Empty)
                 {
                     if (!skipEmptyPerson)
-                        borderFinder.CreateNewRelative(currRow);
+                    {
+                        try
+                        {
+                            borderFinder.CreateNewRelative(currRow);
+                        }
+                        catch (SmartParserRelativeWithoutPersonException e)
+                        {
+                            skipEmptyPerson = true;
+                            Logger.Error(e.Message);
+                            continue;
+                        }
+                    }
                 }
                 else 
                 {
                     if (borderFinder.CurrentPerson == null && FailOnRelativeOrphan)
                     {
                         skipEmptyPerson = true;
+                        Logger.Error(String.Format("No person to attach info on row={0}", row));
                         continue;
-                        // throw new SmartParserEmptyPersonException(String.Format("No person to attach info on row={0}", row));
                     }
                 }
                 if (!skipEmptyPerson)
@@ -466,7 +478,7 @@ namespace Smart.Parser.Lib
             if (currRow.ColumnOrdering.ContainsField(fieldName))
             {
                 RealEstateProperty realEstateProperty = new RealEstateProperty();
-                realEstateProperty.Text = currRow.GetContents(fieldName).Trim();
+                realEstateProperty.Text = currRow.GetContents(fieldName).Trim().Replace("не имеет", "");
                 if (!DataHelper.IsEmptyValue(realEstateProperty.Text))
                 {
                     realEstateProperty.own_type_by_column = ownTypeByColumn;
@@ -485,14 +497,14 @@ namespace Smart.Parser.Lib
                 AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, OwnedString, person);
                 return;
             }
-            string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
+            string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType).Replace("не имеет", "");
             string ownTypeStr = null;
             if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
             {
-                ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
+                ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType).Replace("не имеет", "");
             }
-            string squareStr = currRow.GetContents(DeclarationField.OwnedRealEstateSquare);
-            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry, false);
+            string squareStr = currRow.GetContents(DeclarationField.OwnedRealEstateSquare).Replace("не имеет", "");
+            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry, false).Replace("не имеет", "");
 
             try
             {
@@ -519,10 +531,10 @@ namespace Smart.Parser.Lib
                 AddRealEstateWithNaturalText(currRow, DeclarationField.MixedColumnWithNaturalText, null, person);
                 return;
             }
-            string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
-            string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare);
-            string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry);
-            string owntypeStr = currRow.GetContents(DeclarationField.MixedRealEstateOwnershipType, false);
+            string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType).Replace("не имеет", "");
+            string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare).Replace("не имеет", "");
+            string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry).Replace("не имеет", "");
+            string owntypeStr = currRow.GetContents(DeclarationField.MixedRealEstateOwnershipType, false).Replace("не имеет", "");
             if (owntypeStr == "")
                 owntypeStr = null;
 
@@ -551,10 +563,10 @@ namespace Smart.Parser.Lib
                 AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
                 return;
             }
-            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false);
-            string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false);
-            string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
-            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false);
+            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false).Replace("не имеет", "");
+            string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
+            string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
+            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
 
             try
             {
@@ -712,20 +724,20 @@ namespace Smart.Parser.Lib
         {
             if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.Vehicle))
             {
-                var s = r.GetContents(DeclarationField.Vehicle);
+                var s = r.GetContents(DeclarationField.Vehicle).Replace("не имеет", "");
                 if (!DataHelper.IsEmptyValue(s))
                     person.Vehicles.Add(new Vehicle(s));
             }
             else if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.DeclarantVehicle))
             {
-                var s = r.GetContents(DeclarationField.DeclarantVehicle);
+                var s = r.GetContents(DeclarationField.DeclarantVehicle).Replace("не имеет", "");
                 if (!DataHelper.IsEmptyValue(s))
                     person.Vehicles.Add(new Vehicle(s));
             }
             else
             {
-                var t = r.GetContents(DeclarationField.VehicleType);
-                var m = r.GetContents(DeclarationField.VehicleModel, false);
+                var t = r.GetContents(DeclarationField.VehicleType).Replace("не имеет", "");
+                var m = r.GetContents(DeclarationField.VehicleModel, false).Replace("не имеет", "");
                 var text = t + " " + m;
                 if (t == m)
                 {

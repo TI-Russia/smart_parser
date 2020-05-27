@@ -148,6 +148,7 @@ namespace Smart.Parser.Lib
             return String.IsNullOrWhiteSpace(s)
                 || s == "-"
                 || s == "─"
+                || s == "?"
                 || s == "- - -"
                 || s == "–"
                 || s == "_"
@@ -156,6 +157,7 @@ namespace Smart.Parser.Lib
                 || s == "не имеет"
                 || s == "не указан"
                 || s == "не указано"
+                || s == "не работает"
                 || s == "отсутствует";
         }
 

@@ -14,4 +14,9 @@ namespace Parser.Lib
     {
         public SmartParserFieldNotFoundException(string message) : base(message) { }
     }
+    public class SmartParserRelativeWithoutPersonException : Exception
+    {
+        public SmartParserRelativeWithoutPersonException(string message) : base(message) { }
+    }
+
 }
