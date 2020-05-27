@@ -75,7 +75,7 @@ namespace Smart.Parser.Adapters
                             joinExplanation = "frequent bigram";
                         }
 
-                        if (Regex.Matches(lastWord, @".*\p{Pd}$").Count > 0
+                        if (Regex.Matches(lastWord, @".+\p{Pd}$").Count > 0
                               && Char.IsLower(firstWord[0])
                            )
                         {
@@ -84,6 +84,7 @@ namespace Smart.Parser.Adapters
 
                         if (tokens1.Count + tokens2.Count == 3
                             && TextHelpers.CanBePatronymic(tokens2[tokens2.Count - 1])
+                            && !tokens2[tokens2.Count - 1].Contains('.')
                             && Char.IsUpper(tokens1[0][0])
                             )
                         {
