@@ -120,7 +120,7 @@ def main(args):
     joiner = TJoiner(args, logger)
     joiner.join()
     with open(args.output_json, "w") as out:
-        json.dump(joiner.dlrobot_human_json, out, indent=4)
+        json.dump(joiner.dlrobot_human_json, out,  indent=4)
 
 
 if __name__ == '__main__':
