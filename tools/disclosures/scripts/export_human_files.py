@@ -81,14 +81,14 @@ def get_all_files(tablename):
     db = pymysql.connect(db="declarator", user="declarator", password="declarator", unix_socket="/var/run/mysqld/mysqld.sock" )
     cursor = db.cursor()
     query = ("""
-                select f.id, f.file, f.link, d.office_id, d.income_year 
+                select f.id, d.id, f.file, f.link, d.office_id, d.income_year 
                 from {} f 
                 join declarations_document d on f.document_id=d.id
              """.format(tablename))
     cursor.execute(query)
-    for (document_file_id, filename, link, office_id, income_year) in cursor:
+    for (document_file_id, document_id, filename, link, office_id, income_year) in cursor:
         if filename is not  None and len(filename) > 0:
-            yield document_file_id, filename, link, office_id, income_year
+            yield document_file_id, document_id, filename, link, office_id, income_year
 
     cursor.close()
     db.close()
@@ -113,12 +113,12 @@ def export_file_to_folder(logger, declarator_url_path, document_file_id, out_fol
 
 
 def get_all_files_by_table(logger, table_name, output_folder):
-    for document_file_id, url_path, link, office_id, income_year in get_all_files(table_name):
+    for document_file_id, document_id, url_path, link, office_id, income_year in get_all_files(table_name):
         for local_file_path in export_file_to_folder(logger, url_path, document_file_id, output_folder):
             if not os.path.exists(local_file_path):
                 logger.error("cannot find {}".format(local_file_path))
             else:
-                yield link, local_file_path, office_id, income_year
+                yield document_file_id, document_id, link, local_file_path, office_id, income_year
 
 
 def main(args):
@@ -128,21 +128,27 @@ def main(args):
         logger.debug("create {}".format(args.output_folder))
         os.mkdir(args.output_folder)
 
-    for link, file_path, office_id, income_year in get_all_files_by_table(logger, args.table, args.output_folder):
+    for document_file_id, document_id, link, file_path, office_id, income_year in get_all_files_by_table(logger, args.table, args.output_folder):
         sha256 = build_sha256(file_path)
         domain = urlparse(link).netloc
         if domain.startswith('www.'):
             domain = domain[len('www.'):]
         files[sha256] = {
-                dhjs.web_domain: domain,
-                dhjs.link: link,
-                dhjs.filepath: file_path,
-                dhjs.office_id: office_id,
-                dhjs.income_year: income_year
+                dhjs.declarator_document_id: document_id,
+                dhjs.declarator_document_file_id: document_file_id,
+                dhjs.declarator_web_domain: domain,
+                dhjs.declarator_file_path: os.path.basename(file_path),
+                dhjs.declarator_office_id: office_id,
+                dhjs.declarator_income_year: income_year
         }
+        break
 
     with open(args.output_file, "w") as out:
-        json.dump(files, out, indent=4)
+        human_json = {
+            dhjs.declarator_folder: args.output_folder,
+            dhjs.file_collection: files
+        }
+        json.dump(human_json, out, indent=4)
 
 
 if __name__ == '__main__':

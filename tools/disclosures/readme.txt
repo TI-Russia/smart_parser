@@ -9,14 +9,14 @@ export SCRIPT_FOLDER=$DISCLOSURES_FOlDER/scripts
 CURRENT_DATE=`date  +'%Y-%m-%d'`
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
-export ALL_HUMAN_FILES_FOLDER=out.documentfile
+export ALL_HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
 export INPUT_DLROBOT_PROJECTS=input_projects
 
 #2. создание нового каталога dlrobot  (стоит переименовать в disclosures)
     mkdir $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
 
-№3  получить все файлы из declarator в каталог out.documentfile и создать файл human_files.json
+№3  получить все новые (!) файлы из declarator в каталог $ALL_HUMAN_FILES_FOLDER и создать файл human_files.json
     python $SCRIPT_FOLDER/export_human_files.py --table declarations_documentfile --output-folder $ALL_HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
 
 
