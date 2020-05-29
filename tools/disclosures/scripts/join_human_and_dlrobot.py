@@ -29,7 +29,7 @@ def setup_logging(logfilename):
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
+    ch.setLevel(logging.DEBUG)
     logger.addHandler(ch)
     return logger
 
@@ -58,17 +58,17 @@ class TJoiner:
         domain_info = dict()
         new_files_found_by_dlrobot = 0
         files_count = 0
-        for file_path in os.listdir(domain_folder):
-            file_path = os.path.join(domain_folder, f)
+        for base_file_name in os.listdir(domain_folder):
+            file_path = os.path.join(domain_folder, base_file_name)
             if file_path.endswith(".json") or file_path.endswith(".txt"):
                 continue
             files_count += 1
             sha256 = build_sha256(file_path)
             if sha256 in domain_info:
-                self.logger.error("a file copy found: {}, ignore it".format(f)))
+                self.logger.error("a file copy found: {}, ignore it".format(f))
                 continue
             file_info = {
-                dhjs.dlrobot_path: file_path
+                dhjs.dlrobot_path: os.path.basename(file_path)
             }
             human_file_info = self.human_json[dhjs.file_collection].get(sha256)
             if human_file_info is not None:
@@ -105,7 +105,7 @@ class TJoiner:
             file_info[dhjs.intersection_status] = dhjs.only_human
         if web_site not in self.dlrobot_human_json:
             self.dlrobot_human_json[web_site] = dict()
-        self.dlrobot_human_json.get(web_site][sha256] = file_info
+        self.dlrobot_human_json[web_site][sha256] = file_info
 
     def copy_old_dlrobot_file(self, web_site, sha256, infile):
         folder = os.path.join(args.dlrobot_folder, web_site)
@@ -120,47 +120,49 @@ class TJoiner:
             dhjs.intersection_status: dhjs.only_dlrobot,
             dhjs.dlrobot_copied_from_the_past: True
         }
-        self.dlrobot_human_json.get[web_site][sha256] = file_info
+        if web_site not in self.dlrobot_human_json:
+            self.dlrobot_human_json[web_site] = dict()
+        self.dlrobot_human_json[web_site][sha256] = file_info
 
     def get_old_dlrobot_files(self, json_file_name):
-        with open(json_file_name), "r") as inp:
+        with open(json_file_name, "r") as inp:
             old_json = json.load(inp)
         if dhjs.dlrobot_path in old_json:
             web_domains = old_json[dhjs.file_collection]
             dlrobot_path = old_json[dhjs.dlrobot_path]
         else:
             web_domains = old_json
-            dlrobot_path = os.path.dirname(json_file_name)
+            dlrobot_path = os.path.join(os.path.dirname(json_file_name), 'domains')
         for web_domain, files in web_domains.items():
             for sha256, file_info in files.items():
                 path = file_info.get(dhjs.dlrobot_path, file_info.get("dlrobot_path"))
-                assert is not None
-                path = os.path.join(dlrobot_path, path)
-                if os.path.exists(path)
+                assert path is not None
+                path = os.path.join(dlrobot_path, web_domain, path)
+                if not os.path.exists(path):
                     self.logger.error("old file {} does not exist".format(path))
-                else
-                    yield  web_domain, sha256, path
+                else:
+                    yield web_domain, sha256, path
 
     def join(self):
         for domain in os.listdir(self.args.dlrobot_folder):
-            try:
+            #try:
                 self.process_domain(domain)
-            except Exception as exp:
-                self.logger.error("Error on {}: {}, keep going".format(domain, exp))
+            #except Exception as exp:
+            #    self.logger.error("Error on {}: {}, keep going".format(domain, exp))
 
         for sha256, file_info in self.human_json[dhjs.file_collection].items():
-            try:
+            #try:
                 if sha256 not in self.found_by_dlrobot:
                     self.copy_human_file(sha256, file_info)
-            except Exception as exp:
-                self.logger.error("Error on file {}, exception={}, keep going".format(sha256, exp))
+            #except Exception as exp:
+            #    self.logger.error("Error on file {}, exception={}, keep going".format(sha256, exp))
 
         if args.old_dlrobot_human_json is not None:
             for web_site, sha256, filename in self.get_old_dlrobot_files(args.old_dlrobot_human_json):
                 if web_site not in self.dlrobot_human_json:
                     self.dlrobot_human_json[web_site] = dict()
                 if sha256 not in self.dlrobot_human_json[web_site]:
-                    self.copy_old_file(web_site, sha256, filename)
+                    self.copy_old_dlrobot_file(web_site, sha256, filename)
 
 
 def main(args):

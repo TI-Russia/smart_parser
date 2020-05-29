@@ -45,7 +45,7 @@ def file_to_sha256(folder):
     return files
 
 
-def copy_files_of_one_web_site(logger, web_site, result_fo  lder, output_folder):
+def copy_files_of_one_web_site(logger, web_site, result_folder, output_folder):
     input_folder = os.path.join(result_folder, web_site)
     web_site_output_folder = os.path.join(output_folder, web_site)
     if not os.path.isdir(input_folder):
@@ -54,16 +54,14 @@ def copy_files_of_one_web_site(logger, web_site, result_fo  lder, output_folder)
 
     if not os.path.exists(web_site_output_folder):
         os.mkdir(web_site_output_folder)
-        logger.debug("copy all files of {} to {}".format(input_folder, output_folder))
         for x in os.listdir(input_folder):
             input_file = os.path.join(input_folder, x)
             if os.path.isfile(input_file):
+                logger.debug("copy {} to {}".format(input_file, web_site_output_folder))
                 shutil.copy2(input_file, web_site_output_folder)
     else:
-        logger.debug("join {} and {}".format(input_folder, web_site_output_folder))
         in_sha256 = file_to_sha256(input_folder)
         out_sha256 = file_to_sha256(web_site_output_folder)
-        added_files = 0
         for sha256 in in_sha256:
             if sha256 not in out_sha256:
                 input_file = in_sha256[sha256]
@@ -72,8 +70,8 @@ def copy_files_of_one_web_site(logger, web_site, result_fo  lder, output_folder)
                 os.close(handle)
                 logger.debug("copy {} to {}".format(input_file, output_file))
                 shutil.copy(input_file, output_file)
-                added_files += 1
-        logger.debug("added files: {}".format(added_files))
+            else:
+                logger.debug("skip {}".format(in_sha256[sha256]))
 
 
 def copy_files(logger, input_glob, output_folder):

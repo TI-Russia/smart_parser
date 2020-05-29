@@ -1,0 +1,45 @@
+{
+    "d:folder": "human_files",
+    "r:folder": "domains",
+    "files": {
+        "05.fsin.su": {
+            "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
+                "r:path": "old_dlrobot.xlsx",
+                "intersection_status": "only_dlrobot"
+            },
+            "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3": {
+                "r:path": "new_dlrobot.xlsx",
+                "intersection_status": "only_dlrobot"
+            },
+            "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865": {
+                "r:path": "human.xlsx",
+                "intersection_status": "both_found",
+                "d:document_id": 1,
+                "d:document_file_id": 1,
+                "d:path": "human.xlsx",
+                "d:domain": "05.fsin.su",
+                "d:office_id": 4,
+                "d:income_year": 2009
+            },
+            "fa8bd40933bf21520b3b664b0d7507919426cbd7a86a84238c400b93b3bf4d00": {
+                "r:path": "tmpniba87hj.xlsx",
+                "intersection_status": "only_dlrobot"
+            },
+            "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
+                "d:document_id": 19,
+                "d:document_file_id": 1432,
+                "d:domain": "05.fsin.su",
+                "d:path": "uniq_from_human.xlsx",
+                "d:office_id": 4,
+                "d:income_year": 2009,
+                "r:path": "huniq_from_human.xlsx",
+                "intersection_status": "only_human"
+            },
+            "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
+                "r:path": "onew.xlsx",
+                "intersection_status": "only_dlrobot",
+                "r:old": true
+            }
+        }
+    }
+}
