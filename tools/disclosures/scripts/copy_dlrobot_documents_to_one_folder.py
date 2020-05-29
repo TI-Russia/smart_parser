@@ -2,14 +2,13 @@ import shutil
 import os
 import argparse
 import glob
-import json
+import hashlib
 import logging
-
+import tempfile
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-glob", dest='input_glob', required=True)
-    parser.add_argument("--only-copy", dest='only_copy', required=False, default=False, action="store_true")
     parser.add_argument("--output-folder", dest='output_folder', default="domains")
     return parser.parse_args()
 
@@ -26,112 +25,82 @@ def setup_logging(logfilename):
 
     # create console handler with a higher log level
     ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
+    ch.setLevel(logging.DEBUG)
     logger.addHandler(ch)
     return logger
 
 
-class TMover:
-    def __init__(self, args, logger):
-        self.args = args
-        self.logger = logger
-        self.logger.info("load {}".format(args.human_json))
-        with open(args.human_json, "r") as inp:
-            self.human_json = json.load(inp)
-        self.dlrobot_human_json = dict() #result
-        self.found_by_dlrobot = set()
+def build_sha256(filename):
+    with open(filename, "rb") as f:
+        file_data = f.read()
+        return hashlib.sha256(file_data).hexdigest()
 
-    def process_domain(self, domain):
-        self.logger.debug("process {}".format(domain))
-        domain_folder = os.path.join(self.args.dlrobot_folder, domain)
-        if not os.path.isdir(domain_folder):
-            return
-        domain_info = dict()
-        new_files_found_by_dlrobot = 0
-        files_count = 0
-        for file_path in os.listdir(domain_folder):
-            file_path = os.path.join(domain_folder, f)
-            if file_path.endswith(".json") or file_path.endswith(".txt"):
+
+def file_to_sha256(folder):
+    files = dict()
+    for x in os.listdir(folder):
+        path = os.path.join(folder, x)
+        if os.path.isfile(path):
+            files[build_sha256(path)] = path
+    return files
+
+
+def copy_files_of_one_web_site(logger, web_site, result_fo  lder, output_folder):
+    input_folder = os.path.join(result_folder, web_site)
+    web_site_output_folder = os.path.join(output_folder, web_site)
+    if not os.path.isdir(input_folder):
+        logger.debug("ignore {}".format(input_folder))
+        return
+
+    if not os.path.exists(web_site_output_folder):
+        os.mkdir(web_site_output_folder)
+        logger.debug("copy all files of {} to {}".format(input_folder, output_folder))
+        for x in os.listdir(input_folder):
+            input_file = os.path.join(input_folder, x)
+            if os.path.isfile(input_file):
+                shutil.copy2(input_file, web_site_output_folder)
+    else:
+        logger.debug("join {} and {}".format(input_folder, web_site_output_folder))
+        in_sha256 = file_to_sha256(input_folder)
+        out_sha256 = file_to_sha256(web_site_output_folder)
+        added_files = 0
+        for sha256 in in_sha256:
+            if sha256 not in out_sha256:
+                input_file = in_sha256[sha256]
+                _, extension = os.path.splitext(input_file)
+                handle, output_file = tempfile.mkstemp(dir=web_site_output_folder, suffix=extension)
+                os.close(handle)
+                logger.debug("copy {} to {}".format(input_file, output_file))
+                shutil.copy(input_file, output_file)
+                added_files += 1
+        logger.debug("added files: {}".format(added_files))
+
+
+def copy_files(logger, input_glob, output_folder):
+    for folder in glob.glob(input_glob):
+        assert os.path.isdir(folder)
+        assert os,path.join(folder, "dlrobot_parallel.log")
+
+    for folder in glob.glob(input_glob):
+        for dlrobot_project in os.listdir(folder):
+            project_folder = os.path.join( folder, dlrobot_project)
+            if not os.path.isdir(project_folder):
                 continue
-            files_count += 1
-            sha256 = build_sha256(file_path)
-            if sha256 in domain_info:
-                self.logger.error("a file copy found: {}, ignore it".format(f)))
+            result_folder = os.path.join(project_folder, "result")
+            if not os.path.exists(result_folder):
+                logger.debug("no result found in {}, skip it".format(project_folder))
                 continue
-            file_info = {
-                dhjs.dlrobot_path: file_path
-            }
-            human_file_info = self.human_json[dhjs.file_collection].get(sha256)
-            if human_file_info is not None:
-                file_info[dhjs.intersection_status] = dhjs.both_found
-                file_info.update (human_file_info)
-                self.found_by_dlrobot.add(sha256)
-            else:
-                file_info[dhjs.intersection_status] = dhjs.only_dlrobot
-                new_files_found_by_dlrobot += 1
-            domain_info[sha256] = file_info
-
-        self.dlrobot_human_json[domain] = domain_info
-        self.logger.debug("files: {},  new_files_found_by_dlrobot: {}".format(files_count, new_files_found_by_dlrobot))
-
-    def copy_human_file(self, sha256, file_info):
-        web_site = file_info[dhjs.declarator_web_domain]
-        if web_site == "":
-            web_site = "unknown_domain"
-        folder = os.path.join(args.dlrobot_folder, web_site)
-        if not os.path.exists(folder):
-            self.logger.debug("create folder for domain {}".format(folder))
-            os.mkdir(folder)
-        infile = os.path.join(self.human_json[dhjs.declarator_folder], file_info[dhjs.declarator_file_path])
-        outfile = os.path.join(folder, "h" + os.path.basename(infile))
-        if args.skip_existing and os.path.exists(outfile):
-            self.logger.debug("skip copy {}, it exists".format(outfile))
-        else:
-            self.logger.debug("copy {} to {}".format(binfile, outfile))
-            if not os.path.exists(infile):
-                self.logger.error("Error! Cannot copy {}".format(infile))
-            else:
-
-                shutil.copyfile(infile, outfile)
-            file_info[dhjs.dlrobot_path] = os.path.basename(outfile)
-            file_info[dhjs.intersection_status] = dhjs.only_human
-        if web_site not in self.dlrobot_human_json:
-            self.dlrobot_human_json[web_site] = dict()
-        self.dlrobot_human_json.get(web_site][sha256] = file_info
+            for web_site in os.listdir(result_folder):
+                copy_files_of_one_web_site(logger, web_site, result_folder, output_folder)
 
 
-    def move_files(self):
-        for folder in glob.glob(self.args.input_glob):
-            assert os.path.isdir(folder)
-            assert os,path.join(folder, "dlrobot_parallel.log")
-
-        for folder in glob.glob(self.args.input_glob):
-            for dlrobot_project in os.listdir(folder):
-                project_folder = os.path.join( folder, dlrobot_project)
-                if not os.path.isdir(project_folder):
-                    continue
-                result_folder = os.path.join(project_folder, "result")
-                if not os.path.exists(result_folder):
-                    continue
-                for web_site in os.listdir(result_folder):
-                    input_folder = os.path.join(result_folder, web_site)
-                    output_folder = os.path.join( self.args.output_folder, web_site)
-                    if not os.path.exists(output_folder):
-                        if args.only_copy:
-                            shutil.copy (input_folder, self.args.output_folder)
-                        else:
-                            shutil.move(input_folder, self.args.output_folder)
-                    else:
-                        files_count = os.listdir(output_folder)
-
-
-
-def main(args):
-    logger = setup_logging("mover.log")
-    joiner = TMover(args, logger)
-    joiner.move_files()
+def main():
+    args = parse_args()
+    logger = setup_logging("copier.log")
+    if not os.path.exists(args.output_folder):
+        os.mkdir(args.output_folder)
+    copy_files(logger, args.input_glob, args.output_folder)
 
 
 if __name__ == '__main__':
-    args = parse_args()
-    main(args)
+    main()

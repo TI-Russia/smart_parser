@@ -11,6 +11,7 @@ export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
 export ALL_HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
 export INPUT_DLROBOT_PROJECTS=input_projects
+export DLROBOT_RESULT_FOLDER=domains
 
 #2. создание нового каталога dlrobot  (стоит переименовать в disclosures)
     mkdir $DLROBOT_FOLDER
@@ -21,14 +22,14 @@ export INPUT_DLROBOT_PROJECTS=input_projects
 
 
 #4. Запуск dlrobot, получение каталога domains
-    ~/smart_parser/tools/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains domains.txt  --timeouted-domains timeouted-domains.txt
-    ~/smart_parser/tools/robots/dlrobot/scripts/create_by_domains.py --domains domains.txt --output-folder $INPUT_DLROBOT_PROJECTS
+    python ~/smart_parser/tools/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains domains.txt  --timeouted-domains timeouted-domains.txt
+    python ~/smart_parser/tools/robots/dlrobot/scripts/create_by_domains.py --domains domains.txt --output-folder $INPUT_DLROBOT_PROJECTS
     # деление на 7 порций пока было сделано руками
     ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $INPUT_DLROBOT_PROJECTS $DLROBOT_FOLDER/processed_projects
+    python ~/smart_parser/tools/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  processed_projects.* --output-folder $DLROBOT_RESULT_FOLDER
 
 #5.  запуск smart_parser
-    cp ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/*.sh .
-    bash run_smart_parser_all.sh
+    bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
 
 
 #6.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json

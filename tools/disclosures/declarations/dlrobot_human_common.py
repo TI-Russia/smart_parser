@@ -9,6 +9,7 @@ class dhjs:
 
     dlrobot_path = 'r:dlrobot_path'
     dlrobot_folder = 'r:dlrobot_path'
+    dlrobot_copied_from_the_past = "r:old"
 
     declarator_folder = "d:folder"
     declarator_web_domain = 'd:domain'
@@ -17,3 +18,4 @@ class dhjs:
     declarator_income_year = 'd:income_year'
     declarator_document_id = 'd:document_id'
     declarator_document_file_id = 'd:document_file_id'
+

@@ -36,6 +36,7 @@ def parse_args():
     parser.add_argument("--table", dest='table', default="declarations_documentfile")
     parser.add_argument("--output-folder", dest='output_folder', default='./out.documentfile')
     parser.add_argument("--output-json", dest='output_file', default="human_files.json")
+    parser.add_argument("--max-files-count", dest='max_files_count', type=int)
     return parser.parse_args()
 
 
@@ -127,7 +128,7 @@ def main(args):
     if not os.path.exists(args.output_folder):
         logger.debug("create {}".format(args.output_folder))
         os.mkdir(args.output_folder)
-
+    files_count = 0
     for document_file_id, document_id, link, file_path, office_id, income_year in get_all_files_by_table(logger, args.table, args.output_folder):
         sha256 = build_sha256(file_path)
         domain = urlparse(link).netloc
@@ -141,7 +142,9 @@ def main(args):
                 dhjs.declarator_office_id: office_id,
                 dhjs.declarator_income_year: income_year
         }
-        break
+        files_count += 1
+        if args.max_files_count is not None and files_count >= args.max_files_count:
+            break
 
     with open(args.output_file, "w") as out:
         human_json = {
