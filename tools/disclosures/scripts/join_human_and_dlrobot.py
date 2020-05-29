@@ -3,7 +3,7 @@ import os
 import argparse
 import hashlib
 import json
-from disclosures.declarations.dlrobot_human_common import dhjs
+from disclosures.declarations.input_json_specification import dhjs
 import logging
 
 
@@ -47,8 +47,8 @@ class TJoiner:
         self.logger.info("load {}".format(args.human_json))
         with open(args.human_json, "r") as inp:
             self.human_json = json.load(inp)
-        self.dlrobot_human_json = dict() #result
         self.found_by_dlrobot = set()
+        self.output_json = dict()
 
     def process_domain(self, domain):
         self.logger.debug("process {}".format(domain))
@@ -80,7 +80,7 @@ class TJoiner:
                 new_files_found_by_dlrobot += 1
             domain_info[sha256] = file_info
 
-        self.dlrobot_human_json[domain] = domain_info
+        self.output_json[domain] = domain_info
         self.logger.debug("files: {},  new_files_found_by_dlrobot: {}".format(files_count, new_files_found_by_dlrobot))
 
     def copy_human_file(self, sha256, file_info):
@@ -103,9 +103,9 @@ class TJoiner:
                 shutil.copyfile(infile, outfile)
             file_info[dhjs.dlrobot_path] = os.path.basename(outfile)
             file_info[dhjs.intersection_status] = dhjs.only_human
-        if web_site not in self.dlrobot_human_json:
-            self.dlrobot_human_json[web_site] = dict()
-        self.dlrobot_human_json[web_site][sha256] = file_info
+        if web_site not in self.output_json:
+            self.output_json[web_site] = dict()
+        self.output_json[web_site][sha256] = file_info
 
     def copy_old_dlrobot_file(self, web_site, sha256, infile):
         folder = os.path.join(args.dlrobot_folder, web_site)
@@ -120,9 +120,9 @@ class TJoiner:
             dhjs.intersection_status: dhjs.only_dlrobot,
             dhjs.dlrobot_copied_from_the_past: True
         }
-        if web_site not in self.dlrobot_human_json:
-            self.dlrobot_human_json[web_site] = dict()
-        self.dlrobot_human_json[web_site][sha256] = file_info
+        if web_site not in self.output_json:
+            self.output_json[web_site] = dict()
+        self.output_json[web_site][sha256] = file_info
 
     def get_old_dlrobot_files(self, json_file_name):
         with open(json_file_name, "r") as inp:
@@ -159,9 +159,9 @@ class TJoiner:
 
         if args.old_dlrobot_human_json is not None:
             for web_site, sha256, filename in self.get_old_dlrobot_files(args.old_dlrobot_human_json):
-                if web_site not in self.dlrobot_human_json:
-                    self.dlrobot_human_json[web_site] = dict()
-                if sha256 not in self.dlrobot_human_json[web_site]:
+                if web_site not in self.output_json:
+                    self.output_json[web_site] = dict()
+                if sha256 not in self.output_json[web_site]:
                     self.copy_old_dlrobot_file(web_site, sha256, filename)
 
 
@@ -170,12 +170,12 @@ def main(args):
     joiner = TJoiner(args, logger)
     joiner.join()
     with open(args.output_json, "w") as out:
-        output_json  = {
+        output_json = {
             dhjs.declarator_folder: joiner.human_json[dhjs.declarator_folder],
             dhjs.dlrobot_folder: args.dlrobot_folder,
-            dhjs.file_collection: joiner.dlrobot_human_json
+            dhjs.file_collection: joiner.output_json
         }
-        json.dump(output_json, out,  indent=4)
+        json.dump(output_json, out,  indent=4, sort_keys=True)
 
 
 if __name__ == '__main__':

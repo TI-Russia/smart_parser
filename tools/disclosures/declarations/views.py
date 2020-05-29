@@ -3,7 +3,7 @@ from .forms import SearchForm
 from django.views import generic
 from django.db.models import Q
 from django.views.generic.edit import FormView
-from .dlrobot_human_common import dhjs
+from .input_json_specification import dhjs
 
 
 class SectionView(generic.DetailView):

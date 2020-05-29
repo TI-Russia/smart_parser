@@ -7,8 +7,8 @@ class dhjs:
 
     file_collection = 'files'
 
-    dlrobot_path = 'r:dlrobot_path'
-    dlrobot_folder = 'r:dlrobot_path'
+    dlrobot_path = 'r:path'
+    dlrobot_folder = 'r:folder'
     dlrobot_copied_from_the_past = "r:old"
 
     declarator_folder = "d:folder"

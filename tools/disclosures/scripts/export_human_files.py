@@ -4,7 +4,7 @@ import argparse
 import hashlib
 import json
 from urllib.parse import urlparse
-from disclosures.declarations.dlrobot_human_common import dhjs
+from disclosures.declarations.input_json_specification import dhjs
 import logging
 import zipfile
 import requests

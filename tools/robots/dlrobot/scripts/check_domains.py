@@ -8,7 +8,7 @@ import random
 from functools import partial
 import logging
 import os
-from disclosures.declarations.dlrobot_human_common import dhjs
+from disclosures.declarations.input_json_specification import dhjs
 
 
 def parse_args():

@@ -28,12 +28,12 @@ export DLROBOT_RESULT_FOLDER=domains
     ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $INPUT_DLROBOT_PROJECTS $DLROBOT_FOLDER/processed_projects
     python ~/smart_parser/tools/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  processed_projects.* --output-folder $DLROBOT_RESULT_FOLDER
 
-#5.  запуск smart_parser
-    bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
 
-
-#6.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json
+#5.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json
     python $SCRIPT_FOLDER/join_human_and_dlrobot.py --dlrobot-folder domains --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
+
+#6.  запуск smart_parser
+    bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
 
 
 #7.  создание базы disclosures
