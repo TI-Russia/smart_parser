@@ -3,7 +3,7 @@ import os
 import argparse
 import hashlib
 import json
-from disclosures.declarations.input_json_specification import dhjs
+from declarations.input_json_specification import dhjs
 import logging
 
 
