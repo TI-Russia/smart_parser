@@ -136,7 +136,7 @@ class Person(models.Model):
 
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
-    type = models.TextField(verbose_name='office name')
+    type = models.TextField(verbose_name='real_estate')
     country = models.CharField(max_length=2)
     relative = models.CharField(max_length=1)
     owntype = models.CharField(max_length=1)

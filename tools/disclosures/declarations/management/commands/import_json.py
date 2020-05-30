@@ -29,9 +29,9 @@ def setup_logging(logfilename):
     logger.addHandler(fh)
 
     # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    logger.addHandler(ch)
+    #ch = logging.StreamHandler()
+    #ch.setLevel(logging.DEBUG)
+    #logger.addHandler(ch)
     return logger
 
 
@@ -62,6 +62,9 @@ class TSourceDocumentFile:
         self.office_id = office_id
         self.web_domain = web_domain
         self.file_sha256 = file_sha256
+
+    def __hash__(self):
+        return hash(self.file_sha256)
 
 
 class TInputJsonFile:
@@ -96,10 +99,12 @@ class TInputJsonFile:
 class TImporter:
     def init_document_2_files(self):
         document_2_files = defaultdict(set)
-        for file_info in self.dlrobot_human_file_info.values():
-            document_id = file_info.get(dhjs.declarator_document_id)
-            if document_id is not None:
-                document_2_files[document_id].add(file_info[dhjs.declarator_document_file_id])
+        for web_site_info in self.dlrobot_human_file_info.values():
+            for file_info in web_site_info.values():
+                document_id = file_info.get(dhjs.declarator_document_id)
+                if document_id is not None:
+                    document_2_files[document_id].add(file_info[dhjs.declarator_document_file_id])
+        self.logger.debug("built {} document_2_files".format(len(document_2_files)))
         return document_2_files
 
     def build_office_domains(self):
@@ -110,6 +115,7 @@ class TImporter:
                 raise Exception("no office found for domain {}".format(domain))
             most_freq_office = max(set(offices), key=offices.count)
             offices_to_domains[most_freq_office].append(web_domain)
+        self.logger.debug("built {} offices_to_domains".format(len(offices_to_domains)))
         return offices_to_domains
 
     def __init__(self, args):
@@ -121,9 +127,8 @@ class TImporter:
             self.dlrobot_folder = dlrobot_human[dhjs.dlrobot_folder]
             if not os.path.isabs(self.dlrobot_folder):
                 self.dlrobot_folder = os.path.join(os.path.dirname(args['dlrobot_human']), self.dlrobot_folder)
-
             self.dlrobot_human_file_info = dlrobot_human[dhjs.file_collection]
-
+        self.logger.debug("load information about {} sites ".format(len(self.dlrobot_human_file_info)))
         self.document_2_files = self.init_document_2_files()
         self.office_to_domains = self.build_office_domains()
         self.all_section_passports = set()
@@ -137,7 +142,7 @@ class TImporter:
                 filename = os.path.join(self.args['smart_parser_human_json'], str(document_id) + ".json")
                 if os.path.exists(filename):
                     self.logger.debug("import human json {}".format(filename))
-                    yield TInputJsonFile(source_files[0], filename, dhjs.only_human)
+                    yield TInputJsonFile(list(source_files)[0], filename, dhjs.only_human)
 
     def register_section_passport(self, passport):
         if passport in self.all_section_passports:
@@ -191,10 +196,10 @@ class TImporter:
                 smart_parser_results = list(get_smart_parser_results(self.logger, input_path))
                 if len(smart_parser_results) == 0:
                     if source_file.declarator_document_id is not None:
-                        failed_documents[source_file.declarator_document_id].add(file_info)
+                        failed_documents[source_file.declarator_document_id].add(source_file)
                 else:
                     for file_path in smart_parser_results:  #xlsx sheets
-                        jsons_to_import.append( TInputJsonFile(source_file, file_path) )
+                        jsons_to_import.append(TInputJsonFile(source_file, file_path) )
 
             jsons_to_import += list(self.get_human_smart_parser_json(failed_documents))
             jsons_to_import.sort(key=(lambda x: x.get_import_priority()), reverse=True)

@@ -1,0 +1,28 @@
+{
+    "files": {
+        "test1.ru": {
+            "f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a": {
+                "intersection_status": "only_dlrobot",
+                "r:path": "one_line_2017.docx",
+                "d:office_id": 1
+            },
+            "9f41a1c24d857c38af1b82a18dc496c092e7a562b1169c3f70432d735c5eee36": {
+                "intersection_status": "only_dlrobot",
+                "r:path": "one_line_2017_copy.docx",
+                "d:office_id": 1
+            },
+            "5b51c23cde33e9508125f097827133bee8a0906fd6baa4b8e86f2f4f4ab9eef2": {
+                "intersection_status": "only_dlrobot",
+                "r:path": "one_line_2018.docx"
+            },
+            "b0285ddd2c105768ef18639a3ac99dea84591f3378d478cb4153718753d71a9": {
+                "intersection_status": "both_found",
+                "r:path": "one_line_2019.docx",
+                "d:income_year": 2019,
+                "d:document_id":  198,
+                "d:document_file_id": 1
+            }
+        }
+    },
+    "r:folder": "domains"
+}
