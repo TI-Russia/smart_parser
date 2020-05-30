@@ -1,10 +1,11 @@
 
-from django.test import SimpleTestCase
+#from django.test import SimpleTestCase
+from django.test import TestCase
 import os
 import shutil
 
 
-class JoinDLrobotAndHuman(SimpleTestCase):
+class JoinDLrobotAndHuman(TestCase):
     def setUp(self):
         os.chdir(os.path.dirname(__file__))
         self.domains_folder = "domains"
