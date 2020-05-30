@@ -24,8 +24,11 @@ export DLROBOT_RESULT_FOLDER=domains
 #4. Запуск dlrobot, получение каталога domains
     python ~/smart_parser/tools/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains domains.txt  --timeouted-domains timeouted-domains.txt
     python ~/smart_parser/tools/robots/dlrobot/scripts/create_by_domains.py --domains domains.txt --output-folder $INPUT_DLROBOT_PROJECTS
-    # деление на 7 порций пока было сделано руками
-    ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $INPUT_DLROBOT_PROJECTS $DLROBOT_FOLDER/processed_projects
+    # деление на 7 порций пока было сделано руками (надо вспомнить, что-то такое ls|shuf|split -l 1000 ... или написать скрипт на питоне
+    ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $INPUT_DLROBOT_PROJECTS.01 $DLROBOT_FOLDER/processed_projects.01
+    ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $INPUT_DLROBOT_PROJECTS.03 $DLROBOT_FOLDER/processed_projects.02
+    ...
+    ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $INPUT_DLROBOT_PROJECTS.03 $DLROBOT_FOLDER/processed_projects.07
     python ~/smart_parser/tools/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  processed_projects.* --output-folder $DLROBOT_RESULT_FOLDER
 
 
@@ -35,6 +38,7 @@ export DLROBOT_RESULT_FOLDER=domains
 #6.  запуск smart_parser
     bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
 
+#6.1 создание офисов и подливка ручных json?
 
 #7.  создание базы disclosures
     cd $DISCLOSURES_FOlDER
@@ -52,3 +56,9 @@ export DLROBOT_RESULT_FOLDER=domains
    export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.infoexport DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
    cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db
 
+
+№10 удаление ненужных файлов
+    cd $DLROBOT_FOLDER
+    rm -rf $DLROBOT_RESULT_FOLDER <- предпочтительней, остается все, как было скачено
+    или
+    rm -rf processed_projects.*/*/result

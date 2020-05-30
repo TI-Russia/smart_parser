@@ -117,23 +117,21 @@ class TImporter:
         self.args = args
         with open(args['dlrobot_human'], "r", encoding="utf8") as inp:
             self.dlrobot_human_file_info = json.load(inp)
+        self.dlrobot_folder = self.dlrobot_human_file_info[dhjs.dlrobot_folder]
         self.document_2_files = self.init_document_2_files()
         self.office_to_domains = self.build_office_domains()
         self.all_section_passports = set()
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
 
-    def get_human_smart_parser_json(self, failed_files):
-        # aggregate documentfile to documents
-        documents = dict((source_file.declarator_document_id, source_file) for source_file in failed_files.values())
-
-        for document_id, source_file in documents.items():
+    def get_human_smart_parser_json(self, failed_documents):
+        for document_id, source_files in failed_documents.items():
             all_doc_files = self.document_2_files[document_id]
-            if len(all_doc_files & set(failed_files.keys())) == len(all_doc_files):  #if we failed to import all document files
+            if len(source_files) >= len(all_doc_files):  #if smart_parser failed to parse all document files
                 filename = os.path.join(self.args['smart_parser_human_json'], str(document_id) + ".json")
                 if os.path.exists(filename):
-                    self.logger.debug("import human file {}".format(filename))
-                    yield TInputJsonFile(source_file, filename, dhjs.only_human)
+                    self.logger.debug("import human json {}".format(filename))
+                    yield TInputJsonFile(source_files[0], filename, dhjs.only_human)
 
     def register_section_passport(self, passport):
         if passport in self.all_section_passports:
@@ -175,24 +173,24 @@ class TImporter:
             self.logger.debug("import {} sections out of {} from {}".format(imported_sections, section_index, filepath))
 
     def import_office(self, office_id):
-        for domain in self.office_to_domains[office_id]:
-            self.logger.debug("office {} domain {}".format(office_id, domain))
+        for web_site in self.office_to_domains[office_id]:
+            self.logger.debug("office {} domain {}".format(office_id, web_site))
             jsons_to_import = list()
 
-            failed_files = dict()
-            for source_file_sha256, file_info in self.dlrobot_human_file_info[domain].items():
+            failed_documents = defaultdict(set)
+            for source_file_sha256, file_info in self.dlrobot_human_file_info[web_site].items():
                 file_office_id = file_info.get(dhjs.office_id, office_id)
-                source_file = TSourceDocumentFile(file_office_id, domain, source_file_sha256, file_info)
-                input_path = os.path.join("domains", domain, file_info[dhjs.dlrobot_path])
+                source_file = TSourceDocumentFile(file_office_id, web_site, source_file_sha256, file_info)
+                input_path = os.path.join(self.dlrobot_folder, web_site, file_info[dhjs.dlrobot_path])
                 smart_parser_results = list(get_smart_parser_results(self.logger, input_path))
                 if len(smart_parser_results) == 0:
                     if source_file.declarator_document_id is not None:
-                        failed_files[source_file.declarator_documentfile_id] = source_file
+                        failed_documents[source_file.declarator_document_id].add(file_info)
                 else:
                     for file_path in smart_parser_results:  #xlsx sheets
                         jsons_to_import.append( TInputJsonFile(source_file, file_path) )
 
-            jsons_to_import += list(self.get_human_smart_parser_json(failed_files))
+            jsons_to_import += list(self.get_human_smart_parser_json(failed_documents))
             jsons_to_import.sort(key=(lambda x: x.get_import_priority()), reverse=True)
             for json_file in jsons_to_import:
                 try:
@@ -210,7 +208,7 @@ def process_one_file_in_thread(importer: TImporter, office_id):
         importer.logger.error("cannot import office {}, exception: {}".format(office_id), exp)
 
 
-class Command(BaseCommand):
+class ImportJsonCommand(BaseCommand):
     help = 'Import dlrobot and declarator files into disclosures db'
 
     def __init__(self, *args, **kwargs):
