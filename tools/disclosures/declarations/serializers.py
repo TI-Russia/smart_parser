@@ -192,7 +192,7 @@ class TSmartParserJsonReader:
         self.section.department =  person_info.get("department")
         self.section.department_ru = self.section.department
 
-    def get_passport_factory(self, office_hierarchy):
+    def get_passport_factory(self, office_hierarchy=None):
         return TSectionPassportFactory(
                     self.section.spjsonfile.office.id,
                     self.section.income_year,

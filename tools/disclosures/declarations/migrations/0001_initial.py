@@ -19,6 +19,9 @@ class Migration(migrations.Migration):
                 ('name', models.TextField(verbose_name='office name')),
                 ('name_ru', models.TextField(null=True, verbose_name='office name')),
                 ('name_en', models.TextField(null=True, verbose_name='office name')),
+                ('type_id', models.IntegerField(null=True)),
+                ('parent_id', models.IntegerField(null=True)),
+                ('region_id', models.IntegerField(null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -42,6 +45,7 @@ class Migration(migrations.Migration):
                 ('position_ru', models.TextField(null=True)),
                 ('position_en', models.TextField(null=True)),
                 ('person', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='declarations.Person', verbose_name='person id')),
+                ('dedupe_score', models.FloatField(blank=True, default=0.0, null=True)),
             ],
         ),
         migrations.CreateModel(

@@ -1,6 +1,6 @@
 import declarations.models as models
 from declarations.serializers import TSmartParserJsonReader
-from declarations.dlrobot_human_common import dhjs
+from declarations.input_json_specification import dhjs
 
 from django.core.management import BaseCommand
 from django.db import transaction
@@ -55,9 +55,9 @@ def get_smart_parser_results(logger, input_path):
 
 class TSourceDocumentFile:
     def __init__(self, office_id, web_domain, file_sha256, file_info):
-        self.declarator_documentfile_id = file_info.get(dhjs.document_file_id)
-        self.declarator_document_id = file_info.get(dhjs.document_id)
-        self.declarator_income_year = file_info.get(dhjs.income_year)
+        self.declarator_documentfile_id = file_info.get(dhjs.declarator_document_file_id)
+        self.declarator_document_id = file_info.get(dhjs.declarator_document_id)
+        self.declarator_income_year = file_info.get(dhjs.declarator_income_year)
         self.intersection_status = file_info[dhjs.intersection_status]
         self.office_id = office_id
         self.web_domain = web_domain
@@ -85,7 +85,7 @@ class TInputJsonFile:
         doc_file = models.SPJsonFile(office=office,
                                      sha256=self.source_file.file_sha256,
                                      file_path=self.json_file_path,
-                                     web_domain=self.source_file.declarator_web_domain,
+                                     web_domain=self.source_file.web_domain,
                                      intersection_status=self.intersection_status,
                                      declarator_documentfile_id=self.source_file.declarator_documentfile_id,
                                      declarator_document_id=self.source_file.declarator_document_id)
@@ -96,7 +96,7 @@ class TInputJsonFile:
 class TImporter:
     def init_document_2_files(self):
         document_2_files = defaultdict(set)
-        for file_info in self.dlrobot_human_file_info[dhjs.file_collection].values():
+        for file_info in self.dlrobot_human_file_info.values():
             document_id = file_info.get(dhjs.declarator_document_id)
             if document_id is not None:
                 document_2_files[document_id].add(file_info[dhjs.declarator_document_file_id])
@@ -104,20 +104,26 @@ class TImporter:
 
     def build_office_domains(self):
         offices_to_domains = defaultdict(list)
-        for domain in self.dlrobot_human_file_info:
-            offices = list(x[dhjs.office_id] for x in self.dlrobot_human_file_info[domain].values() if dhjs.office_id in x)
+        for web_domain in self.dlrobot_human_file_info:
+            offices = list(x[dhjs.declarator_office_id] for x in self.dlrobot_human_file_info[web_domain].values() if dhjs.declarator_office_id in x)
             if len(offices) == 0:
                 raise Exception("no office found for domain {}".format(domain))
             most_freq_office = max(set(offices), key=offices.count)
-            offices_to_domains[most_freq_office].append(domain)
+            offices_to_domains[most_freq_office].append(web_domain)
         return offices_to_domains
 
     def __init__(self, args):
         self.logger = setup_logging("import_json.log")
         self.args = args
+
         with open(args['dlrobot_human'], "r", encoding="utf8") as inp:
-            self.dlrobot_human_file_info = json.load(inp)
-        self.dlrobot_folder = self.dlrobot_human_file_info[dhjs.dlrobot_folder]
+            dlrobot_human = json.load(inp)
+            self.dlrobot_folder = dlrobot_human[dhjs.dlrobot_folder]
+            if not os.path.isabs(self.dlrobot_folder):
+                self.dlrobot_folder = os.path.join(os.path.dirname(args['dlrobot_human']), self.dlrobot_folder)
+
+            self.dlrobot_human_file_info = dlrobot_human[dhjs.file_collection]
+
         self.document_2_files = self.init_document_2_files()
         self.office_to_domains = self.build_office_domains()
         self.all_section_passports = set()
@@ -179,7 +185,7 @@ class TImporter:
 
             failed_documents = defaultdict(set)
             for source_file_sha256, file_info in self.dlrobot_human_file_info[web_site].items():
-                file_office_id = file_info.get(dhjs.office_id, office_id)
+                file_office_id = file_info.get(dhjs.declarator_office_id, office_id)
                 source_file = TSourceDocumentFile(file_office_id, web_site, source_file_sha256, file_info)
                 input_path = os.path.join(self.dlrobot_folder, web_site, file_info[dhjs.dlrobot_path])
                 smart_parser_results = list(get_smart_parser_results(self.logger, input_path))
@@ -212,7 +218,7 @@ class ImportJsonCommand(BaseCommand):
     help = 'Import dlrobot and declarator files into disclosures db'
 
     def __init__(self, *args, **kwargs):
-        super(Command, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.importer = None
         self.options = None
 
@@ -236,14 +242,17 @@ class ImportJsonCommand(BaseCommand):
 
 
     def handle(self, *args, **options):
-        from django import db
-        db.connections.close_all()
 
         importer = TImporter(options)
 
-        pool = Pool(processes=int(options.get('process_count')))
-        self.stdout.write("start importing")
         offices = list(i for i in importer.office_to_domains.keys())
+        self.stdout.write("start importing")
 
-        #offices = offices[0:10]
-        pool.map(partial(process_one_file_in_thread, importer), offices)
+        if options.get('process_count', 0) > 1:
+            from django import db
+            db.connections.close_all()
+            pool = Pool(processes=int(options.get('process_count')))
+            pool.map(partial(process_one_file_in_thread, importer), offices)
+        else:
+            for office_id in offices:
+                importer.import_office(office_id)
