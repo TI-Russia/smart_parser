@@ -86,6 +86,8 @@ class TWorkerHost:
                 return True
             return 0 in self.exit_statuses[-tail_len:]
 
+    def __lt__(self, other):
+        return self.hostname < other.hostname
 
 class TJobTasks:
     def __init__(self, args, logger):

@@ -1,5 +1,6 @@
 from django.db import migrations, models
 import gzip
+#from declarations.models import Office
 
 def add_offices(apps, schema_editor):
     Office = apps.get_model('declarations', 'Office')

@@ -8,10 +8,12 @@ import random
 from functools import partial
 import logging
 import os
+from disclosures.declarations.input_json_specification import dhjs
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--human-files", help='a file from ../../disclosures/scripts/create_json_by_human_files.py',
+    parser.add_argument("--human-files", help='a file from ../../disclosures/scripts/export_human_files.py',
                         dest='human_files', required=False)
     parser.add_argument("--domains-list", dest='input_domains', required=False)
     parser.add_argument("--reached-domains", dest='output_domains', required=True, default="domains.txt")
@@ -64,7 +66,7 @@ def read_input(args):
     if args.human_files is not None:
         with open(args.human_files, "r", encoding="utf8") as inpf:
             human_files = json.load(inpf)
-        urls = list(set(x['domain'] for x in human_files.values() if len(x['domain']) > 0))
+        urls = list(set(x[dhjs.declarator_web_domain] for x in human_files.values() if len(x[dhjs.declarator_web_domain]) > 0))
     else:
         assert args.input_domains is not None
         urls = list()
