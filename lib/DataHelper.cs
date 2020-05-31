@@ -112,7 +112,11 @@ namespace Smart.Parser.Lib
                 case "дочьжены": return RelationType.Child;
                 case "несовершеннолетнийребёнок": return RelationType.Child;
                 case "несовершеннолетний": return RelationType.Child;
+                case "несовершеноленийребенок": return RelationType.Child;
+                case "нсовершеннолетнийребенок": return RelationType.Child;
                 case "племяницасупруги": return RelationType.Other;
+                case "совершеннолетнийребенок": return RelationType.Child;
+                case "несоверщеннолетнийребенок": return RelationType.Child;
                 case "муж": return RelationType.Spouse;
                 case "мать": return RelationType.Other;
                 case "жена": return RelationType.Spouse;
@@ -123,6 +127,8 @@ namespace Smart.Parser.Lib
                 case "иждивенец": return RelationType.Child;
                 case "опекаемая": return RelationType.Child;
                 case "опекаемый": return RelationType.Child;
+                case "супруги": return RelationType.Spouse;
+                case "супруна": return RelationType.Spouse;
 
                 default:
                     if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннолетн"))

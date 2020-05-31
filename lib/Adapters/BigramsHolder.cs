@@ -6,6 +6,7 @@ using System.IO;
 using Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Linq;
+using Smart.Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
@@ -91,6 +92,26 @@ namespace Smart.Parser.Adapters
                             joinExplanation = "person regexp";
                         }
 
+                        if (TextHelpers.MayContainsRole(string.Join(" ", tokens1))
+                            && TextHelpers.CanBePatronymic(tokens2.Last())
+                            && Char.IsUpper(tokens2[0][0])
+                            && tokens1.All(x => !TextHelpers.CanBePatronymic(x))
+                        )
+                        {
+                            joinExplanation = "role and person regexp";
+                        }
+
+                        if (Regex.Match(string.Join(" ", tokens1), @".+\([^\)]+", RegexOptions.Singleline).Success && 
+                            Regex.Match(string.Join(" ", tokens2), @"^[^\(]+\).*", RegexOptions.Singleline).Success)
+                        {
+                            joinExplanation = "non-closed ) regexp";
+                        }
+
+                        if (firstWord.Trim()[0] == '(')
+                        {
+                            joinExplanation = "open ( regexp";
+                        }
+                        
                         if (joinExplanation != "")
                         {
                             Logger.Debug(string.Format(
