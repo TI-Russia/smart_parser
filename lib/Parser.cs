@@ -567,6 +567,16 @@ namespace Smart.Parser.Lib
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
 
+            // swap statePropCountryStr and statePropSquareStr
+            if ((statePropSquareStr.ToLower().Trim() == "россия" ||
+                 statePropSquareStr.ToLower().Trim() == "рф") &&
+                Regex.Match(statePropCountryStr.Trim(), @"[0-9,.]").Success)
+            {
+                var t = statePropSquareStr;
+                statePropSquareStr = statePropCountryStr;
+                statePropCountryStr = t;
+            }
+
             try
             {
                 if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
