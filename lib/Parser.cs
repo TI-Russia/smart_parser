@@ -321,8 +321,7 @@ namespace Smart.Parser.Lib
             }
             catch (Exception e)
             {
-                Logger.Error(String.Format("Cannot parse possible header, row={0}, error={1}, so skip it may be it is a data row ", e.ToString(), row.GetRowIndex()));
-
+                Logger.Debug(String.Format("Cannot parse possible header, row={0}, error={1}, so skip it may be it is a data row ", e.ToString(), row.GetRowIndex()));
             }
             return false;
         }
@@ -892,16 +891,31 @@ namespace Smart.Parser.Lib
             string[] lines;
 
             // Eg: "1. Квартира\n2. Квартира"
-            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s").Count > 0)
+            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s", RegexOptions.Singleline).Count > 0)
             {
                 lines = (string[]) Regex.Split(value, @"\d\.\s").Skip(1).ToArray();
                 return lines;
             }
 
             // Eg: "- Квартира\n- Квартира"
-            if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s").Count > 0)
+            if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s", RegexOptions.Singleline).Count > 0)
             {
                 lines = (string[]) Regex.Split(value, @"\n\p{Pd}");
+                return lines;
+            }
+
+            // Eg: "... собственность) - Жилой дом ..."
+            if (Regex.Matches(value, @"^\p{Pd}.+\)[\s\n]+\p{Pd}\s", RegexOptions.Singleline).Count > 0)
+            {
+                lines = (string[]) Regex.Split(value, @"[\s\n]\p{Pd}\s");
+                return lines;
+            }
+
+            // Eg: "Квартира \n(долевая собственность \n\n0,3) \n \n \n \nКвартира \n(индивидуальная собственность) \n"
+            var matches = Regex.Matches(value, @"[^\)]+\([^\)]+\)\;?", RegexOptions.Singleline);
+            if (matches.Count == linesWithNumbers.Count)
+            {
+                lines = matches.Select(m => m.Value).ToArray();
                 return lines;
             }
 

@@ -113,9 +113,10 @@ namespace TI.Declarator.ParserCommon
         {
             s = s.Replace("-", "");
             if (s.Length == 0) return false;
-            return s.EndsWith("заместител") ||
-                   s.EndsWith("начальник") ||
-                   s.EndsWith("руководител")
+            return s.Contains("заместител") ||
+                   s.Contains("начальник") ||
+                   s.Contains("бухгалтер") ||
+                   s.Contains("руководител")
                 ;
         }
 
