@@ -12,7 +12,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '++rv=$@125pu%jb@f)2qgj5&8m_8v063ny%y_7im%pu!+l=d1e'
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -24,6 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modeltranslation',
     'declarations.apps.DeclarationsConfig',
+    'rest_framework',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}

@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.HomePageView.as_view(), name='detail'),
     path('search/', views.SearchResultsView.as_view(), name='search_results'),
     path('statistics/', views.StatisticsView.as_view()),
+#    path('elastic-section-search/', views.SectionElasticSearchView.as_view()),
 ]

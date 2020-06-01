@@ -27,9 +27,9 @@ def setup_logging(logfilename):
     logger.addHandler(fh)
 
     # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    logger.addHandler(ch)
+    #ch = logging.StreamHandler()
+    #ch.setLevel(logging.DEBUG)
+    #logger.addHandler(ch)
     return logger
 
 
