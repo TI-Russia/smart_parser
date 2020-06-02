@@ -19,7 +19,15 @@ fi
 
 sleep 1m
 
+curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json
+
 kill $conv_server_pid >/dev/null
+
+git diff result_stat.json
+if [ $? != 0 ]; then
+  echo "stats are different"
+  exit  1
+fi
 
 files_count=`ls pdf.ocr | wc -l`
 if [ $files_count  != 0 ];then

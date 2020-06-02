@@ -151,7 +151,7 @@ class TDocConversionClient(object):
             if data is not None:
                 message += "; conversion server answer was {}".format(data)
             self.logger.error(message)
-            return 0
+            return 200 * 2**20  # just an unknown number, terror magnifies objects
 
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url)

@@ -51,7 +51,15 @@ while true; do
     sleep 10
 done
 
+curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json
+
 kill $conv_server_pid >/dev/null
+
+git diff result_stat.json
+if [ $? != 0 ]; then
+  echo "stats are different"
+  exit  1
+fi
 
 if [ "$http_code" == "404" ]; then
   echo "cannot get converted file, 404 returned"
