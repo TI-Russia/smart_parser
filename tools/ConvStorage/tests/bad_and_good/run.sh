@@ -55,7 +55,7 @@ curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json
 
 kill $conv_server_pid >/dev/null
 
-git diff result_stat.json
+git diff --exit-code result_stat.json
 if [ $? != 0 ]; then
   echo "stats are different"
   exit  1

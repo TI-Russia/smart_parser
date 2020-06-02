@@ -47,7 +47,7 @@ if [ $was_in_ocr_queue != 1]; then
   exit  1
 fi
 
-git diff result_stat.json
+git diff --exit-code result_stat.json
 if [ $? != 0 ]; then
   echo "stats are different"
   exit  1

@@ -383,17 +383,21 @@ class TConvertDatabase:
     def get_stats(self):
         try:
             ocr_pending_all_file_size = sum(x.file_size for x in self.ocr_tasks.values())
+            input_task_queue = self.input_task_queue.qsize()
+            ocr_tasks_count = len(self.ocr_tasks)
             return {
                 'all_put_files_count': self.all_put_files_count,
-                'input_task_queue': self.input_task_queue.qsize(),
 
-                 #normally it should be the same as input_task_queue
+                # normally input_task_queue == input_folder_files_count
+                'input_task_queue': input_task_queue,
                 'input_folder_files_count': len(os.listdir(self.args.input_folder)),
 
+                # normally ocr_pending_files_count == ocr_tasks_count
                 'ocr_pending_files_count': len(os.listdir(self.args.ocr_input_folder)),
-                'ocr_tasks_count': len(self.ocr_tasks),
+                'ocr_tasks_count': ocr_tasks_count,
                 'ocr_pending_all_file_size': ocr_pending_all_file_size,
-                'is_converting': self.input_task_queue.qsize() > 0 or ocr_pending_all_file_size > 0,
+
+                'is_converting': input_task_queue > 0 or ocr_tasks_count > 0,
                 'processed_files_size': self.processed_files_size,
                 'failed_files_size': self.failed_files_size,
             }
