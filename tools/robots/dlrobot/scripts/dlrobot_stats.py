@@ -38,6 +38,10 @@ def get_click_stats_squeezes(clicks_stats_glob):
     return result
 
 
+def build_html(fig, output_file):
+    fig.write_html(output_file, include_plotlyjs='cdn')
+
+
 def process_clicks_stats(glob):
     declarations_count = []
     processed_files_count = []
@@ -60,11 +64,11 @@ def process_clicks_stats(glob):
     fig = px.line(df, x='Date', y='DeclarationCount',
                         hover_data=["website"],
                         title='Declaration Crawling Progress')
-    fig.write_html('declaration_crawling_stats.html')
+    build_html(fig, 'declaration_crawling_stats.html')
 
     df = pd.DataFrame({'Date': timestamps, "FilesCount": processed_files_count, "website": website} )
     fig = px.line(df, x='Date', y='FilesCount',  title='File Progress', hover_data=["website"])
-    fig.write_html('file_progress.html')
+    build_html(fig, 'file_progress.html')
 
 
 def get_time_stamp_from_log_line(log_line):
@@ -129,7 +133,7 @@ def process_dlrobot_logs(glob):
     fig = px.line(df, x='start_times', y='Minutes',
                         hover_data=['Websites', "hostnames", "exported_files_counts", "start_times"],
                         title='Crawl Website Speed')
-    fig.write_html('web_site_speed.html')
+    build_html(fig, 'web_site_speed.html')
 
 
 
