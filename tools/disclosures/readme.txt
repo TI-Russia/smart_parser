@@ -1,6 +1,5 @@
-#0 use python 3.69
-# sudo apt install redis-server
-#Cозданиr базы disclosures=dlrobot+declarator
+#Cоздание базы disclosures=dlrobot+declarator
+
 #1.1 получение declarator:
     cd ~
     git clone sokirko@bitbucket.org:TI-Russia/declarator.git
@@ -15,12 +14,11 @@
 #1.2
     git clone git@github.com:TI-Russia/smart_parser.git ~/smart_parser
 
-export DISCLOSURES_FOlDER=~/smart_parser/tools/diclosures
-export SCRIPT_FOLDER=$DISCLOSURES_FOlDER/scripts
+export DISCLOSURES_FOlDER=~/smart_parser/tools/disclosures
 CURRENT_DATE=`date  +'%Y-%m-%d'`
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
-export ALL_HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
+export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
 export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 
 export INPUT_DLROBOT_PROJECTS=input_projects
@@ -30,8 +28,8 @@ export DLROBOT_RESULT_FOLDER=domains
     mkdir $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
 
-№3  получить все новые (!) файлы из declarator в каталог $ALL_HUMAN_FILES_FOLDER и создать файл human_files.json
-    python $SCRIPT_FOLDER/export_human_files.py --table declarations_documentfile --output-folder $ALL_HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
+№3  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
+    python $DISCLOSURES_FOlDER/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
 
 
 #4. Запуск dlrobot, получение каталога domains
@@ -46,7 +44,7 @@ export DLROBOT_RESULT_FOLDER=domains
 
 
 #5.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json
-    python $SCRIPT_FOLDER/join_human_and_dlrobot.py --dlrobot-folder domains --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
+    python $DISCLOSURES_FOlDER/scripts/join_human_and_dlrobot.py --dlrobot-folder domains --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
 
 #6.  запуск smart_parser
     bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
@@ -57,12 +55,13 @@ export DLROBOT_RESULT_FOLDER=domains
     source ../venv/bin/activate
     python3 manage.py export_in_smart_parser_format --output-folder $HUMAN_JSONS_FOLDER
 
-#7.  создание базы disclosures
+#7.  инициализация базы disclosures
     follow $DISCLOSURES_FOlDER/INSTALL.txt
 
 
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
+   cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
    python $DISCLOSURES_FOlDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4
    python $DISCLOSURES_FOlDER/manage.py copy_person_id
 

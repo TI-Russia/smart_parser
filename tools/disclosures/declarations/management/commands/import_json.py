@@ -261,3 +261,5 @@ class ImportJsonCommand(BaseCommand):
         else:
             for office_id in offices:
                 importer.import_office(office_id)
+
+Command=ImportJsonCommand
