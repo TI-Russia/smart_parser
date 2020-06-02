@@ -49,7 +49,7 @@ def unzip_one_archive(logger, input_file):
             file_extension = file_extension.lower()
             if file_extension not in extensions:
                 continue
-            zipinfo.filename = "{}_{}{}".format(main_file_name, archive_index, file_extension)
+            zipinfo.filename = os.path.realpath("{}_{}{}".format(main_file_name, archive_index, file_extension))
             logger.debug("unzip {}".format(zipinfo.filename))
             zf.extract(zipinfo)
             yield zipinfo.filename

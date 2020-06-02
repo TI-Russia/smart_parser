@@ -29,7 +29,7 @@ export DLROBOT_RESULT_FOLDER=domains
     cd $DLROBOT_FOLDER
 
 №3  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
-    python $DISCLOSURES_FOlDER/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
+    python $DISCLOSURES_FOLDER/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
 
 
 #4. Запуск dlrobot, получение каталога domains
@@ -44,7 +44,7 @@ export DLROBOT_RESULT_FOLDER=domains
 
 
 #5.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json
-    python $DISCLOSURES_FOlDER/scripts/join_human_and_dlrobot.py --dlrobot-folder domains --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
+    python $DISCLOSURES_FOLDER/scripts/join_human_and_dlrobot.py --dlrobot-folder domains --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
 
 #6.  запуск smart_parser
     bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
@@ -56,17 +56,17 @@ export DLROBOT_RESULT_FOLDER=domains
     python3 manage.py export_in_smart_parser_format --output-folder $HUMAN_JSONS_FOLDER
 
 #7.  инициализация базы disclosures
-    follow $DISCLOSURES_FOlDER/INSTALL.txt
+    follow $DISCLOSURES_FOLDER/INSTALL.txt
 
 
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
-   python $DISCLOSURES_FOlDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4
-   python $DISCLOSURES_FOlDER/manage.py copy_person_id
+   python $DISCLOSURES_FOLDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4
+   python $DISCLOSURES_FOLDER/manage.py copy_person_id
 
 #9.  запуск сливалки, 3 gb each char
-   cd $DISCLOSURES_FOlDER
+   cd $DISCLOSURES_FOLDER
    export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.infoexport DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
    cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db
 
