@@ -259,7 +259,11 @@ class TJobTasks:
         self.threads = []
 
     def wait_conversion_pdf(self):
-        while self.conversion_client.get_pending_all_file_size() > 100 * 2**20:
+        while True:
+            input_queue_size = self.conversion_client.get_pending_all_file_size()
+            self.logger.debug("conversion pdf input_queue_size={}".format(input_queue_size))
+            if input_queue_size < 100 * 2**20:
+                break
             self.logger.debug("wait 5 minutes till the conversion server finish its work")
             time.sleep(60 * 5)
 
@@ -272,7 +276,7 @@ class TJobTasks:
                 if self.running_jobs_count() > 0:
                     continue  #wait till all jobs finished
                 if not self.input_files.empty():
-                    self.logger("stop process, exception={}, left unfinished jobs".format(exp))
+                    self.logger.debug("stop process, exception={}, left unfinished jobs".format(exp))
                     return False
                 break
             host = self.get_free_host()
