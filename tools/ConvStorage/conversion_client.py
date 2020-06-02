@@ -25,7 +25,7 @@ def assert_declarator_conv_alive():
         raise Exception("environment variable DECLARATOR_CONV_URL is not set")
 
     try:
-        with urllib.request.urlopen("http://" + DECLARATOR_CONV_URL+"/ping") as response:
+        with urllib.request.urlopen("http://" + DECLARATOR_CONV_URL+"/ping", timeout=300) as response:
             if response.read() == "yes":
                 return True
     except Exception as exp:

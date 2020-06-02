@@ -13,11 +13,11 @@ for pdf in *.pdf; do
   		echo "cannot found converted file $docx"
   		exit  1
 	fi
-    filesize=`stat --printf="%s" $docx`
-    if [ $filesize -ge 20000 ]; then
-        echo "the size of the output file $docx must be less than 20000 (from Finereader), winword converts it to a jpeg"
-        exit  1
-    fi
+  filesize=`stat --printf="%s" $docx`
+  if [ $filesize -ge 20000 ]; then
+      echo "the size of the output file $docx must be less than 20000 (from Finereader), winword converts it to a jpeg"
+      exit  1
+  fi
 
 done
 
