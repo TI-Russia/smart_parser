@@ -353,11 +353,15 @@ class TConvertDatabase:
 
     def process_docx_from_winword(self):
         new_files_in_db = False
+        files_count = 0
         while not self.input_task_queue.empty():
             task = self.input_task_queue.get()
             try:
                 self.process_one_input_file(task)
                 new_files_in_db = True
+                files_count += 1
+                if files_count >= 80:
+                    break  # just give a chance to accomplish other tasks, then return to these tasks
             except Exception as exp:
                 self.logger.error("Exception: {}".format(exp))
                 if os.path.exists(task.file_path):
