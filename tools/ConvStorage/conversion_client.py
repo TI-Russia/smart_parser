@@ -138,20 +138,26 @@ class TDocConversionClient(object):
         conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
         return conn.getresponse().code == 200
 
-    def get_pending_all_file_size(self):
+    def get_stats(self):
         data = None
         try:
             conn = http.client.HTTPConnection(self.db_conv_url)
             conn.request("GET", "/stat")
             response = conn.getresponse()
             data = response.read().decode('utf8')
-            return json.loads(data)['ocr_pending_all_file_size']
+            return json.loads(data)
         except Exception as exp:
-            message = "conversion_client, get_pending_all_file_size failed: {}".format(exp)
+            message = "conversion_client, get_stats failed: {}".format(exp)
             if data is not None:
                 message += "; conversion server answer was {}".format(data)
             self.logger.error(message)
-            return 200 * 2**20  # just an unknown number, terror magnifies objects
+            return None
+
+    def get_pending_all_file_size(self):
+        stats = self.get_stats()
+        if stats is None:
+            return 200 * 2 ** 20  # just an unknown number, terror magnifies objects
+        return stats['ocr_pending_all_file_size']
 
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url)
