@@ -7,6 +7,7 @@ import os
 from glob import glob
 from pathlib import Path
 import sys
+import json
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -14,6 +15,8 @@ def parse_args():
                         help="for example /home/sokirko/declarator_hdd/processed_projects.[0-9][0-9]/*/*.clicks.stats")
     parser.add_argument("--dlrobot-log-glob", dest='dlrobot_log_glob', required=False,
                         help="for example /home/sokirko/declarator_hdd/processed_projects.[0-9][0-9]/*/*.txt.log")
+    parser.add_argument("--conversion-server-stats", dest='conversion_server_stats', required=False,
+                        help="for example /home/sokirko/declarator_hdd/declarator/convert_stats.txt")
     args = parser.parse_args()
     return args
 
@@ -41,34 +44,50 @@ def get_click_stats_squeezes(clicks_stats_glob):
 def build_html(fig, output_file):
     fig.write_html(output_file, include_plotlyjs='cdn')
 
+class TClicksStatistics:
+    def __init__(self, click_stats_squeezes, min_date=None):
+        self.declarations_count = []
+        self.processed_files_count = []
+        self.timestamps = []
+        self.website = []
+        self.sum_count = 0
+        self.file_count = 0
+        for mtime, value, file_name in click_stats_squeezes:
+            if min_date is not None and mtime < min_date:
+                continue
+            self.timestamps.append(pd.Timestamp(mtime))
+            fname = os.path.basename(file_name)
+            if fname.endswith(".txt.clicks.stats"):
+                fname = fname[:-len(".txt.clicks.stats")]
+            self.website.append(fname)
+            self.sum_count += value
+            self.file_count += 1
+            self.declarations_count.append(self.sum_count)
+            self.processed_files_count.append(self.file_count)
+
+    def write_declaration_crawling_stats(self, html_file):
+        df = pd.DataFrame({'Date': self.timestamps, "DeclarationCount": self.declarations_count, "website": self.website})
+        fig = px.line(df, x='Date', y='DeclarationCount',
+                      hover_data=["website"],
+                      title='Declaration Crawling Progress')
+        build_html(fig, html_file)
+
+    def write_file_progress(self, html_file):
+        df = pd.DataFrame({'Date': self.timestamps, "FilesCount": self.processed_files_count, "website": self.website})
+        fig = px.line(df, x='Date', y='FilesCount', title='File Progress', hover_data=["website"])
+        build_html(fig, html_file)
+
 
 def process_clicks_stats(glob):
-    declarations_count = []
-    processed_files_count = []
-    timestamps = []
-    website = []
-    sum_count = 0
-    file_count = 0
-    for mtime, value, file_name in get_click_stats_squeezes(glob):
-        timestamps.append(pd.Timestamp(mtime))
-        fname = os.path.basename(file_name)
-        if fname.endswith(".txt.clicks.stats"):
-            fname = fname[:-len(".txt.clicks.stats")]
-        website.append(fname)
-        sum_count += value
-        file_count += 1
-        declarations_count.append(sum_count)
-        processed_files_count.append(file_count)
+    click_stats_squeezes = get_click_stats_squeezes(glob)
+    stats = TClicksStatistics(click_stats_squeezes)
+    stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
+    stats.write_file_progress('file_progress.html')
 
-    df = pd.DataFrame({'Date': timestamps, "DeclarationCount": declarations_count, "website": website})
-    fig = px.line(df, x='Date', y='DeclarationCount',
-                        hover_data=["website"],
-                        title='Declaration Crawling Progress')
-    build_html(fig, 'declaration_crawling_stats.html')
-
-    df = pd.DataFrame({'Date': timestamps, "FilesCount": processed_files_count, "website": website} )
-    fig = px.line(df, x='Date', y='FilesCount',  title='File Progress', hover_data=["website"])
-    build_html(fig, 'file_progress.html')
+    min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
+    stats = TClicksStatistics(click_stats_squeezes, min_time)
+    stats.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
+    stats.write_file_progress('file_progress_12h.html')
 
 
 def get_time_stamp_from_log_line(log_line):
@@ -136,13 +155,30 @@ def process_dlrobot_logs(glob):
     build_html(fig, 'web_site_speed.html')
 
 
+def process_convert_stats(history_filename):
+    with open(history_filename, encoding="utf8") as inp:
+        timestamps = list()
+        ocr_pending_all_file_sizes = list()
+        for l in inp:
+            (timestamp, stats) = l.split("\t")
+            dttime = datetime.datetime.fromtimestamp(int(timestamp))
+            timestamps.append(pd.Timestamp(dttime))
+            ocr_pending_all_file_sizes.append( json.loads(stats)['ocr_pending_all_file_size'])
+
+    df = pd.DataFrame({'Time': timestamps, "ocr_pending_file_sizes": ocr_pending_all_file_sizes})
+    fig = px.line(df, x='Time', y='ocr_pending_file_sizes',
+                        title='Ocr Conversion Server')
+    output_file = os.path.join(os.path.dirname(history_filename), "ocr_pending_file_sizes.html")
+    build_html(fig, output_file)
+
 
 def main(args):
     if args.clicks_stats_glob is not None:
         process_clicks_stats(args.clicks_stats_glob)
     if args.dlrobot_log_glob is not None:
         process_dlrobot_logs(args.dlrobot_log_glob)
-
+    if args.conversion_server_stats is not None:
+        process_convert_stats(args.conversion_server_stats)
 
 if __name__ == "__main__":
     args = parse_args()
