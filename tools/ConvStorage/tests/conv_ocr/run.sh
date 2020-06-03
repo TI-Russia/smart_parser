@@ -16,17 +16,22 @@ if [ "$http_code" != "201" ]; then
   exit  1
 fi
 
+was_in_ocr_queue=0
 while true; do 
-    sleep 10
+    sleep 3
     ls files/*.docx 2>/dev/null
     if [ $? -eq "0" ]; then
        break
     fi
+    ocr_pending_all_file_size=`curl $DECLARATOR_CONV_URL/stat | jq '.ocr_pending_all_file_size'`
+    if [ $ocr_pending_all_file_size > 0 ]; then
+        was_in_ocr_queue=1
+    fi
+    http_code=`curl -s -w '%{http_code}'  "$DECLARATOR_CONV_URL?sha256=$sha256" --output $INPUT_FILE.docx`
 done
 
 sleep 10 # to update json
 
-date
 
 [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
 sha256=`sha256sum $INPUT_FILE | awk '{print $1}'`
@@ -36,6 +41,11 @@ curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json
 
 
 kill $conv_server_pid >/dev/null
+
+if [ $was_in_ocr_queue != 1]; then
+  echo "we did not see the input file in the ocr queue"
+  exit  1
+fi
 
 git diff result_stat.json
 if [ $? != 0 ]; then

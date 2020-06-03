@@ -137,6 +137,11 @@ def convert_with_microsoft_word(logger, microsoft_pdf_2_docx, filename):
 
     taskkill_windows('winword.exe')
     taskkill_windows('pdfreflow.exe')
+    docxfile = filename + ".docx"
+    if os.path.exists(docxfile):
+        return docxfile
+    else:
+        return None
 
 
 class TInputTask:
@@ -207,11 +212,6 @@ class TConvertDatabase:
         self.input_task_queue.put(task)
         return True
 
-    def find_ocr_task(self, some_file):
-        base_name = os.path.basename(some_file)
-        input_task = self.ocr_tasks.get(os.path.basename(some_file))
-        return
-
     def move_one_ocred_file(self, docx_file):
         assert docx_file.endswith(".docx")
         input_base_name = os.path.basename(docx_file)[:-len(".docx")]
@@ -234,7 +234,7 @@ class TConvertDatabase:
     def register_file_process_finish(self, input_task: TInputTask, process_result):
         self.input_files_size -= input_task.file_size
         if process_result:
-            self.processed_files_size  += input_task.file_size
+            self.processed_files_size += input_task.file_size
         else:
             self.failed_files_size += input_task.file_size
 
@@ -252,12 +252,11 @@ class TConvertDatabase:
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
         self.logger.info("convert {} with microsoft word".format(input_file))
-        convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
-        docxfile = stripped_file + ".docx"
-        if os.path.exists(docxfile):
+        docxfile = convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
+        if docxfile is not None:
             self.logger.info("move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
-            shutil.move(docxfile, os.path.join(self.converted_files_folder, basename + ".docx"))
-            shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
+            shutil.move(docxfile, self.converted_files_folder)
+            shutil.move(input_file, self.converted_files_folder)
             os.unlink(stripped_file)
             self.register_file_process_finish(input_task, True)
         else:
@@ -268,8 +267,8 @@ class TConvertDatabase:
                 self.register_file_process_finish(input_task, False)
             else:
                 self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
-                shutil.move(stripped_file, os.path.join(self.args.ocr_input_folder, basename))
-                shutil.move(input_file, os.path.join(self.converted_files_folder, basename))
+                shutil.move(stripped_file, self.args.ocr_input_folder)
+                shutil.move(input_file, self.converted_files_folder)
                 self.ocr_tasks[input_task.basename] = input_task
 
     def create_folders(self):
@@ -383,15 +382,20 @@ class TConvertDatabase:
 
     def get_stats(self):
         try:
+            ocr_pending_all_file_size = sum(x.file_size for x in self.ocr_tasks.values())
             return {
                 'all_put_files_count': self.all_put_files_count,
                 'input_task_queue': self.input_task_queue.qsize(),
+
+                 #normally it should be the same as input_task_queue
+                'input_folder_files_count': len(os.listdir(self.args.input_folder)),
+
                 'ocr_pending_files_count': len(os.listdir(self.args.ocr_input_folder)),
                 'ocr_tasks_count': len(self.ocr_tasks),
-                'ocr_pending_all_file_size': sum(x.file_size for x in self.ocr_tasks),
+                'ocr_pending_all_file_size': ocr_pending_all_file_size,
+                'is_converting': self.input_task_queue.qsize() > 0 or ocr_pending_all_file_size > 0,
                 'processed_files_size': self.processed_files_size,
                 'failed_files_size': self.failed_files_size,
-                'winword_input_queue_size': len(os.listdir(self.args.input_folder)),
             }
         except Exception as exp:
             return {"exception": str(exp)}
@@ -402,22 +406,26 @@ class TConvertDatabase:
             fpath = os.path.join(self.args.ocr_input_folder, pdf_file)
             timestamp = Path(fpath).stat().st_mtime
             if current_time - timestamp > TConvertDatabase.ocr_timeout:
-                self.logger.error("delete orphan file {} after stalling {} secongs".format(
+                self.logger.error("delete orphan file {} after stalling {} seconds".format(
                     fpath, TConvertDatabase.ocr_timeout))
                 self.delete_file_silently(fpath)
                 self.register_ocr_process_finish(pdf_file, False)
 
-    def process_input_tasks(self):
+    def process_all_tasks(self):
         save_files_count = -1
         file_garbage_collection_timestamp = 0
         sleep_seconds = 10
         while not self.stop_input_thread:
             time.sleep(sleep_seconds)
+            # sort and winword tasks
             new_files_from_winword = self.process_docx_from_winword()
+
+            # ocr tasks
             new_files_from_ocr = self.process_docx_from_ocr()
             if new_files_from_winword or new_files_from_ocr:
                 self.rebuild_json_wrapper()
 
+            # garbage tasks
             current_time = time.time()
             if current_time - file_garbage_collection_timestamp >= 30:  # just not too often
                 file_garbage_collection_timestamp = current_time
@@ -430,7 +438,7 @@ class TConvertDatabase:
                     
 
     def start_input_files_thread(self):
-        self.input_thread = threading.Thread(target=self.process_input_tasks, args=())
+        self.input_thread = threading.Thread(target=self.process_all_tasks, args=())
         self.input_thread.start()
 
     def stop_input_files_thread(self):
