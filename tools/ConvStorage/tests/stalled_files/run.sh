@@ -17,7 +17,7 @@ if [ "$http_code" != "201" ]; then
   exit  1
 fi
 
-sleep 1m
+sleep 80 # garbage collection each 60 seconds
 
 curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json
 

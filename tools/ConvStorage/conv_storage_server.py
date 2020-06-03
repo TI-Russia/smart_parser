@@ -186,6 +186,16 @@ class TConvertDatabase:
         except Exception as exp:
             self.logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
 
+    def move_file_with_retry(self, file_name, folder):
+        for try_index in [1, 2, 3]:
+            try:
+                shutil.move(file_name, folder)
+                return
+            except Exception as exp:
+                self.logger.error("Exception {}, cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
+                time.sleep(20)
+        shutil.move(file_name, folder)
+
     def get_converted_file_name(self, sha256):
         value = self.conv_db_json['files'].get(sha256)
         if value is not None:
@@ -255,20 +265,20 @@ class TConvertDatabase:
         docxfile = convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
         if docxfile is not None:
             self.logger.info("move {} and {} to {}".format(input_file, docxfile, self.converted_files_folder))
-            shutil.move(docxfile, self.converted_files_folder)
-            shutil.move(input_file, self.converted_files_folder)
-            os.unlink(stripped_file)
+            self.move_file_with_retry(docxfile, self.converted_files_folder)
+            self.move_file_with_retry(input_file, self.converted_files_folder)
+            self.delete_file_silently(stripped_file)
             self.register_file_process_finish(input_task, True)
         else:
             if not self.args.enable_ocr:
                 self.logger.info("cannot process {}, delete it".format(input_file))
-                os.unlink(input_file)
-                os.unlink(stripped_file)
+                self.delete_file_silently(input_file)
+                self.delete_file_silently(stripped_file)
                 self.register_file_process_finish(input_task, False)
             else:
                 self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
-                shutil.move(stripped_file, self.args.ocr_input_folder)
-                shutil.move(input_file, self.converted_files_folder)
+                self.move_file_with_retry(stripped_file, self.args.ocr_input_folder)
+                self.move_file_with_retry(input_file, self.converted_files_folder)
                 self.ocr_tasks[input_task.basename] = input_task
 
     def create_folders(self):
@@ -431,7 +441,7 @@ class TConvertDatabase:
 
             # garbage tasks
             current_time = time.time()
-            if current_time - file_garbage_collection_timestamp >= 30:  # just not too often
+            if current_time - file_garbage_collection_timestamp >= 60:  # just not too often
                 file_garbage_collection_timestamp = current_time
                 self.process_ocr_logs()
                 self.process_stalled_files()

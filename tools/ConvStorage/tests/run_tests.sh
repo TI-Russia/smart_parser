@@ -1,4 +1,4 @@
-for test_folder in ping check_contain conv_winword conv_ocr bad_and_good complicated_pdf rebuild script_convert_pdf must_be_ocred
+for test_folder in ping check_contain conv_winword conv_ocr bad_and_good complicated_pdf rebuild script_convert_pdf must_be_ocred stalled_files
 do
   echo -n "test $test_folder -> "
   cd $test_folder
