@@ -97,6 +97,8 @@ class TInputJsonFile:
 
 
 class TImporter:
+    logger = None
+
     def init_document_2_files(self):
         document_2_files = defaultdict(set)
         for web_site_info in self.dlrobot_human_file_info.values():
@@ -104,11 +106,10 @@ class TImporter:
                 document_id = file_info.get(dhjs.declarator_document_id)
                 if document_id is not None:
                     document_2_files[document_id].add(file_info[dhjs.declarator_document_file_id])
-        self.logger.debug("built {} document_2_files".format(len(document_2_files)))
+        TImporter.logger.debug("built {} document_2_files".format(len(document_2_files)))
         return document_2_files
 
     def __init__(self, args):
-        self.logger = setup_logging("import_json.log")
         self.args = args
 
         with open(args['dlrobot_human'], "r", encoding="utf8") as inp:
@@ -119,7 +120,7 @@ class TImporter:
             self.dlrobot_human_file_info = dlrobot_human[dhjs.file_collection]
             self.office_to_domains = dlrobot_human[dhjs.offices_to_domains]
 
-        self.logger.debug("load information about {} sites ".format(len(self.dlrobot_human_file_info)))
+        TImporter.logger.debug("load information about {} sites ".format(len(self.dlrobot_human_file_info)))
         self.document_2_files = self.init_document_2_files()
         self.all_section_passports = set()
         if models.Section.objects.count() > 0:
@@ -131,12 +132,12 @@ class TImporter:
             if len(source_files) >= len(all_doc_files):  #if smart_parser failed to parse all document files
                 filename = os.path.join(self.args['smart_parser_human_json'], str(document_id) + ".json")
                 if os.path.exists(filename):
-                    self.logger.debug("import human json {}".format(filename))
+                    TImporter.logger.debug("import human json {}".format(filename))
                     yield TInputJsonFile(list(source_files)[0], filename, dhjs.only_human)
 
     def register_section_passport(self, passport):
         if passport in self.all_section_passports:
-            self.logger.debug("skip section because a section with the same passport already exists: {}".format(passport))
+            TImporter.logger.debug("skip section because a section with the same passport already exists: {}".format(passport))
             return False
         # we process each office in one thread, so there  is no need to use thread.locks, since office_id is a part of passport tuple
         self.all_section_passports.add(passport)
@@ -149,7 +150,7 @@ class TImporter:
         # take income_year from smart_parser. If absent, take it from declarator, otherwise the file is useless
         income_year = input_json.get('document', dict()).get('year', json_file.source_file.declarator_income_year)
         if income_year is None:
-            self.logger.error("cannot import {}, year is not defined".format(filepath))
+            TImporter.logger.error("cannot import {}, year is not defined".format(filepath))
             return
         income_year = int(income_year)
 
@@ -166,12 +167,12 @@ class TImporter:
                         json_reader.save_to_database()
                         imported_sections += 1
                 except (DatabaseError, TSmartParserJsonReader.SerializerException) as exp:
-                    self.logger.error("Error! cannot import section N {}: {} ".format(section_index, exp))
+                    TImporter.logger.error("Error! cannot import section N {}: {} ".format(section_index, exp))
         if imported_sections == 0:
-            self.logger.debug("no sections imported from {}".format(filepath))
+            TImporter.logger.debug("no sections imported from {}".format(filepath))
             doc_file.delete()
         else:
-            self.logger.debug("import {} sections out of {} from {}".format(imported_sections, section_index, filepath))
+            TImporter.logger.debug("import {} sections out of {} from {}".format(imported_sections, section_index, filepath))
 
     def import_office(self, office_id):
         for web_site in self.office_to_domains[office_id]:
@@ -179,7 +180,7 @@ class TImporter:
             if files is None:
                 continue
 
-            self.logger.debug("import web site {} to office {} ".format(web_site, office_id))
+            TImporter.logger.debug("import web site {} to office {} ".format(web_site, office_id))
             jsons_to_import = list()
 
             failed_documents = defaultdict(set)
@@ -187,7 +188,7 @@ class TImporter:
                 file_office_id = file_info.get(dhjs.declarator_office_id, office_id)
                 source_file = TSourceDocumentFile(file_office_id, web_site, source_file_sha256, file_info)
                 input_path = os.path.join(self.dlrobot_folder, web_site, file_info[dhjs.dlrobot_path])
-                smart_parser_results = list(get_smart_parser_results(self.logger, input_path))
+                smart_parser_results = list(get_smart_parser_results(TImporter.logger, input_path))
                 if len(smart_parser_results) == 0:
                     if source_file.declarator_document_id is not None:
                         failed_documents[source_file.declarator_document_id].add(source_file)
@@ -201,7 +202,7 @@ class TImporter:
                 try:
                     self.import_one_smart_parser_json(json_file)
                 except TSmartParserJsonReader.SerializerException as exp:
-                    self.logger.error("Error! cannot import {}: {} ".format(file_path, exp))
+                    TImporter.logger.error("Error! cannot import {}: {} ".format(file_path, exp))
 
 
 def process_one_file_in_thread(importer: TImporter, office_id):
@@ -226,6 +227,7 @@ class ImportJsonCommand(BaseCommand):
                 '--process-count',
             dest='process_count',
             default=1,
+            type=int,
             help='number of processes for import all'
         )
         parser.add_argument(
@@ -239,18 +241,16 @@ class ImportJsonCommand(BaseCommand):
             required=True
         )
 
-
     def handle(self, *args, **options):
-
+        TImporter.logger = setup_logging("import_json.log")
         importer = TImporter(options)
 
         offices = list(i for i in importer.office_to_domains.keys())
         self.stdout.write("start importing")
-
         if options.get('process_count', 0) > 1:
             from django import db
             db.connections.close_all()
-            pool = Pool(processes=int(options.get('process_count')))
+            pool = Pool(processes=options.get('process_count'))
             pool.map(partial(process_one_file_in_thread, importer), offices)
         else:
             for office_id in offices:

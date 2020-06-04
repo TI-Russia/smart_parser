@@ -1,5 +1,6 @@
 import os
 from django.utils.translation import gettext_lazy as _
+#from disclosures.disclosures.elastic_signal import ElasticSignalProcessor
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -133,3 +134,7 @@ ELASTICSEARCH_DSL = {
         'hosts': 'localhost:9200'
     },
 }
+
+
+#ELASTICSEARCH_DSL_SIGNAL_PROCESSOR =  ElasticSignalProcessor
+#from django_elasticsearch_dsl.signals import RealTimeSignalProcessor

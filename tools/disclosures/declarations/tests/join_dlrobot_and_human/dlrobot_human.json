@@ -41,5 +41,10 @@
             }
         }
     },
+    "office_to_domains": {
+        "4": [
+            "05.fsin.su"
+        ]
+    },
     "r:folder": "domains"
 }

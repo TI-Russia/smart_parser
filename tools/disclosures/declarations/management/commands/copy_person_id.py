@@ -16,6 +16,12 @@ def copy_human_merges(human_persons):
         if person_id is not None:
             person = models.Person.objects.get_or_create(id=person_id)[0]
             section = models.Section.objects.get(id=section_id)
+
+            person.declarator_person_id = person_id
+            if person.person_name is None or len(person.person_name) < len(section.person_name):
+                person.person_name = section.person_name
+            person.save()
+
             section.person = person
             section.save()
             mergings_count += 1
