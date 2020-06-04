@@ -169,13 +169,14 @@ def main(args):
     logger = setup_logging("join_human_and_dlrobot.log")
     joiner = TJoiner(args, logger)
     joiner.join()
-    with open(args.output_json, "w") as out:
+    with open(args.output_json, "w", encoding="utf8") as out:
         output_json = {
             dhjs.declarator_folder: joiner.human_json[dhjs.declarator_folder],
             dhjs.dlrobot_folder: args.dlrobot_folder,
-            dhjs.file_collection: joiner.output_json
+            dhjs.file_collection: joiner.output_json,
+            dhjs.offices_to_domains: joiner.human_json[dhjs.offices_to_domains],
         }
-        json.dump(output_json, out,  indent=4, sort_keys=True)
+        json.dump(output_json, out,  indent=4, sort_keys=True, ensure_ascii=False)
 
 
 if __name__ == '__main__':

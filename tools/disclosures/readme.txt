@@ -44,7 +44,7 @@ export DLROBOT_RESULT_FOLDER=domains
 
 
 #5.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json
-    python $DISCLOSURES_FOLDER/scripts/join_human_and_dlrobot.py --dlrobot-folder domains --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
+    python $DISCLOSURES_FOLDER/scripts/join_human_and_dlrobot.py --dlrobot-folder $DLROBOT_RESULT_FOLDER --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
 
 #6.  запуск smart_parser
     bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
@@ -62,7 +62,7 @@ export DLROBOT_RESULT_FOLDER=domains
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
-   python $DISCLOSURES_FOLDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4
+       python $DISCLOSURES_FOLDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4
    python $DISCLOSURES_FOLDER/manage.py copy_person_id
 
 #9.  запуск сливалки, 3 gb each char

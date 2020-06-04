@@ -107,17 +107,6 @@ class TImporter:
         self.logger.debug("built {} document_2_files".format(len(document_2_files)))
         return document_2_files
 
-    def build_office_domains(self):
-        offices_to_domains = defaultdict(list)
-        for web_domain in self.dlrobot_human_file_info:
-            offices = list(x[dhjs.declarator_office_id] for x in self.dlrobot_human_file_info[web_domain].values() if dhjs.declarator_office_id in x)
-            if len(offices) == 0:
-                raise Exception("no office found for domain {}".format(domain))
-            most_freq_office = max(set(offices), key=offices.count)
-            offices_to_domains[most_freq_office].append(web_domain)
-        self.logger.debug("built {} offices_to_domains".format(len(offices_to_domains)))
-        return offices_to_domains
-
     def __init__(self, args):
         self.logger = setup_logging("import_json.log")
         self.args = args
@@ -128,9 +117,10 @@ class TImporter:
             if not os.path.isabs(self.dlrobot_folder):
                 self.dlrobot_folder = os.path.join(os.path.dirname(args['dlrobot_human']), self.dlrobot_folder)
             self.dlrobot_human_file_info = dlrobot_human[dhjs.file_collection]
+            self.office_to_domains = dlrobot_human[dhjs.offices_to_domains]
+
         self.logger.debug("load information about {} sites ".format(len(self.dlrobot_human_file_info)))
         self.document_2_files = self.init_document_2_files()
-        self.office_to_domains = self.build_office_domains()
         self.all_section_passports = set()
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
@@ -185,11 +175,15 @@ class TImporter:
 
     def import_office(self, office_id):
         for web_site in self.office_to_domains[office_id]:
-            self.logger.debug("office {} domain {}".format(office_id, web_site))
+            files = self.dlrobot_human_file_info.get(web_site)
+            if files is None:
+                continue
+
+            self.logger.debug("import web site {} to office {} ".format(web_site, office_id))
             jsons_to_import = list()
 
             failed_documents = defaultdict(set)
-            for source_file_sha256, file_info in self.dlrobot_human_file_info[web_site].items():
+            for source_file_sha256, file_info in files.items():
                 file_office_id = file_info.get(dhjs.declarator_office_id, office_id)
                 source_file = TSourceDocumentFile(file_office_id, web_site, source_file_sha256, file_info)
                 input_path = os.path.join(self.dlrobot_folder, web_site, file_info[dhjs.dlrobot_path])
