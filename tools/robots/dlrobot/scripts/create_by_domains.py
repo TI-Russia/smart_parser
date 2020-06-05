@@ -4,6 +4,7 @@ import os
 import random
 import shutil
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--domains",  dest='domains_files', required=True,  action="append")
@@ -31,6 +32,8 @@ def main():
                 if domain.find('google.com') != -1 or domain.find('dropbox.com') != -1 or domain.find('yandex.ru') != -1 \
                     or domain.find('yandex.net') != -1:
                     continue
+                if domain.startswith("xn--"):
+                    domain = domain.encode('latin').decode('idna')
                 domains.add(domain)
 
     domains = list(domains)
