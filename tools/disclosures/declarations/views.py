@@ -6,6 +6,7 @@ from django.views.generic.edit import FormView
 from .input_json_specification import dhjs
 from .documents import ElasticSectionDocument, ElasticPersonDocument
 
+
 class SectionView(generic.DetailView):
     model = models.Section
     template_name = 'section/detail.html'
@@ -40,9 +41,6 @@ class StatisticsView(generic.TemplateView):
             spjsonfile__intersection_status=dhjs.only_dlrobot).count()
         context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
-
-
-
         context['person_count'] = models.Person.objects.all().count()
         return context
 
