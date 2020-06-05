@@ -1,7 +1,7 @@
 import declarations.models as models
 from declarations.serializers import TSmartParserJsonReader
 from declarations.input_json_specification import dhjs
-
+from declarations.documents import stop_elastic_indexing
 from django.core.management import BaseCommand
 from django.db import transaction
 from django.db import DatabaseError
@@ -12,6 +12,7 @@ import os
 from functools import partial
 import json
 import logging
+from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
 
 
 def setup_logging(logfilename):
@@ -244,7 +245,7 @@ class ImportJsonCommand(BaseCommand):
     def handle(self, *args, **options):
         TImporter.logger = setup_logging("import_json.log")
         importer = TImporter(options)
-
+        stop_elastic_indexing()
         offices = list(i for i in importer.office_to_domains.keys())
         self.stdout.write("start importing")
         if options.get('process_count', 0) > 1:
@@ -255,5 +256,6 @@ class ImportJsonCommand(BaseCommand):
         else:
             for office_id in offices:
                 importer.import_office(office_id)
+        ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
 
 Command=ImportJsonCommand

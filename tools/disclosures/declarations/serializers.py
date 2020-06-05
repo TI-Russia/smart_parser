@@ -34,7 +34,6 @@ def read_vehicles(section_json):
         if text is not None:
             yield models.Vehicle(
                 name=text,
-                name_ru=text,
                 relative=models.Relative.get_relative_code( i.get('relative'))
             )
 

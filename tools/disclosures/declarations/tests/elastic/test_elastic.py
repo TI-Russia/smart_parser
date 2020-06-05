@@ -11,7 +11,7 @@ class ElasticTestCase(TestCase):
 
     def test_elastic(self):
         ElasticSectionDocument.init()
-        ElasticSectionDocument.Index.name.endswith("_test")
+        ElasticSectionDocument._index._name.endswith("_test")
         ElasticSectionDocument.search().query().delete()
         time.sleep(2)
         people = list(ElasticSectionDocument.search().query('match', person_name='Иванов'))
