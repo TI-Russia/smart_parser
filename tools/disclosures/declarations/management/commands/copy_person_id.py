@@ -1,8 +1,13 @@
-from django.core.management import BaseCommand
 import declarations.models as models
+from declarations.serializers import TSectionPassportFactory
+from declarations.documents import stop_elastic_indexing
+
+from django.core.management import BaseCommand
+from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
+
 import pymysql
 import sys
-from declarations.serializers import TSectionPassportFactory
+
 
 def copy_human_merges(human_persons):
     mergings_count = 0
@@ -38,7 +43,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
                                                         unix_socket="/var/run/mysqld/mysqld.sock")
+        stop_elastic_indexing()
         factories = TSectionPassportFactory.get_all_passports_from_declarator_with_person_id(db_connection)
         human_persons = TSectionPassportFactory.get_all_passports_dict(factories)
         db_connection.close()
         copy_human_merges(human_persons)
+        ElasticManagement().handle(action="rebuild", models=["declarations.Person"], force=True, parallel=True,
+                                   count=True)

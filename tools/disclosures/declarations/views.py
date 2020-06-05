@@ -4,7 +4,7 @@ from django.views import generic
 from django.db.models import Q
 from django.views.generic.edit import FormView
 from .input_json_specification import dhjs
-#from .documents import ElasticSectionDocument
+from .documents import ElasticSectionDocument, ElasticPersonDocument
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -52,12 +52,6 @@ class SearchResultsView(FormView, generic.ListView):
     paginate_by = 40
     form_class = SearchForm
 
-'''
-class SearchResultsView(FormView, generic.ListView):
-    model = models.Section
-    paginate_by = 40
-    form_class = SearchForm
-
     def get_template_names(self):
         search_object_type = self.request.GET.get('search_object_type')
         if search_object_type == "people_search":
@@ -68,12 +62,20 @@ class SearchResultsView(FormView, generic.ListView):
         query = self.request.GET.get('q')
         search_object_type = self.request.GET.get('search_object_type')
 
-        sections = list(ElasticSectionDocument.search().query('match', person_name=query))
-        object_list = list()
-        for x in sections:
-            object_list.append(models.Section.objects.get(pk=x.id))
-            if len(object_list) > 100:
-                break
+        if search_object_type == "people_search":
+            persons = list(ElasticPersonDocument.search().query('match', person_name=query))
+            object_list = list()
+            for x in persons:
+                object_list.append(models.Person.objects.get(pk=x.id))
+                if len(object_list) > 100:
+                    break
+        else:
+            sections = list(ElasticSectionDocument.search().query('match', person_name=query))
+            object_list = list()
+            for x in sections:
+                object_list.append(models.Section.objects.get(pk=x.id))
+                if len(object_list) > 100:
+                    break
         return object_list
 
     def get_initial(self):
@@ -81,4 +83,3 @@ class SearchResultsView(FormView, generic.ListView):
                 'search_object_type': self.request.GET["search_object_type"]
                 }
 
-'''

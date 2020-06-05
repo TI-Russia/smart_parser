@@ -62,8 +62,8 @@ export DLROBOT_RESULT_FOLDER=domains
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
-       python $DISCLOSURES_FOLDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4
-   python $DISCLOSURES_FOLDER/manage.py copy_person_id
+   python $DISCLOSURES_FOLDER/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.dev
+   python $DISCLOSURES_FOLDER/manage.py copy_person_id --settings disclosures.settings.dev
 
 #9.  запуск сливалки, 3 gb each char
    cd $DISCLOSURES_FOLDER
