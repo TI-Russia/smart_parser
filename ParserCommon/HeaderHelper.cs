@@ -331,6 +331,7 @@ namespace TI.Declarator.ParserCommon
                     || strLower.Contains("годовогодохода")
                     || strLower.Contains("суммадохода") 
                     || strLower.Contains("декларированныйдоход")
+                    || strLower.Contains("декларированныйгодовой")
                     || strLower.Contains("декларированногодохода")
                     || strLower.Contains("общаясуммадохода")
                    );

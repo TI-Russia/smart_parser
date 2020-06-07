@@ -570,6 +570,12 @@ namespace RegressionTesting
             TestSmartParser("4002_0.htm", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void BadOcrPdf()
+        {
+            TestSmartParser("BadOcr.pdf.docx", "prod");
+        }
 
         [TestMethod]
         [TestCategory("htm")]

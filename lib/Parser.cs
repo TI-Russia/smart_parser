@@ -613,23 +613,38 @@ namespace Smart.Parser.Lib
         }
         bool ParseIncome(DataRow currRow, Person person, bool ignoreThousandMultiplier)
         {
-            if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, ignoreThousandMultiplier))
+            try
             {
-                return true;
+                if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, ignoreThousandMultiplier))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, true))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, ignoreThousandMultiplier))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, true))
+                {
+                    return true;
+                }
+                return false;
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, true))
+            catch (SmartParserFieldNotFoundException e)
             {
-                return true;
+                if (person is Relative && (person as Relative).RelationType == RelationType.Child)
+                {
+                    Logger.Info("Child's income is unparsable, set it to 0 ");
+                    return true;
+                }
+                else
+                {
+                    throw e;
+                }
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, ignoreThousandMultiplier))
-            {
-                return true;
-            }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, true))
-            {
-                return true;
-            }
-            return false;
         }
 
         public Declaration ParsePersonalProperties(Declaration declaration)

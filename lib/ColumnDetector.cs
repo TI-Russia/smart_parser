@@ -358,6 +358,7 @@ namespace Smart.Parser.Lib
                 //string clean_text = text.Replace("-", "").Trim();
                 if ((text == "" || clean_text.Length <= 1) && (text != "№"))
                 {
+                    // too short title, try to predict by values
                     field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());
                 }
@@ -366,7 +367,16 @@ namespace Smart.Parser.Lib
                     {
                         text = cell.TextAbove + " " + text;
                     }
-                    field = HeaderHelpers.GetField(text.Replace('\n', ' '));
+                    field = HeaderHelpers.TryGetField(text.Replace('\n', ' '));
+                    if ((field == DeclarationField.None) && clean_text.Length <= 4)
+                    {
+                        field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
+                        Logger.Debug("Predict: " + field.ToString());
+                    }
+                    if (field == DeclarationField.None) {
+                        throw new SmartParserException(String.Format("Cannot recognize field \"{0}\"", text.Replace('\n', ' ')));
+                    }
+
                 }
 
                 if (field == DeclarationField.None && !DataHelper.IsEmptyValue(text) )
