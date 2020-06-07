@@ -4,6 +4,7 @@ from django.views import generic
 from django.db.models import Q
 from django.views.generic.edit import FormView
 from .input_json_specification import dhjs
+from .documents import ElasticSectionDocument, ElasticPersonDocument
 
 
 class SectionView(generic.DetailView):
@@ -40,9 +41,6 @@ class StatisticsView(generic.TemplateView):
             spjsonfile__intersection_status=dhjs.only_dlrobot).count()
         context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
-
-
-
         context['person_count'] = models.Person.objects.all().count()
         return context
 
@@ -63,13 +61,19 @@ class SearchResultsView(FormView, generic.ListView):
         search_object_type = self.request.GET.get('search_object_type')
 
         if search_object_type == "people_search":
-            object_list = models.Person.objects.filter(
-                Q(section__person_name__istartswith=query)
-            ).distinct().order_by('id')
+            persons = list(ElasticPersonDocument.search().query('match', person_name=query))
+            object_list = list()
+            for x in persons:
+                object_list.append(models.Person.objects.get(pk=x.id))
+                if len(object_list) > 100:
+                    break
         else:
-            object_list = models.Section.objects.filter(
-                Q(person_name__istartswith=query)
-            ).order_by('person_name', 'income_year')
+            sections = list(ElasticSectionDocument.search().query('match', person_name=query))
+            object_list = list()
+            for x in sections:
+                object_list.append(models.Section.objects.get(pk=x.id))
+                if len(object_list) > 100:
+                    break
         return object_list
 
     def get_initial(self):

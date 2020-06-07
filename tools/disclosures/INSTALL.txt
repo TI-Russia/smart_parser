@@ -18,7 +18,7 @@
     cat create_disclosures_db.sql | sudo mysql
 
 4. installing and testing
-    python3 manage.py makemigrations
-    python3 manage.py migrate
-    python3 manage.py test declarations/tests
+    python3 manage.py makemigrations --settings disclosures.settings.dev
+    python3 manage.py migrate --settings disclosures.settings.dev
+    python3 manage.py test declarations/tests --settings disclosures.settings.test
 

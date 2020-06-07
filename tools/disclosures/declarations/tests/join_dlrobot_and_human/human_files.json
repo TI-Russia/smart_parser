@@ -17,5 +17,8 @@
             "d:office_id": 4,
             "d:income_year": 2009
         }
+    },
+    "office_to_domains": {
+        "4": ["05.fsin.su"]
     }
 }

@@ -6,6 +6,7 @@ class dhjs:
     only_human = "only_human"
 
     file_collection = 'files'
+    offices_to_domains = 'office_to_domains'
 
     dlrobot_path = 'r:path'
     dlrobot_folder = 'r:folder'

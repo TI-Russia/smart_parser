@@ -131,7 +131,8 @@ class SPJsonFile(models.Model):
 
 
 class Person(models.Model):
-    pass
+    person_name = models.CharField(max_length=64, verbose_name='person name')
+    declarator_person_id = models.IntegerField(null=True)
 
 
 class RealEstate(models.Model):
@@ -172,7 +173,7 @@ def get_relatives(records):
 class Section(models.Model):
     spjsonfile = models.ForeignKey('declarations.spjsonfile', null=True, verbose_name="smart parser json file", on_delete=models.CASCADE)
     person = models.ForeignKey('declarations.Person', null=True, verbose_name="person id", on_delete=models.CASCADE)
-    person_name = models.TextField(verbose_name='person name')
+    person_name = models.CharField(max_length=64, verbose_name='person name')
     income_year = models.IntegerField(null=True)
     department = models.TextField(null=True)
     position = models.TextField(null=True)
