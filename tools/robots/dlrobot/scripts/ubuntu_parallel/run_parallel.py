@@ -197,6 +197,7 @@ class TJobTasks:
 
     def get_input_files(self):
         already_processed = set()
+        failed_tasks = defaultdict(int)
         if args.skip_already_processed:
             with open(args.log_file_name, "r", encoding="utf8") as inp:
                 for line in inp:
@@ -204,9 +205,16 @@ class TJobTasks:
                     if m:
                         filename = os.path.basename(m.group(1))
                         already_processed.add(filename)
+                    m = re.search('task failed: (.+txt)\s*$', line)
+                    if m:
+                        filename = os.path.basename(m.group(1))
+                        failed_tasks[filename] += 1
+
         for x in os.listdir(self.args.input_folder):
             if x in already_processed:
                 self.logger.debug("exclude {}, already processed".format(x))
+            elif failed_tasks[x] >= args.retries_count:
+                self.logger.debug("exclude {}, too many retries".format(x))
             else:
                 yield x
 
@@ -231,6 +239,7 @@ class TJobTasks:
             if was_alive and not host_worker.worker_is_alive():
                 self.logger.error("logger host {} looks like be dead, do not send tasks to it".format(host_worker.hostname))
             if exit_code != 0:
+                self.logger.debug("task failed: {}".format(project_file))
                 if self.tries_count[project_file] < args.retries_count:
                     self.input_files.put(project_file)
                     self.logger.debug("register retry for {}".format(project_file))
