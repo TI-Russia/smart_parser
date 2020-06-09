@@ -79,8 +79,11 @@ namespace MicrosoftPdf2Docx
         }
     }
 
-    class Program
+    class WordDocument
     {
+        public Application WordApplication = null;
+        public Document DocumentInstance = null;
+
         public static void DeleteRegistryKey(string keyName)
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
@@ -95,6 +98,7 @@ namespace MicrosoftPdf2Docx
             }
 
         }
+
         public static void DeleteLastCrashedDialog()
         {
             try
@@ -116,6 +120,35 @@ namespace MicrosoftPdf2Docx
 
         }
 
+        public void OpenDoc(string filename)
+        {
+            DeleteLastCrashedDialog();
+
+            WordApplication = new Application();
+            DocumentInstance = WordApplication.Documents.OpenNoRepairDialog(
+                Path.GetFullPath(filename),
+                ReadOnly: true,
+                ConfirmConversions: false,
+                OpenAndRepair: false);
+        }
+        public void CloseDoc()
+        {
+            WordApplication.ActiveDocument.Close();
+            WordApplication.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
+            WordApplication = null;
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+            WordApplication = null;
+            DocumentInstance = null;
+        }
+
+
+    }
+    class Program
+    {
+        static bool SkipExisting = false;
+        static string FailedFolder = null;
+        static List<String> InputFiles = new List<String>();
         static string GetTextFromDocumentWithoutSpaces(Document doc, int max_length)
         {
             string text = "";
@@ -128,6 +161,7 @@ namespace MicrosoftPdf2Docx
             }
             return text;
         }
+
         static int GetMaxSquareImage(Document doc)
         {
             int max_square = 0;
@@ -143,47 +177,71 @@ namespace MicrosoftPdf2Docx
             return max_square;
         }
 
-        static void ConvertFile(string inFilename, string outFileName)
+        static bool CheckConversion(Document doc)
         {
-            
-            DeleteLastCrashedDialog();
-            Application word = new Application();
-            var doc = word.Documents.OpenNoRepairDialog(
-                Path.GetFullPath(inFilename),
-                ReadOnly: true,
-                ConfirmConversions: false,
-                OpenAndRepair: false);
             int max_text_size_without_spaces = 300;
             string text_start = GetTextFromDocumentWithoutSpaces(doc, max_text_size_without_spaces);
             if (text_start.Length < max_text_size_without_spaces)
             {
                 Console.WriteLine(String.Format("text is too short (less than {0} chars)", max_text_size_without_spaces));
-                return;
+                return false;
             }
             if (TCharCategory.GetMostPopupularCharCategory(text_start) != TCharCategory.CHAR_TYPES.RUSSIAN_CHAR)
             {
                 Console.WriteLine("it is not a Russian text, probably we cannot convert it properly");
-                return;
+                return false;
             }
             if (GetMaxSquareImage(doc) > 10000)
             {
                 Console.WriteLine("document contains large images");
-                return;
+                return false;
             }
-            var outFilePath = Path.GetFullPath(outFileName);
-            doc.SaveAs2(outFilePath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
-            word.ActiveDocument.Close();
-            word.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
-            long length = new System.IO.FileInfo(outFilePath).Length;
-            Console.WriteLine(String.Format("converted {0} to {1} outsize= {2}", inFilename, outFileName, length));
+            return true;
         }
 
-        static void Main(string[] args)
+        static void ConvertFile(string inFilename, string outFileName)
+        {
+            string outFilePath = Path.GetFullPath(outFileName);
+            var word_doc = new WordDocument();
+            word_doc.OpenDoc(inFilename);
+
+            bool can_convert = CheckConversion(word_doc.DocumentInstance);
+            
+            if (can_convert)
+            {
+                word_doc.DocumentInstance.SaveAs2(outFilePath, WdSaveFormat.wdFormatXMLDocument, CompatibilityMode: WdCompatibilityMode.wdWord2013);
+            }
+
+            word_doc.CloseDoc();
+
+            if (can_convert) { 
+                long length = new System.IO.FileInfo(outFilePath).Length;
+                Console.WriteLine(String.Format("converted {0} to {1} outsize= {2}", inFilename, outFileName, length));
+            }
+        }
+
+        static void CopyFailedDocx(string inFilename, string failed_folder)
+        {
+            var word_doc = new WordDocument();
+            word_doc.OpenDoc(inFilename);
+            bool can_convert = CheckConversion(word_doc.DocumentInstance);
+            Console.WriteLine(String.Format("windord conversion for {0} is {1}", inFilename, can_convert));
+            word_doc.CloseDoc();
+            if (!can_convert)
+            {
+                string basename = System.IO.Path.GetFileName(inFilename);
+                string targeFile = System.IO.Path.Combine(failed_folder, basename);
+                Console.WriteLine(String.Format("copy {0} to {1}", inFilename, targeFile));
+                System.IO.File.Copy(inFilename, targeFile, true);
+            }
+        }
+
+        static CMDLine.CMDLineParser ParseArgs(string[] args)
         {
             CMDLine.CMDLineParser parser = new CMDLine.CMDLineParser();
             CMDLine.CMDLineParser.Option skipExistsOpt = parser.AddBoolSwitch("--skip-existing", "");
+            CMDLine.CMDLineParser.Option failedFolderOpt = parser.AddStringParameter("--failed-folder", "", false);
+
             parser.AddHelpOption();
             try
             {
@@ -197,32 +255,62 @@ namespace MicrosoftPdf2Docx
                 Console.WriteLine("Error: " + ex.Message);
                 throw;
             }
-            var files = parser.RemainingArgs();
-            if (files == null) {
-                Console.WriteLine("no input file");
-            } else
+            SkipExisting = skipExistsOpt.isMatched;
+            if (failedFolderOpt.isMatched)
             {
-                foreach (var f in files)
+                FailedFolder = failedFolderOpt.Value.ToString();
+            }
+            foreach (var f in parser.RemainingArgs())
+            {
+                if (File.Exists(f))
                 {
-                    string pdf = f.Trim(new char[] { '"' });
-                    string winword = pdf + ".docx";
-                    if (skipExistsOpt.isMatched && File.Exists(winword))
-                    {
-                        Console.WriteLine(string.Format("skip creating {0}", winword));
-                    }
-                    else
-                    {
-                        try
-                        {
-                            ConvertFile(pdf, winword);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Error: " + ex.Message);
-                        }
-                    }
-
+                    InputFiles.Add(f);
                 }
+            }
+            return parser;
+        }
+
+        static void ConvertFiles()
+        {
+            foreach (var f in InputFiles)
+            {
+                string pdf = f.Trim(new char[] { '"' });
+                string winword = pdf + ".docx";
+                if (SkipExisting && File.Exists(winword))
+                {
+                    Console.WriteLine(string.Format("skip creating {0}", winword));
+                }
+                else
+                {
+                    try
+                    {
+                        ConvertFile(pdf, winword);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            CMDLine.CMDLineParser parser = ParseArgs(args);
+            if (InputFiles.Count == 0) {
+                Console.WriteLine("no input file");
+            } 
+            else if (FailedFolder != null)
+            {
+                foreach (var f in InputFiles)
+                {
+                    CopyFailedDocx(f, FailedFolder);
+                }
+            }
+            else
+            {
+                ConvertFiles();
             }
 
         }
