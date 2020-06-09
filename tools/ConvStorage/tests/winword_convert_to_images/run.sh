@@ -8,7 +8,7 @@ python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-j
 conv_server_pid=$!
 disown
 
-python ocr_monkey.py --ocr-input-folder pdf.ocr --ocr-output-folder  pdf.ocr.out  --expecting-files-count 1 &
+python ../ocr_monkey.py --ocr-input-folder pdf.ocr --ocr-output-folder  pdf.ocr.out  --expecting-files-count 1 &
 ocr_monkey_pid=$!
 disown
 
@@ -54,8 +54,8 @@ if [ ! -f $INPUT_FILE.docx ]; then
 fi
 
 filesize=`stat --printf="%s" $INPUT_FILE.docx`
-if [ $filesize -ge 15000 ]; then
-  echo "the size of the output file must be less than 15000 (from Finereader), winword converts it to a chinese doc"
+if [ $filesize != 21 ]; then
+  echo "the size of the output file must 21 (from ocr monkey), winword converts it to a chinese doc"
   exit  1
 fi
 
