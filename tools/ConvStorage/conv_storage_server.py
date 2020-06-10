@@ -47,6 +47,8 @@ def parse_args():
                         dest='microsoft_pdf_2_docx',
                         required=False,
                         default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
+    parser.add_argument("--disable-killing-winword", dest='use_winword_exlusively', default=True, required=False, action="store_false")
+
     args = parser.parse_args()
     TConvertProcessor.ocr_timeout = convert_to_seconds(args.ocr_timeout)
     return args
@@ -86,26 +88,6 @@ def taskkill_windows(process_name):
     subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 
-def convert_with_microsoft_word(logger, microsoft_pdf_2_docx, filename):
-    taskkill_windows('winword.exe')
-    taskkill_windows('pdfreflow.exe')
-
-    with tempfile.NamedTemporaryFile(prefix="microsoft_pdf_2_docx.log", dir=".") as log_file:
-        subprocess.run([microsoft_pdf_2_docx, filename], timeout=60*10, stderr=log_file, stdout=log_file)
-        try:
-            log_file.seek(0)
-            log_data = log_file.read().decode("utf8").replace("\n", " ").strip()
-            logger.debug(log_data)
-        except Exception as exp:
-            pass
-
-    taskkill_windows('winword.exe')
-    taskkill_windows('pdfreflow.exe')
-    docxfile = filename + ".docx"
-    if os.path.exists(docxfile):
-        return docxfile
-    else:
-        return None
 
 
 class TInputTask:
@@ -119,8 +101,6 @@ class TInputTask:
 
 class TConvertProcessor:
     ocr_timeout = 60*60*3 #3 hours
-    CONVERTED_SUBFOLDER = "docx"
-    INPUT_SUBFOLDER = "pdf"
 
     def __init__(self, args, logger):
         self.args = args
@@ -184,6 +164,28 @@ class TConvertProcessor:
             self.register_file_process_finish(input_task, process_result)
             del self.ocr_tasks[sha256]
 
+    def convert_with_microsoft_word(self, filename):
+        if self.args.use_winword_exlusively:
+            taskkill_windows('winword.exe')
+        taskkill_windows('pdfreflow.exe')
+        with tempfile.NamedTemporaryFile(prefix="microsoft_pdf_2_docx.log", dir=".") as log_file:
+            subprocess.run([self.args.microsoft_pdf_2_docx, filename], timeout=60 * 10, stderr=log_file, stdout=log_file)
+            try:
+                log_file.seek(0)
+                log_data = log_file.read().decode("utf8").replace("\n", " ").strip()
+                self.logger.debug(log_data)
+            except Exception as exp:
+                pass
+
+        if self.args.use_winword_exlusively:
+            taskkill_windows('winword.exe')
+        taskkill_windows('pdfreflow.exe')
+        docx_file = filename + ".docx"
+        if os.path.exists(docx_file):
+            return docx_file
+        else:
+            return None
+
     def process_one_input_file(self, input_task: TInputTask):
         input_file = input_task.file_path
         basename = os.path.basename(input_file)
@@ -192,7 +194,7 @@ class TConvertProcessor:
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
         self.logger.info("convert {} with microsoft word".format(input_file))
-        docxfile = convert_with_microsoft_word(self.logger, self.args.microsoft_pdf_2_docx, stripped_file)
+        docxfile = self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
             self.convert_storage.save_converted_file(docxfile, input_task.sha256, "word")
             self.convert_storage.save_input_file(input_file, input_task.sha256)

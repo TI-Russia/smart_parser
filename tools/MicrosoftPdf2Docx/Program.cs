@@ -215,7 +215,7 @@ namespace MicrosoftPdf2Docx
             var word_doc = new WordDocument();
             word_doc.OpenDoc(WordApplication, inFilename);
             bool can_convert = CheckConversion(word_doc.DocumentInstance);
-            Console.WriteLine(String.Format("windord conversion for {0} is {1}", inFilename, can_convert));
+            Console.WriteLine(String.Format("winword conversion for {0} is {1}", inFilename, can_convert));
             word_doc.CloseDoc();
             if (!can_convert)
             {
