@@ -198,5 +198,5 @@ def assert_declarator_conv_alive():
             if response.read() == "yes":
                 return True
     except Exception as exp:
-        print("cannot connect to {} (declarator conversion server)".format(DECLARATOR_CONV_URL))
+        print("cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL))
         raise
