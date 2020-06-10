@@ -11,7 +11,7 @@ def move_file_with_retry(logger, file_name, folder):
             shutil.move(file_name, folder)
             return
         except Exception as exp:
-            logger.error("Exception {}, cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
+            logger.error("cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
             time.sleep(20)
     shutil.move(file_name, folder)
 
