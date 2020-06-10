@@ -75,7 +75,9 @@ class TConvertStorage:
 
     def recreate_database(self):
         for f in os.listdir(os.path.join(self.converted_files_folder)):
-            assert f.endswith(self.converted_file_extension)
+            if not f.endswith(self.converted_file_extension):
+                self.logger.error("bad file name {}".format(f))
+                assert f.endswith(self.converted_file_extension)
             sha256 = f[:-len(self.converted_file_extension)]
             self.conv_db_json['files'][sha256] = {}
 
