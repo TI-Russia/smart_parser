@@ -81,51 +81,11 @@ namespace MicrosoftPdf2Docx
 
     class WordDocument
     {
-        public Application WordApplication = null;
         public Document DocumentInstance = null;
-
-        public static void DeleteRegistryKey(string keyName)
+        
+        public void OpenDoc(Application wordApplication,  string filename)
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
-            {
-                if (key != null)
-                {
-                    foreach (var v in key.GetValueNames())
-                    {
-                        key.DeleteValue(v, false);
-                    }
-                }
-            }
-
-        }
-
-        public static void DeleteLastCrashedDialog()
-        {
-            try
-            {
-                string wordVersion;
-                Application word = new Application();
-                wordVersion = word.Version;
-                word.Quit();
-                string keyName =
-                    @"Software\Microsoft\Office\"
-                    + wordVersion
-                    + @"\Word\Resiliency\DisabledItems";
-                DeleteRegistryKey(keyName);
-            }
-            catch (Exception)
-            {
-
-            }
-
-        }
-
-        public void OpenDoc(string filename)
-        {
-            DeleteLastCrashedDialog();
-
-            WordApplication = new Application();
-            DocumentInstance = WordApplication.Documents.OpenNoRepairDialog(
+            DocumentInstance = wordApplication.Documents.OpenNoRepairDialog(
                 Path.GetFullPath(filename),
                 ReadOnly: true,
                 ConfirmConversions: false,
@@ -133,12 +93,7 @@ namespace MicrosoftPdf2Docx
         }
         public void CloseDoc()
         {
-            WordApplication.ActiveDocument.Close();
-            WordApplication.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
-            WordApplication = null;
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
-            WordApplication = null;
+            DocumentInstance.Close();
             DocumentInstance = null;
         }
 
@@ -149,6 +104,8 @@ namespace MicrosoftPdf2Docx
         static bool SkipExisting = false;
         static string FailedFolder = null;
         static List<String> InputFiles = new List<String>();
+        static Application WordApplication = null;
+
         static string GetTextFromDocumentWithoutSpaces(Document doc, int max_length)
         {
             string text = "";
@@ -199,11 +156,44 @@ namespace MicrosoftPdf2Docx
             return true;
         }
 
+        public static void DeleteRegistryKey(string keyName)
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(keyName, true))
+            {
+                if (key != null)
+                {
+                    foreach (var v in key.GetValueNames())
+                    {
+                        key.DeleteValue(v, false);
+                    }
+                }
+            }
+
+        }
+
+        public static void DeleteLastCrashedDialog()
+        {
+            try
+            {
+                string keyName =
+                    @"Software\Microsoft\Office\"
+                    + WordApplication.Version
+                    + @"\Word\Resiliency\DisabledItems";
+                DeleteRegistryKey(keyName);
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+
         static void ConvertFile(string inFilename, string outFileName)
         {
             string outFilePath = Path.GetFullPath(outFileName);
+            DeleteLastCrashedDialog();
             var word_doc = new WordDocument();
-            word_doc.OpenDoc(inFilename);
+            word_doc.OpenDoc(WordApplication, inFilename);
 
             bool can_convert = CheckConversion(word_doc.DocumentInstance);
             
@@ -223,7 +213,7 @@ namespace MicrosoftPdf2Docx
         static void CopyFailedDocx(string inFilename, string failed_folder)
         {
             var word_doc = new WordDocument();
-            word_doc.OpenDoc(inFilename);
+            word_doc.OpenDoc(WordApplication, inFilename);
             bool can_convert = CheckConversion(word_doc.DocumentInstance);
             Console.WriteLine(String.Format("windord conversion for {0} is {1}", inFilename, can_convert));
             word_doc.CloseDoc();
@@ -269,6 +259,19 @@ namespace MicrosoftPdf2Docx
             }
             return parser;
         }
+        static void OpenWinWord()
+        {
+            WordApplication = new Application();
+        }
+        static void CloseWinWord()
+        {
+            WordApplication.Quit(SaveChanges: WdSaveOptions.wdDoNotSaveChanges);
+            WordApplication = null;
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+            WordApplication = null;
+            //Thread.Sleep(3000);
+        }
 
         static void ConvertFiles()
         {
@@ -300,8 +303,10 @@ namespace MicrosoftPdf2Docx
             CMDLine.CMDLineParser parser = ParseArgs(args);
             if (InputFiles.Count == 0) {
                 Console.WriteLine("no input file");
-            } 
-            else if (FailedFolder != null)
+                return;
+            }
+            OpenWinWord();
+            if (FailedFolder != null)
             {
                 foreach (var f in InputFiles)
                 {
@@ -312,6 +317,7 @@ namespace MicrosoftPdf2Docx
             {
                 ConvertFiles();
             }
+            CloseWinWord();
 
         }
     }
