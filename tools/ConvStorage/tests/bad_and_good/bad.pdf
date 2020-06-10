@@ -1,3 +1,4 @@
+%PDF-1.4
 import os
 import argparse
 from conv_storage_server import rebuild_json

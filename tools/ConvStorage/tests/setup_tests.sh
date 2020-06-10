@@ -19,7 +19,8 @@ fi
 
 [ ! -d input_files ] || rm -rf input_files
 rm -rf input_files_cracked*
-[ ! -d files ] || rm -rf files
+[ ! -d db_converted_files ] || rm -rf db_converted_files
+[ ! -d db_input_files ] || rm -rf db_input_files
 [ ! -f db_conv.log ] || rm  db_conv.log
 if [ -f db_conv.log ]; then
   echo "cannot remove db_conv.log"
