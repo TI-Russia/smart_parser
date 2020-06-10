@@ -7,7 +7,7 @@ import shutil
 import sys
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
         get_russian_normal_text_ratio
-from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TDocConversionClient
+from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
 
@@ -72,12 +72,11 @@ def process_smart_parser_json(json_file):
 
 def get_smart_parser_result(source_file):
     global EXTERNAl_CONVERTORS
-    global DECLARATOR_CONV_URL
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
     cmd = "{} -converted-storage-url {} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(
         EXTERNAl_CONVERTORS.smart_parser,
-        DECLARATOR_CONV_URL,
+        TDocConversionClient.DECLARATOR_CONV_URL,
         source_file)
     os.system(cmd)
 
