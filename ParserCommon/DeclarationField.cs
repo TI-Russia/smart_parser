@@ -18,10 +18,15 @@ namespace TI.Declarator.ParserCommon
         AllOwnTypes =         Mixed | Owned | State,
         
         // the third byte
-        MainDeclarant = 0b00000001_00000000_00000000,
+        MainDeclarant =   0b00000001_00000000_00000000,
         DeclarantSpouse = 0b00000010_00000000_00000000,
-        DeclarantChild = 0b00000100_00000000_00000000,
-        
+        DeclarantChild =  0b00000100_00000000_00000000,
+        LandArea =        0b00001000_00000000_00000000,
+        LivingHouse =     0b00010000_00000000_00000000,
+        Appartment =      0b00100000_00000000_00000000,
+        SummerHouse    =  0b01000000_00000000_00000000,
+        Garage         =  0b10000000_00000000_00000000,
+
         //the first byte
         None = 0,
         Number = 1 | StartsWithDigitMask,
@@ -46,6 +51,11 @@ namespace TI.Declarator.ParserCommon
         MixedRealEstateCountry = Mixed | CountryMask,
         MixedRealEstateOwnershipType = Mixed | OwnershipTypeMask,
         MixedColumnWithNaturalText = Mixed | NaturalText,
+        MixedLandAreaSquare = Mixed | SquareMask | LandArea,
+        MixedLivingHouseSquare = Mixed | SquareMask | LivingHouse,
+        MixedAppartmentSquare = Mixed | SquareMask | Appartment,
+        MixedSummerHouseSquare = Mixed | SquareMask | SummerHouse,
+        MixedGarageSquare = Mixed | SquareMask | Garage,
 
         // see 30429.docx for these columns
         DeclarantMixedColumnWithNaturalText = MainDeclarant | Mixed | NaturalText,
@@ -83,6 +93,9 @@ namespace TI.Declarator.ParserCommon
         MoneySources = 102,
         Comments = 103,
         TransactionSubject = 104,
+        MoneyOnBankAccounts = 105,
+        Securities = 106,
+        Stocks = 107,
     }
 
 }

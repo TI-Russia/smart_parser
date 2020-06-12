@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TI.Declarator.ParserCommon;
 using System.Globalization;
+using Aspose.Words.Fields;
 
 namespace Smart.Parser.Lib
 {
@@ -467,6 +468,16 @@ namespace Smart.Parser.Lib
             }
         }
 
+        string GetRealyTypeFromColumnTitle(DeclarationField fieldName)
+        {
+            if ((fieldName & DeclarationField.LandArea) > 0) { return "земельный участок"; }
+            if ((fieldName & DeclarationField.LivingHouse) > 0) { return "земельный участок"; }
+            if ((fieldName & DeclarationField.Appartment) > 0) { return "квартира"; }
+            if ((fieldName & DeclarationField.SummerHouse) > 0) { return "дача"; }
+            if ((fieldName & DeclarationField.Garage) > 0) { return "гараж"; }
+            return null;
+        }
+
         void AddRealEstateWithNaturalText(DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(fieldName))
@@ -476,19 +487,33 @@ namespace Smart.Parser.Lib
 
             if (currRow.ColumnOrdering.ContainsField(fieldName))
             {
-                RealEstateProperty realEstateProperty = new RealEstateProperty();
-                realEstateProperty.Text = currRow.GetContents(fieldName).Trim().Replace("не имеет", "");
-                if (!DataHelper.IsEmptyValue(realEstateProperty.Text))
+                string text = currRow.GetContents(fieldName).Trim().Replace("не имеет", "").Trim();
+                if (!DataHelper.IsEmptyValue(text) && text != "0")
                 {
-                    realEstateProperty.own_type_by_column = ownTypeByColumn;
-                    CheckProperty(realEstateProperty);
-                    person.RealEstateProperties.Add(realEstateProperty);
+                    foreach (var bulletText in FindBullets(text))
+                    {
+                        RealEstateProperty realEstateProperty = new RealEstateProperty();
+                        realEstateProperty.Text = bulletText;
+                        realEstateProperty.type_raw = GetRealyTypeFromColumnTitle(fieldName);
+                        realEstateProperty.own_type_by_column = ownTypeByColumn;
+                        var match = Regex.Match(bulletText, ".*\\s(\\d+[.,]\\d+)\\sкв.м", RegexOptions.IgnoreCase);
+                        if (match.Success) {
+                            realEstateProperty.square = DataHelper.ConvertSquareFromString(match.Groups[1].ToString());
+                        }
+
+                        decimal? square = DataHelper.ParseSquare(bulletText);
+                        if (square.HasValue)
+                        {
+                            realEstateProperty.square = square;
+                        }
+                        
+                        CheckProperty(realEstateProperty);
+                        person.RealEstateProperties.Add(realEstateProperty);
+                    }
                 }
             }
-
-            
-
         }
+
         public void ParseOwnedProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
@@ -522,14 +547,37 @@ namespace Smart.Parser.Lib
             }
 
         }
+        public void ParseRealtiesWithTypesInTitles(DataRow currRow, Person person)
+        {
 
+            if (currRow.ColumnOrdering.ContainsField(DeclarationField.MixedLandAreaSquare))
+            {
+                string squareStr = currRow.GetContents(DeclarationField.MixedLandAreaSquare);
+
+            }
+
+        }
         public void ParseMixedProperty(DataRow currRow, Person person)
         {
+            DeclarationField[] fieldWithRealTypes = { DeclarationField.MixedLandAreaSquare,
+                                                      DeclarationField.MixedLivingHouseSquare,
+                                                      DeclarationField.MixedAppartmentSquare,
+                                                      DeclarationField.MixedSummerHouseSquare,
+                                                      DeclarationField.MixedGarageSquare };
+            foreach (var f in fieldWithRealTypes)
+            {
+                if (!currRow.ColumnOrdering.ContainsField(DeclarationField.MixedRealEstateSquare))
+                {
+                    AddRealEstateWithNaturalText(currRow, f, null, person);
+                }
+            }
+
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.MixedRealEstateSquare))
             {
                 AddRealEstateWithNaturalText(currRow, DeclarationField.MixedColumnWithNaturalText, null, person);
                 return;
             }
+
             string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType).Replace("не имеет", "");
             string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare).Replace("не имеет", "");
             string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry).Replace("не имеет", "");
@@ -563,6 +611,9 @@ namespace Smart.Parser.Lib
                 return;
             }
             string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false).Replace("не имеет", "");
+            if (DataHelper.IsEmptyValue(statePropTypeStr)) {
+                return;
+            }
             string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
@@ -850,6 +901,11 @@ namespace Smart.Parser.Lib
             }
             return linesWithNumbers;
 
+        }
+
+        static string[] FindBullets(string text)
+        {
+            return Regex.Split(text, "\n\\s?[0-9][0-9]?[.)]");
         }
 
         static string SliceArrayAndTrim(string[] lines, int start, int end)

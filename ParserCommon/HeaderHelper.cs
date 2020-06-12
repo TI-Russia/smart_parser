@@ -10,7 +10,8 @@ namespace TI.Declarator.ParserCommon
         {
             string strLower = str.ToLower().Replace("-", "");
             return strLower.Contains("недвижимости")
-                || strLower.Contains("недвижимого");
+                || strLower.Contains("недвижимого")
+                || strLower.Replace(" ", "").ToLower().Contains("иноенедвижимоеимущество(кв.м)");
         }
         public static DeclarationField GetField(string str)
         {
@@ -30,13 +31,18 @@ namespace TI.Declarator.ParserCommon
             if (str.IsName()) { return DeclarationField.NameOrRelativeType; }
             if (str.IsRelativeType()) { return DeclarationField.RelativeTypeStrict; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
-            if (str.IsDepartment()) { return DeclarationField.Department; }
+            if (str.IsDepartment() && !str.IsDeclaredYearlyIncome()) { return DeclarationField.Department; }
 
             if (str.IsMixedRealEstateType()) { return DeclarationField.MixedRealEstateType; }
             if (str.IsMixedRealEstateSquare() && !str.IsMixedRealEstateCountry()) { return DeclarationField.MixedRealEstateSquare; }
             if (str.IsMixedRealEstateCountry() && !str.IsMixedRealEstateSquare() ) { return DeclarationField.MixedRealEstateCountry; }
             if (str.IsMixedRealEstateOwnershipType() && !str.IsMixedRealEstateSquare()) { return DeclarationField.MixedRealEstateOwnershipType; }
-
+            if (str.IsMixedLandAreaSquare()) { return DeclarationField.MixedLandAreaSquare; }
+            if (str.IsMixedLivingHouseSquare()) { return DeclarationField.MixedLivingHouseSquare; }
+            if (str.IsMixedAppartmentSquare()) { return DeclarationField.MixedAppartmentSquare; }
+            if (str.IsMixedSummerHouseSquare()) { return DeclarationField.MixedSummerHouseSquare; }
+            if (str.IsMixedGarageSquare()) { return DeclarationField.MixedGarageSquare; }
+            
             if (str.IsOwnedRealEstateType()) { return DeclarationField.OwnedRealEstateType; }
             if (str.IsOwnedRealEstateOwnershipType()) { return DeclarationField.OwnedRealEstateOwnershipType; }
             if (str.IsOwnedRealEstateSquare()) { return DeclarationField.OwnedRealEstateSquare; }
@@ -82,10 +88,15 @@ namespace TI.Declarator.ParserCommon
             if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
             if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
             if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
+            if (HasRealEstateStr(str)) { return DeclarationField.MixedColumnWithNaturalText; }
 
             if (str.IsAcquiredProperty()) { return DeclarationField.AcquiredProperty; }
             if (str.IsTransactionSubject()) { return DeclarationField.TransactionSubject; }
             if (str.IsMoneySources()) { return DeclarationField.MoneySources; }
+            if (str.IsMoneyOnBankAccounts()) { return DeclarationField.MoneyOnBankAccounts; }
+            if (str.IsSecuritiesField()) { return DeclarationField.Securities; }
+            if (str.IsStocksField()) { return DeclarationField.Stocks; }
+
 
 
             if (HasSquareString(str)) { return DeclarationField.MixedRealEstateSquare; }
@@ -137,7 +148,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsDepartment(this string s)
         {
-            return (s.Contains("наименование организации"));
+            return s.Contains("наименование организации");
         }
 
         private static bool IsMixedRealEstateOwnershipType(this string s)
@@ -307,7 +318,7 @@ namespace TI.Declarator.ParserCommon
         {
             string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
             return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
-                    (!clean.Contains("источник")));
+                    !clean.Contains("источник") && !clean.Contains("недвижимоеимущество"));
         }
 
         private static bool IsVehicleType(this string s)
@@ -370,6 +381,46 @@ namespace TI.Declarator.ParserCommon
             string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
             return strLower.Contains("предметсделки");
         }
-        
+        private static bool IsMoneyOnBankAccounts(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("денежныесредства") && strLower.Contains("банках");
+        }
+
+        private static bool IsSecuritiesField(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("ценныебумаги");
+        }
+        private static bool IsStocksField(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("участие") && strLower.Contains("организациях");
+        }
+        private static bool IsMixedLandAreaSquare(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("земельныеучастки") && strLower.Contains("кв.м");
+        }
+        private static bool IsMixedLivingHouseSquare(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("жилыедома") && strLower.Contains("кв.м");
+        }
+        private static bool IsMixedAppartmentSquare(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("квартиры") && strLower.Contains("кв.м");
+        }
+        private static bool IsMixedSummerHouseSquare(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("дачи") && strLower.Contains("кв.м");
+        }
+        private static bool IsMixedGarageSquare(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("гаражи") && strLower.Contains("кв.м");
+        }
     }
 }

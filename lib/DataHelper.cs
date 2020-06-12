@@ -211,6 +211,9 @@ namespace Smart.Parser.Lib
             {
                 try
                 {
+                    strIncome = strIncome.Replace("\n", " ");
+                    strIncome = new Regex(".*Общая\\s+сумма\\s+доходов:", RegexOptions.Compiled).Replace(strIncome, "");
+
                     Regex regex = new Regex("([ ,]+[а-яА-Я])|(\\()", RegexOptions.Compiled);
                     var matches = regex.Matches(strIncome);
                     if (matches.Count > 0)
@@ -252,6 +255,11 @@ namespace Smart.Parser.Lib
             return key;
         }
 
+        public static Decimal ConvertSquareFromString(string str)
+        {
+            return  Decimal.Round(str.ParseDecimalValue(), 2);
+        }
+
         static bool ReadSquareAndCountry(string str, out decimal square, out string country)
         {
             square = 0;
@@ -260,7 +268,7 @@ namespace Smart.Parser.Lib
             var match = Regex.Match(str, regexp, RegexOptions.IgnoreCase);
             if (!match.Success)
                 return false;
-            square = Decimal.Round(match.Groups[1].ToString().ParseDecimalValue(), 2);
+            square = ConvertSquareFromString(match.Groups[1].ToString());
             country = match.Groups[2].ToString();
             return true;
         }
