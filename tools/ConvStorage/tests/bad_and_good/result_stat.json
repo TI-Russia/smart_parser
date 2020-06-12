@@ -1,5 +1,6 @@
 {
   "all_put_files_count": 2,
+  "successful_get_requests_count": 2,
   "input_task_queue": 0,
   "input_folder_files_count": 0,
   "ocr_pending_files_count": 0,
