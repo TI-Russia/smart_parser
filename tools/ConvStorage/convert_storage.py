@@ -34,6 +34,7 @@ class TConvertStorage:
             os.makedirs(self.converted_files_folder)
         self.modify_json_lock = threading.Lock()
         assert "files" in self.conv_db_json
+        self.last_save_time = time.time()
 
     @staticmethod
     def create_empty_db(output_filename, input_folder, converted_folder):
@@ -70,6 +71,7 @@ class TConvertStorage:
         try:
             with open(self.conv_db_json_file_name, "w") as outf:
                 json.dump(self.conv_db_json, outf, indent=4)
+            self.last_save_time = time.time()
         finally:
             self.modify_json_lock.release()
 
@@ -89,6 +91,12 @@ class TConvertStorage:
         if filename is None:
             return False
         return os.path.exists(filename)
+
+    def register_access_request(self, sha256):
+        file_info = self.conv_db_json['files'].get(sha256)
+        if file_info is None:
+            return
+        file_info['a'] = int(time.time()/(60*60*24))  # in days
 
     def save_converted_file(self, file_name, sha256, converter_id):
         converted_file = self.get_converted_file_name(sha256)

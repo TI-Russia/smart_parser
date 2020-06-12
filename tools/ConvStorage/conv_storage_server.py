@@ -48,6 +48,9 @@ def parse_args():
                         required=False,
                         default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
     parser.add_argument("--disable-killing-winword", dest='use_winword_exlusively', default=True, required=False, action="store_false")
+    parser.add_argument("--request-rate-serialize",
+                        dest='request_rate_serialize', default=100, required=False, type=int,
+                        help="save db on each Nth get request")
 
     args = parser.parse_args()
     TConvertProcessor.ocr_timeout = convert_to_seconds(args.ocr_timeout)
@@ -117,6 +120,7 @@ class TConvertProcessor:
         self.input_files_size = 0
         self.processed_files_size = 0
         self.failed_files_size = 0
+        self.successful_get_requests = 0
 
     def delete_file_silently(self, full_path):
         try:
@@ -320,7 +324,7 @@ class TConvertProcessor:
             ocr_tasks_count = len(self.ocr_tasks)
             return {
                 'all_put_files_count': self.all_put_files_count,
-
+                'successful_get_requests_count': self.successful_get_requests,
                 # normally input_task_queue == input_folder_files_count
                 'input_task_queue': input_task_queue,
                 'input_folder_files_count': len(os.listdir(self.args.input_folder)),
@@ -353,6 +357,7 @@ class TConvertProcessor:
         save_files_count = -1
         file_garbage_collection_timestamp = 0
         sleep_seconds = 10
+        save_get_requests = 0
         while not self.stop_input_thread:
             time.sleep(sleep_seconds)
             # sort and winword tasks
@@ -363,7 +368,7 @@ class TConvertProcessor:
             if new_files_from_winword or new_files_from_ocr:
                 self.convert_storage.save_database()
 
-            # garbage tasks
+            # file garbage tasks
             current_time = time.time()
             if current_time - file_garbage_collection_timestamp >= 60:  # just not too often
                 file_garbage_collection_timestamp = current_time
@@ -373,6 +378,12 @@ class TConvertProcessor:
                 if save_files_count != files_count:
                     save_files_count = files_count
                     self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
+
+            # periodic save to store get access times
+            if self.successful_get_requests - save_get_requests >= self.args.request_rate_serialize or \
+                    current_time - self.convert_storage.last_save_time > 60*15:  # each 100 requests or 15 minutes
+                save_get_requests = self.successful_get_requests
+                self.convert_storage.save_database()
 
     def start_input_files_thread(self):
         self.input_thread = threading.Thread(target=self.process_all_tasks, args=())
@@ -451,6 +462,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
             self.end_headers()
+            CONV_PROCESSOR.convert_storage.register_access_request(sha256)
+            CONV_PROCESSOR.successful_get_requests += 1;
             if query_components.get("download_converted_file", True):
                 with open(file_path, 'rb') as fh:
                     self.wfile.write(fh.read())  # Read the file and send the contents
