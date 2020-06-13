@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using static Algorithms.LevenshteinDistance;
+using System.Text.RegularExpressions;
 
 namespace TI.Declarator.ParserCommon
 {
@@ -78,6 +78,12 @@ namespace TI.Declarator.ParserCommon
                 return DeclarationField.DeclaredYearlyIncome;
             }
 
+            if (str.IsMainWorkPositionIncome())
+            {
+                return DeclarationField.MainWorkPositionIncome;
+            }
+                
+
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
             if (str.IsComments()) { return DeclarationField.Comments; }
 
@@ -153,9 +159,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsMixedRealEstateOwnershipType(this string s)
         {
-            return (s.Contains("праве собственности") &&
-                    s.Contains("пользовании") &&
-                    HasOwnershipTypeString(s));
+            return s.IsMixedColumn() && HasOwnershipTypeString(s);
         }
 
         private static bool HasRealEstateTypeStr(this string s)
@@ -172,9 +176,7 @@ namespace TI.Declarator.ParserCommon
         private static bool HasOwnershipTypeString(this string s)
         {
             string clean = s.Replace("-", "").Replace(" ", "");
-            return clean.Contains("видсобственности")
-                || clean.Contains("видсобственкостн")
-                || clean.Contains("видсобствеивостн");
+            return Regex.Match(clean, @"вид((собстве..ост)|(правана))").Success;
         }
         private static bool HasStateString(this string s)
         {
@@ -346,6 +348,11 @@ namespace TI.Declarator.ParserCommon
                     || strLower.Contains("декларированногодохода")
                     || strLower.Contains("общаясуммадохода")
                    );
+        }
+
+        private static bool IsMainWorkPositionIncome(this string str)
+        {
+            return Regex.Match(str, @"сумма.*месту\s+работы").Success;
         }
 
         private static bool IsDeclaredYearlyIncomeThousands(this string s)

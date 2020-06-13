@@ -675,6 +675,13 @@ namespace RegressionTesting
 
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void MainWorkPositionIncome()
+        {
+            TestSmartParser("MainWorkPositionIncome.docx", "prod");
+
+        }
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
