@@ -2,7 +2,7 @@ INPUT_FILE=1501.pdf
 [ ! -f 1501.pdf.docx ] || rm  1501.pdf.docx
 source ../setup_tests.sh
 python ../../scripts/recreate_database.py
-python ../../conv_storage_server.py --clear-db --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json --disable-ocr &
+python ../../conv_storage_server.py --clear-db --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json --disable-ocr --disable-killing-winword &
 conv_server_pid=$!
 disown
 sleep 2

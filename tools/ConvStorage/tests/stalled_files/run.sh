@@ -5,7 +5,7 @@ python ../../scripts/recreate_database.py
 
 #this ocr-input-folder is not watched
 python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json \
-	--ocr-input-folder pdf.ocr --ocr-output-folder  pdf.ocr.out --ocr-timeout 5s &
+	--ocr-input-folder pdf.ocr --ocr-output-folder  pdf.ocr.out --ocr-timeout 5s --disable-killing-winword &
 conv_server_pid=$!
 disown
 
