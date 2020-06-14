@@ -36,6 +36,7 @@ def parse_args():
     parser.add_argument("--db-json", dest='db_json', required=True)
     parser.add_argument("--clear-db", dest='clear_json', required=False, action="store_true")
     parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
+    parser.add_argument("--disable-winword", dest='enable_winword', default=True, required=False, action="store_false")
     parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
     parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
     parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
@@ -89,8 +90,6 @@ def strip_drm(logger, filename, stripped_file):
 
 def taskkill_windows(process_name):
     subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-
-
 
 
 class TInputTask:
@@ -169,6 +168,8 @@ class TConvertProcessor:
             del self.ocr_tasks[sha256]
 
     def convert_with_microsoft_word(self, filename):
+        if not self.args.enable_winword:
+            return
         if self.args.use_winword_exlusively:
             taskkill_windows('winword.exe')
         taskkill_windows('pdfreflow.exe')
