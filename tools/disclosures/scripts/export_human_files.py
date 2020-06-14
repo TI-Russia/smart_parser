@@ -36,9 +36,11 @@ def setup_logging(logfilename):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--table", dest='table', default="declarations_documentfile")
+    parser.add_argument("--document-file-id", dest='document_file_id', required=False)
     parser.add_argument("--output-folder", dest='output_folder', default='./out.documentfile')
     parser.add_argument("--output-json", dest='output_file', default="human_files.json")
     parser.add_argument("--max-files-count", dest='max_files_count', type=int)
+    parser.add_argument("--mysql-port", dest='mysql_port', type=int, default=None)
     return parser.parse_args()
 
 
@@ -72,14 +74,24 @@ def download_file_and_unzip(logger, file_url, filename):
             yield filename
 
 
-def get_all_file_sql_records(tablename):
-    db = pymysql.connect(db="declarator", user="declarator", password="declarator", unix_socket="/var/run/mysqld/mysqld.sock" )
+def get_all_file_sql_records(logger, args):
+    if args.mysql_port is  None:
+        db = pymysql.connect(db="declarator", user="declarator", password="declarator", unix_socket="/var/run/mysqld/mysqld.sock" )
+    else:
+        db = pymysql.connect(db="declarator", user="declarator", password="declarator",
+                             port=args.mysql_port)
     cursor = db.cursor()
+    if args.document_file_id is not None:
+        where_clause = "where f.id = {}\n".format(args.document_file_id)
+    else:
+        where_clause = ""
     query = ("""
                 select f.id, d.id, f.file, f.link, d.office_id, d.income_year 
-                from {} f 
+                from {} f
                 join declarations_document d on f.document_id=d.id
-             """.format(tablename))
+                {} 
+             """.format(args.table, where_clause))
+    logger.debug(query.replace("\n", " "))
     cursor.execute(query)
     for (document_file_id, document_id, filename, link, office_id, income_year) in cursor:
         if filename is not  None and len(filename) > 0:
@@ -103,6 +115,8 @@ def export_file_to_folder(logger, declarator_url_path, document_file_id, out_fol
     base_file = "{}{}".format(document_file_id, ext)
     local_file_path = os.path.join(out_folder, base_file)
     declarator_url = os.path.join(DECLARATOR_DOMAIN, "media", urllib.parse.quote(declarator_url_path))
+    declarator_url = declarator_url.replace('\\', '/')
+
     for file_name in download_file_and_unzip(logger, declarator_url, local_file_path):
         yield file_name
 
@@ -120,13 +134,13 @@ def build_declarator_squeezes(logger, args):
     files = {}
     files_count = 0
     web_site_to_office = dict()
-    for document_file_id, document_id, file_path, link, office_id, income_year in get_all_file_sql_records(args.table):
+    for document_file_id, document_id, file_path, link, office_id, income_year in get_all_file_sql_records(logger, args):
         web_site = urlparse(link).netloc
         if web_site.startswith('www.'):
             web_site = web_site[len('www.'):]
 
-        if args.max_files_count is not None and files_count < args.max_files_count:
-            for local_file_path in export_file_to_folder(logger, link, document_file_id, args.output_folder):
+        if args.max_files_count is None or files_count < args.max_files_count:
+            for local_file_path in export_file_to_folder(logger, file_path, document_file_id, args.output_folder):
                 if not os.path.exists(local_file_path):
                     logger.error("cannot find {}".format(local_file_path))
                 else:
