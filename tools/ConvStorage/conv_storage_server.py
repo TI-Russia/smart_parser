@@ -52,9 +52,12 @@ def parse_args():
     parser.add_argument("--request-rate-serialize",
                         dest='request_rate_serialize', default=100, required=False, type=int,
                         help="save db on each Nth get request")
+    parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
+                        help="restart ocr if it produces no results", default="3h")
 
     args = parser.parse_args()
-    TConvertProcessor.ocr_timeout = convert_to_seconds(args.ocr_timeout)
+    TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
+    TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
     return args
 
 
@@ -102,7 +105,11 @@ class TInputTask:
 
 
 class TConvertProcessor:
-    ocr_timeout = 60*60*3 #3 hours
+    #max time between putting file to ocr queue and getting the result
+    ocr_timeout_with_waiting_in_queue = 60 * 60 * 3 #3 hours
+
+    # if the ocr queue is not empty and ocr produces no results in  1 hour, we have to restart ocr
+    ocr_restart_time = 60*60  #1 hour
 
     def __init__(self, args, logger):
         self.args = args
@@ -274,7 +281,7 @@ class TConvertProcessor:
                         self.logger.debug("remove {}, since ocr cannot process it (\"{}\")".format(filename, log_file))
                         self.delete_file_silently(filename)
 
-    def process_docx_from_winword(self):
+    def try_convert_with_winword(self):
         new_files_in_db = False
         files_count = 0
         while not self.input_task_queue.empty():
@@ -347,41 +354,49 @@ class TConvertProcessor:
         for pdf_file in os.listdir(self.args.ocr_input_folder):
             fpath = os.path.join(self.args.ocr_input_folder, pdf_file)
             timestamp = Path(fpath).stat().st_mtime
-            if current_time - timestamp > TConvertProcessor.ocr_timeout:
+            if current_time - timestamp > TConvertProcessor.ocr_timeout_with_waiting_in_queue:
                 self.logger.error("delete orphan file {} after stalling {} seconds".format(
-                    fpath, TConvertProcessor.ocr_timeout))
+                    fpath, TConvertProcessor.ocr_timeout_with_waiting_in_queue))
                 self.delete_file_silently(fpath)
                 sha256 = TConvertStorage.get_sha256_from_filename(pdf_file)
                 self.register_ocr_process_finish(sha256, False)
 
+    def restart_ocr(self):
+        self.logger.debug("restart ocr");
+        taskkill_windows('fineexec.exe')
+
     def process_all_tasks(self):
-        save_files_count = -1
         file_garbage_collection_timestamp = 0
         sleep_seconds = 10
         save_get_requests = 0
+        ocr_queue_is_empty_last_time_stamp = time.time()
+        got_ocred_file_last_time_stamp = time.time()
         while not self.stop_input_thread:
             time.sleep(sleep_seconds)
-            # sort and winword tasks
-            new_files_from_winword = self.process_docx_from_winword()
-
-            # ocr tasks
+            if len(self.ocr_tasks) == 0:
+                ocr_queue_is_empty_last_time_stamp = time.time()
+            new_files_from_winword = self.try_convert_with_winword()
             new_files_from_ocr = self.process_docx_from_ocr()
-            if new_files_from_winword or new_files_from_ocr:
-                self.convert_storage.save_database()
-
+            if new_files_from_ocr:
+                got_ocred_file_last_time_stamp = time.time()
             # file garbage tasks
             current_time = time.time()
             if current_time - file_garbage_collection_timestamp >= 60:  # just not too often
                 file_garbage_collection_timestamp = current_time
                 self.process_ocr_logs()
                 self.process_stalled_files()
-                files_count = len(os.listdir(self.args.ocr_input_folder))
-                if save_files_count != files_count:
-                    save_files_count = files_count
-                    self.logger.debug("{} contains {} files".format(self.args.ocr_input_folder, files_count))
 
-            # periodic save to store get access times
-            if self.successful_get_requests - save_get_requests >= self.args.request_rate_serialize or \
+            if  time.time() - got_ocred_file_last_time_stamp > TConvertProcessor.ocr_restart_time and \
+                    time.time() - ocr_queue_is_empty_last_time_stamp > TConvertProcessor.ocr_restart_time :
+                self.logger.debug("last ocr file was received long ago and all this time the ocr queue was not empty")
+                self.restart_ocr()
+                got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
+
+            # periodic save db:
+            # new files or each 100 requests or 15 minutes
+            if new_files_from_winword or \
+                    new_files_from_ocr or \
+                    self.successful_get_requests - save_get_requests >= self.args.request_rate_serialize or \
                     current_time - self.convert_storage.last_save_time > 60*15:  # each 100 requests or 15 minutes
                 save_get_requests = self.successful_get_requests
                 self.convert_storage.save_database()

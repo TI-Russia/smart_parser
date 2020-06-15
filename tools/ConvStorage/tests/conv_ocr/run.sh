@@ -11,7 +11,7 @@ python ../../conv_storage_server.py --clear-db --server-address $DECLARATOR_CONV
 conv_server_pid=$!
 disown
 
-python ../../scripts/convert_pdf.py $INPUT_FILE --conversion_timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180
 
 
 curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json

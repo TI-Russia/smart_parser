@@ -11,7 +11,7 @@ conv_server_pid=$!
 disown
 
 
-python ../../scripts/convert_pdf.py $INPUT_FILE --conversion_timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180
 
 kill $conv_server_pid >/dev/null
 

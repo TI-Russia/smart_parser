@@ -9,7 +9,7 @@ disown
 
 function convert_file() {
     [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
-    python ../../scripts/convert_pdf.py $INPUT_FILE --conversion_timeout 60 --rebuild
+    python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 60 --rebuild
     if [ ! -f $INPUT_FILE.docx ]; then
         kill $conv_server_pid >/dev/null
         echo "cannot get converted file"

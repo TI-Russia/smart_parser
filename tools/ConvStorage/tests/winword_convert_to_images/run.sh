@@ -13,7 +13,7 @@ python ../ocr_monkey.py --ocr-input-folder pdf.ocr --ocr-output-folder  pdf.ocr.
 ocr_monkey_pid=$!
 disown
 
-python ../../scripts/convert_pdf.py $INPUT_FILE --conversion_timeout 60
+python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 60
 
 
 curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json

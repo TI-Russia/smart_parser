@@ -11,7 +11,7 @@ python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-j
 conv_server_pid=$!
 disown
 
-python ../../scripts/convert_pdf.py $INPUT_FILE bad.pdf --conversion_timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE bad.pdf --conversion-timeout 180
 
 if [ $? -eq 0 ]; then
     echo "convert_pdf.py must fail on bad.pdf"    
