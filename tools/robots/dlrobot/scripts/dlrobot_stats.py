@@ -9,6 +9,7 @@ from pathlib import Path
 import sys
 import json
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--clicks-stats-glob", dest='clicks_stats_glob', required=False,
@@ -43,6 +44,7 @@ def get_click_stats_squeezes(clicks_stats_glob):
 
 def build_html(fig, output_file):
     fig.write_html(output_file, include_plotlyjs='cdn')
+
 
 class TClicksStatistics:
     def __init__(self, click_stats_squeezes, min_date=None):
@@ -90,11 +92,42 @@ def process_clicks_stats(glob):
     stats.write_file_progress('file_progress_12h.html')
 
 
-def get_time_stamp_from_log_line(log_line):
+def get_time_from_log_line(log_line):
     time_stamp_str = " ".join(log_line.split(' ')[0:2])
     #2020-05-09 15:46:54,219
     date_time_obj = datetime.datetime.strptime(time_stamp_str, '%Y-%m-%d %H:%M:%S,%f')
     return date_time_obj
+
+
+def build_log_squeeze(filename):
+    with open(filename, encoding="utf8") as inp:
+        hostname = 'unknown'
+        first_time = None
+        last_not_empty_line = None
+        exported_files_count = 0
+        for line in inp:
+            m = re.search('hostname=(.*)\s*', line)
+            if m:
+                hostname = m.group(1)
+            if first_time is None:
+                first_time = get_time_from_log_line(line)
+            if len(line.strip()) != 0:
+                last_not_empty_line = line
+            mo = re.match('.*exported\s+([0-9]+)\s+files.*', line)
+            if mo:
+                exported_files_count = float(mo.group(1))
+        last_time = get_time_from_log_line(last_not_empty_line)
+        total_minutes = (last_time - first_time).total_seconds() / 60
+        website = os.path.basename(filename)
+        if website.endswith(".txt.log"):
+            website = website[:-len(".txt.log")]
+        return {
+            'first_time_stamp': first_time.timestamp(),
+            'host_name': hostname,
+            'total_minutes': total_minutes,
+            'website': website,
+            'exported_files_count': exported_files_count
+        }
 
 
 def get_dlrobot_log_squeezes(glob_pattern):
@@ -102,52 +135,40 @@ def get_dlrobot_log_squeezes(glob_pattern):
     result = []
     for f in files:
         try:
-            with open(str(f), encoding="utf8") as inp:
-                hostname = 'unknown'
-                first_time_stamp = None
-                last_not_empty_line = None
-                exported_files_count = 0
-                for line in inp:
-                    m = re.search('hostname=(.*)\s*', line)
-                    if m:
-                        hostname = m.group(1)
-                    if first_time_stamp is None:
-                        first_time_stamp = get_time_stamp_from_log_line(line)
-                    if len(line.strip()) != 0:
-                        last_not_empty_line = line
-                    mo = re.match('.*exported\s+([0-9]+)\s+files.*', line)
-                    if mo:
-                        exported_files_count = float(mo.group(1))
-
-                last_time_stamp = get_time_stamp_from_log_line(last_not_empty_line)
-                total_minutes = (last_time_stamp - first_time_stamp).total_seconds() / 60
-                website = os.path.basename(f)
-                if website.endswith(".txt.log"):
-                    website = website[:-len(".txt.log")]
-                result.append ((first_time_stamp, hostname, total_minutes, website, exported_files_count))
+            filename = str(f)
+            cached_squeeze_file_name = filename + ".squeeze_for_stats"
+            if os.path.exists(cached_squeeze_file_name):
+                with open(cached_squeeze_file_name, encoding="utf8") as inp:
+                    squeeze = json.load(inp)
+            else:
+                squeeze = build_log_squeeze(str(f))
+                with open(cached_squeeze_file_name, "w", encoding="utf8") as out:
+                    json.dump(squeeze, out)
+            result.append(squeeze)
         except Exception as exp:
             print(exp)
             continue
-        result.sort()
+        result.sort(key=lambda x: x['first_time_stamp'])
     return result
 
 
 def process_dlrobot_logs(glob):
     minutes = []
     websites = []
-    hostnames = []
+    host_names = []
     exported_files_counts = []
     start_time_stamps = []
-    for start_time, host_name, total_minutes, website, exported_files_count in get_dlrobot_log_squeezes(glob):
-        if total_minutes > 10:
-            minutes.append(total_minutes)
-            websites.append(website)
-            hostnames.append(host_name)
-            exported_files_counts.append(exported_files_count)
+    for squeeze in get_dlrobot_log_squeezes(glob):
+        start_time = datetime.datetime.fromtimestamp( squeeze['first_time_stamp'])
+        if squeeze['total_minutes'] > 10:
+            minutes.append(squeeze['total_minutes'])
+            websites.append(squeeze['website'])
+            host_names.append(squeeze['host_name'])
+            exported_files_counts.append(squeeze['exported_files_count'])
             start_time_stamps.append(start_time.strftime("%Y-%m-%d %H:%M:%S"))
 
     df = pd.DataFrame({'Minutes': minutes, "Websites": websites,
-                       "hostnames": hostnames, "exported_files_counts": exported_files_counts,
+                       "hostnames": host_names, "exported_files_counts": exported_files_counts,
                        'start_times': start_time_stamps})
     fig = px.line(df, x='start_times', y='Minutes',
                         hover_data=['Websites', "hostnames", "exported_files_counts", "start_times"],
@@ -179,6 +200,7 @@ def main(args):
         process_dlrobot_logs(args.dlrobot_log_glob)
     if args.conversion_server_stats is not None:
         process_convert_stats(args.conversion_server_stats)
+
 
 if __name__ == "__main__":
     args = parse_args()
