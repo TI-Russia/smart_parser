@@ -22,3 +22,4 @@ django_elasticsearch_dsl
 django_elasticsearch_dsl_drf
 djangorestframework
 xlsx2csv
+lxml
