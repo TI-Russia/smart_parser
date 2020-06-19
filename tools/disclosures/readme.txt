@@ -14,7 +14,7 @@
 #1.2
     git clone git@github.com:TI-Russia/smart_parser.git ~/smart_parser
 
-export DISCLOSURES_FOlDER=~/smart_parser/tools/disclosures
+export DISCLOSURES_FOLDER=~/smart_parser/tools/disclosures
 CURRENT_DATE=`date  +'%Y-%m-%d'`
 export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-02-01
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
