@@ -30,6 +30,7 @@ def parse_args():
     parser.add_argument("--rebuild", dest='rebuild_pdf', action="store_true", default=False)
     parser.add_argument("--conversion-timeout", dest='conversion_timeout', type=int, default=60*30)
     parser.add_argument("--conversion-server", dest='conversion_server', required=False)
+    parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false", required=False)
     return parser.parse_args()
 
 
@@ -66,7 +67,7 @@ def main(args, logger):
 
     try:
         sent_files = send_files(args, logger, conv_tasks)
-        if len(sent_files) > 0:
+        if args.receive_files and len(sent_files) > 0:
             conv_tasks.wait_doc_conversion_finished(args.conversion_timeout)
         else:
             logger.debug("stop conversion finished")
@@ -74,8 +75,9 @@ def main(args, logger):
     except Exception as exp:
         logger.error("exception: {}, stop_conversion_thread".format(exp))
         conv_tasks.stop_conversion_thread()
-    if not receive_files(logger, conv_tasks, sent_files):
-        return 1
+    if args.receive_files:
+        if not receive_files(logger, conv_tasks, sent_files):
+            return 1
     return 0
 
 
