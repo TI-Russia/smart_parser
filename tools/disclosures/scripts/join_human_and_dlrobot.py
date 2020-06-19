@@ -65,7 +65,7 @@ class TJoiner:
             files_count += 1
             sha256 = build_sha256(file_path)
             if sha256 in domain_info:
-                self.logger.error("a file copy found: {}, ignore it".format(f))
+                self.logger.error("a file copy found: {}, ignore it".format(base_file_name))
                 continue
             file_info = {
                 dhjs.dlrobot_path: os.path.basename(file_path)

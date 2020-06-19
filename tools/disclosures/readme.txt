@@ -16,7 +16,7 @@
 
 export DISCLOSURES_FOlDER=~/smart_parser/tools/disclosures
 CURRENT_DATE=`date  +'%Y-%m-%d'`
-export OLD_DLROBOT_FOLDER=~/declarator_hdd/2020-02-01
+export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-02-01
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
 export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
@@ -24,6 +24,7 @@ export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 
 export INPUT_DLROBOT_PROJECTS=input_projects
 export DLROBOT_RESULT_FOLDER=domains
+export PYTHONPATH=~/smart_parser/tools/disclosures:~/smart_parser/tools
 
 #2. создание нового каталога dlrobot  (стоит переименовать в disclosures)
     mkdir $DLROBOT_FOLDER
