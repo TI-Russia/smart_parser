@@ -16,6 +16,7 @@
 
 export DISCLOSURES_FOlDER=~/smart_parser/tools/disclosures
 CURRENT_DATE=`date  +'%Y-%m-%d'`
+export OLD_DLROBOT_FOLDER=~/declarator_hdd/2020-02-01
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
 export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
@@ -41,11 +42,16 @@ export DLROBOT_RESULT_FOLDER=domains
         portion_id="${filename##*.}"
         ~/smart_parser/tools/robots/dlrobot/scripts/ubuntu_parallel/run.sh $d $DLROBOT_FOLDER/processed_projects.$portion_id
     done
-    python3 ~/smart_parser/tools/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  processed_projects.* --output-folder $DLROBOT_RESULT_FOLDER
+    python ~/smart_parser/tools/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DLROBOT_RESULT_FOLDER
 
 
-#5.  слияние по файлам dlrobot и declarator, получение dlrobot_human.json
-    python $DISCLOSURES_FOLDER/scripts/join_human_and_dlrobot.py --dlrobot-folder $DLROBOT_RESULT_FOLDER --human-json $HUMAN_FILES_JSON --output-json dlrobot_human.json
+#5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
+    python $DISCLOSURES_FOLDER/scripts/join_human_and_dlrobot.py --dlrobot-folder $DLROBOT_RESULT_FOLDER \
+        --human-json $HUMAN_FILES_JSON --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
+        --output-json dlrobot_human.json
+
+#5.1  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
+    python $DISCLOSURES_FOLDER/scripts/join_human_and_dlrobot.py dlrobot_human.json > dlrobot_human.json.stats
 
 #6.  запуск smart_parser
     bash ~/smart_parser/tools/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_RESULT_FOLDER migalka,oldtimer,ventil,lena
