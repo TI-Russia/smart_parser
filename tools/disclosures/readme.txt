@@ -28,9 +28,11 @@ export DLROBOT_RESULT_FOLDER=domains
     mkdir $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
 
-№3  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
+#3  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
     python $DISCLOSURES_FOLDER/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
 
+#3.1  Отправляем все новые Pdf на конвертацию
+    find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python ~/smart_parser/tools/ConvStorage/scripts/convert_pdf.py --skip-receiving
 
 #4. Запуск dlrobot, получение каталога domains
     # optional python ~/smart_parser/tools/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains ../domains/new_domains.txt  --timeouted-domains timeouted-domains.txt

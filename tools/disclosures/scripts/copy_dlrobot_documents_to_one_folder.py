@@ -95,7 +95,7 @@ class TCopier:
     def copy_files(self):
         for folder in glob.glob(self.args.input_glob):
             assert os.path.isdir(folder)
-            assert os,path.join(folder, "dlrobot_parallel.log")
+            assert os.path.exists( os.path.join(folder, "dlrobot_parallel.log") )
 
         for folder in glob.glob(self.args.input_glob):
             for dlrobot_project in os.listdir(folder):
