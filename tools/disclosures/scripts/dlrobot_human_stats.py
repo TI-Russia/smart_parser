@@ -31,7 +31,10 @@ if __name__ == '__main__':
                 only_human += 1
             if file_info.get(dhjs.dlrobot_copied_from_the_past, False):
                 old_dlrobot += 1
-            file_path = file_info.get(dhjs.dlrobot_path, file_info["dlrobot_path"])
+            file_path = file_info.get(dhjs.dlrobot_path, file_info.get("dlrobot_path"))
+            if file_path is None:
+                print("file record has no file path member: {}".format(file_info))
+                sys.exit(1)
             filename, extension = os.path.splitext(file_path)
             extensions[extension] += 1
 
