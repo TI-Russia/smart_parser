@@ -553,9 +553,16 @@ if __name__ == '__main__':
     logger.debug("start server {}:{}".format(host, port))
     try:
         myServer = http.server.HTTPServer((host, int(port)), THttpServer)
+        logger.debug("myServer.serve_forever()...")
         myServer.serve_forever()
+        logger.debug("myServer.server_close()")
         myServer.server_close()
     except KeyboardInterrupt as exp:
-        print("ctrl+c received, exception: {}".format(exp))
+        logger.error("ctrl+c received, exception: {}".format(exp))
         CONV_PROCESSOR.stop_input_files_thread()
         sys.exit(1)
+    except Exception as exp:
+        logger.error("exception: {}".format(exp))
+        CONV_PROCESSOR.stop_input_files_thread()
+        sys.exit(1)
+    logger.debug("reach the end of the main")
