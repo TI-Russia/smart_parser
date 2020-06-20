@@ -42,6 +42,7 @@ def parse_args():
     parser.add_argument("--keep-txt", dest='keep_txt', action="store_true", default=False)
     parser.add_argument("--reuse-txt", dest='reuse_txt', action="store_true", default=False)
     parser.add_argument("--output", dest='output', default=None)
+    parser.add_argument("--delete-negative", dest='delete_negative', default=False, action="store_true")
     args = parser.parse_args()
     if args.output is None:
         args.output = args.source_file + ".json"
@@ -371,5 +372,9 @@ def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
 if __name__ == "__main__":
     args = parse_args()
     verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt)
-    with open(args.output, "w", encoding="utf8") as outf:
-        outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))
+    if args.delete_negative:
+        if verdict.verdict == DL_RECOGNIZER_ENUM.NEGATIVE:
+            os.unlink(args.source_file)
+    else:
+        with open(args.output, "w", encoding="utf8") as outf:
+            outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))
