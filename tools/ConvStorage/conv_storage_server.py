@@ -242,6 +242,8 @@ class TConvertProcessor:
 
         assert os.path.exists(self.args.microsoft_pdf_2_docx)
         self.args.input_folder_cracked = tempfile.mkdtemp(prefix="input_files_cracked", dir=".")
+        self.logger.debug("input_folder_cracked = {}".format(self.args.input_folder_cracked))
+        assert os.path.isdir(self.args.input_folder_cracked)
 
     def process_ocr_logs(self):
         for log_file in os.listdir(self.args.ocr_output_folder):
@@ -556,13 +558,16 @@ if __name__ == '__main__':
         logger.debug("myServer.serve_forever()...")
         myServer.serve_forever()
         logger.debug("myServer.server_close()")
+        sys.stderr.write("myServer.server_close()\n")  #try to detect silent exits
         myServer.server_close()
     except KeyboardInterrupt as exp:
+        sys.stderr.write("ctrl+c received, exception: {}\n".format(exp))
         logger.error("ctrl+c received, exception: {}".format(exp))
         CONV_PROCESSOR.stop_input_files_thread()
         sys.exit(1)
     except Exception as exp:
-        logger.error("exception: {}".format(exp))
+        sys.stderr.write("general exception: {}\n".format(exp))
+        logger.error("general exception: {}".format(exp))
         CONV_PROCESSOR.stop_input_files_thread()
         sys.exit(1)
     logger.debug("reach the end of the main")

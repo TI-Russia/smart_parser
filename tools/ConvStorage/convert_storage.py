@@ -98,6 +98,17 @@ class TConvertStorage:
             return
         file_info['a'] = int(time.time()/(60*60*24))  # in days
 
+    def copy_file(self, src, dst):
+        self.logger("copy {} to {}".format(src, dst))
+        shutil.copy(src, dst)
+
+    def add_database(self, add_db):
+        for sha256, file_info in add_db.conv_db_json['files'].items():
+            if sha256 not in self.conv_db_json['files']:
+                self.conv_db_json['files'][sha256] = file_info
+                self.copy_file(add_db.get_input_file_name(sha256), self.get_input_file_name(sha256))
+                self.copy_file(add_db.get_converted_file_name(sha256), self.get_converted_file_name(sha256))
+
     def save_converted_file(self, file_name, sha256, converter_id):
         converted_file = self.get_converted_file_name(sha256)
         self.logger.debug("move {} to {}".format(file_name, converted_file))

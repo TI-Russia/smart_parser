@@ -61,6 +61,7 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
 
 #5.3  Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
  find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
+  python $TOOLS/disclosures/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
 
 #6.  запуск smart_parser
     bash $TOOLS/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DISCLOSURES_FILES migalka,oldtimer,ventil,lena

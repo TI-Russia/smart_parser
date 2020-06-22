@@ -19,13 +19,15 @@
                 "intersection_status": "both_found",
                 "r:path": "one_line_2019.docx",
                 "d:income_year": 2019,
-                "d:document_id":  198,
+                "d:document_id": 198,
                 "d:document_file_id": 1
             }
         }
     },
     "r:folder": "domains",
     "office_to_domains": {
-        "1": ["test1.ru"]
+        "1": [
+            "test1.ru"
+        ]
     }
 }
