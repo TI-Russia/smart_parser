@@ -579,8 +579,11 @@ namespace Smart.Parser
                   columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
                   columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
             {
-                Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
-                return 0;
+                if (!ColumnOrdering.SearchForFioColumnOnly)
+                {
+                    Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
+                    return 0;
+                }
             }
 
             Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);
