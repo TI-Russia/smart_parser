@@ -11,14 +11,14 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    files = [ f for f in os.listdir(args.folder) if f.endswith(".json") ]
+    files = [ f for f in os.listdir(args.folder) if f.endswith(".verdict") ]
     print ("found {} files in {}".format(len(files), args.folder))
     for x in files:
         jsonfile = os.path.join(args.folder, x)
         with open (jsonfile, "r", encoding="utf-8") as inpf:
             try:
                 if json.load(inpf).get('result') == "some_other_document_result":
-                    filename = jsonfile[:-len(".json")]
+                    filename = jsonfile[:-len(".verdict")]
                     if os.path.exists(filename):
                         print("remove    file {}".format(filename))
                         os.unlink(filename)

@@ -11,6 +11,7 @@ from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
 
+
 def normalize_whitespace(str):
     str = re.sub(r'\s+', ' ', str)
     str = str.strip()
@@ -45,7 +46,7 @@ def parse_args():
     parser.add_argument("--delete-negative", dest='delete_negative', default=False, action="store_true")
     args = parser.parse_args()
     if args.output is None:
-        args.output = args.source_file + ".json"
+        args.output = args.source_file + ".verdict"
     return args
 
 
