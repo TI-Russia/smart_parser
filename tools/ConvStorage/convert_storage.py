@@ -22,6 +22,7 @@ class TConvertStorage:
 
     def __init__(self, logger, conv_db_json_file_name, new_db=False):
         self.logger = logger
+        self.main_folder = os.path.dirname(conv_db_json_file_name)
         self.conv_db_json_file_name = conv_db_json_file_name
         self.conv_db_json = None
         with open(self.conv_db_json_file_name, "r", encoding="utf8") as inp:
@@ -84,7 +85,7 @@ class TConvertStorage:
             self.conv_db_json['files'][sha256] = {}
 
     def get_converted_file_name(self, sha256):
-        return os.path.join(self.converted_files_folder, sha256 + self.converted_file_extension)
+        return os.path.join(self.main_folder, self.converted_files_folder, sha256 + self.converted_file_extension)
 
     def has_converted_file(self, sha256):
         filename = self.get_converted_file_name(sha256)
@@ -95,19 +96,28 @@ class TConvertStorage:
     def register_access_request(self, sha256):
         file_info = self.conv_db_json['files'].get(sha256)
         if file_info is None:
-            return
+            return                                                        t 
         file_info['a'] = int(time.time()/(60*60*24))  # in days
 
-    def copy_file(self, src, dst):
-        self.logger("copy {} to {}".format(src, dst))
-        shutil.copy(src, dst)
+    def copy_file(self, src, dst, move_files=False):
+        if move_files:
+            self.logger.debug("copy {} to {}".format(src, dst))
+            shutil.move(src, dst)
+        else: 
+            self.logger.debug("copy {} to {}".format(src, dst))
+            shutil.copy(src, dst)
 
-    def add_database(self, add_db):
+    def add_database(self, add_db, move_files=False):
+        self.logger.info("start to copy  files..")
+        cnt = 0
         for sha256, file_info in add_db.conv_db_json['files'].items():
             if sha256 not in self.conv_db_json['files']:
+                cnt += 1
                 self.conv_db_json['files'][sha256] = file_info
-                self.copy_file(add_db.get_input_file_name(sha256), self.get_input_file_name(sha256))
-                self.copy_file(add_db.get_converted_file_name(sha256), self.get_converted_file_name(sha256))
+                self.copy_file(add_db.get_input_file_name(sha256), self.get_input_file_name(sha256), move_files)
+                self.copy_file(add_db.get_converted_file_name(sha256), self.get_converted_file_name(sha256), move_files)
+        self.logger.info("added {} files..".format(cnt))
+    
 
     def save_converted_file(self, file_name, sha256, converter_id):
         converted_file = self.get_converted_file_name(sha256)
@@ -121,7 +131,7 @@ class TConvertStorage:
             self.modify_json_lock.release()
 
     def get_input_file_name(self, sha256):
-        return os.path.join(self.input_files_folder, sha256 + ".pdf")
+        return os.path.join(self.main_folder, self.input_files_folder, sha256 + ".pdf")
 
     def save_input_file(self, file_name, sha256):
         input_file = self.get_input_file_name(sha256)
