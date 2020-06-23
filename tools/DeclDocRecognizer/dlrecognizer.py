@@ -95,6 +95,7 @@ def get_smart_parser_result(source_file):
             sheet_index += 1
     return people_count
 
+
 class TTextFeature:
     def __init__(self):
         self.first_matches = dict()
@@ -105,6 +106,7 @@ class TTextFeature:
             "first_matches" :  list(m.to_json() for m in self.first_matches.values()),
             "all_matches_count": self.all_matches_count
         }
+
 
 class TClassificationVerdict:
 
