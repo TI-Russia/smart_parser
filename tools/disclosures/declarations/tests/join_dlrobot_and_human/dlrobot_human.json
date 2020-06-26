@@ -4,6 +4,7 @@
         "05.fsin.su": {
             "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
                 "intersection_status": "only_dlrobot",
+                "r:old": true,
                 "r:path": "old_dlrobot.xlsx"
             },
             "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865": {
@@ -14,7 +15,7 @@
                 "d:office_id": 4,
                 "d:path": "human.xlsx",
                 "intersection_status": "both_found",
-                "r:path": "human.xlsx"
+                "r:path": "1984.xlsx"
             },
             "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3": {
                 "intersection_status": "only_dlrobot",
