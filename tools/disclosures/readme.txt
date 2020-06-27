@@ -62,9 +62,10 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
 #5.3  Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
  find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
   python $TOOLS/disclosures/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
+  python $TOOLS/disclosures/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats  
 
 #6.  запуск smart_parser
-    bash $TOOLS/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DISCLOSURES_FILES migalka,oldtimer,ventil,lena
+    bash $TOOLS/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_FOLDER/$DISCLOSURES_FILES migalka,oldtimer,ventil,lena
 
 #6.1 создание ручных json
     [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
@@ -79,12 +80,12 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
-   python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.dev
-   python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.dev
+   python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.prod
+   python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
 #9.  запуск сливалки, 3 gb each char
    cd $TOOLS/disclosures
-   export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.infoexport DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
+   export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
    cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db
 
 

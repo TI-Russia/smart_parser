@@ -1,13 +1,16 @@
-0. install mysql 5.7 and python 3.6.9
-
+-1. install python 3.6.9
+0. install mysql 5.7
+   sudo apt install default-libmysqlclient-dev
 1. elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
     sudo apt-get install apt-transport-https
     echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
     ?sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
-    sudo apt-get update && sudo apt-get install elasticsearch
+    sudo apt-get update 
+    sudo apt-get install elasticsearch
     sudo /bin/systemctl daemon-reload
     sudo /bin/systemctl enable elasticsearch.service
     sudo systemctl start elasticsearch.service
+
 
 2. python3 modules
     source ~/smart_parser/tools/venv/bin/activate
