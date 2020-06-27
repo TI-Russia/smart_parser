@@ -110,6 +110,16 @@ class TImporter:
         TImporter.logger.debug("built {} document_2_files".format(len(document_2_files)))
         return document_2_files
 
+    def check_office_integrity(self):
+        db_offices = set()
+        for o in models.Office.objects.all():
+            db_offices.add(o.id)
+
+        for office_id in self.office_to_domains.keys():
+            if int(office_id) not in db_offices:
+                self.logger.error("cannot find office {} references in dlrobot_human.json ".format(office_id))
+                raise Exception("integrity failed")
+
     def __init__(self, args):
         self.args = args
 
@@ -120,6 +130,7 @@ class TImporter:
                 self.dlrobot_folder = os.path.join(os.path.dirname(args['dlrobot_human']), self.dlrobot_folder)
             self.dlrobot_human_file_info = dlrobot_human[dhjs.file_collection]
             self.office_to_domains = dlrobot_human[dhjs.offices_to_domains]
+        self.check_office_integrity()
 
         TImporter.logger.debug("load information about {} sites ".format(len(self.dlrobot_human_file_info)))
         self.document_2_files = self.init_document_2_files()
@@ -241,6 +252,12 @@ class ImportJsonCommand(BaseCommand):
             dest='smart_parser_human_json',
             required=True
         )
+        parser.add_argument(
+            '--take-first-n-offices',
+            dest='take_first_n_offices',
+            required=False,
+            type=int
+        )
 
     def handle(self, *args, **options):
         TImporter.logger = setup_logging("import_json.log")
@@ -254,8 +271,13 @@ class ImportJsonCommand(BaseCommand):
             pool = Pool(processes=options.get('process_count'))
             pool.map(partial(process_one_file_in_thread, importer), offices)
         else:
+            cnt = 0
             for office_id in offices:
+                if cnt >= options.get('take_first_n_offices', 1000000):
+                    break
                 importer.import_office(office_id)
+                cnt += 1
+        importer.logger.info ("Section count={}".format(models.Section.objects.all().count()))
         ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
 
 Command=ImportJsonCommand
