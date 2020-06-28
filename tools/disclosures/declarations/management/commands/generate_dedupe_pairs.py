@@ -7,7 +7,28 @@ from django.core.management import BaseCommand, CommandError
 from declarations.models import Person, Section
 from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
     get_pairs_from_clusters
-from deduplicate.config import resolve_fullname
+import os
+
+
+def setup_logging(logfilename="generate_dedupe_pairs.log"):
+    logger = logging.getLogger("copy_person")
+    logger.setLevel(logging.DEBUG)
+
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if os.path.exists(logfilename):
+        os.remove(logfilename)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+
+    return logger
 
 
 class Command(BaseCommand):
@@ -18,7 +39,7 @@ class Command(BaseCommand):
             '--verbose',
             dest='verbose',
             type=int,
-            help='Increase verbosity',
+            help='set verbosity, default is DEBUG',
             default=0
         )
         parser.add_argument(
@@ -82,6 +103,7 @@ class Command(BaseCommand):
         self.family_prefix = None
         self.dedupe_objects = None
         self.options = None
+        self.logger = setup_logging()
 
     def init_options(self, options):
         self.options = options
@@ -92,7 +114,7 @@ class Command(BaseCommand):
                 log_level = logging.INFO
             elif options.get("verbose") >= 2:
                 log_level = logging.DEBUG
-        logging.getLogger().setLevel(log_level)
+        self.logger.setLevel(log_level)
 
     def fill_dedupe_data(self):
         self.dedupe_objects = {}
@@ -106,30 +128,30 @@ class Command(BaseCommand):
             return
 
         sections = Section.objects.filter(person=None).filter(person_name__istartswith=self.family_prefix)
-        self.stdout.write("Read sections from DB family_prefix={}...".format(self.family_prefix))
+        self.logger.info("Read sections from DB family_prefix={}...".format(self.family_prefix))
         cnt = 0
         for s in sections.all():
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()
-            assert (k != None)
+            assert k is not None
             if len(v['family_name']) == 0:
                 continue # ignore sections with broken person names, because dedupe fails
             self.dedupe_objects[k] = v
             cnt += 1
-        self.stdout.write("Read {0} from section table".format(cnt))
+        self.logger.info("Read {0} from section table".format(cnt))
 
         persons = Person.objects.filter(section__person_name__istartswith=self.family_prefix).distinct().all()
-        self.stdout.write("Read people from DB family_prefix={}...".format(self.family_prefix))
+        self.logger.info("Read people from DB family_prefix={}...".format(self.family_prefix))
         cnt = 0
         for p in persons:
             k, v = TPersonFields(p).get_dedupe_id_and_object()
-            if k == None:
+            if k is None:
                 continue
                 # no sections for this person, ignore this person
             self.dedupe_objects[k] = v
             cnt += 1
-        self.stdout.write("Read {0} from person table".format(cnt))
+        self.logger.info("Read {0} from person table".format(cnt))
 
-        self.stdout.write("All objects  for dedupe = {} ".format(len(self.dedupe_objects)))
+        self.logger.info("All objects  for dedupe = {} ".format(len(self.dedupe_objects)))
 
         dump_file_name = self.options["dump_dedupe_objects_file"]
         if dump_file_name:
@@ -139,7 +161,7 @@ class Command(BaseCommand):
                     of.write("\t".join((k, json_value)) + "\n")
 
     def write_results_to_file(self, clustered_dupes, dump_stream):
-        self.stdout.write('{} clusters generated'.format(len(clustered_dupes)))
+        self.logger.info('{} clusters generated'.format(len(clustered_dupes)))
         for id1, id2, score1, score2 in get_pairs_from_clusters(clustered_dupes):
             dump_stream.write("\t".join((id1, id2, str(score1), str(score2))) + "\n")
 
@@ -159,7 +181,7 @@ class Command(BaseCommand):
     def write_results_to_db(self, clustered_dupes):
         linked_sections = set()
         if clustered_dupes != None:
-            self.stdout.write('Write back to DB'.format(len(clustered_dupes)))
+            self.logger.info('Write back to DB'.format(len(clustered_dupes)))
             for id1, id2, score1, score2 in get_pairs_from_clusters(clustered_dupes):
                 if id1.startswith("person-") and id2.startswith("section-"):
                     person_id = int(id1[len("person-"):])
@@ -168,8 +190,8 @@ class Command(BaseCommand):
                     self.link_section_to_person(section, person_id, float(score2))
                     linked_sections.add(section_id)
 
-        self.stdout.write('Create new people by dedupe clusters... ')
-        if clustered_dupes != None:
+        self.logger.info('Create new people by dedupe clusters... ')
+        if clustered_dupes is not None:
             for (cluster_id, cluster) in enumerate(clustered_dupes):
                 new_sections = set()
                 id_set, scores = cluster
@@ -183,19 +205,17 @@ class Command(BaseCommand):
                         has_person_in_cluster = True
                 if len(new_sections) != 0:
                     if has_person_in_cluster:
-                        self.stdout.write('ignore a strange cluster with section ids = {0} ... '.format(new_sections))
+                        self.logger.info('ignore a strange cluster with section ids = {0} ... '.format(new_sections))
                     else:
                         self.link_sections_to_a_new_person(new_sections)
                         linked_sections.update(new_sections)
 
-
     def handle(self, *args, **options):
-
-        self.stdout.write('Started at: {}'.format(datetime.now()))
+        self.logger.info('Started at: {}'.format(datetime.now()))
         self.init_options(options)
 
         with open(options["model_file"], 'rb') as sf:
-            self.stdout.write('read dedupe settings from {}'.format(sf.name))
+            self.logger.info('read dedupe settings from {}'.format(sf.name))
             self.dedupe = dedupe.StaticDedupe(sf, num_cores=options['num_cores'])
             if logging.getLogger().getEffectiveLevel() > 1:
                 describe_dedupe(self.stdout, self.dedupe)
@@ -204,7 +224,7 @@ class Command(BaseCommand):
         if options.get('threshold', 0) != 0:
             threshold = options.get('threshold')
         else:
-            self.stdout.write('Warning! Threshold is not set. Is it just a test?')
+            self.logger.info('Warning! Threshold is not set. Is it just a test?')
 
         if len(self.family_prefix) == 0:
             if self.options.get("input_dedupe_objects") is None:
@@ -218,28 +238,24 @@ class Command(BaseCommand):
         dump_file_name = self.options.get("result_pairs_file")
         if dump_file_name:
             dump_stream = open(dump_file_name, "w", encoding="utf8")
-            if options.get("verbose", 0) > 0:
-                self.stdout.write(u'write result pairs to {}\n'.format(dump_file_name))
+            self.logger.debug(u'write result pairs to {}\n'.format(dump_file_name))
 
-        if options.get("verbose", 0) > 0:
-            self.stdout.write(u"go through prefixes {}".format(",".join(all_prefixes)))
+        self.logger.debug("go through prefixes {}".format(",".join(all_prefixes)))
 
         for x in range(len(all_prefixes)):
 
             self.family_prefix = all_prefixes[x]
-            if options.get("verbose", 0) > 0:
-                self.stdout.write("prefix {0}".format(self.family_prefix))
+            self.logger.debug("prefix {0}".format(self.family_prefix))
             self.fill_dedupe_data()
             clustered_dupes = None
 
             try:
-                if options.get("verbose", 0) > 0:
-                    self.stdout.write(
-                        u'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), threshold))
+                self.logger.debug(
+                    'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), threshold))
                 clustered_dupes = self.dedupe.match(self.dedupe_objects, threshold)
             except Exception as e:
-                self.stdout.write(
-                    u'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
+                self.logger.error(
+                    'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
 
             if clustered_dupes is not None:
                 if dump_stream is not None:
