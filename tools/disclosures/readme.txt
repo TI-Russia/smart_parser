@@ -83,10 +83,18 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
    python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.prod
    python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
-#9.  запуск сливалки, 3 gb each char
-   cd $TOOLS/disclosures
+#9.  тестирование сливалки
    export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
-   cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db
+   cd $TOOLS/disclosures/toloka/pools
+   bash -x make_pools.sh
+
+#10.  запуск сливалки, 3 gb each char
+   cd $TOOLS/disclosures
+
+    если повторно
+   *cat clear_dedupe_artefacts.sql | mysql -D disclosures_db -u disclosures -pdisclosures 
+
+   cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db --settings disclosures.settings.prod
 
 
 №10 удаление ненужных файлов
