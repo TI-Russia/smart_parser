@@ -6,7 +6,7 @@ from django.core.management import BaseCommand
 from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
 import logging
 import pymysql
-
+import os
 
 def setup_logging(logfilename="copy_person.log"):
     logger = logging.getLogger("copy_person")
