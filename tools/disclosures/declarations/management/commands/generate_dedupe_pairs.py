@@ -8,6 +8,7 @@ from declarations.models import Person, Section
 from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
     get_pairs_from_clusters
 import os
+from declarations.documents import stop_elastic_indexing
 
 
 def setup_logging(logfilename="generate_dedupe_pairs.log"):
@@ -213,6 +214,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.logger.info('Started at: {}'.format(datetime.now()))
         self.init_options(options)
+        stop_elastic_indexing()
 
         with open(options["model_file"], 'rb') as sf:
             self.logger.info('read dedupe settings from {}'.format(sf.name))
