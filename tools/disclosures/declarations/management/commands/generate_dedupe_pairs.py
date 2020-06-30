@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import dedupe
 import logging
@@ -7,7 +6,7 @@ from django.core.management import BaseCommand, CommandError
 from declarations.models import Person, Section
 from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
     get_pairs_from_clusters
-import os
+import sys
 from declarations.documents import stop_elastic_indexing
 
 
@@ -17,8 +16,6 @@ def setup_logging(logfilename="generate_dedupe_pairs.log"):
 
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
     # create file handler which logs even debug messages
     fh = logging.FileHandler(logfilename, encoding="utf8")
     fh.setLevel(logging.DEBUG)
@@ -44,10 +41,17 @@ class Command(BaseCommand):
             default=0
         )
         parser.add_argument(
-            '--family-prefix',
-            dest='family_prefix',
-            default='',
-            help='Russian uppercase char',
+            '--surname-bounds',
+            dest='surname_bounds',
+            default=None,
+            help='[l,b], take records where person_name >=l and person_name < b',
+        )
+        parser.add_argument(
+            '--print-family-prefixes',
+            dest='print_family_prefixes',
+            default=False,
+            action="store_true",
+            help='print family prefixes and exit',
         )
         parser.add_argument(
             '--num-cores',
@@ -101,14 +105,12 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.dedupe = None
-        self.family_prefix = None
         self.dedupe_objects = None
         self.options = None
         self.logger = setup_logging()
 
     def init_options(self, options):
         self.options = options
-        self.family_prefix = options['family_prefix'].upper()
         log_level = logging.WARNING
         if options.get("verbose"):
             if options.get("verbose") == 1:
@@ -117,7 +119,7 @@ class Command(BaseCommand):
                 log_level = logging.DEBUG
         self.logger.setLevel(log_level)
 
-    def fill_dedupe_data(self):
+    def fill_dedupe_data(self, lower_bound, upper_bound):
         self.dedupe_objects = {}
 
         input_dump_file = self.options.get("input_dedupe_objects")
@@ -128,8 +130,8 @@ class Command(BaseCommand):
                     self.dedupe_objects[str(k)] = dedupe_object_reader(v)
             return
 
-        sections = Section.objects.filter(person=None).filter(person_name__istartswith=self.family_prefix)
-        self.logger.info("Read sections from DB family_prefix={}...".format(self.family_prefix))
+        sections = Section.objects.filter(person=None).filter(person_name__gte=lower_bound).filter(person_name__lt=upper_bound)
+        self.logger.info("Read sections from DB... ")
         cnt = 0
         for s in sections.all():
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()
@@ -140,8 +142,8 @@ class Command(BaseCommand):
             cnt += 1
         self.logger.info("Read {0} records from section table".format(cnt))
 
-        persons = Person.objects.filter(section__person_name__istartswith=self.family_prefix).distinct().all()
-        self.logger.info("Read people from DB family_prefix={}...".format(self.family_prefix))
+        persons = Person.objects.filter(section__person_name__gte=lower_bound).filter(section__person_name__lt=upper_bound).distinct().all()
+        self.logger.info("Read people records from DB...")
         cnt = 0
         for p in persons:
             k, v = TPersonFields(p).get_dedupe_id_and_object()
@@ -180,6 +182,7 @@ class Command(BaseCommand):
             self.link_section_to_person(section, person.id, 0.9)
 
     def write_results_to_db(self, clustered_dupes):
+        self.logger.info('write {} results to db'.format(len(clustered_dupes)))
         linked_sections = set()
         if clustered_dupes != None:
             self.logger.info('Write back to DB'.format(len(clustered_dupes)))
@@ -211,9 +214,24 @@ class Command(BaseCommand):
                         self.link_sections_to_a_new_person(new_sections)
                         linked_sections.update(new_sections)
 
+    def get_family_name_bounds(self):
+        if self.options.get('surname_bounds') is not None:
+            yield self.options.get('surname_bounds').split(',')
+        elif self.options.get("input_dedupe_objects") is not None:
+            yield None, None
+        else:
+            all_borders = '-,А,Б,В,Г,Д,Е,Ж,З,И,К,КН,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,Щ,Э,Ю,Я,♪'.split(',')
+            for x in range(1, len(all_borders)):
+                yield all_borders[x-1], all_borders[x]
+
     def handle(self, *args, **options):
+
         self.logger.info('Started at: {}'.format(datetime.now()))
         self.init_options(options)
+        if options.get('print_family_prefixes'):
+            for lower_bound, upper_bound in self.get_family_name_bounds():
+                sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
+            return
         stop_elastic_indexing()
 
         with open(options["model_file"], 'rb') as sf:
@@ -228,27 +246,15 @@ class Command(BaseCommand):
         else:
             self.logger.info('Warning! Threshold is not set. Is it just a test?')
 
-        if len(self.family_prefix) == 0:
-            if self.options.get("input_dedupe_objects") is None:
-                all_prefixes = list("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ")
-            else:
-                all_prefixes = ["dummy"]
-        else:
-            all_prefixes = [self.family_prefix]
-
         dump_stream = None
         dump_file_name = self.options.get("result_pairs_file")
         if dump_file_name:
             dump_stream = open(dump_file_name, "w", encoding="utf8")
             self.logger.debug(u'write result pairs to {}\n'.format(dump_file_name))
 
-        self.logger.debug("go through prefixes {}".format(",".join(all_prefixes)))
-
-        for x in range(len(all_prefixes)):
-
-            self.family_prefix = all_prefixes[x]
-            self.logger.debug("prefix {0}".format(self.family_prefix))
-            self.fill_dedupe_data()
+        for lower_bound, upper_bound in self.get_family_name_bounds():
+            self.logger.debug("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
+            self.fill_dedupe_data(lower_bound, upper_bound)
             clustered_dupes = None
 
             try:

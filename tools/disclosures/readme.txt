@@ -88,13 +88,12 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
    cd $TOOLS/disclosures/toloka/pools
    bash -x make_pools.sh
 
-#10.  запуск сливалки, 3 gb each char
+#10.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    cd $TOOLS/disclosures
 
     если повторно
    *cat clear_dedupe_artefacts.sql | mysql -D disclosures_db -u disclosures -pdisclosures 
-
-   cat data/abc.txt | xargs -P 2 -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --family-prefix {} --write-to-db --settings disclosures.settings.prod
+    python manage.py generate_dedupe_pairs  --surname-bounds А,Я --print-family-prefixes   --settings disclosures.settings.prod |  xargs -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --surname-bounds {} --write-to-db --settings disclosures.settings.prod
 
 
 №10 удаление ненужных файлов
