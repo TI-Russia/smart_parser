@@ -34,9 +34,10 @@ class TDownloadEnv:
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
     @staticmethod
-    def send_pdf_to_conversion(filename, file_extension):
+    def send_pdf_to_conversion(filename, file_extension, sha256):
         if TDownloadEnv.CONVERSION_CLIENT is None:
             return
+        TDownloadEnv.CONVERSION_CLIENT.logger.debug('got pdf with sha256={})'.format(sha256))
         if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < TDownloadEnv.PDF_QUOTA_CONVERSION:
             TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(filename, file_extension)
         else:
@@ -104,15 +105,15 @@ def save_downloaded_file(filename):
         os.makedirs(download_folder)
     assert (os.path.exists(filename))
     with open(filename, "rb") as f:
-        hashcode = hashlib.sha256(f.read()).hexdigest()
+        sha256 = hashlib.sha256(f.read()).hexdigest()
     file_extension = os.path.splitext(filename)[1]
-    saved_filename = os.path.join(download_folder, hashcode + file_extension)
+    saved_filename = os.path.join(download_folder, sha256 + file_extension)
     logger.debug("save file {} as {}".format(filename, saved_filename))
     if os.path.exists(saved_filename):
         logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
-    TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension)
+    TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension, sha256)
     return saved_filename
 
 
@@ -236,7 +237,8 @@ class TDownloadedFile:
                 self.file_extension = self.calc_file_extension_by_data_and_headers()
                 self.page_info['file_extension'] = self.file_extension
                 self.write_file_to_cache()
-                TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension)
+                sha256 = hashlib.sha256(data).hexdigest()
+                TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension, sha256)
 
     def write_file_to_cache(self):
         with open(self.data_file_path, "wb") as f:
