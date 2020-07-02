@@ -27,6 +27,7 @@ export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 export INPUT_DLROBOT_PROJECTS=input_projects
 export DISCLOSURES_FILES=domains
 export PYTHONPATH=$TOOLS/disclosures:$TOOLS
+export HOSTS=migalka,oldtimer,ventil,lena
 
 #2. создание нового каталога dlrobot  (стоит переименовать в disclosures)
     mkdir $DLROBOT_FOLDER
@@ -43,7 +44,7 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
     python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS --portion-size 1000
     for d in INPUT_DLROBOT_PROJECTS*; do
         portion_id="${filename##*.}"
-        $TOOLS/robots/dlrobot/scripts/ubuntu_parallel/run.sh $d $DLROBOT_FOLDER/processed_projects.$portion_id
+        $TOOLS/robots/dlrobot/scripts/ubuntu_parallel/run.sh $d $DLROBOT_FOLDER/processed_projects.$portion_id $HOSTS
     done
     python $TOOLS/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DISCLOSURES_FILES
 
@@ -60,12 +61,12 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
  find  $DISCLOSURES_FILES -name '*.pdf' -type f | xargs -n 100 --verbose python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving --conversion-timeout 20
 
 #5.3  Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
- find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
+  find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
   python $TOOLS/disclosures/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
   python $TOOLS/disclosures/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats  
 
 #6.  запуск smart_parser
-    bash $TOOLS/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_FOLDER/$DISCLOSURES_FILES migalka,oldtimer,ventil,lena
+    bash $TOOLS/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_FOLDER/$DISCLOSURES_FILES $HOSTS
 
 #6.1 создание ручных json
     [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
@@ -84,16 +85,24 @@ export PYTHONPATH=$TOOLS/disclosures:$TOOLS
    python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
 #9.  тестирование сливалки
-   export DEDUPE_MODEL=~/declarator/transparency/model.baseline/dedupe.info
+   export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
+
    cd $TOOLS/disclosures/toloka/pools
    bash -x make_pools.sh
 
 #10.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    cd $TOOLS/disclosures
+   export SURNAME_SPANS=`python manage.py generate_dedupe_pairs  --print-family-prefixes   --settings disclosures.settings.prod`
+   export DISCLOSURES_DB_HOST=migalka
+   echo $HOSTS  |  tr "," "\n" | xargs --verbose -n 1 -I {} ssh {} git  -C ~/smart_parser pull
+   cat clear_dedupe_artefacts.sql | mysql -D disclosures_db -u disclosures -pdisclosures
 
-    если повторно
-   *cat clear_dedupe_artefacts.sql | mysql -D disclosures_db -u disclosures -pdisclosures 
-    python manage.py generate_dedupe_pairs  --surname-bounds А,Я --print-family-prefixes   --settings disclosures.settings.prod |  xargs -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --surname-bounds {} --write-to-db --settings disclosures.settings.prod
+   #10.2 many hosts
+     parallel --jobs 1 -a - --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
+        python $TOOLS/disclosures/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.prod ::: $SURNAME_SPANS
+
+   # 10.3 single host
+   # echo $SURNAME_SPANS |  xargs -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --surname-bounds {} --write-to-db --settings disclosures.settings.prod
 
 
 №10 удаление ненужных файлов

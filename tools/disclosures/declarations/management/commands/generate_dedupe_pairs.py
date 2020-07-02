@@ -119,6 +119,39 @@ class Command(BaseCommand):
                 log_level = logging.DEBUG
         self.logger.setLevel(log_level)
 
+    def read_sections(self, lower_bound, upper_bound):
+        sections = Section.objects.filter(person=None)
+        sections = sections.filter(person_name__gte=lower_bound).filter(person_name__lt=upper_bound)
+        sections_count = sections.count()
+        self.logger.info("Start reading {} sections from DB... ".format(sections_count))
+        cnt = 0
+        for s in sections.all():
+            k, v = TPersonFields(None, s).get_dedupe_id_and_object()
+            assert k is not None
+            if len(v['family_name']) == 0:
+                continue # ignore sections with broken person names, because dedupe fails
+            self.dedupe_objects[k] = v
+            cnt += 1
+            if cnt % 10000 == 0:
+                self.logger.info("Read {} records from section table".format(cnt))
+        self.logger.info("Read {0} records from section table".format(cnt))
+
+    def read_people(self, lower_bound, upper_bound):
+        persons = Person.objects.filter(section__person_name__gte=lower_bound).filter(section__person_name__lt=upper_bound).distinct()
+        persons_count = persons.count()
+        self.logger.info("Start reading {} people records from DB...".format(persons_count))
+        cnt = 0
+        for p in persons.all():
+            k, v = TPersonFields(p).get_dedupe_id_and_object()
+            if k is None:
+                continue
+                # no sections for this person, ignore this person
+            self.dedupe_objects[k] = v
+            cnt += 1
+            if cnt % 1000 == 0:
+                self.logger.info("Read {} records from person table".format(cnt))
+        self.logger.info("Read {} records from person table".format(cnt))
+
     def fill_dedupe_data(self, lower_bound, upper_bound):
         self.dedupe_objects = {}
 
@@ -130,29 +163,8 @@ class Command(BaseCommand):
                     self.dedupe_objects[str(k)] = dedupe_object_reader(v)
             return
 
-        sections = Section.objects.filter(person=None).filter(person_name__gte=lower_bound).filter(person_name__lt=upper_bound)
-        self.logger.info("Read sections from DB... ")
-        cnt = 0
-        for s in sections.all():
-            k, v = TPersonFields(None, s).get_dedupe_id_and_object()
-            assert k is not None
-            if len(v['family_name']) == 0:
-                continue # ignore sections with broken person names, because dedupe fails
-            self.dedupe_objects[k] = v
-            cnt += 1
-        self.logger.info("Read {0} records from section table".format(cnt))
-
-        persons = Person.objects.filter(section__person_name__gte=lower_bound).filter(section__person_name__lt=upper_bound).distinct().all()
-        self.logger.info("Read people records from DB...")
-        cnt = 0
-        for p in persons:
-            k, v = TPersonFields(p).get_dedupe_id_and_object()
-            if k is None:
-                continue
-                # no sections for this person, ignore this person
-            self.dedupe_objects[k] = v
-            cnt += 1
-        self.logger.info("Read {0} records from person table".format(cnt))
+        self.read_sections(lower_bound, upper_bound)
+        self.read_people(lower_bound, upper_bound)
 
         self.logger.info("All objects  for dedupe = {} ".format(len(self.dedupe_objects)))
 
@@ -220,7 +232,7 @@ class Command(BaseCommand):
         elif self.options.get("input_dedupe_objects") is not None:
             yield None, None
         else:
-            all_borders = '-,А,Б,В,Г,Д,Е,Ж,З,И,К,КН,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,Щ,Э,Ю,Я,♪'.split(',')
+            all_borders = '0,А,Б,БП,В,Г,ГП,Д,Е,Ж,З,И,К,КН,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,Щ,Э,Ю,Я,♪'.split(',')
             for x in range(1, len(all_borders)):
                 yield all_borders[x-1], all_borders[x]
 
