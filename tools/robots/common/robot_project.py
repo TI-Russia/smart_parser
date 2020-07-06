@@ -63,6 +63,10 @@ class TRobotProject:
                 if 'step_names' in json_dict:
                     if json_dict['step_names'] != self.get_robot_step_names():
                         raise Exception("different step step_names, adjust manually or rebuild the project")
+            else:
+                self.robot_step_passports = list()
+                for step_name in json_dict['step_names']:
+                    self.robot_step_passports.append(step_name)
 
             for o in json_dict.get('sites', []):
                 site = TRobotWebSite(self, init_json=o)
