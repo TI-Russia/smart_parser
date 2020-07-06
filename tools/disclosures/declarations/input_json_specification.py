@@ -11,6 +11,7 @@ class dhjs:
     dlrobot_path = 'r:path'
     dlrobot_folder = 'r:folder'
     dlrobot_copied_from_the_past = "r:old"
+    dlrobot_url = 'r:url'
 
     declarator_folder = "d:folder"
     declarator_web_domain = 'd:domain'

@@ -16,11 +16,13 @@
                 "d:office_id": 4,
                 "d:path": "human.xlsx",
                 "intersection_status": "both_found",
-                "r:path": "1984.xlsx"
+                "r:path": "1984.xlsx",
+                "r:url": "http://05.fsin.su/new_dlrobot.xlsx"
             },
             "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3": {
                 "intersection_status": "only_dlrobot",
-                "r:path": "new_dlrobot.xlsx"
+                "r:path": "new_dlrobot.xlsx",
+                "r:url": "http://05.fsin.su/2.xlsx"
             },
             "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
                 "d:document_file_id": 1432,
@@ -40,7 +42,8 @@
             },
             "fa8bd40933bf21520b3b664b0d7507919426cbd7a86a84238c400b93b3bf4d00": {
                 "intersection_status": "only_dlrobot",
-                "r:path": "tmp1.xlsx"
+                "r:path": "tmp1.xlsx",
+                "r:url": "http://05.fsin.su/new_dlrobot.xlsx"
             }
         }
     },

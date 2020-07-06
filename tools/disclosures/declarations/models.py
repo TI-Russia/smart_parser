@@ -129,6 +129,7 @@ class SPJsonFile(models.Model):
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
     declarator_document_file_url = models.CharField(max_length=128, null=True)
+    dlrobot_url = models.CharField(max_length=128, null=True)
 
 
 class Person(models.Model):
