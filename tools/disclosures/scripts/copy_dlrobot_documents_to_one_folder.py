@@ -59,6 +59,7 @@ class TCopier:
         if not os.path.exists(args.output_folder):
             os.mkdir(args.output_folder)
         self.file_infos = dict()
+        self.skipped_files_count = 0
 
     def get_temp_file(self, folder, suffix):
         if self.args.use_pseudo_tmp:
@@ -69,10 +70,17 @@ class TCopier:
             os.close(handle)
             return output_file
 
-    def register_file_info(self, web_site, file_path, file_info):
+    def register_file_info(self, web_site, file_info, input_path, output_path):
         if web_site not in self.file_infos:
             self.file_infos[web_site] = {}
-        self.file_infos[web_site][file_path] = file_info
+        file_info = file_info.get(os.path.basename(input_path))
+        if file_info is None:
+            self.logger.error("file {} in {} cannot be found in the dlrobot project. skip it".format(input_path, web_site))
+            self.skipped_files_count += 1
+            return False
+        else:
+            self.file_infos[web_site][os.path.basename(output_path)] = file_info
+            return True
 
     def copy_files_of_one_web_site(self, web_site, file_info, result_folder, output_folder):
         input_folder = os.path.join(result_folder, web_site)
@@ -87,8 +95,9 @@ class TCopier:
                 input_file = os.path.join(input_folder, base_name)
                 if os.path.isfile(input_file):
                     self.logger.debug("copy {} to {}".format(input_file, web_site_output_folder))
-                    shutil.copy2(input_file, web_site_output_folder)
-                    self.register_file_info(web_site, base_name, file_info[base_name])
+                    if self.register_file_info(web_site, file_info, base_name, base_name):
+                        shutil.copy2(input_file, web_site_output_folder)
+
         else:
             in_sha256 = file_to_sha256(input_folder)
             out_sha256 = file_to_sha256(web_site_output_folder)
@@ -98,8 +107,9 @@ class TCopier:
                     _, extension = os.path.splitext(input_file)
                     output_file = self.get_temp_file(web_site_output_folder, extension)
                     self.logger.debug("copy {} to {}".format(input_file, output_file))
-                    shutil.copy(input_file, output_file)
-                    self.register_file_info(web_site, os.path.basename(output_file), file_info[os.path.basename(input_file)])
+                    if self.register_file_info(web_site, file_info, input_file, output_file):
+                        shutil.copy(input_file, output_file)
+
                 else:
                     self.logger.debug("skip {}".format(in_sha256[sha256]))
 
@@ -130,7 +140,7 @@ class TCopier:
                     continue
                 result_folder = os.path.join(project_folder, "result")
                 if not os.path.exists(result_folder):
-                    self.logger.debug("no result found in {}, skip it".format(project_folder))
+                    self.logger.error("no result found in {}, skip it".format(project_folder))
                     continue
                 dlrobot_project_without_timestamp = re.sub('\.15[0-9]+$', '', dlrobot_project)
                 robot_project = os.path.join(project_folder, dlrobot_project_without_timestamp + ".txt")
@@ -143,6 +153,7 @@ class TCopier:
 def main():
     copier = TCopier(parse_args())
     copier.copy_files()
+    copier.logger.info("orphan files: {}".format(copier.skipped_files_count))
     with open(copier.args.output_json, "w", encoding="utf8") as outf:
         json.dump(copier.file_infos, outf, indent=4)
 
