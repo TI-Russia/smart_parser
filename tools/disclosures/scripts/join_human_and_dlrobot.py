@@ -65,7 +65,7 @@ class TJoiner:
         domain_info = dict()
         new_files_found_by_dlrobot = 0
         files_count = 0
-        files_to_urls = self.file_to_urls[domain]
+        files_to_urls = self.file_to_urls.get(domain)
         for base_file_name in os.listdir(domain_folder):
             file_path = os.path.join(domain_folder, base_file_name)
             if file_path.endswith(".json") or file_path.endswith(".txt"):
@@ -165,7 +165,7 @@ class TJoiner:
                     yield web_domain, sha256, path
 
     def join(self):
-        self.logger.error("copy dlrobot files ...")
+        self.logger.error("register dlrobot files ...")
         for domain in os.listdir(self.args.dlrobot_folder):
             self.process_dlrobot_files(domain)
 
