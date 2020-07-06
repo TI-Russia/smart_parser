@@ -46,13 +46,14 @@ export HOSTS=migalka,oldtimer,ventil,lena
         portion_id="${filename##*.}"
         $TOOLS/robots/dlrobot/scripts/ubuntu_parallel/run.sh $d $DLROBOT_FOLDER/processed_projects.$portion_id $HOSTS
     done
-    python $TOOLS/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DISCLOSURES_FILES
+    python $TOOLS/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DISCLOSURES_FILES --output-json copy_to_one_folder.json
 
 
 #5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
-    python $TOOLS/disclosures/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES \
+    python $TOOLS/disclosures/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES  --copy-to-one-folder-json copy_to_one_folder.json \
         --human-json $HUMAN_FILES_JSON --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
         --output-json dlrobot_human.json
+
 
 #5.1  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python $TOOLS/disclosures/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats

@@ -55,13 +55,14 @@ class TRobotProject:
         office_info.morda_url = morda_url
         self.offices.append(office_info)
 
-    def read_project(self, fetch_morda_url=True):
+    def read_project(self, fetch_morda_url=True, check_step_names=True):
         self.offices = list()
         with open(self.project_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
-            if 'step_names' in json_dict:
-                if json_dict['step_names'] != self.get_robot_step_names():
-                    raise Exception("different step step_names, adjust manually or rebuild the project")
+            if check_step_names:
+                if 'step_names' in json_dict:
+                    if json_dict['step_names'] != self.get_robot_step_names():
+                        raise Exception("different step step_names, adjust manually or rebuild the project")
 
             for o in json_dict.get('sites', []):
                 site = TRobotWebSite(self, init_json=o)
