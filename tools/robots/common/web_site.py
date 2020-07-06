@@ -44,9 +44,6 @@ class TRobotWebSite:
                 self.robot_steps.append(TRobotStep(self, project.robot_step_passports[step_no], init_json=step))
             for url, info in init_json.get('url_nodes', dict()).items():
                 self.url_nodes[url] = TUrlInfo(init_json=info)
-            if len(self.url_nodes) == 0:
-                title = get_html_title(TDownloadedFile(self.morda_url).data)
-                self.url_nodes[self.morda_url] = TUrlInfo(title=title)
         else:
             self.morda_url = ""
             self.office_name = ""
@@ -56,6 +53,11 @@ class TRobotWebSite:
             for p in project.robot_step_passports:
                 self.robot_steps.append(TRobotStep(self, p))
         assert len(self.robot_steps) == len(project.robot_step_passports)
+
+    def init_morda_url_if_necessary(self):
+        if len(self.url_nodes) == 0:
+            title = get_html_title(TDownloadedFile(self.morda_url).data)
+            self.url_nodes[self.morda_url] = TUrlInfo(title=title)
 
     def get_domain_name(self):
         return get_site_domain_wo_www(self.morda_url)

@@ -55,7 +55,7 @@ class TRobotProject:
         office_info.morda_url = morda_url
         self.offices.append(office_info)
 
-    def read_project(self):
+    def read_project(self, fetch_morda_url=True):
         self.offices = list()
         with open(self.project_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
@@ -65,6 +65,9 @@ class TRobotProject:
 
             for o in json_dict.get('sites', []):
                 site = TRobotWebSite(self, init_json=o)
+                if fetch_morda_url:
+                    site.init_morda_url_if_necessary()
+
                 self.offices.append(site)
             if "disable_search_engine" in json_dict:
                 self.enable_search_engine = False

@@ -207,7 +207,7 @@ class TDownloadedFile:
     def get_page_info_file_name(self):
         return self.data_file_path + ".page_info"
 
-    def __init__(self, original_url, download_if_absent=True):
+    def __init__(self, original_url):
         self.original_url = original_url
         self.page_info = dict()
         self.data_file_path = get_local_file_name_by_url(self.original_url)
