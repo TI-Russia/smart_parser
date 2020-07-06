@@ -94,7 +94,7 @@ class TInputJsonFile:
                                      intersection_status=self.intersection_status,
                                      declarator_documentfile_id=self.source_file.declarator_documentfile_id,
                                      declarator_document_id=self.source_file.declarator_document_id,
-                                     declarator_document_file_url=self.declarator_document_file_url)
+                                     declarator_document_file_url=self.source_file.declarator_document_file_url)
         doc_file.save()
         return doc_file
 
