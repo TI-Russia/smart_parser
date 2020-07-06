@@ -118,7 +118,7 @@ def export_file_to_folder(logger, declarator_url_path, document_file_id, out_fol
     declarator_url = declarator_url.replace('\\', '/')
 
     for file_name in download_file_and_unzip(logger, declarator_url, local_file_path):
-        yield file_name
+        yield file_name, declarator_url
 
 
 def choose_max(web_site_to_offices):
@@ -139,24 +139,27 @@ def build_declarator_squeezes(logger, args):
         if web_site.startswith('www.'):
             web_site = web_site[len('www.'):]
 
-        if args.max_files_count is None or files_count < args.max_files_count:
-            for local_file_path in export_file_to_folder(logger, file_path, document_file_id, args.output_folder):
-                if not os.path.exists(local_file_path):
-                    logger.error("cannot find {}".format(local_file_path))
-                else:
-                    sha256 = build_sha256(local_file_path)
-                    files[sha256] = {
-                            dhjs.declarator_document_id: document_id,
-                            dhjs.declarator_document_file_id: document_file_id,
-                            dhjs.declarator_web_domain: web_site,
-                            dhjs.declarator_file_path: os.path.basename(local_file_path),
-                            dhjs.declarator_office_id: office_id,
-                            dhjs.declarator_income_year: income_year
-                    }
+        if args.max_files_count is not None and files_count >= args.max_files_count:
+            break
+        logger.debug("export document_file_id={}".format(document_file_id))
+        for local_file_path, declarator_url in export_file_to_folder(logger, file_path, document_file_id, args.output_folder):
+            if not os.path.exists(local_file_path):
+                logger.error("cannot find {}".format(local_file_path))
+            else:
+                sha256 = build_sha256(local_file_path)
+                files[sha256] = {
+                        dhjs.declarator_document_id: document_id,
+                        dhjs.declarator_document_file_id: document_file_id,
+                        dhjs.declarator_web_domain: web_site,
+                        dhjs.declarator_file_path: os.path.basename(local_file_path),
+                        dhjs.declarator_office_id: office_id,
+                        dhjs.declarator_income_year: income_year,
+                        dhjs.declarator_document_file_url: declarator_url
+                }
+                files_count += 1
         if web_site not in web_site_to_office:
             web_site_to_office[web_site] = defaultdict(int)
         web_site_to_office[web_site][office_id] += 1
-        files_count += 1
 
     return {
             dhjs.declarator_folder: args.output_folder,

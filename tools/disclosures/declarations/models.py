@@ -128,6 +128,7 @@ class SPJsonFile(models.Model):
     intersection_status = models.CharField(max_length=16)
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
+    declarator_document_file_url = models.CharField(max_length=128, null=True)
 
 
 class Person(models.Model):

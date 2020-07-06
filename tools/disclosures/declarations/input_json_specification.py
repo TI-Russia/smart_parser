@@ -19,4 +19,5 @@ class dhjs:
     declarator_income_year = 'd:income_year'
     declarator_document_id = 'd:document_id'
     declarator_document_file_id = 'd:document_file_id'
+    declarator_document_file_url = 'd:media_url'
 

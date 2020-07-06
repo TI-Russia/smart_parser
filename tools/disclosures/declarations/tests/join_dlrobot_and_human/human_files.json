@@ -7,7 +7,8 @@
             "d:path": "human.xlsx",
             "d:domain": "05.fsin.su",
             "d:office_id": 4,
-            "d:income_year": 2009
+            "d:income_year": 2009,
+            "d:media_url": "https://declarator.org/media/documents/1.doc"
         },
         "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
             "d:document_id": 19,
@@ -15,7 +16,8 @@
             "d:domain": "05.fsin.su",
             "d:path": "uniq_from_human.xlsx",
             "d:office_id": 4,
-            "d:income_year": 2009
+            "d:income_year": 2009,
+            "d:media_url": "https://declarator.org/media/documents/2.doc"
         }
     },
     "office_to_domains": {

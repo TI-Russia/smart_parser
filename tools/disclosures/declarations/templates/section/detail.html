@@ -22,7 +22,7 @@
        <th rowspan="2"> Должность </th>
        <th colspan="3"> Недвижимость </th>
        <th rowspan="2"> Транспорт </th>
-       <th rowspan="2"> Доход </th>
+       <th rowspan="2" nowrap> Доход </th>
     </tr>
     <tr>
         <th width="30%"> Тип </th>
@@ -71,7 +71,7 @@
                     {% endif %}
                 {% endfor %}
             </td>
-            <td>
+            <td nowrap>
                 {% for i in section.income_set.all %}
                     {% if relative.code == i.relative %}
                         {{ i.size }}
@@ -82,3 +82,11 @@
     {% endfor %}
 
 </table>
+<br>
+
+{% if section.spjsonfile.declarator_documentfile_id %}
+    Источник: <a href="http://{{section.spjsonfile.web_domain}}"> {{section.spjsonfile.web_domain}} </a>
+{% else %}
+    Источник: <a href="http://{{section.spjsonfile.web_domain}}"> {{section.spjsonfile.web_domain}} </a>
+{% endif %}
+

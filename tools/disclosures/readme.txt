@@ -80,7 +80,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
-   cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
+   cat $TOOLS/disclosures/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
    python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.prod
    python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
@@ -97,14 +97,19 @@ export HOSTS=migalka,oldtimer,ventil,lena
    echo $HOSTS  |  tr "," "\n" | xargs --verbose -n 1 -I {} ssh {} git  -C ~/smart_parser pull
    cat clear_dedupe_artefacts.sql | mysql -D disclosures_db -u disclosures -pdisclosures
 
-   #10.2 many hosts
-     parallel --jobs 1 -a - --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
-        python $TOOLS/disclosures/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.prod ::: $SURNAME_SPANS
-
-   # 10.3 single host
-   # echo $SURNAME_SPANS |  xargs -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --surname-bounds {} --write-to-db --settings disclosures.settings.prod
+   parallel --jobs 1 -a - --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
+   python $TOOLS/disclosures/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.prod ::: $SURNAME_SPANS
 
 
-№10 удаление ненужных файлов
+
+№11 удаление ненужных файлов (факультативно)
     cd $DLROBOT_FOLDER
     rm -rf $DISCLOSURES_FILES
+
+#12 перенос на прод
+   mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
+
+   #go to prod (oldtimer)
+   cat $TOOLS/disclosures/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
+   zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -D disclosures_db -u disclosures -pdisclosures
+   python3  manage.py search_index --rebuild -f    --settings disclosures.settings.prod -v3
