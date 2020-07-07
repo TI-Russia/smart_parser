@@ -131,6 +131,12 @@ class SPJsonFile(models.Model):
     declarator_document_file_url = models.CharField(max_length=128, null=True)
     dlrobot_url = models.CharField(max_length=256, null=True)
 
+    @property
+    def doc_path(self):
+        doc_path = self.file_path
+        if doc_path.endswith('.json'):
+            doc_path = doc_path[:-len('.json')]
+        return doc_path
 
 class Person(models.Model):
     person_name = models.CharField(max_length=64, verbose_name='person name')

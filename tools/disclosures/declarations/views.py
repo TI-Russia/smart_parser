@@ -1,7 +1,6 @@
 from . import models
 from .forms import SearchForm
 from django.views import generic
-from django.db.models import Q
 from django.views.generic.edit import FormView
 from .input_json_specification import dhjs
 from .documents import ElasticSectionDocument, ElasticPersonDocument
@@ -15,6 +14,11 @@ class SectionView(generic.DetailView):
 class PersonView(generic.DetailView):
     model = models.Person
     template_name = 'person/detail.html'
+
+
+class FileView(generic.DetailView):
+    model = models.SPJsonFile
+    template_name = 'file/detail.html'
 
 
 class HomePageView(generic.TemplateView):
