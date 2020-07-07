@@ -41,6 +41,7 @@ def parse_args():
     parser.add_argument("--output-json", dest='output_file', default="human_files.json")
     parser.add_argument("--max-files-count", dest='max_files_count', type=int)
     parser.add_argument("--mysql-port", dest='mysql_port', type=int, default=None)
+    parser.add_argument("--rebuild-office-to-domain", dest='rebuild_office_to_domain', action="store_true", default=False)
     return parser.parse_args()
 
 
@@ -121,19 +122,10 @@ def export_file_to_folder(logger, declarator_url_path, document_file_id, out_fol
         yield file_name, declarator_url
 
 
-def choose_max(web_site_to_offices):
-    offices_to_domains = defaultdict(list)
-    for web_site, offices in web_site_to_offices.items():
-        offices_list = list(offices.keys())
-        office_id = max(set(offices_list), key=offices_list.count)
-        offices_to_domains[office_id].append(web_site)
-    return offices_to_domains
-
 
 def build_declarator_squeezes(logger, args):
     files = {}
     files_count = 0
-    web_site_to_office = dict()
     for document_file_id, document_id, file_path, link, office_id, income_year in get_all_file_sql_records(logger, args):
         web_site = urlparse(link).netloc
         if web_site.startswith('www.'):
@@ -157,15 +149,30 @@ def build_declarator_squeezes(logger, args):
                         dhjs.declarator_document_file_url: declarator_url
                 }
                 files_count += 1
+    return {
+            dhjs.declarator_folder: args.output_folder,
+            dhjs.file_collection: files
+        }
+
+
+def choose_max(web_site_to_offices):
+    offices_to_domains = defaultdict(list)
+    for web_site, offices in web_site_to_offices.items():
+        office_id = max(offices.keys(), key=lambda x: offices[x])
+        offices_to_domains[office_id].append(web_site)
+    return offices_to_domains
+
+
+def build_offices_to_domains(logger, human_json):
+    web_site_to_office = dict()
+    logger.info("build_offices_to_domains")
+    for f in human_json[dhjs.file_collection].values():
+        web_site = f[dhjs.declarator_web_domain]
+        office_id = f[dhjs.declarator_office_id]
         if web_site not in web_site_to_office:
             web_site_to_office[web_site] = defaultdict(int)
         web_site_to_office[web_site][office_id] += 1
-
-    return {
-            dhjs.declarator_folder: args.output_folder,
-            dhjs.file_collection: files,
-            dhjs.offices_to_domains: choose_max(web_site_to_office)
-        }
+    return choose_max(web_site_to_office)
 
 
 def main(args):
@@ -173,8 +180,13 @@ def main(args):
     if not os.path.exists(args.output_folder):
         logger.debug("create {}".format(args.output_folder))
         os.mkdir(args.output_folder)
+    if args.rebuild_office_to_domain:
+        with open(args.output_file, "r", encoding="utf8") as inp:
+            human_json = json.load(inp)
+    else:
+        human_json = build_declarator_squeezes(logger, args)
 
-    human_json = build_declarator_squeezes(logger, args)
+    human_json[dhjs.offices_to_domains] = build_offices_to_domains(logger, human_json)
 
     with open(args.output_file, "w", encoding="utf8") as out:
         json.dump(human_json, out, indent=4, ensure_ascii=False)
