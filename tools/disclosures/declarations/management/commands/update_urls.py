@@ -54,13 +54,19 @@ class Command(BaseCommand):
                 except Exception as exp:
                     logger.error("cannot find file with sha256={}".format(sha256))
                     continue
+                updated = False
                 declarator_document_file_url = file_info.get(dhjs.declarator_document_file_url)
                 if declarator_document_file_url is not None and len(declarator_document_file_url) < 128:
-                    file.declarator_document_file_url = declarator_document_file_url
+                    if declarator_document_file_url != file.declarator_document_file_url:
+                        file.declarator_document_file_url = declarator_document_file_url
+                        updated = True
 
                 dlrobot_url = file_info.get(dhjs.dlrobot_url)
                 if dlrobot_url is not None and len(dlrobot_url) < 256:
-                    file.dlrobot_url = dlrobot_url
-                file.save()
+                    if dlrobot_url != file.dlrobot_url:
+                        file.dlrobot_url = dlrobot_url
+                        updated = True
+                if updated:
+                    file.save()
                 files_count += 1
         logger.info("updated {} record in db".format(files_count))
