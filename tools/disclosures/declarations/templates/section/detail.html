@@ -84,9 +84,18 @@
 </table>
 <br>
 
-{% if section.spjsonfile.declarator_documentfile_id %}
-    Источник: <a href="http://{{section.spjsonfile.web_domain}}"> {{section.spjsonfile.web_domain}} </a>
-{% else %}
-    Источник: <a href="http://{{section.spjsonfile.web_domain}}"> {{section.spjsonfile.web_domain}} </a>
-{% endif %}
 
+
+{% if section.spjsonfile.declarator_document_file_url %}
+    <a href="{{section.spjsonfile.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
+{% endif %}
+<br>
+
+{% if section.spjsonfile.dlrobot_url %}
+    <a href="{{section.spjsonfile.dlrobot_url}}"> Ссылка на документ на сайте ведомства (если ведомство не удалило этот документ) </a>
+{% endif %}
+<br>
+
+<a href="http://{{section.spjsonfile.web_domain}}"> Сайт ведомства: {{section.spjsonfile.web_domain}} </a>
+
+<br>
