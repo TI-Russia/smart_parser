@@ -57,6 +57,8 @@ def get_smart_parser_results(logger, input_path):
 class TSourceDocumentFile:
     def __init__(self, office_id, web_domain, file_sha256, file_info):
         self.declarator_documentfile_id = file_info.get(dhjs.declarator_document_file_id)
+        self.declarator_document_file_url = file_info.get(dhjs.declarator_document_file_url)
+        self.dlrobot_url = file_info.get(dhjs.dlrobot_url)
         self.declarator_document_id = file_info.get(dhjs.declarator_document_id)
         self.declarator_income_year = file_info.get(dhjs.declarator_income_year)
         self.intersection_status = file_info[dhjs.intersection_status]
@@ -92,7 +94,9 @@ class TInputJsonFile:
                                      web_domain=self.source_file.web_domain,
                                      intersection_status=self.intersection_status,
                                      declarator_documentfile_id=self.source_file.declarator_documentfile_id,
-                                     declarator_document_id=self.source_file.declarator_document_id)
+                                     declarator_document_id=self.source_file.declarator_document_id,
+                                     declarator_document_file_url=self.source_file.declarator_document_file_url,
+                                     dlrobot_url=self.source_file.dlrobot_url)
         doc_file.save()
         return doc_file
 

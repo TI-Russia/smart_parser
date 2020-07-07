@@ -14,6 +14,8 @@ def parse_args():
     parser.add_argument("--old-dlrobot-human-json", dest='old_dlrobot_human_json', required=False)
     parser.add_argument("--output-json", dest='output_json', default="dlrobot_human.json")
     parser.add_argument("--overwrite-existing", dest='skip_existing', action="store_false", default=True)
+    parser.add_argument("--copy-to-one-folder-json", dest='copy_to_one_folder_json', required=True)
+
     return parser.parse_args()
 
 
@@ -52,6 +54,8 @@ class TJoiner:
             self.human_json = json.load(inp)
         self.all_sha256 = set()
         self.output_json = dict()
+        with open(args.copy_to_one_folder_json, "r", encoding="utf") as inp:
+            self.file_to_urls = json.load(inp)
 
     def process_dlrobot_files(self, domain):
         self.logger.debug("process {}".format(domain))
@@ -61,6 +65,7 @@ class TJoiner:
         domain_info = dict()
         new_files_found_by_dlrobot = 0
         files_count = 0
+        files_to_urls = self.file_to_urls.get(domain)
         for base_file_name in os.listdir(domain_folder):
             file_path = os.path.join(domain_folder, base_file_name)
             if file_path.endswith(".json") or file_path.endswith(".txt"):
@@ -74,7 +79,8 @@ class TJoiner:
                 self.logger.error("a file copy found: {}, ignore it".format(base_file_name))
                 continue
             file_info = {
-                dhjs.dlrobot_path: os.path.basename(file_path)
+                dhjs.dlrobot_path: os.path.basename(file_path),
+                dhjs.dlrobot_url: files_to_urls[os.path.basename(file_path)]
             }
             human_file_info = self.human_json[dhjs.file_collection].get(sha256)
             if human_file_info is not None:
@@ -159,6 +165,7 @@ class TJoiner:
                     yield web_domain, sha256, path
 
     def join(self):
+        self.logger.error("register dlrobot files ...")
         for domain in os.listdir(self.args.dlrobot_folder):
             self.process_dlrobot_files(domain)
 

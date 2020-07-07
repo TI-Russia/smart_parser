@@ -46,13 +46,14 @@ export HOSTS=migalka,oldtimer,ventil,lena
         portion_id="${filename##*.}"
         $TOOLS/robots/dlrobot/scripts/ubuntu_parallel/run.sh $d $DLROBOT_FOLDER/processed_projects.$portion_id $HOSTS
     done
-    python $TOOLS/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DISCLOSURES_FILES
+    python $TOOLS/disclosures/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DISCLOSURES_FILES --output-json copy_to_one_folder.json
 
 
 #5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
-    python $TOOLS/disclosures/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES \
+    python $TOOLS/disclosures/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES  --copy-to-one-folder-json copy_to_one_folder.json \
         --human-json $HUMAN_FILES_JSON --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
         --output-json dlrobot_human.json
+
 
 #5.1  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python $TOOLS/disclosures/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
@@ -80,7 +81,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
-   cat $DISCLOSURES_FOlDER/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
+   cat $TOOLS/disclosures/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
    python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.prod
    python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
@@ -101,8 +102,6 @@ export HOSTS=migalka,oldtimer,ventil,lena
      parallel --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
         python $TOOLS/disclosures/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.prod ::: $SURNAME_SPANS
 
-   # 10.3 single host
-   # echo $SURNAME_SPANS |  xargs -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --surname-bounds {} --write-to-db --settings disclosures.settings.prod
 
 
 #11 mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
