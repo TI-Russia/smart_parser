@@ -98,13 +98,21 @@ export HOSTS=migalka,oldtimer,ventil,lena
    cat clear_dedupe_artefacts.sql | mysql -D disclosures_db -u disclosures -pdisclosures
 
    #10.2 many hosts
-     parallel --jobs 1 -a - --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
+     parallel --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
         python $TOOLS/disclosures/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.prod ::: $SURNAME_SPANS
 
    # 10.3 single host
    # echo $SURNAME_SPANS |  xargs -t -n 1 -I {}  python manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --result-pairs-file dedupe_result.{}.txt  --surname-bounds {} --write-to-db --settings disclosures.settings.prod
 
 
-№10 удаление ненужных файлов
+#11 mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
+
+#12 удаление ненужных файлов
     cd $DLROBOT_FOLDER
     rm -rf $DISCLOSURES_FILES
+
+#13 go to prod
+    mysqladmin drop  disclosures_db
+    cd ~/smart_parser/tools/disclosures
+    cat create_disclosures_db.sql | sudo mysql
+    zcat $DLROBOT_FOLDER//disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
