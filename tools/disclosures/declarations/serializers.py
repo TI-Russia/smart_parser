@@ -99,36 +99,6 @@ class TSectionPassportFactory:
                                                               sum_square, vehicle_count, office_hierarchy=office_hierarchy)
 
     @staticmethod
-    def get_all_passports_from_declarator_with_person_id(connection):
-        # query to declarator db
-        in_cursor = connection.cursor()
-        in_cursor.execute("""
-                        select  s.id, 
-                                s.person_id, 
-                                d.office_id, 
-                                sum(floor(i.size)) * count(distinct i.id) / count(*),
-                                s.original_fio, 
-                                CONCAT(p.family_name, " ", p.name, " ", p.patronymic),
-                                d.income_year,
-                                sum(floor(r.square)) * count(distinct r.id) / count(*),
-                                count(distinct v.id)
-                        from declarations_section s
-                        inner join declarations_person p on p.id = s.person_id
-                        inner join declarations_document d on s.document_id = d.id
-                        left join declarations_income i on i.section_id = s.id
-                        left join declarations_realestate r on r.section_id = s.id
-                        left join declarations_vehicle v on v.section_id = s.id
-                        where s.person_id is not null
-                        group by s.id
-                        
-        """)
-        for section_id, person_id, office_id, income_sum, original_fio, person_fio, year, square_sum, vehicle_count in in_cursor:
-            fio = original_fio
-            if fio is None:
-                fio = person_fio
-            yield person_id, TSectionPassportFactory(office_id, year, fio, income_sum, square_sum, vehicle_count)
-
-    @staticmethod
     def get_all_passports_dict(iterator):
         passport_to_id = dict()
         for (id, passport_factory) in iterator:
