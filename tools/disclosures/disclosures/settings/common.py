@@ -127,6 +127,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    '/home/sokirko/declarator_hdd/declarator/2020-05-15'
 ]
 
 ELASTICSEARCH_DSL = {
