@@ -27,7 +27,7 @@ def setup_logging(logfilename="copy_person.log"):
 
 def copy_human_merges(logger, human_persons):
     mergings_count = 0
-    logger.info("set person_id to sections")
+    logger.info("import person_id to sections")
     cnt = 0
     for section_id, factory in TSectionPassportFactory.get_all_passport_factories():
         cnt += 1

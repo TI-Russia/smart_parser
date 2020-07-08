@@ -36,3 +36,7 @@
     {% endfor %}
 </table>
 
+
+{% if person.declarator_person_id %}
+    <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
+{% endif %}
