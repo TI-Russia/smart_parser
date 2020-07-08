@@ -50,12 +50,12 @@ class Command(BaseCommand):
             for file in SPJsonFile.objects.all():
                 if file.declarator_document_file_url is None:
                     new_office_id = website_to_office.get(file.web_domain)
-                    if new_office_id is not None:
+                    if new_office_id is  None:
                         logger.error(
                             "cannot find website {}  in mapping, file.id={} ".format(file.web_domain, file.id))
-                    elif new_office_id != file.office_id:
+                    elif int(new_office_id) != file.office_id:
                         logger.debug("update file.id={}, office_id {}->{} ".format(file.id, file.office_id, new_office_id))
-                        file.office_id = new_office_id
+                        file.office_id = int(new_office_id)
                         file.save()
                         files_count += 1
         logger.info("updated {} record in db".format(files_count))
