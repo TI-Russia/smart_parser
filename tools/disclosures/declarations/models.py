@@ -121,13 +121,13 @@ class OwnType:
 OwnType.static_initalize()
 
 
-class Web_Location(models.Model):
+class Web_Reference(models.Model):
     source_document = models.ForeignKey('declarations.source_document', verbose_name="source document", on_delete=models.CASCADE)
     dlrobot_url = models.CharField(max_length=256, null=True)
-    crawl_date = models.DateField(null=True) # future
+    crawl_epoch = models.IntegerField(null=True)
 
 
-class Declarator_File_Info(models.Model):
+class Declarator_File_Reference(models.Model):
     source_document = models.ForeignKey('declarations.source_document', verbose_name="source document",
                                  on_delete=models.CASCADE)
     declarator_documentfile_id = models.IntegerField(null=True)

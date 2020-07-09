@@ -2,7 +2,8 @@ from . import models
 from declarations.management.commands.common import normalize_whitespace
 from declarations.countries import get_country_code
 from django.db import connection
-
+import json
+import os
 
 def read_incomes(section_json):
     for i in section_json.get('incomes', []):
@@ -184,3 +185,5 @@ class TSmartParserJsonReader:
         models.Income.objects.bulk_create(self.set_section(self.incomes))
         models.RealEstate.objects.bulk_create(self.set_section(self.real_estates))
         models.Vehicle.objects.bulk_create(self.set_section(self.vehicles))
+
+

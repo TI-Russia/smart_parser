@@ -33,8 +33,8 @@ class CopyPersonIdTestCase(TestCase):
         src_doc = models.Source_Document(office=office)
         src_doc.save()
 
-        decl_info = models.Declarator_File_Info(source_document=src_doc,
-                                                declarator_document_id=person_id)
+        decl_info = models.Declarator_File_Reference(source_document=src_doc,
+                                                     declarator_document_id=person_id)
         decl_info.save()
 
         models.Section.objects.all().delete()

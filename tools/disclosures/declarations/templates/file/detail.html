@@ -10,13 +10,13 @@ Sha256: {{ source_document.sha256 }} <br/>
 
 Intersection status: {{ source_document.intersection_status }} <br/>
 
-{% for web_location in source_document.web_location_set.all %}
+{% for web_location in source_document.web_reference_set.all %}
     Сайт: <a href="http://{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }} </a> <br/>
     <br>
 {% endfor %}
 
 
-{% for decl_info in source_document.declarator_file_info.all %}
+{% for decl_info in source_document.declarator_file_reference.all %}
     <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
     <br>
 {% endfor %}

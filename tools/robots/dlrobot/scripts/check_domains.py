@@ -1,14 +1,13 @@
 import argparse
 import sys
 import re
-import json
 from robots.common.http_request import make_http_request_urllib, RobotHttpException, make_http_request_curl, TRequestPolicy
 from multiprocessing.dummy import Pool as ThreadPool
 import random
 from functools import partial
 import logging
 import os
-from disclosures.declarations.input_json_specification import dhjs
+from declarations.input_json import TDeclaratorReference, TDlrobotHumanFile
 
 
 def parse_args():
@@ -64,9 +63,13 @@ def check_alive(logger, url):
 
 def read_input(args):
     if args.human_files is not None:
-        with open(args.human_files, "r", encoding="utf8") as inpf:
-            human_files = json.load(inpf)
-        urls = list(set(x[dhjs.declarator_web_domain] for x in human_files.values() if len(x[dhjs.declarator_web_domain]) > 0))
+        dlrobot_human = TDlrobotHumanFile(input_file_name=args.human_files)
+        urls = set()
+        for src_doc in dlrobot_human.document_collection.values():
+            for ref in src_doc.references:
+                if isinstance(ref, TDeclaratorReference) and len(ref.web_domain) > 0:
+                    urls.add(ref.web_domain)
+        urls = list(urls)
     else:
         assert args.input_domains is not None
         urls = list()

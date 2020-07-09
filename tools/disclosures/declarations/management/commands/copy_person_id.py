@@ -133,7 +133,7 @@ class Command(BaseCommand):
                 if i.relative == models.Relative.main_declarant_code:
                     main_income = i.size
             checked_results = set()
-            for declaration_info in section.source_document.declarator_file_info_set.all():
+            for declaration_info in section.source_document.declarator_file_reference_set.all():
                 key1 = build_key(declaration_info.declarator_document_id, section.person_name, main_income)
                 checked_results.add(prop_to_person.get(key1))
                 words = section.person_name.split()

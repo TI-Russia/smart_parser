@@ -2,8 +2,9 @@ from . import models
 from .forms import SearchForm
 from django.views import generic
 from django.views.generic.edit import FormView
-from .input_json_specification import dhjs
 from .documents import ElasticSectionDocument, ElasticPersonDocument
+from declarations.input_json import TIntersectionStatus
+
 
 
 class SectionView(generic.DetailView):
@@ -36,13 +37,13 @@ class StatisticsView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['source_document_count'] = models.Source_Document.objects.all().count()
-        context['source_document_only_dlrobot_count'] = models.Source_Document.objects.filter(intersection_status=dhjs.only_dlrobot).count()
-        context['source_document_only_human_count'] = models.Source_Document.objects.filter(intersection_status=dhjs.only_human).count()
-        context['source_document_both_found_count'] = models.Source_Document.objects.filter(intersection_status=dhjs.both_found).count()
+        context['source_document_only_dlrobot_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_dlrobot).count()
+        context['source_document_only_human_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_human).count()
+        context['source_document_both_found_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.both_found).count()
 
         context['sections_count'] = models.Section.objects.all().count()
         context['sections_count_only_dlrobot'] = models.Section.objects.filter(
-            source_document__intersection_status=dhjs.only_dlrobot).count()
+            source_document__intersection_status=TIntersectionStatus.only_dlrobot).count()
         context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
         context['person_count'] = models.Person.objects.all().count()
