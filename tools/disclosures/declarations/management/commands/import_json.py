@@ -65,40 +65,44 @@ class TSourceDocumentFile:
         self.office_id = office_id
         self.web_domain = web_domain
         self.file_sha256 = file_sha256
+        self.document_path = file_info.get(dhjs.document_path)
+        self.json_files = list()
+        self.source_document_in_db = None
 
     def __hash__(self):
         return hash(self.file_sha256)
+
+    def add_json_file(self, json_path):
+        self.json_files.append(json_path)
+
+    def add_locations(self):
+        if self.declarator_documentfile_id is not None:
+            models.Declarator_File_Info(source_document=self.source_document_in_db,
+                                        declarator_documentfile_id=self.declarator_documentfile_id,
+                                        declarator_document_id=self.declarator_document_id,
+                                        declarator_document_file_url=self.declarator_document_file_url).save()
+
+        if self.dlrobot_url is not None:
+            models.Web_Location(source_document=self.source_document_in_db,
+                                dlrobot_url=self.dlrobot_url).save()
+
+    def register_in_database(self):
+        office = models.Office(id=self.office_id)
+        self.source_document_in_db = models.Source_Document(office=office,
+                                                            sha256=self.file_sha256,
+                                                            file_path=self.document_path,
+                                                            intersection_status=self.intersection_status,
+                                                            )
+        self.source_document_in_db.save()
+        self.add_locations()
+
+        return self.source_document_in_db
 
 
 class TInputJsonFile:
     def __init__(self, source_file, json_file_path, intersection_status=None):
         self.source_file = source_file
         self.json_file_path = json_file_path
-        self.intersection_status = intersection_status
-        if self.intersection_status is None:
-            self.intersection_status = source_file.intersection_status
-
-    def get_import_priority(self):
-        if self.source_file.intersection_status == dhjs.only_dlrobot:
-            return 0 # import only_dlrobot last of all
-        return 1
-
-    def register_in_database(self):
-
-        # mind that one source xlsx yields many source json files, so no filtering by sha256 is possible
-
-        office = models.Office(id=self.source_file.office_id)
-        doc_file = models.SPJsonFile(office=office,
-                                     sha256=self.source_file.file_sha256,
-                                     file_path=self.json_file_path,
-                                     web_domain=self.source_file.web_domain,
-                                     intersection_status=self.intersection_status,
-                                     declarator_documentfile_id=self.source_file.declarator_documentfile_id,
-                                     declarator_document_id=self.source_file.declarator_document_id,
-                                     declarator_document_file_url=self.source_file.declarator_document_file_url,
-                                     dlrobot_url=self.source_file.dlrobot_url)
-        doc_file.save()
-        return doc_file
 
 
 class TImporter:
@@ -142,14 +146,13 @@ class TImporter:
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
 
-    def get_human_smart_parser_json(self, failed_documents):
-        for document_id, source_files in failed_documents.items():
-            all_doc_files = self.document_2_files[document_id]
-            if len(source_files) >= len(all_doc_files):  #if smart_parser failed to parse all document files
-                filename = os.path.join(self.args['smart_parser_human_json'], str(document_id) + ".json")
+    def get_human_smart_parser_json(self, documents_to_import):
+        for source_file in documents_to_import:
+            if source_file.declarator_document_id is not None and len(source_file.json_files) == 0:
+                filename = os.path.join(self.args['smart_parser_human_json'], str(source_file.declarator_document_id) + ".json")
                 if os.path.exists(filename):
                     TImporter.logger.debug("import human json {}".format(filename))
-                    yield TInputJsonFile(list(source_files)[0], filename, dhjs.only_human)
+                    source_file.add_json_file(filename)
 
     def register_section_passport(self, passport):
         if passport in self.all_section_passports:
@@ -159,25 +162,23 @@ class TImporter:
         self.all_section_passports.add(passport)
         return True
 
-    def import_one_smart_parser_json(self, json_file):
-        filepath = json_file.json_file_path
+    def import_one_smart_parser_json(self, source_document, filepath):
         with open(filepath, "r", encoding="utf8") as inp:
             input_json = json.load(inp)
         # take income_year from smart_parser. If absent, take it from declarator, otherwise the file is useless
-        income_year = input_json.get('document', dict()).get('year', json_file.source_file.declarator_income_year)
+        income_year = input_json.get('document', dict()).get('year', source_document.declarator_income_year)
         if income_year is None:
             TImporter.logger.error("cannot import {}, year is not defined".format(filepath))
             return
         income_year = int(income_year)
 
-        doc_file = json_file.register_in_database()
         imported_sections = 0
         section_index = 0
         for p in input_json['persons']:
             section_index += 1
             with transaction.atomic():
                 try:
-                    json_reader = TSmartParserJsonReader(income_year, doc_file, p)
+                    json_reader = TSmartParserJsonReader(income_year, source_document.source_document_in_db, p)
                     passport = json_reader.get_passport_factory().get_passport_collection()[0]
                     if self.register_section_passport(passport):
                         json_reader.save_to_database()
@@ -186,7 +187,6 @@ class TImporter:
                     TImporter.logger.error("Error! cannot import section N {}: {} ".format(section_index, exp))
         if imported_sections == 0:
             TImporter.logger.debug("no sections imported from {}".format(filepath))
-            doc_file.delete()
         else:
             TImporter.logger.debug("import {} sections out of {} from {}".format(imported_sections, section_index, filepath))
 
@@ -197,28 +197,30 @@ class TImporter:
                 continue
 
             TImporter.logger.debug("import web site {} to office {} ".format(web_site, office_id))
-            jsons_to_import = list()
+            documents_to_import = list()
 
-            failed_documents = defaultdict(set)
             for source_file_sha256, file_info in files.items():
                 file_office_id = file_info.get(dhjs.declarator_office_id, office_id)
                 source_file = TSourceDocumentFile(file_office_id, web_site, source_file_sha256, file_info)
-                input_path = os.path.join(self.dlrobot_folder, web_site, file_info[dhjs.dlrobot_path])
-                smart_parser_results = list(get_smart_parser_results(TImporter.logger, input_path))
-                if len(smart_parser_results) == 0:
-                    if source_file.declarator_document_id is not None:
-                        failed_documents[source_file.declarator_document_id].add(source_file)
-                else:
-                    for file_path in smart_parser_results:  #xlsx sheets
-                        jsons_to_import.append(TInputJsonFile(source_file, file_path) )
+                input_path = os.path.join(self.dlrobot_folder, web_site, file_info[dhjs.document_path])
+                for file_path in get_smart_parser_results(TImporter.logger, input_path):  #xlsx sheets
+                    source_file.add_json_file(file_path)
+                documents_to_import.append(source_file)
 
-            jsons_to_import += list(self.get_human_smart_parser_json(failed_documents))
-            jsons_to_import.sort(key=(lambda x: x.get_import_priority()), reverse=True)
-            for json_file in jsons_to_import:
-                try:
-                    self.import_one_smart_parser_json(json_file)
-                except TSmartParserJsonReader.SerializerException as exp:
-                    TImporter.logger.error("Error! cannot import {}: {} ".format(file_path, exp))
+            self.get_human_smart_parser_json(documents_to_import)
+            all_office_sha256s = dict()
+            for d in documents_to_import:
+                if d.file_sha256 in all_office_sha256s:
+                    TImporter.logger.debug("skip import copy {}: {} ".format(d.file_sha256, d.document_path))
+                    d.add_locations(all_office_sha256s[d.file_sha256])
+                else:
+                    doc_file = d.register_in_database()
+                    all_office_sha256s[d.file_sha256] = d.register_in_database()
+                    for json_file in d.json_files:
+                        try:
+                            self.import_one_smart_parser_json(d, json_file)
+                        except TSmartParserJsonReader.SerializerException as exp:
+                            TImporter.logger.error("Error! cannot import {}: {} ".format(json_file, exp))
 
 
 def process_one_file_in_thread(importer: TImporter, office_id):

@@ -80,14 +80,14 @@ class TSectionPassportFactory:
                          sum(r.square) * count(distinct r.id) / count(*),
                          count(distinct v.id)
                 from {} s
-                inner join {} d on s.spjsonfile_id = d.id
+                inner join {} d on s.source_document_id = d.id
                 left  join {} i on i.section_id = s.id
                 left  join {} r on r.section_id = s.id
                 left  join {} v on v.section_id = s.id
                 group by s.id
                 """.format(
                         models.Section.objects.model._meta.db_table,
-                        models.SPJsonFile.objects.model._meta.db_table,
+                        models.Source_Document.objects.model._meta.db_table,
                         models.Income.objects.model._meta.db_table,
                         models.RealEstate.objects.model._meta.db_table,
                         models.Vehicle.objects.model._meta.db_table
@@ -142,10 +142,10 @@ class TSmartParserJsonReader:
         def __str__(self):
             return (repr(self.value))
 
-    def __init__(self, income_year, spjsonfile, section_json):
+    def __init__(self, income_year, source_document, section_json):
         self.section_json = section_json
         self.section = models.Section(
-            spjsonfile=spjsonfile,
+            source_document=source_document,
             income_year=income_year,
         )
         self.init_person_info()
@@ -166,7 +166,7 @@ class TSmartParserJsonReader:
 
     def get_passport_factory(self, office_hierarchy=None):
         return TSectionPassportFactory(
-                    self.section.spjsonfile.office.id,
+                    self.section.source_document.office.id,
                     self.section.income_year,
                     self.section.person_name,
                     sum(convert_to_int_with_nones(i.size) for i in self.incomes),

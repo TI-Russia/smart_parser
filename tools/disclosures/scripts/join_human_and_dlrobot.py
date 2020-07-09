@@ -79,7 +79,7 @@ class TJoiner:
                 self.logger.error("a file copy found: {}, ignore it".format(base_file_name))
                 continue
             file_info = {
-                dhjs.dlrobot_path: os.path.basename(file_path),
+                dhjs.document_path: os.path.basename(file_path),
                 dhjs.dlrobot_url: files_to_urls[os.path.basename(file_path)]
             }
             human_file_info = self.human_json[dhjs.file_collection].get(sha256)
@@ -115,7 +115,7 @@ class TJoiner:
             else:
                 shutil.copyfile(infile, outfile)
         # file_info is a  record from human_files.json
-        file_info[dhjs.dlrobot_path] = os.path.basename(outfile)
+        file_info[dhjs.document_path] = os.path.basename(outfile)
         file_info[dhjs.intersection_status] = dhjs.only_human
         if web_site not in self.output_json:
             self.output_json[web_site] = dict()
@@ -137,7 +137,7 @@ class TJoiner:
             self.logger.debug("copy {} to {}".format(infile, outfile))
             shutil.copyfile(infile, outfile)
         file_info = {
-            dhjs.dlrobot_path: os.path.basename(outfile),
+            dhjs.document_path: os.path.basename(outfile),
             dhjs.intersection_status: dhjs.only_dlrobot,
             dhjs.dlrobot_copied_from_the_past: True
         }
@@ -148,15 +148,15 @@ class TJoiner:
     def get_old_dlrobot_files(self, json_file_name):
         with open(json_file_name, "r") as inp:
             old_json = json.load(inp)
-        if dhjs.dlrobot_path in old_json:
+        if dhjs.document_path in old_json:
             web_domains = old_json[dhjs.file_collection]
-            dlrobot_path = old_json[dhjs.dlrobot_path]
+            dlrobot_path = old_json[dhjs.document_path]
         else:
             web_domains = old_json
             dlrobot_path = os.path.join(os.path.dirname(json_file_name), 'domains')
         for web_domain, files in web_domains.items():
             for sha256, file_info in files.items():
-                path = file_info.get(dhjs.dlrobot_path, file_info.get("dlrobot_path"))
+                path = file_info.get(dhjs.document_path, file_info.get("dlrobot_path"))
                 assert path is not None
                 path = os.path.join(dlrobot_path, web_domain, path)
                 if not os.path.exists(path):

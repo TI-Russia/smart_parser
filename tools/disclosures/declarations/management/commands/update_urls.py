@@ -1,6 +1,6 @@
 from declarations.input_json_specification import dhjs
 import json
-from declarations.models import SPJsonFile
+from declarations.models import Source_Document
 from django.core.management import BaseCommand
 import logging
 import os
@@ -50,7 +50,7 @@ class Command(BaseCommand):
         for web_site_info in web_sites.values():
             for sha256, file_info in web_site_info.items():
                 try:
-                    file = SPJsonFile.objects.filter(sha256=sha256).all()[:1].get()
+                    file = Source_Document.objects.filter(sha256=sha256).all()[:1].get()
                 except Exception as exp:
                     logger.error("cannot find file with sha256={}".format(sha256))
                     continue

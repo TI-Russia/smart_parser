@@ -45,6 +45,7 @@ class TOfficeHierarchy:
         for office_id in self.offices:
             self.transitive_top[office_id] = self.go_to_the_top(office_id)
 
+
 class Relative:
     main_declarant_code = "D"
     spouse_code = "S"
@@ -120,16 +121,25 @@ class OwnType:
 OwnType.static_initalize()
 
 
-class SPJsonFile(models.Model):
-    office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
-    sha256 = models.CharField(max_length=200)
-    web_domain = models.CharField(max_length=64)
-    file_path = models.CharField(max_length=128)
-    intersection_status = models.CharField(max_length=16)
+class Web_Location(models.Model):
+    source_document = models.ForeignKey('declarations.source_document', verbose_name="source document", on_delete=models.CASCADE)
+    dlrobot_url = models.CharField(max_length=256, null=True)
+    crawl_date = models.DateField(null=True) # future
+
+
+class Declarator_File_Info(models.Model):
+    source_document = models.ForeignKey('declarations.source_document', verbose_name="source document",
+                                 on_delete=models.CASCADE)
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
     declarator_document_file_url = models.CharField(max_length=128, null=True)
-    dlrobot_url = models.CharField(max_length=256, null=True)
+
+
+class Source_Document(models.Model):
+    office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
+    sha256 = models.CharField(max_length=200)
+    file_path = models.CharField(max_length=128)
+    intersection_status = models.CharField(max_length=16)
 
     @property
     def doc_path(self):
@@ -137,6 +147,7 @@ class SPJsonFile(models.Model):
         if doc_path.endswith('.json'):
             doc_path = doc_path[:-len('.json')]
         return doc_path
+
 
 class Person(models.Model):
     person_name = models.CharField(max_length=64, verbose_name='person name')
@@ -179,7 +190,7 @@ def get_relatives(records):
 
 
 class Section(models.Model):
-    spjsonfile = models.ForeignKey('declarations.spjsonfile', null=True, verbose_name="smart parser json file", on_delete=models.CASCADE)
+    source_document = models.ForeignKey('declarations.source_document', null=True, verbose_name="source document", on_delete=models.CASCADE)
     person = models.ForeignKey('declarations.Person', null=True, verbose_name="person id", on_delete=models.CASCADE)
     person_name = models.CharField(max_length=64, verbose_name='person name')
     income_year = models.IntegerField(null=True)

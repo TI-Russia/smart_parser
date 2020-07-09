@@ -1,19 +1,25 @@
-ID файла: {{ spjsonfile.id }} <br/>
+ID файла: {{ source_document.id }} <br/>
 
-Ведомство: {{ spjsonfile.office.name }} <br/>
+Ведомство: {{ source_document.office.name }} <br/>
 
-ID ведомства: {{ spjsonfile.office.id }} <br/>
+ID ведомства: {{ source_document.office.id }} <br/>
 
-Сайт: <a href="http://{{ spjsonfile.web_domain }}"> {{ spjsonfile.web_domain }} </a> <br/>
+Скаченный файл: <a href="/static/{{ source_document.file_path }}"> {{ source_document.file_path }} </a> <br/>
 
-Скаченный файл: <a href="/static/{{ spjsonfile.doc_path }}"> {{ spjsonfile.doc_path }} </a> <br/>
+Sha256: {{ source_document.sha256 }} <br/>
 
-{% if section.spjsonfile.declarator_document_file_url %}
-    <a href="{{section.spjsonfile.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
-{% endif %}
-<br>
+Intersection status: {{ source_document.intersection_status }} <br/>
 
-{% if section.spjsonfile.dlrobot_url %}
-    <a href="{{section.spjsonfile.dlrobot_url}}"> Ссылка на документ на сайте ведомства (если ведомство не удалило этот документ) </a>
-{% endif %}
-<br>
+{% for web_location in source_document.web_location_set.all %}
+    Сайт: <a href="http://{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }} </a> <br/>
+    <br>
+{% endfor %}
+
+
+{% for decl_info in source_document.declarator_file_info.all %}
+    <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
+    <br>
+{% endfor %}
+
+
+

@@ -105,7 +105,7 @@ class TSectionFields:
         self.person_income = next((i.size for i in s.income_set.all() if i.relative == models.Relative.main_declarant_code), None)
         self.spouse_income = next((i.size for i in s.income_set.all() if i.relative == models.Relative.spouse_code), None)
         self.year = s.income_year
-        self.office = unidecode(s.spjsonfile.office.name)
+        self.office = unidecode(s.source_document.office.name)
         self.position = unidecode("" if s.position is None else s.position)
         self.realestates = [try_to_float(i.square) for i in s.realestate_set.all()]
         self.children_number = len([i for i in s.realestate_set.all() if (i.relative == models.Relative.child_code)])

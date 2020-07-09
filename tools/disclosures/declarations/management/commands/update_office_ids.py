@@ -1,6 +1,6 @@
 from declarations.input_json_specification import dhjs
 import json
-from declarations.models import SPJsonFile
+from declarations.models import Source_Document
 from django.core.management import BaseCommand
 import logging
 import os
@@ -47,7 +47,7 @@ class Command(BaseCommand):
                     assert website not in website_to_office
                     website_to_office[website] = office_id
             files_count = 0
-            for file in SPJsonFile.objects.all():
+            for file in Source_Document.objects.all():
                 if file.declarator_document_file_url is None:
                     new_office_id = website_to_office.get(file.web_domain)
                     if new_office_id is  None:

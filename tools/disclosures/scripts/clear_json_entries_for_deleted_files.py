@@ -16,7 +16,7 @@ if __name__ == '__main__':
     for web_site, web_site_info in dlrobot_human[dhjs.file_collection].items():
         to_remove = set()
         for sha256, file_info in web_site_info.items():
-            file_path = file_info.get(dhjs.dlrobot_path)
+            file_path = file_info.get(dhjs.document_path)
             if file_path is None:
                 print("file record has no file path member: {}".format(file_info))
                 sys.exit(1)

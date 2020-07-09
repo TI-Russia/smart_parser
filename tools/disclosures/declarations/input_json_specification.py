@@ -7,13 +7,14 @@ class dhjs:
 
     file_collection = 'files'
     offices_to_domains = 'office_to_domains'
+    declarator_folder = "d:folder"
 
-    dlrobot_path = 'r:path'
+    document_path = 'r:path'
     dlrobot_folder = 'r:folder'
     dlrobot_copied_from_the_past = "r:old"
     dlrobot_url = 'r:url'
 
-    declarator_folder = "d:folder"
+
     declarator_web_domain = 'd:domain'
     declarator_file_path = 'd:path'
     declarator_office_id = 'd:office_id'

@@ -7,7 +7,7 @@ import logging
 import pymysql
 import os
 import gc
-
+import json
 
 def setup_logging(logfilename="copy_person.log"):
     logger = logging.getLogger("copy_person")
@@ -44,8 +44,10 @@ def build_key(document_id, fio, income_main):
     return "{}_{}_{}".format(document_id, fio.lower(), int(income_main))
 
 
-def get_all_section_from_declarator_with_person_id(connection):
+def get_all_section_from_declarator_with_person_id():
     # query to declarator db
+    db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
+                                    unix_socket="/var/run/mysqld/mysqld.sock")
     in_cursor = connection.cursor()
     in_cursor.execute("""
                     select  s.person_id, 
@@ -98,11 +100,22 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+                '--read-person-from-json',
+            dest='read_person_from_json',
+            default=None,
+            help='read person info  from json for testing'
+        )
+
+
     def handle(self, *args, **options):
         logger = setup_logging()
-        db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
-                                                        unix_socket="/var/run/mysqld/mysqld.sock")
-        prop_to_person = get_all_section_from_declarator_with_person_id(db_connection)
+        if options.get('read_person_from_json') is not None:
+            with open(options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
+                prop_to_person = json.load(inpf)
+        else:
+            prop_to_person = get_all_section_from_declarator_with_person_id(db_connection)
         #with open("debug.dump", "w", encoding="utf8") as outp:
         #    json.dump( prop_to_person, outp, indent=4, ensure_ascii=False)
         logger.info("found {} mergings in declarator".format(len(prop_to_person)))
@@ -110,7 +123,7 @@ class Command(BaseCommand):
         stop_elastic_indexing()
         cnt = 0
         mergings_count = 0
-        for section in queryset_iterator(models.Section.objects.filter(spjsonfile__declarator_document_id__isnull=False)):
+        for section  in queryset_iterator(models.Section.objects):
             cnt += 1
             if (cnt % 10000) == 0:
                 logger.debug("number processed sections = {}".format(cnt))
@@ -119,25 +132,30 @@ class Command(BaseCommand):
             for i in section.income_set.all():
                 if i.relative == models.Relative.main_declarant_code:
                     main_income = i.size
-            key1 = build_key(section.spjsonfile.declarator_document_id, section.person_name, main_income)
-            words = section.person_name.split()
-            if len(words) == 0:
-                logger.error("section {} fio={} cannot find surname(first word)".format(section.id, section.person_name))
-                key2 = key1
-            else:
-                key2 = build_key(section.spjsonfile.declarator_document_id, words[0], main_income)
-            person_id1 = prop_to_person.get(key1)
-            person_id2 = prop_to_person.get(key2)
-            if person_id1 is None and person_id2 is None:
+            checked_results = set()
+            for declaration_info in section.source_document.declarator_file_info_set.all():
+                key1 = build_key(declaration_info.declarator_document_id, section.person_name, main_income)
+                checked_results.add(prop_to_person.get(key1))
+                words = section.person_name.split()
+                if len(words) > 0:
+                    key2 = build_key(declaration_info.declarator_document_id, words[0], main_income)
+                    checked_results.add(prop_to_person.get(key2))
+                else:
+                    logger.error("section {} fio={} cannot find surname(first word)".format(section.id, section.person_name))
+
+            if len(checked_results) == 1 and None in checked_results:
                 logger.debug("section {} fio={} cannot be found in declarator".format(section.id, section.person_name))
-            elif person_id1 is not None and person_id1 != "AMBIGUOUS_KEY":
-                copy_human_merge(logger, section, person_id1)
-                mergings_count += 1
-            elif person_id2 is not None and person_id2 != "AMBIGUOUS_KEY":
-                copy_human_merge(logger, section, person_id2)
-                mergings_count += 1
             else:
-                logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
+                found = False
+                for person_id in checked_results:
+                    if  person_id is not None and person_id != "AMBIGUOUS_KEY":
+                        copy_human_merge(logger, section, person_id)
+                        mergings_count += 1
+                        found = True
+                        break
+                if not found:
+                    logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
+
 
         logger.info("set human person id to {} records".format(mergings_count))
 
@@ -145,3 +163,5 @@ class Command(BaseCommand):
         ElasticManagement().handle(action="rebuild", models=["declarations.Person"], force=True, parallel=True,
                                    count=True)
         logger.info("all done")
+
+CopyPersonIdCommand=Command
