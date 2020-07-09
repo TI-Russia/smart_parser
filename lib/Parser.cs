@@ -342,6 +342,7 @@ namespace Smart.Parser.Lib
             }
 
             bool skipEmptyPerson = false;
+            string prevPersonName = "";
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -374,7 +375,7 @@ namespace Smart.Parser.Lib
 
                 if (updateTrigrams) ColumnPredictor.UpdateByRow(columnOrdering, currRow);
 
-                if (!currRow.InitPersonData())
+                if (!currRow.InitPersonData(prevPersonName))
                 {
                     // be robust, ignore errors see 8562.pdf.docx in tests
                     continue;
@@ -382,6 +383,7 @@ namespace Smart.Parser.Lib
 
                 if (currRow.PersonName != String.Empty)
                 {
+                    prevPersonName = currRow.PersonName; 
                     borderFinder.CreateNewDeclarant(Adapter, currRow);
                     if (borderFinder.CurrentPerson != null)
                         skipEmptyPerson = false;
@@ -566,17 +568,7 @@ namespace Smart.Parser.Lib
             string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
-
-            // swap statePropCountryStr and statePropSquareStr
-            if ((statePropSquareStr.ToLower().Trim() == "россия" ||
-                 statePropSquareStr.ToLower().Trim() == "рф") &&
-                Regex.Match(statePropCountryStr.Trim(), @"[0-9,.]").Success)
-            {
-                var t = statePropSquareStr;
-                statePropSquareStr = statePropCountryStr;
-                statePropCountryStr = t;
-            }
-
+            
             try
             {
                 if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
@@ -780,13 +772,24 @@ namespace Smart.Parser.Lib
             string statePropCountryStr,
             Person person)
         {
+
+            // swap statePropCountryStr and statePropSquareStr
+            if ((statePropSquareStr.ToLower().Trim() == "россия" ||
+                 statePropSquareStr.ToLower().Trim() == "рф") &&
+                Regex.Match(statePropCountryStr.Trim(), @"[0-9,.]").Success)
+            {
+                var t = statePropSquareStr;
+                statePropSquareStr = statePropCountryStr;
+                statePropCountryStr = t;
+            }
+
             statePropTypeStr = statePropTypeStr.Trim();
             if (DataHelper.IsEmptyValue(statePropTypeStr))
             {
                 return;
             }
+            
             RealEstateProperty stateProperty = new RealEstateProperty();
-
 
             stateProperty.Text = statePropTypeStr;
             stateProperty.type_raw = statePropTypeStr;
@@ -800,8 +803,24 @@ namespace Smart.Parser.Lib
             person.RealEstateProperties.Add(stateProperty);
         }
 
-        static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
+        static public void ParseOwnedPropertySingleRow(string estateTypeStr,
+            string ownTypeStr,
+            string areaStr,
+            string countryStr,
+            Person person,
+            string ownTypeByColumn = null)
         {
+            
+            // swap countryStr and areaStr if needed
+            if ((areaStr.ToLower().Trim() == "россия" ||
+                 areaStr.ToLower().Trim() == "рф") &&
+                Regex.Match(countryStr.Trim(), @"[0-9,.]").Success)
+            {
+                var t = areaStr;
+                areaStr = countryStr;
+                countryStr = t;
+            }
+            
             estateTypeStr = estateTypeStr.Trim();
             areaStr = areaStr.ReplaceEolnWithSpace();
             if (DataHelper.IsEmptyValue(estateTypeStr))
@@ -950,7 +969,12 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
+        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr,
+            string ownTypeStr,
+            string areaStr,
+            string countryStr,
+            Person person,
+            string ownTypeByColumn = null)
         {
             List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
             List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);

@@ -388,7 +388,7 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        public bool InitPersonData()
+        public bool InitPersonData(string prevPersonName)
         {
             if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
             {
@@ -431,6 +431,10 @@ namespace Smart.Parser.Adapters
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))
                     {
                         SetRelative(nameOrRelativeType);
+                    }
+                    else if (prevPersonName == nameOrRelativeType && DataHelper.IsRelativeInfo(Occupation))
+                    {
+                        SetRelative(Occupation);
                     }
                     else
                     { 

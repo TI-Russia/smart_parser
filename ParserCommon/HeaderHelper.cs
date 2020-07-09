@@ -326,8 +326,9 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsDeclaredYearlyIncome(this string str)
         {
-            string strLower = str.Replace(" ", "").Replace("-", "");
-            return (strLower.Contains("годовойдоход") 
+            string strLower = str.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            return (strLower.Contains("годовойдоход")
+                    || strLower.StartsWith("сведенияодоходеза")
                     || strLower.Contains("годовогодохода")
                     || strLower.Contains("суммадохода") 
                     || strLower.Contains("декларированныйдоход")

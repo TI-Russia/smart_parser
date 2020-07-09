@@ -26,7 +26,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
         #region Regex matchers
         protected static Regex _realEstateMatcher = new Regex(@"\s*Недвижимое\s*имущество\s*(\(\s*кв[\. ]*м\s*\)\s*)?",
                                                                RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        protected static Regex _realEstateObjectMatcher = new Regex(@"(?<type>[^\(0-9]+)(?<own_type>\([^\)]+\)+)?[\s-]*(?<square_size>[0-9.,]+(?:\s*кв.\s?м\.?)?)?(?<country>[^0-9]*)?", RegexOptions.Compiled);
+        protected static Regex _realEstateObjectMatcher = new Regex(@"(?<type>[^\(0-9]+)(?<own_type>\([^\)]+\)+)?[\s-]*(?<square_size>[0-9.,]+)?(?:\s*кв.\s?м\.?)?(?<country>[^0-9]*)?", RegexOptions.Compiled);
         protected static Regex _squareMatcher = new Regex(@"\d+(.\d+)*", RegexOptions.Compiled);
         protected static Regex _ownershipMatcher = new Regex(@"(долевая)*(индивидуальная)*\s*собственность");
         protected static Regex _yearMatcher = new Regex(@"\d+\s*год", RegexOptions.Compiled | RegexOptions.IgnoreCase);

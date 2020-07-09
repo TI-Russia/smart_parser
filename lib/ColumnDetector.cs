@@ -308,10 +308,13 @@ namespace Smart.Parser.Lib
 
             List<Cell> columnCells =  new List<Cell>();
             bool headerCanHaveSecondLevel = true;
+            int maxMergedRows = 1;
             var texts = new List<string>();
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
+                if (maxMergedRows < cell.MergedRowsCount)
+                    maxMergedRows = cell.MergedRowsCount;
                 if (cell.CellWidth == 0 && text.Trim() == "") continue;
                 var underCells = FindSubcellsUnder(adapter, cell);
 
@@ -377,6 +380,7 @@ namespace Smart.Parser.Lib
                 {
                     ColumnPredictor.PredictForPrecisionCheck(adapter, cell, field);
                 }
+                
                 AddColumn(columnOrdering, field, cell);
                 if (ColumnOrdering.SearchForFioColumnOnly)
                     if  (field == DeclarationField.NameAndOccupationOrRelativeType ||
