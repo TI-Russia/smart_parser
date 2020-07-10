@@ -63,7 +63,7 @@ if __name__ == '__main__':
             web_ref = TWebReference()
             web_ref.crawl_epoch = args.crawl_epoch
             web_ref.url = file_info.get('r:url', website)
-            src_doc.web_references.append(web_ref)
+            src_doc.add_web_reference(web_ref)
 
         if 'd:office_id' in file_info:
             decl_rec = TDeclaratorReference()
@@ -74,7 +74,7 @@ if __name__ == '__main__':
             decl_rec.document_file_url = file_info.get('d:media_url')
             decl_rec.web_domain = file_info.get('d:domain', website)
             src_doc.calculated_office_id = file_info.get('d:office_id')
-            src_doc.decl_references.append(decl_rec)
+            src_doc.add_decl_reference(decl_rec)
 
         if src_doc.calculated_office_id is None and website is not None:
             src_doc.calculated_office_id = domain_to_office.get(website)

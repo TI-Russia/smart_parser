@@ -6,7 +6,6 @@ from .documents import ElasticSectionDocument, ElasticPersonDocument
 from declarations.input_json import TIntersectionStatus
 
 
-
 class SectionView(generic.DetailView):
     model = models.Section
     template_name = 'section/detail.html'
@@ -44,6 +43,8 @@ class StatisticsView(generic.TemplateView):
         context['sections_count'] = models.Section.objects.all().count()
         context['sections_count_only_dlrobot'] = models.Section.objects.filter(
             source_document__intersection_status=TIntersectionStatus.only_dlrobot).count()
+        context['sections_count_both_found'] = models.Section.objects.filter(
+            source_document__intersection_status=TIntersectionStatus.both_found).count()
         context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
         context['person_count'] = models.Person.objects.all().count()

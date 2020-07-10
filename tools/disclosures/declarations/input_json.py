@@ -28,6 +28,9 @@ class TDeclaratorReference:
             'media_url': self.document_file_url,
         }
 
+    def __eq__(self, other):
+        return self.document_file_id == other.document_file_id
+
 
 class TWebReference:
     def __init__(self, from_json=dict()):
@@ -40,6 +43,9 @@ class TWebReference:
             'url': self.url,
             'crawl_epoch': self.crawl_epoch
         }
+
+    def __eq__(self, other):
+        return self.url == other.url and self.crawl_epoch == other.crawl_epoch
 
 
 class TSourceDocument:
@@ -66,6 +72,14 @@ class TSourceDocument:
             if r.income_year is not None:
                 return r.income_year
         return None
+
+    def add_web_reference(self, web_ref):
+        if web_ref not in self.web_references:
+            self.web_references.append(web_ref)
+
+    def add_decl_reference(self, decl_ref):
+        if decl_ref not in self.decl_references:
+            self.decl_references.append(decl_ref)
 
     def write_to_json(self):
         res = {

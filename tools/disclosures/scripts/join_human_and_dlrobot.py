@@ -90,13 +90,13 @@ class TJoiner:
                 self.logger.error("a file copy found: {}/{}".format(domain_folder, base_file_name))
                 src_doc.intersection_status = TIntersectionStatus.both_found
                 src_doc.document_path = relative_path
-                src_doc.web_references.append(web_ref)
+                src_doc.add_web_reference(web_ref)
             else:
                 src_doc = TSourceDocument()
                 src_doc.document_path = os.path.basename(file_path)
                 src_doc.intersection_status = TIntersectionStatus.only_dlrobot
                 src_doc.document_path = relative_path
-                src_doc.web_references.append(web_ref)
+                src_doc.add_web_reference(web_ref)
                 self.dlrobot_human.document_collection[sha256] = src_doc
                 new_files_found_by_dlrobot += 1
 
