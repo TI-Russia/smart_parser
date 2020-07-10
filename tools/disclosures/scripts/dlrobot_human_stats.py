@@ -24,9 +24,8 @@ if __name__ == '__main__':
             only_dlrobot += 1
         if src_doc.intersection_status == TIntersectionStatus.only_human:
             only_human += 1
-        for ref in src_doc.references:
-            if isinstance(ref, TWebReference):
-                crawl_epochs[ref.crawl_epoch] += 1
+        for ref in src_doc.web_references:
+            crawl_epochs[ref.crawl_epoch] += 1
         _, extension = os.path.splitext(src_doc.document_path)
         extensions[extension] += 1
 

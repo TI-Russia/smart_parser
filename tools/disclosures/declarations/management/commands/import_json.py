@@ -60,16 +60,15 @@ def register_in_database(sha256, src_doc):
                                                         intersection_status=src_doc.intersection_status,
                                                         )
     source_document_in_db.save()
-    for ref in src_doc.references:
-        if isinstance(ref, TDeclaratorReference):
-            models.Declarator_File_Reference(source_document=source_document_in_db,
-                                             declarator_documentfile_id=ref.document_file_id,
-                                             declarator_document_id=ref.document_id,
-                                             declarator_document_file_url=ref.document_file_url).save()
-        else:
-            models.Web_Reference(source_document=source_document_in_db,
-                                 dlrobot_url=ref.url,
-                                 crawl_epoch=ref.crawl_epoch).save()
+    for ref in src_doc.decl_references:
+        models.Declarator_File_Reference(source_document=source_document_in_db,
+                                         declarator_documentfile_id=ref.document_file_id,
+                                         declarator_document_id=ref.document_id,
+                                         declarator_document_file_url=ref.document_file_url).save()
+    for ref in src_doc.web_references:
+        models.Web_Reference(source_document=source_document_in_db,
+                         dlrobot_url=ref.url,
+                         crawl_epoch=ref.crawl_epoch).save()
 
     return source_document_in_db
 
@@ -96,13 +95,12 @@ class TImporter:
 
     def get_human_smart_parser_json(self, src_doc, already_imported):
         res = set()
-        for ref in src_doc.references:
-            if isinstance(ref, TDeclaratorReference):
-                filename = os.path.join(self.args['smart_parser_human_json'], str(ref.document_id) + ".json")
-                if os.path.exists(filename) and filename not in already_imported:
-                    TImporter.logger.debug("import human json {}".format(filename))
-                    already_imported.add(filename)
-                    res.add(filename)
+        for ref in src_doc.decl_references:
+            filename = os.path.join(self.args['smart_parser_human_json'], str(ref.document_id) + ".json")
+            if os.path.exists(filename) and filename not in already_imported:
+                TImporter.logger.debug("import human json {}".format(filename))
+                already_imported.add(filename)
+                res.add(filename)
         return res
 
     def register_section_passport(self, passport):

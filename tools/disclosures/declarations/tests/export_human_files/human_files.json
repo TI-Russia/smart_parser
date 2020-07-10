@@ -2,10 +2,7 @@
     "document_folder": "human_files",
     "documents": {
         "7b7995e792823a1daa65008a8045677c052338eb7052dac09029f19ce2fd7a00": {
-            "document_path": "4915.doc",
-            "intersection_status": "only_human",
-            "office_id": null,
-            "refs": [
+            "d_refs": [
                 {
                     "document_file_id": 4915,
                     "document_id": 13,
@@ -14,7 +11,10 @@
                     "office_id": 19,
                     "web_domain": "vladprok.ru"
                 }
-            ]
+            ],
+            "document_path": "4915.doc",
+            "intersection_status": "only_human",
+            "office_id": null
         }
     }
 }

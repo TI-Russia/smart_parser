@@ -147,7 +147,7 @@ def build_declarator_squeezes(logger, args):
                 ref.office_id = office_id
                 ref.income_year = income_year
                 ref.document_file_url = declarator_url
-                source_document.references.append(ref)
+                source_document.decl_references.append(ref)
                 dlrobot_humam.add_source_document(sha256, source_document)
                 files_count += 1
     return dlrobot_humam

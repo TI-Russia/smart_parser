@@ -90,20 +90,20 @@ class TJoiner:
                 self.logger.error("a file copy found: {}/{}".format(domain_folder, base_file_name))
                 src_doc.intersection_status = TIntersectionStatus.both_found
                 src_doc.document_path = relative_path
-                src_doc.references.append(web_ref)
+                src_doc.web_references.append(web_ref)
             else:
                 src_doc = TSourceDocument()
                 src_doc.document_path = os.path.basename(file_path)
                 src_doc.intersection_status = TIntersectionStatus.only_dlrobot
                 src_doc.document_path = relative_path
-                src_doc.references.append(web_ref)
+                src_doc.web_references.append(web_ref)
                 self.dlrobot_human.document_collection[sha256] = src_doc
                 new_files_found_by_dlrobot += 1
 
         self.logger.debug("files: {},  new_files_found_by_dlrobot: {}".format(files_count, new_files_found_by_dlrobot))
 
     def copy_human_file(self, src_doc: TSourceDocument):
-        ref = src_doc.references[0]
+        ref = src_doc.decl_references[0]
         web_site = ref.web_domain
         if web_site == "" or web_site is None:
             web_site = "unknown_domain"
@@ -162,16 +162,14 @@ class TJoiner:
         if args.old_dlrobot_human_json is not None:
             self.copy_old_dlrobot_files(args.old_dlrobot_human_json)
 
-
     def calc_office_id(self):
         web_site_to_office = dict()
         self.logger.info("web_site_to_office")
         for src_doc in self.dlrobot_human.document_collection.values():
-            for r in src_doc.references:
-                if isinstance(r, TDeclaratorReference):
-                    if r.web_domain not in web_site_to_office:
-                        web_site_to_office[r.web_domain] = defaultdict(int)
-                        web_site_to_office[r.web_domain][r.office_id] += 1
+            for r in src_doc.decl_references:
+                if r.web_domain not in web_site_to_office:
+                    web_site_to_office[r.web_domain] = defaultdict(int)
+                    web_site_to_office[r.web_domain][r.office_id] += 1
 
         web_domain_to_office = dict()
         for web_site, offices in web_site_to_office.items():
@@ -183,10 +181,9 @@ class TJoiner:
 
         for src_doc in self.dlrobot_human.document_collection.values():
             office_id = None
-            for r in src_doc.references:
-                if isinstance(r, TDeclaratorReference):
-                    office_id = r.office_id
-                    break
+            for r in src_doc.decl_references:
+                office_id = r.office_id
+                break
             if office_id is None:
                 web_domain = os.path.dirname(src_doc.document_path)
                 office_id = web_domain_to_office.get(web_domain)

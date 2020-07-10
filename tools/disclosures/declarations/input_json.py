@@ -18,10 +18,6 @@ class TDeclaratorReference:
         self.document_file_url = from_json.get('media_url')
         assert len(from_json) == 0 or len(from_json) == 6
 
-    @staticmethod
-    def check_json(j):
-        return 'media_url' in j
-
     def write_to_json(self):
         return  {
             'web_domain': self.web_domain,
@@ -55,30 +51,33 @@ class TSourceDocument:
         self.document_path = from_json.get('document_path')
         self.intersection_status = from_json.get('intersection_status')
         self.calculated_office_id = from_json.get('office_id')
-        self.references = list()
-        for ref in from_json.get('refs', []):
-            if TDeclaratorReference.check_json(ref):
-                self.references.append(TDeclaratorReference(from_json=ref))
-            else:
-                self.references.append(TWebReference(from_json=ref))
+        self.web_references = list()
+        self.decl_references = list()
+        for ref in from_json.get('d_refs', []):
+            self.decl_references.append(TDeclaratorReference(from_json=ref))
+        for ref in from_json.get('w_refs', []):
+            self.web_references.append(TWebReference(from_json=ref))
 
     def get_web_site(self):
         return os.path.dirname(self.document_path)
 
     def get_declarator_income_year(self):
-        for r in self.references:
-            if isinstance(r, TDeclaratorReference):
-                if r.income_year is not None:
-                    return r.income_year
+        for r in self.decl_references:
+            if r.income_year is not None:
+                return r.income_year
         return None
 
     def write_to_json(self):
-        return {
+        res = {
             'document_path': self.document_path,
             'intersection_status': self.intersection_status,
-            'office_id': self.calculated_office_id,
-            'refs': list(x.write_to_json() for x in self.references)
+            'office_id': self.calculated_office_id
         }
+        if len(self.web_references) > 0:
+            res['w_refs'] = list(x.write_to_json() for x in self.web_references)
+        if len(self.decl_references) > 0:
+            res['d_refs'] = list(x.write_to_json() for x in self.decl_references)
+        return res
 
 
 class TDlrobotHumanFile:

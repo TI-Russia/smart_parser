@@ -5,7 +5,7 @@
             "document_path": "test1.ru/one_line_2018.docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
-            "refs": [
+            "w_refs": [
                 {
                     "crawl_epoch": 1,
                     "url": null
@@ -16,11 +16,13 @@
             "document_path": "test1.ru/one_line_2017_copy.docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
-            "refs": [
+            "w_refs": [
                 {
                     "crawl_epoch": 1,
                     "url": null
-                },
+                }
+            ],
+            "d_refs": [
                 {
                     "document_file_id": null,
                     "document_id": null,
@@ -35,11 +37,7 @@
             "document_path": "test1.ru/one_line_2019.docx",
             "intersection_status": "both_found",
             "office_id": 1,
-            "refs": [
-                {
-                    "crawl_epoch": 1,
-                    "url": null
-                },
+            "d_refs": [
                 {
                     "document_file_id": 1,
                     "document_id": 198,
@@ -54,12 +52,8 @@
             "document_path": "test1.ru/one_line_2017.docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
-            "refs": [
-                {
-                    "crawl_epoch": 1,
-                    "url": null
-                },
-                {
+            "d_refs": [
+               {
                     "document_file_id": null,
                     "document_id": null,
                     "income_year": null,

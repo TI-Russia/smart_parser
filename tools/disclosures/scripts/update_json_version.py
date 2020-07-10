@@ -59,12 +59,11 @@ if __name__ == '__main__':
             if src_doc.intersection_status is None and args.human_file_format:
                 src_doc.intersection_status = TIntersectionStatus.only_human
             src_doc.document_path = path
-
         if not args.human_file_format:
             web_ref = TWebReference()
             web_ref.crawl_epoch = args.crawl_epoch
             web_ref.url = file_info.get('r:url', website)
-            src_doc.references.append(web_ref)
+            src_doc.web_references.append(web_ref)
 
         if 'd:office_id' in file_info:
             decl_rec = TDeclaratorReference()
@@ -75,7 +74,7 @@ if __name__ == '__main__':
             decl_rec.document_file_url = file_info.get('d:media_url')
             decl_rec.web_domain = file_info.get('d:domain', website)
             src_doc.calculated_office_id = file_info.get('d:office_id')
-            src_doc.references.append(decl_rec)
+            src_doc.decl_references.append(decl_rec)
 
         if src_doc.calculated_office_id is None and website is not None:
             src_doc.calculated_office_id = domain_to_office.get(website)
