@@ -14,7 +14,6 @@ def add_offices(apps, schema_editor):
         name_ru = name_ru.replace("\t", " ")
         c = Office(id=int(id),
                    name=name_ru,
-                   name_ru=name_ru,
                    type_id=int(type_id))
         if parent_id is not None:
             c.parent_id = int(parent_id)

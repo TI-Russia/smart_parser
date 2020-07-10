@@ -13,25 +13,6 @@ from robots.common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
-DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
-if DECLARATOR_CONV_URL is None:
-    print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
-    assert DECLARATOR_CONV_URL is not None
-
-
-def assert_declarator_conv_alive():
-    global DECLARATOR_CONV_URL
-    if DECLARATOR_CONV_URL is None:
-        raise Exception("environment variable DECLARATOR_CONV_URL is not set")
-
-    try:
-        with urllib.request.urlopen("http://" + DECLARATOR_CONV_URL+"/ping") as response:
-            if response.read() == "yes":
-                return True
-    except Exception as exp:
-        print("cannot connect to {} (declarator conversion server)".format(DECLARATOR_CONV_URL))
-        raise
-
 
 class TInputTask:
     def __init__(self, file_path, file_extension, rebuild):
@@ -41,15 +22,19 @@ class TInputTask:
 
 
 class TDocConversionClient(object):
+    DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
+
     def __init__(self, logger=None):
-        global DECLARATOR_CONV_URL
         assert_declarator_conv_alive()
         self.wait_new_tasks = True
         self._input_tasks = queue.Queue()
         self.lock = threading.Lock()
         self._sent_tasks = list()
         self.conversion_thread = None
-        self.db_conv_url = DECLARATOR_CONV_URL
+        if TDocConversionClient.DECLARATOR_CONV_URL is None:
+            print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
+            assert TDocConversionClient.DECLARATOR_CONV_URL is not None
+        self.db_conv_url = TDocConversionClient.DECLARATOR_CONV_URL
         self.input_task_timeout = 5
         self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
         self.all_pdf_size_sent_to_conversion  = 0
@@ -119,6 +104,7 @@ class TDocConversionClient(object):
 
     def _wait_conversion_tasks(self, timeout_in_seconds):
         start_time = time.time()
+        self.logger.info("number of conversion tasks to be waited: {}".format(len(self._sent_tasks)))
         while len(self._sent_tasks) > 0:
             time.sleep(10)
             for sha256 in list(self._sent_tasks):
@@ -130,7 +116,7 @@ class TDocConversionClient(object):
                     finally:
                         self.lock.release()
             if time.time() > start_time + timeout_in_seconds:
-                self.logger.error("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
+                self.logger.info("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
                 break
 
     def check_file_was_converted(self, sha256):
@@ -138,20 +124,26 @@ class TDocConversionClient(object):
         conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
         return conn.getresponse().code == 200
 
-    def get_pending_all_file_size(self):
+    def get_stats(self):
         data = None
         try:
             conn = http.client.HTTPConnection(self.db_conv_url)
             conn.request("GET", "/stat")
             response = conn.getresponse()
             data = response.read().decode('utf8')
-            return json.loads(data)['ocr_pending_all_file_size']
+            return json.loads(data)
         except Exception as exp:
-            message = "conversion_client, get_pending_all_file_size failed: {}".format(exp)
+            message = "conversion_client, get_stats failed: {}".format(exp)
             if data is not None:
                 message += "; conversion server answer was {}".format(data)
             self.logger.error(message)
-            return 0
+            return None
+
+    def get_pending_all_file_size(self):
+        stats = self.get_stats()
+        if stats is None:
+            return 200 * 2 ** 20  # just an unknown number, terror magnifies objects
+        return stats['ocr_pending_all_file_size']
 
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url)
@@ -191,7 +183,20 @@ class TDocConversionClient(object):
             self.wait_new_tasks = False
             self.conversion_thread.join(self.input_task_timeout + 1)
 
-            self.logger.debug("wait the conversion server convert all files")
+            self.logger.debug("wait the conversion server convert all files for {} seconds".format(timeout_in_seconds))
             self._wait_conversion_tasks(timeout_in_seconds)
         except Exception as exp:
             self.logger.error("wait_doc_conversion_finished: exception {}".format(exp))
+
+
+def assert_declarator_conv_alive():
+    if TDocConversionClient.DECLARATOR_CONV_URL is None:
+        raise Exception("environment variable DECLARATOR_CONV_URL is not set")
+
+    try:
+        with urllib.request.urlopen("http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping", timeout=300) as response:
+            if response.read() == "yes":
+                return True
+    except Exception as exp:
+        print("cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL))
+        raise

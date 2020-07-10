@@ -13,7 +13,9 @@ def parse_args():
     parser.add_argument("--human-json", dest='human_json', default="human_files.json")
     parser.add_argument("--old-dlrobot-human-json", dest='old_dlrobot_human_json', required=False)
     parser.add_argument("--output-json", dest='output_json', default="dlrobot_human.json")
-    parser.add_argument("--skip-existing", dest='skip_existing', action="store_true", default=False)
+    parser.add_argument("--overwrite-existing", dest='skip_existing', action="store_false", default=True)
+    parser.add_argument("--copy-to-one-folder-json", dest='copy_to_one_folder_json', required=True)
+
     return parser.parse_args()
 
 
@@ -41,16 +43,21 @@ def build_sha256(filename):
 
 
 class TJoiner:
+    human_file_name_prefix = "h"
+    old_file_name_prefix = "o"
+
     def __init__(self, args, logger):
         self.args = args
         self.logger = logger
         self.logger.info("load {}".format(args.human_json))
         with open(args.human_json, "r") as inp:
             self.human_json = json.load(inp)
-        self.found_by_dlrobot = set()
+        self.all_sha256 = set()
         self.output_json = dict()
+        with open(args.copy_to_one_folder_json, "r", encoding="utf") as inp:
+            self.file_to_urls = json.load(inp)
 
-    def process_domain(self, domain):
+    def process_dlrobot_files(self, domain):
         self.logger.debug("process {}".format(domain))
         domain_folder = os.path.join(self.args.dlrobot_folder, domain)
         if not os.path.isdir(domain_folder):
@@ -58,26 +65,31 @@ class TJoiner:
         domain_info = dict()
         new_files_found_by_dlrobot = 0
         files_count = 0
+        files_to_urls = self.file_to_urls.get(domain)
         for base_file_name in os.listdir(domain_folder):
             file_path = os.path.join(domain_folder, base_file_name)
             if file_path.endswith(".json") or file_path.endswith(".txt"):
                 continue
+            # we can call join_human_and_dlrobot many times
+            if base_file_name.startswith(TJoiner.human_file_name_prefix) or base_file_name.startswith(TJoiner.old_file_name_prefix):
+                continue
             files_count += 1
             sha256 = build_sha256(file_path)
             if sha256 in domain_info:
-                self.logger.error("a file copy found: {}, ignore it".format(f))
+                self.logger.error("a file copy found: {}, ignore it".format(base_file_name))
                 continue
             file_info = {
-                dhjs.dlrobot_path: os.path.basename(file_path)
+                dhjs.dlrobot_path: os.path.basename(file_path),
+                dhjs.dlrobot_url: files_to_urls[os.path.basename(file_path)]
             }
             human_file_info = self.human_json[dhjs.file_collection].get(sha256)
             if human_file_info is not None:
                 file_info[dhjs.intersection_status] = dhjs.both_found
                 file_info.update (human_file_info)
-                self.found_by_dlrobot.add(sha256)
             else:
                 file_info[dhjs.intersection_status] = dhjs.only_dlrobot
                 new_files_found_by_dlrobot += 1
+            self.all_sha256.add(sha256)
             domain_info[sha256] = file_info
 
         self.output_json[domain] = domain_info
@@ -92,29 +104,38 @@ class TJoiner:
             self.logger.debug("create folder for domain {}".format(folder))
             os.mkdir(folder)
         infile = os.path.join(self.human_json[dhjs.declarator_folder], file_info[dhjs.declarator_file_path])
-        outfile = os.path.join(folder, "h" + os.path.basename(infile))
+        outfile = os.path.join(folder, TJoiner.human_file_name_prefix + os.path.basename(infile))
         if args.skip_existing and os.path.exists(outfile):
             self.logger.debug("skip copy {}, it exists".format(outfile))
         else:
             self.logger.debug("copy {} to {}".format(infile, outfile))
             if not os.path.exists(infile):
-                self.logger.error("Error! Cannot copy {}".format(infile))
+                self.logger.error("Error! Cannot copy {}, the file does not exists".format(infile))
+                return
             else:
                 shutil.copyfile(infile, outfile)
-            file_info[dhjs.dlrobot_path] = os.path.basename(outfile)
-            file_info[dhjs.intersection_status] = dhjs.only_human
+        # file_info is a  record from human_files.json
+        file_info[dhjs.dlrobot_path] = os.path.basename(outfile)
+        file_info[dhjs.intersection_status] = dhjs.only_human
         if web_site not in self.output_json:
             self.output_json[web_site] = dict()
         self.output_json[web_site][sha256] = file_info
+        self.all_sha256.add(sha256)
 
     def copy_old_dlrobot_file(self, web_site, sha256, infile):
         folder = os.path.join(args.dlrobot_folder, web_site)
         if not os.path.exists(folder):
             self.logger.debug("create folder for domain {}".format(folder))
             os.mkdir(folder)
-        outfile = os.path.join(folder, "o" + os.path.basename(infile))
-        self.logger.debug("copy {} to {}".format(infile, outfile))
-        shutil.copyfile(infile, outfile)
+        output_basename = os.path.basename(infile)
+        if not output_basename.startswith(TJoiner.old_file_name_prefix):
+            output_basename = TJoiner.old_file_name_prefix + output_basename
+        outfile = os.path.join(folder, output_basename)
+        if args.skip_existing and os.path.exists(outfile):
+            self.logger.debug("skip copy {}, it exists".format(outfile))
+        else:
+            self.logger.debug("copy {} to {}".format(infile, outfile))
+            shutil.copyfile(infile, outfile)
         file_info = {
             dhjs.dlrobot_path: os.path.basename(outfile),
             dhjs.intersection_status: dhjs.only_dlrobot,
@@ -144,24 +165,19 @@ class TJoiner:
                     yield web_domain, sha256, path
 
     def join(self):
+        self.logger.error("register dlrobot files ...")
         for domain in os.listdir(self.args.dlrobot_folder):
-            #try:
-                self.process_domain(domain)
-            #except Exception as exp:
-            #    self.logger.error("Error on {}: {}, keep going".format(domain, exp))
+            self.process_dlrobot_files(domain)
 
+        self.logger.error("copy human files ...")
         for sha256, file_info in self.human_json[dhjs.file_collection].items():
-            #try:
-                if sha256 not in self.found_by_dlrobot:
-                    self.copy_human_file(sha256, file_info)
-            #except Exception as exp:
-            #    self.logger.error("Error on file {}, exception={}, keep going".format(sha256, exp))
+            if sha256 not in self.all_sha256:
+                self.copy_human_file(sha256, file_info)
 
         if args.old_dlrobot_human_json is not None:
+            self.logger.error("copy old files ...")
             for web_site, sha256, filename in self.get_old_dlrobot_files(args.old_dlrobot_human_json):
-                if web_site not in self.output_json:
-                    self.output_json[web_site] = dict()
-                if sha256 not in self.output_json[web_site]:
+                if sha256 not in self.all_sha256:
                     self.copy_old_dlrobot_file(web_site, sha256, filename)
 
 
@@ -169,13 +185,14 @@ def main(args):
     logger = setup_logging("join_human_and_dlrobot.log")
     joiner = TJoiner(args, logger)
     joiner.join()
-    with open(args.output_json, "w") as out:
+    with open(args.output_json, "w", encoding="utf8") as out:
         output_json = {
             dhjs.declarator_folder: joiner.human_json[dhjs.declarator_folder],
             dhjs.dlrobot_folder: args.dlrobot_folder,
-            dhjs.file_collection: joiner.output_json
+            dhjs.file_collection: joiner.output_json,
+            dhjs.offices_to_domains: joiner.human_json[dhjs.offices_to_domains],
         }
-        json.dump(output_json, out,  indent=4, sort_keys=True)
+        json.dump(output_json, out,  indent=4, sort_keys=True, ensure_ascii=False)
 
 
 if __name__ == '__main__':

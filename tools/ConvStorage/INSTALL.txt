@@ -1,0 +1,47 @@
+﻿0. Install Windows 10 Pro
+1. Install Microsoft Word 2019
+2. Install Cygwin в c:\cygwin64 with 
+      g++, git, p7zip, wget, jq
+3. mkdir c:/tmp/smart_parser; cd  c:/tmp/smart_parser
+4. git clone git@github.com:TI-Russia/smart_parser.git
+5. download Visual Studio Community, install all options for C#
+6. compile c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx in debug mode
+7. cd c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/tests;
+    bash run_tests.sh  (may output one gui message box)
+   the last line must be "success"
+     
+8. download and compile pdfcrack  https://sourceforge.net/projects/pdfcrack
+ (I used g++ from cygwin)
+
+9. download qpdf https://sourceforge.net/projects/qpdf/
+ (I used g++ from cygwin)
+
+10.  install unrar
+    $ wget http://www.rarlab.com/rar/unrarsrc-5.1.7.tar.gz
+    $ tar -xzvf unrarsrc-5.1.7.tar.gz
+    $ cd unrar
+    $ make; make install 
+
+
+11. install FineReader
+
+12. set in environmet variable 
+   PYTHONPATH=C:\tmp\smart_parser\smart_parser\tools;C:\tmp\smart_parser\smart_parser\tools\disclosures
+
+13. go to c:/tmp/smart_parser/smart_parser/tools/ConvStorage/tests
+
+14.   create  test.hft
+     python update_finereader_task.py
+     import test.hft into Finereader HotFolder (gui)
+
+
+15.   run the simple test:
+
+     bash run_tests.sh ping
+
+16. import prod.hft to Finereader HotFolder (gui)
+     
+    must pass
+
+17. run all ConvStorage tests
+    bash run_tests.sh

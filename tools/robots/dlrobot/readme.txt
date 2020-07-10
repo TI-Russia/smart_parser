@@ -1,12 +1,12 @@
 0. insert into /etc/environment or into ~/.profile
-export DECLARATOR_CONV_URL=192.168.100.152:8091
+export DECLARATOR_CONV_URL=disclosures.ru:8091
 export ASPOSE_LIC=~/lic.bin
 export PYTHONPATH=$PYTHONPATH:~/smart_parser/tools
 
 
-1. Read and follow tools/INSTALL.txt to install python packages
+1. Read and follow tools/INSTALL.txt
 
-2. Go to tools/DeclDocRecognizer and read readme.txt, run tests
+2. Go to tools/DeclDocRecognizer run tests
 
 3. Return to tools /robots/dlrobot
    

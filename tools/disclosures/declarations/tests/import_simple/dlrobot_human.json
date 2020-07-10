@@ -8,5 +8,8 @@
             }
         }
     },
-    "r:folder": "domains"
+    "r:folder": "domains",
+    "office_to_domains": {
+        "1": ["test1.ru"]
+    }
 }

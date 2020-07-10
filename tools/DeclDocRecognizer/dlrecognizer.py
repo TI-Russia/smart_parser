@@ -7,9 +7,10 @@ import shutil
 import sys
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
         get_russian_normal_text_ratio
-from ConvStorage.conversion_client import DECLARATOR_CONV_URL, TDocConversionClient
+from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from collections import defaultdict
+
 
 def normalize_whitespace(str):
     str = re.sub(r'\s+', ' ', str)
@@ -42,9 +43,10 @@ def parse_args():
     parser.add_argument("--keep-txt", dest='keep_txt', action="store_true", default=False)
     parser.add_argument("--reuse-txt", dest='reuse_txt', action="store_true", default=False)
     parser.add_argument("--output", dest='output', default=None)
+    parser.add_argument("--delete-negative", dest='delete_negative', default=False, action="store_true")
     args = parser.parse_args()
     if args.output is None:
-        args.output = args.source_file + ".json"
+        args.output = args.source_file + ".verdict"
     return args
 
 
@@ -72,12 +74,11 @@ def process_smart_parser_json(json_file):
 
 def get_smart_parser_result(source_file):
     global EXTERNAl_CONVERTORS
-    global DECLARATOR_CONV_URL
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
     cmd = "{} -converted-storage-url {} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(
         EXTERNAl_CONVERTORS.smart_parser,
-        DECLARATOR_CONV_URL,
+        TDocConversionClient.DECLARATOR_CONV_URL,
         source_file)
     os.system(cmd)
 
@@ -95,6 +96,7 @@ def get_smart_parser_result(source_file):
             sheet_index += 1
     return people_count
 
+
 class TTextFeature:
     def __init__(self):
         self.first_matches = dict()
@@ -105,6 +107,7 @@ class TTextFeature:
             "first_matches" :  list(m.to_json() for m in self.first_matches.values()),
             "all_matches_count": self.all_matches_count
         }
+
 
 class TClassificationVerdict:
 
@@ -372,5 +375,9 @@ def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
 if __name__ == "__main__":
     args = parse_args()
     verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt)
-    with open(args.output, "w", encoding="utf8") as outf:
-        outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))
+    if args.delete_negative:
+        if verdict.verdict == DL_RECOGNIZER_ENUM.NEGATIVE:
+            os.unlink(args.source_file)
+    else:
+        with open(args.output, "w", encoding="utf8") as outf:
+            outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))

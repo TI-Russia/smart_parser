@@ -1,0 +1,12 @@
+{
+  "all_put_files_count": 1,
+  "successful_get_requests_count": 0,
+  "input_task_queue": 0,
+  "input_folder_files_count": 0,
+  "ocr_pending_files_count": 0,
+  "ocr_tasks_count": 0,
+  "ocr_pending_all_file_size": 0,
+  "is_converting": false,
+  "processed_files_size": 0,
+  "failed_files_size": 24448
+}

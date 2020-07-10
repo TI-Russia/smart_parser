@@ -4,6 +4,7 @@
         "05.fsin.su": {
             "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
                 "intersection_status": "only_dlrobot",
+                "r:old": true,
                 "r:path": "old_dlrobot.xlsx"
             },
             "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865": {
@@ -11,20 +12,24 @@
                 "d:document_id": 1,
                 "d:domain": "05.fsin.su",
                 "d:income_year": 2009,
+                "d:media_url": "https://declarator.org/media/documents/1.doc",
                 "d:office_id": 4,
                 "d:path": "human.xlsx",
                 "intersection_status": "both_found",
-                "r:path": "human.xlsx"
+                "r:path": "1984.xlsx",
+                "r:url": "http://05.fsin.su/new_dlrobot.xlsx"
             },
             "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3": {
                 "intersection_status": "only_dlrobot",
-                "r:path": "new_dlrobot.xlsx"
+                "r:path": "new_dlrobot.xlsx",
+                "r:url": "http://05.fsin.su/2.xlsx"
             },
             "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
                 "d:document_file_id": 1432,
                 "d:document_id": 19,
                 "d:domain": "05.fsin.su",
                 "d:income_year": 2009,
+                "d:media_url": "https://declarator.org/media/documents/2.doc",
                 "d:office_id": 4,
                 "d:path": "uniq_from_human.xlsx",
                 "intersection_status": "only_human",
@@ -37,9 +42,15 @@
             },
             "fa8bd40933bf21520b3b664b0d7507919426cbd7a86a84238c400b93b3bf4d00": {
                 "intersection_status": "only_dlrobot",
-                "r:path": "tmp1.xlsx"
+                "r:path": "tmp1.xlsx",
+                "r:url": "http://05.fsin.su/new_dlrobot.xlsx"
             }
         }
+    },
+    "office_to_domains": {
+        "4": [
+            "05.fsin.su"
+        ]
     },
     "r:folder": "domains"
 }

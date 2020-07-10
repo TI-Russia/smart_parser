@@ -197,6 +197,7 @@ class TJobTasks:
 
     def get_input_files(self):
         already_processed = set()
+        failed_tasks = defaultdict(int)
         if args.skip_already_processed:
             with open(args.log_file_name, "r", encoding="utf8") as inp:
                 for line in inp:
@@ -204,9 +205,16 @@ class TJobTasks:
                     if m:
                         filename = os.path.basename(m.group(1))
                         already_processed.add(filename)
+                    m = re.search('task failed: (.+txt)\s*$', line)
+                    if m:
+                        filename = os.path.basename(m.group(1))
+                        failed_tasks[filename] += 1
+
         for x in os.listdir(self.args.input_folder):
             if x in already_processed:
                 self.logger.debug("exclude {}, already processed".format(x))
+            elif failed_tasks[x] >= args.retries_count:
+                self.logger.debug("exclude {}, too many retries".format(x))
             else:
                 yield x
 
@@ -231,6 +239,7 @@ class TJobTasks:
             if was_alive and not host_worker.worker_is_alive():
                 self.logger.error("logger host {} looks like be dead, do not send tasks to it".format(host_worker.hostname))
             if exit_code != 0:
+                self.logger.debug("task failed: {}".format(project_file))
                 if self.tries_count[project_file] < args.retries_count:
                     self.input_files.put(project_file)
                     self.logger.debug("register retry for {}".format(project_file))
@@ -259,7 +268,11 @@ class TJobTasks:
         self.threads = []
 
     def wait_conversion_pdf(self):
-        while self.conversion_client.get_pending_all_file_size() > 100 * 2**20:
+        while True:
+            input_queue_size = self.conversion_client.get_pending_all_file_size()
+            self.logger.debug("conversion pdf input_queue_size={}".format(input_queue_size))
+            if input_queue_size < 100 * 2**20:
+                break
             self.logger.debug("wait 5 minutes till the conversion server finish its work")
             time.sleep(60 * 5)
 
@@ -272,7 +285,7 @@ class TJobTasks:
                 if self.running_jobs_count() > 0:
                     continue  #wait till all jobs finished
                 if not self.input_files.empty():
-                    self.logger("stop process, exception={}, left unfinished jobs".format(exp))
+                    self.logger.debug("stop process, exception={}, left unfinished jobs".format(exp))
                     return False
                 break
             host = self.get_free_host()

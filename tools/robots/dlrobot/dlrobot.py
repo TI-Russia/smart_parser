@@ -167,4 +167,5 @@ if __name__ == "__main__":
         print("ctrl+c received")
         sys.exit(1)
     finally:
-        TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
+        if TDownloadEnv.CONVERSION_CLIENT is not None:
+            TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()

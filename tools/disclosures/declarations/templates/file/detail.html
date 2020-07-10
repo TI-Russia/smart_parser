@@ -1,0 +1,19 @@
+ID файла: {{ spjsonfile.id }} <br/>
+
+Ведомство: {{ spjsonfile.office.name }} <br/>
+
+ID ведомства: {{ spjsonfile.office.id }} <br/>
+
+Сайт: <a href="http://{{ spjsonfile.web_domain }}"> {{ spjsonfile.web_domain }} </a> <br/>
+
+Скаченный файл: <a href="/static/{{ spjsonfile.doc_path }}"> {{ spjsonfile.doc_path }} </a> <br/>
+
+{% if section.spjsonfile.declarator_document_file_url %}
+    <a href="{{section.spjsonfile.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
+{% endif %}
+<br>
+
+{% if section.spjsonfile.dlrobot_url %}
+    <a href="{{section.spjsonfile.dlrobot_url}}"> Ссылка на документ на сайте ведомства (если ведомство не удалило этот документ) </a>
+{% endif %}
+<br>

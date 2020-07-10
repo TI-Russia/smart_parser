@@ -1,5 +1,6 @@
 import os
 from django.utils.translation import gettext_lazy as _
+#from disclosures.disclosures.elastic_signal import ElasticSignalProcessor
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,7 +11,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '++rv=$@125pu%jb@f)2qgj5&8m_8v063ny%y_7im%pu!+l=d1e'
-
 
 
 # Application definition
@@ -24,6 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modeltranslation',
     'declarations.apps.DeclarationsConfig',
+    'rest_framework',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 ]
 
 MIDDLEWARE = [
@@ -124,4 +127,15 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    '/home/sokirko/declarator_hdd/declarator/2020-05-15'
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
+
+
+#ELASTICSEARCH_DSL_SIGNAL_PROCESSOR =  ElasticSignalProcessor
+#from django_elasticsearch_dsl.signals import RealTimeSignalProcessor

@@ -1,0 +1,147 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Авагян Рубик Ваганович",
+        "role": ""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": [
+        {
+          "text": "1. автомобиль легковой, PORSCHE PANAMERA S 4.8 (2010 г.)",
+          "relative": null
+        }
+      ],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Авдеев Виктор Евгеньевич",
+        "role": ""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 204797.77,
+          "size_raw": "1, Общество с ограниченной ответственностью \"Водмонтаж-сервис\"; \n\n\n\nОбщая сумма доходов: 204797,77 руб,",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "1. город Москва, 64,7 кв.м.",
+          "square": 64.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "0",
+          "relative": null
+        }
+      ],
+      "person_index": 2
+    },
+    {
+      "person": {
+        "name_raw": "Аверкиев Павел Борисович",
+        "role": ""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 14106391.41,
+          "size_raw": "1, акционерное общество ВТБ Капитал; \n\n\n\n2, акционерное общество \"Открытие Брокер\"; \n\n\n\n3, акционерное общество Негосударственный пенсионный фонд ВТБ Пенсионный фонд; \n\n\n\n4, публичное акционерное общество БАНК \"ЮГРА\"; \n\n\n\n5, Коммерческий банк \"Ренессанс Кредит\" (общество с ограниченной ответственностью); \n\n\n\n6, Акционерный коммерческий банк «РОССИЙСКИЙ КАПИТАЛ» (публичное акционерное общество); \n\n\n\nОбщая сумма доходов: 14106391,41 руб,",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "кол-во объектов: 4; \n\n",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        },
+        {
+          "text": " город Москва, 37,9 кв.м.; \n\n",
+          "square": 37.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        },
+        {
+          "text": " 39,4 кв.м.; \n\n",
+          "square": 39.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        },
+        {
+          "text": " город Санкт-Петербург, 43,4 кв.м.; \n\n",
+          "square": 43.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        },
+        {
+          "text": " 69,1 кв.м.",
+          "square": 69.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "1. автомобиль легковой, БМВ 525XI (2006 г.)",
+          "relative": null
+        }
+      ],
+      "person_index": 3
+    },
+    {
+      "person": {
+        "name_raw": "Агеев Александр Александрович",
+        "role": ""
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 4735560.13,
+          "size_raw": "1, Государственная Дума Федерального Собрания Российской Федерации; \n\n\n\nОбщая сумма доходов: 4735560,13 руб,",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "1. Волгоградская область, 64,2 кв.м., доля в праве 1/3",
+          "square": 64.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "кол-во объектов: 2; \n\n\n\n1. мотоцикл, HONDA CBR1000RR (2008 г.); \n\n\n\n2. автомобиль легковой, MERCEDES-BENZ ML350 BLUETEC (2012 г.)",
+          "relative": null
+        }
+      ],
+      "person_index": 4
+    }
+  ],
+  "document": {
+    "year": 2015
+  }
+}

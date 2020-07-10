@@ -16,7 +16,8 @@
         <th> section_id </th>
         <th> ФИО </th>
         <th> Год </th>
-        <th> Место работы </th>
+        <th> Ведомство, где была найдена декларация </th>
+        <th> Уверенность </th>
     </tr>
     {% for section in person.section_set.all %}
         <tr>
@@ -24,7 +25,18 @@
             <td> <a href="/section/{{ section.id }}"> {{ section.person_name }} </a> </td>
             <td> {{ section.income_year }} </td>
             <td> {{ section.spjsonfile.office.name }} </td>
+            <td> 
+                {% if section.dedupe_score > 0 %}
+                    {{ section.dedupe_score | floatformat:2}}
+                {% else %}
+                    1.0
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
 </table>
 
+
+{% if person.declarator_person_id %}
+    <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
+{% endif %}

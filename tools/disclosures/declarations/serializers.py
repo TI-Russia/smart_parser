@@ -34,7 +34,6 @@ def read_vehicles(section_json):
         if text is not None:
             yield models.Vehicle(
                 name=text,
-                name_ru=text,
                 relative=models.Relative.get_relative_code( i.get('relative'))
             )
 
@@ -158,6 +157,12 @@ class TSectionPassportFactory:
         return res, search_results
 
 
+def normalize_fio(fio):
+    fio = normalize_whitespace(fio)
+    fio = fio.replace('"', ' ').strip()
+    return fio.title()
+
+
 class TSmartParserJsonReader:
 
     class SerializerException(Exception):
@@ -185,12 +190,9 @@ class TSmartParserJsonReader:
         fio = person_info.get('name', person_info.get('name_raw'))
         if fio is None:
             raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
-        self.section.person_name =  normalize_whitespace(fio.replace('"', ' '))
-        self.section.person_name_ru = self.section.person_name
-        self.section.position =  person_info.get("role")
-        self.section.position_ru = self.section.position
+        self.section.person_name = normalize_fio(fio)
+        self.section.position = person_info.get("role")
         self.section.department =  person_info.get("department")
-        self.section.department_ru = self.section.department
 
     def get_passport_factory(self, office_hierarchy=None):
         return TSectionPassportFactory(
