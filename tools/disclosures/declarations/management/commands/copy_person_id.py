@@ -48,7 +48,7 @@ def get_all_section_from_declarator_with_person_id():
     # query to declarator db
     db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
                                     unix_socket="/var/run/mysqld/mysqld.sock")
-    in_cursor = connection.cursor()
+    in_cursor = db_connection.cursor()
     in_cursor.execute("""
                     select  s.person_id, 
                             d.id, 
@@ -115,9 +115,7 @@ class Command(BaseCommand):
             with open(options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
                 prop_to_person = json.load(inpf)
         else:
-            prop_to_person = get_all_section_from_declarator_with_person_id(db_connection)
-        #with open("debug.dump", "w", encoding="utf8") as outp:
-        #    json.dump( prop_to_person, outp, indent=4, ensure_ascii=False)
+            prop_to_person = get_all_section_from_declarator_with_person_id()
         logger.info("found {} mergings in declarator".format(len(prop_to_person)))
         logger.info("stop_elastic_indexing")
         stop_elastic_indexing()
