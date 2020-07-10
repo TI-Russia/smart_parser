@@ -2,8 +2,7 @@ import json
 import sys
 import os
 from collections import defaultdict
-from declarations.serializers import  TDlrobotHumanFile, TWebReference
-from declarations.input_json import TIntersectionStatus
+from declarations.input_json import TIntersectionStatus, TDlrobotHumanFile
 
 if __name__ == '__main__':
     dlrobot_human = TDlrobotHumanFile(input_file_name=sys.argv[1])
@@ -35,6 +34,7 @@ if __name__ == '__main__':
         "files_count": files_count,
         "both_found": both_found,
         "only_human": only_human,
+        "only_dlrobot": only_dlrobot,
         "crawl_epochs": dict(crawl_epochs),
         "extensions": dict(extensions),
     }

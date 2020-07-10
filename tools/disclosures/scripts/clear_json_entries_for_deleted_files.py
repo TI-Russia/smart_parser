@@ -1,6 +1,6 @@
 import sys
 import os
-from declarations.serializers import TDlrobotHumanFile
+from declarations.input_json import TDlrobotHumanFile
 
 
 if __name__ == '__main__':

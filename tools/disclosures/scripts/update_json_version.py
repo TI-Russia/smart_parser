@@ -4,6 +4,7 @@ import json
 import argparse
 import os
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--crawl-epoch", dest='crawl_epoch', type=int, required=True)
@@ -24,7 +25,7 @@ def get_files(args, json_body):
     else:
         for web_site, web_site_info in json_body.items():
             for sha256, file_info in web_site_info.items():
-                yield web_site, a256, file_info
+                yield web_site, sha256, file_info
 
 
 if __name__ == '__main__':
@@ -62,6 +63,8 @@ if __name__ == '__main__':
         if not args.human_file_format:
             web_ref = TWebReference()
             web_ref.crawl_epoch = args.crawl_epoch
+            if file_info.get('r:old', False):
+                web_ref.crawl_epoch -= 1
             web_ref.url = file_info.get('r:url', website)
             src_doc.add_web_reference(web_ref)
 
