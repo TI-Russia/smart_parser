@@ -335,6 +335,7 @@ namespace Smart.Parser.Lib
             }
 
             bool skipEmptyPerson = false;
+            string prevPersonName = "";
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -367,7 +368,7 @@ namespace Smart.Parser.Lib
 
                 if (updateTrigrams) ColumnPredictor.UpdateByRow(columnOrdering, currRow);
 
-                if (!currRow.InitPersonData())
+                if (!currRow.InitPersonData(prevPersonName))
                 {
                     // be robust, ignore errors see 8562.pdf.docx in tests
                     continue;
@@ -375,6 +376,7 @@ namespace Smart.Parser.Lib
 
                 if (currRow.PersonName != String.Empty)
                 {
+                    prevPersonName = currRow.PersonName; 
                     borderFinder.CreateNewDeclarant(Adapter, currRow);
                     if (borderFinder.CurrentPerson != null)
                         skipEmptyPerson = false;

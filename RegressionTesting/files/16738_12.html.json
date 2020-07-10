@@ -16,10 +16,10 @@
       "real_estates": [
         {
           "text": "Квартира (Индивидуальная) - 61,9 кв.м. РФ",
-          "square": null,
+          "square": 61.9,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "61,9 кв,м,",
+          "square_raw": "61,9",
           "country_raw": "РФ",
           "type_raw": "Квартира (Индивидуальная) - 61,9 кв.м. РФ",
           "own_type_raw": "(Индивидуальная)"

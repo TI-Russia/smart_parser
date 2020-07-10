@@ -23,30 +23,30 @@
       "real_estates": [
         {
           "text": "Квартира (долевая собственность) 122 кв.м.",
-          "square": null,
+          "square": 122.0,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "122 кв,м,",
+          "square_raw": "122",
           "country_raw": "",
           "type_raw": "Квартира (долевая собственность) 122 кв.м.",
           "own_type_raw": "(долевая собственность)"
         },
         {
           "text": "Квартира (долевая собственность) 122 кв.м.",
-          "square": null,
+          "square": 122.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "122 кв,м,",
+          "square_raw": "122",
           "country_raw": "",
           "type_raw": "Квартира (долевая собственность) 122 кв.м.",
           "own_type_raw": "(долевая собственность)"
         },
         {
           "text": "Квартира (долевая собственность) 122 кв.м.",
-          "square": null,
+          "square": 122.0,
           "relative": "Ребенок",
           "own_type_by_column": null,
-          "square_raw": "122 кв,м,",
+          "square_raw": "122",
           "country_raw": "",
           "type_raw": "Квартира (долевая собственность) 122 кв.м.",
           "own_type_raw": "(долевая собственность)"

@@ -85,6 +85,17 @@ namespace Smart.Parser.Lib
                 case "супруга": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
                 case "супругнет": return RelationType.Spouse;
+                case "муж": return RelationType.Spouse;
+                case "жена": return RelationType.Spouse;
+                case "жены": return RelationType.Spouse;
+                case "подопечный": return RelationType.Spouse;
+                case "супруги": return RelationType.Spouse;
+                case "суапруга": return RelationType.Spouse;
+                case "сурпуга": return RelationType.Spouse;
+                case "спруг": return RelationType.Spouse;
+                case "супргуа": return RelationType.Spouse;
+                case "супруна": return RelationType.Spouse;
+
                 case "несовершенно": return RelationType.Child;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
@@ -111,27 +122,26 @@ namespace Smart.Parser.Lib
                 case "сынжены": return RelationType.Child;
                 case "дочьжены": return RelationType.Child;
                 case "несовершеннолетнийребёнок": return RelationType.Child;
+                case "несовешеннолетнийребенок": return RelationType.Child;
+                case "несовершеннолетийребенок": return RelationType.Child;
                 case "несовершеннолетний": return RelationType.Child;
                 case "несовершеноленийребенок": return RelationType.Child;
                 case "нсовершеннолетнийребенок": return RelationType.Child;
-                case "племяницасупруги": return RelationType.Other;
                 case "совершеннолетнийребенок": return RelationType.Child;
                 case "несоверщеннолетнийребенок": return RelationType.Child;
-                case "муж": return RelationType.Spouse;
-                case "мать": return RelationType.Other;
-                case "жена": return RelationType.Spouse;
-                case "жены": return RelationType.Spouse;
-                case "подопечный": return RelationType.Spouse;
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
                 case "иждивенец": return RelationType.Child;
                 case "опекаемая": return RelationType.Child;
                 case "опекаемый": return RelationType.Child;
-                case "супруги": return RelationType.Spouse;
-                case "супруна": return RelationType.Spouse;
+                case "иждивенц": return RelationType.Child;
+
+                case "племяницасупруги": return RelationType.Other;
+                case "мать": return RelationType.Other;
+                case "членсемьи": return RelationType.Other;
 
                 default:
-                    if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннолетн"))
+                    if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннол"))
                         return RelationType.Child;
                     if (clean.StartsWith("супруг"))
                         return RelationType.Spouse;

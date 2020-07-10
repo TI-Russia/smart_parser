@@ -23,40 +23,40 @@
       "real_estates": [
         {
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",
-          "square": null,
+          "square": 64.3,
           "relative": null,
           "own_type_by_column": null,
-          "square_raw": "64,3 кв,м,",
+          "square_raw": "64,3",
           "country_raw": "(Россия)",
           "type_raw": "квартира (пользование) 64,3 кв.м. (Россия)",
           "own_type_raw": "(пользование)"
         },
         {
           "text": "гараж (Индивидуальная) 52,7 кв.м. (Россия)",
-          "square": null,
+          "square": 52.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "52,7 кв,м,",
+          "square_raw": "52,7",
           "country_raw": "(Россия)",
           "type_raw": "гараж (Индивидуальная) 52,7 кв.м. (Россия)",
           "own_type_raw": "(Индивидуальная)"
         },
         {
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",
-          "square": null,
+          "square": 64.3,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
-          "square_raw": "64,3 кв,м,",
+          "square_raw": "64,3",
           "country_raw": "(Россия)",
           "type_raw": "квартира (пользование) 64,3 кв.м. (Россия)",
           "own_type_raw": "(пользование)"
         },
         {
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",
-          "square": null,
+          "square": 64.3,
           "relative": "Ребенок",
           "own_type_by_column": null,
-          "square_raw": "64,3 кв,м,",
+          "square_raw": "64,3",
           "country_raw": "(Россия)",
           "type_raw": "квартира (пользование) 64,3 кв.м. (Россия)",
           "own_type_raw": "(пользование)"
