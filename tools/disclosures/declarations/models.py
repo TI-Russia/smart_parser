@@ -123,7 +123,7 @@ OwnType.static_initalize()
 
 class Web_Reference(models.Model):
     source_document = models.ForeignKey('declarations.source_document', verbose_name="source document", on_delete=models.CASCADE)
-    dlrobot_url = models.CharField(max_length=256, null=True)
+    dlrobot_url = models.TextField(null=True)
     crawl_epoch = models.IntegerField(null=True)
 
 
@@ -132,7 +132,7 @@ class Declarator_File_Reference(models.Model):
                                  on_delete=models.CASCADE)
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
-    declarator_document_file_url = models.CharField(max_length=128, null=True)
+    declarator_document_file_url = models.TextField(null=True)
 
 
 class Source_Document(models.Model):

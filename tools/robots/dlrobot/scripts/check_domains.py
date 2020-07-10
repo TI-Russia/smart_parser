@@ -66,8 +66,8 @@ def read_input(args):
         dlrobot_human = TDlrobotHumanFile(input_file_name=args.human_files)
         urls = set()
         for src_doc in dlrobot_human.document_collection.values():
-            for ref in src_doc.references:
-                if isinstance(ref, TDeclaratorReference) and len(ref.web_domain) > 0:
+            for ref in src_doc.decl_references:
+                if len(ref.web_domain) > 0:
                     urls.add(ref.web_domain)
         urls = list(urls)
     else:
