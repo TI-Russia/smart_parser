@@ -63,7 +63,7 @@ if __name__ == '__main__':
         if not args.human_file_format:
             web_ref = TWebReference()
             web_ref.crawl_epoch = args.crawl_epoch
-            web_ref.url = file_info.get('r:url')
+            web_ref.url = file_info.get('r:url', website)
             src_doc.references.append(web_ref)
 
         if 'd:office_id' in file_info:
