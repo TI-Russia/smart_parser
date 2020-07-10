@@ -159,6 +159,18 @@ namespace Smart.Parser.Lib
 
         }
 
+        static public void SwapCountryAndSquare(ref string squareStr, ref string countryStr)
+        {
+            if ((squareStr.ToLower().Trim() == "россия" ||
+                 squareStr.ToLower().Trim() == "рф") &&
+                Regex.Match(countryStr.Trim(), @"[0-9,.]").Success)
+            {
+                var t = squareStr;
+                squareStr = countryStr;
+                countryStr = t;
+            }
+        }
+
         public void ParseStateProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.StatePropertySquare))
@@ -174,7 +186,9 @@ namespace Smart.Parser.Lib
             string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
             string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
             string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
-
+            
+            SwapCountryAndSquare(ref statePropSquareStr, ref statePropCountryStr);
+            
             try
             {
                 if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
@@ -203,11 +217,14 @@ namespace Smart.Parser.Lib
         }
 
         static public void ParseStatePropertySingleRow(string statePropTypeStr,
-    string statePropOwnershipTypeStr,
-    string statePropSquareStr,
-    string statePropCountryStr,
-    Person person)
+            string statePropOwnershipTypeStr,
+            string statePropSquareStr,
+            string statePropCountryStr,
+            Person person)
         {
+
+            SwapCountryAndSquare(ref statePropSquareStr, ref statePropCountryStr);
+
             statePropTypeStr = statePropTypeStr.Trim();
             if (DataHelper.IsEmptyValue(statePropTypeStr))
             {
@@ -230,6 +247,9 @@ namespace Smart.Parser.Lib
 
         static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
         {
+
+            SwapCountryAndSquare(ref areaStr, ref countryStr);
+
             estateTypeStr = estateTypeStr.Trim();
             areaStr = areaStr.ReplaceEolnWithSpace();
             if (DataHelper.IsEmptyValue(estateTypeStr))
