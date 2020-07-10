@@ -41,3 +41,8 @@ class ElasticPersonDocument(Document):
 def stop_elastic_indexing():
     ElasticSectionDocument.django.ignore_signals = True
     ElasticPersonDocument.django.ignore_signals = True
+
+
+def start_elastic_indexing():
+    ElasticSectionDocument.django.ignore_signals = False
+    ElasticPersonDocument.django.ignore_signals = False

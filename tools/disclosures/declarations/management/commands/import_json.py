@@ -1,6 +1,6 @@
 import declarations.models as models
 from declarations.serializers import TSmartParserJsonReader
-from declarations.documents import stop_elastic_indexing
+from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from django.core.management import BaseCommand
 from django.db import transaction
 from django.db import DatabaseError
@@ -60,7 +60,7 @@ def register_in_database(sha256, src_doc):
                                                         intersection_status=src_doc.intersection_status,
                                                         )
     source_document_in_db.save()
-    for ref im src_doc.references:
+    for ref in src_doc.references:
         if isinstance(ref, TDeclaratorReference):
             models.Declarator_File_Reference(source_document=source_document_in_db,
                                              declarator_documentfile_id=ref.document_file_id,
@@ -90,14 +90,13 @@ class TImporter:
     def __init__(self, args):
         self.args = args
         self.dlrobot_human = TDlrobotHumanFile(input_file_name=args['dlrobot_human'])
-        TImporter.logger.debug("load information about {} sites ".format(len(self.dlrobot_human_file_info)))
         self.all_section_passports = set()
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
 
     def get_human_smart_parser_json(self, src_doc, already_imported):
         res = set()
-        for ref in src_doc.referemces:
+        for ref in src_doc.references:
             if isinstance(ref, TDeclaratorReference):
                 filename = os.path.join(self.args['smart_parser_human_json'], str(ref.document_id) + ".json")
                 if os.path.exists(filename) and filename not in already_imported:
@@ -114,11 +113,11 @@ class TImporter:
         self.all_section_passports.add(passport)
         return True
 
-    def import_one_smart_parser_json(self, source_document, filepath):
+    def import_one_smart_parser_json(self, declarator_income_year, source_document_in_db, filepath):
         with open(filepath, "r", encoding="utf8") as inp:
             input_json = json.load(inp)
         # take income_year from smart_parser. If absent, take it from declarator, otherwise the file is useless
-        income_year = input_json.get('document', dict()).get('year', source_document.declarator_income_year)
+        income_year = input_json.get('document', dict()).get('year', declarator_income_year)
         if income_year is None:
             TImporter.logger.error("cannot import {}, year is not defined".format(filepath))
             return
@@ -130,7 +129,7 @@ class TImporter:
             section_index += 1
             with transaction.atomic():
                 try:
-                    json_reader = TSmartParserJsonReader(income_year, source_document.source_document_in_db, p)
+                    json_reader = TSmartParserJsonReader(income_year, source_document_in_db, p)
                     passport = json_reader.get_passport_factory().get_passport_collection()[0]
                     if self.register_section_passport(passport):
                         json_reader.save_to_database()
@@ -144,7 +143,7 @@ class TImporter:
 
     def import_office(self, office_id):
         all_imported_human_jsons = set()
-        for sha256, src_doc in self.dlrobot_human.document_collectio.items():
+        for sha256, src_doc in self.dlrobot_human.document_collection.items():
             if src_doc.calculated_office_id != office_id:
                 continue
             input_path = self.dlrobot_human.get_document_path(src_doc, absolute=True)
@@ -155,7 +154,7 @@ class TImporter:
             doc_file_in_db = register_in_database(sha256, src_doc)
             for json_file in json_files:
                 try:
-                    self.import_one_smart_parser_json(doc_file_in_db, json_file)
+                    self.import_one_smart_parser_json(src_doc.get_declarator_income_year(), doc_file_in_db, json_file)
                 except TSmartParserJsonReader.SerializerException as exp:
                     TImporter.logger.error("Error! cannot import {}: {} ".format(json_file, exp))
 
@@ -223,5 +222,5 @@ class ImportJsonCommand(BaseCommand):
                 cnt += 1
         importer.logger.info ("Section count={}".format(models.Section.objects.all().count()))
         ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
-
+        start_elastic_indexing()
 Command=ImportJsonCommand

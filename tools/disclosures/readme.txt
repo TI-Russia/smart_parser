@@ -18,6 +18,7 @@
 
 export TOOLS=~/smart_parser/tools
 CURRENT_DATE=`date  +'%Y-%m-%d'`
+export CRAWL_EPOCH=2
 export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-02-01
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
@@ -52,7 +53,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 #5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
     python $TOOLS/disclosures/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES  --copy-to-one-folder-json copy_to_one_folder.json \
         --human-json $HUMAN_FILES_JSON --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
-        --output-json dlrobot_human.json
+        --crawl-epoch $CRAWL_EPOCH --output-json dlrobot_human.json
 
 
 #5.1  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом

@@ -1,11 +1,12 @@
+from declarations.input_json import TSourceDocument, TDeclaratorReference, TDlrobotHumanFile, TWebReference, TIntersectionStatus
+
 import shutil
 import os
 import argparse
 import hashlib
 import json
 import logging
-from declarations.input_json import TSourceDocument, TDeclaratorReference, TDlrobotHumanFile, TWebReference, TIntersectionStatus
-
+from collections import defaultdict
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -89,12 +90,13 @@ class TJoiner:
                 self.logger.error("a file copy found: {}/{}".format(domain_folder, base_file_name))
                 src_doc.intersection_status = TIntersectionStatus.both_found
                 src_doc.document_path = relative_path
-                src_doc.refs.append(web_ref)
+                src_doc.references.append(web_ref)
             else:
                 src_doc = TSourceDocument()
                 src_doc.document_path = os.path.basename(file_path)
                 src_doc.intersection_status = TIntersectionStatus.only_dlrobot
                 src_doc.document_path = relative_path
+                src_doc.references.append(web_ref)
                 self.dlrobot_human.document_collection[sha256] = src_doc
                 new_files_found_by_dlrobot += 1
 
@@ -103,12 +105,12 @@ class TJoiner:
     def copy_human_file(self, src_doc: TSourceDocument):
         ref = src_doc.references[0]
         web_site = ref.web_domain
-        if web_site == "":
+        if web_site == "" or web_site is None:
             web_site = "unknown_domain"
-        infile = os.path.join(self.saved_declarator_folder, ref.file_path)
-        src_doc.document_path = os.path.join(web_site, os.path.basename(TJoiner.human_file_name_prefix + os.path.basename(infile)))
+        infile = os.path.join(self.saved_declarator_folder, src_doc.document_path)
+        src_doc.document_path = os.path.join(web_site, TJoiner.human_file_name_prefix + os.path.basename(infile))
         outfile = self.dlrobot_human.get_document_path(src_doc)
-        output_folder = os.path.dirnname(outfile)
+        output_folder = os.path.dirname(outfile)
         if not os.path.exists(output_folder):
             self.logger.debug("create folder for domain {}".format(output_folder))
             os.mkdir(output_folder)
@@ -123,13 +125,13 @@ class TJoiner:
                 shutil.copyfile(infile, outfile)
 
     def copy_old_dlrobot_files(self, json_file_name):
-        self.logger.debug( "read {}".format(json_file_name) )
+        self.logger.info( "read {}".format(json_file_name) )
         old_json = TDlrobotHumanFile (json_file_name)
 
-        self.logger.debug("copy old files ...")
+        self.logger.info("copy old files ...")
         for sha256, src_doc  in old_json.document_collection.items():
             if sha256  not in self.dlrobot_human.document_collection:
-                infile = old_json.get_document_path(src_doc)
+                infile = old_json.get_document_path(src_doc, absolute=True)
                 if not os.path.exists(infile):
                     self.logger.error("old file {} does not exist".format(infile))
                 else:
@@ -143,30 +145,29 @@ class TJoiner:
                     src_doc.document_path = os.path.join(folder, output_basename)
                     self.dlrobot_human.document_collection[sha256] = src_doc
                     outfile = self.dlrobot_human.get_document_path(src_doc)
-                    self.logger.error("copy {} to {}".format(infile, outfile))
+                    self.logger.debug("copy {} to {}".format(infile, outfile))
                     shutil.copyfile(infile, outfile)
 
     def join(self):
-        self.logger.error("register dlrobot files ...")
+        self.logger.info("register dlrobot files ...")
         for domain in os.listdir(self.args.dlrobot_folder):
-            if domain != TSourceDocument.humans_folder:
+            if domain != "unknown_domain":
                 self.add_dlrobot_files(domain)
 
-        self.logger.error("copy human files ...")
+        self.logger.info("copy human files ...")
         for src_doc in self.dlrobot_human.document_collection.values():
             if src_doc.intersection_status == TSourceDocument.only_human:
                 self.copy_human_file(src_doc)
 
         if args.old_dlrobot_human_json is not None:
-            self.copy_old_dlrobot_file(args.old_dlrobot_human_json)
+            self.copy_old_dlrobot_files(args.old_dlrobot_human_json)
 
-        self.output_file.write(args.output_json)
 
     def calc_office_id(self):
         web_site_to_office = dict()
         self.logger.info("web_site_to_office")
-        for f in self.dlrobot_human.document_collection.values():
-            for r in f.references:
+        for src_doc in self.dlrobot_human.document_collection.values():
+            for r in src_doc.references:
                 if isinstance(r, TDeclaratorReference):
                     if r.web_domain not in web_site_to_office:
                         web_site_to_office[r.web_domain] = defaultdict(int)
@@ -177,11 +178,12 @@ class TJoiner:
             office_id = max(offices.keys(), key=lambda x: offices[x])
             web_domain_to_office[web_site] = office_id
 
+        print(web_domain_to_office)
         self.logger.info("update calculated_office_id...")
 
         for src_doc in self.dlrobot_human.document_collection.values():
             office_id = None
-            for r in f.references:
+            for r in src_doc.references:
                 if isinstance(r, TDeclaratorReference):
                     office_id = r.office_id
                     break
@@ -189,6 +191,7 @@ class TJoiner:
                 web_domain = os.path.dirname(src_doc.document_path)
                 office_id = web_domain_to_office.get(web_domain)
             if office_id is not None:
+                self.logger.debug("set file {} calculated_office_id={}".format(src_doc.document_path, office_id))
                 src_doc.calculated_office_id = office_id
 
 
@@ -199,6 +202,12 @@ def main(args):
         joiner.join()
     joiner.calc_office_id()
 
+    for src_doc in joiner.dlrobot_human.document_collection.values():
+        assert os.path.exists(joiner.dlrobot_human.get_document_path(src_doc, absolute=True))
+        if src_doc.calculated_office_id is None:
+            logger.error("file {} has no office".format(src_doc.document_path))
+
+    joiner.dlrobot_human.write(args.output_json)
 
 if __name__ == '__main__':
     args = parse_args()

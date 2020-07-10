@@ -7,7 +7,7 @@ from declarations.models import Person, Section
 from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
     get_pairs_from_clusters
 import sys
-from declarations.documents import stop_elastic_indexing
+from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 
 
 def setup_logging(logfilename="generate_dedupe_pairs.log"):
@@ -285,3 +285,4 @@ class Command(BaseCommand):
 
         if dump_stream is not None:
             dump_stream.close()
+        start_elastic_indexing()

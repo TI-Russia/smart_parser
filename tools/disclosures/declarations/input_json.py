@@ -16,7 +16,7 @@ class TDeclaratorReference:
         self.document_id = from_json.get('document_id')
         self.document_file_id = from_json.get('document_file_id')
         self.document_file_url = from_json.get('media_url')
-        assert len(from_json) == 0 or len(from_json) == 7
+        assert len(from_json) == 0 or len(from_json) == 6
 
     @staticmethod
     def check_json(j):
@@ -65,6 +65,13 @@ class TSourceDocument:
     def get_web_site(self):
         return os.path.dirname(self.document_path)
 
+    def get_declarator_income_year(self):
+        for r in self.references:
+            if isinstance(r, TDeclaratorReference):
+                if r.income_year is not None:
+                    return r.income_year
+        return None
+
     def write_to_json(self):
         return {
             'document_path': self.document_path,
@@ -83,7 +90,7 @@ class TDlrobotHumanFile:
                 from_json = json.load(inp)
             self.input_file_name_dir_name = os.path.dirname(input_file_name)
         self.document_folder = from_json.get('document_folder')
-        self.document_collection = from_json.get('documents', dict())
+        self.document_collection = dict((k, TSourceDocument(from_json=v)) for k, v in from_json.get('documents', dict()).items())
 
     def add_source_document(self, sha256, src_doc: TSourceDocument):
         self.document_collection[sha256] = src_doc
@@ -103,5 +110,5 @@ class TDlrobotHumanFile:
             json.dump(output_json, out,  indent=4, sort_keys=True, ensure_ascii=False)
 
     def get_all_offices(self):
-        return set(x.calculated_office_id for x in self.document_collection.values())
+        return set(x.calculated_office_id for x in self.document_collection.values() if x.calculated_office_id is not None)
 

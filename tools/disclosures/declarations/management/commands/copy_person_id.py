@@ -1,5 +1,5 @@
 import declarations.models as models
-from declarations.documents import stop_elastic_indexing
+from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 
 from django.core.management import BaseCommand
 from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
@@ -162,6 +162,7 @@ class Command(BaseCommand):
         logger.info("rebuild elastic search for person")
         ElasticManagement().handle(action="rebuild", models=["declarations.Person"], force=True, parallel=True,
                                    count=True)
+        start_elastic_indexing()
         logger.info("all done")
 
 CopyPersonIdCommand=Command
