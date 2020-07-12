@@ -113,6 +113,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 
 #13 go to prod
     mysqladmin drop  disclosures_db
-    cd ~/smart_parser/tools/disclosures
+    cd ~/smart_parser.disclosures_prod/tools/disclosures
     cat create_disclosures_db.sql | sudo mysql
-    zcat $DLROBOT_FOLDER//disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
+    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
+    python manage.py search_index --rebuild  --settings disclosures.settings.prod
