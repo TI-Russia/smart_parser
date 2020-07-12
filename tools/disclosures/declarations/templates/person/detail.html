@@ -1,3 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Информация о декларанте {% endblock title %}
+
+{% block content %}
+
 <h1>Person (person_id={{ person.id }}) </h1>
 
 <style>
@@ -40,3 +46,5 @@
 {% if person.declarator_person_id %}
     <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
 {% endif %}
+
+{% endblock content %}

@@ -1,4 +1,8 @@
-<h1>Search Results</h1>
+{% extends 'base.html' %}
+
+{% block title %}Найденные декларации {% endblock title %}
+
+{% block content %}
 
 {% include "search/search_form.html" %}
 
@@ -11,3 +15,5 @@
 </ul>
 
 {% include "search/paginator.html" %}
+
+{% endblock content %}

@@ -30,6 +30,10 @@ class HomePageView(generic.TemplateView):
         return context
 
 
+class AboutPageView(generic.TemplateView):
+    template_name = 'morda/about.html'
+
+
 class StatisticsView(generic.TemplateView):
     template_name = "statistics/statistics.html"
 

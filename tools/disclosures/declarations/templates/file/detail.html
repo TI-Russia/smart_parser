@@ -1,3 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Информация об исходном файле деклараций{% endblock title %}
+
+{% block content %}
+
 ID файла: {{ source_document.id }} <br/>
 
 Ведомство: {{ source_document.office.name }} <br/>
@@ -20,6 +26,11 @@ Intersection status: {{ source_document.intersection_status }} <br/>
     <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
     <br>
 {% endfor %}
+
+
+
+{% endblock content %}
+
 
 
 
