@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Ведомства{% endblock title %}
+
+
+{% block content %}
+
+<form action="{% url 'office_search' %}" method="get">
+    {{ form.q }}
+    <input type="submit" value="Поиск">
+    <br/>
+</form>
+
+{% if query %}
+  <br/>
+  Число найденных ведомств: {{ hits_count }}
+  <br/>
+
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Название</th>
+      <th>Документов</th>
+    </tr>
+    {% for office in object_list %}
+      <tr>
+        <td> {{ office.id }} </td>
+        <td>
+            <a href="/office/{{ office.id }}"> {{ office.name }} </a>
+        </td>
+        <td>
+            {{ office.source_document_count }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  {% include "search/paginator.html" %}
+
+{% endif %}
+
+{% endblock content %}
+
+

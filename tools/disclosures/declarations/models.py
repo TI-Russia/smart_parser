@@ -16,6 +16,46 @@ class Office(models.Model):
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
 
+    @property
+    def source_document_count(self):
+        return self.source_document_set.all().count()
+
+    def get_source_documents(self, max_count=10):
+        cnt = 0
+        for src_doc in self.source_document_set.all():
+            yield src_doc.id, src_doc.file_path
+            cnt += 1
+            if cnt >= max_count:
+                break
+
+    @property
+    def source_documents(self):
+        return self.get_source_documents(max_count=10)
+
+    @property
+    def parent_office_name(self):
+        if self.parent_id is None:
+            return ""
+        return Office.objects.get(pk=self.parent_id).name
+
+    @property
+    def child_offices_count(self):
+        return Office.objects.all().filter(parent_id=self.id).count()
+
+    def get_child_offices(self, max_count=5):
+        if self.parent_id is None:
+            return ""
+        cnt = 0
+        for x in Office.objects.all().filter(parent_id=self.id):
+            yield x.id, x.name
+            cnt += 1
+            if  cnt >= max_count:
+                break
+
+    @property
+    def child_offices(self):
+        return self.get_child_offices(max_count=5)
+
 
 class TOfficeHierarchy:
     group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
@@ -153,6 +193,10 @@ class Person(models.Model):
     person_name = models.CharField(max_length=64, verbose_name='person name')
     declarator_person_id = models.IntegerField(null=True)
 
+    @property
+    def section_count(self):
+        return self.section_set.all().count()
+
 
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
@@ -206,6 +250,8 @@ class Section(models.Model):
         relatives |= get_relatives(self.vehicle_set)
         result = Relative.sort_by_visual_order(list(relatives))
         return result
+
+
 
 
 

@@ -1,6 +1,6 @@
 from django_elasticsearch_dsl import Document
 from django_elasticsearch_dsl.registries import registry
-from declarations.models import Section, Person
+from declarations.models import Section, Person, Office
 from django.conf import settings
 from elasticsearch_dsl import Index
 
@@ -35,6 +35,23 @@ class ElasticPersonDocument(Document):
         fields = [
             'id',
             'person_name',
+        ]
+
+
+office_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['office_index_name'])
+office_search_index.settings(
+    number_of_shards=1,
+    number_of_replicas=0
+)
+
+@registry.register_document
+@office_search_index.document
+class ElasticOfficeDocument(Document):
+    class Django:
+        model = Office
+        fields = [
+            'id',
+            'name',
         ]
 
 

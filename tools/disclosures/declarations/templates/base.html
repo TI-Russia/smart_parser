@@ -51,8 +51,8 @@
   function menuCreate() {
       var menu_div = document.getElementById("menu_div");
       var tbl = document.createElement('table');
-      tbl.style.width = 760;
-      tbl.border="0";
+      tbl.style.width = "100%";
+      tbl.border = "0";
       menu = [{
                 "text":"главная",
                 "href":"/",
@@ -60,6 +60,18 @@
               {
                 "text":"о&nbsp;проекте",
                 "href":"/about.html",
+              },
+              {
+                "text":"ведомства",
+                "href":"/office/",
+              },
+              {
+                "text":"декларанты",
+                "href":"/person/",
+              },
+              {
+                "text":"декларации",
+                "href":"/section/",
               },
               {
                 "text":"статистика",
@@ -72,15 +84,18 @@
 
       for (var i = 0; i < menu.length; i++) {
           var td = document.createElement('td');
-          td.width = "150";
+          td.width = "20%";
           var anchor = menu[i].text;
           var link =  document.createElement('a');
           link.href = menu[i].href;
           if (window.location.pathname == menu[i].href) {
-                td.style.backgroundColor = "black";
-                link.innerHTML = `<font color="white"> ${anchor}</font>`;
+                var spanNode = document.createElement('span');
+                spanNode.style.backgroundColor = "black";
+                spanNode.style.color = "white";
+                spanNode.innerHTML = anchor;
+                link.appendChild(spanNode);
           } else {
-                link.innerHTML = `${anchor}`;
+                link.innerHTML = anchor;
           }
           td.appendChild(link);
           tr.appendChild(td);

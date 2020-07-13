@@ -6,9 +6,7 @@
 
 ID файла: {{ source_document.id }} <br/>
 
-Ведомство: {{ source_document.office.name }} <br/>
-
-ID ведомства: {{ source_document.office.id }} <br/>
+Ведомство: <a href="/office/{{ source_document.office.id }}"> {{ source_document.office.name }} </a><br/>
 
 Скаченный файл: <a href="/static/{{ source_document.file_path }}"> {{ source_document.file_path }} </a> <br/>
 

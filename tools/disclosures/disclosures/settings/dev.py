@@ -9,6 +9,7 @@ os.environ['DISCLOSURES_DB_HOST'] = 'localhost'
 ELASTICSEARCH_INDEX_NAMES = {
     'section_index_name': 'declaration_sections_dev',
     'person_index_name': 'declaration_person_dev',
+    'office_index_name': 'declaration_office_dev',
 }
 
 from .common import *
