@@ -13,8 +13,9 @@ urlpatterns = [
     path('section/<int:pk>/', views.SectionView.as_view(), name='section_detail'),
 
     path('office/', views.OfficeSearchView.as_view(), name='office_search'),
-    path('child-office/', views.ChildOfficeSearchView.as_view(), name='child_office_search'),
     path('office/<int:pk>/', views.OfficeView.as_view(), name='office_detail'),
 
     path('file/<int:pk>/', views.FileView.as_view(), name='file_detail'),
+    path('file/', views.FileSearchView.as_view(), name='file_search'),
+
 ]

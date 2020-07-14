@@ -1,10 +1,10 @@
 from . import models
 from django.views import generic
 from django.views.generic.edit import FormView
-from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument
+from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from declarations.input_json import TIntersectionStatus
 from django import forms
-
+import json
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -79,42 +79,34 @@ class CommonSearchView(FormView, generic.ListView):
             result['q'] = self.request.GET["q"]
         return result
 
+    def process_query(self, max_count=100):
+        query = self.request.GET.get('q')
+        if query is None:
+            return []
+        query = query.strip()
+        try:
+            if query.startswith('{') and query.endswith('}'):
+                query_dict = json.loads(query)
+            else:
+                query_dict = {self.elastic_search_document.default_field_name: query}
+        except Exception:
+            return []
+        search = self.elastic_search_document.search().query('match', **query_dict)
+        self.hits_count = search.count()
+        self.query = query
+        object_list = list()
+        for x in search[:max_count]:
+            object_list.append(self.model.objects.get(pk=x.id))
+        return object_list
+
 
 class OfficeSearchView(CommonSearchView):
     model = models.Office
     template_name = 'office/index.html'
+    elastic_search_document = ElasticOfficeDocument
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query is None:
-            return []
-        search = ElasticOfficeDocument.search().query('match', name=query)
-        self.hits_count = search.count()
-        self.query = query
-        object_list = list()
-        for x in search[:100]:
-            object_list.append(models.Office.objects.get(pk=x.id))
-            if len(object_list) > 100:
-                break
-        object_list.sort(key=lambda x: x.source_document_count, reverse=True)
-        return object_list
-
-
-class ChildOfficeSearchView(CommonSearchView):
-    model = models.Office
-    template_name = 'office/index.html'
-
-    def get_queryset(self):
-        parent_id = self.request.GET.get('parent_id')
-        if parent_id is None:
-            return []
-        parent_id = int(parent_id)
-        office = models.Office.objects.get(id=parent_id)
-        self.hits_count = office.child_offices_count
-        self.query = "parent_id={}".format(parent_id)
-        object_list = list()
-        for id, _ in office.get_child_offices(1000):
-            object_list.append(models.Office.objects.get(pk=id))
+        object_list = self.process_query()
         object_list.sort(key=lambda x: x.source_document_count, reverse=True)
         return object_list
 
@@ -122,19 +114,10 @@ class ChildOfficeSearchView(CommonSearchView):
 class PersonSearchView(CommonSearchView):
     model = models.Person
     template_name = 'person/index.html'
+    elastic_search_document = ElasticPersonDocument
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query is None:
-            return []
-        search = ElasticPersonDocument.search().query('match', person_name=query)
-        self.hits_count = search.count()
-        self.query = query
-        object_list = list()
-        for x in search[:100]:
-            object_list.append(models.Person.objects.get(pk=x.id))
-            if len(object_list) > 100:
-                break
+        object_list = self.process_query()
         object_list.sort(key=lambda x: x.section_count, reverse=True)
         return object_list
 
@@ -142,18 +125,22 @@ class PersonSearchView(CommonSearchView):
 class SectionSearchView(CommonSearchView):
     model = models.Section
     template_name = 'section/index.html'
+    elastic_search_document = ElasticSectionDocument
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query is None:
-            return []
-        search = ElasticSectionDocument.search().query('match', person_name=query)
-        self.hits_count = search.count()
-        self.query = query
-        object_list = list()
-        for x in search[:100]:
-            object_list.append(models.Section.objects.get(pk=x.id))
-            if len(object_list) > 100:
-                break
+        object_list = self.process_query(max_count=1000)
         object_list.sort(key=lambda x: x.income_year, reverse=True)
+        return object_list
+
+
+class FileSearchView(CommonSearchView):
+    model = models.Person
+    template_name = 'file/index.html'
+    elastic_search_document = ElasticFileDocument
+
+    def get_queryset(self):
+        # using 300 here to allow search bots to crawl all file links going from one office
+        object_list = self.process_query(max_count=300)
+
+        object_list.sort(key=lambda x: x.file_path, reverse=True)
         return object_list

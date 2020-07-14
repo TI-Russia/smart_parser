@@ -26,7 +26,7 @@
       <tr>
         <td> {{ office.id }} </td>
         <td>
-            <a href="/office/{{ office.id }}"> {{ office.name }} </a>
+            <a href="/office/{{office.id}}"> {{ office.name }} </a>
         </td>
         <td>
             {{ office.source_document_count }}
@@ -36,7 +36,6 @@
   </table>
 
   {% include "search/paginator.html" %}
-
 {% endif %}
 
 {% endblock content %}
