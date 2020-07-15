@@ -134,7 +134,7 @@ class SectionSearchView(CommonSearchView):
 
 
 class FileSearchView(CommonSearchView):
-    model = models.Person
+    model = models.Source_Document
     template_name = 'file/index.html'
     elastic_search_document = ElasticFileDocument
 
