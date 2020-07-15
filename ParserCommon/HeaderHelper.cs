@@ -121,6 +121,7 @@ namespace TI.Declarator.ParserCommon
             str = str.Replace(" ", "");
             return str.StartsWith("№") || 
                    str.ToLower().Contains("nп/п") || 
+                   str.ToLower().Contains("№п/п") || 
                    str.ToLower().Replace("\\", "/").Equals("п/п") || 
                    str.ToLower().Contains("nпп");
         }
@@ -132,6 +133,7 @@ namespace TI.Declarator.ParserCommon
                     clean.Contains("фамилимя") ||
                     clean.Contains("фио") ||
                     clean.Contains(".иф.о.") ||
+                    clean.Contains("сведенияодепутате") ||
                     clean.Contains("ф.и.о"));
         }
         public static bool IsNameAndOccupation(this string s)
@@ -344,9 +346,11 @@ namespace TI.Declarator.ParserCommon
                     || strLower.StartsWith("сведенияодоходеза")
                     || strLower.Contains("годовогодохода")
                     || strLower.Contains("суммадохода") 
+                    || strLower.Contains("суммадоходов") 
                     || strLower.Contains("декларированныйдоход")
                     || strLower.Contains("декларированныйгодовой")
                     || strLower.Contains("декларированногодохода")
+                    || strLower.Contains("декларированногогодовогодоход")
                     || strLower.Contains("общаясуммадохода")
                    );
         }
