@@ -37,6 +37,7 @@ def send_email (event_id, to_addr, message):
     except Exception as e:
         print(e)
 
+
 def check_ping(hostname):
     response = os.system("ping -c 1 " + hostname)
     # and then check the response...
@@ -51,19 +52,31 @@ def read_morda(url):
     except Exception as exp:
         return False
 
+def check_pdf_converter_server():
+    try:
+        f = urllib.request.urlopen('http://disclosures.ru:8091/ping')
+        s = f.read().decode('utf-8')
+        return s == "yes"
+    except Exception as exp:
+        return False
+
+
 def main():
     url = 'http://disclosures.ru'
     admin_email = "alexey.sokirko@gmail.com"
     ping_flag = True
     morda_flag = True
+    pdf_conv_srv_flag = True
     last_time_check_morda = 0
+    last_time_check_pdf_conv_src = 0
     send_email("start", admin_email, "disclosures checker start")
     assert read_morda(url)
+    assert check_pdf_converter_server()
 
     ping_period = 60*5
-    morda_read_period = 60 * 30
+    http_read_period = 60 * 30
     #ping_period = 10
-    #morda_read_period = 20
+    #http_read_period = 20
     while True:
         time.sleep(ping_period)
         if not check_ping('google.com'):
@@ -76,7 +89,8 @@ def main():
             if not ping_flag:
                 send_email("ping", admin_email, "disclosures.ru ping succeeded")
                 ping_flag = True
-            if not morda_flag or time.time() - last_time_check_morda  >= morda_read_period:
+
+            if not morda_flag or time.time() - last_time_check_morda  >= http_read_period:
                 last_time_check_morda = time.time()
                 if read_morda(url):
                     if not morda_flag:
@@ -85,6 +99,16 @@ def main():
                 else:
                     send_email("morda", admin_email, "disclosures.ru main page access failed")
                     morda_flag = False
+
+            if not pdf_conv_srv_flag or time.time() - last_time_check_pdf_conv_src >= http_read_period:
+                last_time_check_pdf_conv_src = time.time()
+                if check_pdf_converter_server():
+                    if not pdf_conv_srv_flag:
+                        send_email("pdf_conv_srv", admin_email, "pdf conversion server access restored")
+                    pdf_conv_srv_flag = True
+                else:
+                    send_email("pdf_conv_srv", admin_email, "pdf conversion server access failed")
+                    pdf_conv_srv_flag = False
 
 
 if __name__ == "__main__":
