@@ -4,27 +4,28 @@
 
 {% block content %}
 
-ID файла: {{ source_document.id }} <br/>
+<b>ID файла:</b> {{ source_document.id }} <br/><br/>
 
-Ведомство: <a href="/office/{{ source_document.office.id }}"> {{ source_document.office.name }} </a><br/>
+<b>Ведомство:</b> <a href="/office/{{ source_document.office.id }}"> {{ source_document.office.name }} </a><br/><br/>
 
-Скаченный файл: <a href="/static/{{ source_document.file_path }}"> {{ source_document.file_path }} </a> <br/>
+<b>Скаченный файл:</b> <a href="/static/{{ source_document.file_path }}"> {{ source_document.file_path }} </a> <br/><br/>
 
-Sha256: {{ source_document.sha256 }} <br/>
+<b>Sha256:</b> {{ source_document.sha256 }} <br/><br/>
 
-Intersection status: {{ source_document.intersection_status }} <br/>
+<b>Intersection status:</b> {{ source_document.intersection_status }} <br/><br/>
 
 {% for web_location in source_document.web_reference_set.all %}
-    Сайт: <a href="http://{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }} </a> <br/>
-    <br>
+    <b>Сайт:</b> <a href="http://{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>
+    <br><br/>
 {% endfor %}
 
 
 {% for decl_info in source_document.declarator_file_reference.all %}
     <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
-    <br>
+    <br><br/>
 {% endfor %}
 
+<a href=/section/?q={"source_document_id":{{source_document.id}}}> Все декларации этого документа </a> <br/><br/>
 
 
 {% endblock content %}
