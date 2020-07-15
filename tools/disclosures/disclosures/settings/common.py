@@ -119,6 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+from . import log_setup
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -136,6 +137,5 @@ ELASTICSEARCH_DSL = {
     },
 }
 
-
-#ELASTICSEARCH_DSL_SIGNAL_PROCESSOR =  ElasticSignalProcessor
-#from django_elasticsearch_dsl.signals import RealTimeSignalProcessor
+LOG_PATH = os.path.join(BASE_DIR, "logs/disclosures.log")
+LOGGING = log_setup.get_logging_settings(LOG_PATH)
