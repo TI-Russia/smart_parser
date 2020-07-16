@@ -83,7 +83,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    cat $TOOLS/disclosures/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
-   python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.prod
+   python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 3 --settings disclosures.settings.prod
    python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
 #9.  тестирование сливалки

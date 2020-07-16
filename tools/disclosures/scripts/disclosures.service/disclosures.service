@@ -1,0 +1,10 @@
+[Unit]
+Description=Production http-service for disclosures.ru
+
+[Service]
+ExecStart=/bin/bash -x /home/sokirko/smart_parser.disclosures_prod/tools/disclosures/scripts/disclosures.service/start_server.sh
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
