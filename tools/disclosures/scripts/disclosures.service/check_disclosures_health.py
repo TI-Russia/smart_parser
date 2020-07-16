@@ -17,15 +17,15 @@ def send_email (event_id, to_addr, message):
     smtp_server = "smtp.gmail.com"
     port = 587  # For starttls
     sender_email = "disclosures.ru@gmail.com"
-    with open("password.txt") as inp:
-        password = inp.read().strip()
+    with open("example.txt", "r") as inp:
+        text_cut = inp.read()[1024:1034]
 
     context = ssl.create_default_context()
 
     try:
         server = smtplib.SMTP(smtp_server, port)
         server.starttls(context=context) # Secure the connection
-        server.login(sender_email, password)
+        server.login(sender_email, text_cut)
         server.sendmail(sender_email, to_addr, message)
     except Exception as e:
         print(e)
@@ -113,3 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
