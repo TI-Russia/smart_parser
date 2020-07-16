@@ -46,7 +46,7 @@ def check_ping(hostname):
 
 def read_morda(url):
     try:
-        f = urllib.request.urlopen(url)
+        f = urllib.request.urlopen(url, timeout=30)
         s = f.read().decode('utf-8')
         return len(s) > 100
     except Exception as exp:
@@ -54,7 +54,7 @@ def read_morda(url):
 
 def check_pdf_converter_server():
     try:
-        f = urllib.request.urlopen('http://disclosures.ru:8091/ping')
+        f = urllib.request.urlopen('http://disclosures.ru:8091/ping', timeout=30)
         s = f.read().decode('utf-8')
         return s == "yes"
     except Exception as exp:
@@ -70,8 +70,8 @@ def main():
     last_time_check_morda = 0
     last_time_check_pdf_conv_src = 0
     send_email("start", admin_email, "disclosures checker start")
-    assert read_morda(url)
-    assert check_pdf_converter_server()
+    #assert read_morda(url)
+    #assert check_pdf_converter_server()
 
     ping_period = 60*5
     http_read_period = 60 * 30
