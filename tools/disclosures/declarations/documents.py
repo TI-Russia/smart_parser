@@ -15,6 +15,7 @@ section_search_index.settings(
 class ElasticSectionDocument(Document):
     default_field_name = "person_name"
     source_document_id = IntegerField()
+    office_id = IntegerField()
     class Django:
         model = Section
         fields = [
@@ -24,6 +25,9 @@ class ElasticSectionDocument(Document):
 
     def prepare_source_document_id(self, instance):
         return instance.source_document_id
+
+    def prepare_office_id(self, instance):
+        return instance.source_document.office.id
 
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])
@@ -36,6 +40,7 @@ person_search_index.settings(
 @person_search_index.document
 class ElasticPersonDocument(Document):
     default_field_name = "person_name"
+
     class Django:
         model = Person
         fields = [
