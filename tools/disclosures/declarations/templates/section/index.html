@@ -15,10 +15,14 @@
       Число найденных деклараций: {{ hits_count }}
   <br/>
 
+
   <ul>
     {% for section in object_list %}
       <li>
         {{ section.id }} : <a href="/section/{{ section.id }}">{{ section.person_name }} </a> ({{ section.income_year }})
+          {% if section.person_id %}
+            , <a href="/person/{{ section.person_id }}"> Декларант </a>
+          {% endif %}
       </li>
     {% endfor %}
   </ul>
