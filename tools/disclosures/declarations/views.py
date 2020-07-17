@@ -56,9 +56,7 @@ class StatisticsView(generic.TemplateView):
 
 
 class CommonSearchForm(forms.Form):
-    q = forms.CharField(label='')
-    def send_search_query(self):
-        pass
+    search_request = forms.CharField(widget=forms.TextInput(attrs={'size': 80}))
 
 
 class CommonSearchView(FormView, generic.ListView):
@@ -74,16 +72,18 @@ class CommonSearchView(FormView, generic.ListView):
         return context
 
     def get_initial(self):
-        result = {}
-        if 'q' in self.request.GET:
-            result['q'] = self.request.GET["q"]
-        return result
+        return {
+            'search_request': self.request.GET.get('search_request'),
+        }
 
     def process_query(self, max_count=100):
-        query = self.request.GET.get('q')
+        query = self.get_initial().get('search_request')
         if query is None:
             return []
         query = query.strip()
+        if len(query) == 0:
+            return []
+
         try:
             if query.startswith('{') and query.endswith('}'):
                 query_dict = json.loads(query)
@@ -129,7 +129,7 @@ class SectionSearchView(CommonSearchView):
 
     def get_queryset(self):
         object_list = self.process_query(max_count=1000)
-        object_list.sort(key=lambda x: x.income_year, reverse=True)
+        object_list.sort(key=lambda x: x.person_name)
         return object_list
 
 

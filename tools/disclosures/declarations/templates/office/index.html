@@ -5,7 +5,7 @@
 {% block content %}
 
 <form action="{% url 'office_search' %}" method="get">
-    {{ form.q }}
+    {{ form.search_request }}
     <input type="submit" value="Поиск">
     <br/>
 </form>
@@ -36,6 +36,7 @@
   </table>
 
   {% include "search/paginator.html" %}
+
 {% endif %}
 
 {% endblock content %}

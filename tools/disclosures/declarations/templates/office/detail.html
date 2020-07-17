@@ -25,7 +25,7 @@
             {% endfor %}
 
             {% if office.child_offices_count > 5 %}
-                <a href=/office?q={"parent_id":{{office.id}}}>...</a>
+                <a href=/office?search_request={"parent_id":{{office.id}}}>...</a>
             {% endif %}
             </td>
         </tr>
@@ -39,11 +39,14 @@
             {% endfor %}
 
             {% if office.source_document_count > 10 %}
-                <a href=/file?q={"office_id":{{office.id}}}>...</a>
+                <a href=/file?search_request={"office_id":{{office.id}}}>...</a>
             {% endif %}
             </td>
         </tr>
     {% endif %}
 
+    <tr><td>
+    <a href=/section?search_request={"office_id":{{office.id}}}>Все декларации этого ведомства</a>
+    </td></tr>
 </table>
 {% endblock content %}

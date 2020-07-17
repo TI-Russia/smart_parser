@@ -5,7 +5,7 @@
 {% block content %}
 
 <form action="{% url 'person_search' %}" method="get">
-    {{ form.q }}
+    {{ form.search_request }}
     <input type="submit" value="Поиск">
     <br/>
 </form>
