@@ -4,5 +4,5 @@ DISCLOSURES_FOLDER=`realpath $SCRIPT_FOLDER/../..`
 cd $DISCLOSURES_FOLDER
 export PYTHONPATH=$DISCLOSURES_FOLDER:$DISCLOSURES_FOLDER/..
 source ../venv/bin/activate
-python3 manage.py runserver 192.168.100.121:8000  --insecure --noreload --settings disclosures.settings.prod &
+python3 manage.py runserver 192.168.100.151:8000  --insecure --noreload --settings disclosures.settings.prod &
 
