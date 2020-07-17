@@ -7,7 +7,7 @@
 <h1>Person (person_id={{ person.id }}) </h1>
 
 <style>
-   table, td, th {
+   .section_table.table, .section_table.td, .section_table.th {
         border: solid;
         word-break: break-all;
         border-collapse: collapse;
@@ -17,7 +17,7 @@
    }
 </style>
 
-<table>
+<table class="section_table">
     <tr>
         <th> section_id </th>
         <th> ФИО </th>
@@ -30,7 +30,7 @@
             <td> {{ section.id }} </td>
             <td> <a href="/section/{{ section.id }}"> {{ section.person_name }} </a> </td>
             <td> {{ section.income_year }} </td>
-            <td> {{ section.spjsonfile.office.name }} </td>
+            <td> {{ section.source_document.office.name }} </td>
             <td> 
                 {% if section.dedupe_score > 0 %}
                     {{ section.dedupe_score | floatformat:2}}

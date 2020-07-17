@@ -21,7 +21,7 @@
       <li>
         {{ section.id }} : <a href="/section/{{ section.id }}">{{ section.person_name }} </a> ({{ section.income_year }})
           {% if section.person_id %}
-            , <a href="/person/{{ section.person_id }}"> Декларант </a>
+            , <a href="/person/{{ section.person_id }}"> Декларант ID={{ section.person_id }} </a>
           {% endif %}
       </li>
     {% endfor %}
