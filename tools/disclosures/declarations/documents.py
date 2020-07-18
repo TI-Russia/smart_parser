@@ -16,11 +16,14 @@ class ElasticSectionDocument(Document):
     default_field_name = "person_name"
     source_document_id = IntegerField()
     office_id = IntegerField()
+
     class Django:
         model = Section
         fields = [
             'id',
             'person_name',
+            'position',
+            'department'
         ]
 
     def prepare_source_document_id(self, instance):

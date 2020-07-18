@@ -30,7 +30,7 @@
             <td> {{ section.id }} </td>
             <td> <a href="/section/{{ section.id }}"> {{ section.person_name }} </a> </td>
             <td> {{ section.income_year }} </td>
-            <td> {{ section.source_document.office.name }} </td>
+            <td> <a href="/office/{{section.source_document.office_id}}"> {{section.source_document.office.name}} </a> </td>
             <td> 
                 {% if section.dedupe_score > 0 %}
                     {{ section.dedupe_score | floatformat:2}}
