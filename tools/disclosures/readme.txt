@@ -116,4 +116,14 @@ export HOSTS=migalka,oldtimer,ventil,lena
     cd ~/smart_parser.disclosures_prod/tools/disclosures
     cat create_disclosures_db.sql | sudo mysql
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
+
     python manage.py search_index --rebuild  --settings disclosures.settings.prod
+
+    # to rebuild one index
+    #python manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
+
+    # index sizes
+    # curl 127.0.0.1:9200/_cat/indices
+
+    # some query example
+    #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : {"query" : 5963}}}}'
