@@ -85,6 +85,13 @@ class Command(BaseCommand):
             help='',
         )
         parser.add_argument(
+            '--rebuild',
+            dest='rebuild',
+            action="store_true",
+            default=False,
+            help='rebuild old persom, declaration pairs',
+        )
+        parser.add_argument(
             '--input-dedupe-objects',
             dest='input_dedupe_objects',
             help='',
@@ -118,14 +125,24 @@ class Command(BaseCommand):
             elif options.get("verbose") >= 2:
                 log_level = logging.DEBUG
         self.logger.setLevel(log_level)
+        if options['rebuild'] and not options['write_to_db']:
+            self.logger.info("please add --write-to-db  option if you use --rebuild")
 
     def read_sections(self, lower_bound, upper_bound):
-        sections = Section.objects.filter(person=None)
-        sections = sections.filter(person_name__gte=lower_bound).filter(person_name__lt=upper_bound)
+        sections = Section.objects.filter(person_name__gte=lower_bound).filter(person_name__lt=upper_bound)
+        if not self.options['rebuild']:
+            sections = sections.filter(person=None)
         sections_count = sections.count()
         self.logger.info("Start reading {} sections from DB... ".format(sections_count))
         cnt = 0
         for s in sections.all():
+            if s.person_id is not None and s.dedupe_score is None:
+                # this merging was copied from declarator, do not touch it
+                continue
+            if self.options['rebuild'] and s.person_id is not None:
+                s.dedupe_score = None
+                s.person_id = None
+                s.save() # do it to disable constraint delete
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()
             assert k is not None
             if len(v['family_name']) == 0:
@@ -141,16 +158,24 @@ class Command(BaseCommand):
         persons_count = persons.count()
         self.logger.info("Start reading {} people records from DB...".format(persons_count))
         cnt = 0
+        deleted_cnt = 0
         for p in persons.all():
-            k, v = TPersonFields(p).get_dedupe_id_and_object()
-            if k is None:
-                continue
-                # no sections for this person, ignore this person
-            self.dedupe_objects[k] = v
+            if self.options['rebuild'] and p.declarator_person_id is None:
+                # the record was created by the previous deduplication run
+                p.delete()
+                deleted_cnt += 1
+            else:
+                k, v = TPersonFields(p).get_dedupe_id_and_object()
+                if k is None:
+                    continue
+                    # no sections for this person, ignore this person
+                self.dedupe_objects[k] = v
             cnt += 1
             if cnt % 1000 == 0:
                 self.logger.info("Read {} records from person table".format(cnt))
         self.logger.info("Read {} records from person table".format(cnt))
+        if deleted_cnt > 0:
+            self.logger.info("Deleted {} records from person table".format(deleted_cnt))
 
     def fill_dedupe_data(self, lower_bound, upper_bound):
         self.dedupe_objects = {}
@@ -180,10 +205,13 @@ class Command(BaseCommand):
         for id1, id2, score1, score2 in get_pairs_from_clusters(clustered_dupes):
             dump_stream.write("\t".join((id1, id2, str(score1), str(score2))) + "\n")
 
-    def link_section_to_person(self, section, person_id, dedupe_score):
-        section.person_id = person_id
+    def link_section_to_person(self, section, person, dedupe_score):
+        section.person_id = person.id
         section.dedupe_score = dedupe_score
         section.save()
+        if len(person.person_name) < len(section.person_name):
+            person.person_name = section.person_name
+            person.save()
 
     def link_sections_to_a_new_person(self, section_ids):
         person = Person()
@@ -191,7 +219,7 @@ class Command(BaseCommand):
         for id in section_ids:
             section = Section.objects.get(id=id)
             # dedupe_score is unknown but it must be > 0 for dedupe linked (person, section) pairs
-            self.link_section_to_person(section, person.id, 0.9)
+            self.link_section_to_person(section, person, 0.9)
 
     def write_results_to_db(self, clustered_dupes):
         self.logger.info('write {} results to db'.format(len(clustered_dupes)))
@@ -203,7 +231,8 @@ class Command(BaseCommand):
                     person_id = int(id1[len("person-"):])
                     section_id = int(id2[len("section-"):])
                     section = Section.objects.get(id=section_id)
-                    self.link_section_to_person(section, person_id, float(score2))
+                    person = Person.get(pk=int(person_id))
+                    self.link_section_to_person(section, person, float(score2))
                     linked_sections.add(section_id)
 
         self.logger.info('Create new people by dedupe clusters... ')

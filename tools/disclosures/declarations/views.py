@@ -5,6 +5,7 @@ from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOff
 from declarations.input_json import TIntersectionStatus
 from django import forms
 import json
+import logging
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -96,7 +97,12 @@ class CommonSearchView(FormView, generic.ListView):
         self.query = query
         object_list = list()
         for x in search[:max_count]:
-            object_list.append(self.model.objects.get(pk=x.id))
+            try:
+                rec = self.model.objects.get(pk=x.id)
+            except Exception as exp:
+                logging.getLogger('django').error("cannot get record, id={}".format(x.id))
+                raise
+            object_list.append(rec)
         return object_list
 
 

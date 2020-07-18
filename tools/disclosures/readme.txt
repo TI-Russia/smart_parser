@@ -126,4 +126,4 @@ export HOSTS=migalka,oldtimer,ventil,lena
     # curl 127.0.0.1:9200/_cat/indices
 
     # some query example
-    #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : {"query" : 5963}}}}'
+    #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
