@@ -15,7 +15,7 @@
 <b>Intersection status:</b> {{ source_document.intersection_status }} <br/><br/>
 
 {% for web_location in source_document.web_reference_set.all %}
-    <b>Сайт:</b> <a href="http://{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>
+    <b>Сайт:</b> <a href="{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>
     <br><br/>
 {% endfor %}
 
