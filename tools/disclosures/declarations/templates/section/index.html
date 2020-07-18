@@ -16,16 +16,26 @@
   <br/>
 
 
-  <ul>
+  <table cellpadding="5">
+      <tr>
+          <th>ID</th>
+          <th>ФИО</th>
+          <th>Год</th>
+          <th>Декларант</th>
+      </tr>
     {% for section in object_list %}
-      <li>
-        {{ section.id }} : <a href="/section/{{ section.id }}">{{ section.person_name }} </a> ({{ section.income_year }})
+      <tr>
+          <td>{{section.id }}</td>
+          <td><a href="/section/{{ section.id }}">{{ section.person_name }} </a></td>
+          <td>{{ section.income_year }} </td>
+          <td>
           {% if section.person_id %}
-            , <a href="/person/{{ section.person_id }}"> Декларант ID={{ section.person_id }} </a>
+            <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
           {% endif %}
-      </li>
+          </td>
+      </tr>
     {% endfor %}
-  </ul>
+  </table>
 
   {% include "search/paginator.html" %}
 
