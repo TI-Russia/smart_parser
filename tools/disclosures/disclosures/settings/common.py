@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'declarations.apps.DeclarationsConfig',
     'rest_framework',
     'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
+    'django_elasticsearch_dsl_drf'
 ]
 
 MIDDLEWARE = [
@@ -119,6 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+from . import log_setup
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -127,7 +128,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    '/home/sokirko/declarator_hdd/declarator/2020-05-15'
+    '/home/sokirko/declarator_hdd/declarator/2020-05-15/domains'
 ]
 
 ELASTICSEARCH_DSL = {
@@ -136,6 +137,5 @@ ELASTICSEARCH_DSL = {
     },
 }
 
-
-#ELASTICSEARCH_DSL_SIGNAL_PROCESSOR =  ElasticSignalProcessor
-#from django_elasticsearch_dsl.signals import RealTimeSignalProcessor
+LOG_PATH = os.path.join(BASE_DIR, "logs/disclosures.log")
+LOGGING = log_setup.get_logging_settings(LOG_PATH)

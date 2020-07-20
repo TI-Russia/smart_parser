@@ -8,6 +8,7 @@
     <None Remove="Resources\bigrams.txt" />
     <None Remove="Resources\column_trigrams.txt" />
     <None Remove="Resources\log4net.config" />
+    <None Remove="Resources\countries_in_russian.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\bigrams.txt" />
     <EmbeddedResource Include="Resources\column_trigrams.txt" />
+    <EmbeddedResource Include="Resources\countries_in_russian.json" />
   </ItemGroup>
 
   <ItemGroup>

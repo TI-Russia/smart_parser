@@ -1,10 +1,11 @@
 from . import models
-from .forms import SearchForm
 from django.views import generic
 from django.views.generic.edit import FormView
-from .input_json_specification import dhjs
-from .documents import ElasticSectionDocument, ElasticPersonDocument
-
+from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
+from declarations.input_json import TIntersectionStatus
+from django import forms
+import json
+import logging
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -17,17 +18,21 @@ class PersonView(generic.DetailView):
 
 
 class FileView(generic.DetailView):
-    model = models.SPJsonFile
+    model = models.Source_Document
     template_name = 'file/detail.html'
 
 
 class HomePageView(generic.TemplateView):
     template_name = 'morda/index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = SearchForm
-        return context
+
+class OfficeView(generic.DetailView):
+    model = models.Office
+    template_name = 'office/detail.html'
+
+
+class AboutPageView(generic.TemplateView):
+    template_name = 'morda/about.html'
 
 
 class StatisticsView(generic.TemplateView):
@@ -35,53 +40,113 @@ class StatisticsView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['spjsonfile_count'] = models.SPJsonFile.objects.all().count()
-        context['spjsonfile_only_dlrobot_count'] = models.SPJsonFile.objects.filter(intersection_status=dhjs.only_dlrobot).count()
-        context['spjsonfile_only_human_count'] = models.SPJsonFile.objects.filter(intersection_status=dhjs.only_human).count()
-        context['spjsonfile_both_found_count'] = models.SPJsonFile.objects.filter(intersection_status=dhjs.both_found).count()
+        context['source_document_count'] = models.Source_Document.objects.all().count()
+        context['source_document_only_dlrobot_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_dlrobot).count()
+        context['source_document_only_human_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_human).count()
+        context['source_document_both_found_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.both_found).count()
 
         context['sections_count'] = models.Section.objects.all().count()
         context['sections_count_only_dlrobot'] = models.Section.objects.filter(
-            spjsonfile__intersection_status=dhjs.only_dlrobot).count()
+            source_document__intersection_status=TIntersectionStatus.only_dlrobot).count()
+        context['sections_count_both_found'] = models.Section.objects.filter(
+            source_document__intersection_status=TIntersectionStatus.both_found).count()
         context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
         context['person_count'] = models.Person.objects.all().count()
         return context
 
 
-class SearchResultsView(FormView, generic.ListView):
-    model = models.Section
-    paginate_by = 40
-    form_class = SearchForm
+class CommonSearchForm(forms.Form):
+    search_request = forms.CharField(widget=forms.TextInput(attrs={'size': 80}))
 
-    def get_template_names(self):
-        search_object_type = self.request.GET.get('search_object_type')
-        if search_object_type == "people_search":
-            return 'person/search_results.html'
-        return 'section/search_results.html'
 
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        search_object_type = self.request.GET.get('search_object_type')
+class CommonSearchView(FormView, generic.ListView):
+    paginate_by = 20
+    form_class = CommonSearchForm
 
-        if search_object_type == "people_search":
-            persons = list(ElasticPersonDocument.search().query('match', person_name=query))
-            object_list = list()
-            for x in persons:
-                object_list.append(models.Person.objects.get(pk=x.id))
-                if len(object_list) > 100:
-                    break
-        else:
-            sections = list(ElasticSectionDocument.search().query('match', person_name=query))
-            object_list = list()
-            for x in sections:
-                object_list.append(models.Section.objects.get(pk=x.id))
-                if len(object_list) > 100:
-                    break
-        return object_list
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if hasattr(self, "hits_count"):
+            context['hits_count'] = self.hits_count
+            context['query'] = self.query
+
+        return context
 
     def get_initial(self):
-        return {'q': self.request.GET["q"],
-                'search_object_type': self.request.GET["search_object_type"]
-                }
+        return {
+            'search_request': self.request.GET.get('search_request'),
+        }
 
+    def process_query(self, max_count=100):
+        query = self.get_initial().get('search_request')
+        if query is None:
+            return []
+        query = query.strip()
+        if len(query) == 0:
+            return []
+
+        try:
+            if query.startswith('{') and query.endswith('}'):
+                query_dict = json.loads(query)
+            else:
+                query_dict = {self.elastic_search_document.default_field_name: query}
+        except Exception:
+            return []
+        search = self.elastic_search_document.search().query('match', **query_dict)
+        self.hits_count = search.count()
+        self.query = query
+        object_list = list()
+        for x in search[:max_count]:
+            try:
+                rec = self.model.objects.get(pk=x.id)
+            except Exception as exp:
+                logging.getLogger('django').error("cannot get record, id={}".format(x.id))
+                raise
+            object_list.append(rec)
+        return object_list
+
+
+class OfficeSearchView(CommonSearchView):
+    model = models.Office
+    template_name = 'office/index.html'
+    elastic_search_document = ElasticOfficeDocument
+
+    def get_queryset(self):
+        object_list = self.process_query()
+        object_list.sort(key=lambda x: x.source_document_count, reverse=True)
+        return object_list
+
+
+class PersonSearchView(CommonSearchView):
+    model = models.Person
+    template_name = 'person/index.html'
+    elastic_search_document = ElasticPersonDocument
+
+    def get_queryset(self):
+        object_list = self.process_query()
+        object_list.sort(key=lambda x: x.section_count, reverse=True)
+        return object_list
+
+
+class SectionSearchView(CommonSearchView):
+    model = models.Section
+    template_name = 'section/index.html'
+    elastic_search_document = ElasticSectionDocument
+
+    def get_queryset(self):
+        object_list = self.process_query(max_count=1000)
+        object_list.sort(key=lambda x: x.person_name)
+        return object_list
+
+
+class FileSearchView(CommonSearchView):
+    model = models.Source_Document
+    template_name = 'file/index.html'
+    elastic_search_document = ElasticFileDocument
+
+    def get_queryset(self):
+        # using 300 here to allow search bots to crawl all file links going from one office
+        object_list = self.process_query(max_count=300)
+
+        object_list.sort(key=lambda x: x.file_path, reverse=True)
+        return object_list

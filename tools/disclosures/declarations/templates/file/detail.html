@@ -1,19 +1,35 @@
-ID файла: {{ spjsonfile.id }} <br/>
+{% extends 'base.html' %}
 
-Ведомство: {{ spjsonfile.office.name }} <br/>
+{% block title %}Информация об исходном файле деклараций{% endblock title %}
 
-ID ведомства: {{ spjsonfile.office.id }} <br/>
+{% block content %}
 
-Сайт: <a href="http://{{ spjsonfile.web_domain }}"> {{ spjsonfile.web_domain }} </a> <br/>
+<b>ID файла:</b> {{ source_document.id }} <br/><br/>
 
-Скаченный файл: <a href="/static/{{ spjsonfile.doc_path }}"> {{ spjsonfile.doc_path }} </a> <br/>
+<b>Ведомство:</b> <a href="/office/{{ source_document.office.id }}"> {{ source_document.office.name }} </a><br/><br/>
 
-{% if section.spjsonfile.declarator_document_file_url %}
-    <a href="{{section.spjsonfile.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
-{% endif %}
-<br>
+<b>Скаченный файл:</b> <a href="/static/{{ source_document.file_path }}"> {{ source_document.file_path }} </a> <br/><br/>
 
-{% if section.spjsonfile.dlrobot_url %}
-    <a href="{{section.spjsonfile.dlrobot_url}}"> Ссылка на документ на сайте ведомства (если ведомство не удалило этот документ) </a>
-{% endif %}
-<br>
+<b>Sha256:</b> {{ source_document.sha256 }} <br/><br/>
+
+<b>Intersection status:</b> {{ source_document.intersection_status }} <br/><br/>
+
+{% for web_location in source_document.web_reference_set.all %}
+    <b>Сайт:</b> <a href="{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>
+    <br><br/>
+{% endfor %}
+
+
+{% for decl_info in source_document.declarator_file_reference.all %}
+    <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
+    <br><br/>
+{% endfor %}
+
+<a href=/section/?search_request={"source_document_id":{{source_document.id}}}> Все декларации этого документа </a> <br/><br/>
+
+
+{% endblock content %}
+
+
+
+

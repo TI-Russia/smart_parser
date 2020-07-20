@@ -1,5 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Одна декларация {% endblock title %}
+
+{% block content %}
+
 <h1>
-     {{ section.spjsonfile.office.name }} <br/>
+     {{ section.source_document.office.name }} <br/>
      Cведения о доходах за {{ section.income_year }} год <br/>
      {% if section.department %}
         {{ section.department }}
@@ -8,7 +14,7 @@
 </h1>
 
 <style>
-   td, th {
+   .declaration_table td, .declaration_table th {
         border: solid;
         word-break: break-all;
         padding-left: 4px;
@@ -16,7 +22,7 @@
    }
 </style>
 
-<table style="border:solid; border-collapse: collapse">
+<table class="declaration_table" style="border:solid; border-collapse: collapse">
     <tr>
        <th rowspan="2" > ФИО </th>
        <th rowspan="2"> Должность </th>
@@ -45,7 +51,7 @@
             {% endif %}
 
             <td colspan="3" size="50%" style="padding: 0px;"  >
-                <table width="100%" style="border-style: hidden; border-collapse: collapse;">
+                <table class="declaration_table" width="100%" style="border-style: hidden; border-collapse: collapse;" >
                 {% for r in section.realestate_set.all %}
                     {% if relative.code == r.relative %}
                     {% if r.square %}
@@ -84,5 +90,6 @@
 </table>
 <br>
 
-Файл: <a href="/file/{{ section.spjsonfile.id }}">{{ section.spjsonfile.id }} </a>
+Файл: <a href="/file/{{ section.source_document.id }}">{{ section.source_document.id }} </a>
 
+{% endblock content %}

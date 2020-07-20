@@ -1,17 +1,23 @@
+
 <div class="pagination">
+    <br/>
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?q={{ form.q.value }}&search_object_type={{ form.search_object_type.value }}&page=1">&laquo; first</a>
-            <a href="?q={{ form.q.value }}&search_object_type={{ form.search_object_type.value }}&page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?search_request={{form.search_request.value}}&page=1">&laquo; first</a>
+            <a href="?search_request={{form.search_request.value}}&page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
         </span>
 
+
         {% if page_obj.has_next %}
-            <a href="?q={{ form.q.value }}&search_object_type={{ form.search_object_type.value }}&page={{ page_obj.next_page_number }}">next</a>
-            <a href="?q={{ form.q.value }}&search_object_type={{ form.search_object_type.value }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a href="?search_request={{form.search_request.value}}&page={{ page_obj.next_page_number }}">next</a>
+            <a href="?search_request={{form.search_request.value}}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
+
     </span>
+      <br/> <br/> <br/>
+
 </div>

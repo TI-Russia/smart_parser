@@ -66,7 +66,7 @@ class Command(BaseCommand):
         else:
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
-            json_file = models.SPJsonFile(office_id=sections[0].get('office_id', -1))
+            json_file = models.Source_Document(office_id=sections[0].get('office_id', -1))
             passport_factory = TSmartParserJsonReader(year, json_file, sections[0]).get_passport_factory(self.office_hierarchy)
             section_id, search_results = passport_factory.search_by_passports(self.stable_key_to_sections)
             if section_id is not None:

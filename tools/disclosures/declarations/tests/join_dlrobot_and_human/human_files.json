@@ -1,26 +1,35 @@
 {
-    "d:folder": "human_files",
-    "files": {
+    "document_folder": "human_files",
+    "documents": {
         "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865": {
-            "d:document_id": 1,
-            "d:document_file_id": 1,
-            "d:path": "human.xlsx",
-            "d:domain": "05.fsin.su",
-            "d:office_id": 4,
-            "d:income_year": 2009,
-            "d:media_url": "https://declarator.org/media/documents/1.doc"
+            "document_path": "human.xlsx",
+            "intersection_status": "only_human",
+            "office_id": null,
+            "d_refs": [
+                {
+                    "document_file_id": 1,
+                    "document_id": 1,
+                    "income_year": 2009,
+                    "media_url": "https://declarator.org/media/documents/1.doc",
+                    "office_id": 4,
+                    "web_domain": "05.fsin.su"
+                }
+            ]
         },
         "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
-            "d:document_id": 19,
-            "d:document_file_id": 1432,
-            "d:domain": "05.fsin.su",
-            "d:path": "uniq_from_human.xlsx",
-            "d:office_id": 4,
-            "d:income_year": 2009,
-            "d:media_url": "https://declarator.org/media/documents/2.doc"
+            "document_path": "uniq_from_human.xlsx",
+            "intersection_status": "only_human",
+            "office_id": null,
+            "d_refs": [
+                {
+                    "document_file_id": 1432,
+                    "document_id": 19,
+                    "income_year": 2009,
+                    "media_url": "https://declarator.org/media/documents/2.doc",
+                    "office_id": 4,
+                    "web_domain": "05.fsin.su"
+                }
+            ]
         }
-    },
-    "office_to_domains": {
-        "4": ["05.fsin.su"]
     }
 }

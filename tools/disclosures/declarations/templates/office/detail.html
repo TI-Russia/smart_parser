@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Информация о ведомстве {% endblock title %}
+
+{% block content %}
+
+<table>
+    <tr><td><b>ID</b>:</td><td>{{ office.id }} </td></tr>
+    <tr><td><b>Название</b>:</td><td>{{ office.name }} </td></tr>
+    <tr><td><b>Регион</b>:</td><td>{{ office.region_id }} </td></tr>
+    <tr><td><b>Тип</b>:</td><td>{{ office.type_id }} </td></tr>
+
+    {% if office.parent_id %}
+            <tr>
+                <td><b>Вышестоящая организация</b>:</td>
+                <td> <a href="/office/{{ office.parent_id }}">{{ office.parent_office_name }}</a></td>
+            </tr>
+    {% endif %}
+
+    {% if office.child_offices_count > 0 %}
+        <tr>
+            <td valign="baseline"><b>Нижестоящие организации</b>:</td>
+            <td>{% for child_id, child_name in office.child_offices %}
+              <a href="/office/{{ child_id }}"> {{ child_name }} </a><br/>
+            {% endfor %}
+
+            {% if office.child_offices_count > 5 %}
+                <a href=/office?search_request={"parent_id":{{office.id}}}>...</a>
+            {% endif %}
+            </td>
+        </tr>
+    {% endif %}
+
+    {% if office.source_document_count > 0 %}
+        <tr>
+            <td valign="baseline"><b>Документы</b>:</td>
+            <td>{% for src_doc_id, file_path in office.get_source_documents %}
+              <a href="/file/{{ src_doc_id }}"> {{ file_path }} </a><br/>
+            {% endfor %}
+
+            {% if office.source_document_count > 10 %}
+                <a href=/file?search_request={"office_id":{{office.id}}}>...</a>
+            {% endif %}
+            </td>
+        </tr>
+    {% endif %}
+
+    <tr><td>
+    <a href=/section?search_request={"office_id":{{office.id}}}>Все декларации этого ведомства</a>
+    </td></tr>
+</table>
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Исходные документы деклараций {% endblock title %}
+
+{% block content %}
+
+<form action="{% url 'file_search' %}" method="get">
+    {{ form.search_request }}
+    <input type="submit" value="Поиск">
+    <br/>
+</form>
+
+{% if query %}
+
+    <br/>
+      Число найденных документов: {{ hits_count }}
+    <br/>
+
+    <table>
+      {% for file in object_list %}
+        <tr>
+          <td> {{ file.id }}: </td>
+          <td>
+              <a href="/file/{{ file.id }}"> {{ file.file_path }} </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {% include "search/paginator.html" %}
+{% endif %}
+
+
+{% endblock content %}
+
+

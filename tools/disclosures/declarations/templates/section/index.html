@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Найденные декларации {% endblock title %}
+
+{% block content %}
+
+<form action="{% url 'section_search' %}" method="get">
+    {{ form.search_request }}
+    <input type="submit" value="Поиск">
+    <br/>
+</form>
+
+{% if query %}
+  <br/>
+      Число найденных деклараций: {{ hits_count }}
+  <br/>
+
+
+  <table cellpadding="5">
+      <tr>
+          <th>ID</th>
+          <th>ФИО</th>
+          <th>Год</th>
+          <th>Декларант</th>
+      </tr>
+    {% for section in object_list %}
+      <tr>
+          <td>{{section.id }}</td>
+          <td><a href="/section/{{ section.id }}">{{ section.person_name }} </a></td>
+          <td>{{ section.income_year }} </td>
+          <td>
+          {% if section.person_id %}
+            <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
+          {% endif %}
+          </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  {% include "search/paginator.html" %}
+
+{% endif %}
+
+{% endblock content %}

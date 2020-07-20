@@ -1,16 +1,15 @@
+from declarations.input_json import TSourceDocument, TDeclaratorReference,  TDlrobotHumanFile, TIntersectionStatus
+from robots.common.archives import  dearchive_one_archive
+
 import pymysql
 import os
 import argparse
 import hashlib
-import json
 from urllib.parse import urlparse
-from declarations.input_json_specification import dhjs
 import logging
-from robots.common.archives import  dearchive_one_archive
 import requests
 import urllib.parse
 import glob
-from collections import defaultdict
 
 
 DECLARATOR_DOMAIN = 'https://declarator.org'
@@ -41,7 +40,6 @@ def parse_args():
     parser.add_argument("--output-json", dest='output_file', default="human_files.json")
     parser.add_argument("--max-files-count", dest='max_files_count', type=int)
     parser.add_argument("--mysql-port", dest='mysql_port', type=int, default=None)
-    parser.add_argument("--rebuild-office-to-domain", dest='rebuild_office_to_domain', action="store_true", default=False)
     return parser.parse_args()
 
 
@@ -122,9 +120,9 @@ def export_file_to_folder(logger, declarator_url_path, document_file_id, out_fol
         yield file_name, declarator_url
 
 
-
 def build_declarator_squeezes(logger, args):
-    files = {}
+    dlrobot_humam = TDlrobotHumanFile()
+    dlrobot_humam.document_folder = args.output_folder
     files_count = 0
     for document_file_id, document_id, file_path, link, office_id, income_year in get_all_file_sql_records(logger, args):
         web_site = urlparse(link).netloc
@@ -139,40 +137,20 @@ def build_declarator_squeezes(logger, args):
                 logger.error("cannot find {}".format(local_file_path))
             else:
                 sha256 = build_sha256(local_file_path)
-                files[sha256] = {
-                        dhjs.declarator_document_id: document_id,
-                        dhjs.declarator_document_file_id: document_file_id,
-                        dhjs.declarator_web_domain: web_site,
-                        dhjs.declarator_file_path: os.path.basename(local_file_path),
-                        dhjs.declarator_office_id: office_id,
-                        dhjs.declarator_income_year: income_year,
-                        dhjs.declarator_document_file_url: declarator_url
-                }
+                source_document = TSourceDocument()
+                source_document.intersection_status = TIntersectionStatus.only_human
+                source_document.document_path = os.path.basename(local_file_path)
+                ref = TDeclaratorReference()
+                ref.document_id = document_id
+                ref.document_file_id = document_file_id
+                ref.web_domain = web_site
+                ref.office_id = office_id
+                ref.income_year = income_year
+                ref.document_file_url = declarator_url
+                source_document.add_decl_reference(ref)
+                dlrobot_humam.add_source_document(sha256, source_document)
                 files_count += 1
-    return {
-            dhjs.declarator_folder: args.output_folder,
-            dhjs.file_collection: files
-        }
-
-
-def choose_max(web_site_to_offices):
-    offices_to_domains = defaultdict(list)
-    for web_site, offices in web_site_to_offices.items():
-        office_id = max(offices.keys(), key=lambda x: offices[x])
-        offices_to_domains[office_id].append(web_site)
-    return offices_to_domains
-
-
-def build_offices_to_domains(logger, human_json):
-    web_site_to_office = dict()
-    logger.info("build_offices_to_domains")
-    for f in human_json[dhjs.file_collection].values():
-        web_site = f[dhjs.declarator_web_domain]
-        office_id = f[dhjs.declarator_office_id]
-        if web_site not in web_site_to_office:
-            web_site_to_office[web_site] = defaultdict(int)
-        web_site_to_office[web_site][office_id] += 1
-    return choose_max(web_site_to_office)
+    return dlrobot_humam
 
 
 def main(args):
@@ -180,16 +158,8 @@ def main(args):
     if not os.path.exists(args.output_folder):
         logger.debug("create {}".format(args.output_folder))
         os.mkdir(args.output_folder)
-    if args.rebuild_office_to_domain:
-        with open(args.output_file, "r", encoding="utf8") as inp:
-            human_json = json.load(inp)
-    else:
-        human_json = build_declarator_squeezes(logger, args)
-
-    human_json[dhjs.offices_to_domains] = build_offices_to_domains(logger, human_json)
-
-    with open(args.output_file, "w", encoding="utf8") as out:
-        json.dump(human_json, out, indent=4, ensure_ascii=False)
+    human_json = build_declarator_squeezes(logger, args)
+    human_json.write(args.output_file)
 
 
 if __name__ == '__main__':

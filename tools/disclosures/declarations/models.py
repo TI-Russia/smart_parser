@@ -16,6 +16,46 @@ class Office(models.Model):
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
 
+    @property
+    def source_document_count(self):
+        return self.source_document_set.all().count()
+
+    def get_source_documents(self, max_count=10):
+        cnt = 0
+        for src_doc in self.source_document_set.all():
+            yield src_doc.id, src_doc.file_path
+            cnt += 1
+            if cnt >= max_count:
+                break
+
+    @property
+    def source_documents(self):
+        return self.get_source_documents(max_count=10)
+
+    @property
+    def parent_office_name(self):
+        if self.parent_id is None:
+            return ""
+        return Office.objects.get(pk=self.parent_id).name
+
+    @property
+    def child_offices_count(self):
+        return Office.objects.all().filter(parent_id=self.id).count()
+
+    def get_child_offices(self, max_count=5):
+        if self.parent_id is None:
+            return ""
+        cnt = 0
+        for x in Office.objects.all().filter(parent_id=self.id):
+            yield x.id, x.name
+            cnt += 1
+            if  cnt >= max_count:
+                break
+
+    @property
+    def child_offices(self):
+        return self.get_child_offices(max_count=5)
+
 
 class TOfficeHierarchy:
     group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
@@ -44,6 +84,7 @@ class TOfficeHierarchy:
             self.offices[o.id] = o
         for office_id in self.offices:
             self.transitive_top[office_id] = self.go_to_the_top(office_id)
+
 
 class Relative:
     main_declarant_code = "D"
@@ -120,16 +161,25 @@ class OwnType:
 OwnType.static_initalize()
 
 
-class SPJsonFile(models.Model):
-    office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
-    sha256 = models.CharField(max_length=200)
-    web_domain = models.CharField(max_length=64)
-    file_path = models.CharField(max_length=128)
-    intersection_status = models.CharField(max_length=16)
+class Web_Reference(models.Model):
+    source_document = models.ForeignKey('declarations.source_document', verbose_name="source document", on_delete=models.CASCADE)
+    dlrobot_url = models.TextField(null=True)
+    crawl_epoch = models.IntegerField(null=True)
+
+
+class Declarator_File_Reference(models.Model):
+    source_document = models.ForeignKey('declarations.source_document', verbose_name="source document",
+                                 on_delete=models.CASCADE)
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
-    declarator_document_file_url = models.CharField(max_length=128, null=True)
-    dlrobot_url = models.CharField(max_length=256, null=True)
+    declarator_document_file_url = models.TextField(null=True)
+
+
+class Source_Document(models.Model):
+    office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
+    sha256 = models.CharField(max_length=200)
+    file_path = models.CharField(max_length=128)
+    intersection_status = models.CharField(max_length=16)
 
     @property
     def doc_path(self):
@@ -138,9 +188,14 @@ class SPJsonFile(models.Model):
             doc_path = doc_path[:-len('.json')]
         return doc_path
 
+
 class Person(models.Model):
     person_name = models.CharField(max_length=64, verbose_name='person name')
     declarator_person_id = models.IntegerField(null=True)
+
+    @property
+    def section_count(self):
+        return self.section_set.all().count()
 
 
 class RealEstate(models.Model):
@@ -179,7 +234,7 @@ def get_relatives(records):
 
 
 class Section(models.Model):
-    spjsonfile = models.ForeignKey('declarations.spjsonfile', null=True, verbose_name="smart parser json file", on_delete=models.CASCADE)
+    source_document = models.ForeignKey('declarations.source_document', null=True, verbose_name="source document", on_delete=models.CASCADE)
     person = models.ForeignKey('declarations.Person', null=True, verbose_name="person id", on_delete=models.CASCADE)
     person_name = models.CharField(max_length=64, verbose_name='person name')
     income_year = models.IntegerField(null=True)
@@ -195,6 +250,8 @@ class Section(models.Model):
         relatives |= get_relatives(self.vehicle_set)
         result = Relative.sort_by_visual_order(list(relatives))
         return result
+
+
 
 
 

@@ -18,6 +18,7 @@
 
 export TOOLS=~/smart_parser/tools
 CURRENT_DATE=`date  +'%Y-%m-%d'`
+export CRAWL_EPOCH=2
 export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-02-01
 export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
 export HUMAN_FILES_JSON=human_files.json
@@ -52,7 +53,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 #5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
     python $TOOLS/disclosures/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES  --copy-to-one-folder-json copy_to_one_folder.json \
         --human-json $HUMAN_FILES_JSON --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
-        --output-json dlrobot_human.json
+        --crawl-epoch $CRAWL_EPOCH --output-json dlrobot_human.json
 
 
 #5.1  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
@@ -82,7 +83,7 @@ export HOSTS=migalka,oldtimer,ventil,lena
 #8.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
    cat $TOOLS/disclosures/clear_database.sql | mysql -D disclosures_db -u disclosures -pdisclosures
-   python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 4 --settings disclosures.settings.prod
+   python $TOOLS/disclosures/manage.py import_json --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER  --dlrobot-human dlrobot_human.json  --process-count 3 --settings disclosures.settings.prod
    python $TOOLS/disclosures/manage.py copy_person_id --settings disclosures.settings.prod
 
 #9.  тестирование сливалки
@@ -112,6 +113,17 @@ export HOSTS=migalka,oldtimer,ventil,lena
 
 #13 go to prod
     mysqladmin drop  disclosures_db
-    cd ~/smart_parser/tools/disclosures
+    cd ~/smart_parser.disclosures_prod/tools/disclosures
     cat create_disclosures_db.sql | sudo mysql
-    zcat $DLROBOT_FOLDER//disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
+    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
+
+    python manage.py search_index --rebuild  --settings disclosures.settings.prod
+
+    # to rebuild one index
+    #python manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
+
+    # index sizes
+    # curl 127.0.0.1:9200/_cat/indices
+
+    # some query example
+    #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'

@@ -1,10 +1,7 @@
 from django.test import TestCase
 import declarations.models as models
-from django_elasticsearch_dsl import Document
-from django_elasticsearch_dsl.registries import registry
 import time
 from declarations.documents import ElasticSectionDocument
-
 
 
 class ElasticTestCase(TestCase):
@@ -21,7 +18,8 @@ class ElasticTestCase(TestCase):
         section = models.Section()
         section.person_name = "Иванов Иван"
         section.save()
-        time.sleep(3)
+        print("sleep 2 seconds till elastic processes records")
+        time.sleep(2)
 
         people = list(ElasticSectionDocument.search().query('match', person_name='Иванов'))
         print (len(people))
