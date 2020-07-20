@@ -549,7 +549,8 @@ namespace Smart.Parser.Lib
                                 DeclarationField.OwnedRealEstateCountry,
                                 DeclarationField.MixedRealEstateCountry,
                                 DeclarationField.StatePropertyCountry,
-                                DeclarationField.NameOrRelativeType))
+                                DeclarationField.NameOrRelativeType) &&
+                            rows.Count > 0) 
                         {
                             Logger.Debug("Merge row to the last if state and square cell is empty");
                             rows.Last().Merge(row);

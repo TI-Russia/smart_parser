@@ -156,7 +156,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsDepartment(this string s)
         {
-            return s.Contains("наименование организации");
+            return s.Contains("наименование организации") || s.Contains("ерриториальное управление в субъекте");
         }
 
         private static bool IsMixedRealEstateOwnershipType(this string s)
@@ -396,7 +396,8 @@ namespace TI.Declarator.ParserCommon
         private static bool IsMoneyOnBankAccounts(this string s)
         {
             string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
-            return strLower.Contains("денежныесредства") && strLower.Contains("банках");
+            return (strLower.Contains("денежныесредства") && (
+                strLower.Contains("банках") || strLower.Contains("вкладах")));
         }
 
         private static bool IsSecuritiesField(this string s)

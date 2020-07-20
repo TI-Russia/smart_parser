@@ -323,7 +323,7 @@ namespace Smart.Parser.Lib
                     headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
 
                     // иногда в двухярусном заголовке в верхней клетке пусто, а в нижней есть заголовок (TwoRowHeaderEmptyTopCellTest)
-                    if (text.Trim() == "" && maxMergedRows == 2 && underCells.Count() == 1) 
+                    if (text.Trim() == "" && cell.MergedRowsCount < maxMergedRows && underCells.Count() == 1) 
                     {
                         columnCells.Add(underCells.First());
                     }

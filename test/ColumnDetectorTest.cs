@@ -132,5 +132,17 @@ namespace test
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn, 11);
         }
 
+        [TestMethod]
+        public void TwoRowHeaderEmptyTopCellTest2()
+        {
+            string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "customs-tworow-header.xls");
+            IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
+
+            ColumnPredictor.InitializeIfNotAlready();
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(ordering.ColumnOrder.Count, 14);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn, 2);
+        }
+
     }
 }
