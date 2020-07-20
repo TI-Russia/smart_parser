@@ -6,43 +6,64 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using TI.Declarator.ParserCommon;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Smart.Parser.Lib
 {
     public class DataHelper
     {
-        static string CountryRegexp;
-        // Non-breaking space or breaking space can be between digits like "1 680,0"
-        static string SquareRegexp = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
+        static Regex CountryRegexp;
+        static Regex SquareAndCountryRegexp;
+        static Regex SquareRegexp;
         static DataHelper()
         {
-            CountryRegexp = string.Join(")|(?:", new List<string>(ReadCountryList()).ToArray());
-            CountryRegexp = "((?:" + CountryRegexp + "))";
+            var countryList = ReadCountryList();
+            string anyCountry = "(" + string.Join(")|(", countryList.ToArray()) + ")";
+            CountryRegexp = new Regex(anyCountry, RegexOptions.IgnoreCase);
 
+            // Non-breaking space or breaking space can be between digits like "1 680,0"
+            string squareRegexpStr = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
+            SquareAndCountryRegexp = new Regex(squareRegexpStr + @"\s+" + anyCountry, RegexOptions.IgnoreCase);
+            SquareRegexp = new Regex(squareRegexpStr, RegexOptions.IgnoreCase);
         }
-        static HashSet<string> ReadCountryList() {
-            HashSet<string> countries = new HashSet<string>();
 
-            CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures);
-
-            //loop through all the cultures found
-            var savCulture = Thread.CurrentThread.CurrentUICulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("ru-RU");
-            foreach (CultureInfo culture in cultures)
+        static public List<string> ParseCountryList(string s)   {
+            s = s.Trim();
+            var countries = new List<string>();
+            while (s.Length > 0)
             {
-                try {
-                    RegionInfo region = new RegionInfo(culture.LCID);
-                    countries.Add(region.DisplayName.ToLower());
-                }
-                catch (ArgumentException)
+                var match = CountryRegexp.Match(s);
+                if (match.Success && match.Index == 0)
                 {
-                    continue;
+                    countries.Add(match.Value);
+                }
+                else
+                {
+                    return new List<string>();
+                }
+                s = s.Substring(match.Length).Trim();
+            }
+            return countries;
+        }
+
+        static List<string> ReadCountryList() {
+            // taken from https://github.com/umpirsky/country-list
+
+            var countries = new List<string>();
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.countries_in_russian.json"))
+            {
+                using (var file = new System.IO.StreamReader(stream))
+                {
+                    string jsonStr = file.ReadToEnd();
+                    var country2code = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                    foreach (var s in country2code.Keys)
+                    {
+                        countries.Add(s.ToLower());
+                    }
                 }
             }
-            Thread.CurrentThread.CurrentUICulture = savCulture;
-            countries.Add("российская федерация");
-            countries.Add("абхазия");
-            countries.Add("южная осетия");
             return countries;
         }
         static public bool IsPublicServantInfo(string nameOrRelativeType)
@@ -274,8 +295,7 @@ namespace Smart.Parser.Lib
         {
             square = 0;
             country = "";
-            string regexp = SquareRegexp + " +" + CountryRegexp;
-            var match = Regex.Match(str, regexp, RegexOptions.IgnoreCase);
+            var match = SquareAndCountryRegexp.Match(str);
             if (!match.Success)
                 return false;
             square = ConvertSquareFromString(match.Groups[1].ToString());
@@ -294,13 +314,13 @@ namespace Smart.Parser.Lib
             if (Regex.Match(strSquares, "[а-я]+", RegexOptions.IgnoreCase).Success)
                 return null;
 
-            var match = Regex.Match(strSquares, SquareRegexp);
+            var match = SquareRegexp.Match(strSquares);
             if (!match.Success) return null;
             return  Decimal.Round(match.Value.ParseDecimalValue(), 2);
         }
         public static bool IsCountryStrict(string str)
         {
-            var match = Regex.Match(str, CountryRegexp, RegexOptions.IgnoreCase);
+            var match = CountryRegexp.Match(str);
             return match.Success;
         }
 

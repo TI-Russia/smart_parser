@@ -45,6 +45,22 @@ namespace test
         }
 
         [TestMethod]
+        public void TestCountriesRegexp()
+        {
+            string s = "Италия";
+            var countries = DataHelper.ParseCountryList(s);
+            Assert.IsTrue(countries.Count == 1 );
+            Assert.IsTrue(countries[0] == "Италия");
+
+            s = "Саудовская Аравия  Российская Федерация";
+            countries = DataHelper.ParseCountryList(s);
+            Assert.IsTrue(countries.Count == 2);
+            Assert.IsTrue(countries[0] == "Саудовская Аравия");
+            Assert.IsTrue(countries[1] == "Российская Федерация");
+
+        }
+
+        [TestMethod]
         public void TestParseDocumentFileName()
         {
             string file1 = @"min_agr_new/2013/9037/dep_gos_slyzhbi_2013.xls";
