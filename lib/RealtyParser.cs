@@ -7,6 +7,7 @@ using TI.Declarator.ParserCommon;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace Smart.Parser.Lib
 {
@@ -70,6 +71,36 @@ namespace Smart.Parser.Lib
             }
         }
 
+        public bool OneCellContainsManyValues(string squareStr, string countryStr)
+        {
+            /*int countriesCount = DataHelper.ParseCountryList(countryStr).Count;
+            if (countriesCount == 1)
+            {
+                return true;
+            }
+            int numbersCount = GetLinesStaringWithNumbers(squareStr);
+            if (GetLinesStaringWithNumbers(squareStr).Count > 1)
+                return true;
+            if (DataHelper.ParseCountryList(countryStr).Count > 1)
+            {
+                return true;
+            }*/
+                
+            int numbersCount = GetLinesStaringWithNumbers(squareStr).Count;
+            return numbersCount > 1;
+            /*    return true;
+
+            if (!DataHelper.IsEmptyValue(countryStr))
+            {
+                int countriesCount = DataHelper.ParseCountryList(countryStr).Count;
+                if (countriesCount > 0)
+                {
+                    return countriesCount > 1;
+                }
+            }
+            return false;*/
+        }
+
         public void ParseOwnedProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
@@ -88,7 +119,7 @@ namespace Smart.Parser.Lib
 
             try
             {
-                if (GetLinesStaringWithNumbers(squareStr).Count > 1)
+                if (OneCellContainsManyValues(squareStr, countryStr))
                 {
                     ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
                 }
@@ -143,7 +174,7 @@ namespace Smart.Parser.Lib
 
             try
             {
-                if (GetLinesStaringWithNumbers(squareStr).Count > 1)
+                if (OneCellContainsManyValues(squareStr, countryStr))
                 {
                     ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, owntypeStr, squareStr, countryStr, person);
                 }
@@ -183,29 +214,29 @@ namespace Smart.Parser.Lib
             {
                 return;
             }
-            string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
-            string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
-            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
+            string ownershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
+            string squareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
+            string countryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
             
-            SwapCountryAndSquare(ref statePropSquareStr, ref statePropCountryStr);
+            SwapCountryAndSquare(ref squareStr, ref countryStr);
             
             try
             {
-                if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
+                if (OneCellContainsManyValues(squareStr, countryStr))
                 {
                     ParseStatePropertyManyValuesInOneCell(
                         statePropTypeStr,
-                        statePropOwnershipTypeStr,
-                        statePropSquareStr,
-                        statePropCountryStr,
+                        ownershipTypeStr,
+                        squareStr,
+                        countryStr,
                         person);
                 }
                 else
                 {
                     ParseStatePropertySingleRow(statePropTypeStr,
-                        statePropOwnershipTypeStr,
-                        statePropSquareStr,
-                        statePropCountryStr,
+                        ownershipTypeStr,
+                        squareStr,
+                        countryStr,
                         person);
                 }
             }

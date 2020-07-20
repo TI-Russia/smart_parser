@@ -24,7 +24,7 @@ namespace Smart.Parser.Lib
 
             // Non-breaking space or breaking space can be between digits like "1 680,0"
             string squareRegexpStr = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
-            SquareAndCountryRegexp = new Regex(squareRegexpStr + @"\s+" + anyCountry, RegexOptions.IgnoreCase);
+            SquareAndCountryRegexp = new Regex(squareRegexpStr + @"\s+(" + anyCountry + ")", RegexOptions.IgnoreCase);
             SquareRegexp = new Regex(squareRegexpStr, RegexOptions.IgnoreCase);
         }
 
@@ -34,7 +34,7 @@ namespace Smart.Parser.Lib
             while (s.Length > 0)
             {
                 var match = CountryRegexp.Match(s);
-                if (match.Success && match.Index == 0)
+                if (match.Success && match.Index == 0 && match.Length > 0)
                 {
                     countries.Add(match.Value);
                 }
@@ -291,7 +291,7 @@ namespace Smart.Parser.Lib
             return  Decimal.Round(str.ParseDecimalValue(), 2);
         }
 
-        static bool ReadSquareAndCountry(string str, out decimal square, out string country)
+        static public bool ReadSquareAndCountry(string str, out decimal square, out string country)
         {
             square = 0;
             country = "";

@@ -61,6 +61,21 @@ namespace test
         }
 
         [TestMethod]
+        public void TestReadSquareAndCountry()
+        {
+            string s = "1 Россия";
+            decimal square;
+            string country;
+            var r = DataHelper.ReadSquareAndCountry(s, out square, out country);
+            Assert.IsTrue(square == 1);
+            Assert.IsTrue(country == "Россия");
+            
+            s = "(Россия)";
+            r = DataHelper.ReadSquareAndCountry(s, out square, out country);
+            Assert.IsFalse(r);
+        }
+
+        [TestMethod]
         public void TestParseDocumentFileName()
         {
             string file1 = @"min_agr_new/2013/9037/dep_gos_slyzhbi_2013.xls";
