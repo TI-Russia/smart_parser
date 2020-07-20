@@ -1,5 +1,6 @@
 from django.db import migrations, models
 import gzip
+#from declarations.models import Office
 
 def add_offices(apps, schema_editor):
     Office = apps.get_model('declarations', 'Office')
@@ -13,7 +14,6 @@ def add_offices(apps, schema_editor):
         name_ru = name_ru.replace("\t", " ")
         c = Office(id=int(id),
                    name=name_ru,
-                   name_ru=name_ru,
                    type_id=int(type_id))
         if parent_id is not None:
             c.parent_id = int(parent_id)

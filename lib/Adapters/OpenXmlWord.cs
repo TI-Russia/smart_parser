@@ -287,6 +287,9 @@ namespace Smart.Parser.Adapters
                           (textOrBreak.Name == w + "lastRenderedPageBreak") */
                     {
                         s += "\n";
+                    } else if (textOrBreak.LocalName == "numPr")
+                    {
+                        s += "- ";
                     }
                 }
                 s += "\n";
@@ -301,7 +304,7 @@ namespace Smart.Parser.Adapters
             }
             Text = s;
             IsEmpty = s.IsNullOrWhiteSpace();
-            if (FontName == null || FontName == "")
+            if (string.IsNullOrEmpty(FontName))
             {
                 FontName = docHolder.DefaultFontName;
             }

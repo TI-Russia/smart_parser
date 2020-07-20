@@ -128,15 +128,24 @@ class SPJsonFile(models.Model):
     intersection_status = models.CharField(max_length=16)
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
+    declarator_document_file_url = models.CharField(max_length=128, null=True)
+    dlrobot_url = models.CharField(max_length=256, null=True)
 
+    @property
+    def doc_path(self):
+        doc_path = self.file_path
+        if doc_path.endswith('.json'):
+            doc_path = doc_path[:-len('.json')]
+        return doc_path
 
 class Person(models.Model):
-    pass
+    person_name = models.CharField(max_length=64, verbose_name='person name')
+    declarator_person_id = models.IntegerField(null=True)
 
 
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
-    type = models.TextField(verbose_name='office name')
+    type = models.TextField(verbose_name='real_estate')
     country = models.CharField(max_length=2)
     relative = models.CharField(max_length=1)
     owntype = models.CharField(max_length=1)
@@ -172,7 +181,7 @@ def get_relatives(records):
 class Section(models.Model):
     spjsonfile = models.ForeignKey('declarations.spjsonfile', null=True, verbose_name="smart parser json file", on_delete=models.CASCADE)
     person = models.ForeignKey('declarations.Person', null=True, verbose_name="person id", on_delete=models.CASCADE)
-    person_name = models.TextField(verbose_name='person name')
+    person_name = models.CharField(max_length=64, verbose_name='person name')
     income_year = models.IntegerField(null=True)
     department = models.TextField(null=True)
     position = models.TextField(null=True)
@@ -186,6 +195,7 @@ class Section(models.Model):
         relatives |= get_relatives(self.vehicle_set)
         result = Relative.sort_by_visual_order(list(relatives))
         return result
+
 
 
 

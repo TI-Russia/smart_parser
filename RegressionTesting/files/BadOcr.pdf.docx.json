@@ -1,0 +1,86 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Фролов А.В.",
+        "role": "Руководитель\nРосгидромета\n"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 3385119.0,
+          "size_raw": "3385119",
+          "relative": null
+        },
+        {
+          "size": 751582.0,
+          "size_raw": "751582",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 47.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "47,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая"
+        },
+        {
+          "text": "дача служебная",
+          "square": 136.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "136",
+          "country_raw": "Россия",
+          "type_raw": "дача служебная"
+        },
+        {
+          "text": "квартира",
+          "square": 74.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "74",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный\nучасток",
+          "square": 1000.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1000",
+          "country_raw": "Россия",
+          "type_raw": "земельный\nучасток",
+          "own_type_raw": "индивидуальный"
+        },
+        {
+          "text": "квартира",
+          "square": 47.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "47,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль Volkswagen Passat",
+          "relative": null
+        }
+      ],
+      "person_index": 1
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащихцентрального аппарата Федеральной службы по гидрометеорологии и мониторингу окружающей среды и членов их семейза период с 01 января 2014 г. по 31 декабря 2014 г.\n",
+    "year": 2014
+  }
+}

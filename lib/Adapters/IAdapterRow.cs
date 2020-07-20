@@ -367,37 +367,37 @@ namespace Smart.Parser.Adapters
             else
             {
                 string pattern = @"\s+\p{Pd}\s+"; // UnicodeCategory.DashPunctuation
-                string[] result = Regex.Split(v, pattern);
-                if (result.Length < 2)
+                string[] two_parts = Regex.Split(v, pattern);
+                string clean_v = Regex.Replace(v, pattern, " ");
+                string[] words = Regex.Split(clean_v, @"[\,\s\n]+");
+                if (words.Length >= 3 && TextHelpers.CanBePatronymic(words[2]) 
+                                      && !TextHelpers.MayContainsRole(words[0])
+                                      && !TextHelpers.MayContainsRole(words[1]))
                 {
-                    string[] words = Regex.Split(v, @"[\,\s\n]+");
-                    if (words.Length >= 3 && TextHelpers.CanBePatronymic(words[2]))
-                    {
-                        // ex: "Рутенберг Дмитрий Анатольевич начальник управления"
-                        PersonName = String.Join(" ", words.Take(3)).Trim();
-                        Occupation = String.Join(" ", words.Skip(3)).Trim();
-                    }
-                    else if (TextHelpers.CanBePatronymic(words.Last()))
-                    {
-                        // ex: "начальник управления Рутенберг Дмитрий Анатольевич"
-                        PersonName = String.Join(" ", words.Skip(words.Length - 3)).Trim();
-                        Occupation = String.Join(" ", words.Take(words.Length - 3)).Trim();
-                    }
-                    else
-                    {
-                        throw new SmartParserException(
-                            string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
-                    }
+                    // ex: "Рутенберг Дмитрий Анатольевич начальник управления"
+                    PersonName = String.Join(" ", words.Take(3)).Trim();
+                    Occupation = String.Join(" ", words.Skip(3)).Trim();
+                }
+                else if (TextHelpers.CanBePatronymic(words.Last()))
+                {
+                    // ex: "начальник управления Рутенберг Дмитрий Анатольевич"
+                    PersonName = String.Join(" ", words.Skip(words.Length - 3)).Trim();
+                    Occupation = String.Join(" ", words.Take(words.Length - 3)).Trim();
+                }
+                else if (two_parts.Length == 2)
+                {
+                    PersonName = two_parts[0].Trim();
+                    Occupation = String.Join(" - ", two_parts.Skip(1)).Trim();
                 }
                 else
                 {
-                    PersonName = result[0].Trim();
-                    Occupation = String.Join(" - ", result.Skip(1)).Trim();
+                    throw new SmartParserException(
+                        string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
                 }
             }
         }
 
-        public bool InitPersonData()
+        public bool InitPersonData(string prevPersonName)
         {
             if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
             {
@@ -425,7 +425,7 @@ namespace Smart.Parser.Adapters
             else
             {
                 var nameCell = GetDeclarationField(DeclarationField.NameOrRelativeType);
-                nameOrRelativeType = nameCell.Text.ReplaceEolnWithSpace();
+                nameOrRelativeType = nameCell.Text.ReplaceEolnWithSpace().Replace("не имеет", "");
                 NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
                 if (this.ColumnOrdering.ContainsField(DeclarationField.Occupation))
                 {
@@ -440,6 +440,10 @@ namespace Smart.Parser.Adapters
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))
                     {
                         SetRelative(nameOrRelativeType);
+                    }
+                    else if (prevPersonName == nameOrRelativeType && DataHelper.IsRelativeInfo(Occupation))
+                    {
+                        SetRelative(Occupation);
                     }
                     else
                     { 

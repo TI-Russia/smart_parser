@@ -120,5 +120,29 @@ namespace test
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.MoneySources].BeginColumn, 12);
         }
 
+        [TestMethod]
+        public void TwoRowHeaderEmptyTopCellTest()
+        {
+            string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "57715.doc");
+            IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
+
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(ordering.ColumnOrder.Count, 13);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.Vehicle].BeginColumn, 10);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn, 11);
+        }
+
+        [TestMethod]
+        public void TwoRowHeaderEmptyTopCellTest2()
+        {
+            string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "customs-tworow-header.xls");
+            IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
+
+            ColumnPredictor.InitializeIfNotAlready();
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(ordering.ColumnOrder.Count, 14);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn, 2);
+        }
+
     }
 }

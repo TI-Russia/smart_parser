@@ -28,6 +28,9 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('input', nargs='+')
     parser.add_argument("--rebuild", dest='rebuild_pdf', action="store_true", default=False)
+    parser.add_argument("--conversion-timeout", dest='conversion_timeout', type=int, default=60*30)
+    parser.add_argument("--conversion-server", dest='conversion_server', required=False)
+    parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false", required=False)
     return parser.parse_args()
 
 
@@ -56,24 +59,27 @@ def receive_files(logger, conv_tasks, sent_files):
     return errors_count == 0
 
 
-def main (args, logger):
+def main(args, logger):
+    if args.conversion_server is not None:
+        TDocConversionClient.DECLARATOR_CONV_URL = args.conversion_server
     conv_tasks = TDocConversionClient(logger)
     conv_tasks.start_conversion_thread()
 
     try:
         sent_files = send_files(args, logger, conv_tasks)
-        if len(sent_files) > 0:
-            logger.debug("wait conversion finished")
-            conv_tasks.wait_doc_conversion_finished(60*30)
+        if args.receive_files and len(sent_files) > 0:
+            conv_tasks.wait_doc_conversion_finished(args.conversion_timeout)
         else:
             logger.debug("stop conversion finished")
             conv_tasks.stop_conversion_thread()
     except Exception as exp:
         logger.error("exception: {}, stop_conversion_thread".format(exp))
         conv_tasks.stop_conversion_thread()
-    if not receive_files(logger, conv_tasks, sent_files):
-        return 1
+    if args.receive_files:
+        if not receive_files(logger, conv_tasks, sent_files):
+            return 1
     return 0
+
 
 if __name__ == '__main__':
     args = parse_args()

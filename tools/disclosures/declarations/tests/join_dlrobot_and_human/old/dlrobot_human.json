@@ -1,0 +1,14 @@
+{
+    "05.fsin.su": {
+        "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
+            "human_miss": true,
+            "dlrobot_path": "new.xlsx",
+            "intersection_status": "only_dlrobot"
+        },
+        "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
+                "dlrobot_path": "old_dlrobot.xlsx",
+                "intersection_status": "only_dlrobot"
+        }
+
+    }
+}

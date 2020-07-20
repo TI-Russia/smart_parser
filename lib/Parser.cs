@@ -3,24 +3,17 @@ using Smart.Parser.Adapters;
 using System;
 using System.Threading;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using TI.Declarator.ParserCommon;
-using System.Globalization;
 
 namespace Smart.Parser.Lib
 {
     
-    public class Parser
+    public class Parser : RealtyParser
     {
         DateTime FirstPassStartTime;
         DateTime SecondPassStartTime;
         bool FailOnRelativeOrphan;
-        public static bool UseDecimalRawNormalization = false;
-        static readonly string OwnedString = "В собственности";
-        static readonly string StateString = "В пользовании";
-        static NumberFormatInfo ParserNumberFormatInfo = new NumberFormatInfo();
         public int NameOrRelativeTypeColumn { set; get; } = 1;
 
         public Parser(IAdapter adapter, bool failOnRelativeOrphan = true)
@@ -154,13 +147,14 @@ namespace Smart.Parser.Lib
                 for (int k = 0; k < borders.Count; ++k)
                 {
                     DataRow currRow = dividedLines[k];
-                    var nameOrRelativeType = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType).Text;
+                    var nameOrRelativeType = currRow.GetDeclarationField(DeclarationField.NameOrRelativeType).Text.Replace("не имеет", "");
                     if (k == 0)
                     {
                         currRow.PersonName = nameOrRelativeType;
-                        currRow.Occupation = row.Occupation;
+                        currRow.Occupation = row.Occupation.Replace("не имеет", "");
                         currRow.Department = row.Department;
-
+                        if (currRow.Department != null)
+                            currRow.Department = currRow.Department.Replace("не имеет", "");
                         InitDeclarantProperties(currRow);
                     }
                     else
@@ -239,8 +233,8 @@ namespace Smart.Parser.Lib
 
             public void InitDeclarantProperties(DataRow row)
             {
-                CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit();
-                CurrentDeclarant.Occupation = row.Occupation;
+                CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit().Replace("не имеет", "");
+                CurrentDeclarant.Occupation = row.Occupation.Replace("не имеет", "");
                 CurrentDeclarant.Department = row.Department;
                 CurrentDeclarant.Ordering = row.ColumnOrdering;
             }
@@ -269,7 +263,7 @@ namespace Smart.Parser.Lib
                 {
                     if (FailOnRelativeOrphan)
                     {
-                        throw new SmartParserException(
+                        throw new SmartParserRelativeWithoutPersonException(
                             string.Format("Relative {0} at row {1} without main Person", row.RelativeType, row.GetRowIndex()));
                     }
                     else
@@ -320,8 +314,7 @@ namespace Smart.Parser.Lib
             }
             catch (Exception e)
             {
-                Logger.Error(String.Format("Cannot parse possible header, row={0}, error={1}, so skip it may be it is a data row ", e.ToString(), row.GetRowIndex()));
-
+                Logger.Debug(String.Format("Cannot parse possible header, row={0}, error={1}, so skip it may be it is a data row ", e.ToString(), row.GetRowIndex()));
             }
             return false;
         }
@@ -342,6 +335,7 @@ namespace Smart.Parser.Lib
             }
 
             bool skipEmptyPerson = false;
+            string prevPersonName = "";
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -354,7 +348,7 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
-                Logger.Debug(currRow.DebugString());
+                Logger.Debug(String.Format("currRow {1}: {0}", currRow.DebugString(), row));
 
                 string sectionName;
                 if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))
@@ -374,7 +368,7 @@ namespace Smart.Parser.Lib
 
                 if (updateTrigrams) ColumnPredictor.UpdateByRow(columnOrdering, currRow);
 
-                if (!currRow.InitPersonData())
+                if (!currRow.InitPersonData(prevPersonName))
                 {
                     // be robust, ignore errors see 8562.pdf.docx in tests
                     continue;
@@ -382,6 +376,7 @@ namespace Smart.Parser.Lib
 
                 if (currRow.PersonName != String.Empty)
                 {
+                    prevPersonName = currRow.PersonName; 
                     borderFinder.CreateNewDeclarant(Adapter, currRow);
                     if (borderFinder.CurrentPerson != null)
                         skipEmptyPerson = false;
@@ -389,15 +384,26 @@ namespace Smart.Parser.Lib
                 else if  (currRow.RelativeType != String.Empty)
                 {
                     if (!skipEmptyPerson)
-                        borderFinder.CreateNewRelative(currRow);
+                    {
+                        try
+                        {
+                            borderFinder.CreateNewRelative(currRow);
+                        }
+                        catch (SmartParserRelativeWithoutPersonException e)
+                        {
+                            skipEmptyPerson = true;
+                            Logger.Error(e.Message);
+                            continue;
+                        }
+                    }
                 }
                 else 
                 {
                     if (borderFinder.CurrentPerson == null && FailOnRelativeOrphan)
                     {
                         skipEmptyPerson = true;
+                        Logger.Error(String.Format("No person to attach info on row={0}", row));
                         continue;
-                        // throw new SmartParserEmptyPersonException(String.Format("No person to attach info on row={0}", row));
                     }
                 }
                 if (!skipEmptyPerson)
@@ -443,145 +449,6 @@ namespace Smart.Parser.Lib
             }
         }
 
-        public static void CheckProperty(RealEstateProperty prop)
-        {
-            if (prop == null)
-            {
-                return;
-            }
-
-            if (String.IsNullOrEmpty(prop.country_raw))
-            {
-                //Logger.Error(CurrentRow, "wrong country: {0}", prop.country_raw);
-            }
-        }
-
-        void AddRealEstateWithNaturalText(DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
-        {
-            if (!currRow.ColumnOrdering.ContainsField(fieldName))
-            {
-                fieldName = fieldName | DeclarationField.MainDeclarant;
-            }
-
-            if (currRow.ColumnOrdering.ContainsField(fieldName))
-            {
-                RealEstateProperty realEstateProperty = new RealEstateProperty();
-                realEstateProperty.Text = currRow.GetContents(fieldName).Trim();
-                if (!DataHelper.IsEmptyValue(realEstateProperty.Text))
-                {
-                    realEstateProperty.own_type_by_column = ownTypeByColumn;
-                    CheckProperty(realEstateProperty);
-                    person.RealEstateProperties.Add(realEstateProperty);
-                }
-            }
-
-            
-
-        }
-        public void ParseOwnedProperty(DataRow currRow, Person person)
-        {
-            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
-            {
-                AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, OwnedString, person);
-                return;
-            }
-            string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType);
-            string ownTypeStr = null;
-            if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
-            {
-                ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType);
-            }
-            string squareStr = currRow.GetContents(DeclarationField.OwnedRealEstateSquare);
-            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry, false);
-
-            try
-            {
-                if (GetLinesStaringWithNumbers(squareStr).Count > 1)
-                {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
-                }
-                else
-                {
-                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
-            }
-
-        }
-
-        public void ParseMixedProperty(DataRow currRow, Person person)
-        {
-            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.MixedRealEstateSquare))
-            {
-                AddRealEstateWithNaturalText(currRow, DeclarationField.MixedColumnWithNaturalText, null, person);
-                return;
-            }
-            string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType);
-            string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare);
-            string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry);
-            string owntypeStr = currRow.GetContents(DeclarationField.MixedRealEstateOwnershipType, false);
-            if (owntypeStr == "")
-                owntypeStr = null;
-
-            try
-            {
-                if (GetLinesStaringWithNumbers(squareStr).Count > 1)
-                {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, owntypeStr, squareStr, countryStr, person);
-                }
-                else
-                {
-                    ParseOwnedPropertySingleRow(estateTypeStr, owntypeStr, squareStr, countryStr, person);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
-            }
-
-        }
-
-        public void ParseStateProperty(DataRow currRow, Person person)
-        {
-            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.StatePropertySquare))
-            {
-                AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
-                return;
-            }
-            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false);
-            string statePropOwnershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false);
-            string statePropSquareStr = currRow.GetContents(DeclarationField.StatePropertySquare);
-            string statePropCountryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false);
-
-            try
-            {
-                if (GetLinesStaringWithNumbers(statePropSquareStr).Count > 1)
-                {
-                    ParseStatePropertyManyValuesInOneCell(
-                        statePropTypeStr, 
-                        statePropOwnershipTypeStr,
-                        statePropSquareStr, 
-                        statePropCountryStr, 
-                        person);
-                }
-                else
-                {
-                    ParseStatePropertySingleRow(statePropTypeStr, 
-                        statePropOwnershipTypeStr, 
-                        statePropSquareStr, 
-                        statePropCountryStr, 
-                        person);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
-            }
-
-        }
         bool ParseIncomeOneField(DataRow currRow, Person person, DeclarationField field, bool ignoreThousandMultiplier)
         {
             if (!currRow.ColumnOrdering.ContainsField(field)) return false;
@@ -602,23 +469,38 @@ namespace Smart.Parser.Lib
         }
         bool ParseIncome(DataRow currRow, Person person, bool ignoreThousandMultiplier)
         {
-            if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, ignoreThousandMultiplier))
+            try
             {
-                return true;
+                if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncomeThousands, ignoreThousandMultiplier))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, true))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, ignoreThousandMultiplier))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, true))
+                {
+                    return true;
+                }
+                return false;
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredYearlyIncome, true))
+            catch (SmartParserFieldNotFoundException e)
             {
-                return true;
+                if (person is Relative && (person as Relative).RelationType == RelationType.Child)
+                {
+                    Logger.Info("Child's income is unparsable, set it to 0 ");
+                    return true;
+                }
+                else
+                {
+                    throw e;
+                }
             }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncomeInThousands, ignoreThousandMultiplier))
-            {
-                return true;
-            }
-            else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, true))
-            {
-                return true;
-            }
-            return false;
         }
 
         public Declaration ParsePersonalProperties(Declaration declaration)
@@ -667,7 +549,8 @@ namespace Smart.Parser.Lib
                                 DeclarationField.OwnedRealEstateCountry,
                                 DeclarationField.MixedRealEstateCountry,
                                 DeclarationField.StatePropertyCountry,
-                                DeclarationField.NameOrRelativeType))
+                                DeclarationField.NameOrRelativeType) &&
+                            rows.Count > 0) 
                         {
                             Logger.Debug("Merge row to the last if state and square cell is empty");
                             rows.Last().Merge(row);
@@ -681,8 +564,6 @@ namespace Smart.Parser.Lib
 
                     foreach (var currRow in rows)
                     {
-                        CurrentRow = currRow.GetRowIndex();
-            
                         if (!foundIncomeInfo)
                         {
                             if (ParseIncome(currRow, person, declaration.IgnoreThousandMultipler))
@@ -712,20 +593,20 @@ namespace Smart.Parser.Lib
         {
             if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.Vehicle))
             {
-                var s = r.GetContents(DeclarationField.Vehicle);
+                var s = r.GetContents(DeclarationField.Vehicle).Replace("не имеет", "");
                 if (!DataHelper.IsEmptyValue(s))
                     person.Vehicles.Add(new Vehicle(s));
             }
             else if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.DeclarantVehicle))
             {
-                var s = r.GetContents(DeclarationField.DeclarantVehicle);
+                var s = r.GetContents(DeclarationField.DeclarantVehicle).Replace("не имеет", "");
                 if (!DataHelper.IsEmptyValue(s))
                     person.Vehicles.Add(new Vehicle(s));
             }
             else
             {
-                var t = r.GetContents(DeclarationField.VehicleType);
-                var m = r.GetContents(DeclarationField.VehicleModel, false);
+                var t = r.GetContents(DeclarationField.VehicleType).Replace("не имеет", "");
+                var m = r.GetContents(DeclarationField.VehicleModel, false).Replace("не имеет", "");
                 var text = t + " " + m;
                 if (t == m)
                 {
@@ -738,228 +619,7 @@ namespace Smart.Parser.Lib
 
         }
         
-        static string NormalizeRawDecimalForTest(string s)
-        {
-            if (!UseDecimalRawNormalization) return s;
-            Double v;
-            if (Double.TryParse(s, out v))
-            {
-                return v.ToString(ParserNumberFormatInfo);
-            }
-            else
-            {
-                return s.Replace(".", ",").Replace("\u202f", " ");
-                //return s;
-            }
-        }
-
-        static public void ParseStatePropertySingleRow(string statePropTypeStr,
-            string statePropOwnershipTypeStr,
-            string statePropSquareStr,
-            string statePropCountryStr,
-            Person person)
-        {
-            statePropTypeStr = statePropTypeStr.Trim();
-            if (DataHelper.IsEmptyValue(statePropTypeStr))
-            {
-                return;
-            }
-            RealEstateProperty stateProperty = new RealEstateProperty();
-
-
-            stateProperty.Text = statePropTypeStr;
-            stateProperty.type_raw = statePropTypeStr;
-            stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
-            stateProperty.square_raw = NormalizeRawDecimalForTest(statePropSquareStr);
-            stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
-            if (statePropOwnershipTypeStr != "")
-                stateProperty.own_type_raw = statePropOwnershipTypeStr;
-            stateProperty.own_type_by_column = StateString;
-            CheckProperty(stateProperty);
-            person.RealEstateProperties.Add(stateProperty);
-        }
-
-        static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
-        {
-            estateTypeStr = estateTypeStr.Trim();
-            areaStr = areaStr.ReplaceEolnWithSpace();
-            if (DataHelper.IsEmptyValue(estateTypeStr))
-            {
-                return;
-            }
-
-            RealEstateProperty realEstateProperty = new RealEstateProperty();
-
-            realEstateProperty.square = DataHelper.ParseSquare(areaStr);
-            realEstateProperty.square_raw = NormalizeRawDecimalForTest(areaStr);
-            realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
-            realEstateProperty.own_type_by_column = ownTypeByColumn;
-
-            // колонка с типом недвижимости отдельно
-            if (ownTypeStr != null)
-            {
-                realEstateProperty.type_raw = estateTypeStr;
-                realEstateProperty.own_type_raw = ownTypeStr;
-                realEstateProperty.Text = estateTypeStr;
-            }
-            else // колонка содержит тип недвижимости и тип собственности
-            {
-                realEstateProperty.Text  = estateTypeStr;
-            }
-
-            realEstateProperty.Text = estateTypeStr;
-            CheckProperty(realEstateProperty);
-            person.RealEstateProperties.Add(realEstateProperty);
-        }
-        static List<int> GetLinesStaringWithNumbers(string areaStr)
-        {
-            List<int> linesWithNumbers = new List<int>();
-            string[] lines = areaStr.Split('\n');
-            for (int i = 0; i < lines.Count(); ++i)
-            {
-                if (Regex.Matches(lines[i], "^\\s*[1-9]").Count > 0) // not a zero in the begining
-                {
-                    linesWithNumbers.Add(i);
-                }
-            }
-            return linesWithNumbers;
-
-        }
-
-        static string SliceArrayAndTrim(string[] lines, int start, int end)
-        {
-            return  String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
-        }
-
-        static List<string> DivideByBordersOrEmptyLines(string value, List<int> linesWithNumbers)
-        {
-            var result = new List<string>();
-            if (value == null)
-            {
-                return result;
-            }
-            var lines = SplitJoinedLinesByFuzzySeparator(value, linesWithNumbers);
-            Debug.Assert(linesWithNumbers.Count > 1);
-            int startLine = linesWithNumbers[0];
-            int numberIndex = 1;
-            string item;
-            for (int i = startLine + 1; i < lines.Count(); ++i)
-            {
-                item = SliceArrayAndTrim(lines, startLine, i);
-                if (item.Count() > 0) // not empty item
-                {
-                    if ((numberIndex < linesWithNumbers.Count && i == linesWithNumbers[numberIndex]) || lines[i].Trim().Count() == 0)
-                    {
-                        result.Add(item);
-                        startLine = i;
-                        numberIndex++;
-                    }
-                }
-            }
-
-            item = SliceArrayAndTrim(lines, startLine, lines.Count());
-            if (item.Count() > 0) result.Add(item);
-
-            if (result.Count < linesWithNumbers.Count) {
-                var notEmptyLines = new List<string>();
-                foreach (var l in lines) {
-                    if (l.Trim(' ').Length > 0) {
-                        notEmptyLines.Add(l);
-                    }
-                }
-                if (notEmptyLines.Count == linesWithNumbers.Count) {
-                    return notEmptyLines;
-                }
-            }
-    
-            return result;
-        }
-
-        private static string[] SplitJoinedLinesByFuzzySeparator(string value, List<int> linesWithNumbers)
-        {
-            string[] lines;
-
-            // Eg: "1. Квартира\n2. Квартира"
-            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s").Count > 0)
-            {
-                lines = (string[]) Regex.Split(value, @"\d\.\s").Skip(1).ToArray();
-                return lines;
-            }
-
-            // Eg: "- Квартира\n- Квартира"
-            if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s").Count > 0)
-            {
-                lines = (string[]) Regex.Split(value, @"\n\p{Pd}");
-                return lines;
-            }
-
-            lines = value.Trim(' ', ';').Split(';');
-            if (lines.Length != linesWithNumbers.Count)
-            {
-                lines = value.Split('\n');
-            }
-
-            return lines;
-        }
-
-        static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
-        {
-            if (index >= body.Count)
-            {
-                return defaultValue;
-            }
-            else
-            {
-                return body[index];
-            }
-        }
-
-        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
-        {
-            List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
-            List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
-            List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
-            List<string> ownTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
-            List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
-            for (int i=0; i < areas.Count; ++i )
-            {
-                ParseOwnedPropertySingleRow(
-                    GetListValueOrDefault(estateTypes,i, ""), 
-                    GetListValueOrDefault(ownTypes, i, null),
-                    GetListValueOrDefault(areas, i, ""),
-                    GetListValueOrDefault(countries, i, ""),
-                    person,
-                    ownTypeByColumn
-                );
-            }
-        }
-        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr,
-            string ownTypeStr,
-            string areaStr,
-            string countryStr,
-            Person person)
-        {
-            List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
-            List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
-            List<string> estateOwnTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
-            List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
-            List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
-            for (int i = 0; i < areas.Count; ++i)
-            {
-                ParseStatePropertySingleRow(
-                    GetListValueOrDefault(estateTypes, i, ""),
-                    GetListValueOrDefault(estateOwnTypes, i, ""),
-                    GetListValueOrDefault(areas, i, ""),
-                    GetListValueOrDefault(countries, i, ""),
-                    person
-                );
-            }
-        }
-
 
         IAdapter Adapter { get; set; }
-        static int CurrentRow { get; set; } = -1;
-
-        
     }
 }

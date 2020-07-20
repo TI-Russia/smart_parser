@@ -1,0 +1,15 @@
+{
+    "files": {
+        "test1.ru": {
+            "f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a": {
+                "intersection_status": "only_dlrobot",
+                "r:path": "one_line_2017.docx",
+                "d:office_id": 1
+            }
+        }
+    },
+    "r:folder": "domains",
+    "office_to_domains": {
+        "1": ["test1.ru"]
+    }
+}

@@ -1,0 +1,6 @@
+1. I use python 3.6.9 and create virtualenv in tools/ven
+cd ~/smart_parser/tools
+python3 -m venv venv
+
+2. sudo apt install  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice python3-wheel calibre  catdoc xlsx2csv
+3. pip3 install -r requirements.txt

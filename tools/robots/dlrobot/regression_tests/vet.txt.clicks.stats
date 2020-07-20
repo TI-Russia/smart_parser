@@ -139,7 +139,25 @@
         {
             "click_path": [
                 {
-                    "search_query": "\"сведения о доходах\""
+                    "source:url": "http://www.fsvps.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018 год",
+                    "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2018.doc",

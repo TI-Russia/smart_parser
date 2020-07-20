@@ -262,6 +262,10 @@ namespace Smart.Parser.Adapters
                     {
                         for (int rowIndex = start + 1; rowIndex < start + firstLine[cellIndex].MergedRowsCount; ++rowIndex)
                         {
+                            if (rowIndex >= TableRows.Count)
+                            {
+                                break; // #-max-rows 100
+                            }
                             var additCell = new HtmlAdapterCell(rowIndex, cellIndex);
                             additCell.FirstMergedRow = start;
                             additCell.MergedRowsCount = firstLine[cellIndex].MergedRowsCount - rowIndex;

@@ -28,6 +28,13 @@ namespace test
         }
 
         [TestMethod]
+        public void TryGetFieldTest()
+        {
+            string s1 = "N№ п/п";
+            Assert.IsTrue(s1.IsNumber());
+        }
+
+        [TestMethod]
         public void HeaderDetectionTest()
         {
             string big_header = "Объекты недвижимости, находящиеся в собственности Вид\nсобствен\nности";
@@ -36,6 +43,20 @@ namespace test
             big_header = "Объекты недвижимости имущества находящиеся в пользовании Вид обьекта";
             field = HeaderHelpers.GetField(big_header);
         }
-
+        
+     
+        [TestMethod]
+        public void TestSwapCountryAndSquare()
+        {
+            string square = "рф";
+            string country = "57 кв м";
+            RealtyParser.SwapCountryAndSquare(ref square, ref country);
+            Assert.AreEqual("рф", country);
+            Assert.AreEqual("57 кв м", square);
+            
+            // no swap
+            RealtyParser.SwapCountryAndSquare(ref square, ref country);
+            Assert.AreEqual("57 кв м", square);
+        }   
     }
 }

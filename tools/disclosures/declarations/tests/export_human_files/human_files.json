@@ -1,0 +1,19 @@
+{
+    "d:folder": "human_files",
+    "files": {
+        "7b7995e792823a1daa65008a8045677c052338eb7052dac09029f19ce2fd7a00": {
+            "d:document_id": 13,
+            "d:document_file_id": 4915,
+            "d:domain": "vladprok.ru",
+            "d:path": "4915.doc",
+            "d:office_id": 19,
+            "d:income_year": 2009,
+            "d:media_url": "https://declarator.org/media/documents/doxod%2520prokurorov%2520za%25202009.doc"
+        }
+    },
+    "office_to_domains": {
+        "19": [
+            "vladprok.ru"
+        ]
+    }
+}

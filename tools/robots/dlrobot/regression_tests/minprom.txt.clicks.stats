@@ -1,9 +1,6 @@
 {
-    "files_count": 31,
+    "files_count": 28,
     "files_sorted (short report)": [
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8742a94d5b6/actual/grafik_3_4.docx/dlrobot_data -1",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8af9201b439/actual/primer_1.pdf/dlrobot_data -1",
-        "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8af968b4e2d/actual/primer_2.pdf/dlrobot_data -1",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc6d68ee0c/actual/primer_1_1.pdf/dlrobot_data -1",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc73e0f4a1/actual/primer_2_1.pdf/dlrobot_data -1",
         "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8bc77f2f98f/actual/primer_3_1.pdf/dlrobot_data -1",
@@ -80,15 +77,6 @@
             ],
             "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5afd94a11ec7e/actual/Rabotniki_organizatsii_Minpromtorg_e2f924bb3c661e5406e950b6c1d64c06/dlrobot_data",
             "sha256": "1f1998504891e2c71519548475876c785700173ce0e2e0044f4e3b8df8392a47"
-        },
-        {
-            "click_path": [
-                {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
-                }
-            ],
-            "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8742a94d5b6/actual/grafik_3_4.docx/dlrobot_data",
-            "sha256": "24f8c91a07fdd9f89a9ea0ef421fab101733df79638fdcc3a0dd2118ec1205ff"
         },
         {
             "click_path": [
@@ -366,7 +354,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://minpromtorg.gov.ru/search_results/?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=15",
+                    "source:url": "http://minpromtorg.gov.ru/search_results/index.php?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=16",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера руководителей федеральных государственных учреждений, а также их супруги (супруга) и несовершеннолетних детей, за отчетный период с 01.01.2012 г. по 31.12.2012 г.",
@@ -575,33 +563,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://minpromtorg.gov.ru/search_results/?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=15",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Пример заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера – «Работник подведомственной организации»",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://minpromtorg.gov.ru/docs/#!primer_zapolneniya_spravki_o_dohodah_raskhodah_ob_imushchestve_i_obyazatelstvah_imushchestvennogo_haraktera_rabotnik_podvedomstvennoj_organizacii",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "ЗАГРУЗИТЬ\n3.85 MB, 29.01.2020",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8af9201b439/actual/primer_1.pdf",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8af9201b439/actual/primer_1.pdf/dlrobot_data",
-            "sha256": "ab79b014c8f82898a2f07b1bac72c0606439658eb1f9b06da54d24fff6170aeb"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
                     "source:url": "http://minpromtorg.gov.ru/search_results/index.php?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=16",
                     "source:step": "declarations",
                     "source:title": "",
@@ -683,33 +644,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://minpromtorg.gov.ru/search_results/?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=15",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Пример заполнения справки о доходах, расходах, об имуществе и обязательствах имущественного характера – «Супруга (супруг)»",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://minpromtorg.gov.ru/docs/#!primer_zapolneniya_spravki_o_dohodah_raskhodah_ob_imushchestve_i_obyazatelstvah_imushchestvennogo_haraktera_supruga",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "ЗАГРУЗИТЬ\n3.24 MB, 29.01.2020",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://minpromtorg.gov.ru/common/upload/docVersions/5a8af968b4e2d/actual/primer_2.pdf",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/minpromtorg.gov.ru/common/upload/docVersions/5a8af968b4e2d/actual/primer_2.pdf/dlrobot_data",
-            "sha256": "c635cd73b99879c12f24570ab820b4b474fad8b16eb0f72b0bf344f38e93660c"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
                     "source:url": "http://minpromtorg.gov.ru/open_ministry/anti/activities/info/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -737,7 +671,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://minpromtorg.gov.ru/search_results/?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=15",
+                    "source:url": "http://minpromtorg.gov.ru/search_results/index.php?q_24=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=16",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера федеральных государственных гражданских служащих Минпромторга России (руководство), а также их супруги (супруга) и несовершеннолетних детей за период с 1 января 2014 г. по 31 декабря 2014 г.",

@@ -1,0 +1,99 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Филонов А.В.",
+        "role": "Глава администрации  \n"
+      },
+      "year": null,
+      "incomes": [
+        {
+          "size": 4298742.21,
+          "size_raw": "4298742,21",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "1.Квартира",
+          "square": 59.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "59,8",
+          "country_raw": "Россия",
+          "type_raw": "1.Квартира",
+          "own_type_raw": "1.Индивидуал ьная "
+        },
+        {
+          "text": "2. Квартира",
+          "square": 190.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "190,3",
+          "country_raw": "Россия",
+          "type_raw": "2. Квартира",
+          "own_type_raw": "2.Безвозмездн ое пользование 3.Безвозмездн ое "
+        },
+        {
+          "text": "3.Квартира",
+          "square": 24.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "24",
+          "country_raw": "Россия",
+          "type_raw": "3.Квартира",
+          "own_type_raw": "пользование"
+        },
+        {
+          "text": "Кампус",
+          "square": null,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "Для данног о вида недвиж имого имущес тва не предус мотрен о  указани е  площад и",
+          "country_raw": "Соединенно\nе \nКоролевств\nо \nВеликобрит ании и Северной \nИрландии",
+          "type_raw": "Кампус",
+          "own_type_raw": "Пользование на период обучения"
+        },
+        {
+          "text": "Квартира",
+          "square": 54.0,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "54",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Безвозмездно е пользование"
+        },
+        {
+          "text": "Квартира",
+          "square": 190.3,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "190,3",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Безвозмездно е пользование"
+        },
+        {
+          "text": "Квартира",
+          "square": 190.3,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "190,3",
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": "Безвозмездно е пользование"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "1.Автомобиль AUDI Q 7, \n2. Мотоцикл SUZUKI \nVZR 1800, \n3.Гидроцикл Bombardier \nRХP ХPS, \n4.Автоприцеп для гидроцикла",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "year": null
+  }
+}

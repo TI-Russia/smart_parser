@@ -308,17 +308,30 @@ namespace Smart.Parser.Lib
 
             List<Cell> columnCells =  new List<Cell>();
             bool headerCanHaveSecondLevel = true;
+            int maxMergedRows = 1;
             var texts = new List<string>();
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
+                if (maxMergedRows < cell.MergedRowsCount)
+                    maxMergedRows = cell.MergedRowsCount;
                 if (cell.CellWidth == 0 && text.Trim() == "") continue;
                 var underCells = FindSubcellsUnder(adapter, cell);
 
                 if (underCells.Count() <= 1 || !headerCanHaveSecondLevel)
                 {
                     headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
-                    columnCells.Add(cell);
+
+                    // иногда в двухярусном заголовке в верхней клетке пусто, а в нижней есть заголовок (TwoRowHeaderEmptyTopCellTest)
+                    if (text.Trim() == "" && cell.MergedRowsCount < maxMergedRows && underCells.Count() == 1) 
+                    {
+                        columnCells.Add(underCells.First());
+                    }
+                    else
+                    {
+                        columnCells.Add(cell);
+                    }
+                    
                     texts.Add(cell.Text.NormSpaces());
                     
                     // обработка ошибки документа DepEnergo2010
@@ -358,6 +371,7 @@ namespace Smart.Parser.Lib
                 //string clean_text = text.Replace("-", "").Trim();
                 if ((text == "" || clean_text.Length <= 1) && (text != "№"))
                 {
+                    // too short title, try to predict by values
                     field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());
                 }
@@ -366,7 +380,16 @@ namespace Smart.Parser.Lib
                     {
                         text = cell.TextAbove + " " + text;
                     }
-                    field = HeaderHelpers.GetField(text.Replace('\n', ' '));
+                    field = HeaderHelpers.TryGetField(text.Replace('\n', ' '));
+                    if ((field == DeclarationField.None) && clean_text.Length <= 4)
+                    {
+                        field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
+                        Logger.Debug("Predict: " + field.ToString());
+                    }
+                    if (field == DeclarationField.None) {
+                        throw new SmartParserException(String.Format("Cannot recognize field \"{0}\"", text.Replace('\n', ' ')));
+                    }
+
                 }
 
                 if (field == DeclarationField.None && !DataHelper.IsEmptyValue(text) )
@@ -377,6 +400,7 @@ namespace Smart.Parser.Lib
                 {
                     ColumnPredictor.PredictForPrecisionCheck(adapter, cell, field);
                 }
+                
                 AddColumn(columnOrdering, field, cell);
                 if (ColumnOrdering.SearchForFioColumnOnly)
                     if  (field == DeclarationField.NameAndOccupationOrRelativeType ||

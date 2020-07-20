@@ -1,5 +1,5 @@
 {
-    "files_count": 34,
+    "files_count": 38,
     "files_sorted (short report)": [
         "cached/volgograd.izbirkom.ru/kadry/dohod/Sved_o_dokhod_GGS_2013.doc/dlrobot_data -1",
         "cached/volgograd.izbirkom.ru/kadry/dohod/Svedeniia_o_dokhodakh_ggs_2012_tablitsa.doc/dlrobot_data -1",
@@ -24,6 +24,10 @@
         "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh.pdf/dlrobot_data -1",
         "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_ER._90d6b3c12c6db4a60f1000a4bb9bc0cb/dlrobot_data -1",
         "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/svedeniia_o_raskhodakh_pen_9d820c8a7b09713ea294367eb281ea5f/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/06.07.2017_Dvizh_sredstv.docx/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/13.07.2017_Dvizh_sredstv.docx/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/20.07.2017_Dvizh_sredstv.docx/dlrobot_data -1",
+        "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/kand_dohod_oik15.doc/dlrobot_data -1",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/Svedeniia_o_dokhodakh_preds.TIK_za_201_92213a6bd95601d4c2006d2b22a417b7/dlrobot_data -1",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/dohody/Svedeniia_o_dokhodakh_predsTIK__db61c5250dfc5fab088ea28058f59008/dlrobot_data -1",
         "cached/www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_ch_ikvo_2016.doc/dlrobot_data -1",
@@ -117,6 +121,26 @@
             "cached_file": "cached/volgograd.izbirkom.ru/vybory/2019/obldum/vydvizhenie-i-registratsiya/docs/nedostovernye1.zip/dlrobot_data",
             "sha256": "0819577e1692eaf920ca7519f85f2a1db07c9c75341cfec65ee0d103ca45be05",
             "archive_index": 4
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах за 2016 год и об имуществе зарегистрированных кандидатов в депутаты Волгоградской областной Думы (на основании данных, представленных кандидатами)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/kand_dohod_oik15.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/kand_dohod_oik15.doc/dlrobot_data",
+            "sha256": "0c1a5fcacb4e189bd54c93a7a4717fb0549bad09dcb3156f1002c50812d57809"
         },
         {
             "click_path": [
@@ -246,6 +270,26 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Cведения о поступлении и расходовании средств избирательных фондов кандидатов (избирательных объединений), подлежащие обязательному опубликованию в средствах массовой информации при проведении выборов депутатов Волгоградской областной Думы (на основании данных Сберегательного банка Российской Федерации (иной кредитной организации) по состоянию на 13.07.2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/13.07.2017%20%D0%94%D0%B2%D0%B8%D0%B6%20%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/13.07.2017_Dvizh_sredstv.docx/dlrobot_data",
+            "sha256": "51e732fd2b8c7dcc19a9df941293183cd9e9ecd2080d542d83605196caa33d6e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "http://www.volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/index.php",
                     "source:step": "anticorruption_div",
                     "source:title": "",
@@ -326,12 +370,52 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Cведения о поступлении и расходовании средств избирательных фондов кандидатов (избирательных объединений), подлежащие обязательному опубликованию в средствах массовой информации при проведении выборов депутатов Волгоградской областной Думы (на основании данных Сберегательного банка Российской Федерации (иной кредитной организации) по состоянию на 06.07.2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/06.07.2017%20%D0%94%D0%B2%D0%B8%D0%B6%20%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/06.07.2017_Dvizh_sredstv.docx/dlrobot_data",
+            "sha256": "6900f7181fca3f61a4ac280081867a6c2a09896c4f88dab7e7eb23911b586872"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "http://volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc",
                     "step": "declarations"
                 }
             ],
             "cached_file": "cached/volgograd.izbirkom.ru/voprosy-protivodeystviya-korruptsii/sved_lzgd_2017_.doc/dlrobot_data",
             "sha256": "84e20c6eb375c17e56491f911c2d86bf8aceaaaeb509dc642c32eb03df110f93"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15.php",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Cведения о поступлении и расходовании средств избирательных фондов кандидатов (избирательных объединений), подлежащие обязательному опубликованию в средствах массовой информации при проведении выборов депутатов Волгоградской областной Думы (на основании данных Сберегательного банка Российской Федерации (иной кредитной организации) по состоянию на 20.07.2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/20.07.2017%20%D0%94%D0%B2%D0%B8%D0%B6%20%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.volgograd.izbirkom.ru/edg2017/obldum2017/oik15/20.07.2017_Dvizh_sredstv.docx/dlrobot_data",
+            "sha256": "871997b3df856675023777f0a672195779f2a549be423b7b071a526cb1456533"
         },
         {
             "click_path": [

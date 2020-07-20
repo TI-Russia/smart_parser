@@ -578,13 +578,23 @@ namespace Smart.Parser
                 Logger.Info("Declaration Ministry: {0} ", columnOrdering.MinistryName);
             }
 
+            if (!(columnOrdering.ContainsField(DeclarationField.NameOrRelativeType) ||
+                  columnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)))
+            {
+                Logger.Error("Insufficient fields: No any of Declarant Name fields found.");
+                return 0;
+            }
+
             if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) || 
                   columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
                   columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
                   columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
             {
-                Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
-                return 0;
+                if (!ColumnOrdering.SearchForFioColumnOnly)
+                {
+                    Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
+                    return 0;
+                }
             }
 
             Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);

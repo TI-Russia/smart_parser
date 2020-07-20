@@ -9,26 +9,33 @@ import tempfile
 if shutil.which('unrar') is None:
     raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt intall unrar")
 
+FILE_EXTENSIONS_IN_ARCHIVE = set()
+FILE_EXTENSIONS_IN_ARCHIVE.update(ACCEPTED_DECLARATION_FILE_EXTENSIONS)
+FILE_EXTENSIONS_IN_ARCHIVE.add(".htm")
+FILE_EXTENSIONS_IN_ARCHIVE.add(".html")
+
 
 def unzip_one_archive(input_file, main_index, outfolder):
+    global FILE_EXTENSIONS_IN_ARCHIVE
     with zipfile.ZipFile(input_file) as zf:
         for archive_index, zipinfo in enumerate(zf.infolist()):
             _, file_extension = os.path.splitext(zipinfo.filename)
             file_extension = file_extension.lower()
-            if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+            if file_extension not in FILE_EXTENSIONS_IN_ARCHIVE:
                 continue
             old_file_name = zipinfo.filename
-            zipinfo.filename = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
-            zf.extract(zipinfo)
-            yield archive_index, old_file_name, zipinfo.filename
+            zipinfo.filename = "{}_{}{}".format(main_index, archive_index, file_extension)
+            zf.extract(zipinfo, path=outfolder)
+            yield archive_index, old_file_name, os.path.join(outfolder, zipinfo.filename)
 
 
 def process_temp_folder(temp_folder, main_index, outfolder):
+    global FILE_EXTENSIONS_IN_ARCHIVE
     logger = logging.getLogger("dlrobot_logger")
     for archive_index, filename in enumerate(os.listdir(temp_folder)):
         _, file_extension = os.path.splitext(filename)
         file_extension = file_extension.lower()
-        if file_extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+        if file_extension not in FILE_EXTENSIONS_IN_ARCHIVE:
             continue
         normalized_file_name = os.path.join(outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
         try:

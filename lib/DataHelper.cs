@@ -85,6 +85,18 @@ namespace Smart.Parser.Lib
                 case "супруга": return RelationType.Spouse;
                 case "супруг(а)": return RelationType.Spouse;
                 case "супругнет": return RelationType.Spouse;
+                case "муж": return RelationType.Spouse;
+                case "жена": return RelationType.Spouse;
+                case "жены": return RelationType.Spouse;
+                case "подопечный": return RelationType.Spouse;
+                case "супруги": return RelationType.Spouse;
+                case "суапруга": return RelationType.Spouse;
+                case "сурпуга": return RelationType.Spouse;
+                case "спруг": return RelationType.Spouse;
+                case "супргуа": return RelationType.Spouse;
+                case "супруна": return RelationType.Spouse;
+                case "супргуга": return RelationType.Spouse;
+
                 case "несовершенно": return RelationType.Child;
                 case "несовершеннолетняядочь": return RelationType.Child;
                 case "несовершеннолетнийсын": return RelationType.Child;
@@ -111,21 +123,26 @@ namespace Smart.Parser.Lib
                 case "сынжены": return RelationType.Child;
                 case "дочьжены": return RelationType.Child;
                 case "несовершеннолетнийребёнок": return RelationType.Child;
+                case "несовешеннолетнийребенок": return RelationType.Child;
+                case "несовершеннолетийребенок": return RelationType.Child;
                 case "несовершеннолетний": return RelationType.Child;
-                case "племяницасупруги": return RelationType.Other;
-                case "муж": return RelationType.Spouse;
-                case "мать": return RelationType.Other;
-                case "жена": return RelationType.Spouse;
-                case "жены": return RelationType.Spouse;
-                case "подопечный": return RelationType.Spouse;
+                case "несовершеноленийребенок": return RelationType.Child;
+                case "нсовершеннолетнийребенок": return RelationType.Child;
+                case "совершеннолетнийребенок": return RelationType.Child;
+                case "несоверщеннолетнийребенок": return RelationType.Child;
                 case "ребёнок": return RelationType.Child;
                 case "ребенок": return RelationType.Child;
                 case "иждивенец": return RelationType.Child;
                 case "опекаемая": return RelationType.Child;
                 case "опекаемый": return RelationType.Child;
+                case "иждивенц": return RelationType.Child;
+
+                case "племяницасупруги": return RelationType.Other;
+                case "мать": return RelationType.Other;
+                case "членсемьи": return RelationType.Other;
 
                 default:
-                    if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннолетн"))
+                    if (clean.StartsWith("ребенок") || clean.StartsWith("ребёнок") || clean.StartsWith("сын") || clean.StartsWith("дочь") || clean.StartsWith("несовершеннол"))
                         return RelationType.Child;
                     if (clean.StartsWith("супруг"))
                         return RelationType.Spouse;
@@ -148,6 +165,7 @@ namespace Smart.Parser.Lib
             return String.IsNullOrWhiteSpace(s)
                 || s == "-"
                 || s == "─"
+                || s == "?"
                 || s == "- - -"
                 || s == "–"
                 || s == "_"
@@ -156,6 +174,7 @@ namespace Smart.Parser.Lib
                 || s == "не имеет"
                 || s == "не указан"
                 || s == "не указано"
+                || s == "не работает"
                 || s == "отсутствует";
         }
 
@@ -203,6 +222,9 @@ namespace Smart.Parser.Lib
             {
                 try
                 {
+                    strIncome = strIncome.Replace("\n", " ");
+                    strIncome = new Regex(".*Общая\\s+сумма\\s+доходов:", RegexOptions.Compiled).Replace(strIncome, "");
+
                     Regex regex = new Regex("([ ,]+[а-яА-Я])|(\\()", RegexOptions.Compiled);
                     var matches = regex.Matches(strIncome);
                     if (matches.Count > 0)
@@ -244,6 +266,11 @@ namespace Smart.Parser.Lib
             return key;
         }
 
+        public static Decimal ConvertSquareFromString(string str)
+        {
+            return  Decimal.Round(str.ParseDecimalValue(), 2);
+        }
+
         static bool ReadSquareAndCountry(string str, out decimal square, out string country)
         {
             square = 0;
@@ -252,7 +279,7 @@ namespace Smart.Parser.Lib
             var match = Regex.Match(str, regexp, RegexOptions.IgnoreCase);
             if (!match.Success)
                 return false;
-            square = Decimal.Round(match.Groups[1].ToString().ParseDecimalValue(), 2);
+            square = ConvertSquareFromString(match.Groups[1].ToString());
             country = match.Groups[2].ToString();
             return true;
         }
