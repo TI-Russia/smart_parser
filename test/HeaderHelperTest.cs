@@ -28,6 +28,13 @@ namespace test
         }
 
         [TestMethod]
+        public void TryGetFieldTest()
+        {
+            string s1 = "N№ п/п";
+            Assert.IsTrue(s1.IsNumber());
+        }
+
+        [TestMethod]
         public void HeaderDetectionTest()
         {
             string big_header = "Объекты недвижимости, находящиеся в собственности Вид\nсобствен\nности";

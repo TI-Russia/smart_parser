@@ -321,7 +321,17 @@ namespace Smart.Parser.Lib
                 if (underCells.Count() <= 1 || !headerCanHaveSecondLevel)
                 {
                     headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
-                    columnCells.Add(cell);
+
+                    // иногда в двухярусном заголовке в верхней клетке пусто, а в нижней есть заголовок (TwoRowHeaderEmptyTopCellTest)
+                    if (text.Trim() == "" && cell.MergedRowsCount < maxMergedRows && underCells.Count() == 1) 
+                    {
+                        columnCells.Add(underCells.First());
+                    }
+                    else
+                    {
+                        columnCells.Add(cell);
+                    }
+                    
                     texts.Add(cell.Text.NormSpaces());
                     
                     // обработка ошибки документа DepEnergo2010
