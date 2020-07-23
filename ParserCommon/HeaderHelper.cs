@@ -102,6 +102,7 @@ namespace TI.Declarator.ParserCommon
             if (str.IsMoneyOnBankAccounts()) { return DeclarationField.MoneyOnBankAccounts; }
             if (str.IsSecuritiesField()) { return DeclarationField.Securities; }
             if (str.IsStocksField()) { return DeclarationField.Stocks; }
+            if (str.IsSpendingsField()) { return DeclarationField.Spendings; }
 
 
 
@@ -405,6 +406,13 @@ namespace TI.Declarator.ParserCommon
             string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
             return strLower.Contains("ценныебумаги");
         }
+        
+        private static bool IsSpendingsField(this string s)
+        {
+            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            return strLower.Contains("расход");
+        }
+
         private static bool IsStocksField(this string s)
         {
             string strLower = s.Replace(" ", "").Replace("-", "").ToLower();

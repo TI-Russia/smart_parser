@@ -96,7 +96,9 @@ namespace TI.Declarator.ParserCommon
         MoneyOnBankAccounts = 105,
         Securities = 106,
         Stocks = 107,
-        MainWorkPositionIncome = 108
+        MainWorkPositionIncome = 108,
+        Spendings = 109
+        
     }
 
 }
