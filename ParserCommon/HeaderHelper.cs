@@ -172,13 +172,14 @@ namespace TI.Declarator.ParserCommon
 
         private static bool HasRealEstateTypeStr(this string s)
         {
-            return (s.Contains("вид объекта") ||
-             s.Contains("вид объектов") ||
-             s.Contains("вид обьекта") ||
-             s.Contains("виды объектов") ||
-             s.Contains("виды недвижимости") ||
-             s.Contains("вид и наименование имущества") ||
-             s.Contains("вид недвижимости"));
+            string clean = s.OnlyRussianLowercase();
+            return (clean.Contains("видобъекта") ||
+                    clean.Contains("видобъектов") ||
+                    clean.Contains("видобьекта") ||
+                    clean.Contains("видыобъектов") ||
+                    clean.Contains("видынедвижимости") ||
+                    clean.Contains("видинаименование имущества") ||
+                    clean.Contains("виднедвижимости"));
         }
 
         private static bool HasOwnershipTypeString(this string s)
