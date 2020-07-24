@@ -140,7 +140,8 @@ namespace TI.Declarator.ParserCommon
         }
         public static bool IsNameAndOccupation(this string s)
         {
-            return s.IsName() && s.IsOccupation();
+            return (s.IsName() && s.IsOccupation()) 
+                   || s.OnlyRussianLowercase().Contains("замещаемаядолжностьстепеньродства");
         }
 
         private static bool IsRelativeType(this string s)
@@ -177,9 +178,10 @@ namespace TI.Declarator.ParserCommon
             return (clean.Contains("видобъекта") ||
                     clean.Contains("видобъектов") ||
                     clean.Contains("видобьекта") ||
+                    clean.Contains("видимущества") ||
                     clean.Contains("видыобъектов") ||
                     clean.Contains("видынедвижимости") ||
-                    clean.Contains("видинаименование имущества") ||
+                    clean.Contains("видинаименованиеимущества") ||
                     clean.Contains("виднедвижимости"));
         }
 
@@ -196,7 +198,7 @@ namespace TI.Declarator.ParserCommon
         private static bool HasOwnedString(this string s)
         {
             string clean = s.OnlyRussianLowercase();
-            return clean.Contains("собственности");
+            return clean.Contains("собственности") || clean.Contains("принадлежащие");
         }
 
         private static bool HasSquareString(this string s)
@@ -355,6 +357,7 @@ namespace TI.Declarator.ParserCommon
                     || strLower.StartsWith("сведенияодоходеза")
                     || strLower.Contains("годовогодохода")
                     || strLower.Contains("суммадохода") 
+                    || strLower.StartsWith("доход")
                     || strLower.Contains("суммадоходов") 
                     || strLower.Contains("декларированныйдоход")
                     || strLower.Contains("декларированныйгодовой")
