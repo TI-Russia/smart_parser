@@ -367,6 +367,7 @@ namespace Smart.Parser.Adapters
             else
             {
                 string pattern = @"\s+\p{Pd}\s+"; // UnicodeCategory.DashPunctuation
+                v = Regex.Replace(v, @"\d+\.\s+", "");
                 string[] two_parts = Regex.Split(v, pattern);
                 string clean_v = Regex.Replace(v, pattern, " ");
                 string[] words = Regex.Split(clean_v, @"[\,\s\n]+");

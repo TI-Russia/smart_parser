@@ -122,6 +122,7 @@ namespace TI.Declarator.ParserCommon
             return s.Contains("заместител") ||
                    s.Contains("начальник") ||
                    s.Contains("аудитор") ||
+                   s.Contains("депутат") ||
                    s.Contains("секретарь") ||
                    s.Contains("уполномоченный") ||
                    s.Contains("председатель") ||

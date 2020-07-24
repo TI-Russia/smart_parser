@@ -132,6 +132,7 @@ namespace TI.Declarator.ParserCommon
             return (clean.Contains("фамилия") ||
                     clean.Contains("фамилимя") ||
                     clean.StartsWith("подающиесведения") ||
+                    clean.StartsWith("подающийсведения") ||
                     clean.Contains("фио") ||
                     clean.Contains(".иф.о.") ||
                     clean.Contains("сведенияодепутате") ||
