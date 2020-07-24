@@ -95,6 +95,7 @@ namespace TI.Declarator.ParserCommon
             if (str.IsMixedRealEstate()) { return DeclarationField.MixedColumnWithNaturalText; }
             if (str.IsOwnedRealEstate()) { return DeclarationField.OwnedColumnWithNaturalText; }
             if (str.IsStateRealEstate()) { return DeclarationField.StateColumnWithNaturalText; }
+            if (HasCountryString(str) && HasRealEstateStr(str)) { return DeclarationField.MixedRealEstateCountry; }
             if (HasRealEstateStr(str)) { return DeclarationField.MixedColumnWithNaturalText; }
 
             if (str.IsAcquiredProperty()) { return DeclarationField.AcquiredProperty; }
@@ -103,7 +104,6 @@ namespace TI.Declarator.ParserCommon
             if (str.IsMoneyOnBankAccounts()) { return DeclarationField.MoneyOnBankAccounts; }
             if (str.IsSecuritiesField()) { return DeclarationField.Securities; }
             if (str.IsStocksField()) { return DeclarationField.Stocks; }
-
 
             if (HasSquareString(str)) { return DeclarationField.MixedRealEstateSquare; }
             if (HasCountryString(str)) { return DeclarationField.MixedRealEstateCountry; }
@@ -239,7 +239,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsOwnedRealEstateSquare(this string s)
         {
-            return IsOwnedColumn(s) &&  HasSquareString(s);
+            return IsOwnedColumn(s) &&  HasSquareString(s) && !s.Contains("вид");
         }
 
         private static bool IsOwnedRealEstateCountry(this string s)
@@ -257,7 +257,7 @@ namespace TI.Declarator.ParserCommon
         }
         private static bool IsStatePropertySquare(this string s)
         {
-            return IsStateColumn(s) && HasSquareString(s);
+            return IsStateColumn(s) && HasSquareString(s) && !s.Contains("вид");
         }
 
         private static bool IsStatePropertyCountry(this string s)
