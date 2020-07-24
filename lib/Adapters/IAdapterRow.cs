@@ -370,6 +370,7 @@ namespace Smart.Parser.Adapters
                 string[] two_parts = Regex.Split(v, pattern);
                 string clean_v = Regex.Replace(v, pattern, " ");
                 string[] words = Regex.Split(clean_v, @"[\,\s\n]+");
+                
                 if (words.Length >= 3 && TextHelpers.CanBePatronymic(words[2]) 
                                       && !TextHelpers.MayContainsRole(words[0])
                                       && !TextHelpers.MayContainsRole(words[1]))
@@ -383,6 +384,12 @@ namespace Smart.Parser.Adapters
                     // ex: "начальник управления Рутенберг Дмитрий Анатольевич"
                     PersonName = String.Join(" ", words.Skip(words.Length - 3)).Trim();
                     Occupation = String.Join(" ", words.Take(words.Length - 3)).Trim();
+                }
+                else if (words.Length >= 2 && TextHelpers.CanBeInitials(words[1]) && TextHelpers.MayContainsRole(String.Join(" ", words.Skip(2)).Trim()))
+                {
+                    // ex: "Головачева Н.В., заместитель"
+                    PersonName = String.Join(" ", words.Take(2)).Trim();
+                    Occupation = String.Join(" ", words.Skip(2)).Trim();
                 }
                 else if (two_parts.Length == 2)
                 {

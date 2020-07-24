@@ -87,6 +87,12 @@ namespace TI.Declarator.ParserCommon
             var replRegex = new Regex(Regex.Escape(substr));
             return replRegex.Replace(str, replStr, 1);
         }
+
+        public static bool CanBeInitials(string s)
+        {
+            return Regex.Match(s.Trim(), @"\w\.\w\.").Success;
+        }
+
         public static bool CanBePatronymic(string s)
         {
             s = s.Replace("-", "");
@@ -111,10 +117,14 @@ namespace TI.Declarator.ParserCommon
 
         public static bool MayContainsRole(string s)
         {
-            s = s.Replace("-", "");
+            s = s.OnlyRussianLowercase();
             if (s.Length == 0) return false;
             return s.Contains("заместител") ||
                    s.Contains("начальник") ||
+                   s.Contains("аудитор") ||
+                   s.Contains("секретарь") ||
+                   s.Contains("уполномоченный") ||
+                   s.Contains("председатель") ||
                    s.Contains("бухгалтер") ||
                    s.Contains("руководител")
                 ;
