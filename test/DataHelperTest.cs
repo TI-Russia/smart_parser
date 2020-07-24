@@ -22,6 +22,16 @@ namespace test
 
             Assert.IsNull(result);
         }
+
+        [TestMethod]
+        public void TestOnlyRussianRegex()
+        {
+            string s = "годо-вой дох-од в 2019 –()";
+            string result = s.OnlyRussianLowercase();
+            Assert.AreEqual("годовойдоходв", result);   
+        }
+
+        
         [TestMethod]
         public void TestParseNames()
         {

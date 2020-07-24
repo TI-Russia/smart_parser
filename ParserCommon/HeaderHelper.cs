@@ -165,6 +165,11 @@ namespace TI.Declarator.ParserCommon
             return s.IsMixedColumn() && HasOwnershipTypeString(s);
         }
 
+        public static string OnlyRussianLowercase(this string s)
+        {
+            return Regex.Replace(s.ToLower(), "[^а-яё]", "");
+        }
+
         private static bool HasRealEstateTypeStr(this string s)
         {
             return (s.Contains("вид объекта") ||
@@ -178,29 +183,29 @@ namespace TI.Declarator.ParserCommon
 
         private static bool HasOwnershipTypeString(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
+            string clean = s.OnlyRussianLowercase();
             return Regex.Match(clean, @"вид((собстве..ост)|(правана))").Success;
         }
         private static bool HasStateString(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
+            string clean = s.OnlyRussianLowercase();
             return clean.Contains("пользовании");
         }
         private static bool HasOwnedString(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
+            string clean = s.OnlyRussianLowercase();
             return clean.Contains("собственности");
         }
 
         private static bool HasSquareString(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
+            string clean = s.OnlyRussianLowercase();
             return clean.Contains("площадь");
         }
 
         private static bool HasCountryString(this string s)
         {
-            string clean = s.Replace("-", "").Replace(" ", "");
+            string clean = s.OnlyRussianLowercase();
             return clean.Contains("страна") || clean.Contains("регион");
         }
         
@@ -267,6 +272,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool HasMainDeclarant(this string s)
         {
+            s = s.OnlyRussianLowercase();
             return (s.Contains("служащего") || s.Contains("служащему"))
                 && !HasChild(s) && !HasSpouse(s);
         }
@@ -321,28 +327,28 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsVehicle(this string s)
         {
-            string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            string clean = s.OnlyRussianLowercase();
             return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
                     !clean.Contains("источник") && !clean.Contains("недвижимоеимущество"));
         }
 
         private static bool IsVehicleType(this string s)
         {
-            string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            string clean = s.OnlyRussianLowercase();
             return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
                     ((clean.Contains("вид") && !clean.Contains("марк"))));
         }
 
         private static bool IsVehicleModel(this string s)
         {
-            string clean = s.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            string clean = s.OnlyRussianLowercase();
             return ((clean.Contains("транспорт") || clean.Contains("трнспорт") || clean.Contains("движимоеимущество")) &&
                     ((clean.Contains("марка") && !clean.Contains("вид"))));
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)
         {
-            string strLower = str.Replace(" ", "").Replace("-", "").Replace("\n", "");
+            string strLower = str.OnlyRussianLowercase();
             return (strLower.Contains("годовойдоход")
                     || strLower.StartsWith("сведенияодоходеза")
                     || strLower.Contains("годовогодохода")
@@ -373,75 +379,75 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsComments(this string s)
         {
-            string lowerS = s.ToLower().Replace(" ", "").Replace("-", "");
+            string lowerS = s.OnlyRussianLowercase();
             return lowerS.Contains("примечани");
         }
 
         private static bool IsAcquiredProperty(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "");
+            string strLower = s.OnlyRussianLowercase();
             return strLower.Contains("приобретенногоимущества");
         }
         
         private static bool IsMoneySources(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "");
+            string strLower = s.OnlyRussianLowercase();
             return strLower.Contains("источникполучениясредств") || strLower.Contains("сточникиполучениясредств");
         }
 
         private static bool IsTransactionSubject(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            string strLower = s.OnlyRussianLowercase();
             return strLower.Contains("предметсделки");
         }
         private static bool IsMoneyOnBankAccounts(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            string strLower = s.OnlyRussianLowercase();
             return (strLower.Contains("денежныесредства") && (
                 strLower.Contains("банках") || strLower.Contains("вкладах")));
         }
 
         private static bool IsSecuritiesField(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            string strLower = s.OnlyRussianLowercase();
             return strLower.Contains("ценныебумаги");
         }
         
         private static bool IsSpendingsField(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            string strLower = s.OnlyRussianLowercase();
             return strLower.Contains("расход");
         }
 
         private static bool IsStocksField(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
+            string strLower = s.OnlyRussianLowercase();
             return strLower.Contains("участие") && strLower.Contains("организациях");
         }
         private static bool IsMixedLandAreaSquare(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
-            return strLower.Contains("земельныеучастки") && strLower.Contains("кв.м");
+            string strLower = s.OnlyRussianLowercase();
+            return strLower.Contains("земельныеучастки") && strLower.Contains("квм");
         }
         private static bool IsMixedLivingHouseSquare(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
-            return strLower.Contains("жилыедома") && strLower.Contains("кв.м");
+            string strLower = s.OnlyRussianLowercase();
+            return strLower.Contains("жилыедома") && strLower.Contains("квм");
         }
         private static bool IsMixedAppartmentSquare(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
-            return strLower.Contains("квартиры") && strLower.Contains("кв.м");
+            string strLower = s.OnlyRussianLowercase();
+            return strLower.Contains("квартиры") && strLower.Contains("квм");
         }
         private static bool IsMixedSummerHouseSquare(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
-            return strLower.Contains("дачи") && strLower.Contains("кв.м");
+            string strLower = s.OnlyRussianLowercase();
+            return strLower.Contains("дачи") && strLower.Contains("квм");
         }
         private static bool IsMixedGarageSquare(this string s)
         {
-            string strLower = s.Replace(" ", "").Replace("-", "").ToLower();
-            return strLower.Contains("гаражи") && strLower.Contains("кв.м");
+            string strLower = s.OnlyRussianLowercase();
+            return strLower.Contains("гаражи") && strLower.Contains("квм");
         }
     }
 }
