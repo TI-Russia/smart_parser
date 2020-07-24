@@ -131,6 +131,7 @@ namespace TI.Declarator.ParserCommon
             string clean = s.Replace("-", "").Replace("\n", "").Replace(" ", "").ToLower();
             return (clean.Contains("фамилия") ||
                     clean.Contains("фамилимя") ||
+                    clean.StartsWith("подающиесведения") ||
                     clean.Contains("фио") ||
                     clean.Contains(".иф.о.") ||
                     clean.Contains("сведенияодепутате") ||
