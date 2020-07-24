@@ -32,6 +32,8 @@ namespace TI.Declarator.ParserCommon
             if (str.IsRelativeType()) { return DeclarationField.RelativeTypeStrict; }
             if (str.IsOccupation()) { return DeclarationField.Occupation; }
             if (str.IsDepartment() && !str.IsDeclaredYearlyIncome()) { return DeclarationField.Department; }
+            
+            if (str.IsSpendingsField()) { return DeclarationField.Spendings; }
 
             if (str.IsMixedRealEstateType()) { return DeclarationField.MixedRealEstateType; }
             if (str.IsMixedRealEstateSquare() && !str.IsMixedRealEstateCountry()) { return DeclarationField.MixedRealEstateSquare; }
@@ -83,7 +85,6 @@ namespace TI.Declarator.ParserCommon
                 return DeclarationField.MainWorkPositionIncome;
             }
                 
-
             if (str.IsDataSources()) { return DeclarationField.DataSources; }
             if (str.IsComments()) { return DeclarationField.Comments; }
 
@@ -102,8 +103,6 @@ namespace TI.Declarator.ParserCommon
             if (str.IsMoneyOnBankAccounts()) { return DeclarationField.MoneyOnBankAccounts; }
             if (str.IsSecuritiesField()) { return DeclarationField.Securities; }
             if (str.IsStocksField()) { return DeclarationField.Stocks; }
-            if (str.IsSpendingsField()) { return DeclarationField.Spendings; }
-
 
 
             if (HasSquareString(str)) { return DeclarationField.MixedRealEstateSquare; }
