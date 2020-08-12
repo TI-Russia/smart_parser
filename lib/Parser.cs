@@ -539,6 +539,7 @@ namespace Smart.Parser.Lib
                         {
                             continue;
                         }
+                        
                         if (Adapter.IsExcel() && 
                             !row.IsEmpty(DeclarationField.StatePropertyType,
                                 DeclarationField.MixedRealEstateType,
@@ -550,7 +551,7 @@ namespace Smart.Parser.Lib
                                 DeclarationField.MixedRealEstateCountry,
                                 DeclarationField.StatePropertyCountry,
                                 DeclarationField.NameOrRelativeType) &&
-                            rows.Count > 0) 
+                            rows.Count > 0)
                         {
                             Logger.Debug("Merge row to the last if state and square cell is empty");
                             rows.Last().Merge(row);

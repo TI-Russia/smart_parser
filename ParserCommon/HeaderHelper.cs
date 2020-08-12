@@ -128,9 +128,10 @@ namespace TI.Declarator.ParserCommon
 
         public static bool IsName(this string s)
         {
-            string clean = s.Replace("-", "").Replace("\n", "").Replace(" ", "").ToLower();
+            string clean = s.Replace(",", "").Replace("-", "").Replace("\n", "").Replace(" ", "").ToLower();
             return (clean.Contains("фамилия") ||
                     clean.Contains("фамилимя") ||
+                    clean.StartsWith("лицаодоходах") ||
                     clean.StartsWith("подающиесведения") ||
                     clean.StartsWith("подающийсведения") ||
                     clean.Contains("фио") ||
@@ -421,7 +422,7 @@ namespace TI.Declarator.ParserCommon
         private static bool IsSpendingsField(this string s)
         {
             string strLower = s.OnlyRussianLowercase();
-            return strLower.Contains("расход");
+            return strLower.Contains("расход") && !strLower.Contains("доход");
         }
 
         private static bool IsStocksField(this string s)

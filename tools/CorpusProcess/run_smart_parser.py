@@ -2,18 +2,21 @@
 import re
 import sys
 import os
-from syslog import syslog
-
-import tqdm
-from datetime import datetime
-import requests
 import json
 import logging
-from requests.auth import HTTPBasicAuth
-from setuptools import glob
-from multiprocessing import Pool
+import tqdm
 import signal
 import argparse
+
+import requests
+from requests.packages.urllib3.util.retry import Retry
+from requests.auth import HTTPBasicAuth
+from requests.adapters import HTTPAdapter
+
+from setuptools import glob
+from multiprocessing import Pool
+from datetime import datetime
+from syslog import syslog
 
 SMART_PARSER = '..\\..\\src\\bin\\Debug\\netcoreapp3.1\\smart_parser.exe'
 if sys.platform in ['darwin', 'linux']:
@@ -35,11 +38,14 @@ def parse_args():
     parser.add_argument("--force-upload", dest='force_upload',
                         help="Force upload for degraded files.",
                         default=False, action="store_true")
+    parser.add_argument("--download-only", dest='download_only',
+                        help="Only download files to output folder, no pasring or anything else.",
+                        default=False, action="store_true")
     parser.add_argument("--skip-upload", dest='skip_upload',
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
     parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?office=6&children=1", type=str)
+                        default="https://declarator.org/api/fixed_document_file/?document_file=83450", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -77,7 +83,13 @@ def get_logger():
 
 logger = get_logger()
 
+retry_strategy = Retry(
+    total=10,
+    status_forcelist=[429, 500, 502, 503, 504],
+)
+adapter = HTTPAdapter(max_retries=retry_strategy)
 client = requests.Session()
+client.mount("https://", adapter)
 credentials = json.load(open('auth.json'))
 client.auth = HTTPBasicAuth(credentials['username'], credentials['password'])
 
@@ -161,7 +173,11 @@ def post_results(sourcefile, job, time_delta=None, skip_upload=False):
     if 'sheet_number' in data['document']:
         del data['document']['sheet_number']
 
-    data['document']['file_size'] = os.path.getsize(sourcefile)
+    try:
+        data['document']['file_size'] = os.path.getsize(sourcefile)
+    except:
+        data['document']['file_size'] = 0
+
     try:
         data['document']['parser_log'] = open(
             sourcefile + ".log", 'rb').read().decode('utf-8', errors='ignore')
@@ -240,7 +256,8 @@ class ProcessOneFile(object):
             job.get('document_file', None),
             job.get('archive_file', None))
 
-        # logger.info("Running job (id=%s) with URL: %s" % (df_id, file_url))
+        if self.args.download_only:
+            file_url = job.get("original_url")
 
         url_path, filename = os.path.split(file_url)
         filename, ext = os.path.splitext(filename)
@@ -258,6 +275,9 @@ class ProcessOneFile(object):
             file_path = os.path.join(self.args.output, "%i%s" % (df_id, ext))
 
         file_path = download_file(file_url, file_path)
+
+        if self.args.download_only:
+            return
 
         time_delta, parser_log = run_smart_parser(file_path, self.args)
         return post_results(file_path, job, time_delta, self.args.skip_upload)
@@ -333,8 +353,14 @@ if __name__ == '__main__':
             results.append(res)
         else:
             iter_pool = pool.imap_unordered(ProcessOneFile(args, os.getpid()), joblist, chunksize=1)
-            for res in tqdm.tqdm(iter_pool, total=len(joblist)):
-                results.append(res)
+            with tqdm.tqdm(iter_pool, total=len(joblist)) as t:
+                for res in t:
+                    results.append(res)
+                    total = len(results)
+                    ok = len(list(filter(lambda x: x['new_status'] == 'ok', results)))
+                    upgraded = len(list(filter(lambda x: x['new_status'] == 'ok' and x['status'] == 'error', results)))
+                    degraded = len(list(filter(lambda x: x['new_status'] == 'degrade', results)))
+                    t.set_postfix(ok=ok, error=total - ok, upgraded=upgraded, degraded=degraded)
 
     except KeyboardInterrupt:
         logger.info("stop processing...")

@@ -415,6 +415,10 @@ namespace Smart.Parser.Adapters
 
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess)
         {
+            // if (OnePersonAdapter.CanProcess(fileName))
+            //     // throw new SmartParserException("Impossible to parse one-person file");
+            //     return new OnePersonAdapter(fileName);
+            
             return new OpenXmlWordAdapter(fileName, maxRowsToProcess);
         }
 

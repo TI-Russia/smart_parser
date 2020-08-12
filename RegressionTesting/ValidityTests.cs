@@ -33,17 +33,12 @@ namespace RegressionTesting
         ///</summary>
         public TestContext TestContext
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            get { return testContextInstance; }
+            set { testContextInstance = value; }
         }
 
         #region Additional test attributes
+
         //
         // You can use the following additional attributes as you write your tests:
         //
@@ -63,8 +58,9 @@ namespace RegressionTesting
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
+
         #endregion
-            
+
         private const string SmartParserLogFile = "smart_parser_files.log";
 
         private string SmartParserLogFilePath
@@ -75,10 +71,12 @@ namespace RegressionTesting
         public String GetCanonFolder()
         {
             string solution_dir = Path.GetDirectoryName(Path.GetDirectoryName(TestContext.TestDir));
-            if (solution_dir.EndsWith("RegressionTesting")) {
+            if (solution_dir.EndsWith("RegressionTesting"))
+            {
                 return Path.Join(solution_dir, "files"); // for ubuntu dotnet
             }
-            else {
+            else
+            {
                 return Path.Join(solution_dir, "RegressionTesting", "files"); // in Windows Visual Studio
             }
         }
@@ -91,7 +89,8 @@ namespace RegressionTesting
             Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
-            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
+            Log(SmartParserLogFile,
+                String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = false;
             string outDir = Path.GetDirectoryName(Path.GetFullPath(filename));
@@ -105,13 +104,14 @@ namespace RegressionTesting
         }
 
 
-        public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan=false)
+        public void TestSmartParser(string filename, string adapterName, bool skipRelativeOrphan = false)
         {
             SetupLog4Net();
             Smart.Parser.Lib.Parser.InitializeSmartParser();
             Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
-            Log(SmartParserLogFile, String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
+            Log(SmartParserLogFile,
+                String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));
             Smart.Parser.Program.AdapterFamily = adapterName;
             Smart.Parser.Program.SkipRelativeOrphan = skipRelativeOrphan;
             string outFileName = Smart.Parser.Program.BuildOutFileNameByInput(filename);
@@ -125,15 +125,17 @@ namespace RegressionTesting
                 string nameWithoutExtension = Path.GetFileNameWithoutExtension(outFileName);
                 int i = 0;
                 string fileName = $"{nameWithoutExtension}_{i}.json";
-                while(File.Exists(fileName))
+                while (File.Exists(fileName))
                 {
                     outFiles.Add(fileName);
                     i++;
                     fileName = $"{nameWithoutExtension}_{i}.json";
                 }
+
                 if (outFiles.Count == 0)
                     throw new Exception($"Could not find output file");
             }
+
             List<string> expectedFileNames = outFiles.Select(x => Path.Combine(GetCanonFolder(), x)).ToList();
             for (int i = 0; i < outFiles.Count; i++)
             {
@@ -234,7 +236,7 @@ namespace RegressionTesting
             TestSmartParser("DepEnergo2010.doc", "prod");
         }
 
-        
+
         [TestMethod]
         [TestCategory("doc")]
         public void TestWeakHeaderNumberCheck()
@@ -299,7 +301,7 @@ namespace RegressionTesting
         [TestCategory("docx")]
         public void Fsin2013()
         {
-            TestSmartParser("fsin2013.docx", "prod") ;
+            TestSmartParser("fsin2013.docx", "prod");
         }
 
         [TestMethod]
@@ -371,8 +373,8 @@ namespace RegressionTesting
         [TestCategory("xlsx")]
         public void Rykovodstvo2013()
         {
-            TestSmartParserMultipleOut("prod", 
-                "9037/rykovodstvo_2013.xlsx", 
+            TestSmartParserMultipleOut("prod",
+                "9037/rykovodstvo_2013.xlsx",
                 "9037/rykovodstvo_2013.xlsx_0.json", "9037/rykovodstvo_2013.xlsx_1.json");
         }
 
@@ -584,14 +586,13 @@ namespace RegressionTesting
             TestSmartParser("17335_3.html", "prod");
         }
 
-        
+
         [TestMethod]
         [TestCategory("htm")]
         public void ArbitrationCourt1TableLayout()
         {
             TestSmartParser("17339_24.html", "prod");
         }
-
 
 
         [TestMethod]
@@ -641,7 +642,6 @@ namespace RegressionTesting
         public void FederalAgencySubsoiUse2013()
         {
             TestSmartParser("15555_1.html", "prod");
-
         }
 
         [TestMethod]
@@ -649,7 +649,6 @@ namespace RegressionTesting
         public void HtmlRowSpanLastColumn()
         {
             TestSmartParser("15555_0.html", "prod");
-
         }
 
         [TestMethod]
@@ -664,7 +663,6 @@ namespace RegressionTesting
         public void win1251Html()
         {
             TestSmartParser("7022_0.htm", "prod");
-
         }
 
         [TestMethod]
@@ -672,7 +670,6 @@ namespace RegressionTesting
         public void Deputy2015()
         {
             TestSmartParser("Deputy2015.docx", "prod");
-
         }
 
         [TestMethod]
@@ -680,8 +677,16 @@ namespace RegressionTesting
         public void MainWorkPositionIncome()
         {
             TestSmartParser("MainWorkPositionIncome.docx", "prod");
-
         }
+
+        // [TestMethod]
+        // [TestCategory("docx")]
+        // public void OnePersonDocxScheme1()
+        // {
+        //     // changed to Yakushev
+        //     TestSmartParser("1person_pdf_converted.docx", "prod");
+        // }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -756,7 +761,10 @@ namespace RegressionTesting
                 {
                     string fcOut = RunFileCompare(expectedFile, actualFile);
                     Console.Write(fcOut);
-                } else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ||
+                         RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
                     string fcOut = RunFileCompare(expectedFile, actualFile, "diff");
                     Console.Write(fcOut);
                 }

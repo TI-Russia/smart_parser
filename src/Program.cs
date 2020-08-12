@@ -577,6 +577,8 @@ namespace Smart.Parser
             if (!(columnOrdering.ContainsField(DeclarationField.NameOrRelativeType) ||
                   columnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)))
             {
+                // TODO сначала поискать первый section_row и проверить, именно там может быть ФИО
+                // https://declarator.org/admin/declarations/jsonfile/186842/change/
                 Logger.Error("Insufficient fields: No any of Declarant Name fields found.");
                 return 0;
             }

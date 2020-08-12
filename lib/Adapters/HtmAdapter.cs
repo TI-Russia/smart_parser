@@ -260,12 +260,10 @@ namespace Smart.Parser.Adapters
         }
 
 
-
         public static bool CanProcess(string filename)
         {
             var document = AngleHtmlAdapter.GetAngleDocument(filename);
             return _allSchemes.Any(x=>x.CanProcess(document));
-            
         }
 
 

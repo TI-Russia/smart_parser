@@ -133,6 +133,18 @@ namespace test
         }
 
         [TestMethod]
+        public void SpendingsWrongColumnTest()
+        {
+            string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "82442.doc");
+            IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
+
+            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            Assert.AreEqual(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn, 1);
+        }
+
+        
+
+        [TestMethod]
         public void TwoRowHeaderEmptyTopCellTest2()
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "customs-tworow-header.xls");
