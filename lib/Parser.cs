@@ -36,7 +36,7 @@ namespace Smart.Parser.Lib
             }
         }
 
-        Declaration InitializeDeclaration(ColumnOrdering columnOrdering, int? user_documentfile_id)
+        public Declaration InitializeDeclaration(ColumnOrdering columnOrdering, int? user_documentfile_id)
         {
             // parse filename
             int? documentfile_id;
@@ -619,8 +619,8 @@ namespace Smart.Parser.Lib
             }
 
         }
-        
 
-        IAdapter Adapter { get; set; }
+
+        public IAdapter Adapter { get; set; }
     }
 }

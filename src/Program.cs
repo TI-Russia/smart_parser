@@ -33,6 +33,7 @@ namespace Smart.Parser
         public static bool IgnoreDirectoryIds = false;
         public static bool BuildTrigrams = false;
         public static int? UserDocumentFileId;
+
         static string ParseArgs(string[] args)
         {
             CMDLineParser parser = new CMDLineParser();
@@ -40,22 +41,33 @@ namespace Smart.Parser
             CMDLineParser.Option licenseOpt = parser.AddStringParameter("-license", "", false);
             CMDLineParser.Option mainLogOpt = parser.AddStringParameter("-log", "", false);
             CMDLineParser.Option skipLoggingOpt = parser.AddBoolSwitch("-skip-logging", "");
-            CMDLineParser.Option verboseOpt = parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
+            CMDLineParser.Option verboseOpt =
+                parser.AddStringParameter("-v", "verbose level: debug, info, error", false);
             CMDLineParser.Option columnsOnlyOpt = parser.AddBoolSwitch("-columnsonly", "");
             CMDLineParser.Option checkJsonOpt = parser.AddBoolSwitch("-checkjson", "");
-            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter", "can be aspose,npoi, microsoft or prod, by default is aspose", false);
-            CMDLineParser.Option maxRowsToProcessOpt = parser.AddStringParameter("-max-rows", "max rows to process from the input file", false);
-            CMDLineParser.Option dumpColumnOpt = parser.AddStringParameter("-dump-column", "dump column identified by enum DeclarationField and exit", false);
+            CMDLineParser.Option adapterOpt = parser.AddStringParameter("-adapter",
+                "can be aspose,npoi, microsoft or prod, by default is aspose", false);
+            CMDLineParser.Option maxRowsToProcessOpt =
+                parser.AddStringParameter("-max-rows", "max rows to process from the input file", false);
+            CMDLineParser.Option dumpColumnOpt = parser.AddStringParameter("-dump-column",
+                "dump column identified by enum DeclarationField and exit", false);
             CMDLineParser.Option dumpHtmlOpt = parser.AddStringParameter("-dump-html", "dump table to html", false);
-            CMDLineParser.Option tolokaFileNameOpt = parser.AddStringParameter("-toloka", "generate toloka html", false);
+            CMDLineParser.Option tolokaFileNameOpt =
+                parser.AddStringParameter("-toloka", "generate toloka html", false);
             CMDLineParser.Option skipRelativeOrphanOpt = parser.AddBoolSwitch("-skip-relative-orphan", "");
-            CMDLineParser.Option apiValidationOpt = parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
+            CMDLineParser.Option apiValidationOpt =
+                parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
-            CMDLineParser.Option checkPredictorOpt = parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
-            CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id", "document id to initialize document/documentfile_id", false);
-            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url", "document id to initialize document/documentfile_id for example http://disclosures.ru:8091, the default value is read from env variable DECLARATOR_CONV_URL", false);
+            CMDLineParser.Option checkPredictorOpt =
+                parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
+            CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id",
+                "document id to initialize document/documentfile_id", false);
+            CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url",
+                "document id to initialize document/documentfile_id for example http://disclosures.ru:8091, the default value is read from env variable DECLARATOR_CONV_URL",
+                false);
             CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
-            CMDLineParser.Option useDecimalRawNormalizationOpt = parser.AddBoolSwitch("-decimal-raw-normalization", "print raw floats in Russian traditional format");
+            CMDLineParser.Option useDecimalRawNormalizationOpt = parser.AddBoolSwitch("-decimal-raw-normalization",
+                "print raw floats in Russian traditional format");
             parser.AddHelpOption();
             try
             {
@@ -70,6 +82,7 @@ namespace Smart.Parser
                 Console.WriteLine("Error: " + ex.Message);
                 throw;
             }
+
             if (licenseOpt.isMatched)
             {
                 AsposeLicense.SetLicense(licenseOpt.Value.ToString());
@@ -78,41 +91,51 @@ namespace Smart.Parser
                     throw new SmartParserException("Not valid aspose licence " + licenseOpt.Value.ToString());
                 }
             }
+
             Smart.Parser.Lib.Parser.InitializeSmartParser();
             if (maxRowsToProcessOpt.isMatched)
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
             }
+
             if (docFileIdOpt.isMatched)
             {
                 UserDocumentFileId = System.Convert.ToInt32(docFileIdOpt.Value.ToString());
             }
-            
+
             string logFileName = "";
             if (mainLogOpt.isMatched)
             {
                 logFileName = Path.GetFullPath(mainLogOpt.Value.ToString());
             }
+
             Logger.Setup(logFileName, skipLoggingOpt.isMatched);
             if (outputOpt.isMatched)
             {
                 OutFile = outputOpt.Value.ToString();
             }
+
             Logger.LogLevel verboseLevel = Logger.LogLevel.Info;
             if (verboseOpt.isMatched)
             {
                 switch (verboseOpt.Value.ToString())
                 {
-                    case "info": verboseLevel = Logger.LogLevel.Info; break;
-                    case "error": verboseLevel = Logger.LogLevel.Error; break;
-                    case "debug": verboseLevel = Logger.LogLevel.Debug; break;
+                    case "info":
+                        verboseLevel = Logger.LogLevel.Info;
+                        break;
+                    case "error":
+                        verboseLevel = Logger.LogLevel.Error;
+                        break;
+                    case "debug":
+                        verboseLevel = Logger.LogLevel.Debug;
+                        break;
                     default:
-                        {
-                            throw new Exception("unknown verbose level " + verboseOpt.Value.ToString());
-                        }
+                    {
+                        throw new Exception("unknown verbose level " + verboseOpt.Value.ToString());
+                    }
                 }
-
             }
+
             Logger.SetLoggingLevel(verboseLevel);
 
             SkipRelativeOrphan = skipRelativeOrphanOpt.isMatched;
@@ -129,22 +152,27 @@ namespace Smart.Parser
                     throw new Exception("unknown adapter family " + AdapterFamily);
                 }
             }
+
             if (dumpColumnOpt.isMatched)
             {
-                ColumnToDump = (DeclarationField)Enum.Parse(typeof(DeclarationField), dumpColumnOpt.Value.ToString());
+                ColumnToDump = (DeclarationField) Enum.Parse(typeof(DeclarationField), dumpColumnOpt.Value.ToString());
             }
+
             if (dumpHtmlOpt.isMatched)
             {
                 HtmlFileName = dumpHtmlOpt.Value.ToString();
             }
+
             if (convertedFileStorageUrlOpt.isMatched)
             {
                 IAdapter.ConvertedFileStorageUrl = convertedFileStorageUrlOpt.Value.ToString();
             }
+
             if (tolokaFileNameOpt.isMatched)
             {
                 TolokaFileName = tolokaFileNameOpt.Value.ToString();
             }
+
             if (useDecimalRawNormalizationOpt.isMatched)
             {
                 Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
@@ -157,7 +185,7 @@ namespace Smart.Parser
             BuildTrigrams = buildTrigramsOpt.isMatched;
             ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
             var freeArgs = parser.RemainingArgs();
-            return String.Join(" ", freeArgs).Trim(new char[] { '"' });
+            return String.Join(" ", freeArgs).Trim(new char[] {'"'});
         }
 
         public static string BuildOutFileNameByInput(string declarationFile)
@@ -173,7 +201,7 @@ namespace Smart.Parser
             }
             catch
             {
-                return false; 
+                return false;
             }
         }
 
@@ -188,7 +216,9 @@ namespace Smart.Parser
                 return 1;
             }
 
-            bool isDirectory = IsDirectory(declarationFile); //(File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
+            bool isDirectory =
+                IsDirectory(
+                    declarationFile); //(File.GetAttributes(declarationFile) & FileAttributes.Directory) == FileAttributes.Directory;
 
             if (isDirectory)
             {
@@ -207,6 +237,7 @@ namespace Smart.Parser
                 {
                     OutFile = BuildOutFileNameByInput(declarationFile);
                 }
+
                 ParseFile(declarationFile, OutFile);
             }
             catch (SmartParserException e)
@@ -222,6 +253,7 @@ namespace Smart.Parser
             {
                 Logger.SetOutMain();
             }
+
             if (ColumnPredictor.CalcPrecision)
             {
                 Logger.Info(ColumnPredictor.GetPrecisionStr());
@@ -241,6 +273,7 @@ namespace Smart.Parser
         }
 
         private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx";
+
         public static int ParseDirectory(string dirName)
         {
             string[] files = Directory.GetFiles(dirName, SupportedFileTypesPattern);
@@ -256,7 +289,6 @@ namespace Smart.Parser
                 Logger.Info("Reading files list from " + fileName);
 
                 files = File.ReadAllLines(fileName).ToArray();
-
             }
             else
             {
@@ -275,10 +307,10 @@ namespace Smart.Parser
         {
             var parse_results = new Dictionary<string, List<string>>
             {
-                { "ok", new List<string>() },
-                { "error", new List<string>() },
-                { "too_many_errors", new List<string>() },
-                { "exception", new List<string>() },
+                {"ok", new List<string>()},
+                {"error", new List<string>()},
+                {"too_many_errors", new List<string>()},
+                {"exception", new List<string>()},
             };
 
             foreach (string file in files)
@@ -307,15 +339,18 @@ namespace Smart.Parser
                 {
                     Logger.SetOutMain();
                 }
+
                 if (caught)
                 {
                     Logger.Info("Result: Exception");
                 }
+
                 if (!caught && Logger.Errors.Count() > 0)
                 {
                     Logger.Info("Result: error");
                     parse_results["error"].Add(file);
                 }
+
                 if (!caught && Logger.Errors.Count() == 0)
                 {
                     Logger.Info("Result: OK");
@@ -392,6 +427,7 @@ namespace Smart.Parser
                         {
                             throw new Exception("xls file format is not supported");
                         }
+
                         if (AsposeLicense.Licensed)
                         {
                             return AsposeExcelAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
@@ -403,13 +439,15 @@ namespace Smart.Parser
                     }
                     else
                     {
-                        return null ;
+                        return null;
                     }
+
                     break;
                 default:
                     Logger.Error("Unknown file extension " + extension);
                     return null;
             }
+
             Logger.Error("Cannot find adapter for " + declarationFile);
             return null;
         }
@@ -423,11 +461,11 @@ namespace Smart.Parser
                     return OpenXmlWordAdapter.CreateAdapter(declarationFile, MaxRowsToProcess);
                 }
             }
-            else
-            if (!AsposeLicense.Licensed)
+            else if (!AsposeLicense.Licensed)
             {
                 throw new Exception("doc and docx file format is not supported");
             }
+
             return AsposeDocAdapter.CreateAdapter(declarationFile);
         }
 
@@ -437,7 +475,6 @@ namespace Smart.Parser
             {
                 Logger.Info("JSON file {0} already exist", outFile);
                 return 0;
-
             }
 
             if (!File.Exists(declarationFile))
@@ -445,11 +482,12 @@ namespace Smart.Parser
                 Logger.Info("ERROR: {0} file NOT exists", declarationFile);
                 return 0;
             }
-                
-            
+
+
             ColumnPredictor.InitializeIfNotAlready();
 
-            string logFile = Path.Combine(Path.GetDirectoryName(declarationFile), Path.GetFileName(declarationFile) + ".log");
+            string logFile = Path.Combine(Path.GetDirectoryName(declarationFile),
+                Path.GetFileName(declarationFile) + ".log");
             Logger.SetSecondLogFileName(Path.GetFullPath(logFile));
 
             Logger.Info(String.Format("Parsing {0}", declarationFile));
@@ -458,7 +496,9 @@ namespace Smart.Parser
             Logger.Info(String.Format("TablesCount = {0}", adapter.GetTablesCount()));
             Logger.Info(String.Format("RowsCount = {0}", adapter.GetRowsCount()));
 
-            if (HtmlFileName != "") adapter.WriteHtmlFile(HtmlFileName);
+            if (HtmlFileName != "")
+                adapter.WriteHtmlFile(HtmlFileName);
+
             if (adapter.GetWorkSheetCount() > 1)
             {
                 Logger.Info(String.Format("File has multiple ({0}) worksheets", adapter.GetWorkSheetCount()));
@@ -471,8 +511,10 @@ namespace Smart.Parser
                     {
                         ParseDocumentSheet(adapter, curOutFile, declarationFile);
                     }
-                    catch (ColumnDetectorException) {
-                        Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)", sheetIndex));
+                    catch (ColumnDetectorException)
+                    {
+                        Logger.Info(String.Format("Skipping empty sheet {0} (No headers found exception thrown)",
+                            sheetIndex));
                     }
                 }
             }
@@ -480,7 +522,7 @@ namespace Smart.Parser
             {
                 ParseDocumentSheet(adapter, outFile, declarationFile);
             }
-            
+
             return 0;
         }
 
@@ -508,21 +550,24 @@ namespace Smart.Parser
                 }
             }
         }
+
         static string BuildInputFileId(IAdapter adapter, string filename)
         {
             return CalculateMD5(filename) + "_" + adapter.GetWorksheetName();
         }
 
-        public static void SaveRandomPortionToToloka(IAdapter adapter, ColumnOrdering columnOrdering, Declaration declaration, string declarationFileName)
+        public static void SaveRandomPortionToToloka(IAdapter adapter, ColumnOrdering columnOrdering,
+            Declaration declaration, string declarationFileName)
         {
             if (TolokaFileName == "") return;
-            string fileID = BuildInputFileId(adapter, declarationFileName); 
+            string fileID = BuildInputFileId(adapter, declarationFileName);
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(TolokaFileName))
             {
                 file.WriteLine("INPUT:input_id\tINPUT:input_json\tGOLDEN:declaration_json\tHINT:text");
                 Random random = new Random();
                 int dataRowsCount = Math.Min(20, adapter.GetRowsCount() - columnOrdering.GetPossibleHeaderEnd());
-                int dataStart = random.Next(columnOrdering.GetPossibleHeaderEnd(), adapter.GetRowsCount() - dataRowsCount);
+                int dataStart = random.Next(columnOrdering.GetPossibleHeaderEnd(),
+                    adapter.GetRowsCount() - dataRowsCount);
                 int dataEnd = dataStart + dataRowsCount;
                 var json = adapter.TablePortionToJson(columnOrdering, dataStart, dataEnd);
                 json.InputFileName = declarationFileName;
@@ -530,73 +575,89 @@ namespace Smart.Parser
                 string jsonStr = JsonConvert.SerializeObject(json);
                 jsonStr = jsonStr.Replace("\t", " ").Replace("\\t", " ").Replace("\"", "\"\"");
                 string id = fileID + "_" + dataStart + "_" + dataEnd;
-                file.WriteLine(id + "\t"+ "\"" + jsonStr + "\"\t\t");
+                file.WriteLine(id + "\t" + "\"" + jsonStr + "\"\t\t");
             }
         }
+
         public static int ParseDocumentSheet(IAdapter adapter, string outFile, string declarationFile)
         {
+            Declaration declaration;
             string declarationFileName = Path.GetFileName(declarationFile);
             Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
-            var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
 
-            // Try to extract declaration year from file name if we weren't able to get it from document title
-            if (!columnOrdering.Year.HasValue)
+            if (adapter.CurrentScheme == default)
             {
-                columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
-            }
+                var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
 
-            Logger.Info("Column ordering: ");
-            foreach (var ordering in columnOrdering.ColumnOrder)
-            {
-                Logger.Info(ordering.ToString());
-            } 
-            Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}", columnOrdering.OwnershipTypeInSeparateField));
-            
-            if (ColumnsOnly)
-                return 0;
-
-            if (ColumnToDump != DeclarationField.None)
-            {
-                DumpColumn(adapter, columnOrdering, ColumnToDump);
-                return 0;
-            }
-
-            if (columnOrdering.Title != null)
-            {
-                Logger.Info("Declaration Title: {0} ", columnOrdering.Title);
-            }
-            if (columnOrdering.Year != null)
-            {
-                Logger.Info("Declaration Year: {0} ", columnOrdering.Year.Value);
-            }
-            if (columnOrdering.MinistryName != null)
-            {
-                Logger.Info("Declaration Ministry: {0} ", columnOrdering.MinistryName);
-            }
-
-            if (!(columnOrdering.ContainsField(DeclarationField.NameOrRelativeType) ||
-                  columnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)))
-            {
-                // TODO сначала поискать первый section_row и проверить, именно там может быть ФИО
-                // https://declarator.org/admin/declarations/jsonfile/186842/change/
-                Logger.Error("Insufficient fields: No any of Declarant Name fields found.");
-                return 0;
-            }
-
-            if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) || 
-                  columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
-                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
-                  columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
-            {
-                if (!ColumnOrdering.SearchForFioColumnOnly)
+                // Try to extract declaration year from file name if we weren't able to get it from document title
+                if (!columnOrdering.Year.HasValue)
                 {
-                    Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
+                    columnOrdering.Year = TextHelpers.ExtractYear(declarationFileName);
+                }
+
+                Logger.Info("Column ordering: ");
+                foreach (var ordering in columnOrdering.ColumnOrder)
+                {
+                    Logger.Info(ordering.ToString());
+                }
+
+                Logger.Info(String.Format("OwnershipTypeInSeparateField: {0}",
+                    columnOrdering.OwnershipTypeInSeparateField));
+
+                if (ColumnsOnly)
+                    return 0;
+
+                if (ColumnToDump != DeclarationField.None)
+                {
+                    DumpColumn(adapter, columnOrdering, ColumnToDump);
                     return 0;
                 }
+
+                if (columnOrdering.Title != null)
+                {
+                    Logger.Info("Declaration Title: {0} ", columnOrdering.Title);
+                }
+
+                if (columnOrdering.Year != null)
+                {
+                    Logger.Info("Declaration Year: {0} ", columnOrdering.Year.Value);
+                }
+
+                if (columnOrdering.MinistryName != null)
+                {
+                    Logger.Info("Declaration Ministry: {0} ", columnOrdering.MinistryName);
+                }
+
+
+                if (!(columnOrdering.ContainsField(DeclarationField.NameOrRelativeType) ||
+                      columnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)))
+                {
+                    // TODO сначала поискать первый section_row и проверить, именно там может быть ФИО
+                    // https://declarator.org/admin/declarations/jsonfile/186842/change/
+                    Logger.Error("Insufficient fields: No any of Declarant Name fields found.");
+                    return 0;
+                }
+
+                if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) ||
+                      columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
+                      columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
+                      columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
+                {
+                    if (!ColumnOrdering.SearchForFioColumnOnly)
+                    {
+                        Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
+                        return 0;
+                    }
+                }
+
+                declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);
+                SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);
+            }
+            else
+            {
+                declaration = adapter.CurrentScheme.Parse(parser, UserDocumentFileId);
             }
 
-            Declaration declaration = parser.Parse(columnOrdering, BuildTrigrams, UserDocumentFileId);
-            SaveRandomPortionToToloka(adapter, columnOrdering, declaration, declarationFile);
             string schema_errors = null;
             string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
 
@@ -608,14 +669,16 @@ namespace Smart.Parser
             {
                 Logger.Info("Json schema OK");
             }
+
             Logger.Info("Output size: " + output.Length);
 
             if (ValidateByApi)
             {
                 string validationResult = ApiClient.ValidateParserOutput(output);
                 if (validationResult != "[]")
-                {                    
-                    string errorsFileName = "validation_errors_" + Path.GetFileNameWithoutExtension(declarationFileName) + ".json";
+                {
+                    string errorsFileName = "validation_errors_" +
+                                            Path.GetFileNameWithoutExtension(declarationFileName) + ".json";
                     var rep = MiscSerializer.DeserializeValidationReport(validationResult);
                     File.WriteAllText(errorsFileName, validationResult);
                     Logger.Error("Api validation failed. Errors:" + errorsFileName);
@@ -627,5 +690,4 @@ namespace Smart.Parser
             return 0;
         }
     }
-
 }

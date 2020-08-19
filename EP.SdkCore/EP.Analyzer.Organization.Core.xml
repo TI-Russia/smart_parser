@@ -1,0 +1,441 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Organization.Core</name>
+    </assembly>
+    <members>
+        <member name="F:EP.Ner.Org.Internal.OrgItemNameToken.IsStdTail">
+            <summary>
+            Стандартное окончание (типа Ltd, Inc)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemNameToken.IsStdName">
+            <summary>
+            Стандартное название (типа "Разработки ПО", ")
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemNameToken.IsEmptyWord">
+            <summary>
+            Это паразитные слова типа "Заказчик", "Вкладчик" и т.п.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemNameToken.IsIgnoredPart">
+            <summary>
+            Это "паразитная" комбинация типа "ордена Трудового Красного знамени"
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemNameToken.StdOrgNameNouns">
+            <summary>
+            Имя состоит из слов, которыми обычно называются госучреждения, министерства, департаменты и т.п.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemNameToken.OrgStdProf">
+            <summary>
+            Стандартный профиль ...
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Org.Internal.OrgItemTypeToken">
+            <summary>
+            Используется внутренним образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.Name">
+            <summary>
+            Если непусто, то это была именная группа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.AltTyp">
+            <summary>
+            Это дополнительный тип вместе с возможными прилагательными
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.Number">
+            <summary>
+            Это номер бывает в начале
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.Internal.OrgItemTypeToken.Profiles">
+            <summary>
+            Список профилей
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.Geo">
+            <summary>
+            Это если среди прилагательных ключевого слова есть территория
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.Geo2">
+            <summary>
+            Для совместных предприятий может быть несколько стран
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.CharsRoot">
+            <summary>
+            Это относится только к корневому слову
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.Internal.OrgItemTypeToken.NameWordsCount">
+            <summary>
+            Количество слов в имени
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.CanBeDepBeforeOrganization">
+            <summary>
+            Это может быть отдельное подразделение перед какой-либо организацией
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.IsDouterOrg">
+            <summary>
+            Дочерняя организация
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.Internal.OrgItemTypeToken.IsDoubtRootWord">
+            <summary>
+            Корень - сомнительное слово (типа: организация или движение)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTypeToken.CanBeOrganization">
+            <summary>
+            Это значит тип может полностью описывать организацию
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Org.Internal.OrgItemTypeToken.CheckOrgSpecialWordBefore(EP.Ner.Token)">
+            <summary>
+            Проверка, что перед токеном есть специфическое слово типа "Президент" и т.п.
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTermin.MustBePartofName">
+            <summary>
+            Признак того, что тип обязательно входит в имя (например, Министерство)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTermin.IsPurePrefix">
+            <summary>
+            Чистый префикс, никогда не входит в имя (типа ООО)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.Internal.OrgItemTermin.IsDoubtWord">
+            <summary>
+            Корень - сомнительное слово (типа: организация или движение)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Org.Internal.OrgOwnershipHelper.CanBeHigher(EP.Ner.Org.OrganizationReferent,EP.Ner.Org.OrganizationReferent,System.Boolean)">
+            <summary>
+            Проверка на отношения "вышестоящий - нижестоящий"
+            </summary>
+            <param name="higher"></param>
+            <param name="lower"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Org.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Org.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Org.OrganizationAnalyzer">
+            <summary>
+            Анализатор организаций
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationAnalyzer.TextStartsWithNumber">
+            <summary>
+            Текст начинается с номера, если есть
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Org.OrganizationReferent">
+            <summary>
+            Организация как сущность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationReferent.ShowNumberOnFirstPosition">
+            <summary>
+            При выводе в ToString() первым ставить номер, если есть
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.INN">
+            <summary>
+            Номер ИНН
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.OGRN">
+            <summary>
+            Номер ОГРН
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Names">
+            <summary>
+            Список имён организации
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Profiles">
+            <summary>
+            Профиль деятельности
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Types">
+            <summary>
+            Список типов и префиксов организации (ЗАО, компания, институт ...)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Number">
+            <summary>
+            Номер (если есть)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Owner">
+            <summary>
+            Типа владелец - (Аппарат Президента)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Higher">
+            <summary>
+            Вышестоящая организация
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Eponyms">
+            <summary>
+            Список объектов, которым посвящена организации (имени кого)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationReferent.IsFromGlobalOntos">
+            <summary>
+            Признак того, что организация находится во встроенной отнологии
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationReferent.ExtOntologyAttached">
+            <summary>
+            Признак того, что была попытка привязаться к внешней онтологии
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Org.OrganizationReferent.Kind">
+            <summary>
+            Коласс организации (некоторая экспертная оценка на основе названия и типов)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Org.OrganizationReferent.CanBeSecondDefinition(EP.Ner.Org.OrganizationReferent,EP.Ner.Org.OrganizationReferent)">
+            <summary>
+            Проверка, что организация slave может быть дополнительным описанием основной организации
+            </summary>
+            <param name="master"></param>
+            <param name="slave"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Org.OrganizationReferent.CanBeHigher(EP.Ner.Org.OrganizationReferent,EP.Ner.Org.OrganizationReferent)">
+            <summary>
+            Проверка на отношения "вышестоящий - нижестоящий"
+            </summary>
+            <param name="higher"></param>
+            <param name="lower"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Org.OrganizationKind">
+            <summary>
+            Разновидности организаций
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Undefined">
+            <summary>
+            Неопределённая
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Science">
+            <summary>
+            Научно-исследовательские
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Department">
+            <summary>
+            Подразделение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Federation">
+            <summary>
+            Федерация, Союз и т.п. непонятность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Hotel">
+            <summary>
+            Отели, Санатории, Пансионаты ...
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Justice">
+            <summary>
+            Суды, тюрьмы ...
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Church">
+            <summary>
+            Церкви, религиозное
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Military">
+            <summary>
+            Военные
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Airport">
+            <summary>
+            Аэропорт
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Seaport">
+            <summary>
+            Морские порты
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrganizationKind.Festival">
+            <summary>
+            События (фестиваль, чемпионат)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Org.OrgProfile">
+            <summary>
+            Профили организации, хранятся в атрибутах ATTR_PROFILE, может быть несколько.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Undefined">
+            <summary>
+            Неопределённое
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Unit">
+            <summary>
+            Подразделение, отдел
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Union">
+            <summary>
+            Различные объединения людей (фонды, движения, партии, ассоциации)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Competition">
+            <summary>
+            Соревнование, конкурс, чемпионат
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Holding">
+            <summary>
+            Группы компаний, холдинги
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.State">
+            <summary>
+            Государственные
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Business">
+            <summary>
+            Бизнес, коммерция
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Finance">
+            <summary>
+            Финансы (банки, фонды)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Education">
+            <summary>
+            Образование
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Science">
+            <summary>
+            Наука
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Industry">
+            <summary>
+            Производство
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Trade">
+            <summary>
+            Торговля, реализация
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Medicine">
+            <summary>
+            Медицина
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Policy">
+            <summary>
+            Политика
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Justice">
+            <summary>
+            Судебная система
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Enforcement">
+            <summary>
+            Силовые структуры
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Army">
+            <summary>
+            Армейские структуры
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Sport">
+            <summary>
+            Спорт
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Religion">
+            <summary>
+            Религиозные
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Art">
+            <summary>
+            Искусство
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Music">
+            <summary>
+            Музыка, группы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Show">
+            <summary>
+            Театры, выставки, музеи, концерты
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Media">
+            <summary>
+            Срадства массовой информации
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Press">
+            <summary>
+            Издательства, газеты, журналы ... (обычно вместе с Media)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Hotel">
+            <summary>
+            пансионаты, отели, дома отдыха
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Food">
+            <summary>
+            Предприятия питания
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Org.OrgProfile.Transport">
+            <summary>
+            Железные дороги, авиакомпании ...
+            </summary>
+        </member>
+    </members>
+</doc>

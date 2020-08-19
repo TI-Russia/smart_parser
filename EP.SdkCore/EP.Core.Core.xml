@@ -1,0 +1,3262 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Core.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.AnalysisResult">
+            <summary>
+            Результат анализа
+            </summary>
+        </member>
+        <member name="P:EP.Ner.AnalysisResult.Sofas">
+            <summary>
+            Входные анализируемые тексты
+            </summary>
+        </member>
+        <member name="P:EP.Ner.AnalysisResult.Entities">
+            <summary>
+            Выделенные сущности
+            </summary>
+        </member>
+        <member name="F:EP.Ner.AnalysisResult.FirstToken">
+            <summary>
+            Ссылка на первый токен текста, который был проанализирован последним
+            </summary>
+        </member>
+        <member name="F:EP.Ner.AnalysisResult.Ontology">
+            <summary>
+            Используемая внешняя онтология
+            </summary>
+        </member>
+        <member name="F:EP.Ner.AnalysisResult.BaseLanguage">
+            <summary>
+            Базовый язык
+            </summary>
+        </member>
+        <member name="P:EP.Ner.AnalysisResult.Log">
+            <summary>
+            Это некоторые информационные сообщения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.AnalysisResult.Exceptions">
+            <summary>
+            Возникшие исключения (одинаковые исключаются)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.AnalysisResult.IsTimeoutBreaked">
+            <summary>
+            Процесс был прерван по таймауту (если был задан)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.AnalyzerData">
+            <summary>
+            Данные, полученные в ходе обработки анализатором
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.AnalyzerData.Kit">
+            <summary>
+            Ссылка на аналитический контейнер
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.AnalyzerData.Referents">
+            <summary>
+            Список выделенных сущностей
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.AnalyzerData.RegisterReferent(EP.Ner.Referent)">
+            <summary>
+            Зарегистрировать новую сущность или привязать к существующей сущности
+            </summary>
+            <param name="referent"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.AnalyzerDataWithOntology">
+            <summary>
+            Данные, полученные в ходе обработки, причём с поддержкой механизма онтологий
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.AnalysisKit">
+            <summary>
+            Внутренний аналитический контейнер данных
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.CorrectedTokens">
+            <summary>
+            Токены, подправленные по корректировочному словарю (SourceOfAnalysis.CorrectionDict).
+            Здесь Value - исходый токен
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.AnalysisKit.EmbedToken(EP.Ner.MetaToken)">
+            <summary>
+            Встроить токен в основную цепочку токенов
+            </summary>
+            <param name="mt"></param>
+        </member>
+        <member name="M:EP.Ner.Core.AnalysisKit.DebedToken(EP.Ner.Token)">
+            <summary>
+            Убрать метатокен из цепочки, восстановив исходное
+            </summary>
+            <param name="t"></param>
+            <returns>первый токен удалённого метатокена</returns>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.FirstToken">
+            <summary>
+            Это начало цепочки токенов
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.AnalysisKit.Entities">
+            <summary>
+            Список сущностей, выделенных в ходе анализа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.Ontology">
+            <summary>
+            Внешняя онтология
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.BaseLanguage">
+            <summary>
+            Базовый язык
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.AnalysisKit.Sofa">
+            <summary>
+            Ссылка на исходный текст
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.AnalysisKit.GetTextCharacter(System.Int32)">
+            <summary>
+            Получить символ из исходного текста
+            </summary>
+            <param name="position">позиция</param>
+            <returns>символ (0, если выход за границу)</returns>
+        </member>
+        <member name="M:EP.Ner.Core.AnalysisKit.GetAnalyzerData(EP.Ner.Analyzer)">
+            <summary>
+            Работа с локальными данными анализаторов
+            </summary>
+            <param name="analyzer"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.MiscData">
+            <summary>
+            Используется анализаторами произвольным образом
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.AnalysisKit.ReplaceReferent(EP.Ner.Referent,EP.Ner.Referent)">
+            <summary>
+            Заменить везде где только возможно старую сущность на новую (используется при объединении сущностей)
+            </summary>
+            <param name="oldReferent"></param>
+            <param name="newReferent"></param>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.Processor">
+            <summary>
+            Это для объединения внешних оттологических элементов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.m_AnalyzerStack">
+            <summary>
+            Используется для предотвращения большого числа рекурсий
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.AnalysisKit.OntoRegime">
+            <summary>
+            Используется внутренним образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.BracketHelper">
+            <summary>
+            Поддержка анализа скобок и кавычек
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.BracketHelper.CanBeStartOfSequence(EP.Ner.Token,System.Boolean,System.Boolean)">
+            <summary>
+            Проверка, что с этого терма может начинаться последовательность
+            </summary>
+            <param name="t">проверяемый токен</param>
+            <param name="quotesOnly">должны быть именно кавычка, а не скобка</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.BracketHelper.CanBeEndOfSequence(EP.Ner.Token,System.Boolean,EP.Ner.Token,System.Boolean)">
+            <summary>
+            Проверка, что на этом терме может заканчиваться последовательность
+            </summary>
+            <param name="t">закрывающая кавычка</param>
+            <param name="quotesOnly">должны быть именно кавычка, а не скобка</param>
+            <param name="openT">это ссылка на токен, который мог быть открывающим</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.BracketHelper.IsBracketChar(System.Char,System.Boolean)">
+            <summary>
+            Проверка символа, что он может быть скобкой или кавычкой
+            </summary>
+            <param name="ch"></param>
+            <param name="quotsOnly"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.BracketHelper.IsBracket(EP.Ner.Token,System.Boolean)">
+            <summary>
+            Проверка токена, что он является скобкой или кавычкой
+            </summary>
+            <param name="t"></param>
+            <param name="quotsOnly"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.BracketHelper.TryParse(EP.Ner.Token,EP.Ner.Core.BracketParseAttr,System.Int32)">
+            <summary>
+            Попробовать восстановить последовательность, обрамляемой кавычками
+            </summary>
+            <param name="t"></param>
+            <param name="typ">параметры выделения</param>
+            <param name="maxTokens">максимально токенов (вдруг забыли закрывающую ккавычку)</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.BracketParseAttr">
+            <summary>
+            Параметры выделения последовательности
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.BracketParseAttr.CanContainsVerbs">
+            <summary>
+            По умолчанию, посл-ть не должна содержать чистых глаголов (если есть, то null).
+            Почему так? Да потому, что это используется в основном для имён именованных
+            сущностей, а там не может быть глаголов.
+            Если же этот ключ указан, то глаголы не проверяются.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.BracketParseAttr.NearCloseBracket">
+            <summary>
+            Брать первую же подходящую закрывающую кавычку
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.BracketParseAttr.CanBeManyLines">
+            <summary>
+            Внутри могут быть переходы на новую строку (многострочный)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.ConjunctionHelper">
+            <summary>
+            Поддержка работы с союзами (запятая тоже считается союзом)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.ConjunctionHelper.TryParse(EP.Ner.Token)">
+            <summary>
+            Попытаться выделить союз с указанного токена
+            </summary>
+            <param name="t">начальный токен</param>
+            <returns>результат или null</returns>
+        </member>
+        <member name="T:EP.Ner.Core.MiscHelper">
+            <summary>
+            Разные полезные процедурки
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.IsNotMoreThanOneError(System.String,EP.Ner.Token)">
+            <summary>
+            Сравнение, чтобы не было больше одной ошибки в написании.
+            Ошибка - это замена буквы или пропуск буквы.
+            </summary>
+            <param name="value">правильное написание</param>
+            <param name="t">проверяемый токен</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.TryAttachWordByLetters(System.String,EP.Ner.Token,System.Boolean)">
+            <summary>
+            Проверить написание слова вразбивку по буквам (например:   П Р И К А З)
+            </summary>
+            <param name="word">проверяемое слово</param>
+            <param name="t">начальный токен</param>
+            <param name="useMorphVariants">перебирать ли падежи у слова</param>
+            <returns>токен последней буквы или null</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CanBeEquals(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Сравнение 2-х строк на предмет равенства с учётом морфологии и пунктуации (то есть инвариантно относительно них).
+            Функция довольно трудоёмка, не использовать без крайней необходимости.
+            ВНИМАНИЕ! Вместо этой функции теперь используйте CanBeEqualsEx.
+            </summary>
+            <param name="s1">первая строка</param>
+            <param name="s2">вторая строка</param>
+            <param name="ignoreNonletters">игнорировать небуквенные символы</param>
+            <param name="ignoreCase">игнорировать регистр символов</param>
+            <param name="checkMorphEquAfterFirstNoun">после первого существительного слова должны полностью совпадать</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CanBeEqualsEx(System.String,System.String,EP.Ner.Core.CanBeEqualsAttrs)">
+            <summary>
+            Сравнение 2-х строк на предмет равенства с учётом морфологии и пунктуации (то есть инвариантно относительно них).
+            Функция довольно трудоёмка, не использовать без крайней необходимости.
+            </summary>
+            <param name="s1">первая строка</param>
+            <param name="s2">вторая строка</param>
+            <param name="attrs">дополнительные атрибуты</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CanBeStartOfSentence(EP.Ner.Token)">
+            <summary>
+            Проверка того, может ли здесь начинаться новое предложение
+            </summary>
+            <param name="t">токен начала предложения</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.FindEndOfSentence(EP.Ner.Token)">
+            <summary>
+            Переместиться на конец предложения
+            </summary>
+            <param name="t">токен, с которого идёт поиск</param>
+            <returns>последний токен предложения (не обязательно точка!)</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CheckNumberPrefix(EP.Ner.Token)">
+            <summary>
+            Привязка различных способов написания ключевых слов для номеров (ном., №, рег.номер и пр.)
+            </summary>
+            <param name="t">начало префикса</param>
+            <returns>null, если не префикс, или токен, следующий сразу за префиксом номера</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.ConvertFirstCharUpperAndOtherLower(System.String)">
+            <summary>
+            Преобразовать строку чтобы первая буква стала большой, остальные маленькие
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetAbbreviation(System.String)">
+            <summary>
+            Сделать аббревиатуру для строки из нескольких слов
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetTailAbbreviation(System.String)">
+            <summary>
+            Получить аббревиатуру (уже не помню, какую именно...)
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CreateCyrLatAlternative(System.String)">
+            <summary>
+            Попытка через транслитеральную замену сделать альтернативное написание строки
+            Например, А-10 => A-10  (здесь латиница и кириллица)
+            </summary>
+            <param name="str"></param>
+            <returns>если null, то не получается</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.ConvertLatinWordToRussianVariants(System.String)">
+            <summary>
+            Преобразовать слово, написанное по латыни, в варианты на русском языке.
+            Например, "Mikhail" -> "Михаил"
+            </summary>
+            <param name="str">Строка на латыни</param>
+            <returns>Варианты на русском языке</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.ConvertRussianWordToLatinVariants(System.String)">
+            <summary>
+            Преобразовать слово, написанное в кириллице, в варианты на латинице.
+            </summary>
+            <param name="str">Строка на кириллице</param>
+            <returns>Варианты на латинице</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetAbsoluteNormalValue(System.String,System.Boolean)">
+            <summary>
+            Получение абсолютного нормализованного значения (с учётом гласных, удалением невидимых знаков и т.п.).
+            Используется для сравнений различных вариантов написаний.
+            Преобразования:  гласные заменяются на *, Щ на Ш, Х на Г, одинаковые соседние буквы сливаются,
+            Ъ и Ь выбрасываются.
+            Например, ХАБИБУЛЛИН -  Г*Б*Б*Л*Н
+            </summary>
+            <param name="str">страка</param>
+            <returns>если null, то не удалось нормализовать (слишком короткий)</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.IsExistsInDictionary(EP.Ner.Token,EP.Ner.Token,EP.Morph.MorphClass)">
+            <summary>
+            Проверка, что хотя бы одно из слов внутри заданного диапазона находится в морфологическом словаре
+            </summary>
+            <param name="begin"></param>
+            <param name="end"></param>
+            <param name="cla"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.IsTokenAnimate(EP.Ner.Token)">
+            <summary>
+            Проверка, что это - одушевлённое
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.IsAllCharactersLower(EP.Ner.Token,EP.Ner.Token,System.Boolean)">
+            <summary>
+            Проверка, что все в заданном диапазоне в нижнем регистре
+            </summary>
+            <param name="begin"></param>
+            <param name="end"></param>
+            <param name="errorIfNotText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.HasVowel(EP.Ner.TextToken)">
+            <summary>
+            Текстовой токен должен иметь гласную
+            </summary>
+            <param name="t">токен</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.TestAcronym(EP.Ner.Token,EP.Ner.Token,EP.Ner.Token)">
+            <summary>
+            Проверка акронима, что из первых букв слов диапазона может получиться проверяемый акроним.
+            Например,  РФ = Российская Федерация, ГосПлан = государственный план
+            </summary>
+            <param name="acr">акроним</param>
+            <param name="begin">начало диапазона</param>
+            <param name="end">конец диапазона</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetCyrLatWord(EP.Ner.Token,System.Int32)">
+            <summary>
+            Получить вариант на кириллице и\или латинице
+            </summary>
+            <param name="t"></param>
+            <param name="maxLen"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CanBeEqualCyrAndLatTS(EP.Ner.Token,System.String)">
+            <summary>
+            Проверка на возможную эквивалентность русского и латинского написания одного и того же слова
+            </summary>
+            <param name="t"></param>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CanBeEqualCyrAndLatTT(EP.Ner.Token,EP.Ner.Token)">
+            <summary>
+            Проверка на возможную эквивалентность русского и латинского написания одного и того же слова.
+            Например,  ИКЕЯ ? IKEA
+            </summary>
+            <param name="t1">токен на одном языке</param>
+            <param name="t2">токен на другом языке</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.CanBeEqualCyrAndLatSS(System.String,System.String)">
+            <summary>
+            Проверка на возможную эквивалентность русского и латинского написания одного и того же слова.
+            Например,  ИКЕЯ ? IKEA
+            </summary>
+            <param name="str1">слово на одном языке</param>
+            <param name="str2">слово на другом языке</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetTextValueOfMetaToken(EP.Ner.MetaToken,EP.Ner.Core.GetTextAttr)">
+            <summary>
+            Получить текст, покрываемый метатокеном
+            </summary>
+            <param name="mt">метатокен</param>
+            <param name="attrs">атрибуты преобразования текста</param>
+            <returns>результат</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetTextValue(EP.Ner.Token,EP.Ner.Token,EP.Ner.Core.GetTextAttr)">
+            <summary>
+            Получить текст, задаваемый диапазоном токенов
+            </summary>
+            <param name="begin">начальный токен</param>
+            <param name="end">конечный токен</param>
+            <param name="attrs">атрибуты преобразования текста</param>
+            <returns>результат</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.IsEngAdjSuffix(EP.Ner.Token)">
+            <summary>
+            Проверка, что это суффикс прилагательного (street's)
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetTextMorphVarBySample(System.String,EP.Ner.Token,System.Boolean,System.Boolean)">
+            <summary>
+            Преобразовать строку в нужный род, число и падеж (точнее, преобразуется
+            первая именная группа), регистр определяется соответствующими символами примера.
+            Морфология определяется по первой именной группе примера.
+            Фукнция полезна при замене по тексту одной комбинации на другую с учётом
+            морфологии и регистра.
+            </summary>
+            <param name="txt">преобразуемая строка</param>
+            <param name="beginSample">начало фрагмента примера</param>
+            <param name="useMopthSample">использовать именную группу примера для морфологии</param>
+            <param name="useRegisterSample">регистр определять по фрагменту пример, при false регистр исходной строки</param>
+            <returns>результат, в худшем случае вернёт исходную строку</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetTextMorphVarByCase(System.String,EP.Morph.MorphCase,System.Boolean)">
+            <summary>
+            Преобразовать строку к нужному падежу (и числу).
+            Преобразуется только начало строки, содержащей в начале именную группу или персону
+            </summary>
+            <param name="txt">исходная строка</param>
+            <param name="cas">падеж</param>
+            <param name="pluralNumber">множественное число</param>
+            <returns>результат (в крайнем случае, вернёт исходную строку, если ничего не получилось)</returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.GetTextMorphVarByCaseAndNumberEx(System.String,EP.Morph.MorphCase,EP.Morph.MorphNumber,System.String)">
+            <summary>
+            Корректировка числа и падежа строки
+            </summary>
+            <param name="str">исходная строка, изменяется только первая именная группа</param>
+            <param name="cas"></param>
+            <param name="num"></param>
+            <param name="numVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.MiscHelper.NormalizeText(System.String,EP.Ner.Core.NormalizeTextAttr)">
+            <summary>
+            Нормализация текста
+            </summary>
+            <param name="text">исходный текст</param>
+            <param name="attr">атрибуты нормализации</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.NormalizeTextAttr">
+            <summary>
+            Атрибуты нормализации текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NormalizeTextAttr.KeepRegister">
+            <summary>
+            Сохранять ли регистр букв (по умолчанию, верхний регистр)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NormalizeTextAttr.KeepPunctuation">
+            <summary>
+            Игонорировать пунктуацию, скобки, кавычки и пр. несимволы и не числа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NormalizeTextAttr.NerProcess">
+            <summary>
+            Выделять ли именованные сущности и их потом нормализовывать (через ToString())
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.GetTextAttr">
+            <summary>
+            Атрибуты получения текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.KeepRegister">
+            <summary>
+            Сохранять ли регистр букв (по умолчанию, верхний регистр)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.FirstNounGroupToNominative">
+            <summary>
+            Первую именную группу преобразовывать к именительному падежу
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.FirstNounGroupToNominativeSingle">
+            <summary>
+            Первую именную группу преобразовывать к именительному падежу единственному числу
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.KeepQuotes">
+            <summary>
+            Оставлять кавычки (по умолчанию, кавычки игнорируются). К скобкам это не относится.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.IgnoreGeoReferent">
+            <summary>
+            Игнорировать географические объекты
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.NormalizeNumbers">
+            <summary>
+            Преобразовать ли числовые значения в цифры
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.RestoreRegister">
+            <summary>
+            Если все слова в верхнем регистре, то попытаться восстановить слова в нижнем регистре
+            на основе их встречаемости в других частях всего документа
+            (то есть если слово есть в нижнем, то оно переводится в нижний)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.GetTextAttr.IgnoreArticles">
+            <summary>
+            Для английского языка игнорировать артикли и суффикс 'S 
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.CanBeEqualsAttrs">
+            <summary>
+            Атрибуты функции CanBeEqualsEx
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.CanBeEqualsAttrs.IgnoreNonletters">
+            <summary>
+            Игнорировать небуквенные символы (они как бы выбрасываются)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.CanBeEqualsAttrs.IgnoreUppercase">
+            <summary>
+            Игнорировать регистр символов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.CanBeEqualsAttrs.CheckMorphEquAfterFirstNoun">
+            <summary>
+             После первого существительного слова должны полностью совпадать
+            (иначе совпадение с точностью до морфологии)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.CanBeEqualsAttrs.UseBrackets">
+            <summary>
+            Даже если указано IgnoreNonletters, кавычки проверять!
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.CanBeEqualsAttrs.IgnoreUppercaseFirstWord">
+            <summary>
+            Игнорировать регистр символов только первого слова
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.CanBeEqualsAttrs.FirstCanBeShorter">
+            <summary>
+            Первое слово может быть короче (то есть второе должно начинаться на первое слово)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.NounPhraseHelper">
+            <summary>
+            Выделение именных групп (существительсно с согласованными прилагательными (если они есть).
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.NounPhraseHelper.TryParse(EP.Ner.Token,EP.Ner.Core.NounPhraseParseAttr,System.Int32,EP.Ner.MetaToken)">
+            <summary>
+            Попробовать создать именную группу с указанного токена
+            </summary>
+            <param name="t">начальный токен</param>
+            <param name="typ">параметры (можно битовую маску)</param>
+            <param name="maxCharPos">максимальная позиция в тексте, до которой выделять, если 0, то без ограничений</param>
+            <param name="noun">это если нужно выделить только прилагательные для ранее выделенного существительного (из другой группы)</param>
+            <returns>именная группа или null</returns>
+        </member>
+        <member name="T:EP.Ner.Core.NounPhraseParseAttr">
+            <summary>
+            Параметры выделения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.ParsePronouns">
+            <summary>
+            Выделять ли местоимения (моя страна)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.ParsePreposition">
+            <summary>
+            Выделять ли в начале предлог
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.IgnoreAdjBest">
+            <summary>
+            Игнорировать прилагательные превосходной степени
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.IgnoreParticiples">
+            <summary>
+            Игнорировать причастия, брать только чистые прилагательные
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.ReferentCanBeNoun">
+            <summary>
+            Корнем может выступать выделенная сущность (необъятная Россия)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.CanNotHasCommaAnd">
+            <summary>
+            Между прилагательными не должно быть запятых и союзов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.AdjectiveCanBeLast">
+            <summary>
+            Прилагательное м.б. на последнем месте (член моржовый)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.ParseAdverbs">
+            <summary>
+            Выделять наречия
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.ParseVerbs">
+            <summary>
+            Выделять причастия (это прилагательные и глаголы одновременно)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.ParseNumericAsAdjective">
+            <summary>
+            Выделять ли такие констркуции "двое сотрудников", "пять компаний" числа как прилагательные.
+            Это не касается ситуаций "второй сотрудник", "пятая компания" - это всегда как прилагательные
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.Multilines">
+            <summary>
+            Группа может быть на разбита на нескольких строках (начало на одной, окончание на другой)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.IgnoreBrackets">
+            <summary>
+            Игнорировать содержимое в скобках (...) внутри именной группы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseParseAttr.MultiNouns">
+            <summary>
+            Это для случая "грузовой и легковой автомобили" - то есть прилагательные
+            относятся к одному существительному (как бы слепленному)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.NumberHelper">
+            <summary>
+            Работа с числовыми значениями
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseNumber(EP.Ner.Token)">
+            <summary>
+            Попробовать создать числительное (без знака, целочисленное).
+            Внимание! Этот метод всегда вызывается процессором при формировании цепочки токенов,
+            так что все NumberToken уже созданы.
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseRoman(EP.Ner.Token)">
+            <summary>
+            Попробовать выделить римскую цифру
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseRomanBack(EP.Ner.Token)">
+            <summary>
+            Выделить римскую цифру с token в обратном порядке
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseAge(EP.Ner.Token)">
+            <summary>
+            Это выделение числительных типа 16-летие, 50-летний
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseAnniversary(EP.Ner.Token)">
+            <summary>
+            Выделение годовщин и летий (XX-летие) ...
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseRealNumber(EP.Ner.Token,System.Boolean,System.Boolean)">
+            <summary>
+            Выделить действительное число, знак также выделяется,
+            разделители дроби могут быть точка или запятая, разделителями тысячных
+            могут быть точки, пробелы и запятые.
+            </summary>
+            <param name="t">начальный токен</param>
+            <param name="canBeInteger">число должно быть целым</param>
+            <param name="noWhitespace">не должно быть пробелов</param>
+            <returns>результат или null</returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.GetNumberAdjective(System.Int32,EP.Morph.MorphGender,EP.Morph.MorphNumber)">
+            <summary>
+            Преобразовать число в числительное, записанное буквами, в соотв. роде и числе.
+            Например, 5 жен.ед. - ПЯТАЯ,  26 мн. - ДВАДЦАТЬ ШЕСТЫЕ
+            </summary>
+            <param name="value">значение</param>
+            <param name="gender">род</param>
+            <param name="num">число</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.GetNumberRoman(System.Int32)">
+            <summary>
+            Получить для числа римскую запись
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.GetNumberString(System.Int32,System.String)">
+            <summary>
+            Получить строковое представление целого числа
+            </summary>
+            <param name="val">значение</param>
+            <param name="units">единицы измерения (они тоже будут преобразовываться в нужное число)</param>
+            <returns>строковое представление (пока на русском языке)</returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParseNumberWithPostfix(EP.Ner.Token)">
+            <summary>
+            Выделение стандартных мер, типа: 10 кв.м.
+            </summary>
+            <param name="t">начальный токен</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.TryParsePostfixOnly(EP.Ner.Token)">
+            <summary>
+            Это попробовать только тип (постфикс) без самого числа.
+            Например, куб.м.
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.IsMoneyChar(EP.Ner.Token)">
+            <summary>
+            Если этообозначение денежной единицы (н-р, $), то возвращает код валюты
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.StringToDouble(System.String)">
+            <summary>
+            Для парсинга действительного числа из строки используйте эту функцию,
+            которая работает назависимо от локализьных настроек и на всех языках программирования
+            </summary>
+            <param name="str">строка</param>
+            <returns>число</returns>
+        </member>
+        <member name="M:EP.Ner.Core.NumberHelper.DoubleToString(System.Double)">
+            <summary>
+            Независимо от языка и настроек выводит действиельное число в строку,
+            разделитель - точка. Ситуация типа 1.0000000001 или 23.7299999999999,
+            случающиеся на разных языках, округляются куда надо.
+            </summary>
+            <param name="d">число</param>
+            <returns>результат</returns>
+        </member>
+        <member name="T:EP.Ner.Core.PrepositionHelper">
+            <summary>
+            Поддержка работы с предлогами
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.PrepositionHelper.TryParse(EP.Ner.Token)">
+            <summary>
+            Попытаться выделить предлог с указанного токена
+            </summary>
+            <param name="t">начальный токен</param>
+            <returns>результат или null</returns>
+        </member>
+        <member name="T:EP.Ner.Core.ProperNameHelper">
+            <summary>
+            Поддержка работы с собственными именами
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.ProperNameHelper.GetNameWithoutBrackets(EP.Ner.Token,EP.Ner.Token,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Получить строковое значение между токенами, при этом исключая кавычки и скобки
+            </summary>
+            <param name="begin">начальный токен</param>
+            <param name="end">конечный токен</param>
+            <param name="normalizeFirstNounGroup">нормализовывать ли первую именную группу (именит. падеж)</param>
+            <param name="normalFirstGroupSingle">приводить ли к единственному числу первую именную группу</param>
+            <param name="ignoreGeoReferent">игнорировать внутри географические сущности</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.ProperNameHelper.GetName(EP.Ner.Token,EP.Ner.Token)">
+            <summary>
+            Получить строковое значение между токенами без нормализации первой группы, всё в верхнем регистре.
+            </summary>
+            <param name="begin"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.VerbPhraseHelper">
+            <summary>
+            Работа с глагольными группами (последовательность из глаголов и наречий)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.VerbPhraseHelper.TryParse(EP.Ner.Token,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Создать глагольную группу
+            </summary>
+            <param name="t">первый токен группы</param>
+            <param name="canBePartition">выделять ли причастия</param>
+            <param name="canBeAdjPartition">это бывают чистые прилагательные используются в режиме причастий (действия, опасные для жизни)</param>
+            <returns>группа или null</returns>
+        </member>
+        <member name="T:EP.Ner.Core.Internal.NounPhraseItem">
+            <summary>
+            Элемент именной группы
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Internal.NounPhraseItem.CanBeNumericAdj">
+            <summary>
+            Это признак количественного (число, НЕСКОЛЬКО, МНОГО)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Internal.NounPhraseItem.IsVerb">
+            <summary>
+            Это признак причастия
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.Internal.NounPhraseItemTextVar">
+            <summary>
+            Морфологический вариант для элемента именной группы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Internal.NounPhraseItemTextVar.NormalValue">
+            <summary>
+            Нормализованное значение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Internal.NounPhraseItemTextVar.SingleNumberValue">
+            <summary>
+            Нормализованное значение в единственном числе
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Internal.NumberExHelper.TryParseNumberWithPostfix(EP.Ner.Token)">
+            <summary>
+            Выделение стандартных мер, типа: 10 кв.м.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Internal.NumberExHelper.TryAttachPostfixOnly(EP.Ner.Token)">
+            <summary>
+            Это попробовать только тип (постфикс) без самого числа
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.Internal.RusLatAccord.GetVariants(System.String)">
+            <summary>
+            Сформировать всевозможные варианты написаний на другой раскладке
+            </summary>
+            <param name="rusOrLat">слово на кириллице или латинице</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.Internal.RusLatAccord.FindAccordsRusToLat(System.String,System.Int32,System.Collections.Generic.List{System.String})">
+            <summary>
+            Вернёт длину привязки
+            </summary>
+            <param name="txt"></param>
+            <param name="pos"></param>
+            <param name="res"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.Internal.TableHelper">
+            <summary>
+            Поддержка работы с таблицами, расположенными в текстах.
+            Начало таблицы - символ 1Eh, конец - 1Fh, ячейки оканчиваются 07h,
+            комбинация 0D 0A 07 - конец строки.
+            Данную структуру формирует функция извлечения текстов (ExtractText), так что это - для
+            обратного восстановления таблицы в случае необходимости.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Internal.TableHelper.TryParseRows(EP.Ner.Token,System.Int32,System.Boolean)">
+            <summary>
+            Получить список строк таблицы
+            </summary>
+            <param name="t">начальная позиция</param>
+            <param name="maxChar">максимальная позиция (0 - не ограничена)</param>
+            <param name="mustBeStartOfTable">при true первый символ должен быть 1Eh</param>
+            <returns>список строк</returns>
+        </member>
+        <member name="T:EP.Ner.Core.Internal.TableRowToken">
+            <summary>
+            Токен - строка таблицы из текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Internal.TableRowToken.Cells">
+            <summary>
+            Ячейки строки таблицы
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.Internal.TableCellToken">
+            <summary>
+            Токен - ячейка таблицы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Internal.TableCellToken.ColSpan">
+            <summary>
+            Количество объединённых ячеек по горизонтали
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Internal.TableCellToken.RowSpan">
+            <summary>
+            Количество объединённых ячеек по вертикали
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.IntOntologyCollection">
+            <summary>
+            Онтологический словарь 
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.IntOntologyCollection.Items">
+            <summary>
+            Список элементов онтологии
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyCollection.IsExtOntology">
+            <summary>
+            Признак того, что это внешняя онтология
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.AddItem(EP.Ner.Core.IntOntologyItem)">
+            <summary>
+            Добавить элемент (внимание, после добавления нельзя менять термины у элемента)
+            </summary>
+            <param name="di"></param>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.AddReferent(EP.Ner.Referent)">
+            <summary>
+            Добавить в онтологию сущность
+            </summary>
+            <param name="referent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.AddTermin(EP.Ner.Core.IntOntologyItem,EP.Ner.Core.Termin)">
+            <summary>
+            Добавить термин в существующий элемент
+            </summary>
+            <param name="di"></param>
+            <param name="t"></param>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.Add(EP.Ner.Core.Termin)">
+            <summary>
+            Добавить отдельный термин (после добавления нельзя изменять свойства термина)
+            </summary>
+            <param name="t"></param>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.TryAttach(EP.Ner.Token,System.String,System.Boolean)">
+            <summary>
+            Привязать с указанной позиции
+            </summary>
+            <param name="t"></param>
+            <param name="canBeGeoObject">при True внутри может быть географический объект (Министерство РФ по делам ...)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.TryAttachByItem(EP.Ner.Core.IntOntologyItem)">
+            <summary>
+            Найти похожие онтологические объекты
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.TryAttachByReferent(EP.Ner.Referent,EP.Ner.Core.IntOntologyItem,System.Boolean)">
+            <summary>
+            Найти эквивалентные сущности через онтологические объекты
+            </summary>
+            <param name="item"></param>
+            <param name="referent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyCollection.Remove(EP.Ner.Referent)">
+            <summary>
+            Удалить всё, что связано с сущностью
+            </summary>
+            <param name="r"></param>
+        </member>
+        <member name="T:EP.Ner.Core.IntOntologyItem">
+            <summary>
+            Элемент онтологического словаря
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyItem.Termins">
+            <summary>
+            Список терминов, ассоциированных со словарной записью
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.IntOntologyItem.CanonicText">
+            <summary>
+            Каноноический текст
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.IntOntologyItem.SetShortestCanonicalText(System.Boolean)">
+            <summary>
+            В качестве канонического текста установить самый короткий среди терминов
+            </summary>
+            <param name="ignoreTerminsWithNotnullTags"></param>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyItem.Typ">
+            <summary>
+            Необязательный тип элемента
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyItem.MiscAttr">
+            <summary>
+            Используется произвольным образом (для некоторого дополнительного признака)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyItem.Owner">
+            <summary>
+            Ссылка на онтологию
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyItem.Referent">
+            <summary>
+            Ссылка на сущность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyItem.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.IntOntologyToken">
+            <summary>
+            Это привязка элемента отнологии к тексту
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyToken.Item">
+            <summary>
+            Элемент словаря
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.IntOntologyToken.Termin">
+            <summary>
+            Или просто отдельный термин
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.StatisticCollection">
+            <summary>
+            Поддержка анализа биграммной зависимости токенов в тексте
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.StatisticCollection.WordInfo.HasBeforePersonAttr">
+            <summary>
+            Есть ли перед атрибут персон (вычисляется только в процессе отработки соотв. анализатора на его 1-м проходе) 
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.StatisticCollection.WordInfo.NotCapitalBeforeCount">
+            <summary>
+            Количество слов перед этим, которые не тексты или в нижнем регистре
+            (например, для проверки отчеств - фамилия ли это)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.Termin">
+            <summary>
+            Термин, понятие, система обозначений чего-либо и варианты его написания
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.#ctor(System.String,EP.Morph.MorphLang,System.Boolean)">
+            <summary>
+            Создать термин из строки с добавлением всех морфологических вариантов написания
+            </summary>
+            <param name="source">строка</param>
+            <param name="lang">возможный язык</param>
+            <param name="sourceIsNormal">при true морфварианты не добавляются 
+            (эквивалентно вызову InitByNormalText)</param>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.AssignAllTextsAsNormal">
+            <summary>
+            Используется внутренним образом (для ускорения Питона)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.InitByNormalText(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Быстрая инициализация без морф.вариантов, производится только
+            токенизация текста. Используется для ускорения работы со словарём в случае,
+            когда изначально известно, что на входе уже нормализованные строки
+            </summary>
+            <param name="text">исходно нормализованный текст</param>
+            <param name="lang">возможный язык</param>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Terms">
+            <summary>
+            Морфологические токены полного написания
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.AdditionalVars">
+            <summary>
+            Дополнительные варианты
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.AddVariant(System.String,System.Boolean)">
+            <summary>
+            Добавить дополнительный вариант полного написания 
+            </summary>
+            <param name="var">строка варианта</param>
+            <param name="sourceIsNormal">при true морфварианты не добавляются, иначе добавляются</param>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.AddVariantTerm(EP.Ner.Core.Termin)">
+            <summary>
+            Добавить дополнительный вариант написания
+            </summary>
+            <param name="t"></param>
+        </member>
+        <member name="T:EP.Ner.Core.Termin.Term">
+            <summary>
+            Элемент термина (слово или число)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Term.IsPatternAny">
+            <summary>
+            То есть на месте этого терма может быть всё, что угодно
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Term.Variants">
+            <summary>
+            Варианты морфологического написания
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Term.CanonicalText">
+            <summary>
+            Каноническое изображение (первый вариант)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Term.IsNumber">
+            <summary>
+            Признак того, что это число
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Term.IsHiphen">
+            <summary>
+            Это перенос
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Term.IsPoint">
+            <summary>
+            Это точка
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Term.Gender">
+            <summary>
+            Род
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.Term.CheckByToken(EP.Ner.Token)">
+            <summary>
+            Сравнение с токеном
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.CanonicText">
+            <summary>
+            Каноноический текст
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.IgnoreTermsOrder">
+            <summary>
+            Порядок токенов неважен (то есть привязка с точностью до перестановок)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Acronym">
+            <summary>
+            Возможная аббревиатура (всегда слитно в верхнем регистре)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.AcronymSmart">
+            <summary>
+            "Мягкая" аббревиатура, допускающая разбивку, точки и т.п.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.AcronymCanBeLower">
+            <summary>
+            Аббревиатура м.б. в нижнем регистре
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.SetStdAcronim(System.Boolean)">
+            <summary>
+            Установить стандартную аббревиатуру
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Abridges">
+            <summary>
+            Список возможных сокращений
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Lang">
+            <summary>
+            Язык
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Tag2">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.Termin.Tag3">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.Termin.Gender">
+            <summary>
+            Род (первого термина)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.AddAllAbridges(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Добавить все сокращения (с первой буквы до любого согласного)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.TryParse(EP.Ner.Token,EP.Ner.Core.TerminParseAttr,System.Double)">
+            <summary>
+            Попробовать привязать термин
+            </summary>
+            <param name="t0"></param>
+            <param name="pars">дополнительные параметры привязки</param>
+            <param name="simD">степень похожести (если меньше 1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.Termin.TryParseSim(EP.Ner.Token,System.Double,EP.Ner.Core.TerminParseAttr)">
+            <summary>
+            Попробовать привязать термин с использованием "похожести"
+            </summary>
+            <param name="t0">начальный токен</param>
+            <param name="simD">похожесть (0.05..1)</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.TerminCollection">
+            <summary>
+            Коллекций некоторых обозначений, терминов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.TerminCollection.Add(EP.Ner.Core.Termin)">
+            <summary>
+            Добавить термин. После добавления в термин нельзя вносить изменений,
+            кроме как в значения Tag и Tag2 (иначе потом нужно вызвать Reindex)
+            </summary>
+            <param name="term"></param>
+        </member>
+        <member name="M:EP.Ner.Core.TerminCollection.AddStr(System.String,System.Object,EP.Morph.MorphLang,System.Boolean)">
+            <summary>
+            Добавить строку вместе с морфологическими вариантами
+            </summary>
+            <param name="termins"></param>
+            <param name="tag"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Core.TerminCollection.Termins">
+            <summary>
+            Полный список понятий
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminCollection.AllAddStrsNormalized">
+            <summary>
+            Если установлено true, то все входные термины уже нормализованы
+            (сделано для ускорения загрузки в питоне)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminCollection.Synonyms">
+            <summary>
+            Возможный словарь синонимов (если в словаре комбинация не найдена, а она есть в синонимах,
+            то синонимы ищутся в текущем словаре, если есть, то ОК)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.TerminCollection.Reindex(EP.Ner.Core.Termin)">
+            <summary>
+            Переиндексировать термин (если после добавления у него что-либо поменялось)
+            </summary>
+            <param name="t"></param>
+        </member>
+        <member name="M:EP.Ner.Core.TerminCollection.TryParse(EP.Ner.Token,EP.Ner.Core.TerminParseAttr)">
+            <summary>
+            Попытка привязать к аналитическому контейнеру с указанной позиции
+            </summary>
+            <param name="token">начальная позиция</param>
+            <param name="pars">параметры выделения</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.TerminCollection.TryParseAll(EP.Ner.Token,EP.Ner.Core.TerminParseAttr,System.Double)">
+            <summary>
+            Попытка привязать все возможные варианты
+            </summary>
+            <param name="token"></param>
+            <param name="pars">параметры выделения</param>
+            <param name="simD">параметр "похожесть (0.05..1)"</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.TerminCollection.TryAttach(EP.Ner.Core.Termin)">
+            <summary>
+            Поискать эквивалентные термины
+            </summary>
+            <param name="termin"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.TerminParseAttr">
+            <summary>
+            Патаметры выделения термина словаря (TryParse)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminParseAttr.FullwordsOnly">
+            <summary>
+            не использовать сокращения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminParseAttr.InDictionaryOnly">
+            <summary>
+            Рассматривать только варианты из морфологичского словаря
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminParseAttr.TermOnly">
+            <summary>
+            Игнорировать морфологические варианты, а брать только терм
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminParseAttr.CanBeGeoObject">
+            <summary>
+            Может иметь географический объект в середине (Министерство РФ по делам ...)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminParseAttr.IgnoreBrackets">
+            <summary>
+            Игнорировать скобки внутри нескольких термов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.TerminParseAttr.IgnoreStopWords">
+            <summary>
+            Игнорировать знаки препинания, числа, союзы и предлоги
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.TerminToken">
+            <summary>
+            Результат привязки термина
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.BracketSequenceToken">
+            <summary>
+            Представление последовательности, обрамлённой кавычками (скобками)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.BracketSequenceToken.Internal">
+            <summary>
+            Внутренние подпоследовательности.
+            Например, "О внесении изменений (2010-2011)", содержит внутри (2010-2011)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.BracketSequenceToken.IsQuoteType">
+            <summary>
+            Признак обрамления кавычками (если false, то м.б. [...], (...), {...})
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.BracketSequenceToken.OpenChar">
+            <summary>
+            Открывающий символ
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.BracketSequenceToken.CloseChar">
+            <summary>
+            Закрывающий символ
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.ConjunctionToken">
+            <summary>
+            Представление союзов (они могут быть из нескольких токенов, например, "из-за того что"
+            Получить можно с помощью ConjunctionHelper.TryParse(t)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.ConjunctionToken.Normal">
+            <summary>
+            Нормализованное значение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.ConjunctionToken.Typ">
+            <summary>
+            Возможный тип (класс союза)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.ConjunctionToken.IsSimple">
+            <summary>
+            Это когда союз простой (запятая, И, ...), а не такой типа "а также", "также, как и"
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.NounPhraseToken">
+            <summary>
+            Токен для представления именной группы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.Noun">
+            <summary>
+            Корень группы (существительное, местоимение или сущность)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.Adjectives">
+            <summary>
+            Прилагательные (и причастия, если задан ключ ParseVerbs)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.Adverbs">
+            <summary>
+            Наречия (если задан ключ ParseAdverbs при выделении)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.InternalNoun">
+            <summary>
+            Для случая "по современным на данный момент представлениям" -
+            это будет "данный момент"
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.Anafor">
+            <summary>
+            Токен с анафорической ссылкой-местоимением (если есть), например: старшего своего брата
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.AnaforaRef">
+            <summary>
+            Используется внешней системой для нахождения анафоры
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.Preposition">
+            <summary>
+            Начальный предлог предлог (если задан ключ ParsePreposition)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NounPhraseToken.MultiNouns">
+            <summary>
+            Это когда Noun как бы слепленный для разных прилагательных (грузовой и легковой автомобили)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Core.NounPhraseToken.GetMultivars">
+            <summary>
+            Это если MultiNouns = true, то можно как бы расщепить на варианты
+            (грузовой и легковой автомобили -> грузовой автомобиль и легковой автомобиль)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Core.NounPhraseToken.GetMorphVariant(EP.Morph.MorphCase,System.Boolean)">
+            <summary>
+            Сгенерировать текст именной группы в нужном падеже и числе
+            </summary>
+            <param name="cas"></param>
+            <param name="plural"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Core.NounPhraseMultivarToken">
+            <summary>
+            Вариант расщепления именной группы, у которой слиплись существительные
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.NumberExToken">
+            <summary>
+            Число с стандартный постфиксом (мерой длины, вес, деньги и т.п.)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NumberExToken.AltRealValue">
+            <summary>
+            Это возможно в скобках другое написание
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NumberExToken.ExTyp">
+            <summary>
+            Тип постфикса
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NumberExToken.ExTyp2">
+            <summary>
+            Это постфикс после деления, например гр./м3
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NumberExToken.ExTypParam">
+            <summary>
+            Дополнительный параметр постфикса (для денег - 3-х значный код валюты)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.NumberExToken.MultAfter">
+            <summary>
+            Это признак того, что "множитель" слипся с единицей измерения
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.NumberExType">
+            <summary>
+            Единицы измерения для NumberExToken
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.PrepositionToken">
+            <summary>
+            Представление предлогов (они могут быть из нескольких токенов, например, 
+            "несмотря на", "в соответствии с").
+            Получить можно с помощью PrepositionHelper.TryParse(t)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.PrepositionToken.Normal">
+            <summary>
+            Нормализованное значение (ПОДО -> ПОД,  ОБО, ОБ -> О ...)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.PrepositionToken.NextCase">
+            <summary>
+            Падежи для слов, используемых с предлогом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.VerbPhraseToken">
+            <summary>
+            Глагольная группа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.VerbPhraseToken.Items">
+            <summary>
+            Список элементов глагольной группы
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseToken.FirstVerb">
+            <summary>
+            Первый глагол (всегда есть, иначе это не группа)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseToken.LastVerb">
+            <summary>
+            Последний глагол (если один, то совпадает с первым)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.VerbPhraseToken.Preposition">
+            <summary>
+            Предлог перед (для причастий)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseToken.IsVerbPassive">
+            <summary>
+            Признак того, что вся группа в пассивном залоге (по первому глаголу)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Core.VerbPhraseItemToken">
+            <summary>
+            Элемент глагольной группы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.VerbPhraseItemToken.Not">
+            <summary>
+            Частица НЕ
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Core.VerbPhraseItemToken.IsAdverb">
+            <summary>
+            Наречие
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.IsParticiple">
+            <summary>
+            Причастие
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.IsDeeParticiple">
+            <summary>
+            Признак деепричастия
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.IsVerbInfinitive">
+            <summary>
+            Глагол-инфиниитив
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.IsVerbBe">
+            <summary>
+            Глаголы быть, являться...
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.IsVerbReversive">
+            <summary>
+            Возвратный глагол
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.IsVerbPassive">
+            <summary>
+            Глагол в страдательном залоге
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.Normal">
+            <summary>
+            Нормализованное значение
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Core.VerbPhraseItemToken.VerbMorph">
+            <summary>
+            Полное морф.информация о глаголе глагола
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Analyzer">
+            <summary>
+            Базовый класс для всех семантических анализаторов 
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Analyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Запустить анализ
+            </summary>
+            <param name="kit">контейнер с данными</param>
+        </member>
+        <member name="P:EP.Ner.Analyzer.Name">
+            <summary>
+            Уникальное наименование анализатора
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.Caption">
+            <summary>
+            Заголовок анализатора
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.Description">
+            <summary>
+            Описание анализатора
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.TypeSystem">
+            <summary>
+            Список поддерживаемых типов объектов (сущностей), которые выделяет анализатор
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.Images">
+            <summary>
+            Список изображений объектов
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.IsSpecific">
+            <summary>
+            Признак специфического анализатора (предназначенного для конкретной предметной области).
+            Специфические анализаторы по умолчанию не добавляются в процессор (Processor)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Analyzer.CreateReferent(System.String)">
+            <summary>
+            Создать объект указанного типа
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Analyzer.UsedExternObjectTypes">
+            <summary>
+            Список имён типов объектов из других картриджей, которые желательно предварительно выделить (для управления приоритетом применения правил)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.ProgressWeight">
+            <summary>
+            Сколько примерно времени работает анализатор по сравнению с другими (в условных единицах)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.PersistReferentsRegim">
+            <summary>
+            Включить режим накопления выделяемых сущностей при обработке разных SourceOfText
+            (то есть локальные сущности будут накапливаться)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Analyzer.IgnoreThisAnalyzer">
+            <summary>
+            При установке в true будет игнорироваться при обработке (для отладки)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Analyzer.CreateAnalyzerData">
+            <summary>
+            Используется внутренним образом
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Analyzer.ProcessReferent(EP.Ner.Token,EP.Ner.Token)">
+            <summary>
+            Попытаться выделить сущность в указанном диапазоне (используется внутренним образом).
+            Кстати, выделенная сущность не сохраняется в локальной онтологии.
+            </summary>
+            <param name="begin">начало диапазона</param>
+            <param name="end">конец диапазона (если null, то до конца)</param>
+            <returns>результат</returns>
+        </member>
+        <member name="M:EP.Ner.Analyzer.ProcessOntologyItem(EP.Ner.Token)">
+            <summary>
+            Это используется внутренним образом для обработки внешних онтологий
+            </summary>
+            <param name="begin"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.ExtOntology">
+            <summary>
+            Внешняя онтология
+            </summary>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.Add(System.Object,System.String,System.String)">
+            <summary>
+            Добавить элемент
+            </summary>
+            <param name="extId">произвольный объект</param>
+            <param name="typeName">имя типа сущности</param>
+            <param name="definition">текстовое определение. Определение может содержать несколько 
+            отдельных фрагментов, которые разделяются точкой с запятой.
+            Например, Министерство Обороны России; Минобороны</param>
+            <returns>если null, то не получилось...</returns>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.AddReferent(System.Object,EP.Ner.Referent)">
+            <summary>
+            Добавить готовую сущность
+            </summary>
+            <param name="extId">произвольный объект</param>
+            <param name="referent">готовая сущность (например, сфомированная явно)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.Refresh(EP.Ner.ExtOntologyItem,System.String)">
+            <summary>
+            Обновить существующий элемент онтологии
+            </summary>
+            <param name="item"></param>
+            <param name="definition">новое определение</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.Refresh(EP.Ner.ExtOntologyItem,EP.Ner.Referent)">
+            <summary>
+            Обновить существующий элемент онтологии
+            </summary>
+            <param name="item"></param>
+            <param name="newReferent"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.ExtOntology.Items">
+            <summary>
+            Список элементов внешней онтологии
+            </summary>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.Serialize(System.IO.Stream)">
+            <summary>
+            Сериазизовать весь словарь в поток
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.Deserialize(System.IO.Stream)">
+            <summary>
+            Восстановить словарь из потока
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:EP.Ner.ExtOntology._getAnalyzerData(System.String)">
+            <summary>
+            Используется внутренним образом
+            </summary>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.AttachReferent(EP.Ner.Referent)">
+            <summary>
+            Привязать сущность
+            </summary>
+            <param name="r"></param>
+            <returns>null или список подходящих элементов</returns>
+        </member>
+        <member name="M:EP.Ner.ExtOntology.AttachToken(System.String,EP.Ner.Token)">
+            <summary>
+            Используется внутренним образом
+            </summary>
+            <param name="typeName"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.ExtOntology.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.ExtOntologyItem">
+            <summary>
+            Элемент внешней онтологии
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ExtOntologyItem.ExtId">
+            <summary>
+            Внешний идентификатор (ссылка на что угодно)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ExtOntologyItem.TypeName">
+            <summary>
+            Имя типа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ExtOntologyItem.Referent">
+            <summary>
+            Ссылка на сущность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ExtOntologyItem.Refs">
+            <summary>
+            Используется внутренним образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.MorphCollection">
+            <summary>
+            Коллекция морфологических вариантов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.Clone">
+            <summary>
+            Создать копию
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.MorphCollection.ItemsCount">
+            <summary>
+            Количество морфологических вариантов
+            </summary>
+        </member>
+        <member name="P:EP.Ner.MorphCollection.Item(System.Int32)">
+            <summary>
+            Пролучить морфологический вариант
+            </summary>
+            <param name="ind"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.MorphCollection.Items">
+            <summary>
+            Морфологические варианты
+            </summary>
+        </member>
+        <member name="P:EP.Ner.MorphCollection.Voice">
+            <summary>
+            Залог (для глаголов)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveItems(EP.Morph.MorphCase)">
+            <summary>
+            Удалить элементы, не соответствующие падежу
+            </summary>
+            <param name="cas"></param>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveItems(EP.Morph.MorphClass,System.Boolean)">
+            <summary>
+            Удалить элементы, не соответствующие классу
+            </summary>
+            <param name="cl"></param>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveItems(EP.Morph.MorphBaseInfo)">
+            <summary>
+            Удалить элементы, не соответствующие параметрам
+            </summary>
+            <param name="inf"></param>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveItemsByPreposition(EP.Ner.Token)">
+            <summary>
+            Убрать элементы, не соответствующие по падежу предлогу
+            </summary>
+            <param name="prep"></param>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveNotInDictionaryItems">
+            <summary>
+            Удалить элементы не из словаря (если все не из словаря, то ничего не удаляется).
+            То есть оставить только словарный вариант.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveItemsListCla(System.Collections.Generic.ICollection{EP.Morph.MorphBaseInfo},EP.Morph.MorphClass)">
+            <summary>
+            Удалить элементы, не соответствующие заданным параметрам
+            </summary>
+            <param name="bis"></param>
+            <param name="cla"></param>
+        </member>
+        <member name="M:EP.Ner.MorphCollection.RemoveItemsEx(EP.Ner.MorphCollection,EP.Morph.MorphClass)">
+            <summary>
+            Удалить элементы, не соответствующие другой морфологической коллекции
+            </summary>
+            <param name="col"></param>
+        </member>
+        <member name="T:EP.Ner.Processor">
+            <summary>
+            Семантический процессор
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Processor.AddAnalyzer(EP.Ner.Analyzer)">
+            <summary>
+            Добавить анализатор, если его ещё нет
+            </summary>
+            <param name="a">экземпляр анализатора</param>
+        </member>
+        <member name="M:EP.Ner.Processor.DelAnalyzer(EP.Ner.Analyzer)">
+            <summary>
+            Удалить анализатор
+            </summary>
+            <param name="a"></param>
+        </member>
+        <member name="P:EP.Ner.Processor.Analyzers">
+            <summary>
+            Последовательность обработки данных (анализаторы)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Processor.FindAnalyzer(System.String)">
+            <summary>
+            Найти анализатор по его имени
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Processor.Process(EP.Ner.SourceOfAnalysis,EP.Ner.ExtOntology,EP.Morph.MorphLang)">
+            <summary>
+            Обработать текст
+            </summary>
+            <param name="text">входной контейнер текста</param>
+            <param name="extOntology">внешняя онтология (null - не используется)</param>
+            <param name="lang">язык (если не задан, то будет определён автоматически)</param>
+            <returns>аналитический контейнер с результатом</returns>
+        </member>
+        <member name="M:EP.Ner.Processor.ProcessNext(EP.Ner.AnalysisResult)">
+            <summary>
+            Доделать результат, который был сделан другим процессором
+            </summary>
+            <param name="ar">то, что было сделано другим процессором</param>
+        </member>
+        <member name="E:EP.Ner.Processor.Progress">
+            <summary>
+            Событие обработки строки состояния процесса.
+            Там-же в событии ProgressChangedEventArg в UserState выводятся информационные сообщения.
+            Внимание, если ProgressPercentage &lt; 0, то учитывать только информационное сообщение в UserState.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Processor.Break">
+            <summary>
+            Прервать процесс анализа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Processor.TimeoutSeconds">
+            <summary>
+            Максимальное время обработки, прервёт при превышении.
+            По умолчанию (0) - неограничено.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Processor.DeserializeReferent(System.String,System.String,System.Boolean)">
+            <summary>
+            Десериализация сущности
+            </summary>
+            <param name="data">результат сериализации, см. Referent.Serialize()</param>
+            <param name="ontologyElement">если не null, то элемент будет добавляться к внутренней онтологии,
+            и при привязке к нему у сущности будет устанавливаться соответствующее свойство (Referent.OntologyElement)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Processor.DeserializeReferentFromXml(System.Xml.XmlNode,System.String,System.Boolean)">
+            <summary>
+            Десериализация сущности из узла XML
+            </summary>
+            <param name="xml"></param>
+            <param name="identity"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Processor.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.ProxyReferent">
+            <summary>
+            Это заглушка референта при десериализации
+            </summary>
+        </member>
+        <member name="T:EP.Ner.ProcessorService">
+            <summary>
+            Глобальная служба семантического процессора
+            </summary>
+        </member>
+        <member name="P:EP.Ner.ProcessorService.Version">
+            <summary>
+            Версия системы
+            </summary>
+        </member>
+        <member name="P:EP.Ner.ProcessorService.VersionDate">
+            <summary>
+            Дата-время текущей версии
+            </summary>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.Initialize(EP.Morph.MorphLang)">
+            <summary>
+            Инициализация сервиса.  
+            Внимание! После этого нужно инициализровать анализаторы (см. документацию)
+            <param name="lang">необходимые языки (по умолчанию, русский и английский)</param>
+            </summary>
+        </member>
+        <member name="P:EP.Ner.ProcessorService.IsInitialized">
+            <summary>
+            Признак того, что инициализация сервиса уже была
+            </summary>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.CreateProcessor">
+            <summary>
+            Создать процессор со стандартным списком анализаторов (у которых свойство IsSpecific = false)
+            </summary>
+            <returns>экземпляр процессора</returns>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.CreateSpecificProcessor(System.String)">
+            <summary>
+            Создать процессор с набором стандартных и указанных параметром специфических
+            анализаторов.
+            </summary>
+            <param name="specAnalyzerNames">можно несколько, разделённые запятой или точкой с запятой. 
+            Если список пустой, то эквивалентно CreateProcessor()</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.CreateEmptyProcessor">
+            <summary>
+            Создать экземпляр процессора с пустым списком анализаторов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.RegisterAnalyzer(EP.Ner.Analyzer)">
+            <summary>
+            Регистрация аналозатора. Вызывается при инициализации из инициализируемой сборки
+            (она сама знает, какие содержит анализаторы, и регистрирует их)
+            </summary>
+            <param name="analyzer"></param>
+        </member>
+        <member name="P:EP.Ner.ProcessorService.Analyzers">
+            <summary>
+            Экземпляры доступных анализаторов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.CreateReferent(System.String)">
+            <summary>
+            Создать экземпляр объекта заданного типа
+            </summary>
+            <param name="typeName">имя типа</param>
+            <returns>результат</returns>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.GetImageById(System.String)">
+            <summary>
+            Получить иконку по идентификатору иконки
+            </summary>
+            <param name="imageId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ProcessorService.AddImage(System.String,System.Byte[])">
+            <summary>
+            Добавить специфическую иконку
+            </summary>
+            <param name="imageId">идентификатор (возвращаемый Referent.getImageId())</param>
+            <param name="content">содержимое иконки</param>
+        </member>
+        <member name="P:EP.Ner.ProcessorService.EmptyProcessor">
+            <summary>
+            Экземпляр процессора с пустым множеством анализаторов (используется для
+            разных лингвистических процедур, где не нужны сущности)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ProcessorService.DebugCurrentDateTime">
+            <summary>
+            Это нужно для автотестов, чтобы фиксировать дату-время, относительно которой 
+            идут вычисления (если не задана, то берётся текущая)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.ImageWrapper">
+            <summary>
+            Приходится работать через обёртку, так как некоторые реализации .NET не содержат System.Drawing
+            (например, для Андроида)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ImageWrapper.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ImageWrapper.Content">
+            <summary>
+            Байтовый поток иконки
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ImageWrapper.Image">
+            <summary>
+            А здесь Bitmap вы уж сами формируйте, если нужно
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Referent">
+            <summary>
+            Базовый класс для всех сущностей
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Referent.TypeName">
+            <summary>
+            Имя типа (= InstanceOf.Name)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.ToString(System.Boolean,EP.Morph.MorphLang,System.Int32)">
+            <summary>
+            Специализированное строковое представление сущности
+            </summary>
+            <param name="shortVariant">Сокращённый вариант</param>
+            <param name="lang">Язык</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.ToSortString">
+            <summary>
+            По этой строке можно осуществлять сортировку среди объектов одного типа
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Referent.InstanceOf">
+            <summary>
+            Ссылка на описание из модели данных
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Referent.OntologyItems">
+            <summary>
+            Привязка к элементам внешней онтологии, если таковые были заданы
+            (в принципе, может соответствовать несколько элементов онтологии)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Referent.Slots">
+            <summary>
+            Значения атрибутов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.AddSlot(System.String,System.Object,System.Boolean,System.Int32)">
+            <summary>
+            Добавить значение атрибута
+            </summary>
+            <param name="attrName">имя</param>
+            <param name="attrValue">значение</param>
+            <param name="clearOldValue">если true и слот существует, то значение перезапишется</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.FindSlot(System.String,System.Object,System.Boolean)">
+            <summary>
+            Найти слот
+            </summary>
+            <param name="attrName"></param>
+            <param name="val"></param>
+            <param name="useCanBeEqualsForReferents"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.GetSlotValue(System.String)">
+            <summary>
+            Получить значение слота-атрибута (если их несколько, то вернёт первое)
+            </summary>
+            <param name="attrName">имя слота</param>
+            <returns>значение (поле Value)</returns>
+        </member>
+        <member name="M:EP.Ner.Referent.GetStringValue(System.String)">
+            <summary>
+            Получить строковое значение (если их несколько, то вернёт первое)
+            </summary>
+            <param name="attrName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.GetStringValues(System.String)">
+            <summary>
+            Получить все строовые значения заданного атрибута
+            </summary>
+            <param name="attrName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.GetIntValue(System.String,System.Int32)">
+            <summary>
+            Получить числовое значение (если их несколько, то вернёт первое)
+            </summary>
+            <param name="attrName"></param>
+            <param name="defValue"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Referent.Occurrence">
+            <summary>
+            Привязка элемента к текстам (аннотации)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.AddOccurence(EP.Ner.TextAnnotation)">
+            <summary>
+            Добавить аннотацию
+            </summary>
+            <param name="anno"></param>
+        </member>
+        <member name="M:EP.Ner.Referent.CheckOccurence(System.Int32,System.Int32)">
+            <summary>
+            Проверка, что ссылки на элемент имеются на заданном участке текста
+            </summary>
+            <param name="beginChar"></param>
+            <param name="endChar"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Referent.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Referent.EqualType">
+            <summary>
+            Типы сравнение объектов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Referent.EqualType.WithinOneText">
+            <summary>
+            Объекты в рамках одного текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Referent.EqualType.DifferentTexts">
+            <summary>
+            Объекты из разных текстов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Referent.EqualType.ForMerging">
+            <summary>
+            Проверка для потенциального объединения объектов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.CanBeEquals(EP.Ner.Referent,EP.Ner.Referent.EqualType)">
+            <summary>
+            Проверка возможной тождественности объектов
+            </summary>
+            <param name="obj">другой объект</param>
+            <param name="typ">тип сравнения</param>
+            <returns>результат</returns>
+        </member>
+        <member name="M:EP.Ner.Referent.MergeSlots(EP.Ner.Referent,System.Boolean)">
+            <summary>
+            Объединение значений атрибутов со значениями атрибутов другого объекта
+            </summary>
+            <param name="obj">Другой объект, считающийся эквивалентным</param>
+        </member>
+        <member name="P:EP.Ner.Referent.ParentReferent">
+            <summary>
+            Ссылка на родительский объект (для разных типов объектов здесь может быть свои объекты,
+            например, для организаций - вышестоящая организация, для пункта закона - сам закон и т.д.)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.GetImageId">
+            <summary>
+            Получить идентификатор иконки (саму иконку можно получить через функцию
+            GetImageById(imageId) статического класса ProcessorService
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.CanBeGeneralFor(EP.Ner.Referent)">
+            <summary>
+            Проверка, может ли текущий объект быть обобщением для другого объекта
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Referent.GeneralReferent">
+            <summary>
+            Ссылка на объект-обобщение
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.CreateOntologyItem">
+            <summary>
+            Создать элемент отнологии
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Referent.IntOntologyItem">
+            <summary>
+            Используется внутренним образом (напрямую не устанавливать!)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Referent.GetCompareStrings">
+            <summary>
+            Используется внутренним образом
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.Serialize">
+            <summary>
+            Сериализация в строку XML 
+            (последующая десериализация делается через Processor.DeserializeReferent)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Referent.Serialize(System.Xml.XmlWriter,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Прямая сериализация в XML
+            </summary>
+            <param name="xml"></param>
+        </member>
+        <member name="F:EP.Ner.Referent.RepositoryItemId">
+            <summary>
+            Используется внутренним образом (при сохранении сущностей в репозитории)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Repository.RepositoryBase">
+            <summary>
+            Репозиторий сущностей (базовый класс)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryBase.Processor">
+            <summary>
+            Экземпляр процессора, используемого при десериализации
+            (по умолчанию, создаётся с полным набором доступных анализаторов)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryBase.SaveTextSamples">
+            <summary>
+            Сохранять ли примеры фрагментов текстов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.ResetFetchItems">
+            <summary>
+            Инициализировать извлечение всех элементов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.FetchNextItem">
+            <summary>
+            Извлечь очередной элемент
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.GetItem(System.Int32)">
+            <summary>
+            Получить элемент по его идентификатору
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.SaveItem(EP.Ner.Repository.RepositoryItem)">
+            <summary>
+            Сохранить изменения. Если у элемента нулевой идентификатор, то это новый
+            элемент, и новое значение нужно записать в поле Id.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.MergeItems(EP.Ner.Repository.RepositoryItem,System.Collections.Generic.List{EP.Ner.Repository.RepositoryItem})">
+            <summary>
+            Объединить сущности. Необходимо сохранить baseItem, удалить mergedItems,
+            а также предпринять усилия по обеспечению целостности информации, если
+            кто-либо извне ссылается на удаляемые элементы.
+            </summary>
+            <param name="baseItem"></param>
+            <param name="mergedItems"></param>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.AddAdditionalData(EP.Ner.Repository.RepositoryItem,System.Object)">
+            <summary>
+            Добавить в элемент дополнительную информацию (которая поступает из RepositoryInputItem.AdditionalData)
+            </summary>
+            <param name="item"></param>
+            <param name="additionalData"></param>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.CreateItem">
+            <summary>
+            Создать экземпляр элемента (по умолчанию создаётся RepositoryItem)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.Initialize">
+            <summary>
+            Инициализация репозитория (необходимо вызывать перед первым использованием) 
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryBase.ItemsCount">
+            <summary>
+            Общее число элементов в репозитории
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.Deinitialize">
+            <summary>
+            Вызывать в конце работы
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryBase.AllItems">
+            <summary>
+            Перечисление всех элеменов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.GetOutgoingItems(System.Int32)">
+            <summary>
+            Получить список всех элементов, на которые ссылается указанный
+            </summary>
+            <param name="itemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.GetIncomingItems(System.Int32)">
+            <summary>
+            Получить список всех элементов, которые ссылаются на указанный элемент
+            </summary>
+            <param name="itemId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.SaveReferents(System.Collections.Generic.ICollection{EP.Ner.Repository.RepositoryInputItem})">
+            <summary>
+            Сохранить сущности
+            </summary>
+            <param name="input">список обёрток над сущностями</param>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase.FindItems(EP.Ner.Referent,System.Boolean)">
+            <summary>
+            Найти для сущности существующие в хранилище элементы
+            </summary>
+            <param name="referent"></param>
+            <param name="includeGenerals">при true будет включать в список сущности с учётом отношения обобщения</param>
+            <returns>список (null - если нет аналогов)</returns>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryBase._mergeEntities(System.Collections.Generic.List{EP.Ner.Referent},System.Int32,System.Boolean)">
+            <summary>
+            Объединение сущностей - тонкая вещь
+            </summary>
+            <param name="res"></param>
+        </member>
+        <member name="E:EP.Ner.Repository.RepositoryBase.MessageOccured">
+            <summary>
+            Это для сообщений
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Repository.RepositoryInputItem">
+            <summary>
+            Это обёртка для входной сущности
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryInputItem.Referent">
+            <summary>
+            Это должно быть установлено на входе
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryInputItem.Samples">
+            <summary>
+            Здесь могут быть ранее подготовленные примеры вхождений
+            (если нет, то будут вычисляться из Referent.Occurence)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryInputItem.AdditionalData">
+            <summary>
+            Некоторые дополнительные данные
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryInputItem.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryInputItem.Item">
+            <summary>
+            Это будет установлено после сохранения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryInputItem.Tmp">
+            <summary>
+            Используется внутренним образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Repository.RepositoryItem">
+            <summary>
+            Элемент репозитория сущностей -
+            представление сущности для СУБД или какго другого внешнего хранилища
+            (обёртка над Referent)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryItem.Id">
+            <summary>
+            Уникальный идентификатор внутри репозитория
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryItem.Spelling">
+            <summary>
+            Это ToString() от сущности
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryItem.Typ">
+            <summary>
+            Это тип сущности (поле TypeName)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryItem.GeneralId">
+            <summary>
+            Идентификатор сущности-обобщения ("общее-частное")
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryItem.ParentId">
+            <summary>
+            Идентификатор сущности-контейнера ("часть-целое")
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Repository.RepositoryItem.ImageId">
+            <summary>
+            Идентификатор иконки (саму иконку можно получить через 
+            ProcessorService.GetImageById(imageId)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItem.Data">
+            <summary>
+            Это строка, представляющая сериализацию сущности
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItem.Samples">
+            <summary>
+            Это строка, в которой сериализуются примеры встречаемости сущности в текстах
+            (для десериализации используйте класс RepositoryItemSample
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItem.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItem.Repository">
+            <summary>
+            Ссылка на репозиторий
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItem.Referent">
+            <summary>
+            Экземпляр сущности 
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItem.IsChanged">
+            <summary>
+            Признак изменения
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Repository.RepositoryItemSample">
+            <summary>
+            Элемент примера сущности в тексте
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItemSample.HeadPeace">
+            <summary>
+             Фрагмент перед
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItemSample.BodyPeace">
+            <summary>
+            Сам фрагмент
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItemSample.TailPeace">
+            <summary>
+            Фрагмент после
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Repository.RepositoryItemSample.IsEssential">
+            <summary>
+            Признак того, что этот текстовой фрагмент был использован для "первого" выделения сущности,
+            а не привязки к ранее выделенному.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Repository.RepositoryItemSample.Deserialize(System.String)">
+            <summary>
+            Представить в виде списка классов 
+            </summary>
+            <param name="samples"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.ReferentClass">
+            <summary>
+            Описатель некоторого класса сущностей
+            </summary>
+        </member>
+        <member name="P:EP.Ner.ReferentClass.Name">
+            <summary>
+            Строковый идентификатор
+            </summary>
+        </member>
+        <member name="P:EP.Ner.ReferentClass.Caption">
+            <summary>
+            Заголовок (зависит от текущего языка)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.ReferentClass.Features">
+            <summary>
+            Атрибуты класса
+            </summary>
+        </member>
+        <member name="M:EP.Ner.ReferentClass.AddFeature(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Добавить фичу
+            </summary>
+            <param name="attrName"></param>
+            <param name="attrCaption"></param>
+            <param name="lowBound"></param>
+            <param name="upBound"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ReferentClass.FindFeature(System.String)">
+            <summary>
+            Найти атрибут по его системному имени
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.ReferentClass.GetImageId(EP.Ner.Referent)">
+            <summary>
+            Вычислить картинку
+            </summary>
+            <param name="obj">если null, то общая картинка для типа</param>
+            <returns>идентификатор картинки, саму картинку можно будет получить через ProcessorService.GetImageById</returns>
+        </member>
+        <member name="F:EP.Ner.ReferentClass.HideInGraph">
+            <summary>
+            Не выводить на графе объектов
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Feature">
+            <summary>
+            Атрибут класса сущностей
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Feature.Name">
+            <summary>
+            Внутреннее имя
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Feature.Caption">
+            <summary>
+            Заголовок
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Feature.LowerBound">
+            <summary>
+            Минимальное количество
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Feature.UpperBound">
+            <summary>
+            Максимальное количество (0 - неограничено)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Feature.ShowAsParent">
+            <summary>
+            Это для внутреннего использования
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Slot">
+            <summary>
+            Значение атрибута в конкретном экземпляре сущности
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Slot.Count">
+            <summary>
+            Статистика встречаемости в объектах
+            (например, используется для имён организаций, чтобы статистически определить
+            правильное написание имени)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Slot.DefiningFeature">
+            <summary>
+            Ссылка на атрибут метамодели
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Slot.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Slot.Delete">
+            <summary>
+            Удалить слот из сущности
+            </summary>
+        </member>
+        <member name="T:EP.Ner.SourceOfAnalysis">
+            <summary>
+            Анализируемый текст
+            </summary>
+        </member>
+        <member name="P:EP.Ner.SourceOfAnalysis.Text">
+            <summary>
+            Исходный плоский текст
+            </summary>
+        </member>
+        <member name="P:EP.Ner.SourceOfAnalysis.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.SourceOfAnalysis.ClearDust">
+            <summary>
+            Игнорировать сбойные участки (это участки с неправильной кодировкой,
+            мусором и т.п.)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.SourceOfAnalysis.#ctor(System.String)">
+            <summary>
+            Создать контейнер на основе плоского текста.
+            При создании будут автоматически сделаны транслитеральные замены, если они будут найдены.
+            </summary>
+            <param name="txt">Текст</param>
+        </member>
+        <member name="M:EP.Ner.SourceOfAnalysis.DoCrLfCorrection(System.String)">
+            <summary>
+            Это анализ случаев принудительно отформатированного текста
+            </summary>
+            <param name="txt"></param>
+        </member>
+        <member name="F:EP.Ner.SourceOfAnalysis.CrlfCorrectedCount">
+            <summary>
+            Факт исправления переходов на новую строку
+            </summary>
+        </member>
+        <member name="F:EP.Ner.SourceOfAnalysis.DoWordCorrectionByMorph">
+            <summary>
+            Пытаться ли делать коррекцию слов, не попавших в словарь.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:EP.Ner.SourceOfAnalysis.DoWordsMergingByMorph" -->
+        <member name="F:EP.Ner.SourceOfAnalysis.CreateNumberTokens">
+            <summary>
+            Создавать автоматически NumberToken
+            </summary>
+        </member>
+        <member name="F:EP.Ner.SourceOfAnalysis.CorrectionDict">
+            <summary>
+            Словарь корректировки типовых ошибок.
+            Ключ - ошибочное написание, Значение - правильное.
+            Ключи и значения должны быть в верхнем регистре и без Ё.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.SourceOfAnalysis.DoTransliteralCorrection(System.Text.StringBuilder,System.Text.StringBuilder)">
+            <summary>
+            Произвести транслитеральную коррекцию
+            </summary>
+            <param name="txt">корректируемый текст</param>
+            <param name="info">информация о замене (может быть null)</param>
+            <returns>количество замен</returns>
+        </member>
+        <member name="M:EP.Ner.SourceOfAnalysis.Substring(System.Int32,System.Int32)">
+            <summary>
+            Извлечь фрагмент из исходного текста
+            </summary>
+            <param name="position"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.SourceOfAnalysis.CalcWhitespaceDistanceBetweenPositions(System.Int32,System.Int32)">
+            <summary>
+            Вычислить расстояние в символах между соседними элементами
+            </summary>
+            <param name="indFrom"></param>
+            <param name="indTo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.TextAnnotation">
+            <summary>
+            Аннотация слитного фрагмента текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextAnnotation.Sofa">
+            <summary>
+            Ссылка на текст
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextAnnotation.BeginChar">
+            <summary>
+            Начальная позиция фрагмента
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextAnnotation.EndChar">
+            <summary>
+            Конечная позиция фрагмента
+            </summary>
+        </member>
+        <member name="P:EP.Ner.TextAnnotation.OccurenceOf">
+            <summary>
+            Ссылка на сущность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextAnnotation.EssentialForOccurence">
+            <summary>
+            Указание на то, что текущая сущность была выделена на основе правил
+            на данном фрагменте текста.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.TextAnnotation.GetText">
+            <summary>
+            Извлечь фрагмент исходного текста, соответствующий аннотации
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.MetaToken">
+            <summary>
+            Токен - надстройка над диапазоном других токенов
+            </summary>
+        </member>
+        <member name="P:EP.Ner.MetaToken.BeginToken">
+            <summary>
+            Начальный токен диапазона
+            </summary>
+        </member>
+        <member name="P:EP.Ner.MetaToken.EndToken">
+            <summary>
+            Конечный токен диапазона
+            </summary>
+        </member>
+        <member name="P:EP.Ner.MetaToken.TokensCount">
+            <summary>
+            Количество токенов в диапазоне
+            </summary>
+        </member>
+        <member name="T:EP.Ner.NumberToken">
+            <summary>
+            Числовой токен (числительное)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.NumberToken.Value">
+            <summary>
+            Числовое значение (если действительное, то с точкой - разделителем дробных).
+            </summary>
+        </member>
+        <member name="P:EP.Ner.NumberToken.IntValue">
+            <summary>
+            Целочисленное 32-х битное значение.
+            Число может быть большое и не умещаться в Int, тогда вернёт null.
+            Если есть дробная часть, то тоже вернёт null.
+            Long не используется, так как не поддерживается в Javascript
+            </summary>
+        </member>
+        <member name="P:EP.Ner.NumberToken.RealValue">
+            <summary>
+            Получить действительное значение из Value. Если не удалось, то NaN.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.NumberToken.Typ">
+            <summary>
+            Тип написания
+            </summary>
+        </member>
+        <member name="T:EP.Ner.NumberSpellingType">
+            <summary>
+            Возможные типы написаний
+            </summary>
+        </member>
+        <member name="F:EP.Ner.NumberSpellingType.Digit">
+            <summary>
+            Цифрами
+            </summary>
+        </member>
+        <member name="F:EP.Ner.NumberSpellingType.Roman">
+            <summary>
+            Римскими цифрами
+            </summary>
+        </member>
+        <member name="F:EP.Ner.NumberSpellingType.Words">
+            <summary>
+            Прописью (словами)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.NumberSpellingType.Age">
+            <summary>
+            Возраст (летие)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.ReferentToken">
+            <summary>
+            Токен, соответствующий сущности
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ReferentToken.Referent">
+            <summary>
+            Ссылка на сущность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.ReferentToken.MiscAttrs">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.TextToken">
+            <summary>
+            Входной токен (после морфанализа)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextToken.Term">
+            <summary>
+            Исходный фрагмент, слегка нормализованный (не морфологически, а символьно)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextToken.Lemma">
+            <summary>
+            А это уже лемма (нормальная форма слова)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextToken.Term0">
+            <summary>
+            Это вариант до коррекции (если была коррекция)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.TextToken.GetLemma">
+            <summary>
+            Получить лемму (устарело, используйте Lemma)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.TextToken.InvariantPrefixLength">
+            <summary>
+            Это количество начальных символов, одинаковых для всех морфологических вариантов
+            (пригодится для оптимизации поиска)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.TextToken.MaxLength">
+            <summary>
+            Максимальная длина среди морфвариантов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.TextToken.CheckValue(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Попробовать привязать словарь
+            </summary>
+            <param name="dict"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.TextToken.IsAnd">
+            <summary>
+            Это соединительный союз И (на всех языках)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.TextToken.IsOr">
+            <summary>
+            Это соединительный союз ИЛИ (на всех языках)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.TextToken.IsPureVerb">
+            <summary>
+            Признак того, что это чистый глагол
+            </summary>
+        </member>
+        <member name="P:EP.Ner.TextToken.IsVerbBe">
+            <summary>
+            Проверка, что это глагол типа БЫТЬ, ЯВЛЯТЬСЯ и т.п.
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Token">
+            <summary>
+            Базовый класс для всех токенов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Token.Kit">
+            <summary>
+            Аналитический контейнер
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.BeginChar">
+            <summary>
+            Начальная позиция
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.EndChar">
+            <summary>
+            Конечная позиция
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.LengthChar">
+            <summary>
+            Длина в исходных символах
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Token.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.Previous">
+            <summary>
+            Предыдущий токен
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.Next">
+            <summary>
+            Следующий токен
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.Morph">
+            <summary>
+            Морфологическая информация
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Token.Chars">
+            <summary>
+            Информация о символах
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsWhitespaceBefore">
+            <summary>
+            Наличие пробельных символов перед
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsWhitespaceAfter">
+            <summary>
+            Наличие пробельных символов после
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsNewlineBefore">
+            <summary>
+            Элемент начинается с новой строки.
+            Для 1-го элемента всегда true.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsNewlineAfter">
+            <summary>
+            Элемент заканчивает строку.
+            Для последнего элемента всегда true.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.InnerBool">
+            <summary>
+            Это используется внутренним образом
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.NotNounPhrase">
+            <summary>
+            Это используется внутренним образом 
+            (признак того, что здесь не начинается именная группа, чтобы повторно не пытаться выделять)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.WhitespacesBeforeCount">
+            <summary>
+            Количество пробелов перед, переход на новую строку = 10, табуляция = 5
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.NewlinesBeforeCount">
+            <summary>
+            Количество переходов на новую строку перед
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.NewlinesAfterCount">
+            <summary>
+            Количество переходов на новую строку перед
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.WhitespacesAfterCount">
+            <summary>
+            Количество пробелов перед, переход на новую строку = 10, табуляция = 5
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsHiphen">
+            <summary>
+            Это символ переноса
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsTableControlChar">
+            <summary>
+            Это спец-символы для табличных элементов (7h, 1Eh, 1Fh)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsAnd">
+            <summary>
+            Это соединительный союз И (на всех языках)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsOr">
+            <summary>
+            Это соединительный союз ИЛИ (на всех языках)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsComma">
+            <summary>
+            Это запятая
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsCommaAnd">
+            <summary>
+            Это запятая или союз И
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Token.IsChar(System.Char)">
+            <summary>
+            Токен состоит из символа
+            </summary>
+            <param name="ch">проверяемый символ</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Token.IsCharOf(System.String)">
+            <summary>
+            Токен состоит из одного символа, который есть в указанной строке
+            </summary>
+            <param name="chars">строка возможных символов</param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Ner.Token.IsLetters">
+            <summary>
+            Признак того, что это буквенный текстовой токен (TextToken)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsNumber">
+            <summary>
+            Это число (в различных вариантах задания)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Token.IsReferent">
+            <summary>
+            Это сущность (Referent)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Token.GetReferent">
+            <summary>
+            Ссылка на сущность (для ReferentToken)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Token.GetReferents">
+            <summary>
+            Получить список ссылок на все сущности, скрывающиеся под элементом
+            (дело в том, что одни сущности могут поглощать дркгие, например, адрес поглотит город)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Token.GetNormalCaseText(EP.Morph.MorphClass,EP.Morph.MorphNumber,EP.Morph.MorphGender,System.Boolean)">
+            <summary>
+            Получить связанный с токеном текст в именительном падеже
+            </summary>
+            <param name="mc">желательная часть речи</param>
+            <param name="num">желательное число</param>
+            <param name="gender">желательный пол</param>
+            <param name="keepChars">сохранять регистр символов (по умолчанию, всё в верхний)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Token.GetSourceText">
+            <summary>
+            Получить чистый фрагмент исходного текста
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Token.GetMorphClassInDictionary">
+            <summary>
+            Проверка, что это текстовый токен и есть в словаре соотв. тип
+            </summary>
+            <param name="cla"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Semantic.Core.ISemanticOnto">
+            <summary>
+            Интерфейс внешней дополнительной онтологии
+            (для улучшения качества семантичсекой обработки)
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.Core.ISemanticOnto.CheckLink(System.String,System.String)">
+            <summary>
+            Проверка, что в онтологии слова master и slave образуют устойчивую пару
+            </summary>
+            <param name="master"></param>
+            <param name="slave"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Semantic.Core.SemanticHelper">
+            <summary>
+            Полезные фукнции для семантического анализа
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.Core.SemanticHelper.TryCreateLinks(EP.Ner.MetaToken,EP.Ner.MetaToken,EP.Semantic.Core.ISemanticOnto)">
+            <summary>
+            Попробовать создать семантическую связь между элементами.
+            Элементом м.б. именная (NounPhraseToken) или глагольная группа (VerbPhraseToken).
+            </summary>
+            <param name="master">основной элемент</param>
+            <param name="slave">стыкуемый элемент (также м.б. SemanticAbstractSlave)</param>
+            <param name="onto">дополнительный онтологический словарь</param>
+            <returns>список вариантов (возможно, пустой)</returns>
+        </member>
+        <member name="T:EP.Semantic.Core.SemanticLink">
+            <summary>
+            Семантическая связь двух элементов 
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Master">
+            <summary>
+            Основной элемент (м.б. глагольная группа VerbPhraseToken или
+            именная группа NounPhraseToken)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Slave">
+            <summary>
+            Пристыкованный элемент (м.б. именная или глагольная группа)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Question">
+            <summary>
+            Вопрос, на который отвечает связь
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Role">
+            <summary>
+            Семантическая роль
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.IsPassive">
+            <summary>
+            Страдательный залог или возвратный глагол (роли Агент и Пациент подлежит коррекции)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Rank">
+            <summary>
+            Сила связи (для сравнения и выбора лучшей)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Modelled">
+            <summary>
+            Эта связь смоделирована, так как не нашлась подходящая модель управления основного элемента
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticLink.Idiom">
+            <summary>
+            Идиомная связь (то есть устойчивое словосочетание)
+            </summary>
+        </member>
+    </members>
+</doc>

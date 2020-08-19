@@ -1,0 +1,556 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Location.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Address.AddressAnalyzer">
+            <summary>
+            Анализатор адресов
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Address.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Address.Internal.StreetItemToken">
+            <summary>
+            Токен для поддержки выделения улиц
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemToken.IsAbridge">
+            <summary>
+            Признак сокращения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.Noun">
+            <summary>
+            Это существительное - улица, проезд и пр.
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.Name">
+            <summary>
+            Это название
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.Number">
+            <summary>
+            Номер
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.StdAdjective">
+            <summary>
+            Стандартное прилагательное (Большой, Средний ...)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.StdName">
+            <summary>
+            Стандартное имя
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.StdPartOfName">
+            <summary>
+            Стандартная часть имени
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.Age">
+            <summary>
+            40-летия чего-то там
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.Internal.StreetItemType.Fix">
+            <summary>
+            Некоторое фиусированное название (МКАД)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.AddressReferent">
+            <summary>
+            Сущность, представляющая адрес
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Streets">
+            <summary>
+            Улица (кстати, их может быть несколько)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.House">
+            <summary>
+            Дом
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Building">
+            <summary>
+            Строение
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.BuildingType">
+            <summary>
+            Тип строения
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Corpus">
+            <summary>
+            Корпус
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.CorpusOrFlat">
+            <summary>
+            Корпус или квартира
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Floor">
+            <summary>
+            Этаж
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Potch">
+            <summary>
+            Подъезд
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Flat">
+            <summary>
+            Квартира
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Office">
+            <summary>
+            Номер офиса
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Plot">
+            <summary>
+            Номер участка
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Block">
+            <summary>
+            Блок (ряд)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Box">
+            <summary>
+            Бокс (гараж)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Metro">
+            <summary>
+            Станция метро
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Kilometer">
+            <summary>
+            Километр
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Zip">
+            <summary>
+            Почтовый индекс
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.PostOfficeBox">
+            <summary>
+            Почтовый ящик
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.CSP">
+            <summary>
+            ГСП (абонент городской служебной почты)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Geos">
+            <summary>
+            Ссылки на географические объекты (самого нижнего уровня)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.AddressReferent.Detail">
+            <summary>
+            ополнительная детализация места (пересечение, около ...)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.AddressDetailType">
+            <summary>
+            Детализация местоположения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.Cross">
+            <summary>
+            Пересечение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.Near">
+            <summary>
+            Возле
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.Hostel">
+            <summary>
+            Общежитие
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.North">
+            <summary>
+            На север
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.South">
+            <summary>
+            На юг
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.West">
+            <summary>
+            На запад
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.East">
+            <summary>
+            На восток
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.NorthWest">
+            <summary>
+            На сереро-запад
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.NorthEast">
+            <summary>
+            На северо-восток
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.SouthWest">
+            <summary>
+            На юго-запад
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressDetailType.SouthEast">
+            <summary>
+            На юго-восток
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.AddressHouseType">
+            <summary>
+            Тип дома
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressHouseType.Estate">
+            <summary>
+            Владение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressHouseType.House">
+            <summary>
+            Просто дом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressHouseType.HouseEstate">
+            <summary>
+            Домовладение
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.AddressBuildingType">
+            <summary>
+            Тип строения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressBuildingType.Building">
+            <summary>
+            Строение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressBuildingType.Construction">
+            <summary>
+            Сооружение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.AddressBuildingType.Liter">
+            <summary>
+            Литера
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.StreetReferent">
+            <summary>
+            Улица, проспект, площадь, шоссе и т.п.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.Typs">
+            <summary>
+            Тип(ы)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.Names">
+            <summary>
+            Наименования
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.Number">
+            <summary>
+            Номер улицы (16-я Парковая)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.SecNumber">
+            <summary>
+            Дополнительный номер (3-я 1 Мая)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.Geos">
+            <summary>
+            Ссылка на географические объекты
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.City">
+            <summary>
+            Город
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Address.StreetReferent.Kind">
+            <summary>
+            Классификатор
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Address.StreetKind">
+            <summary>
+            Типы улиц
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.StreetKind.Undefined">
+            <summary>
+            Обычная улица-переулок-площадь
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.StreetKind.Road">
+            <summary>
+            Автодорога
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Address.StreetKind.Metro">
+            <summary>
+            Станция метро
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Geo.Internal.CityAttachHelper._tryNameExist(System.Collections.Generic.List{EP.Ner.Geo.Internal.CityItemToken},EP.Ner.Core.IntOntologyItem@,System.Boolean)">
+            <summary>
+            Это проверяем некоторые частные случаи
+            </summary>
+            <param name="li"></param>
+            <param name="oi"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.Typ">
+            <summary>
+            Тип элемента
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.Value">
+            <summary>
+            Строковое значение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.AltValue">
+            <summary>
+            Альтернативное значение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.OntoItem">
+            <summary>
+            Ссылка на онтологический элемент (существующий город)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.Doubtful">
+            <summary>
+            Признак сомнительности
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.GeoObjectBefore">
+            <summary>
+            Есть ли перед элементом некоторый географический объект
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.GeoObjectAfter">
+            <summary>
+            Есть ли после элемента некоторый географический объект
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.HigherGeo">
+            <summary>
+            Столица Чечни
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.CityItemToken.OrgRef">
+            <summary>
+            Это ссылка на организацию (для: посёлок НИИ Радио)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Geo.Internal.MiscLocationHelper.CheckUnknownRegion(EP.Ner.Token)">
+            <summary>
+            Проверка, что здесь какой-то непонятный регион типа "Европа", "Средняя Азия", "Дикий запад" и т.п.
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Geo.Internal.MiscLocationHelper.GetGeoReferentByName(System.String)">
+            <summary>
+            Прлучить глобальный экземпляр существующего объекта по ALPHA2 или краткой текстовой форме (РФ, РОССИЯ, КИТАЙ ...)
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Geo.Internal.MiscLocationHelper.TryAttachNordWest(EP.Ner.Token)">
+            <summary>
+            Выделение существительных и прилагательных типа "северо-западное", "южное"
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Geo.Internal.TerrAttachHelper.TryAttachStateUSATerritory(EP.Ner.Token)">
+            <summary>
+            Это привязка сокращений штатов
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.OntoItem">
+            <summary>
+            Ссылка на существующий объект 
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.OntoItem2">
+            <summary>
+            Это бывает другой вариант (Распублика Алтай - Алтайский край)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.TerminItem">
+            <summary>
+            Это термин для существительного и прилагательного
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.IsAdjective">
+            <summary>
+            Прилагательное (существующих объектов, для терминов или для собственного имени)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.AdjectiveRef">
+            <summary>
+            Это ссылка на страну для "китайская провинция"
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.Rzd">
+            <summary>
+            Ссылка на организацию-РЖД
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.CanBeCity">
+            <summary>
+            Это если есть такой же город
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.IsAdjInDictionary">
+            <summary>
+            Прилагательное находится в словаре
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.IsDoubt">
+            <summary>
+            Сомнительность...
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Geo.Internal.TerrItemToken.TryParseDistrictName(EP.Ner.Token,EP.Ner.Core.IntOntologyCollection)">
+            <summary>
+            Это пыделение возможного имени для городского района типа Владыкино, Тёплый Стан)
+            </summary>
+            <param name="t"></param>
+            <param name="intOnt"></param>
+            <param name="proc"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Geo.Internal.TerrItemToken.m_TerrOntology">
+            <summary>
+            Словарь стран и некоторых терминов
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Geo.GeoAnalyzer">
+            <summary>
+            Анализатор стран
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Geo.GeoAnalyzer.ProcessReferent(EP.Ner.Token,EP.Ner.Token)">
+            <summary>
+            Это привязка стран к прилагательным (например, "французский лидер")
+            </summary>
+            <param name="begin"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Geo.GeoAnalyzer.GetAllCountries">
+            <summary>
+            Получить список всех стран из внутреннего словаря
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Geo.GeoReferent">
+            <summary>
+            Сущность, описывающая территорию как административную единицу.
+            Это страны, автономные образования, области, административные районы и пр.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.Typs">
+            <summary>
+            Тип(ы)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.IsCity">
+            <summary>
+            Это может быть населенным пунктом
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.IsBigCity">
+            <summary>
+            Это именно город, а не деревня или поселок
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.IsState">
+            <summary>
+            Это может быть отдельным государством
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.IsRegion">
+            <summary>
+            Это может быть регионом в составе другого образования
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.IsTerritory">
+            <summary>
+            Просто территория (например, территория аэропорта Шереметьево)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.IsUnion">
+            <summary>
+            Союз России и Белоруссии
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.Alpha2">
+            <summary>
+            2-х символьный идентификатор страны (ISO 3166)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Geo.GeoReferent.Higher">
+            <summary>
+            Вышестоящий объект
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Geo.GeoReferent.AddOrgReferent(EP.Ner.Referent)">
+            <summary>
+            Добавляем ссылку на организацию, также добавляем имена
+            </summary>
+            <param name="org"></param>
+        </member>
+    </members>
+</doc>

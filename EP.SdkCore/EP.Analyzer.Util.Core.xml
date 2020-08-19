@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Util.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Business.BusinessAnalyzer">
+            <summary>
+            Анализатор для бизнес-фактов
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Business.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Business.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Business.BusinessFactReferent">
+            <summary>
+            Представление бизнес-факта
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.Kind">
+            <summary>
+            Классификатор бизнес-факта
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.Typ">
+            <summary>
+            Краткое описание факта
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.Who">
+            <summary>
+            Кто (действительный залог)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.Who2">
+            <summary>
+            Второй "Кто" (действительный залог)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.Whom">
+            <summary>
+            Кого (страдательный залог)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.When">
+            <summary>
+            Когда (DateReferent или DateRangeReferent)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.BusinessFactReferent.Whats">
+            <summary>
+            Что (артефакты события)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Business.BusinessFactKind">
+            <summary>
+            Типы бизнес-фактов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Create">
+            <summary>
+            Создан
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Delete">
+            <summary>
+            Упразднён
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Get">
+            <summary>
+            Приобретать, покупать
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Sell">
+            <summary>
+            Продавать
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Have">
+            <summary>
+            Владеть, иметь
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Profit">
+            <summary>
+            Прибыль, доход
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Damages">
+            <summary>
+            Убытки
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Agreement">
+            <summary>
+            Соглашение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Subsidiary">
+            <summary>
+            Дочернее предприятие
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Finance">
+            <summary>
+            Финансировать, спонсировать
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.BusinessFactKind.Lawsuit">
+            <summary>
+            Судебный иск
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Business.FundsReferent">
+            <summary>
+            Ценные бумаги (акции, доли в уставном капитале и пр.)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Kind">
+            <summary>
+            Классификатор ценной бумаги
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Source">
+            <summary>
+            Эмитент
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Typ">
+            <summary>
+            Тип (например, привелигированная акция)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Percent">
+            <summary>
+            Процент от общего количества
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Count">
+            <summary>
+            Количество
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Sum">
+            <summary>
+            Сумма за все акции
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Business.FundsReferent.Price">
+            <summary>
+            Сумма за одну акцию
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Business.FundsKind">
+            <summary>
+            Типы ценных бумаг
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.FundsKind.Stock">
+            <summary>
+            Акция
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Business.FundsKind.Capital">
+            <summary>
+            Уставной капитал
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Chat.ChatReferent.Typ">
+            <summary>
+            Тип элемента
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Chat.ChatReferent.Value">
+            <summary>
+            Базовое значение
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Chat.ChatType">
+            <summary>
+            Типы диалоговых элементов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Undefined">
+            <summary>
+            Неопределённый
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Thanks">
+            <summary>
+            Благодарность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Misc">
+            <summary>
+            Вводные слова, мусор и пр., на что не стоит обращать внимание
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Hello">
+            <summary>
+            Привет
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Bye">
+            <summary>
+            Пока
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Accept">
+            <summary>
+            Согласие
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Cancel">
+            <summary>
+            Отказ
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Busy">
+            <summary>
+            Занят
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Verb">
+            <summary>
+            Глагольная группа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Later">
+            <summary>
+            Позже - (например, перезвонить позже)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Date">
+            <summary>
+            дата (возможно, относительная)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.DateRange">
+            <summary>
+            диапазон дат
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.ChatType.Repeat">
+            <summary>
+            Просьба повторить
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Chat.VerbType">
+            <summary>
+            Тип глагольной формы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.VerbType.Be">
+            <summary>
+            Быть, являться
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.VerbType.Have">
+            <summary>
+            Иметь
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.VerbType.Can">
+            <summary>
+            Могу
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.VerbType.Must">
+            <summary>
+            Должен
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.VerbType.Say">
+            <summary>
+            Говорить, произносить ...
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Chat.VerbType.Call">
+            <summary>
+            Звонить
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Named.NamedEntityAnalyzer">
+            <summary>
+            Анализатор мелких именованных сущностей (планеты, памятники, здания, местоположения, планеты и пр.)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Named.NamedEntityReferent">
+            <summary>
+            Текоторые мелкие именованные сущности (планеты, памятники, здания, местоположения, планеты и пр.)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Named.NamedEntityReferent.Kind">
+            <summary>
+            Класс сущности
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Named.NamedEntityReferent.CreateOntologyItem">
+            <summary>
+            Признак того, что была попытка привязаться к внешней онтологии
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Named.NamedEntityKind">
+            <summary>
+            Разновидности мелких именованных сущностей
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Named.NamedEntityKind.Undefined">
+            <summary>
+            Неопределённая
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Named.NamedEntityKind.Planet">
+            <summary>
+            Планеты
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Named.NamedEntityKind.Location">
+            <summary>
+            Разные географические объекты (не города) - реки, моря, континенты ...
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Named.NamedEntityKind.Monument">
+            <summary>
+            Памятники и монументы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Named.NamedEntityKind.Building">
+            <summary>
+            Выдающиеся здания
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Resume.Internal.ResumeToken">
+            <summary>
+            Это для поддержки резюме
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Sentiment.SentimentAnalyzer">
+            <summary>
+            Анализатор для сентиментов (эмоциональная оценка)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Sentiment.SentimentReferent">
+            <summary>
+            Фрагмент, соответсвующий сентиментной оценке
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Sentiment.SentimentKind">
+            <summary>
+            Тип сентимента
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Sentiment.SentimentKind.Positive">
+            <summary>
+            Положительный
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Sentiment.SentimentKind.Negative">
+            <summary>
+            Отрицательный
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Transport.TransportAnalyzer">
+            <summary>
+            Анализатор транспортных стредств
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Transport.TransportReferent">
+            <summary>
+            Транспортное средство
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Transport.TransportReferent.Kind">
+            <summary>
+            Класс сущности (авто, авиа, аква ...)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Transport.TransportKind">
+            <summary>
+            Разновидности транспортных средств
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Weapon.WeaponAnalyzer">
+            <summary>
+            Анализатор выделения оружия
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Weapon.WeaponReferent">
+            <summary>
+            Оружие
+            </summary>
+        </member>
+    </members>
+</doc>

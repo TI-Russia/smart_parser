@@ -1,0 +1,996 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Morphology.Core</name>
+    </assembly>
+    <members>
+        <member name="M:EP.Morph.Internal.InnerMorphology.UnloadLanguages(EP.Morph.MorphLang)">
+            <summary>
+            Выгрузить язык(и), если они больше не нужны
+            </summary>
+            <param name="langs"></param>
+        </member>
+        <member name="M:EP.Morph.Internal.InnerMorphology.Run(System.String,System.Boolean,EP.Morph.MorphLang,System.ComponentModel.ProgressChangedEventHandler,System.Boolean)">
+            <summary>
+            Произвести морфологический анализ текста
+            </summary>
+            <param name="text">исходный текст</param>
+            <param name="lang">язык (если null, то попробует определить)</param>
+            <returns>последовательность результирующих морфем</returns>
+        </member>
+        <member name="M:EP.Morph.Internal.InnerMorphology.DetectLang(EP.Morph.Internal.TextWrapper,System.Int32,System.Int32,System.String)">
+            <summary>
+            Определение языка для одного слова
+            </summary>
+            <param name="word">слово (в верхнем регистре)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.Internal.MorphEngine.Process(System.String)">
+            <summary>
+            Обработка одного слова
+            </summary>
+            <param name="word">слово должно быть в верхнем регистре</param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Morph.Internal.MorphRuleVariant.Coef">
+            <summary>
+            Используется при построении обратного дерева
+            </summary>
+        </member>
+        <member name="F:EP.Morph.Internal.MorphRuleVariant.MiscInfo">
+            <summary>
+            Остаточная информация
+            </summary>
+        </member>
+        <member name="F:EP.Morph.Internal.MorphRuleVariant.NormalTail">
+            <summary>
+            Нормализованной окончание (мягкая нормализация - падеж и число)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.Internal.MorphRuleVariant.FullNormalTail">
+            <summary>
+            Полная нормализация - для прилагательных ещё и к мужскому роду...
+            </summary>
+        </member>
+        <member name="T:EP.Morph.Internal.ByteArrayWrapper">
+            <summary>
+            Сделан специально для Питона - а то стандартым способом через MemoryStream
+            жутко тормозит, придётся делать самим
+            </summary>
+        </member>
+        <member name="F:EP.Morph.Internal.MorphTreeNode.Nodes">
+            <summary>
+            Движение дальше по дереву
+            </summary>
+        </member>
+        <member name="F:EP.Morph.Internal.MorphTreeNode.Rules">
+            <summary>
+            Конечные правила
+            </summary>
+        </member>
+        <member name="T:EP.Morph.Internal.TextWrapper">
+            <summary>
+            Введено для ускорения Питона!
+            </summary>
+        </member>
+        <member name="T:EP.Morph.Internal.UnicodeInfo">
+            <summary>
+            Ввели для оптимизации на Питоне.
+            </summary>
+        </member>
+        <member name="T:EP.Morph.LanguageHelper">
+            <summary>
+            Служба подержки языков. 
+            В качестве универсальных идентификаторов языков выступает 2-х символьный идентификатор ISO 639-1.
+            Также содержит некоторые полезные функции.
+            </summary>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.GetLanguageForText(System.String)">
+            <summary>
+            Определить язык для неструктурированного ткста
+            </summary>
+            <param name="text">текст</param>
+            <returns>код языка или null при ненахождении</returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.IsCyrillicVowel(System.Char)">
+            <summary>
+            Проверка, что это гласная на кириллице
+            </summary>
+            <param name="ch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.IsLatinVowel(System.Char)">
+            <summary>
+            Проверка, что это гласная на латинице
+            </summary>
+            <param name="ch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.GetCyrForLat(System.Char)">
+            <summary>
+            Получить для латинской буквы её возможный графический эквивалент на кириллице
+            (для тексто-графических замен)
+            </summary>
+            <param name="lat"></param>
+            <returns>0 - нет эквивалента</returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.GetLatForCyr(System.Char)">
+            <summary>
+            Получить для кириллической буквы её возможный графический эквивалент на латинице
+            (для тексто-графических замен)
+            </summary>
+            <param name="lat"></param>
+            <returns>0 - нет эквивалента</returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.TransliteralCorrection(System.String,System.String,System.Boolean)">
+            <summary>
+            Транслитеральная корректировка
+            </summary>
+            <param name="value"></param>
+            <param name="prevValue"></param>
+            <param name="always"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.GetCaseAfterPreposition(System.String)">
+            <summary>
+            Получить возможные падежи существительных после предлогов
+            </summary>
+            <param name="prep">предлог</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.EndsWith(System.String,System.String)">
+            <summary>
+            Замена стандартной функции, которая очень тормозит
+            </summary>
+            <param name="str"></param>
+            <param name="substr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.EndsWithEx(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Проверка окончания строки на одну из заданных подстрок
+            </summary>
+            <param name="str"></param>
+            <param name="substr"></param>
+            <param name="substr2"></param>
+            <param name="substr3"></param>
+            <param name="substr4"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Morph.LanguageHelper.CorrectWord(System.String)">
+            <summary>
+            Откорректировать слово (перевод в верхний регистр и замена некоторых букв типа Ё->Е)
+            </summary>
+            <param name="w">исходное слово</param>
+            <returns>откорректированное слово</returns>
+        </member>
+        <member name="T:EP.Morph.MorphBaseInfo">
+            <summary>
+            Базовая часть морфологической информации
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphBaseInfo.Class">
+            <summary>
+            Часть речи
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphBaseInfo.Gender">
+            <summary>
+            Род
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphBaseInfo.Number">
+            <summary>
+            Число
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphBaseInfo.Case">
+            <summary>
+            Падеж
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphBaseInfo.Language">
+            <summary>
+            Язык
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphClass">
+            <summary>
+            Часть речи
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsUndefined">
+            <summary>
+            Неопределённый тип
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsNoun">
+            <summary>
+            Существительное
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsAdjective">
+            <summary>
+            Прилагательное
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsVerb">
+            <summary>
+            Глагол
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsAdverb">
+            <summary>
+            Наречие
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsPronoun">
+            <summary>
+            Местоимение
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsMisc">
+            <summary>
+            Всякая ерунда (частицы, междометия)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsPreposition">
+            <summary>
+            Предлог
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsConjunction">
+            <summary>
+            Союз
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsProper">
+            <summary>
+            Собственное имя (фамилия, имя, отчество, геогр.название и др.)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsProperSurname">
+            <summary>
+            Фамилия
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsProperName">
+            <summary>
+            Фамилия
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsProperSecname">
+            <summary>
+            Отчество
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsProperGeo">
+            <summary>
+            Географическое название
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphClass.IsPersonalPronoun">
+            <summary>
+            Личное местоимение (я, мой, ты, он ...)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Undefined">
+            <summary>
+            Неопределённое
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Noun">
+            <summary>
+            Существительное
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Pronoun">
+            <summary>
+            Местоимение
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.PersonalPronoun">
+            <summary>
+            Личное местоимение
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Verb">
+            <summary>
+            Глагол
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Adjective">
+            <summary>
+            Прилагательное
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Adverb">
+            <summary>
+            Наречие
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Preposition">
+            <summary>
+            Предлог
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphClass.Conjunction">
+            <summary>
+            Союз
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphCase">
+            <summary>
+            Падеж
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.Count">
+            <summary>
+            Количество падежей
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Nominative">
+            <summary>
+            Именительный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Genitive">
+            <summary>
+            Родительный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Dative">
+            <summary>
+            Дательный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Accusative">
+            <summary>
+            Винительный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Instrumental">
+            <summary>
+            Творительный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Prepositional">
+            <summary>
+            Предложный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Vocative">
+            <summary>
+            Звательный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Partial">
+            <summary>
+            Частичный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Common">
+            <summary>
+            Общий падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.Possessive">
+            <summary>
+            Притяжательный падеж
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphCase.AllCases">
+            <summary>
+            Все падежи одновременно
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsNominative">
+            <summary>
+            Именительный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsGenitive">
+            <summary>
+            Родительный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsDative">
+            <summary>
+            Дательный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsAccusative">
+            <summary>
+            Винительный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsInstrumental">
+            <summary>
+            Творительный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsPrepositional">
+            <summary>
+            Предложный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsVocative">
+            <summary>
+            Звательный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsPartial">
+            <summary>
+            Частичный
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsCommon">
+            <summary>
+            Общий (для английского)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphCase.IsPossessive">
+            <summary>
+            Притяжательный (для английского)
+            </summary>
+        </member>
+        <member name="M:EP.Morph.MorphCase.Parse(System.String)">
+            <summary>
+            Восстановить падежи из строки, полученной ToString
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Morph.MorphGender">
+            <summary>
+            Род (мужской-средний-женский)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphGender.Undefined">
+            <summary>
+            Неопределён
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphGender.Masculine">
+            <summary>
+            Мужской
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphGender.Feminie">
+            <summary>
+            Женский
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphGender.Neuter">
+            <summary>
+            Средний
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphNumber">
+            <summary>
+            Число (единственное-множественное)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphNumber.Undefined">
+            <summary>
+            Неопределено
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphNumber.Singular">
+            <summary>
+            Единственное
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphNumber.Plural">
+            <summary>
+            Множественное
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphPerson">
+            <summary>
+            Лицо (1, 2, 3)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphPerson.Undefined">
+            <summary>
+            Неопределено
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphPerson.First">
+            <summary>
+            Первое
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphPerson.Second">
+            <summary>
+            Второе
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphPerson.Third">
+            <summary>
+            Третье
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphTense">
+            <summary>
+            Время (для глаголов)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphTense.Undefined">
+            <summary>
+            Неопределено
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphTense.Past">
+            <summary>
+            Прошлое
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphTense.Present">
+            <summary>
+            Настоящее
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphTense.Future">
+            <summary>
+            Будущее
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphVoice">
+            <summary>
+            Залог (для глаголов)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphVoice.Undefined">
+            <summary>
+            Неопределено
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphVoice.Active">
+            <summary>
+            Действительный
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphVoice.Passive">
+            <summary>
+            Страдательный
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphVoice.Middle">
+            <summary>
+            Средний
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphMood">
+            <summary>
+            Наклонение (для глаголов)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphMood.Undefined">
+            <summary>
+            Неопределено
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphMood.Indicative">
+            <summary>
+            Изъявительное
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphMood.Subjunctive">
+            <summary>
+            Условное
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphMood.Imperative">
+            <summary>
+            Повелительное
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphAspect">
+            <summary>
+            Аспект (для глаголов)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphAspect.Undefined">
+            <summary>
+            Неопределено
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphAspect.Perfective">
+            <summary>
+            Совершенный
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphAspect.Imperfective">
+            <summary>
+            Несовершенный
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphFinite">
+            <summary>
+            Это для английских глаголов
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphForm">
+            <summary>
+            Форма
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphForm.Undefined">
+            <summary>
+            Не определена
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphForm.Short">
+            <summary>
+            Краткая форма
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphForm.Synonym">
+            <summary>
+            Синонимичная форма
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphLang">
+            <summary>
+            Язык(и)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsUndefined">
+            <summary>
+            Неопределённый язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsRu">
+            <summary>
+            Русский язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsUa">
+            <summary>
+            Украинский язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsBy">
+            <summary>
+            Белорусский язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsCyrillic">
+            <summary>
+            Русский, украинский, белорусский или казахский язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsEn">
+            <summary>
+            Английский язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsIt">
+            <summary>
+            Итальянский язык
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphLang.IsKz">
+            <summary>
+            Казахский язык
+            </summary>
+        </member>
+        <member name="M:EP.Morph.MorphLang.TryParse(System.String,EP.Morph.MorphLang@)">
+            <summary>
+            Преобразовать из строки
+            </summary>
+            <param name="str"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Morph.MorphLang.Unknown">
+            <summary>
+            Неопределённое
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphLang.RU">
+            <summary>
+            Русский
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphLang.UA">
+            <summary>
+            Украинский
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphLang.BY">
+            <summary>
+            Белорусский
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphLang.EN">
+            <summary>
+            Английский
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphLang.IT">
+            <summary>
+            Итальянский
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphLang.KZ">
+            <summary>
+            Казахский
+            </summary>
+        </member>
+        <member name="T:EP.Morph.CharsInfo">
+            <summary>
+            Информация о символах токена
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsAllUpper">
+            <summary>
+            Все символы в верхнем регистре
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsAllLower">
+            <summary>
+            Все символы в нижнем регистре
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsCapitalUpper">
+            <summary>
+            Первый символ в верхнем регистре, остальные в нижнем.
+            Для однобуквенной комбинации false.
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsLastLower">
+            <summary>
+            Все символы в верхнем регистре, кроме последнего (длина >= 3)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsLetter">
+            <summary>
+            Это буквы
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsLatinLetter">
+            <summary>
+            Это латиница
+            </summary>
+        </member>
+        <member name="P:EP.Morph.CharsInfo.IsCyrillicLetter">
+            <summary>
+            Это кириллица
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphMiscInfo">
+            <summary>
+            Дополнительная морфологическая информация
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Attrs">
+            <summary>
+            Дополнительные атрибуты
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Person">
+            <summary>
+            Лицо
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Tense">
+            <summary>
+            Время (для глаголов)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Aspect">
+            <summary>
+            Аспект (совершенный - несовершенный)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Mood">
+            <summary>
+            Наклонение (для глаголов)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Voice">
+            <summary>
+            Залог (для глаголов)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.Form">
+            <summary>
+            Форма (краткая, синонимичная)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphMiscInfo.IsSynonymForm">
+            <summary>
+            Синонимическая форма
+            </summary>
+        </member>
+        <member name="T:EP.Morph.Morphology">
+            <summary>
+            Морфологический анализ текстов
+            </summary>
+        </member>
+        <member name="M:EP.Morph.Morphology.Initialize(EP.Morph.MorphLang)">
+            <summary>
+            Инициализация внутренних словарей.
+            Можно не вызывать, но тогда будет автоматически вызвано при первом обращении к морфологии,
+            и соответственно первый разбор отработает на несколько секунд дольше.
+            </summary>
+            <param name="langs">по умолчанию, русский и английский</param>
+        </member>
+        <member name="P:EP.Morph.Morphology.LoadedLanguages">
+            <summary>
+            Языки, морфологические словари для которых загружены в память
+            </summary>
+        </member>
+        <member name="M:EP.Morph.Morphology.LoadLanguages(EP.Morph.MorphLang)">
+            <summary>
+            Загрузить язык(и), если они ещё не загружены
+            </summary>
+            <param name="langs">загружаемые языки</param>
+        </member>
+        <member name="M:EP.Morph.Morphology.UnloadLanguages(EP.Morph.MorphLang)">
+            <summary>
+            Выгрузить язык(и), если они больше не нужны
+            </summary>
+            <param name="langs">выгружаемые языки</param>
+        </member>
+        <member name="M:EP.Morph.Morphology.Tokenize(System.String)">
+            <summary>
+            Произвести чистую токенизацию без формирования морф-вариантов
+            </summary>
+            <param name="text">исходный текст</param>
+            <returns>последовательность результирующих лексем</returns>
+        </member>
+        <member name="M:EP.Morph.Morphology.Process(System.String,EP.Morph.MorphLang,System.ComponentModel.ProgressChangedEventHandler)">
+            <summary>
+            Произвести морфологический анализ текста
+            </summary>
+            <param name="text">исходный текст</param>
+            <param name="lang">базовый язык (если null, то будет определён автоматически)</param>
+            <param name="progress">это для бегунка</param>
+            <returns>последовательность результирующих лексем</returns>
+        </member>
+        <member name="M:EP.Morph.Morphology.GetAllWordforms(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Получить все варианты словоформ для нормальной формы слова
+            </summary>
+            <param name="word"></param>
+            <param name="lang">язык (по умолчанию, русский)</param>
+            <returns>список словоформ</returns>
+        </member>
+        <member name="M:EP.Morph.Morphology.GetWordform(System.String,EP.Morph.MorphBaseInfo)">
+            <summary>
+            Получить вариант написания словоформы
+            </summary>
+            <param name="word">слово</param>
+            <param name="morphInfo">морфологическая информация</param>
+            <returns>вариант написания</returns>
+        </member>
+        <member name="M:EP.Morph.Morphology.GetWordBaseInfo(System.String,EP.Morph.MorphLang,System.Boolean,System.Boolean)">
+            <summary>
+            Получить для словоформы род\число\падеж
+            </summary>
+            <param name="word">словоформа</param>
+            <param name="lang">возможный язык</param>
+            <param name="isCaseNominative">исходное слово в именительном падеже (иначе считается падеж любым)</param>
+            <param name="inDictOnly">при true не строить гипотезы для несловарных слов</param>
+            <returns>базовая морфологическая информация</returns>
+        </member>
+        <member name="M:EP.Morph.Morphology.CorrectWord(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Попробовать откорретировать одну букву словоформы, чтобы получилось словарное слово
+            </summary>
+            <param name="word">искаженное слово</param>
+            <param name="lang">возможный язык</param>
+            <returns>откорректированное слово или null при невозможности</returns>
+        </member>
+        <member name="M:EP.Morph.Morphology.ConvertAdverbToAdjective(System.String,EP.Morph.MorphBaseInfo)">
+            <summary>
+            Преобразовать наречие в прилагательное (это пока только для русского языка)
+            </summary>
+            <param name="adverb">наречие</param>
+            <param name="bi">род число падеж</param>
+            <returns>прилагательное</returns>
+        </member>
+        <member name="F:EP.Morph.Morphology.LazyLoad">
+            <summary>
+            При и нициализации не грузить всю морфологиюю сразу в память, а подгружать по мере необходимости.
+            Сильно экономит время и память. Но выяснилось, что при работе из разных потоков какие-то непонятные проблемы.
+            Пока не разобрались, приходится это использовать (ставьте false перед инициализацией, чтобы грузилось сразу всё).
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphToken">
+            <summary>
+            Элементы, на которые разбивается исходный текст (токены)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphToken.BeginChar">
+            <summary>
+            Начальная позиция
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphToken.EndChar">
+            <summary>
+            Конечная позиция
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphToken.Term">
+            <summary>
+            Нормализованный фрагмент исходного текста (верхний регистр, замена некотрых букв)
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphToken.Length">
+            <summary>
+            Число символов (нормализованного фрагмента = Term.Length)
+            </summary>
+        </member>
+        <member name="M:EP.Morph.MorphToken.GetSourceText(System.String)">
+            <summary>
+            Извлечь фрагмент из исходного текста, соответствующий токену
+            </summary>
+            <param name="text">полный исходный текст</param>
+            <returns>фрагмент</returns>
+        </member>
+        <member name="P:EP.Morph.MorphToken.Lemma">
+            <summary>
+            Лемма (вариант морфологической нормализации)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphToken.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphToken.Language">
+            <summary>
+            Язык(и)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphToken.WordForms">
+            <summary>
+            Варианты словоформ
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphToken.CharInfo">
+            <summary>
+            Информация о токене
+            </summary>
+        </member>
+        <member name="T:EP.Morph.MorphWordForm">
+            <summary>
+            Словоформа (вариант морфанализа лексемы)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphWordForm.NormalFull">
+            <summary>
+            Полная нормальная форма:
+             - для существ. и местоимений - именит. падеж единств. число;
+             - для прилаг.  - именит. падеж единств. число мужской род;
+             - для глаголов - инфинитив;
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphWordForm.NormalCase">
+            <summary>
+            Именительная нормальная форма (падежная нормализация - 
+            только приведение к именительному падежу, остальные хар-ки без изменений),
+            для глаголов - инфинитив.
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphWordForm.Misc">
+            <summary>
+            Дополнительная морф.информация
+            </summary>
+        </member>
+        <member name="P:EP.Morph.MorphWordForm.IsInDictionary">
+            <summary>
+            Находится ли словоформа в словаре (если false, то восстановлена по аналогии)
+            </summary>
+        </member>
+        <member name="F:EP.Morph.MorphWordForm.UndefCoef">
+            <summary>
+            Коэффициент достоверности для неизвестных словоформ (чем больше, тем вероятнее)
+            </summary>
+        </member>
+    </members>
+</doc>

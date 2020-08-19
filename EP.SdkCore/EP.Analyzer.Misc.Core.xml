@@ -1,0 +1,936 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Misc.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Bank.BankAnalyzer">
+            <summary>
+            Анализатор банковских данных (счетов, платёжных реквизитов...)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Bank.BankDataReferent">
+            <summary>
+            Банковские данные (реквизиты)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Bank.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Bank.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Date.DateAnalyzer">
+            <summary>
+            Анализатор для дат и диапазонов дат
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Date.DateAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения дат
+            </summary>
+            <param name="cnt"></param>
+            <param name="stage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Date.Internal.DateExToken">
+            <summary>
+            ВСЁ, этот класс теперь используется внутренним робразом, а DateReferent поддерживает относительные даты-время
+            Используется для нахождения в тексте абсолютных и относительных дат и диапазонов,
+            например, "в прошлом году", "за первый квартал этого года", "два дня назад и т.п."
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.IsDiap">
+            <summary>
+            Признак того, что это диапазон
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.ItemsFrom">
+            <summary>
+            Выделенные элементы (для диапазона начало периода)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.ItemsTo">
+            <summary>
+            Для диапазона конец периода
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Date.Internal.DateExToken.GetDate(System.DateTime,System.Int32)">
+            <summary>
+            Получить дату-время (одну)
+            </summary>
+            <param name="now">текущая дата (для относительных вычислений)</param>
+            <param name="tense">время (-1 - прошлое, 0 - любое, 1 - будущее) - испрользуется
+            при неоднозначных случаях</param>
+            <returns>дата-время или null</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:EP.Ner.Date.Internal.DateExToken.GetDates(System.DateTime,System.DateTime@,System.DateTime@,System.Int32)" -->
+        <member name="M:EP.Ner.Date.Internal.DateExToken.TryParse(EP.Ner.Token)">
+            <summary>
+            Выделить в тексте дату с указанной позиции
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.DateExItemToken.Value">
+            <summary>
+            Начало и конец диапазона, при совпадении значение точное
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.DateExItemToken.IsValueRelate">
+            <summary>
+            Признак относительности значения (относительно текущей даты)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.DateExItemToken.IsValueNotstrict">
+            <summary>
+            Признак того, что значение примерное (в начале года)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.DateExItemTokenType.DayOfWeek">
+            <summary>
+            День недели
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateExToken.DateExItemTokenType.Weekend">
+            <summary>
+            Выходные
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Date.Internal.DateItemToken">
+            <summary>
+            Примитив, из которых состоит дата
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateItemToken.Typ">
+            <summary>
+            Тип примитива
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateItemToken.StringValue">
+            <summary>
+            Строковое значение (для разделителя)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateItemToken.IntValue">
+            <summary>
+            Числовое значение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.Internal.DateItemToken.Lang">
+            <summary>
+            Язык
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Date.Internal.DateItemToken.TryAttach(EP.Ner.Token,System.Collections.Generic.List{EP.Ner.Date.Internal.DateItemToken},System.Boolean)">
+            <summary>
+            Привязать с указанной позиции один примитив
+            </summary>
+            <param name="cnt"></param>
+            <param name="indFrom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Date.Internal.DateItemToken.TryAttachList(EP.Ner.Token,System.Int32)">
+            <summary>
+            Привязать примитивы в контейнере с указанной позиции
+            </summary>
+            <param name="cnt"></param>
+            <param name="indFrom"></param>
+            <returns>Список примитивов</returns>
+        </member>
+        <member name="T:EP.Ner.Date.DateRangeReferent">
+            <summary>
+            Сущность, представляющая диапазон дат
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateRangeReferent.DateFrom">
+            <summary>
+            Начало диапазона
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateRangeReferent.DateTo">
+            <summary>
+            Конец диапазона
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateRangeReferent.IsRelative">
+            <summary>
+            Диапазон относителен (с 10 по 20 февраля прошлого года)
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:EP.Ner.Date.DateRangeReferent.CalculateDateRange(System.DateTime,System.DateTime@,System.DateTime@,System.Int32)" -->
+        <member name="P:EP.Ner.Date.DateRangeReferent.QuarterNumber">
+            <summary>
+            Проверка, что диапазон задаёт квартал, возвращает номер 1..4
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateRangeReferent.HalfyearNumber">
+            <summary>
+            Проверка, что диапазон задаёт полугодие, возвращает номер 1..2
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Date.DateReferent">
+            <summary>
+            Сущность, представляющая дату
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Dt">
+            <summary>
+            Дата в стандартной структуре .NET (null, если что-либо неопределено или дата некорректна)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.IsRelative">
+            <summary>
+            Элемент даты относителен (послезавтра, пару лет назад ...)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Date.DateReferent.CalculateDate(System.DateTime,System.Int32)">
+            <summary>
+            Вычислить дату-время (одну)
+            </summary>
+            <param name="now">текущая дата (для относительных дат)</param>
+            <param name="tense">время (-1 - прошлое, 0 - любое, 1 - будущее) - испрользуется
+            при неоднозначных случаях</param>
+            <returns>дата-время или null</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:EP.Ner.Date.DateReferent.CalculateDateRange(System.DateTime,System.DateTime@,System.DateTime@,System.Int32)" -->
+        <member name="P:EP.Ner.Date.DateReferent.Century">
+            <summary>
+            Век (0 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Year">
+            <summary>
+            Год (0 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Quartal">
+            <summary>
+            Квартал (0 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Month">
+            <summary>
+            Месяц (0 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Week">
+            <summary>
+            Неделя (0 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Day">
+            <summary>
+            День месяца (0 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.DayOfWeek">
+            <summary>
+            День недели (0 - неопределён, 1 - понедельник ...)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Hour">
+            <summary>
+            Час (-1 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Minute">
+            <summary>
+            Минуты (-1 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Second">
+            <summary>
+            Секунд (-1 - неопределён)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Higher">
+            <summary>
+            Вышестоящая дата
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Date.DateReferent.Pointer">
+            <summary>
+            Дополнительный указатель примерной даты
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Date.DateReferent.IsMonthDefined(EP.Ner.Referent)">
+            <summary>
+            Проверка, что дата или диапазон определены с точностью до одного месяца
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Date.DatePointerType">
+            <summary>
+            Дополнительные указатели для дат
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Begin">
+            <summary>
+            В начале
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Center">
+            <summary>
+            В середине
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.End">
+            <summary>
+            В конце
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Today">
+            <summary>
+            В настоящее время, сегодня
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Winter">
+            <summary>
+            Зимой
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Spring">
+            <summary>
+            Весной
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Summer">
+            <summary>
+            Летом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Autumn">
+            <summary>
+            Осенью
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.About">
+            <summary>
+            Около, примерно
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Date.DatePointerType.Undefined">
+            <summary>
+            Неопределено (например, 20__ года )
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Definition.DefinitionAnalyzer">
+            <summary>
+            Анализатор определений
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Definition.DefinitionAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения объектов
+            </summary>
+            <param name="container"></param>
+            <param name="lastStage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Definition.DefinitionAnalyzer.TryAttachEnd(EP.Ner.Token,EP.Ner.Core.TerminCollection,System.Int32)">
+            <summary>
+            Это распознавание случая, когда термин находится в конце
+            </summary>
+            <param name="t"></param>
+            <param name="onto"></param>
+            <param name="maxChar"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Definition.DefinitionAnalyzer.CalcSemanticCoef(System.String,System.String)">
+            <summary>
+            Вычисление коэффициента семантической близости 2-х текстов.
+            Учитываются именные группы (существительные с возможными прилагательными).
+            </summary>
+            <param name="text1">первый текст</param>
+            <param name="text2">второй текст</param>
+            <returns>0 - ничего общего, 100 - полное соответствие (тождество)</returns>
+        </member>
+        <member name="M:EP.Ner.Definition.DefinitionAnalyzer.GetConcepts(System.String,System.Boolean)">
+            <summary>
+            Выделить ключевые концепты из текста.
+            Концепт - это нормализованная комбинация ключевых слов, причём дериватная нормализация
+            (СЛУЖИТЬ -> СЛУЖБА).
+            </summary>
+            <param name="txt">текст</param>
+            <param name="doNormalizeForEnglish">делать ли для английского языка нормализацию по дериватам</param>
+            <returns>список концептов</returns>
+        </member>
+        <member name="T:EP.Ner.Definition.Internal.ParenthesisToken">
+            <summary>
+            Анализ вводных слов и словосочетаний
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Definition.DefinitionReferent">
+            <summary>
+            Сущность, моделирующая определение (утверждение, тезис)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Definition.DefinitionReferent.Termin">
+            <summary>
+            Термин
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Definition.DefinitionReferent.TerminAdd">
+            <summary>
+            Дополнительный атрибут термина ("как наука", "в широком смысле" ...)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Definition.DefinitionReferent.Value">
+            <summary>
+            Собственно определение (правая часть)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Definition.DefinitionReferent.Kind">
+            <summary>
+            Тип определение
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Definition.DefinitionKind">
+            <summary>
+            Тип определения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionKind.Undefined">
+            <summary>
+            Непонятно
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionKind.Assertation">
+            <summary>
+            Просто утрерждение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionKind.Definition">
+            <summary>
+            Строгое определение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionKind.Negation">
+            <summary>
+            Отрицание
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Definition.DefinitionWithNumericToken">
+            <summary>
+            Для поддержки выделений тезисов с числовыми данными
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.Number">
+            <summary>
+            Значение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.NumberBeginChar">
+            <summary>
+            Начальная позиция числового значения в тексте
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.NumberEndChar">
+            <summary>
+            Конечная позиция числового значения в тексте
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.Noun">
+            <summary>
+            Существительное (или именная группа) в единственном числе
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.NounsGenetive">
+            <summary>
+            Это же существительное во множественном числе и родительном падеже
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.NumberSubstring">
+            <summary>
+            Подстрока из Text, содержащая числовое значение вместе с существительным
+            (чтобы потом при формировании вопроса можно было бы её заменить на что-угодно)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Definition.DefinitionWithNumericToken.Text">
+            <summary>
+            Текст тезиса
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Definition.DefinitionWithNumericToken.TryParse(EP.Ner.Token)">
+            <summary>
+            Выделить определение с указанного токена
+            </summary>
+            <param name="t">токен</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Denomination.DenominationAnalyzer">
+            <summary>
+            Анализатор деноминаций и обозначений
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Denomination.DenominationAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения объектов
+            </summary>
+            <param name="container"></param>
+            <param name="lastStage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Denomination.DenominationAnalyzer.TryAttachSpec(EP.Ner.Token)">
+            <summary>
+            Некоторые специфические случаи
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Denomination.DenominationReferent">
+            <summary>
+            Сущность, моделирующая непонятные комбинации (например, Си++, СС-300)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Denomination.DenominationReferent.Value">
+            <summary>
+            Значение (одно или несколько)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Keyword.KeywordAnalyzer">
+            <summary>
+            Анализатор ключевых комбинаций
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordAnalyzer.AnnotationMaxSentences">
+            <summary>
+            Максимально предложений в автоаннотацию (KeywordReferent с типом Annotation).
+            Если 0, то не делать автоаннотацию.
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Keyword.KeywordAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения телефонов
+            </summary>
+            <param name="cnt"></param>
+            <param name="stage"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordAnalyzer.SortKeywordsByRank">
+            <summary>
+            Сортировать ли в списке Entity ключевые слова в порядке убывания ранга
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Keyword.KeywordReferent">
+            <summary>
+            Оформление ключевых слов и комбинаций
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordReferent.Rank">
+            <summary>
+            Вычисляемый ранг (в атрибутах не сохраняется - просто поле!)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Keyword.KeywordType">
+            <summary>
+            Тип ключевой комбинации
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordType.Undefined">
+            <summary>
+            Неопределён
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordType.Object">
+            <summary>
+            Объект (именная группа)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordType.Referent">
+            <summary>
+            Именованная сущность
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordType.Predicate">
+            <summary>
+            Предикат (глагол)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Keyword.KeywordType.Annotation">
+            <summary>
+            Автоаннотация всего текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.MeasureToken.Reliable">
+            <summary>
+            Очень хорошее выделение
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Measure.Internal.MeasureToken.TryParse(EP.Ner.Token,EP.Ner.Core.TerminCollection,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Выделение вместе с наименованием
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Measure.Internal.NumbersWithUnitToken">
+            <summary>
+            Это для моделирования разных числовых диапазонов + единицы изменерия
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.SingleVal">
+            <summary>
+            Одиночное значение, если не null, то скаляр - фактически совпадает с NumberExToken
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.FromInclude">
+            <summary>
+            Включается ли минимальное значение в диапапазон или исключается
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.FromVal">
+            <summary>
+            Минимальное значение (если null, то неопределено)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.ToInclude">
+            <summary>
+            Включается ли максимальное значение в диапазон
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.ToVal">
+            <summary>
+            Максимальное значение (если null, то неопределено)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.About">
+            <summary>
+            Около
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.Units">
+            <summary>
+            Единицы измерения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.NumbersWithUnitToken.DivNum">
+            <summary>
+            Чтсло, слкдующее после знака деления
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Measure.Internal.NumbersWithUnitToken.TryParse(EP.Ner.Token,EP.Ner.Core.TerminCollection,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Попробовать выделить с указанной позиции
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Measure.Internal.NumbersWithUnitToken._tryParseWHL(EP.Ner.Token)">
+            <summary>
+            Это распознавание написаний ГхШхВ
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Measure.Internal.Unit">
+            <summary>
+            Единица измерения (задаётся в "базе")
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.Unit.BaseUnit">
+            <summary>
+            Ссылка на базовую единицу
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.Unit.MultUnit">
+            <summary>
+            Другая базовая единица, на которую ижёт умножение (Ач = А * ч)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.Unit.Keywords">
+            <summary>
+            Список возможных ключевых слов перед ...
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.Internal.Unit.Psevdo">
+            <summary>
+            Список возможных реальных единиц, перекрывающих эту
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Measure.Internal.UnitsFactors">
+            <summary>
+            Степени десяток
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Measure.MeasureAnalyzer">
+            <summary>
+            Аналозатор для измеряемых величин
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Measure.MeasureAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения телефонов
+            </summary>
+            <param name="cnt"></param>
+            <param name="stage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Measure.MeasureReferent">
+            <summary>
+            Величина или диапазон величин, измеряемая в некоторых единицах
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Measure.MeasureReferent.Template">
+            <summary>
+            Шаблон для значений, например, [1..2], 1x2, 1 ]..1]
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Measure.MeasureKind">
+            <summary>
+            Что измеряется этой величиной
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Time">
+            <summary>
+            Время
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Length">
+            <summary>
+            Длина
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Area">
+            <summary>
+            Площадь
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Volume">
+            <summary>
+            Объём
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Weight">
+            <summary>
+            Вес
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Speed">
+            <summary>
+            Скорость
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Temperature">
+            <summary>
+            Температура
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Ip">
+            <summary>
+            Класс защиты
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.MeasureKind.Percent">
+            <summary>
+            Процент
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Measure.UnitReferent">
+            <summary>
+            Ежиница измерения
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Measure.UnitReferent.IsUnknown">
+            <summary>
+            Признак того, что это неизвестная метрика
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Measure.UnitReferent.m_Unit">
+            <summary>
+            Используется внутренним образом
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Money.MoneyAnalyzer">
+            <summary>
+            Анализатор для денежных сумм
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Money.MoneyAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения объектов
+            </summary>
+            <param name="container"></param>
+            <param name="lastStage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Money.MoneyReferent">
+            <summary>
+            Представление денежных сумм
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Money.MoneyReferent.Currency">
+            <summary>
+            Тип валюты (3-х значный код ISO 4217)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Money.MoneyReferent.Value">
+            <summary>
+            Значение
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Money.MoneyReferent.AltValue">
+            <summary>
+            Альтернативное значение (если есть, то значит неправильно написали сумму
+            числом и далее прописью в скобках)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Money.MoneyReferent.Rest">
+            <summary>
+            Остаток (от 0 до 99) - копеек, центов и т.п.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Money.MoneyReferent.AltRest">
+            <summary>
+            Остаток (от 0 до 99) - копеек, центов и т.п.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Money.MoneyReferent.RealValue">
+            <summary>
+            Действительное значение (вместе с копейками)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Phone.Internal.PhoneHelper.GetCountryPrefix(System.String)">
+            <summary>
+            Выделить телефонный префикс из "полного" номера
+            </summary>
+            <param name="fullNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Phone.Internal.PhoneItemToken">
+            <summary>
+            Примитив, из которых состоит телефонный номер
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Phone.Internal.PhoneItemToken.ItemType">
+            <summary>
+            Тип примитива
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Phone.Internal.PhoneItemToken.Value">
+            <summary>
+            Строковое значение
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Phone.Internal.PhoneItemToken.TryAttach(EP.Ner.Token)">
+            <summary>
+            Привязать с указанной позиции один примитив
+            </summary>
+            <param name="cnt"></param>
+            <param name="indFrom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Phone.Internal.PhoneItemToken.TryAttachAll(EP.Ner.Token)">
+            <summary>
+            Привязать примитивы в контейнере с указанной позиции
+            </summary>
+            <param name="cnt"></param>
+            <param name="indFrom"></param>
+            <returns>Список примитивов</returns>
+        </member>
+        <member name="T:EP.Ner.Phone.PhoneAnalyzer">
+            <summary>
+            Анализатор для выделения телефонных номеров
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Phone.PhoneAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения телефонов
+            </summary>
+            <param name="cnt"></param>
+            <param name="stage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Phone.PhoneReferent">
+            <summary>
+            Сущность, представляющая телефонные номера
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Phone.PhoneReferent.Number">
+            <summary>
+            Основной номер (без кода города)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Phone.PhoneReferent.AddNumber">
+            <summary>
+            Добавочный номер (если есть)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Phone.PhoneReferent.CountryCode">
+            <summary>
+            Код страны
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Phone.PhoneReferent.Kind">
+            <summary>
+            Тип телефона
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Phone.PhoneKind">
+            <summary>
+            Тип телефонного номера
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Phone.PhoneKind.Home">
+            <summary>
+            Домашний
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Phone.PhoneKind.Mobile">
+            <summary>
+            Мобильный
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Phone.PhoneKind.Work">
+            <summary>
+            Рабочий
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Phone.PhoneKind.Fax">
+            <summary>
+            Факс
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Uri.UriAnalyzer">
+            <summary>
+            Анализатор для выделения URI-объектов (схема:значение)
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Uri.UriAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения объектов
+            </summary>
+            <param name="container"></param>
+            <param name="lastStage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Uri.UriReferent">
+            <summary>
+            URI, а также ISBN, УДК, ББК, ICQ и пр. (всё, что укладывается в СХЕМА:ЗНАЧЕНИЕ)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Uri.UriReferent.Value">
+            <summary>
+            Значение
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Uri.UriReferent.Scheme">
+            <summary>
+            Схема
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Uri.UriReferent.Detail">
+            <summary>
+            Детализация кода (если есть)
+            </summary>
+        </member>
+    </members>
+</doc>

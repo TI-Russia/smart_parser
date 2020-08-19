@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Biblio.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Booklink.BookLinkAnalyzer">
+            <summary>
+            Анализатор ссылок на внешнюю литературу
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Booklink.BookLinkAnalyzer.IsSpecific">
+            <summary>
+            Этот анализатор является специфическим
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Booklink.BookLinkReferent">
+            <summary>
+            Ссылка на внешний литературный источник (статью, книгу и пр.)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Booklink.BookLinkRefReferent">
+            <summary>
+            Ссылка на внешний литературный источник (статью, книгу и пр.)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Booklink.BookLinkRefReferent.Typ">
+            <summary>
+            Тип ссылки
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Booklink.BookLinkRefReferent.Book">
+            <summary>
+            Собственно ссылка вовне на источник - BookLinkReferent или DecreeReferent
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Booklink.BookLinkRefReferent.Number">
+            <summary>
+            Порядковый номер в списке
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Booklink.BookLinkRefReferent.Pages">
+            <summary>
+            Ссылка на страницу или диапазон страниц
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Booklink.BookLinkRefReferent.GetNumberDiff(EP.Ner.Referent,EP.Ner.Referent)">
+            <summary>
+            Возвращает разницу номеров r2 - r1, иначе null, если номеров нет
+            </summary>
+            <param name="r1"></param>
+            <param name="r2"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Booklink.BookLinkRefType">
+            <summary>
+            Тип ссылки
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Booklink.BookLinkRefType.Inline">
+            <summary>
+            Встроенная в текст
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Booklink.Internal.BookLinkTyp.Tamze">
+            <summary>
+            там же
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Booklink.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Booklink.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Literature.CharacterReferent">
+            <summary>
+            Литературный персонаж
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.CharacterReferent.Names">
+            <summary>
+            Собственные имена (все)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.CharacterReferent.Typ">
+            <summary>
+            Тип персонажа
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.CharacterReferent.Gender">
+            <summary>
+            Пол
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.CharacterReferent.IsAuthor">
+            <summary>
+            Признак того, что повествования ведётся от этого лица
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.CharacterGender">
+            <summary>
+            Пол персонажа
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.CharacterType">
+            <summary>
+            Тип персонажа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.CharacterType.Undefined">
+            <summary>
+            Неизвестно
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.CharacterType.Man">
+            <summary>
+            Человек
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.CharacterType.Animal">
+            <summary>
+            Животное
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.CharacterType.Mythic">
+            <summary>
+            Мифическое
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.LinkReferent">
+            <summary>
+            Связь персонажа с другим персонажем
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LinkReferent.Chars">
+            <summary>
+            Ссылки на персонажей
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LinkReferent.Name">
+            <summary>
+            Наименование
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LinkReferent.ShortName">
+            <summary>
+            Краткое наименование
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LinkReferent.Typ">
+            <summary>
+            Тип персонажа
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.LinkType">
+            <summary>
+            Пол персонажа
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.LiteratureAnalyzer">
+            <summary>
+            Анализатор литературных произведений
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LiteratureAnalyzer.IsSpecific">
+            <summary>
+            Этот анализатор является специфическим
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LiteratureAnalyzer.TypeSystem">
+            <summary>
+            Это список типов объектов, которые выделяются анализатором
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.LiteratureAnalyzer.Images">
+            <summary>
+            Это список иконок для объектов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Literature.LiteratureAnalyzer.CreateReferent(System.String)">
+            <summary>
+            Создать объект нужного типа
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Literature.Internal.CharacterVariant.NormOccures">
+            <summary>
+            Это встречаемости в нормальной форме
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.Internal.CharacterVariant.LinkVariant">
+            <summary>
+            Это для "дочь Пупкина"
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Literature.Internal.CharacterVariant.IsLinkProbableError">
+            <summary>
+            Проверить, что возможна ошибка стыковки
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:EP.Ner.Literature.Internal.CharItemToken.FullValues">
+            <summary>
+            Полное имя для сокращённого
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.RefCharacter">
+            <summary>
+            Это тот персонах, на который ссылается атрибут!!!
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsAttr">
+            <summary>
+            Это атрибут
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsNeedNext">
+            <summary>
+            Значит обязательно далее должен быть другой элемент (например, де ...)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsNeedPrev">
+            <summary>
+            Обязательно перед должен быть элемент
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsEmoAttr">
+            <summary>
+            Позитивная окраска атрибуда (сволочь, подлец, молодец)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsAnimal">
+            <summary>
+            Это явно животное
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsCanBePersonAfter">
+            <summary>
+            За словом может быть персона в родительном падеже (слуга Хозяина, отец Ивана ...)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsEmptyAttr">
+            <summary>
+            Пустой атрибут (типа: господин, мистер)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsMan">
+            <summary>
+            Это явно человек
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.CharItemVar.IsMythical">
+            <summary>
+            Мифологическое существо
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.Internal.DialogItemToken.Speaker">
+            <summary>
+            Кто говорит
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.Internal.DialogItemToken.Callers">
+            <summary>
+            К кому обращаются
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Literature.Internal.LitHelper.FindNearVerb(EP.Ner.Token,EP.Morph.MorphGender)">
+            <summary>
+            Найти ближайший грагол (слева или справа), согласованный с токеном,
+            который считается агентом глагола
+            </summary>
+            <param name="agent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Literature.Internal.LitHelper.FindByName(EP.Ner.Token,EP.Morph.MorphGender@)">
+            <summary>
+            Проверить, что это шаблон типа "шарманщик по имени ..."
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Literature.Internal.MetaCharacter">
+            <summary>
+            Метаинформация о литературном персонаже
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.Internal.MetaLink">
+            <summary>
+            Метаинформация о литературном персонаже
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.Internal.MetaPeace">
+            <summary>
+            Метаинформация о литературном персонаже
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Literature.Internal.ChapterTextToken.PrimaryAnalyze">
+            <summary>
+            Сформировать для главы список потенциальных персонажей
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.Internal.CharacterExType.FirstPerson">
+            <summary>
+            Первое лицо
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Literature.Internal.OccuresContainer.IsAllInDialogs">
+            <summary>
+            Признак того, что встречается только в прямой речи диалогов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Literature.Internal.PeaceToken.GetPeace(EP.Ner.Token)">
+            <summary>
+            Получить часть, которой принадлежит токен
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Literature.Internal.PeaceToken.IsInOnePeace(EP.Ner.Token,EP.Ner.Token)">
+            <summary>
+            Проверка, что оба токена из одной части
+            </summary>
+            <param name="t1"></param>
+            <param name="t2"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Literature.TextPeaceReferent">
+            <summary>
+            Фрагмент текста
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.TextPeaceKind">
+            <summary>
+            Классы фрагментов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceKind.Text">
+            <summary>
+            Текстовой фрагмент
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceKind.Title">
+            <summary>
+            Заголовок части, раздела, главы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceKind.Head">
+            <summary>
+            Заголовок всего произведения
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceKind.Tail">
+            <summary>
+            Фрагмент в конце произведения
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Literature.TextPeaceType">
+            <summary>
+            Типы и подптипы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Book">
+            <summary>
+            Книга
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Volume">
+            <summary>
+            Том (для заголовков)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Part">
+            <summary>
+            Часть (для заголовков)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Chapter">
+            <summary>
+            Глава (для заголовков)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Intro">
+            <summary>
+            Введение (для заголовков)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Conclusion">
+            <summary>
+            Заключение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Literature.TextPeaceType.Remarks">
+            <summary>
+            Замечания
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Old.DocumentBlockReferent">
+            <summary>
+            Блок документа (часть, глава или весь документ целиком)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Old.DocumentBlockType">
+            <summary>
+            Типы текстов
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Old.DocumentStructureAnalyzer.IsSpecific">
+            <summary>
+            Этот анализатор является специфическим
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Titlepage.Internal.TitleNameToken">
+            <summary>
+            Название статьи
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Titlepage.Internal.TitleNameToken.Rank">
+            <summary>
+            Ранг
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Titlepage.Internal.TitleNameToken.TypeValue">
+            <summary>
+            Это значение типа работы (если есть)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Titlepage.Internal.TitleNameToken.Speciality">
+            <summary>
+            Специальность (если есть)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Titlepage.TitlePageAnalyzer">
+            <summary>
+            Анализатор заголовочной информации
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageAnalyzer.IsSpecific">
+            <summary>
+            Этот анализатор является специфическим
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Titlepage.TitlePageReferent">
+            <summary>
+            Сущность, описывающая информацию из заголовков статей, книг, диссертация и пр.
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.Types">
+            <summary>
+            Список типов 
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.Names">
+            <summary>
+            Названия (одно или несколько)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.Date">
+            <summary>
+            Дата
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.StudentYear">
+            <summary>
+            Номер курса (для студентов)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.Org">
+            <summary>
+            Организация
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.City">
+            <summary>
+            Город
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Titlepage.TitlePageReferent.Speciality">
+            <summary>
+            Специальность
+            </summary>
+        </member>
+    </members>
+</doc>

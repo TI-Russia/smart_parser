@@ -13,8 +13,8 @@ namespace Smart.Parser.Lib
 {
     public class RealtyParser : ParserBase
     {
-        static readonly string OwnedString = "В собственности";
-        static readonly string StateString = "В пользовании";
+        public static readonly string OwnedString = "В собственности";
+        public static readonly string StateString = "В пользовании";
         public static void CheckProperty(RealEstateProperty prop)
         {
             if (prop == null)

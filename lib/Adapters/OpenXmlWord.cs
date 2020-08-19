@@ -11,10 +11,12 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Parser.Lib;
 using System.Xml.Linq;
+using Smart.Parser.Lib.Adapters.AdapterSchemes;
+using Smart.Parser.Lib.Adapters.DocxSchemes;
 
 namespace Smart.Parser.Adapters
 {
-    class TableWidthInfo
+    public class TableWidthInfo
     {
         public int TableWidthInPixels;
         public int TableIndentionInPixels = 0;
@@ -50,7 +52,7 @@ namespace Smart.Parser.Adapters
 
     }
 
-    class WordDocHolder : IDisposable
+    public class WordDocHolder : IDisposable
     {
         public WordprocessingDocument WordDocument;
         public int DocumentPageSizeInPixels;
@@ -162,7 +164,8 @@ namespace Smart.Parser.Adapters
         }
 
     }
-    class OpenXmlWordCell : Cell
+
+    public class OpenXmlWordCell : Cell
     {
         public bool IsVerticallyMerged;
         public OpenXmlWordCell(WordDocHolder docHolder, TableWidthInfo tableWidth, TableCell inputCell, int row, int column)
@@ -325,22 +328,37 @@ namespace Smart.Parser.Adapters
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
         private DocxConverter _DocxConverter;
-
-
-
-
+        
+        protected static List<IAdapterScheme> _allSchemes = new List<IAdapterScheme>()
+        {
+            new SovetFederaciiDocxScheme(),
+            // new DocxSchemePDF(),
+        };
+        
         private static Uri FixUri(string brokenUri)
         {
             return new Uri("http://broken-link/");
         }
+        
         private void ProcessDoc (string fileName, string extension, int maxRowsToProcess)
         {
             using (var doc = new WordDocHolder(WordprocessingDocument.Open(fileName, false)))
             {
-                Title = doc.FindTitleAboveTheTable();
-                CollectRows(doc, maxRowsToProcess, extension);
-                UnmergedColumnsCount =  GetUnmergedColumnsCountByFirstRow();
-                InitializeVerticallyMerge();
+                CurrentScheme = _allSchemes.Find(x=> x.CanProcess(doc.WordDocument));
+                if (CurrentScheme != default)
+                {
+                    // CollectRows from distinct Tables
+                    Title = doc.FindTitleAboveTheTable();
+                    CurrentScheme.Document = doc.WordDocument.MainDocumentPart.Document;
+                    TablesCount = 1;
+                }
+                else
+                {
+                    Title = doc.FindTitleAboveTheTable();
+                    CollectRows(doc, maxRowsToProcess, extension);
+                    UnmergedColumnsCount =  GetUnmergedColumnsCountByFirstRow();
+                    InitializeVerticallyMerge();
+                }
             };
 
         }
@@ -528,8 +546,6 @@ namespace Smart.Parser.Adapters
             }
         }
 
-
-
         int GetRowGridBefore(TableRow row)
         {   
             if (row.TableRowProperties != null)
@@ -583,7 +599,6 @@ namespace Smart.Parser.Adapters
             }
             return widthInfo;
         }
-
 
         void ProcessWordTable(WordDocHolder docHolder,  Table table, int maxRowsToProcess)
         {

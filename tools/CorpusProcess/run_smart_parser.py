@@ -317,6 +317,8 @@ def get_folder_jobs(folder, args):
     for name in filenames:
         if not check_extension(name, args.extensions):
             continue
+        if name.startswith("~") and name.endswith(".doc"):
+            continue
         joblist.append({
             "download_url": os.path.join(folder, name),
             "status": 'new'
@@ -340,10 +342,6 @@ if __name__ == '__main__':
         else:
             joblist = get_folder_jobs(joblist, args)
 
-        if len(joblist) == 0:
-            logger.info("0 jobs found, exiting")
-            sys.exit()
-
         if args.limit:
             joblist = joblist[:args.limit]
 
@@ -351,6 +349,8 @@ if __name__ == '__main__':
         if len(joblist) == 1:
             res = ProcessOneFile(args, os.getpid())(joblist[0])
             results.append(res)
+        elif len(joblist) == 0:
+            logger.info("0 jobs found, exiting")
         else:
             iter_pool = pool.imap_unordered(ProcessOneFile(args, os.getpid()), joblist, chunksize=1)
             with tqdm.tqdm(iter_pool, total=len(joblist)) as t:
@@ -366,9 +366,13 @@ if __name__ == '__main__':
         logger.info("stop processing...")
         pool.terminate()
     else:
+        print("Clean up")
         pool.close()
 
     total = len(results)
+
+    if total == 0:
+        sys.exit()
 
     ok = len(list(filter(lambda x: x['new_status'] == 'ok', results)))
     upgraded = len(list(filter(lambda x: x['new_status'] == 'ok' and x['status'] == 'error', results)))

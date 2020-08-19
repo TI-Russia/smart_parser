@@ -9,6 +9,7 @@ using CsvHelper;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 using Parser.Lib;
+using Smart.Parser.Lib.Adapters.DocxSchemes;
 
 namespace Smart.Parser.Adapters
 {
@@ -17,6 +18,9 @@ namespace Smart.Parser.Adapters
         // some excel files contain 32000 columns, most of them are empty
         // we try to found real column number in the header, by default is 1024
         public const int MaxColumnsCount = 1024;
+
+        // specific scheme to parse tables
+        public IAdapterScheme CurrentScheme = null;
 
         public static string ConvertedFileStorageUrl = "";
 

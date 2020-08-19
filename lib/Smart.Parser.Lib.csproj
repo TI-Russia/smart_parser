@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>TRACE;DYLD_PRINT_LIBRARIES</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Resources\bigrams.txt" />
     <None Remove="Resources\column_trigrams.txt" />
@@ -52,6 +56,48 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EP.Analyzer.Biblio.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Biblio.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Decree.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Decree.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Goods.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Goods.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Location.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Location.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Misc.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Misc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Organization.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Organization.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Person.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Person.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Semantic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Semantic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Util.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Analyzer.Util.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Core.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Core.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Explanatory.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Explanatory.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Morphology.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Morphology.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Semantic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\EP.SdkCore\EP.Semantic.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

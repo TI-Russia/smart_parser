@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Semantic.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Semantic.ActantReferent">
+            <summary>
+            Актант - связь предиката с объектами или объекта с объектами
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.ActantReferent.Role">
+            <summary>
+            Роль актанта
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.ActantReferent.Refs">
+            <summary>
+            Ссылки на объекты, предикаты или другие актанты
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.ActantReferent.Value">
+            <summary>
+            Исходное значение из текста
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.ActantReferent.Count">
+            <summary>
+            Количественная характеристика
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.ActantReferent.Prep">
+            <summary>
+            Предлог (если есть)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.ActantRole">
+            <summary>
+            Роли актанта
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Semantic.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Semantic.Internal.Actant">
+            <summary>
+            Поддержка анализа актантов у предикатов
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.Internal.Fragment.IsWhich">
+            <summary>
+            Признак того, что начинается "о которой", "которая" ... или ЧТО
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.Internal.History.Abbrs">
+            <summary>
+            Список возможных сокращений
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.Internal.History.Names">
+            <summary>
+            Список возможных собственных имён
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.Internal.History.Aliases">
+            <summary>
+            Список возможных псевдонимов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Semantic.Internal.ObjectsLinks.ObjLink.Prepare">
+            <summary>
+            Формирование результата (ссылки)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Semantic.Internal.SentenceContainer">
+            <summary>
+            Анализатор предложений
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.Internal.SynToken.IsPredicateBe">
+            <summary>
+            Это предикат с ключевым словом "БЫТЬ" ("ЯВЛЯТЬСЯ")
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.Internal.SynToken.IsPredicateSelf">
+            <summary>
+            Возвратные предикат
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.Internal.SynToken._ObjVarTyp">
+            <summary>
+            Это используется внутренним образом для алгоритма стыковки объектов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.Internal.SynToken._LastPredicate">
+            <summary>
+            Это используется внутренним образом для алгоритма формирования актантов предикатов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.Internal.SynToken._UseThisToken">
+            <summary>
+            Использовать это токен вместо текущего
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.ObjectReferent">
+            <summary>
+            Семантический объект
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.ObjectReferent.PropRefs">
+            <summary>
+            Все ссылка с другими объектами или предикатами (прямые и через актанты)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.ObjectReferent.Rank">
+            <summary>
+            Ранг значимости элемента в рамках анализируемого текста
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.ObjectReferent.IsSignific">
+            <summary>
+            Уситывается при построении автоаннотаций
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.SemanticKind">
+            <summary>
+            Классы синтаксических элементов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.SemanticKind.Object">
+            <summary>
+            Объект
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.SemanticKind.Pronoun">
+            <summary>
+            Неизвестный (местоимение)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.PredicateReferent">
+            <summary>
+            Предикат (действие, глагол)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.PredicateReferent.Attrs">
+            <summary>
+            Морфологические атрибуты
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.PredicateReferent.Bases">
+            <summary>
+            Глагол(ы)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.PredicateReferent.Props">
+            <summary>
+            Наречия
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.PredicateReferent.Actants">
+            <summary>
+            Актанты
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.PredicateAttr">
+            <summary>
+            Атрибут глагола
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Not">
+            <summary>
+            Отрицание (не)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Verb">
+            <summary>
+            Глагол
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Participle">
+            <summary>
+            Причастие
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Transregressive">
+            <summary>
+            Деепричастие
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Infinitive">
+            <summary>
+            Инфинитив
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Past">
+            <summary>
+            Прошедшее время
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Present">
+            <summary>
+            Настоящее время
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Future">
+            <summary>
+            Будущее время
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Imperative">
+            <summary>
+            Повелительное наклонение
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Reflexive">
+            <summary>
+            Возвратный
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Imperfective">
+            <summary>
+            Несовершенный
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.PredicateAttr.Perfective">
+            <summary>
+            Совершенный
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.SemanticAnalyzer">
+            <summary>
+            Семантический анализатор 
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.SemanticAnalyzer.IgnoreActions">
+            <summary>
+            Не выделять действия
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.SentenceReferent">
+            <summary>
+            Семантический объект
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.SentenceReferent.Kind">
+            <summary>
+            Тип предложения
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.SentenceReferent.SemRefs">
+            <summary>
+            Ссылка на семантические объекты
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.SentenceReferent.SynRefs">
+            <summary>
+            Ссылка на синтаксические объекты (для аннотации - предложения, входящие в аннотацию)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Semantic.SentenceReferent.Content">
+            <summary>
+            Содержимое
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.SentenceReferent.IgnoredPart">
+            <summary>
+            Это для аннотаций
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Semantic.SentenceKind">
+            <summary>
+            Классы синтаксических элементов
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Semantic.SentenceKind.Annotation">
+            <summary>
+            Аннотация всего текста (реферат)
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,438 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Explanatory.Core</name>
+    </assembly>
+    <members>
+        <member name="F:EP.Semantic.Utils.ControlModelItem.NominativeCanBeAgentAndPacient">
+            <summary>
+            Именительный падеж м.б. агентом и пациентом (для возвратных глаголов).
+            Например, "ЗАЩИЩАТЬСЯ"
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelItem.Ignorable">
+            <summary>
+            Это для редактора, игнорируйте этот флаг
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelItemType.Word">
+            <summary>
+            Конкретное слово (не относится
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelItemType.Verb">
+            <summary>
+            Все глаголы (не Reflexive)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelItemType.Reflexive">
+            <summary>
+            Возвратные глаголы и страдательный залог
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelItemType.Noun">
+            <summary>
+            Существительное, которое можно отглаголить
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Utils.ControlModel">
+            <summary>
+            Новая модель управления
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModel.Items">
+            <summary>
+            Элементы модели
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModel.Pacients">
+            <summary>
+            Типовые пациенты (устойчивые словосочетания)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelQuestion.IsBase">
+            <summary>
+            Признак вопроса базойо части модели
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelQuestion.IsAbstract">
+            <summary>
+            Это вопросы где, куда, откуда, когда
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ControlModelQuestion.Subquestions">
+            <summary>
+            Конкретные вопросы для абстрактных вопросов
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Utils.QuestionType">
+            <summary>
+            Основные вопросы модели управления
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.QuestionType.Where">
+            <summary>
+            Где
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.QuestionType.WhereFrom">
+            <summary>
+            Откуда
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.QuestionType.WhereTo">
+            <summary>
+            Куда
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.QuestionType.When">
+            <summary>
+            Когда
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.QuestionType.WhatToDo">
+            <summary>
+            Что делать (инфинитив за группой)
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Utils.DerivateGroup">
+            <summary>
+            Дериватная группа
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.Words">
+            <summary>
+            Слова дериватной группы
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.Prefix">
+            <summary>
+            Приставка (при образовании из другой группы)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.IsDummy">
+            <summary>
+            Псевдогруппа (является основой для других групп)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.NotGenerate">
+            <summary>
+            Не образовывать группы путём перебора приставок
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.IsGenerated">
+            <summary>
+            Группа сгенерирована на основе перебора приставок (runtime)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.Model">
+            <summary>
+            Новая модель управления (информация для вычисления семантическимх связей)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.Cm">
+            <summary>
+            Модель управаления группы (кроме возвратных глаголов)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateGroup.CmRev">
+            <summary>
+            Модель управления возвратных глаголов
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.Utils.DerivateGroup.ContainsWord(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Содержит ли группа слово
+            </summary>
+            <param name="word">слово</param>
+            <param name="lang">возможный язык</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Semantic.Utils.DerivateWord">
+            <summary>
+            Слово толкового словаря
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Group">
+            <summary>
+            Деривативаная группа, содержащая данное слово
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Spelling">
+            <summary>
+            Само слово в нормальной форме
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Class">
+            <summary>
+            Часть речи
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Aspect">
+            <summary>
+            Совершенный\несовершенный
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Voice">
+            <summary>
+            Действительный\страдательный
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Tense">
+            <summary>
+            Время (для причастий)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Reflexive">
+            <summary>
+            Возвратный
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Lang">
+            <summary>
+            Язык
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.Attrs">
+            <summary>
+            Дополнительные характеристики
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.DerivateWord.NextWords">
+            <summary>
+            Возможные частые продолжения слова (идиомы)
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Utils.Explanatory">
+            <summary>
+            Сервис для получение толковой информации о словах.
+            В настоящий момент поддержаны русский и украинский языки.
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.Initialize(EP.Morph.MorphLang)">
+            <summary>
+            Инициализация внутренних словарей.
+            Можно не вызывать, но тогда будет автоматически вызвано при первом обращении,
+            и соответственно первое обращение отработает на несколько секунд дольше.
+            </summary>
+            <remarks>Русский и украинский языки грузятся одновременно!</remarks>
+            <param name="langs">по умолчанию, русский с украинским</param>
+        </member>
+        <member name="P:EP.Semantic.Utils.Explanatory.LoadedLanguages">
+            <summary>
+            Языки, морфологические словари для которых загружены в память
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.LoadLanguages(EP.Morph.MorphLang)">
+            <summary>
+            Загрузить язык(и), если они ещё не загружены
+            </summary>
+            <param name="langs"></param>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.UnloadLanguages(EP.Morph.MorphLang)">
+            <summary>
+            Выгрузить язык(и), если они больше не нужны
+            </summary>
+            <param name="langs"></param>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.FindDerivates(System.String,System.Boolean,EP.Morph.MorphLang)">
+            <summary>
+            Найти для слова дериативные группы, в которые входит это слово
+            (групп может быть несколько, но в большинстве случаев - одна)
+            </summary>
+            <param name="word"></param>
+            <param name="tryVariants"></param>
+            <param name="lang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.FindWords(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Найти для слова его толковую информацию (среди деривативных групп)
+            </summary>
+            <param name="word">нормальная форма слова</param>
+            <param name="lang">возможный язык</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.GetWordClassVar(System.String,EP.Morph.MorphClass,EP.Morph.MorphLang)">
+            <summary>
+            Получить вариант для слова аналог нужного типа.
+            Например, для "ГЛАГОЛ" вариант прилагательного: "ГЛАГОЛЬНЫЙ"
+            </summary>
+            <param name="word">исходное слово</param>
+            <param name="cla">нужный тип</param>
+            <param name="lang">возможный язык</param>
+            <returns>вариант или null при ненахождении</returns>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.IsAnimated(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Может ли быть одушевлённым
+            </summary>
+            <param name="word"></param>
+            <param name="lang">язык (по умолчанию, русский)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.IsNamed(System.String,EP.Morph.MorphLang)">
+            <summary>
+            Может ли иметь собственное имя
+            </summary>
+            <param name="word"></param>
+            <param name="lang">язык (по умолчанию, русский)</param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantic.Utils.Explanatory.SetDictionary(EP.Semantic.Internal.DerivateDictionary)">
+            <summary>
+            Не использовать!!!
+            </summary>
+            <param name="dic"></param>
+        </member>
+        <member name="T:EP.Semantic.Utils.ExplanWordAttr">
+            <summary>
+            Дополнительные характеристики слова
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsUndefined">
+            <summary>
+            Неопределённый тип
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsAnimated">
+            <summary>
+            Одушевлённое
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsNamed">
+            <summary>
+            Может иметь собственное имя
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsNumbered">
+            <summary>
+            Может иметь номер (например, Олимпиада 80)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsMeasured">
+            <summary>
+            Может ли иметь числовую характеристику (длина, количество, деньги ...)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsEmoPositive">
+            <summary>
+            Позитивная окраска
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsEmoNegative">
+            <summary>
+            Негативная окраска
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsAnimal">
+            <summary>
+            Это животное, а не человек (для IsAnimated = true)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsMan">
+            <summary>
+            Это человек, а не животное (для IsAnimated = true)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsCanPersonAfter">
+            <summary>
+            За словом может быть персона в родительном падеже (слуга Хозяина, отец Ивана ...)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsSpaceObject">
+            <summary>
+            Пространственный объект
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsTimeObject">
+            <summary>
+            Временной объект
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.Utils.ExplanWordAttr.IsVerbNoun">
+            <summary>
+            Временной объект
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Utils.ExplanWordAttr.Undefined">
+            <summary>
+            Неопределённое
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Internal.ControlModelOld">
+            <summary>
+            Модель управления группы (всей группы, а не только глаголов)
+            СТАРАЯ. Осталась временно, пока не переведём всё на новую
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ControlModelOld.Transitive">
+            <summary>
+            Признак переходности группы (то, что за сущ. слово в родимт. падеже,
+            а за невозвратным глаголом - в винительном).
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ControlModelOld.Nexts">
+            <summary>
+            Возможные продолжения (следующее слово):
+            Пары: (Предлог, Падежи). 
+            Для транзитивной группы не указываются род.п. (сущ) или вин.п. (глаг)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ControlModelOld.Questions">
+            <summary>
+            Возможные вопросы для продолжения
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ControlModelOld.Agent">
+            <summary>
+            Глагольная роль "агенс"
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ControlModelOld.Pacient">
+            <summary>
+            Глагольная роль "пациенс"
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ControlModelOld.Instrument">
+            <summary>
+            Глагольная роль "инструмент"
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ExplanTreeNode.Nodes">
+            <summary>
+            Движение дальше по дереву
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.ExplanTreeNode.Groups">
+            <summary>
+            Конечные правила
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Core.SemanticRole">
+            <summary>
+            Семантические роли
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticRole.Common">
+            <summary>
+            Обычная
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticRole.Agent">
+            <summary>
+            Агент
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticRole.Pacient">
+            <summary>
+            Пациент
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Core.SemanticRole.Strong">
+            <summary>
+            Сильная связь
+            </summary>
+        </member>
+    </members>
+</doc>

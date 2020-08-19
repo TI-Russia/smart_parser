@@ -1,0 +1,254 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Person.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Person.Internal.PersonAttrToken">
+            <summary>
+            ИСпользуется внутренним образом
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.Internal.PersonAttrToken.KingSurname">
+            <summary>
+            Например, патриарх Московский и всея Руси - это будет Московский
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.Internal.PersonAttrToken.Age">
+            <summary>
+            ВОзраст
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.Internal.PersonAttrToken.IsDoubt">
+            <summary>
+            Сомнительный атрибут
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Person.Internal.PersonHelper.CreateSex(EP.Ner.Person.PersonReferent,EP.Ner.Token)">
+            <summary>
+            Выделить пол
+            </summary>
+            <param name="pr"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Ner.Person.Internal.PersonHelper.CreateNickname(EP.Ner.Person.PersonReferent,EP.Ner.Token)">
+            <summary>
+            Выделить кличку
+            </summary>
+            <param name="pr"></param>
+            <param name="t">начальный токен</param>
+            <returns>если не null, то последний токен клички, а в pr запишет саму кличку</returns>
+        </member>
+        <member name="F:EP.Ner.Person.Internal.PersonItemToken.ParseAttr.MustBeItemAlways">
+            <summary>
+            Всегда выделять элемент, не нелать никакие проверки
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.Internal.PersonItemToken.ParseAttr.NominativeCase">
+            <summary>
+            Известно, что персона в именительном падеже
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.Internal.PersonItemToken.ParseAttr.SurnamePrefixNotMerge">
+            <summary>
+            Для фамилий префиксы (фон, ван) оформлять отдельным элементом
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Person.Internal.PersonItemToken.TryParsePerson(EP.Ner.Token,EP.Ner.Person.Internal.FioTemplateType)">
+            <summary>
+            Это попытка привязать персону со специфического места
+            </summary>
+            <param name="t"></param>
+            <param name="prevPersTemplate">шаблон от предыдущей персоны (поможет принять решение в случае ошибки)</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Person.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Person.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Person.PersonAnalyzer">
+            <summary>
+            Анализатор выделения персон
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonAnalyzer.NominativeCaseAlways">
+            <summary>
+            Все персоны идут в именительном падеже
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonAnalyzer.TextStartsWithLastnameFirstnameMiddlename">
+            <summary>
+            Текст начинается с Фамилии Имени Отчества
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Person.PersonIdentityReferent">
+            <summary>
+            Удостоверение личности (паспорт и пр.)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonIdentityReferent.Typ">
+            <summary>
+            Тип документа
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonIdentityReferent.Number">
+            <summary>
+            Номер (вместе с серией)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonIdentityReferent.State">
+            <summary>
+            Государство
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonIdentityReferent.Address">
+            <summary>
+            Адрес регистрации
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Person.PersonPropertyReferent">
+            <summary>
+            Сущность, описывающая некоторое свойство физического лица
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonPropertyReferent.Name">
+            <summary>
+            Наименование
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonPropertyReferent.Higher">
+            <summary>
+            Вышестоящая должность
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Person.PersonPropertyReferent.CanHasRef(EP.Ner.Referent)">
+            <summary>
+            Проверка, что этот референт может выступать в качестве ATTR_REF
+            </summary>
+            <param name="r"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Person.PersonPropertyKind">
+            <summary>
+            Типы свойств персон
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonPropertyKind.Boss">
+            <summary>
+            Начальник
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonPropertyKind.King">
+            <summary>
+            Вельможные и духовные особы
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonPropertyKind.Kin">
+            <summary>
+            Родственники
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonPropertyKind.MilitaryRank">
+            <summary>
+            Воинское звание
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonPropertyKind.Nationality">
+            <summary>
+            Национальность
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Person.PersonReferent">
+            <summary>
+            Сущность, описывающее физическое лицо
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonReferent.IsMale">
+            <summary>
+            Это мужчина
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonReferent.IsFemale">
+            <summary>
+            Это женщина
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Person.PersonReferent.Age">
+            <summary>
+            Возраст
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Person.PersonReferent.ShowLastnameOnFirstPosition">
+            <summary>
+            При выводе в ToString() первым ставить фамилию, а не имя
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Person.PersonReferent.CompareSurnamesStrs(System.String,System.String)">
+            <summary>
+            Сравнение с учётом возможных окончаний
+            </summary>
+            <param name="s1"></param>
+            <param name="s2"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Mail.MailAnalyzer">
+            <summary>
+            Анализатор анализа писем (блоков писем)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Mail.MailAnalyzer.IsSpecific">
+            <summary>
+            Этот анализатор является специфическим
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Mail.Internal.MailLine.Lev">
+            <summary>
+            Это кол-во элементов, которые характеризуют вложенность письма
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Mail.MailReferent">
+            <summary>
+            Письмо (точнее, блок письма)
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Mail.MailReferent.Kind">
+            <summary>
+            Тип блока письма
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Mail.MailKind">
+            <summary>
+            Тип блока письма
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Mail.MailKind.Head">
+            <summary>
+            Заголовок
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Mail.MailKind.Hello">
+            <summary>
+            Приветствие
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Mail.MailKind.Body">
+            <summary>
+            Содержимое
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Mail.MailKind.Tail">
+            <summary>
+            Подпись
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,600 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Semantic.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Semantic.Internal.AlgoParams">
+            <summary>
+            Параметры семантического движка
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.NGLink.ToAllListItems">
+            <summary>
+            Применима ко всем To списка, а не только к последнему
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.NGLinkType.Be">
+            <summary>
+            Это пропущенный глагол БЫТЬ
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.Internal.NGSegment.CreateLinks(System.Boolean)">
+            <summary>
+            А это создание вариантов связей между элементами
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.SentItemType.Deepart">
+            <summary>
+            Деепричастие
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.SentItemType.PartBefore">
+            <summary>
+            Причастие с сущ. перед (возможным сущ.!)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.SentItemType.PartAfter">
+            <summary>
+            Причастие с сущ. после
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.SentItemType.SubSent">
+            <summary>
+            Деепричастие или придаточное предложение
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Internal.SentItemType.Formula">
+            <summary>
+            Это всякие формулы и отношения
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemBlock">
+            <summary>
+            Блок документа (абзац)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemBlock.Fragments">
+            <summary>
+            Фрагменты блока
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemBlock.Links">
+            <summary>
+            А это связи фрагментов
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemDocument">
+            <summary>
+            Документ
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemDocument.Graph">
+            <summary>
+            Семантические объекты уровня документа
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemDocument.Blocks">
+            <summary>
+            Блоки документа
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemFragment">
+            <summary>
+            Фрагмент блока (предложения)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemFragment.Graph">
+            <summary>
+            Объекты фрагмента (отметим, что часть объектов, связанных с этими,
+            могут находиться в графах вышележащих уровней).
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFragment.Typ">
+            <summary>
+            Тип фрагмента
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFragment.IsOr">
+            <summary>
+            Корневые объекты объединены как ИЛИ (иначе И)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemFragment.RootObjects">
+            <summary>
+            Список объектов, в которые нет связей. При нормальном разборе
+            такой объект должен быть один - это обычно предикат
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemFragment.Spelling">
+            <summary>
+            Текст фрагмента (возможно, слегка подкорректированный)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFragment.BeginToken">
+            <summary>
+            Начальный токен
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFragment.EndToken">
+            <summary>
+            Конечный токен
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemGraph">
+            <summary>
+            Семантический граф
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemGraph.Owner">
+            <summary>
+            Владелец графа (фрагмент, блок или документ)
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemGraph.Higher">
+            <summary>
+            Вышележащий граф (граф у вышележащего владельца)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemGraph.Objects">
+            <summary>
+            Список объектов (узлы графа), упорядочиваются по первым позициям в тексте
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemGraph.Links">
+            <summary>
+            Список связей, неупорядоченный, дублируется у объектов в LinksFrom и LinksTo
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemLink">
+            <summary>
+            Семантическая связь между объектами
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.Graph">
+            <summary>
+            Граф, владеющий связью (кстати, сами объекты у связи могут принадлежать разным графам).
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.Typ">
+            <summary>
+            Тип связи
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemLink.Source">
+            <summary>
+            Объект начала связи
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemLink.Target">
+            <summary>
+            Объект конца связи
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.AltLink">
+            <summary>
+            Альтернативная ссылка (парная, а та в свою очередь ссылается на эту).
+            Используется для неоднозначных связях.
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.Question">
+            <summary>
+            Вопрос, соответствующий связи
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.Preposition">
+            <summary>
+            Предлог, если есть
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.IsOr">
+            <summary>
+            Для нескольких однотипных связей из одного Source или Target обозначает логическое "или".
+            Если false, то логическое "и".
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLink.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemObject">
+            <summary>
+            Семантический объект
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Graph">
+            <summary>
+            Ссылка на граф - владалец объекта.
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Morph">
+            <summary>
+            Морфологическая информация (падеж отсутствует в принципе), 
+            часть речи Class тоже не задана - вместо этого поле Typ.
+            NormalFull - полная нормализация, NormalCase - только падежная нормализация.
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Typ">
+            <summary>
+            Тип (определяется частью речи)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Quantity">
+            <summary>
+            Количественная характеристика
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Concept">
+            <summary>
+            Ссылка на концепт - это абстрактное понятие, используется вовне.
+            Это и Referent, это и DerivateGroup. В принципе, приложения сами здесь будут расставлять
+            свои объекты.
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Attrs">
+            <summary>
+            Атрибуты (формируются частично из наречий, частично из служебных частей речи)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Measure">
+            <summary>
+            Ну не знаю, потом нужно будет обобщить и куда-нибудь перенесём
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Not">
+            <summary>
+            Признак отрицания (потом перенесём в атрибуты)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Tokens">
+            <summary>
+            Токены в исходном тексте
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemObject.BeginChar">
+            <summary>
+            Начальная позиция первого токена
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.SemObject.EndChar">
+            <summary>
+            Последняя позиция последнего токена
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.LinksFrom">
+            <summary>
+            Исходящие связи (текущий объект выступает как Source)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.LinksTo">
+            <summary>
+            Входящие связи (текущий объект выступает как Target)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObject.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.SemObject.IsValue(System.String,EP.Semantic.SemObjectType)">
+            <summary>
+            Проверка значения
+            </summary>
+            <param name="word"></param>
+            <param name="typ"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantic.SemObject.FindFromObject(System.String,EP.Semantic.SemLinkType,EP.Semantic.SemObjectType)">
+            <summary>
+            Найти объект, кторый связан с текущим исходящий связью (Source = this)
+            </summary>
+            <param name="word"></param>
+            <param name="typ"></param>
+            <param name="otyp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantic.SemObject.FindAttr(EP.Semantic.SemAttributeType)">
+            <summary>
+            Найти атрибут указанного типа
+            </summary>
+            <param name="typ"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Semantic.SemAttribute">
+            <summary>
+            Семантический атрибут
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttribute.Typ">
+            <summary>
+            Тип атрибута
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttribute.Spelling">
+            <summary>
+            Написание (нормализованное)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttribute.Not">
+            <summary>
+            Признак отрицания
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemAttributeType">
+            <summary>
+            Типы семантических атрибутов
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Very">
+            <summary>
+            Очень
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Already">
+            <summary>
+            Уже
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Still">
+            <summary>
+            Ещё
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.All">
+            <summary>
+            Все
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Any">
+            <summary>
+            Любой, каждый
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Some">
+            <summary>
+            Некоторый
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.One">
+            <summary>
+            Один
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.OneOf">
+            <summary>
+            Один из
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Other">
+            <summary>
+            Другой
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.EachOther">
+            <summary>
+            друг друга, один другого
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Himelf">
+            <summary>
+            Сам себя
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Whole">
+            <summary>
+            Целиком, весь
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Less">
+            <summary>
+            Меньше
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemAttributeType.Great">
+            <summary>
+            Больше
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemFraglink">
+            <summary>
+            Связь между самантическими фрагментами
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFraglink.Typ">
+            <summary>
+            Тип связи
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFraglink.Source">
+            <summary>
+            Фрагмент-источник (откуда связь)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFraglink.Target">
+            <summary>
+            Фрагмент-приёмник (куда связь)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemFraglink.Question">
+            <summary>
+            Возможный вопрос, на который даёт ответ связь
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemFraglinkType">
+            <summary>
+            Типы связей между фрагментами
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemFragmentType">
+            <summary>
+            Типы фрагментов
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.ISemContainer">
+            <summary>
+            Интерфейс того, кто владеет графом объектов
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.ISemContainer.Graph">
+            <summary>
+            Сам граф объектов и связей
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.ISemContainer.Higher">
+            <summary>
+            Вышестоящий элемент
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.ISemContainer.BeginChar">
+            <summary>
+            Начальная позиция в тексте
+            </summary>
+        </member>
+        <member name="P:EP.Semantic.ISemContainer.EndChar">
+            <summary>
+            Конечная позиция в тексте
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemLinkType">
+            <summary>
+            Тип семантической связи
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLinkType.Detail">
+            <summary>
+            Детализация (какой?)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLinkType.Naming">
+            <summary>
+            Именование
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLinkType.Agent">
+            <summary>
+            Агент (кто действует)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLinkType.Pacient">
+            <summary>
+            Пациент (на кого действуют)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLinkType.Participle">
+            <summary>
+            Причастный и деепричастный оборот
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemLinkType.Anafor">
+            <summary>
+            Анафорическая ссылка (он, который, ...)
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemObjectType">
+            <summary>
+            Типы семантических объектов
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Noun">
+            <summary>
+            Существительное (в широком смысле, например, сущности)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Adjective">
+            <summary>
+            Прилагательное
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Verb">
+            <summary>
+            Предикат (глагол)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Participle">
+            <summary>
+            Причастие или деепричастие
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Adverb">
+            <summary>
+            Наречие
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Pronoun">
+            <summary>
+            Местоимение
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.PersonalPronoun">
+            <summary>
+            Личное местоимение
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemObjectType.Question">
+            <summary>
+            Вопрос
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.Quantity">
+            <summary>
+            Количественная характеристика.
+            Тут предстоит очень много сделать (сложная модель диапазонов, составных значений и пр.)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.Quantity.Spelling">
+            <summary>
+            Суммарное написание
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemanticService">
+            <summary>
+            Сервис семантического анализа
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemanticService.Version">
+            <summary>
+            Версия семантики
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.SemanticService.Initialize">
+            <summary>
+            Необходимо вызывать в самом начале и только один раз 
+            (после инициализации ProcessorService)
+            </summary>
+        </member>
+        <member name="M:EP.Semantic.SemanticService.Process(EP.Ner.AnalysisResult,EP.Semantic.SemProcessParams)">
+            <summary>
+            Сделать семантический анализ поверх результатов морфологического анализа и NEER
+            </summary>
+            <param name="ar">результат обработки Processor</param>
+            <param name="pars">дополнительные параметры</param>
+            <returns>результат анализа текста</returns>
+        </member>
+        <member name="F:EP.Semantic.SemanticService.Params">
+            <summary>
+            Для внутреннего использования
+            </summary>
+        </member>
+        <member name="T:EP.Semantic.SemProcessParams">
+            <summary>
+            Дополнительные параметры
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemProcessParams.DontCreateAnafor">
+            <summary>
+            Не делать анафору, оставлять всё как есть
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemProcessParams.MaxChar">
+            <summary>
+            Максимальнкая длина (дальше этого символа обработки не будет)
+            </summary>
+        </member>
+        <member name="F:EP.Semantic.SemProcessParams.Progress">
+            <summary>
+            Для реализации бегущей строки
+            </summary>
+        </member>
+    </members>
+</doc>

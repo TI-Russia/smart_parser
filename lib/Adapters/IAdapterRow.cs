@@ -100,7 +100,7 @@ namespace Smart.Parser.Adapters
                     }
                 }
             }
-            Logger.Info("result = {0}", string.Join("|\n", res));
+            // Logger.Info("result = {0}", string.Join("|\n", res));
             return res;
         }
 

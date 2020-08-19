@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EP.Analyzer.Goods.Core</name>
+    </assembly>
+    <members>
+        <member name="T:EP.Ner.Goods.GoodAttributeReferent">
+            <summary>
+            Атрибут товара
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Goods.GoodAttributeReferent.Typ">
+            <summary>
+            Тип атрибута
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Goods.GoodAttributeReferent.Values">
+            <summary>
+            Значения
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Goods.GoodAttributeReferent.AltValues">
+            <summary>
+            Значения
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Goods.GoodAttributeReferent.Units">
+            <summary>
+            Единицы измерения
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Goods.GoodAttributeReferent.Ref">
+            <summary>
+            Ссылка на внушнюю сущность
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Goods.GoodAttrType">
+            <summary>
+            Типы атрибутоа
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Goods.GoodAttrType.Keyword">
+            <summary>
+            Ключевое слово (тип товара)
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Goods.GoodAttrType.Character">
+            <summary>
+            Качественное свойство
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Goods.GoodAttrType.Proper">
+            <summary>
+            Собственное имя
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Goods.GoodAttrType.Model">
+            <summary>
+            Модель
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Goods.GoodAttrType.Numeric">
+            <summary>
+            Количественное свойство
+            </summary>
+        </member>
+        <member name="F:EP.Ner.Goods.GoodAttrType.Referent">
+            <summary>
+            Ссылка на некоторую сущность (страна, организация - производитель ...)
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Goods.GoodReferent">
+            <summary>
+            Товар
+            </summary>
+        </member>
+        <member name="P:EP.Ner.Goods.GoodReferent.Attrs">
+            <summary>
+            Атрибуты товара
+            </summary>
+        </member>
+        <member name="T:EP.Ner.Goods.GoodsAnalyzer">
+            <summary>
+            Анализатор для названий товаров (номенклатур) и их характеристик
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Goods.GoodsAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения дат
+            </summary>
+            <param name="cnt"></param>
+            <param name="stage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Goods.GoodsAttrAnalyzer">
+            <summary>
+            Анализатор для названий товаров (номенклатур) и их характеристик
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Goods.GoodsAttrAnalyzer.Process(EP.Ner.Core.AnalysisKit)">
+            <summary>
+            Основная функция выделения атрибутов
+            </summary>
+            <param name="cnt"></param>
+            <param name="stage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:EP.Ner.Goods.Internal.ResourceHelper">
+            <summary>
+            Это для поддержки получения встроенных ресурсов
+            </summary>
+        </member>
+        <member name="M:EP.Ner.Goods.Internal.ResourceHelper.GetBytes(System.String)">
+            <summary>
+            Получить встроенный ресурс
+            </summary>
+            <param name="name">имя, на который оканчивается ресурс</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
