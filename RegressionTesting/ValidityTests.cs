@@ -474,6 +474,15 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void OneBigCellInHeader()
+        {
+            TestSmartParser("33793.doc", "prod");
+        }
+
+        
+
+        [TestMethod]
         [TestCategory("docx")]
         public void MinProm2013()
         {

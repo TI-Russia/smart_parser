@@ -313,9 +313,13 @@ namespace Smart.Parser.Lib
             foreach (var cell in firstRow)
             {
                 string text = cell.GetText(true);
+
+                if (adapter.GetRowsCount() == cell.MergedRowsCount)
+                    continue;
+                if (cell.CellWidth == 0 && text.Trim() == "") continue;
+
                 if (maxMergedRows < cell.MergedRowsCount)
                     maxMergedRows = cell.MergedRowsCount;
-                if (cell.CellWidth == 0 && text.Trim() == "") continue;
                 var underCells = FindSubcellsUnder(adapter, cell);
 
                 if (underCells.Count() <= 1 || !headerCanHaveSecondLevel)
@@ -368,7 +372,10 @@ namespace Smart.Parser.Lib
                 Logger.Debug(string.Format("column title: \"{0}\"[{1}]",text.ReplaceEolnWithSpace().CoalesceWhitespace(), cell.CellWidth));
                 DeclarationField field;
                 string clean_text = AbsenceMarkers.Aggregate(text, (x, y) => x.Replace(y, "")).Trim();
-                //string clean_text = text.Replace("-", "").Trim();
+                
+                if (adapter.GetRowsCount() == cell.MergedRowsCount)
+                    continue;
+                
                 if ((text == "" || clean_text.Length <= 1) && (text != "№"))
                 {
                     // too short title, try to predict by values

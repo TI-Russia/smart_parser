@@ -707,6 +707,7 @@ namespace Smart.Parser.Adapters
             }
             if (extension != ".htm" && extension != ".html") // это просто костыль. Нужно как-то встроить это в архитектуру.
                 tables = ExtractSubtables(tables);
+            
             TablesCount = tables.Count();
             foreach (var t in tables)
             {

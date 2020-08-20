@@ -495,6 +495,9 @@ namespace Smart.Parser
 
             Logger.Info(String.Format("TablesCount = {0}", adapter.GetTablesCount()));
             Logger.Info(String.Format("RowsCount = {0}", adapter.GetRowsCount()));
+            
+            if (adapter.GetTablesCount() == 0)
+                throw new SmartParserException("No tables found in document");
 
             if (HtmlFileName != "")
                 adapter.WriteHtmlFile(HtmlFileName);
