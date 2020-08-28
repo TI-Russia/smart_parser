@@ -480,8 +480,6 @@ namespace RegressionTesting
             TestSmartParser("33793.doc", "prod");
         }
 
-        
-
         [TestMethod]
         [TestCategory("docx")]
         public void MinProm2013()

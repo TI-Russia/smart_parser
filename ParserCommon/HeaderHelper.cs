@@ -194,7 +194,7 @@ namespace TI.Declarator.ParserCommon
         private static bool HasStateString(this string s)
         {
             string clean = s.OnlyRussianLowercase();
-            return clean.Contains("пользовании");
+            return clean.Contains("пользовани");
         }
         private static bool HasOwnedString(this string s)
         {
