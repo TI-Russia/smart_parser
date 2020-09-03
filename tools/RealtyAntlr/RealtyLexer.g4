@@ -4,7 +4,7 @@ lexer grammar RealtyLexer;
 FLOATING_POINT: '.';
 SEMICOLON : ';';
 NUMBER : [0-9+]+(FLOATING_POINT[0-9+]+)?;
-SPC : (' ')+;
+SPC : (' ')+ -> skip;
 
 SQUARE_METER : 'кв.м.';
 

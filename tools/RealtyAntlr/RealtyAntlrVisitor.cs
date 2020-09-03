@@ -21,7 +21,8 @@ namespace SmartAntlr
             }
             if (context.square() != null)
             {
-                Square = context.square().GetText();
+                RealtyParser.SquareContext sc = context.square();
+                Square = sc.NUMBER().GetText();
             }
         }
         public string GetJsonString()
