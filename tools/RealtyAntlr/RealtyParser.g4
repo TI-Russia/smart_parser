@@ -10,7 +10,10 @@ realty :
 	     (realty_type COMMA? OPN_BRK? own_type CLS_BRK? COMMA? square COUNTRY?)
 
 		 /*Квартира (комнаты 1,2) 25,7 кв.м Индивидуальная собственность РФ*/
-       | (realty_type COMMA? square COMMA? own_type COUNTRY?)      
+       | (realty_type COMMA? square COMMA? own_type COUNTRY?)
+
+		 /*Земельный участок сельхоз.назначения 1788452000 Долевая собственность 2697/17884 доли РФ*/
+       | (realty_type COMMA? REALTY_ID COMMA? own_type COUNTRY?)      
 	;
 
 realty_type : REALTY_TYPE realty_addition?;
