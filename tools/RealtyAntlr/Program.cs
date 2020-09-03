@@ -18,6 +18,7 @@ namespace SmartAntlr
             }
             string text = "";
             var texts = new List<string>();
+
             for (int i = 0; i < lines.Count; ++i)
             {
                 var line = lines[i];
@@ -36,7 +37,7 @@ namespace SmartAntlr
             return texts;
 
         }
-            static void Main(string[] args)
+        static void Main(string[] args)
         {
             string inputPath = args[0];
             string outputPath = args[0] + ".realty";
@@ -47,6 +48,8 @@ namespace SmartAntlr
                 foreach (string text in texts)
                 {
                     var parser = new AntlrRealtyParser();
+                    Console.WriteLine(text);
+                    outputFile.WriteLine(text);
                     foreach (var realty in parser.Parse(text))
                     {
                         outputFile.WriteLine(realty.GetJsonString());

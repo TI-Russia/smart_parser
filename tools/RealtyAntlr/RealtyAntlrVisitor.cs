@@ -6,9 +6,12 @@ namespace SmartAntlr
 {
     public class RealtyFromText
     {
-        public string OwnType;
-        public string RealtyType;
-        public string Square;
+        public string OwnType = "";
+        public string RealtyType = "";
+        public string Square = "";
+        public string RealtyShare = "";
+        public string Country = "";
+
         public RealtyFromText(RealtyParser.RealtyContext context)
         {
             if (context.OWN_TYPE() != null)
@@ -19,20 +22,38 @@ namespace SmartAntlr
             {
                 RealtyType = context.REALTY_TYPE().GetText();
             }
+            
             if (context.square() != null)
             {
                 RealtyParser.SquareContext sc = context.square();
                 Square = sc.NUMBER().GetText();
             }
+            if (context.realty_share() != null)
+            {
+                RealtyShare = context.realty_share().GetText();
+            }
+            if (context.COUNTRY() != null)
+            {
+                Country = context.COUNTRY().GetText();
+            }
+            
         }
         public string GetJsonString()
         {
-            var my_jsondata = new
+            var my_jsondata = new Dictionary<string, string>
             {
-                OwnType = OwnType,
-                RealtyType = RealtyType,
-                Square = Square
+                { "OwnType", OwnType},
+                { "RealtyType",  RealtyType},
+                { "Square", Square}
             };
+            if (RealtyShare != "")
+            {
+                my_jsondata["RealtyShare"] = RealtyShare;
+            }
+            if (Country != "")
+            {
+                my_jsondata["Country"] = Country;
+            }
             return JsonConvert.SerializeObject(my_jsondata, Formatting.Indented);
         }
     }
