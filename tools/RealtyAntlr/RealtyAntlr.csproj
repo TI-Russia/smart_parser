@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="save\**" />
+    <EmbeddedResource Remove="save\**" />
+    <None Remove="save\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="RealtyLexer.g4" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <Antlr4 Include="RealtyLexer.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+        </Antlr4>
+        <Antlr4 Include="RealtyParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+        </Antlr4>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
+      <PackageReference Include="Antlr4BuildTasks" Version="8.3.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
+
+</Project>
