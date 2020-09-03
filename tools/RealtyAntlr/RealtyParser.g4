@@ -2,19 +2,28 @@ parser grammar RealtyParser;
 options { tokenVocab=RealtyLexer; }
 
 
-realty_list : realty+;
-
+realty_list : (realty SEMICOLON?)+;
 
 realty : 
 		/*Квартира (долевая собственность) 122 кв.м.*/
-	   (REALTY_TYPE  OPN_BRK? OWN_TYPE CLS_BRK? square COUNTRY? SEMICOLON?)
-
 		/*Квартира, общая долевая собственность ¼ от 44,4 кв.м., РФ */
-	 | (REALTY_TYPE COMMA OWN_TYPE realty_share OT square COMMA COUNTRY? SEMICOLON?)
+	     (realty_type COMMA? OPN_BRK? own_type CLS_BRK? COMMA? square COUNTRY?)
+
+		 /*Квартира (комнаты 1,2) 25,7 кв.м Индивидуальная собственность РФ*/
+       | (realty_type COMMA? square COMMA? own_type COUNTRY?)      
 	;
 
+realty_type : REALTY_TYPE realty_addition?;
+own_type :    OWN_TYPE
+			| (OWN_TYPE SHARE? realty_share SHARE? OT?);
+
+
+/*для "(комнаты 1,2)" в примере Квартира (комнаты 1,2) 25,7 кв.м Индивидуальная собственность РФ*/
+realty_addition : OPN_BRK REALTY_PARTS NUMBER (COMMA NUMBER)*  CLS_BRK;
 
 /*122 кв.м.*/
 square : NUMBER  SQUARE_METER;
 
+/*1/2 доли*/
 realty_share : (FRACTION_UNICODE | FRACTION_ASCII);
+

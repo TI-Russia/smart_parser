@@ -14,13 +14,13 @@ namespace SmartAntlr
 
         public RealtyFromText(RealtyParser.RealtyContext context)
         {
-            if (context.OWN_TYPE() != null)
+            if (context.own_type() != null)
             {
-                OwnType = context.OWN_TYPE().GetText();
+                OwnType = context.own_type().OWN_TYPE().GetText();
             }
-            if (context.REALTY_TYPE() != null)
+            if (context.realty_type() != null)
             {
-                RealtyType = context.REALTY_TYPE().GetText();
+                RealtyType = context.realty_type().REALTY_TYPE().GetText();
             }
             
             if (context.square() != null)
@@ -28,9 +28,9 @@ namespace SmartAntlr
                 RealtyParser.SquareContext sc = context.square();
                 Square = sc.NUMBER().GetText();
             }
-            if (context.realty_share() != null)
+            if (context.own_type() != null && context.own_type().realty_share() != null)
             {
-                RealtyShare = context.realty_share().GetText();
+                RealtyShare = context.own_type().realty_share().GetText();
             }
             if (context.COUNTRY() != null)
             {

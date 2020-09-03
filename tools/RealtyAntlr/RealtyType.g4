@@ -1,5 +1,7 @@
 ﻿lexer grammar RealtyLexer;
 
+REALTY_PARTS : 'комнаты' | 'комната';
+
 REALTY_TYPE :   
 
   'квартира'
@@ -349,4 +351,4 @@ REALTY_TYPE :
 | 'земельный участок для с/х'
 | 'хоз. постройки'
 | 'кафе'
-;             ;
+;           
