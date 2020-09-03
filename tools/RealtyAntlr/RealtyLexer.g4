@@ -9,6 +9,7 @@ CLS_BRK : ')';
 SPC : (' ')+ -> skip;
 
 SQUARE_METER : 'кв.м' | 'кв.м.';
+HECTARE	 : 'га';
 OT: 'от';
 
 /* short number < 100000 like 1.23, 99999.999 */

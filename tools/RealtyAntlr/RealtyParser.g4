@@ -25,7 +25,7 @@ own_type :    OWN_TYPE
 realty_addition : OPN_BRK REALTY_PARTS NUMBER (COMMA NUMBER)*  CLS_BRK;
 
 /*122 кв.м.*/
-square : NUMBER  SQUARE_METER;
+square : NUMBER  (SQUARE_METER | HECTARE);
 
 /*1/2 доли*/
 realty_share : (FRACTION_UNICODE | FRACTION_ASCII);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Antlr4.Runtime;
 using Newtonsoft.Json;
+using TI.Declarator.ParserCommon;
 
 namespace SmartAntlr
 {
@@ -8,7 +9,7 @@ namespace SmartAntlr
     {
         public string OwnType = "";
         public string RealtyType = "";
-        public string Square = "";
+        public decimal Square = -1;
         public string RealtyShare = "";
         public string Country = "";
 
@@ -26,7 +27,12 @@ namespace SmartAntlr
             if (context.square() != null)
             {
                 RealtyParser.SquareContext sc = context.square();
-                Square = sc.NUMBER().GetText();
+                var strVal = sc.NUMBER().GetText(); 
+                Square = strVal.ParseDecimalValue(); 
+                if (sc.HECTARE() != null)
+                {
+                    Square = Square * 10000;
+                }
             }
             if (context.own_type() != null && context.own_type().realty_share() != null)
             {
@@ -44,7 +50,7 @@ namespace SmartAntlr
             {
                 { "OwnType", OwnType},
                 { "RealtyType",  RealtyType},
-                { "Square", Square}
+                { "Square", Square.ToString()}
             };
             if (RealtyShare != "")
             {
