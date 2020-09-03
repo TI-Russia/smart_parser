@@ -1,8 +1,11 @@
 parser grammar RealtyParser;
 options { tokenVocab=RealtyLexer; }
 
-/*Квартира (долевая собственность) 122 кв.м.*/
 
 realty_list : realty+;
-realty : REALTY_TYPE  OWN_TYPE square ( SEMICOLON)?;
+
+/*Квартира (долевая собственность) 122 кв.м.*/
+realty : REALTY_TYPE  OPN_BRK? OWN_TYPE CLS_BRK? square SEMICOLON?;
+
+/*122 кв.м.*/
 square : NUMBER  SQUARE_METER;

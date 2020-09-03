@@ -5,6 +5,8 @@ FLOATING_POINT: '.';
 SEMICOLON : ';';
 NUMBER : [0-9+]+(FLOATING_POINT[0-9+]+)?;
 SPC : (' ')+ -> skip;
+OPN_BRK : '(';
+CLS_BRK : ')';
 
 SQUARE_METER : 'кв.м.';
 
