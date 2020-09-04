@@ -22,7 +22,10 @@ namespace SmartAntlr
             if (context.Stop != null) {
                 end = context.Stop.StopIndex + 1;
             }
-            TheWholeRecord = inputText.Substring(start, end - start);
+            if (end > start)
+            {
+                TheWholeRecord = inputText.Substring(start, end - start);
+            }
 
             if (context.own_type() != null)
             {
@@ -33,7 +36,7 @@ namespace SmartAntlr
                 RealtyType = context.realty_type().REALTY_TYPE().GetText();
             }
             
-            if (context.square() != null)
+            if (context.square() != null && context.square().NUMBER() != null)
             {
                 RealtyAllParser.SquareContext sc = context.square();
                 var strVal = sc.NUMBER().GetText(); 

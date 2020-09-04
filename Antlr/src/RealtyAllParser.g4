@@ -32,7 +32,7 @@ realty :
 realty_type : REALTY_TYPE;
 
 own_type :    OWN_TYPE
-			| (OWN_TYPE DOLYA_WORD? realty_share DOLYA_WORD? OT?);
+			| (OWN_TYPE DOLYA_WORD? COMMA? realty_share DOLYA_WORD? OT?);
 
 
 /*122 кв.м.*/
