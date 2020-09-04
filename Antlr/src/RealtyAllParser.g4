@@ -1,4 +1,7 @@
-parser grammar RealtyParser;
+/* парсим записи о недвижимости (все в одной строке), без деления по колонкам */
+
+parser grammar RealtyAllParser;
+
 options { tokenVocab=RealtyLexer; }
 
 

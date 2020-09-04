@@ -13,7 +13,7 @@ namespace SmartAntlr
         public string RealtyShare = "";
         public string Country = "";
 
-        public RealtyFromText(RealtyParser.RealtyContext context)
+        public RealtyFromText(RealtyAllParser.RealtyContext context)
         {
             if (context.own_type() != null)
             {
@@ -26,7 +26,7 @@ namespace SmartAntlr
             
             if (context.square() != null)
             {
-                RealtyParser.SquareContext sc = context.square();
+                RealtyAllParser.SquareContext sc = context.square();
                 var strVal = sc.NUMBER().GetText(); 
                 Square = strVal.ParseDecimalValue(); 
                 if (sc.HECTARE() != null)
@@ -68,11 +68,11 @@ namespace SmartAntlr
         }
     }
 
-    public class RealtyVisitor : RealtyParserBaseVisitor<object>
+    public class RealtyVisitor : RealtyAllParserBaseVisitor<object>
     {
         public List<RealtyFromText> Lines = new List<RealtyFromText>();
 
-        public override object VisitRealty(RealtyParser.RealtyContext context)
+        public override object VisitRealty(RealtyAllParser.RealtyContext context)
         {
             var line = new RealtyFromText(context);
             Lines.Add(line);
@@ -87,12 +87,13 @@ namespace SmartAntlr
             AntlrInputStream inputStream = new AntlrInputStream(inputText);
             RealtyLexer speakLexer = new RealtyLexer(inputStream);
             CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
-            RealtyParser speakParser = new RealtyParser(commonTokenStream);
+            RealtyAllParser speakParser = new RealtyAllParser(commonTokenStream);
 
             var context = speakParser.realty_list();
             var visitor = new RealtyVisitor();
             visitor.Visit(context);
             return visitor.Lines;
         }
+
     }
 }
