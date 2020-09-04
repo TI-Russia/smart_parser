@@ -2,12 +2,11 @@
 using Smart.Parser.Adapters;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using TI.Declarator.ParserCommon;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-using DocumentFormat.OpenXml.Drawing.Charts;
+using TI.Declarator.ParserCommon;
+using SmartAntlr;
 
 namespace Smart.Parser.Lib
 {
@@ -21,10 +20,9 @@ namespace Smart.Parser.Lib
             {
                 return;
             }
-
         }
 
-        string GetRealyTypeFromColumnTitle(DeclarationField fieldName)
+        string GetRealtyTypeFromColumnTitle(DeclarationField fieldName)
         {
             if ((fieldName & DeclarationField.LandArea) > 0) { return "земельный участок"; }
             if ((fieldName & DeclarationField.LivingHouse) > 0) { return "земельный участок"; }
@@ -34,6 +32,48 @@ namespace Smart.Parser.Lib
             return null;
         }
 
+        void ParseRealtiesDistributedByColumns(string ownTypeByColumn, string realtyTypeFromColumnTitle, string cellText, Person person)
+        {
+            foreach (var bulletText in FindBullets(cellText))
+            {
+                RealEstateProperty realEstateProperty = new RealEstateProperty();
+                realEstateProperty.Text = bulletText;
+                realEstateProperty.type_raw = realtyTypeFromColumnTitle;
+                realEstateProperty.own_type_by_column = ownTypeByColumn;
+                var match = Regex.Match(bulletText, ".*\\s(\\d+[.,]\\d+)\\sкв.м", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    realEstateProperty.square = DataHelper.ConvertSquareFromString(match.Groups[1].ToString());
+                }
+
+                decimal? square = DataHelper.ParseSquare(bulletText);
+                if (square.HasValue)
+                {
+                    realEstateProperty.square = square;
+                }
+
+                CheckProperty(realEstateProperty);
+                person.RealEstateProperties.Add(realEstateProperty);
+            }
+        }
+        void ParseRealtiesByAntlr(string ownTypeByColumn, string cellText, Person person)
+        {
+            foreach (var realty in AntlrRealtyParser.Parse(cellText))
+            if (realty.RealtyType != null && realty.RealtyType.Length > 0)
+            {
+                RealEstateProperty realEstateProperty = new RealEstateProperty();
+                realEstateProperty.Text = realty.TheWholeRecord;
+                realEstateProperty.type_raw = realty.RealtyType;
+                realEstateProperty.square = realty.Square;
+                realEstateProperty.country_raw = realty.Country;
+                realEstateProperty.own_type_raw = realty.OwnType;
+                //???  = realty.RealtyShare; // nowhere to copy
+                realEstateProperty.own_type_by_column = ownTypeByColumn;
+                CheckProperty(realEstateProperty);
+                person.RealEstateProperties.Add(realEstateProperty);
+            }
+        }
+
         void AddRealEstateWithNaturalText(DataRow currRow, DeclarationField fieldName, string ownTypeByColumn, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(fieldName))
@@ -41,33 +81,21 @@ namespace Smart.Parser.Lib
                 fieldName = fieldName | DeclarationField.MainDeclarant;
             }
 
-            if (currRow.ColumnOrdering.ContainsField(fieldName))
+            if (!currRow.ColumnOrdering.ContainsField(fieldName)) {
+                return;
+            }
+            string text = currRow.GetContents(fieldName).Trim().Replace("не имеет", "").Trim();
+            if (DataHelper.IsEmptyValue(text) || text == "0") {
+                return;
+            }
+            var realtyType = GetRealtyTypeFromColumnTitle(fieldName);
+            if (realtyType != null) {
+                ParseRealtiesDistributedByColumns(ownTypeByColumn, realtyType, text, person);
+            }
+            else
             {
-                string text = currRow.GetContents(fieldName).Trim().Replace("не имеет", "").Trim();
-                if (!DataHelper.IsEmptyValue(text) && text != "0")
-                {
-                    foreach (var bulletText in FindBullets(text))
-                    {
-                        RealEstateProperty realEstateProperty = new RealEstateProperty();
-                        realEstateProperty.Text = bulletText;
-                        realEstateProperty.type_raw = GetRealyTypeFromColumnTitle(fieldName);
-                        realEstateProperty.own_type_by_column = ownTypeByColumn;
-                        var match = Regex.Match(bulletText, ".*\\s(\\d+[.,]\\d+)\\sкв.м", RegexOptions.IgnoreCase);
-                        if (match.Success)
-                        {
-                            realEstateProperty.square = DataHelper.ConvertSquareFromString(match.Groups[1].ToString());
-                        }
+                ParseRealtiesByAntlr(ownTypeByColumn, text, person);
 
-                        decimal? square = DataHelper.ParseSquare(bulletText);
-                        if (square.HasValue)
-                        {
-                            realEstateProperty.square = square;
-                        }
-
-                        CheckProperty(realEstateProperty);
-                        person.RealEstateProperties.Add(realEstateProperty);
-                    }
-                }
             }
         }
 
@@ -98,7 +126,7 @@ namespace Smart.Parser.Lib
                     return countriesCount > 1;
                 }
             }
-            return false;*/
+            return false;*/ 
         }
 
         public void ParseOwnedProperty(DataRow currRow, Person person)

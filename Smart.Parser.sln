@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Parser.Lib", "lib\Smart.Parser.Lib.csproj", "{76B50097-280E-484F-9F16-00E8785F53BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{93B1A504-38C4-4CC4-AC5A-84F3E0B4E536} = {93B1A504-38C4-4CC4-AC5A-84F3E0B4E536}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParserCommon", "ParserCommon\ParserCommon.csproj", "{27713A38-4B6B-46DB-A227-52AEBB8B70A0}"
 EndProject
@@ -24,6 +27,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Sdk.Core", "EP.SdkCore\EP.Sdk.Core.csproj", "{6B9AC4CF-8932-429D-B431-FF41F2A5CCBE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildAntlr", "Antlr\BuildAntlr.csproj", "{93B1A504-38C4-4CC4-AC5A-84F3E0B4E536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntlrTester", "tools\AntlrTester\AntlrTester.csproj", "{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,12 +76,17 @@ Global
 		{93B1A504-38C4-4CC4-AC5A-84F3E0B4E536}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B1A504-38C4-4CC4-AC5A-84F3E0B4E536}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B1A504-38C4-4CC4-AC5A-84F3E0B4E536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE82CDC1-CF67-4E79-971E-B769F17E0A3A} = {AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}
+		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA} = {AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD2A9583-38EC-41A7-9E73-34858556C2B6}
