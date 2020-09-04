@@ -16,13 +16,16 @@ realty :
        | (realty_type COMMA? REALTY_ID COMMA? own_type COUNTRY?)      
 
 		 /*Участок под ЛПХ (1/2 доли), 14 000,00 м2. Россия*/
-       | (realty_type  OPN_BRK? realty_share SHARE? CLS_BRK? COMMA? square COMMA?  COUNTRY?)      
+       | (realty_type  OPN_BRK? realty_share DOLYA_WORD? CLS_BRK? COMMA? square COMMA?  COUNTRY?)      
+
+	    /*Земельный участок под хозяйственными постройками, 30,00 м2. Россия (аренда)*/
+	   | (realty_type  COMMA? square COMMA?  COUNTRY? OPN_BRK? own_type  CLS_BRK? )      
 	;
 
 realty_type : REALTY_TYPE;
 
 own_type :    OWN_TYPE
-			| (OWN_TYPE SHARE? realty_share SHARE? OT?);
+			| (OWN_TYPE DOLYA_WORD? realty_share DOLYA_WORD? OT?);
 
 
 /*122 кв.м.*/
