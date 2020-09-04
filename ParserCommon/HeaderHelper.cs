@@ -278,9 +278,16 @@ namespace TI.Declarator.ParserCommon
         private static bool HasMainDeclarant(this string s)
         {
             s = s.OnlyRussianLowercase();
-            return (s.Contains("служащего") || s.Contains("служащему"))
+            return (
+                           s.Contains("служащего") 
+                        || s.Contains("служащему")
+                        || s.Contains("должностлицо")
+                        || s.Contains("должнослицо")
+                        || s.Contains("должностноелицо")
+                   )
                 && !HasChild(s) && !HasSpouse(s);
         }
+
         private static bool HasChild(this string s)
         {
             return s.Contains("детей") || s.Contains("детям");
