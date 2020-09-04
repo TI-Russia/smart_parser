@@ -1,4 +1,5 @@
 ﻿lexer grammar RealtyLexer;
+import  RealtyChars;
 
 fragment KOMNATA : 
       'комнаты' 
@@ -149,7 +150,7 @@ fragment ZEM_UCHASTOK_PURPOSE:
 fragment ZEM_UCHASTOK_WITH_PROPS: 
               ZEM_UCHASTOK  
             | (ZEM_UCHASTOK ' ' (PREPOSITION ' ')? ZEM_UCHASTOK_PURPOSE)
-            | (ZEM_UCHASTOK_ADJ ' ' ZEM_UCHASTOK_ADJ? ' ' ZEM_UCHASTOK)
+            | (ZEM_UCHASTOK_ADJ ' ' (ZEM_UCHASTOK_ADJ ' ')? ZEM_UCHASTOK)
             | (ZEM_UCHASTOK ' ' ZEM_UCHASTOK_ADJ)
             | ('земельный ' ZEM_UCHASTOK_ADJ ' участок')
             | (ZEM_UCHASTOK_ADJ ' участок')
@@ -161,6 +162,7 @@ REALTY_TYPE :
 
   KVARTIRA
 | ZEM_UCHASTOK_WITH_PROPS
+| (FRACTION_UNICODE ' ' DOM)
 | 'жилой дом'
 | 'гараж'
 | 'дом'
