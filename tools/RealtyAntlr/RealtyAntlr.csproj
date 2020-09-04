@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <None Remove="RealtyLexer.g4" />
+    <None Remove="RealtyType.g4" />
+    <None Remove="RealtyType.g4.err" />
   </ItemGroup>
 
     <ItemGroup>
@@ -24,6 +26,24 @@
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
         </Antlr4>
+        <Antlr4 Include="RealtyType.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+        </Antlr4>
+        <Antlr4 Include="RealtyOwnType.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+        </Antlr4>
+        <Antlr4 Include="RealtyCountry.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+        </Antlr4>
+        <Antlr4 Include="RealtyChars.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+        </Antlr4>
+
+
     </ItemGroup>
 
     <ItemGroup>
@@ -34,6 +54,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\ParserCommon\ParserCommon.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Antlr4 Include="RealtyType.g4.err">
+        <Generator>sb</Generator>
+      </Antlr4>
     </ItemGroup>
 
 

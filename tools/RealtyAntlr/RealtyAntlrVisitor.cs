@@ -38,6 +38,10 @@ namespace SmartAntlr
             {
                 RealtyShare = context.own_type().realty_share().GetText();
             }
+            if (context.realty_share() != null)
+            {
+                RealtyShare = context.realty_share().GetText();
+            }
             if (context.COUNTRY() != null)
             {
                 Country = context.COUNTRY().GetText();

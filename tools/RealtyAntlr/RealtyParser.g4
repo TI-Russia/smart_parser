@@ -14,15 +14,16 @@ realty :
 
 		 /*Земельный участок сельхоз.назначения 1788452000 Долевая собственность 2697/17884 доли РФ*/
        | (realty_type COMMA? REALTY_ID COMMA? own_type COUNTRY?)      
+
+		 /*Участок под ЛПХ (1/2 доли), 14 000,00 м2. Россия*/
+       | (realty_type  OPN_BRK? realty_share SHARE? CLS_BRK? COMMA? square COMMA?  COUNTRY?)      
 	;
 
-realty_type : REALTY_TYPE realty_addition?;
+realty_type : REALTY_TYPE;
+
 own_type :    OWN_TYPE
 			| (OWN_TYPE SHARE? realty_share SHARE? OT?);
 
-
-/*для "(комнаты 1,2)" в примере Квартира (комнаты 1,2) 25,7 кв.м Индивидуальная собственность РФ*/
-realty_addition : OPN_BRK REALTY_PARTS NUMBER (COMMA NUMBER)*  CLS_BRK;
 
 /*122 кв.м.*/
 square : NUMBER  (SQUARE_METER | HECTARE);
