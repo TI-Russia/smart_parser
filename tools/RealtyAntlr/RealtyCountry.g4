@@ -1,4 +1,4 @@
-﻿lexer grammar RealtyLexer;
+lexer grammar RealtyLexer;
 
 COUNTRY : 'россия'
         | 'рф';

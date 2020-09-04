@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Office2Txt", "tools\Office2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EP.Sdk.Core", "EP.SdkCore\EP.Sdk.Core.csproj", "{6B9AC4CF-8932-429D-B431-FF41F2A5CCBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Sdk.Core", "EP.SdkCore\EP.Sdk.Core.csproj", "{6B9AC4CF-8932-429D-B431-FF41F2A5CCBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

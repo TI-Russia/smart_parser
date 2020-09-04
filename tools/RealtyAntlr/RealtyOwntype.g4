@@ -1,4 +1,4 @@
-﻿lexer grammar RealtyLexer;
+lexer grammar RealtyLexer;
 
 OWN_TYPE :   
              'индивидуальная собственность'

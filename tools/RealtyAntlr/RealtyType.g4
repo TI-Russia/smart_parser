@@ -1,4 +1,4 @@
-﻿lexer grammar RealtyLexer;
+lexer grammar RealtyLexer;
 import  RealtyChars;
 
 fragment KOMNATA : 
@@ -122,7 +122,7 @@ fragment ZEM_UCHASTOK_ADJ:
 
 fragment ZEM_UCHASTOK_PURPOSE:
                    ('ижс')
-                |  ('индивидуально' . .? ' жилищно' . .? ' строительств' .)
+                |  ('индивидуально' ('го'|'е') ' жилищно' . .? ' строительств' .)
                 |  'жилищного строительства'
                 |  'индивид. жил. строит.'
                 |  'индивидуальное гаражное строительство'                
