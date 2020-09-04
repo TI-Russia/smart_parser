@@ -124,6 +124,8 @@ namespace Smart.Parser.Adapters
                     try
                     {
                         client.DownloadFile(url, docXPath);
+                        Logger.Debug("WebClient.DownloadFile downloaded file successfully");
+                        Logger.Debug(String.Format("file {0}, size is {1}", docXPath, new System.IO.FileInfo(docXPath).Length));
                     }
                     catch (WebException exp)
                     {
