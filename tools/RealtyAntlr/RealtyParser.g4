@@ -20,6 +20,9 @@ realty :
 
 	    /*Земельный участок под хозяйственными постройками, 30,00 м2. Россия (аренда)*/
 	   | (realty_type  COMMA? square COMMA?  COUNTRY? OPN_BRK? own_type  CLS_BRK? )      
+
+	   /* Земельный участок для ведения с/х, 58 269,00 м2. Россия */
+	   | (realty_type  COMMA? square COMMA?  COUNTRY?)      
 	;
 
 realty_type : REALTY_TYPE;
