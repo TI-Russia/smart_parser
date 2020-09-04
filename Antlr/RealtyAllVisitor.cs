@@ -2,19 +2,28 @@
 using Antlr4.Runtime;
 using Newtonsoft.Json;
 using TI.Declarator.ParserCommon;
+using System.Text.RegularExpressions;
 
 namespace SmartAntlr
 {
     public class RealtyFromText
     {
+        public string TheWholeRecord = "";
         public string OwnType = "";
         public string RealtyType = "";
         public decimal Square = -1;
         public string RealtyShare = "";
         public string Country = "";
 
-        public RealtyFromText(RealtyAllParser.RealtyContext context)
+        public RealtyFromText(string inputText, RealtyAllParser.RealtyContext context)
         {
+            int start = context.Start.StartIndex;
+            int end = inputText.Length;
+            if (context.Stop != null) {
+                end = context.Stop.StopIndex + 1;
+            }
+            TheWholeRecord = inputText.Substring(start, end - start);
+
             if (context.own_type() != null)
             {
                 OwnType = context.own_type().OWN_TYPE().GetText();
@@ -71,10 +80,15 @@ namespace SmartAntlr
     public class RealtyVisitor : RealtyAllParserBaseVisitor<object>
     {
         public List<RealtyFromText> Lines = new List<RealtyFromText>();
+        public string InputText;
 
+        public RealtyVisitor(string inputText)
+        {
+            InputText = inputText;
+        }
         public override object VisitRealty(RealtyAllParser.RealtyContext context)
         {
-            var line = new RealtyFromText(context);
+            var line = new RealtyFromText(InputText, context);
             Lines.Add(line);
             return line;
         }
@@ -82,15 +96,18 @@ namespace SmartAntlr
 
     public class AntlrRealtyParser
     {
-        public List<RealtyFromText> Parse(string inputText)
+        public static List<RealtyFromText> Parse(string inputText)
         {
-            AntlrInputStream inputStream = new AntlrInputStream(inputText);
+            inputText = Regex.Replace(inputText, @"\s+", " ");
+            inputText = inputText.Trim();
+            
+            AntlrInputStream inputStream = new AntlrInputStream(inputText.ToLower());
             RealtyLexer speakLexer = new RealtyLexer(inputStream);
             CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
             RealtyAllParser speakParser = new RealtyAllParser(commonTokenStream);
 
             var context = speakParser.realty_list();
-            var visitor = new RealtyVisitor();
+            var visitor = new RealtyVisitor(inputText);
             visitor.Visit(context);
             return visitor.Lines;
         }

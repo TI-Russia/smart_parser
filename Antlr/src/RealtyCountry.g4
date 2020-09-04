@@ -1,6 +1,6 @@
 lexer grammar RealtyLexer;
 
-country : 
+COUNTRY : 
 
   'австралия'
 | 'австрия'
