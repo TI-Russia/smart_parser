@@ -4,15 +4,51 @@ using SmartAntlr;
 using System.IO;
 using Antlr4.Runtime;
 using System;
+using Newtonsoft.Json;
 
 
-public abstract class GeneralRealtyParser
+public class GeneralParserPhrase
+{
+    string TextFromLexer = "";
+    string SourceText = "";
+
+    public GeneralParserPhrase(string inputText, ParserRuleContext context)
+    {
+        int start = context.Start.StartIndex;
+        int end = inputText.Length;
+        if (context.Stop != null)
+        {
+            end = context.Stop.StopIndex + 1;
+        }
+        if (end > start)
+        {
+            SourceText = inputText.Substring(start, end - start);
+        }
+        TextFromLexer = context.GetText();
+    }
+
+    virtual public string GetJsonString()
+    {
+        var my_jsondata = new Dictionary<string, string>
+            {
+                { "value", TextFromLexer}
+            };
+        return JsonConvert.SerializeObject(my_jsondata, Formatting.Indented);
+    }
+
+
+    public string GetText() { return TextFromLexer; }
+    public string GetSourceText() { return SourceText; }
+
+}
+
+public abstract class GeneralAntlrParser
 {
     public string InputText;
     public bool Silent = true;
     public CommonTokenStream CommonTokenStream;
 
-    public GeneralRealtyParser(bool silent = true)
+    public GeneralAntlrParser(bool silent = true)
     {
         Silent = silent;
     }
@@ -32,7 +68,37 @@ public abstract class GeneralRealtyParser
         RealtyLexer lexer = new RealtyLexer(inputStream, output, errorOutput);
         CommonTokenStream = new CommonTokenStream(lexer);
     }
-    public abstract List<string> ParseToJson(string inputText);
+    public abstract List<GeneralParserPhrase> Parse(string inputText);
+
+    public List<string> ParseToJson(string inputText)
+    {
+        var result = new List<string>();
+        if (inputText != null)
+        {
+            foreach (var i in Parse(inputText))
+            {
+                result.Add(i.GetJsonString());
+            }
+        }
+        return result;
+    }
+
+    public List<string> ParseToStringList(string inputText)
+    {
+        var result = new List<string>();
+        if (inputText != null)
+        {
+            foreach (var item in Parse(inputText))
+            {
+                if (item.GetText() != "")
+                {
+                    result.Add(item.GetText());
+                }
+            }
+        }
+        return result;
+
+    }
 
 }
 
@@ -68,7 +134,7 @@ public class AntlrCommon
         return texts;
 
     }
-    public static void WriteTestCaseResultsToFile(GeneralRealtyParser parser, List<string> texts, string outputPath)
+    public static void WriteTestCaseResultsToFile(GeneralAntlrParser parser, List<string> texts, string outputPath)
     {
         using (StreamWriter outputFile = new StreamWriter(outputPath))
         {

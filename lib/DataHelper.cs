@@ -28,25 +28,6 @@ namespace Smart.Parser.Lib
             SquareRegexp = new Regex(squareRegexpStr, RegexOptions.IgnoreCase);
         }
 
-        static public List<string> ParseCountryList(string s)   {
-            s = s.Trim();
-            var countries = new List<string>();
-            while (s.Length > 0)
-            {
-                var match = CountryRegexp.Match(s);
-                if (match.Success && match.Index == 0 && match.Length > 0)
-                {
-                    countries.Add(match.Value);
-                }
-                else
-                {
-                    return new List<string>();
-                }
-                s = s.Substring(match.Length).Trim();
-            }
-            return countries;
-        }
-
         static List<string> ReadCountryList() {
             // taken from https://github.com/umpirsky/country-list
 

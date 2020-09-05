@@ -71,16 +71,6 @@ public interface IRealtyAllParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOwn_type([NotNull] RealtyAllParser.Own_typeContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RealtyAllParser.square"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterSquare([NotNull] RealtyAllParser.SquareContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RealtyAllParser.square"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitSquare([NotNull] RealtyAllParser.SquareContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="RealtyAllParser.realty_share"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -90,4 +80,14 @@ public interface IRealtyAllParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitRealty_share([NotNull] RealtyAllParser.Realty_shareContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyAllParser.square"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare([NotNull] RealtyAllParser.SquareContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyAllParser.square"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare([NotNull] RealtyAllParser.SquareContext context);
 }

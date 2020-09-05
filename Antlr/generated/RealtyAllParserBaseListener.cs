@@ -83,18 +83,6 @@ public partial class RealtyAllParserBaseListener : IRealtyAllParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOwn_type([NotNull] RealtyAllParser.Own_typeContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RealtyAllParser.square"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterSquare([NotNull] RealtyAllParser.SquareContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RealtyAllParser.square"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitSquare([NotNull] RealtyAllParser.SquareContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="RealtyAllParser.realty_share"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -106,6 +94,18 @@ public partial class RealtyAllParserBaseListener : IRealtyAllParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitRealty_share([NotNull] RealtyAllParser.Realty_shareContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyAllParser.square"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare([NotNull] RealtyAllParser.SquareContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyAllParser.square"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare([NotNull] RealtyAllParser.SquareContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

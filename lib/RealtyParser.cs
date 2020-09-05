@@ -14,13 +14,6 @@ namespace Smart.Parser.Lib
     {
         public static readonly string OwnedString = "В собственности";
         public static readonly string StateString = "В пользовании";
-        public static void CheckProperty(RealEstateProperty prop)
-        {
-            if (prop == null)
-            {
-                return;
-            }
-        }
 
         string GetRealtyTypeFromColumnTitle(DeclarationField fieldName)
         {
@@ -52,26 +45,27 @@ namespace Smart.Parser.Lib
                     realEstateProperty.square = square;
                 }
 
-                CheckProperty(realEstateProperty);
                 person.RealEstateProperties.Add(realEstateProperty);
             }
         }
         void ParseRealtiesByAntlr(string ownTypeByColumn, string cellText, Person person)
         {
             var parser = new AntlrRealtyParser();
-            foreach (var realty in parser.Parse(cellText))
-            if (realty.RealtyType != null && realty.RealtyType.Length > 0)
+            foreach (var item in parser.Parse(cellText))
             {
-                RealEstateProperty realEstateProperty = new RealEstateProperty();
-                realEstateProperty.Text = realty.TheWholeRecord;
-                realEstateProperty.type_raw = realty.RealtyType;
-                realEstateProperty.square = realty.Square;
-                realEstateProperty.country_raw = realty.Country;
-                realEstateProperty.own_type_raw = realty.OwnType;
-                //???  = realty.RealtyShare; // nowhere to write to
-                realEstateProperty.own_type_by_column = ownTypeByColumn;
-                CheckProperty(realEstateProperty);
-                person.RealEstateProperties.Add(realEstateProperty);
+                RealtyFromText realty = (RealtyFromText)item;
+                if (realty.RealtyType != null && realty.RealtyType.Length > 0)
+                {
+                    RealEstateProperty realEstateProperty = new RealEstateProperty();
+                    realEstateProperty.Text = realty.GetSourceText();
+                    realEstateProperty.type_raw = realty.RealtyType;
+                    realEstateProperty.square = realty.Square;
+                    realEstateProperty.country_raw = realty.Country;
+                    realEstateProperty.own_type_raw = realty.OwnType;
+                    //???  = realty.RealtyShare; // nowhere to write to
+                    realEstateProperty.own_type_by_column = ownTypeByColumn;
+                    person.RealEstateProperties.Add(realEstateProperty);
+                }
             }
         }
 
@@ -100,34 +94,18 @@ namespace Smart.Parser.Lib
             }
         }
 
+
         public bool OneCellContainsManyValues(string squareStr, string countryStr)
         {
-            /*int countriesCount = DataHelper.ParseCountryList(countryStr).Count;
-            if (countriesCount == 1)
+            if (countryStr != "")
             {
-                return true;
-            }
-            int numbersCount = GetLinesStaringWithNumbers(squareStr);
-            if (GetLinesStaringWithNumbers(squareStr).Count > 1)
-                return true;
-            if (DataHelper.ParseCountryList(countryStr).Count > 1)
-            {
-                return true;
-            }*/
-                
-            int numbersCount = GetLinesStaringWithNumbers(squareStr).Count;
-            return numbersCount > 1;
-            /*    return true;
-
-            if (!DataHelper.IsEmptyValue(countryStr))
-            {
-                int countriesCount = DataHelper.ParseCountryList(countryStr).Count;
-                if (countriesCount > 0)
+                if (new AntlrCountryParser().ParseToStringList(countryStr).Count > 1)
                 {
-                    return countriesCount > 1;
+                    // может быть одна страна на все объекты недвижимости
+                    return true;
                 }
             }
-            return false;*/ 
+            return GetLinesStaringWithNumbers(squareStr).Count > 1;
         }
 
         public void ParseOwnedProperty(DataRow currRow, Person person)
@@ -301,7 +279,6 @@ namespace Smart.Parser.Lib
             if (statePropOwnershipTypeStr != "")
                 stateProperty.own_type_raw = statePropOwnershipTypeStr;
             stateProperty.own_type_by_column = StateString;
-            CheckProperty(stateProperty);
             person.RealEstateProperties.Add(stateProperty);
         }
 
@@ -337,7 +314,6 @@ namespace Smart.Parser.Lib
             }
 
             realEstateProperty.Text = estateTypeStr;
-            CheckProperty(realEstateProperty);
             person.RealEstateProperties.Add(realEstateProperty);
         }
         static List<int> GetLinesStaringWithNumbers(string areaStr)
@@ -467,43 +443,76 @@ namespace Smart.Parser.Lib
             }
         }
 
-        static public void ParseOwnedPropertyManyValuesInOneCell(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
+        class RealtyColumns
         {
-            List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
-            List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
-            List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
-            List<string> ownTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
-            List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
-            for (int i = 0; i < areas.Count; ++i)
+            public List<string> RealtyTypes;
+            public List<string> OwnTypes;
+            public List<string> Squares;
+            public List<string> Countries;
+            public RealtyColumns(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
+            {
+                List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
+                if (linesWithNumbers.Count > 1)
+                {
+                    RealtyTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
+                    Squares = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
+                    OwnTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
+                    Countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
+                }
+                else
+                {
+                    Squares = new AntlrSquareParser().ParseToStringList(areaStr);
+                    if (ownTypeStr != null)
+                    {
+                        RealtyTypes = new AntlrRealtyTypeParser().ParseToStringList(estateTypeStr);
+                        OwnTypes = new AntlrOwnTypeParser().ParseToStringList(ownTypeStr);
+                    }
+                    else
+                    {
+                        RealtyTypes = new List<string>();
+                        OwnTypes = new List<string>();
+                        foreach (var r in new AntlrRealtyTypeAndOwnTypeParser().Parse(estateTypeStr))
+                        {
+                            var i = (RealtyTypeAndOwnTypeFromText)r;
+                            RealtyTypes.Add(i.RealtyType);
+                            OwnTypes.Add(i.OwnType);
+                        }
+
+                    }
+                    Countries = new AntlrCountryParser().ParseToStringList(countryStr);
+                }
+            }
+        }
+        static public void ParseOwnedPropertyManyValuesInOneCell(string realtyTypeStr, string ownTypeStr, string squareStr, string countryStr, Person person, string ownTypeByColumn = null)
+        {
+            var cols = new RealtyColumns(realtyTypeStr, ownTypeStr, squareStr, countryStr);
+            for (int i = 0; i < Math.Max(cols.Squares.Count, cols.RealtyTypes.Count); ++i)
             {
                 ParseOwnedPropertySingleRow(
-                    GetListValueOrDefault(estateTypes, i, ""),
-                    GetListValueOrDefault(ownTypes, i, null),
-                    GetListValueOrDefault(areas, i, ""),
-                    GetListValueOrDefault(countries, i, ""),
+                    GetListValueOrDefault(cols.RealtyTypes, i, ""),
+                    GetListValueOrDefault(cols.OwnTypes, i, null),
+                    GetListValueOrDefault(cols.Squares, i, ""),
+                    GetListValueOrDefault(cols.Countries, i, ""),
                     person,
                     ownTypeByColumn
                 );
             }
         }
-        static public void ParseStatePropertyManyValuesInOneCell(string estateTypeStr,
+        static public void ParseStatePropertyManyValuesInOneCell(string realtyTypeStr,
             string ownTypeStr,
-            string areaStr,
+            string squareStr,
             string countryStr,
             Person person)
         {
-            List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
-            List<string> estateTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
-            List<string> estateOwnTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
-            List<string> areas = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
-            List<string> countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
-            for (int i = 0; i < areas.Count; ++i)
+
+            var cols = new RealtyColumns(realtyTypeStr, ownTypeStr, squareStr, countryStr);
+            for (int i = 0; i < Math.Max(cols.Squares.Count, cols.RealtyTypes.Count); ++i)
             {
                 ParseStatePropertySingleRow(
-                    GetListValueOrDefault(estateTypes, i, ""),
-                    GetListValueOrDefault(estateOwnTypes, i, ""),
-                    GetListValueOrDefault(areas, i, ""),
-                    GetListValueOrDefault(countries, i, ""),
+                    GetListValueOrDefault(cols.RealtyTypes, i, ""),
+                    GetListValueOrDefault(cols.OwnTypes, i, ""),
+                    GetListValueOrDefault(cols.Squares, i, ""),
+                    GetListValueOrDefault(cols.Countries, i, ""),
                     person
                 );
             }

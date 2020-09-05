@@ -8,27 +8,16 @@ using System.IO;
 
 namespace SmartAntlr
 {
-    public class RealtyFromText
+    public class RealtyFromText : GeneralParserPhrase
     {
-        public string TheWholeRecord = "";
         public string OwnType = "";
         public string RealtyType = "";
         public decimal Square = -1;
         public string RealtyShare = "";
         public string Country = "";
 
-        public RealtyFromText(string inputText, RealtyAllParser.RealtyContext context)
+        public RealtyFromText(string inputText, RealtyAllParser.RealtyContext context) : base(inputText, context)
         {
-            int start = context.Start.StartIndex;
-            int end = inputText.Length;
-            if (context.Stop != null) {
-                end = context.Stop.StopIndex + 1;
-            }
-            if (end > start)
-            {
-                TheWholeRecord = inputText.Substring(start, end - start);
-            }
-
             if (context.own_type() != null)
             {
                 OwnType = context.own_type().OWN_TYPE().GetText();
@@ -62,7 +51,7 @@ namespace SmartAntlr
             }
             
         }
-        public string GetJsonString()
+        public override string GetJsonString()
         {
             var my_jsondata = new Dictionary<string, string>
             {
@@ -84,7 +73,7 @@ namespace SmartAntlr
 
     public class RealtyVisitor : RealtyAllParserBaseVisitor<object>
     {
-        public List<RealtyFromText> Lines = new List<RealtyFromText>();
+        public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
         public string InputText;
 
         public RealtyVisitor(string inputText)
@@ -99,9 +88,9 @@ namespace SmartAntlr
         }
     }
 
-    public class AntlrRealtyParser : GeneralRealtyParser
+    public class AntlrRealtyParser : GeneralAntlrParser
     {
-        public List<RealtyFromText> Parse(string inputText)
+        public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
             var parser = new RealtyAllParser(CommonTokenStream);
@@ -109,16 +98,6 @@ namespace SmartAntlr
             var visitor = new RealtyVisitor(InputText);
             visitor.Visit(context);
             return visitor.Lines;
-        }
-
-        public override List<string> ParseToJson(string inputText)
-        {
-            var result = new List<string>(); 
-            foreach (var i in Parse(inputText))
-            {
-                result.Add(i.GetJsonString());
-            }
-            return result;
         }
 
     }

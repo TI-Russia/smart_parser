@@ -41,9 +41,9 @@ public partial class RealtyAllParser : Parser {
 		HYPHEN=14, OWN_TYPE=15, COUNTRY=16, REALTY_TYPE=17;
 	public const int
 		RULE_realty_list = 0, RULE_realty = 1, RULE_realty_type = 2, RULE_own_type = 3, 
-		RULE_square = 4, RULE_realty_share = 5;
+		RULE_realty_share = 4, RULE_square = 5;
 	public static readonly string[] ruleNames = {
-		"realty_list", "realty", "realty_type", "own_type", "square", "realty_share"
+		"realty_list", "realty", "realty_type", "own_type", "realty_share", "square"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -696,6 +696,59 @@ public partial class RealtyAllParser : Parser {
 		return _localctx;
 	}
 
+	public partial class Realty_shareContext : ParserRuleContext {
+		public ITerminalNode FRACTION_UNICODE() { return GetToken(RealtyAllParser.FRACTION_UNICODE, 0); }
+		public ITerminalNode FRACTION_ASCII() { return GetToken(RealtyAllParser.FRACTION_ASCII, 0); }
+		public Realty_shareContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_realty_share; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IRealtyAllParserListener typedListener = listener as IRealtyAllParserListener;
+			if (typedListener != null) typedListener.EnterRealty_share(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IRealtyAllParserListener typedListener = listener as IRealtyAllParserListener;
+			if (typedListener != null) typedListener.ExitRealty_share(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IRealtyAllParserVisitor<TResult> typedVisitor = visitor as IRealtyAllParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitRealty_share(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Realty_shareContext realty_share() {
+		Realty_shareContext _localctx = new Realty_shareContext(Context, State);
+		EnterRule(_localctx, 8, RULE_realty_share);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 145;
+			_la = TokenStream.LA(1);
+			if ( !(_la==FRACTION_ASCII || _la==FRACTION_UNICODE) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
 	public partial class SquareContext : ParserRuleContext {
 		public ITerminalNode NUMBER() { return GetToken(RealtyAllParser.NUMBER, 0); }
 		public ITerminalNode SQUARE_METER() { return GetToken(RealtyAllParser.SQUARE_METER, 0); }
@@ -723,68 +776,15 @@ public partial class RealtyAllParser : Parser {
 	[RuleVersion(0)]
 	public SquareContext square() {
 		SquareContext _localctx = new SquareContext(Context, State);
-		EnterRule(_localctx, 8, RULE_square);
+		EnterRule(_localctx, 10, RULE_square);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 145; Match(NUMBER);
-			State = 146;
-			_la = TokenStream.LA(1);
-			if ( !(_la==SQUARE_METER || _la==HECTARE) ) {
-			ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class Realty_shareContext : ParserRuleContext {
-		public ITerminalNode FRACTION_UNICODE() { return GetToken(RealtyAllParser.FRACTION_UNICODE, 0); }
-		public ITerminalNode FRACTION_ASCII() { return GetToken(RealtyAllParser.FRACTION_ASCII, 0); }
-		public Realty_shareContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_realty_share; } }
-		public override void EnterRule(IParseTreeListener listener) {
-			IRealtyAllParserListener typedListener = listener as IRealtyAllParserListener;
-			if (typedListener != null) typedListener.EnterRealty_share(this);
-		}
-		public override void ExitRule(IParseTreeListener listener) {
-			IRealtyAllParserListener typedListener = listener as IRealtyAllParserListener;
-			if (typedListener != null) typedListener.ExitRealty_share(this);
-		}
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			IRealtyAllParserVisitor<TResult> typedVisitor = visitor as IRealtyAllParserVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitRealty_share(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public Realty_shareContext realty_share() {
-		Realty_shareContext _localctx = new Realty_shareContext(Context, State);
-		EnterRule(_localctx, 10, RULE_realty_share);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
+			State = 147; Match(NUMBER);
 			State = 148;
 			_la = TokenStream.LA(1);
-			if ( !(_la==FRACTION_ASCII || _la==FRACTION_UNICODE) ) {
+			if ( !(_la==SQUARE_METER || _la==HECTARE) ) {
 			ErrorHandler.RecoverInline(this);
 			}
 			else {
@@ -837,13 +837,13 @@ public partial class RealtyAllParser : Parser {
 		'\x5', '\x86', '\n', '\x5', '\x3', '\x5', '\x5', '\x5', '\x89', '\n', 
 		'\x5', '\x3', '\x5', '\x3', '\x5', '\x5', '\x5', '\x8D', '\n', '\x5', 
 		'\x3', '\x5', '\x5', '\x5', '\x90', '\n', '\x5', '\x5', '\x5', '\x92', 
-		'\n', '\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\a', '\x3', 
+		'\n', '\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\a', '\x3', '\a', '\x3', 
 		'\a', '\x3', '\a', '\x2', '\x2', '\b', '\x2', '\x4', '\x6', '\b', '\n', 
-		'\f', '\x2', '\x4', '\x3', '\x2', '\x3', '\x4', '\x4', '\x2', '\b', '\b', 
-		'\xF', '\xF', '\x2', '\xBB', '\x2', '\x15', '\x3', '\x2', '\x2', '\x2', 
+		'\f', '\x2', '\x4', '\x4', '\x2', '\b', '\b', '\xF', '\xF', '\x3', '\x2', 
+		'\x3', '\x4', '\x2', '\xBB', '\x2', '\x15', '\x3', '\x2', '\x2', '\x2', 
 		'\x4', '~', '\x3', '\x2', '\x2', '\x2', '\x6', '\x80', '\x3', '\x2', '\x2', 
 		'\x2', '\b', '\x91', '\x3', '\x2', '\x2', '\x2', '\n', '\x93', '\x3', 
-		'\x2', '\x2', '\x2', '\f', '\x96', '\x3', '\x2', '\x2', '\x2', '\xE', 
+		'\x2', '\x2', '\x2', '\f', '\x95', '\x3', '\x2', '\x2', '\x2', '\xE', 
 		'\x10', '\a', '\x10', '\x2', '\x2', '\xF', '\xE', '\x3', '\x2', '\x2', 
 		'\x2', '\xF', '\x10', '\x3', '\x2', '\x2', '\x2', '\x10', '\x11', '\x3', 
 		'\x2', '\x2', '\x2', '\x11', '\x13', '\x5', '\x4', '\x3', '\x2', '\x12', 
@@ -862,7 +862,7 @@ public partial class RealtyAllParser : Parser {
 		'\x2', '\x2', '\"', '#', '\x3', '\x2', '\x2', '\x2', '#', '%', '\x3', 
 		'\x2', '\x2', '\x2', '$', '&', '\a', '\v', '\x2', '\x2', '%', '$', '\x3', 
 		'\x2', '\x2', '\x2', '%', '&', '\x3', '\x2', '\x2', '\x2', '&', '\'', 
-		'\x3', '\x2', '\x2', '\x2', '\'', ')', '\x5', '\n', '\x6', '\x2', '(', 
+		'\x3', '\x2', '\x2', '\x2', '\'', ')', '\x5', '\f', '\a', '\x2', '(', 
 		'*', '\a', '\v', '\x2', '\x2', ')', '(', '\x3', '\x2', '\x2', '\x2', ')', 
 		'*', '\x3', '\x2', '\x2', '\x2', '*', ',', '\x3', '\x2', '\x2', '\x2', 
 		'+', '-', '\a', '\x12', '\x2', '\x2', ',', '+', '\x3', '\x2', '\x2', '\x2', 
@@ -870,7 +870,7 @@ public partial class RealtyAllParser : Parser {
 		'\x2', '.', '\x30', '\x5', '\x6', '\x4', '\x2', '/', '\x31', '\a', '\v', 
 		'\x2', '\x2', '\x30', '/', '\x3', '\x2', '\x2', '\x2', '\x30', '\x31', 
 		'\x3', '\x2', '\x2', '\x2', '\x31', '\x32', '\x3', '\x2', '\x2', '\x2', 
-		'\x32', '\x34', '\x5', '\n', '\x6', '\x2', '\x33', '\x35', '\a', '\v', 
+		'\x32', '\x34', '\x5', '\f', '\a', '\x2', '\x33', '\x35', '\a', '\v', 
 		'\x2', '\x2', '\x34', '\x33', '\x3', '\x2', '\x2', '\x2', '\x34', '\x35', 
 		'\x3', '\x2', '\x2', '\x2', '\x35', '\x36', '\x3', '\x2', '\x2', '\x2', 
 		'\x36', '\x38', '\x5', '\b', '\x5', '\x2', '\x37', '\x39', '\a', '\v', 
@@ -891,13 +891,13 @@ public partial class RealtyAllParser : Parser {
 		'K', '\x7F', '\x3', '\x2', '\x2', '\x2', 'L', 'N', '\x5', '\x6', '\x4', 
 		'\x2', 'M', 'O', '\a', '\f', '\x2', '\x2', 'N', 'M', '\x3', '\x2', '\x2', 
 		'\x2', 'N', 'O', '\x3', '\x2', '\x2', '\x2', 'O', 'P', '\x3', '\x2', '\x2', 
-		'\x2', 'P', 'R', '\x5', '\f', '\a', '\x2', 'Q', 'S', '\a', '\t', '\x2', 
+		'\x2', 'P', 'R', '\x5', '\n', '\x6', '\x2', 'Q', 'S', '\a', '\t', '\x2', 
 		'\x2', 'R', 'Q', '\x3', '\x2', '\x2', '\x2', 'R', 'S', '\x3', '\x2', '\x2', 
 		'\x2', 'S', 'U', '\x3', '\x2', '\x2', '\x2', 'T', 'V', '\a', '\r', '\x2', 
 		'\x2', 'U', 'T', '\x3', '\x2', '\x2', '\x2', 'U', 'V', '\x3', '\x2', '\x2', 
 		'\x2', 'V', 'X', '\x3', '\x2', '\x2', '\x2', 'W', 'Y', '\a', '\v', '\x2', 
 		'\x2', 'X', 'W', '\x3', '\x2', '\x2', '\x2', 'X', 'Y', '\x3', '\x2', '\x2', 
-		'\x2', 'Y', 'Z', '\x3', '\x2', '\x2', '\x2', 'Z', '\\', '\x5', '\n', '\x6', 
+		'\x2', 'Y', 'Z', '\x3', '\x2', '\x2', '\x2', 'Z', '\\', '\x5', '\f', '\a', 
 		'\x2', '[', ']', '\a', '\v', '\x2', '\x2', '\\', '[', '\x3', '\x2', '\x2', 
 		'\x2', '\\', ']', '\x3', '\x2', '\x2', '\x2', ']', '_', '\x3', '\x2', 
 		'\x2', '\x2', '^', '`', '\a', '\x12', '\x2', '\x2', '_', '^', '\x3', '\x2', 
@@ -905,7 +905,7 @@ public partial class RealtyAllParser : Parser {
 		'\x2', '\x2', '\x2', '\x61', '\x63', '\x5', '\x6', '\x4', '\x2', '\x62', 
 		'\x64', '\a', '\v', '\x2', '\x2', '\x63', '\x62', '\x3', '\x2', '\x2', 
 		'\x2', '\x63', '\x64', '\x3', '\x2', '\x2', '\x2', '\x64', '\x65', '\x3', 
-		'\x2', '\x2', '\x2', '\x65', 'g', '\x5', '\n', '\x6', '\x2', '\x66', 'h', 
+		'\x2', '\x2', '\x2', '\x65', 'g', '\x5', '\f', '\a', '\x2', '\x66', 'h', 
 		'\a', '\v', '\x2', '\x2', 'g', '\x66', '\x3', '\x2', '\x2', '\x2', 'g', 
 		'h', '\x3', '\x2', '\x2', '\x2', 'h', 'j', '\x3', '\x2', '\x2', '\x2', 
 		'i', 'k', '\a', '\x12', '\x2', '\x2', 'j', 'i', '\x3', '\x2', '\x2', '\x2', 
@@ -917,7 +917,7 @@ public partial class RealtyAllParser : Parser {
 		'r', '\x7F', '\x3', '\x2', '\x2', '\x2', 's', 'u', '\x5', '\x6', '\x4', 
 		'\x2', 't', 'v', '\a', '\v', '\x2', '\x2', 'u', 't', '\x3', '\x2', '\x2', 
 		'\x2', 'u', 'v', '\x3', '\x2', '\x2', '\x2', 'v', 'w', '\x3', '\x2', '\x2', 
-		'\x2', 'w', 'y', '\x5', '\n', '\x6', '\x2', 'x', 'z', '\a', '\v', '\x2', 
+		'\x2', 'w', 'y', '\x5', '\f', '\a', '\x2', 'x', 'z', '\a', '\v', '\x2', 
 		'\x2', 'y', 'x', '\x3', '\x2', '\x2', '\x2', 'y', 'z', '\x3', '\x2', '\x2', 
 		'\x2', 'z', '|', '\x3', '\x2', '\x2', '\x2', '{', '}', '\a', '\x12', '\x2', 
 		'\x2', '|', '{', '\x3', '\x2', '\x2', '\x2', '|', '}', '\x3', '\x2', '\x2', 
@@ -932,17 +932,17 @@ public partial class RealtyAllParser : Parser {
 		'\x85', '\x86', '\x3', '\x2', '\x2', '\x2', '\x86', '\x88', '\x3', '\x2', 
 		'\x2', '\x2', '\x87', '\x89', '\a', '\v', '\x2', '\x2', '\x88', '\x87', 
 		'\x3', '\x2', '\x2', '\x2', '\x88', '\x89', '\x3', '\x2', '\x2', '\x2', 
-		'\x89', '\x8A', '\x3', '\x2', '\x2', '\x2', '\x8A', '\x8C', '\x5', '\f', 
-		'\a', '\x2', '\x8B', '\x8D', '\a', '\t', '\x2', '\x2', '\x8C', '\x8B', 
+		'\x89', '\x8A', '\x3', '\x2', '\x2', '\x2', '\x8A', '\x8C', '\x5', '\n', 
+		'\x6', '\x2', '\x8B', '\x8D', '\a', '\t', '\x2', '\x2', '\x8C', '\x8B', 
 		'\x3', '\x2', '\x2', '\x2', '\x8C', '\x8D', '\x3', '\x2', '\x2', '\x2', 
 		'\x8D', '\x8F', '\x3', '\x2', '\x2', '\x2', '\x8E', '\x90', '\a', '\x5', 
 		'\x2', '\x2', '\x8F', '\x8E', '\x3', '\x2', '\x2', '\x2', '\x8F', '\x90', 
 		'\x3', '\x2', '\x2', '\x2', '\x90', '\x92', '\x3', '\x2', '\x2', '\x2', 
 		'\x91', '\x82', '\x3', '\x2', '\x2', '\x2', '\x91', '\x83', '\x3', '\x2', 
 		'\x2', '\x2', '\x92', '\t', '\x3', '\x2', '\x2', '\x2', '\x93', '\x94', 
-		'\a', '\x6', '\x2', '\x2', '\x94', '\x95', '\t', '\x2', '\x2', '\x2', 
-		'\x95', '\v', '\x3', '\x2', '\x2', '\x2', '\x96', '\x97', '\t', '\x3', 
-		'\x2', '\x2', '\x97', '\r', '\x3', '\x2', '\x2', '\x2', '\'', '\xF', '\x13', 
+		'\t', '\x2', '\x2', '\x2', '\x94', '\v', '\x3', '\x2', '\x2', '\x2', '\x95', 
+		'\x96', '\a', '\x6', '\x2', '\x2', '\x96', '\x97', '\t', '\x3', '\x2', 
+		'\x2', '\x97', '\r', '\x3', '\x2', '\x2', '\x2', '\'', '\xF', '\x13', 
 		'\x17', '\x1B', '\x1E', '\"', '%', ')', ',', '\x30', '\x34', '\x38', ';', 
 		'?', '\x43', 'G', 'J', 'N', 'R', 'U', 'X', '\\', '_', '\x63', 'g', 'j', 
 		'm', 'q', 'u', 'y', '|', '~', '\x85', '\x88', '\x8C', '\x8F', '\x91',

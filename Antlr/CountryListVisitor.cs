@@ -1,34 +1,11 @@
 ﻿using System.Collections.Generic;
-using Antlr4.Runtime;
-using Newtonsoft.Json;
-using TI.Declarator.ParserCommon;
-using System.Text.RegularExpressions;
-using System;
-using System.IO;
 
 namespace SmartAntlr
 {
-    public class CountryFromText
-    {
-        public string Country = "";
-
-        public CountryFromText(string inputText, CountryListParser.CountryContext context)
-        {
-            Country = context.GetText();
-        }
-        public string GetJsonString()
-        {
-            var my_jsondata = new Dictionary<string, string>
-            {
-                { "Country", Country}
-            };
-            return JsonConvert.SerializeObject(my_jsondata, Formatting.Indented);
-        }
-    }
 
     public class CountryListVisitor : CountryListParserBaseVisitor<object>
     {
-        public List<CountryFromText> Lines = new List<CountryFromText>();
+        public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
         public string InputText;
 
         public CountryListVisitor(string inputText)
@@ -37,16 +14,16 @@ namespace SmartAntlr
         }
         public override object VisitCountry(CountryListParser.CountryContext context)
         {
-            var line = new CountryFromText(InputText, context);
+            var line = new GeneralParserPhrase(InputText, context);
             Lines.Add(line);
             return line;
         }
     }
 
 
-    public class AntlrCountryParser : GeneralRealtyParser
+    public class AntlrCountryParser : GeneralAntlrParser
     {
-        public List<CountryFromText> Parse(string inputText)
+        public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
             var parser = new CountryListParser(CommonTokenStream);
@@ -56,15 +33,6 @@ namespace SmartAntlr
             return visitor.Lines;
         }
 
-        public override List<string> ParseToJson(string inputText)
-        {
-            var result = new List<string>();
-            foreach (var i in Parse(inputText))
-            {
-                result.Add(i.GetJsonString());
-            }
-            return result;
-        }
 
     }
 }

@@ -1,6 +1,7 @@
 /* парсим записи о недвижимости (все в одной строке), без деления по колонкам */
 
 parser grammar RealtyAllParser;
+import  RealtyCommonParser;
 
 options { tokenVocab=RealtyLexer; }
 
@@ -29,15 +30,7 @@ realty :
 	   | (realty_type  COMMA? square COMMA?  COUNTRY?)      
 	;
 
+
+
 realty_type : REALTY_TYPE;
-
-own_type :    OWN_TYPE
-			| (OWN_TYPE DOLYA_WORD? COMMA? realty_share DOLYA_WORD? OT?);
-
-
-/*122 кв.м.*/
-square : NUMBER  (SQUARE_METER | HECTARE);
-
-/*1/2 доли*/
-realty_share : (FRACTION_UNICODE | FRACTION_ASCII);
 

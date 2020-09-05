@@ -1,9 +1,6 @@
 lexer grammar RealtyLexer;
 import  RealtyChars, RealtyOwntype, RealtyCountry, RealtyType;
 
-
-
-
 SQUARE_METER : 'кв.м' | 'кв.м.' | 'м2.' | 'м2';
 HECTARE	 : 'га';
 OT: 'от';
@@ -23,6 +20,7 @@ REALTY_ID : [0-9][0-9][0-9][0-9][0-9][0-9][0-9]+;
 /*2697/17884 доли*/
 FRACTION_ASCII : [1-9][0-9]*[/][1-9][0-9]*;
 DOLYA_WORD : 'доли' | 'доля';
+
 
 
 

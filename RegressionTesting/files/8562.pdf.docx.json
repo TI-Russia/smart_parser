@@ -29,12 +29,44 @@
           "country_raw": "Россия"
         },
         {
-          "text": "жилой дом\n(собственность, общая\n совместная) земельный\n участок ИЖС\n (собственность) дачный земельный\nучасток\n(собственность)\nквартира\n(собственность)\n\n(собственность)",
+          "text": "жилой дом",
           "square": 12.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "12",
-          "country_raw": "Россия\n\n\nРоссия\n\nРоссия\n\n\nРоссия\n\nРоссия"
+          "country_raw": "россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": "собственность, общая совместная"
+        },
+        {
+          "text": "земельный участок ижс",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "россия",
+          "type_raw": "земельный участок ижс",
+          "own_type_raw": "собственность"
+        },
+        {
+          "text": "дачный земельный участок",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "россия",
+          "type_raw": "дачный земельный участок",
+          "own_type_raw": "собственность"
+        },
+        {
+          "text": "квартира",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "россия",
+          "type_raw": "квартира",
+          "own_type_raw": "собственность"
         }
       ],
       "vehicles": [

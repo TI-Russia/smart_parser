@@ -56,15 +56,15 @@ public interface IRealtyAllParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOwn_type([NotNull] RealtyAllParser.Own_typeContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="RealtyAllParser.square"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitSquare([NotNull] RealtyAllParser.SquareContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="RealtyAllParser.realty_share"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitRealty_share([NotNull] RealtyAllParser.Realty_shareContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyAllParser.square"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare([NotNull] RealtyAllParser.SquareContext context);
 }

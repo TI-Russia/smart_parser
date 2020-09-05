@@ -40,7 +40,7 @@ namespace AntlrTester
             string input = ParseArgs(args);
             var output = input + ".result";
             var texts = AntlrCommon.ReadTestCases(input);
-            GeneralRealtyParser parser = null;
+            GeneralAntlrParser parser = null;
             Console.Error.Write(String.Format("Grammar {0}\n", ParseType));
             if (ParseType == "realty_all")
             {

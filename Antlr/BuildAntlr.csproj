@@ -46,9 +46,31 @@
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-
-
-
+        <Antlr4 Include="src\RealtyTypeListParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
+        <Antlr4 Include="src\OwnTypeListParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
+        <Antlr4 Include="src\SquareListParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
+        <Antlr4 Include="src\RealtyCommonParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
+        <Antlr4 Include="src\RealtyTypeAndOwnTypeParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
     </ItemGroup>
 
     <ItemGroup>
