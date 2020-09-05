@@ -34,14 +34,14 @@ public class AntlrTestUtilities
         return texts;
 
     }
-    public static void ProcessTestCases(List<string> texts, string outputPath)
+    public static void ProcessTestCases(List<string> texts, string outputPath, bool silent=true)
     {
         using (StreamWriter outputFile = new StreamWriter(outputPath))
         {
             foreach (string text in texts)
             {
                 outputFile.WriteLine(text);
-                foreach (var realty in AntlrRealtyParser.Parse(text))
+                foreach (var realty in AntlrRealtyParser.Parse(text, silent))
                 {
                     outputFile.WriteLine(realty.GetJsonString());
                 }

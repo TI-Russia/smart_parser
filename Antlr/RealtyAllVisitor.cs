@@ -3,6 +3,8 @@ using Antlr4.Runtime;
 using Newtonsoft.Json;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
+using System;
+using System.IO;
 
 namespace SmartAntlr
 {
@@ -99,14 +101,22 @@ namespace SmartAntlr
 
     public class AntlrRealtyParser
     {
-        public static List<RealtyFromText> Parse(string inputText)
+        public static List<RealtyFromText> Parse(string inputText, bool silent=true)
         {
             inputText = Regex.Replace(inputText, @"\s+", " ");
             inputText = inputText.Trim();
             
             AntlrInputStream inputStream = new AntlrInputStream(inputText.ToLower());
-            RealtyLexer speakLexer = new RealtyLexer(inputStream);
-            CommonTokenStream commonTokenStream = new CommonTokenStream(speakLexer);
+            TextWriter output = Console.Out;
+            TextWriter errorOutput = Console.Error;
+            if (silent)
+            {
+                output = TextWriter.Null;
+                errorOutput = TextWriter.Null;
+            }
+            RealtyLexer lexer = new RealtyLexer(inputStream,  output, errorOutput);
+            
+            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             RealtyAllParser speakParser = new RealtyAllParser(commonTokenStream);
 
             var context = speakParser.realty_list();

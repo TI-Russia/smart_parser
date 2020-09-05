@@ -9,7 +9,7 @@ namespace AntlrTester
             var input = args[0];
             var output = input + ".result";
             var texts = AntlrTestUtilities.ReadTestCases(input);
-            AntlrTestUtilities.ProcessTestCases(texts, output);
+            AntlrTestUtilities.ProcessTestCases(texts, output, false);
         }
     }
 }
