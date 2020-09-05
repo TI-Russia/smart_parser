@@ -401,6 +401,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("docx")]
+        public void AntlrForRealties()
+        {
+            TestSmartParser("RealtyNaturalText.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
         public void DividePersonAndRelativesByEoln()
         {
             TestSmartParser("8562.pdf.docx", "prod");

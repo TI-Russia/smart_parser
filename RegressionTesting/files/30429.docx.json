@@ -21,10 +21,13 @@
       ],
       "real_estates": [
         {
-          "text": "Квартира, 50,7м2, индивидуальна\nя.",
-          "square": null,
+          "text": "Квартира, 50,7м2,",
+          "square": 50.7,
           "relative": null,
-          "own_type_by_column": null
+          "own_type_by_column": null,
+          "country_raw": "",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -45,10 +48,22 @@
       ],
       "real_estates": [
         {
-          "text": "Квартира, \n45,9м2, \n\nиндивидуальна я; Земельный \nучасток, 750м2, индивидуальна\nя.",
-          "square": null,
+          "text": "Квартира, 45,9м2,",
+          "square": 45.9,
           "relative": null,
-          "own_type_by_column": null
+          "own_type_by_column": null,
+          "country_raw": "",
+          "type_raw": "квартира",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Земельный участок, 750м2,",
+          "square": 750.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "country_raw": "",
+          "type_raw": "земельный участок,",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
