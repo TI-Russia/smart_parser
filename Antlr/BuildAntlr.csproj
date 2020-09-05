@@ -41,6 +41,12 @@
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
+        <Antlr4 Include="src\CountryListParser.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
+
 
 
     </ItemGroup>

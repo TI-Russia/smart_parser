@@ -58,7 +58,8 @@ namespace Smart.Parser.Lib
         }
         void ParseRealtiesByAntlr(string ownTypeByColumn, string cellText, Person person)
         {
-            foreach (var realty in AntlrRealtyParser.Parse(cellText))
+            var parser = new AntlrRealtyParser();
+            foreach (var realty in parser.Parse(cellText))
             if (realty.RealtyType != null && realty.RealtyType.Length > 0)
             {
                 RealEstateProperty realEstateProperty = new RealEstateProperty();
@@ -67,7 +68,7 @@ namespace Smart.Parser.Lib
                 realEstateProperty.square = realty.Square;
                 realEstateProperty.country_raw = realty.Country;
                 realEstateProperty.own_type_raw = realty.OwnType;
-                //???  = realty.RealtyShare; // nowhere to copy
+                //???  = realty.RealtyShare; // nowhere to write to
                 realEstateProperty.own_type_by_column = ownTypeByColumn;
                 CheckProperty(realEstateProperty);
                 person.RealEstateProperties.Add(realEstateProperty);

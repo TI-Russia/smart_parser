@@ -1,0 +1,47 @@
+token literal names:
+null
+null
+'га'
+'от'
+null
+null
+null
+null
+';'
+','
+'('
+')'
+null
+null
+'-'
+null
+null
+null
+
+token symbolic names:
+null
+SQUARE_METER
+HECTARE
+OT
+NUMBER
+REALTY_ID
+FRACTION_ASCII
+DOLYA_WORD
+SEMICOLON
+COMMA
+OPN_BRK
+CLS_BRK
+SPC
+FRACTION_UNICODE
+HYPHEN
+OWN_TYPE
+COUNTRY
+REALTY_TYPE
+
+rule names:
+countries
+country
+
+
+atn:
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 19, 16, 4, 2, 9, 2, 4, 3, 9, 3, 3, 2, 6, 2, 8, 10, 2, 13, 2, 14, 2, 9, 3, 3, 3, 3, 5, 3, 14, 10, 3, 3, 3, 2, 2, 4, 2, 4, 2, 2, 2, 15, 2, 7, 3, 2, 2, 2, 4, 11, 3, 2, 2, 2, 6, 8, 5, 4, 3, 2, 7, 6, 3, 2, 2, 2, 8, 9, 3, 2, 2, 2, 9, 7, 3, 2, 2, 2, 9, 10, 3, 2, 2, 2, 10, 3, 3, 2, 2, 2, 11, 13, 7, 18, 2, 2, 12, 14, 7, 11, 2, 2, 13, 12, 3, 2, 2, 2, 13, 14, 3, 2, 2, 2, 14, 5, 3, 2, 2, 2, 4, 9, 13]

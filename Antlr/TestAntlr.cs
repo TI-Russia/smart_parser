@@ -2,12 +2,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
-
+using SmartAntlr;
 
 namespace test
 {
     [TestClass]
-    public class AntlrRealtyAllTest
+    public class AntlrTest
     {
         static bool FileEquals(string path1, string path2)
         {
@@ -30,20 +30,24 @@ namespace test
 
 
         [TestMethod]
-        public void TestSimple()
+        public void TestRealtyAll()
         {
             string input = Path.Join(GetTestFilesFolder(), "realty_all.txt");
             string output = input + ".result";
-            var texts = AntlrTestUtilities.ReadTestCases(input);
-
-            if (File.Exists(output))
-            {
-                File.Delete(output);
-            }
-            AntlrTestUtilities.ProcessTestCases(texts, output);
+            var texts = AntlrCommon.ReadTestCases(input);
+            AntlrCommon.WriteTestCaseResultsToFile(new AntlrRealtyParser(), texts, output);
             Assert.AreEqual(FileEquals(output, input + ".result.canon"), true);
         }
 
+        [TestMethod]
+        public void TestCountries()
+        {
+            string input = Path.Join(GetTestFilesFolder(), "country.txt");
+            string output = input + ".result";
+            var texts = AntlrCommon.ReadTestCases(input);
+            AntlrCommon.WriteTestCaseResultsToFile(new AntlrCountryParser(), texts, output);
+            Assert.AreEqual(FileEquals(output, input + ".result.canon"), true);
+        }
     }
-    
+
 }

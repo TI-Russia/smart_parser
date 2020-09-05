@@ -99,30 +99,26 @@ namespace SmartAntlr
         }
     }
 
-    public class AntlrRealtyParser
+    public class AntlrRealtyParser : GeneralRealtyParser
     {
-        public static List<RealtyFromText> Parse(string inputText, bool silent=true)
+        public List<RealtyFromText> Parse(string inputText)
         {
-            inputText = Regex.Replace(inputText, @"\s+", " ");
-            inputText = inputText.Trim();
-            
-            AntlrInputStream inputStream = new AntlrInputStream(inputText.ToLower());
-            TextWriter output = Console.Out;
-            TextWriter errorOutput = Console.Error;
-            if (silent)
-            {
-                output = TextWriter.Null;
-                errorOutput = TextWriter.Null;
-            }
-            RealtyLexer lexer = new RealtyLexer(inputStream,  output, errorOutput);
-            
-            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-            RealtyAllParser speakParser = new RealtyAllParser(commonTokenStream);
-
-            var context = speakParser.realty_list();
-            var visitor = new RealtyVisitor(inputText);
+            InitLexer(inputText);
+            var parser = new RealtyAllParser(CommonTokenStream);
+            var context = parser.realty_list();
+            var visitor = new RealtyVisitor(InputText);
             visitor.Visit(context);
             return visitor.Lines;
+        }
+
+        public override List<string> ParseToJson(string inputText)
+        {
+            var result = new List<string>(); 
+            foreach (var i in Parse(inputText))
+            {
+                result.Add(i.GetJsonString());
+            }
+            return result;
         }
 
     }
