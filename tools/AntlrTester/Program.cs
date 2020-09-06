@@ -54,6 +54,7 @@ namespace AntlrTester
             {
                 Debug.Assert(false);
             }
+            parser.BeVerbose();
             AntlrCommon.WriteTestCaseResultsToFile(parser, texts, output);
         }
     }

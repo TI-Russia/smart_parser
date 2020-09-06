@@ -26,7 +26,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new CountryListParser(CommonTokenStream);
+            var parser = new CountryListParser(CommonTokenStream, Output, ErrorOutput);
             var context = parser.countries();
             var visitor = new CountryListVisitor(InputText);
             visitor.Visit(context);

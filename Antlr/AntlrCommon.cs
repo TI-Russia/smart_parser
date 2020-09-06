@@ -44,13 +44,22 @@ public class GeneralParserPhrase
 
 public abstract class GeneralAntlrParser
 {
-    public string InputText;
-    public bool Silent = true;
-    public CommonTokenStream CommonTokenStream;
+    protected string InputText;
+    protected CommonTokenStream CommonTokenStream;
+    protected TextWriter Output = TextWriter.Null;
+    protected TextWriter ErrorOutput = TextWriter.Null;
 
     public GeneralAntlrParser(bool silent = true)
     {
-        Silent = silent;
+        if (!silent)
+        {
+            BeVerbose();
+        }
+    }
+    public void BeVerbose()
+    {
+        Output = Console.Out;
+        ErrorOutput = Console.Error;
     }
     public void InitLexer(string inputText)
     {
@@ -58,14 +67,7 @@ public abstract class GeneralAntlrParser
         inputText = inputText.Trim();
         InputText = inputText;
         AntlrInputStream inputStream = new AntlrInputStream(InputText.ToLower());
-        TextWriter output = Console.Out;
-        TextWriter errorOutput = Console.Error;
-        if (Silent)
-        {
-            output = TextWriter.Null;
-            errorOutput = TextWriter.Null;
-        }
-        RealtyLexer lexer = new RealtyLexer(inputStream, output, errorOutput);
+        RealtyLexer lexer = new RealtyLexer(inputStream, Output, ErrorOutput);
         CommonTokenStream = new CommonTokenStream(lexer);
     }
     public abstract List<GeneralParserPhrase> Parse(string inputText);

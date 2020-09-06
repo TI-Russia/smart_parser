@@ -26,7 +26,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new OwnTypeListParser(CommonTokenStream);
+            var parser = new OwnTypeListParser(CommonTokenStream, Output, ErrorOutput);
             var context = parser.own_type_list();
             var visitor = new OwnTypeListVisitor(InputText);
             visitor.Visit(context);

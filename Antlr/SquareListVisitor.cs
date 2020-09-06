@@ -26,7 +26,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new SquareListParser(CommonTokenStream);
+            var parser = new SquareListParser(CommonTokenStream, Output, ErrorOutput);
             var context = parser.squares();
             var visitor = new SquareListVisitor(InputText);
             visitor.Visit(context);

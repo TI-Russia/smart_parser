@@ -93,7 +93,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new RealtyAllParser(CommonTokenStream);
+            var parser = new RealtyAllParser(CommonTokenStream, Output, ErrorOutput);
             var context = parser.realty_list();
             var visitor = new RealtyVisitor(InputText);
             visitor.Visit(context);
