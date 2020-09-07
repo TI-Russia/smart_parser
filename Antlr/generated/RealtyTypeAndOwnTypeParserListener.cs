@@ -51,16 +51,6 @@ public interface IRealtyTypeAndOwnTypeParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitRealty([NotNull] RealtyTypeAndOwnTypeParser.RealtyContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -90,4 +80,24 @@ public interface IRealtyTypeAndOwnTypeParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitSquare([NotNull] RealtyTypeAndOwnTypeParser.SquareContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.country"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCountry([NotNull] RealtyTypeAndOwnTypeParser.CountryContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.country"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCountry([NotNull] RealtyTypeAndOwnTypeParser.CountryContext context);
 }

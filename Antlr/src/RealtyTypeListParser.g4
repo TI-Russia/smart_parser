@@ -2,7 +2,7 @@
 
 parser grammar RealtyTypeListParser;
 
-options { tokenVocab=RealtyLexer; }
+options { tokenVocab=StrictLexer; }
 
 realty_type_list : realty_type+;
 

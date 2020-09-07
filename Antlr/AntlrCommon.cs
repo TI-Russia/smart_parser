@@ -7,23 +7,15 @@ using System;
 using Newtonsoft.Json;
 
 
+
 public class GeneralParserPhrase
 {
     string TextFromLexer = "";
     string SourceText = "";
-
-    public GeneralParserPhrase(string inputText, ParserRuleContext context)
+        
+    public GeneralParserPhrase(GeneralAntlrParser parser, ParserRuleContext context)
     {
-        int start = context.Start.StartIndex;
-        int end = inputText.Length;
-        if (context.Stop != null)
-        {
-            end = context.Stop.StopIndex + 1;
-        }
-        if (end > start)
-        {
-            SourceText = inputText.Substring(start, end - start);
-        }
+        SourceText = parser.GetSourceTextByParserContext(context);
         TextFromLexer = context.GetText();
     }
 
@@ -42,9 +34,46 @@ public class GeneralParserPhrase
 
 }
 
+public class RealtyFromText : GeneralParserPhrase
+{
+    public string OwnType = "";
+    public string RealtyType = "";
+    public decimal Square = -1;
+    public string RealtyShare = "";
+    public string Country = "";
+
+    public bool IsEmpty()
+    {
+        return Square == -1 && OwnType.Length == 0 && RealtyType.Length == 0 && RealtyShare.Length == 0 &&
+            Country.Length == 0;
+    }
+
+    public RealtyFromText(GeneralAntlrParser parser, ParserRuleContext context) : base(parser, context) 
+    { 
+    }
+    public override string GetJsonString()
+    {
+        var my_jsondata = new Dictionary<string, string>
+            {
+                { "OwnType", OwnType},
+                { "RealtyType",  RealtyType},
+                { "Square", Square.ToString()}
+            };
+        if (RealtyShare != "")
+        {
+            my_jsondata["RealtyShare"] = RealtyShare;
+        }
+        if (Country != "")
+        {
+            my_jsondata["Country"] = Country;
+        }
+        return JsonConvert.SerializeObject(my_jsondata, Formatting.Indented);
+    }
+}
+
 public abstract class GeneralAntlrParser
 {
-    protected string InputText;
+    public string InputTextCaseSensitive;
     protected CommonTokenStream CommonTokenStream;
     protected TextWriter Output = TextWriter.Null;
     protected TextWriter ErrorOutput = TextWriter.Null;
@@ -61,14 +90,22 @@ public abstract class GeneralAntlrParser
         Output = Console.Out;
         ErrorOutput = Console.Error;
     }
-    public void InitLexer(string inputText)
+    public void InitLexer(string inputText, bool strictLexer = true)
     {
         inputText = Regex.Replace(inputText, @"\s+", " ");
         inputText = inputText.Trim();
-        InputText = inputText;
-        AntlrInputStream inputStream = new AntlrInputStream(InputText.ToLower());
-        RealtyLexer lexer = new RealtyLexer(inputStream, Output, ErrorOutput);
-        CommonTokenStream = new CommonTokenStream(lexer);
+        InputTextCaseSensitive = inputText;
+        AntlrInputStream inputStream = new AntlrInputStream(InputTextCaseSensitive.ToLower());
+        if (strictLexer) {
+            var lexer = new StrictLexer(inputStream, Output, ErrorOutput);
+            CommonTokenStream = new CommonTokenStream(lexer);
+        }
+        else
+        {
+            var lexer = new SoupLexer(inputStream, Output, ErrorOutput);
+            CommonTokenStream = new CommonTokenStream(lexer);
+        }
+        
     }
     public abstract List<GeneralParserPhrase> Parse(string inputText);
 
@@ -102,6 +139,24 @@ public abstract class GeneralAntlrParser
 
     }
 
+    public string GetSourceTextByParserContext(ParserRuleContext context)
+    {
+        int start = context.Start.StartIndex;
+        int end = InputTextCaseSensitive.Length;
+        if (context.Stop != null)
+        {
+            end = context.Stop.StopIndex + 1;
+        }
+        if (end > start)
+        {
+            return InputTextCaseSensitive.Substring(start, end - start);
+        }
+        else
+        {
+            return context.GetText();
+        }
+    }
+
 }
 
 public class AntlrCommon
@@ -121,10 +176,9 @@ public class AntlrCommon
         {
             var line = lines[i];
             text += line;
-            if (line.Length == 0 || i + 1 == lines.Count)
+            if (line.Trim().Length == 0 || i + 1 == lines.Count)
             {
                 text = Regex.Replace(text, @"\s+", " ");
-                text = text.ToLower();
                 text = text.Trim();
                 if (text.Length > 0)
                 {

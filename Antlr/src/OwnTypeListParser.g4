@@ -1,6 +1,6 @@
 parser grammar OwnTypeListParser;
 
-options { tokenVocab=RealtyLexer; }
+options { tokenVocab=StrictLexer; }
 
 own_type_list : own_type+;
 

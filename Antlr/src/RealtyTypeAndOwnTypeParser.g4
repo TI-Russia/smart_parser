@@ -1,9 +1,8 @@
 /* парсим записи о недвижимости (все в одной строке), без деления по колонкам */
 
 parser grammar RealtyTypeAndOwnTypeParser;
-import  RealtyCommonParser;
-
-options { tokenVocab=RealtyLexer; }
+import  CommonForParsers;
+options { tokenVocab=StrictLexer; }
 
 
 realty_list : (HYPHEN? realty SEMICOLON?)+;
@@ -19,5 +18,4 @@ realty :
 
 	;
 
-realty_type : REALTY_TYPE;
 

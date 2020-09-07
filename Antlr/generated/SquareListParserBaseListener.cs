@@ -82,6 +82,30 @@ public partial class SquareListParserBaseListener : ISquareListParserListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSquare([NotNull] SquareListParser.SquareContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.realty_type"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRealty_type([NotNull] SquareListParser.Realty_typeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.realty_type"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRealty_type([NotNull] SquareListParser.Realty_typeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.country"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterCountry([NotNull] SquareListParser.CountryContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.country"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitCountry([NotNull] SquareListParser.CountryContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

@@ -54,16 +54,6 @@ public partial class RealtyTypeAndOwnTypeParserBaseVisitor<Result> : AbstractPar
 	/// <return>The visitor result.</return>
 	public virtual Result VisitRealty([NotNull] RealtyTypeAndOwnTypeParser.RealtyContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
-	/// <para>
-	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
-	/// on <paramref name="context"/>.
-	/// </para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	public virtual Result VisitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context) { return VisitChildren(context); }
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.own_type"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -93,4 +83,24 @@ public partial class RealtyTypeAndOwnTypeParserBaseVisitor<Result> : AbstractPar
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitSquare([NotNull] RealtyTypeAndOwnTypeParser.SquareContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.country"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitCountry([NotNull] RealtyTypeAndOwnTypeParser.CountryContext context) { return VisitChildren(context); }
 }

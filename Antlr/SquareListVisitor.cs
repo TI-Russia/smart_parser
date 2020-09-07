@@ -6,15 +6,15 @@ namespace SmartAntlr
     public class SquareListVisitor : SquareListParserBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public string InputText;
+        public GeneralAntlrParser Parser;
 
-        public SquareListVisitor(string inputText)
+        public SquareListVisitor(GeneralAntlrParser parser)
         {
-            InputText = inputText;
+            Parser = parser;
         }
         public override object VisitSquare(SquareListParser.SquareContext context)
         {
-            var line = new GeneralParserPhrase(InputText, context);
+            var line = new GeneralParserPhrase(Parser, context);
             Lines.Add(line);
             return line;
         }
@@ -28,7 +28,7 @@ namespace SmartAntlr
             InitLexer(inputText);
             var parser = new SquareListParser(CommonTokenStream, Output, ErrorOutput);
             var context = parser.squares();
-            var visitor = new SquareListVisitor(InputText);
+            var visitor = new SquareListVisitor(this);
             visitor.Visit(context);
             return visitor.Lines;
         }

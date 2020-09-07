@@ -44,12 +44,6 @@ public interface IRealtyTypeAndOwnTypeParserVisitor<Result> : IParseTreeVisitor<
 	/// <return>The visitor result.</return>
 	Result VisitRealty([NotNull] RealtyTypeAndOwnTypeParser.RealtyContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -67,4 +61,16 @@ public interface IRealtyTypeAndOwnTypeParserVisitor<Result> : IParseTreeVisitor<
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitSquare([NotNull] RealtyTypeAndOwnTypeParser.SquareContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.country"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitCountry([NotNull] RealtyTypeAndOwnTypeParser.CountryContext context);
 }

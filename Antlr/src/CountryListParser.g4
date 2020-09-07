@@ -2,7 +2,7 @@
 
 parser grammar CountryListParser;
 
-options { tokenVocab=RealtyLexer; }
+options { tokenVocab=StrictLexer; }
 
 countries : country+;
 

@@ -6,15 +6,15 @@ namespace SmartAntlr
     { 
     
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public string InputText;
+        public GeneralAntlrParser Parser;
 
-        public RealtyTypeListVisitor(string inputText)
+        public RealtyTypeListVisitor(GeneralAntlrParser parser)
         {
-            InputText = inputText;
+            Parser = parser;
         }
         public override object VisitRealty_type(RealtyTypeListParser.Realty_typeContext context)
         {
-            var item = new GeneralParserPhrase(InputText, context);
+            var item = new GeneralParserPhrase(Parser, context);
             Lines.Add(item);
             return item;
         }
@@ -28,7 +28,7 @@ namespace SmartAntlr
             InitLexer(inputText);
             var parser = new RealtyTypeListParser(CommonTokenStream, Output, ErrorOutput);
             var context = parser.realty_type_list();
-            var visitor = new RealtyTypeListVisitor(InputText);
+            var visitor = new RealtyTypeListVisitor(this);
             visitor.Visit(context);
             return visitor.Lines;
         }

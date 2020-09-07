@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
 using SmartAntlr;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace test
 {
@@ -13,7 +14,7 @@ namespace test
         {
             return File.ReadAllBytes(path1).SequenceEqual(File.ReadAllBytes(path2));
         }
-
+            
         public String GetTestFilesFolder()
         {
             var curDir = Directory.GetCurrentDirectory();
@@ -29,24 +30,31 @@ namespace test
         }
 
 
-        [TestMethod]
-        public void TestRealtyAll()
+        void TestCase(GeneralAntlrParser parser, string filename)
         {
-            string input = Path.Join(GetTestFilesFolder(), "realty_all.txt");
+            string input = Path.Join(GetTestFilesFolder(), filename);
             string output = input + ".result";
             var texts = AntlrCommon.ReadTestCases(input);
-            AntlrCommon.WriteTestCaseResultsToFile(new AntlrRealtyParser(), texts, output);
+            AntlrCommon.WriteTestCaseResultsToFile(parser, texts, output);
             Assert.AreEqual(FileEquals(output, input + ".result.canon"), true);
         }
 
         [TestMethod]
-        public void TestCountries()
+        public void StrictParser()
         {
-            string input = Path.Join(GetTestFilesFolder(), "country.txt");
-            string output = input + ".result";
-            var texts = AntlrCommon.ReadTestCases(input);
-            AntlrCommon.WriteTestCaseResultsToFile(new AntlrCountryParser(), texts, output);
-            Assert.AreEqual(FileEquals(output, input + ".result.canon"), true);
+            TestCase(new AntlrStrictParser(), "strict.txt");
+        }
+
+        [TestMethod]
+        public void SoupParser()
+        {
+            TestCase(new AntlrSoupParser(), "soup.txt");
+        }
+
+        [TestMethod]
+        public void CountryList()
+        {
+            TestCase(new AntlrCountryListParser(), "country_list.txt");
         }
     }
 

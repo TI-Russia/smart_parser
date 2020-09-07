@@ -55,4 +55,16 @@ public interface ISquareListParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitSquare([NotNull] SquareListParser.SquareContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.realty_type"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRealty_type([NotNull] SquareListParser.Realty_typeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.country"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitCountry([NotNull] SquareListParser.CountryContext context);
 }

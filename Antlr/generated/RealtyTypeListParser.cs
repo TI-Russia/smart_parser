@@ -36,9 +36,9 @@ public partial class RealtyTypeListParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		SQUARE_METER=1, HECTARE=2, OT=3, NUMBER=4, REALTY_ID=5, FRACTION_ASCII=6, 
-		DOLYA_WORD=7, SEMICOLON=8, COMMA=9, OPN_BRK=10, CLS_BRK=11, SPC=12, FRACTION_UNICODE=13, 
-		HYPHEN=14, OWN_TYPE=15, COUNTRY=16, REALTY_TYPE=17;
+		SEMICOLON=1, COMMA=2, OPN_BRK=3, CLS_BRK=4, SPC=5, FRACTION_UNICODE=6, 
+		HYPHEN=7, OT=8, REALTY_ID=9, FRACTION_ASCII=10, DOLYA_WORD=11, OWN_TYPE=12, 
+		COUNTRY=13, REALTY_TYPE=14, SQUARE_METER=15, HECTARE=16, NUMBER=17;
 	public const int
 		RULE_realty_type_list = 0, RULE_realty_type = 1;
 	public static readonly string[] ruleNames = {
@@ -46,13 +46,13 @@ public partial class RealtyTypeListParser : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, null, "'\u0433\u0430'", "'\u043E\u0442'", null, null, null, null, 
-		"';'", "','", "'('", "')'", null, null, "'-'"
+		null, "';'", "','", "'('", "')'", null, null, "'-'", "'\u043E\u0442'", 
+		null, null, null, null, null, null, null, "'\u0433\u0430'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "SQUARE_METER", "HECTARE", "OT", "NUMBER", "REALTY_ID", "FRACTION_ASCII", 
-		"DOLYA_WORD", "SEMICOLON", "COMMA", "OPN_BRK", "CLS_BRK", "SPC", "FRACTION_UNICODE", 
-		"HYPHEN", "OWN_TYPE", "COUNTRY", "REALTY_TYPE"
+		null, "SEMICOLON", "COMMA", "OPN_BRK", "CLS_BRK", "SPC", "FRACTION_UNICODE", 
+		"HYPHEN", "OT", "REALTY_ID", "FRACTION_ASCII", "DOLYA_WORD", "OWN_TYPE", 
+		"COUNTRY", "REALTY_TYPE", "SQUARE_METER", "HECTARE", "NUMBER"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -213,8 +213,8 @@ public partial class RealtyTypeListParser : Parser {
 		'\x2', '\x2', '\x2', '\x6', '\b', '\x5', '\x4', '\x3', '\x2', '\a', '\x6', 
 		'\x3', '\x2', '\x2', '\x2', '\b', '\t', '\x3', '\x2', '\x2', '\x2', '\t', 
 		'\a', '\x3', '\x2', '\x2', '\x2', '\t', '\n', '\x3', '\x2', '\x2', '\x2', 
-		'\n', '\x3', '\x3', '\x2', '\x2', '\x2', '\v', '\r', '\a', '\x13', '\x2', 
-		'\x2', '\f', '\xE', '\a', '\v', '\x2', '\x2', '\r', '\f', '\x3', '\x2', 
+		'\n', '\x3', '\x3', '\x2', '\x2', '\x2', '\v', '\r', '\a', '\x10', '\x2', 
+		'\x2', '\f', '\xE', '\a', '\x4', '\x2', '\x2', '\r', '\f', '\x3', '\x2', 
 		'\x2', '\x2', '\r', '\xE', '\x3', '\x2', '\x2', '\x2', '\xE', '\x5', '\x3', 
 		'\x2', '\x2', '\x2', '\x4', '\t', '\r',
 	};

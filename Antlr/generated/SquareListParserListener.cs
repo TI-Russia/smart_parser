@@ -70,4 +70,24 @@ public interface ISquareListParserListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitSquare([NotNull] SquareListParser.SquareContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.realty_type"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRealty_type([NotNull] SquareListParser.Realty_typeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.realty_type"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRealty_type([NotNull] SquareListParser.Realty_typeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.country"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCountry([NotNull] SquareListParser.CountryContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.country"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCountry([NotNull] SquareListParser.CountryContext context);
 }

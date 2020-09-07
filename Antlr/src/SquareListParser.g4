@@ -1,6 +1,6 @@
 parser grammar SquareListParser;
-import  RealtyCommonParser;
-options { tokenVocab=RealtyLexer; }
+import  CommonForParsers;
+options { tokenVocab=StrictLexer; }
 squares : square+;
 
 

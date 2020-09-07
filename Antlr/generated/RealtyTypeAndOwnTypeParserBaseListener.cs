@@ -59,18 +59,6 @@ public partial class RealtyTypeAndOwnTypeParserBaseListener : IRealtyTypeAndOwnT
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitRealty([NotNull] RealtyTypeAndOwnTypeParser.RealtyContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.own_type"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -106,6 +94,30 @@ public partial class RealtyTypeAndOwnTypeParserBaseListener : IRealtyTypeAndOwnT
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSquare([NotNull] RealtyTypeAndOwnTypeParser.SquareContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_type"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRealty_type([NotNull] RealtyTypeAndOwnTypeParser.Realty_typeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.country"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterCountry([NotNull] RealtyTypeAndOwnTypeParser.CountryContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.country"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitCountry([NotNull] RealtyTypeAndOwnTypeParser.CountryContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
