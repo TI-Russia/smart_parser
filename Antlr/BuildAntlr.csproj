@@ -4,41 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="src\RealtyLexer.g4" />
-    <None Remove="src\RealtyType.g4" />
-    <None Remove="src\RealtyType.g4.err" />
-  </ItemGroup>
-
 
 
 
     <ItemGroup>
-        <Antlr4 Include="src\CommonForLexers.g4">
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
-          <AntOutDir>generated</AntOutDir>
-        </Antlr4>
-        <Antlr4 Include="src\CountryLexer.g4">
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
-          <AntOutDir>generated</AntOutDir>
-        </Antlr4>
-        <Antlr4 Include="src\OwntypeLexer.g4">
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
-          <AntOutDir>generated</AntOutDir>
-        </Antlr4>
-        <Antlr4 Include="src\SquareLexer.g4">
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
-          <AntOutDir>generated</AntOutDir>
-        </Antlr4>
-        <Antlr4 Include="src\RealtyTypeLexer.g4">
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
-          <AntOutDir>generated</AntOutDir>
-        </Antlr4>
         <Antlr4 Include="src\StrictLexer.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
@@ -59,11 +28,6 @@
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
         <Antlr4 Include="src\RealtyTypeListParser.g4">
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
-          <AntOutDir>generated</AntOutDir>
-        </Antlr4>
-        <Antlr4 Include="src\CommonForParsers.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>

@@ -9,4 +9,7 @@ any_realty_item:
             | square
             | realty_type
             | own_type
+            | INT
+            | FLOATING
+            | COMMA
    ;

@@ -35,17 +35,77 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class SquareListParserBaseListener : ISquareListParserListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SquareListParser.squares"/>.
+	/// Enter a parse tree produced by <see cref="SquareListParser.bareSquares"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterSquares([NotNull] SquareListParser.SquaresContext context) { }
+	public virtual void EnterBareSquares([NotNull] SquareListParser.BareSquaresContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SquareListParser.squares"/>.
+	/// Exit a parse tree produced by <see cref="SquareListParser.bareSquares"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitSquares([NotNull] SquareListParser.SquaresContext context) { }
+	public virtual void ExitBareSquares([NotNull] SquareListParser.BareSquaresContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.bareScore"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBareScore([NotNull] SquareListParser.BareScoreContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.bareScore"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBareScore([NotNull] SquareListParser.BareScoreContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.realty_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRealty_id([NotNull] SquareListParser.Realty_idContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.realty_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRealty_id([NotNull] SquareListParser.Realty_idContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.square_value_without_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value_without_spaces([NotNull] SquareListParser.Square_value_without_spacesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.square_value_without_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value_without_spaces([NotNull] SquareListParser.Square_value_without_spacesContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.square_value_with_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value_with_spaces([NotNull] SquareListParser.Square_value_with_spacesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.square_value_with_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value_with_spaces([NotNull] SquareListParser.Square_value_with_spacesContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.square_value"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value([NotNull] SquareListParser.Square_valueContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.square_value"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value([NotNull] SquareListParser.Square_valueContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SquareListParser.own_type"/>.
 	/// <para>The default implementation does nothing.</para>

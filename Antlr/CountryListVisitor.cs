@@ -6,9 +6,9 @@ namespace SmartAntlr
     public class CountryListVisitor : CountryListParserBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public GeneralAntlrParser Parser;
+        public GeneralAntlrParserWrapper Parser;
 
-        public CountryListVisitor(GeneralAntlrParser parser)
+        public CountryListVisitor(GeneralAntlrParserWrapper parser)
         {
             Parser = parser;
         }
@@ -21,7 +21,7 @@ namespace SmartAntlr
     }
 
 
-    public class AntlrCountryListParser : GeneralAntlrParser
+    public class AntlrCountryListParser : GeneralAntlrParserWrapper
     {
         public override List<GeneralParserPhrase> Parse(string inputText)
         {

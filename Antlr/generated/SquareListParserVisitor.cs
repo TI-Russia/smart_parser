@@ -32,11 +32,41 @@ using IToken = Antlr4.Runtime.IToken;
 [System.CLSCompliant(false)]
 public interface ISquareListParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SquareListParser.squares"/>.
+	/// Visit a parse tree produced by <see cref="SquareListParser.bareSquares"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitSquares([NotNull] SquareListParser.SquaresContext context);
+	Result VisitBareSquares([NotNull] SquareListParser.BareSquaresContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.bareScore"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitBareScore([NotNull] SquareListParser.BareScoreContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRealty_id([NotNull] SquareListParser.Realty_idContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_without_spaces([NotNull] SquareListParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_with_spaces([NotNull] SquareListParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SquareListParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value([NotNull] SquareListParser.Square_valueContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SquareListParser.own_type"/>.
 	/// </summary>

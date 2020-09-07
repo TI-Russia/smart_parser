@@ -13,7 +13,7 @@ public class GeneralParserPhrase
     string TextFromLexer = "";
     string SourceText = "";
         
-    public GeneralParserPhrase(GeneralAntlrParser parser, ParserRuleContext context)
+    public GeneralParserPhrase(GeneralAntlrParserWrapper parser, ParserRuleContext context)
     {
         SourceText = parser.GetSourceTextByParserContext(context);
         TextFromLexer = context.GetText();
@@ -48,7 +48,7 @@ public class RealtyFromText : GeneralParserPhrase
             Country.Length == 0;
     }
 
-    public RealtyFromText(GeneralAntlrParser parser, ParserRuleContext context) : base(parser, context) 
+    public RealtyFromText(GeneralAntlrParserWrapper parser, ParserRuleContext context) : base(parser, context) 
     { 
     }
     public override string GetJsonString()
@@ -71,14 +71,14 @@ public class RealtyFromText : GeneralParserPhrase
     }
 }
 
-public abstract class GeneralAntlrParser
+public abstract class GeneralAntlrParserWrapper
 {
     public string InputTextCaseSensitive;
     protected CommonTokenStream CommonTokenStream;
     protected TextWriter Output = TextWriter.Null;
     protected TextWriter ErrorOutput = TextWriter.Null;
-
-    public GeneralAntlrParser(bool silent = true)
+    public Parser Parser = null;
+    public GeneralAntlrParserWrapper(bool silent = true)
     {
         if (!silent)
         {
@@ -90,21 +90,20 @@ public abstract class GeneralAntlrParser
         Output = Console.Out;
         ErrorOutput = Console.Error;
     }
-    public void InitLexer(string inputText, bool strictLexer = true)
+
+    public virtual Lexer CreateLexer(AntlrInputStream inputStream)
+    {
+        return new StrictLexer(inputStream, Output, ErrorOutput);
+    }
+
+    public void InitLexer(string inputText)
     {
         inputText = Regex.Replace(inputText, @"\s+", " ");
         inputText = inputText.Trim();
         InputTextCaseSensitive = inputText;
         AntlrInputStream inputStream = new AntlrInputStream(InputTextCaseSensitive.ToLower());
-        if (strictLexer) {
-            var lexer = new StrictLexer(inputStream, Output, ErrorOutput);
-            CommonTokenStream = new CommonTokenStream(lexer);
-        }
-        else
-        {
-            var lexer = new SoupLexer(inputStream, Output, ErrorOutput);
-            CommonTokenStream = new CommonTokenStream(lexer);
-        }
+        var lexer = CreateLexer(inputStream);
+        CommonTokenStream = new CommonTokenStream(lexer);
         
     }
     public abstract List<GeneralParserPhrase> Parse(string inputText);
@@ -190,7 +189,7 @@ public class AntlrCommon
         return texts;
 
     }
-    public static void WriteTestCaseResultsToFile(GeneralAntlrParser parser, List<string> texts, string outputPath)
+    public static void WriteTestCaseResultsToFile(GeneralAntlrParserWrapper parser, List<string> texts, string outputPath)
     {
         using (StreamWriter outputFile = new StreamWriter(outputPath))
         {

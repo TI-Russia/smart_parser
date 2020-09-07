@@ -10,15 +10,15 @@ namespace SmartAntlr
     public class SoupVisitor : SoupParserBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public GeneralAntlrParser Parser;
+        public GeneralAntlrParserWrapper ParserWrapper;
 
-        public SoupVisitor(GeneralAntlrParser parser)
+        public SoupVisitor(GeneralAntlrParserWrapper parser)
         {
-            Parser = parser;
+            ParserWrapper = parser;
         }
         RealtyFromText InitializeOneRecord(SoupParser.Any_realty_itemContext  context)
         {
-            var record = new RealtyFromText(Parser, context);
+            var record = new RealtyFromText(ParserWrapper, context);
             if (context.own_type() != null)
             {
                 record.OwnType = context.own_type().OWN_TYPE().GetText();
@@ -28,10 +28,10 @@ namespace SmartAntlr
                 record.RealtyType = context.realty_type().REALTY_TYPE().GetText();
             }
 
-            if (context.square() != null && context.square().NUMBER() != null)
+            if (context.square() != null && context.square().square_value() != null)
             {
                 var sc = context.square();
-                var strVal = sc.NUMBER().GetText();
+                var strVal = sc.square_value().GetText();
                 record.Square = strVal.ParseDecimalValue();
                 if (sc.HECTARE() != null)
                 {
@@ -44,13 +44,15 @@ namespace SmartAntlr
             }
             if (context.country() != null)
             {
-                record.Country = context.country().GetText();
+                // record.Country = context.country().GetText();
+                record.Country = ParserWrapper.GetSourceTextByParserContext(context.country());
             }
             return record;
         }
 
         public override object VisitAny_realty_item(SoupParser.Any_realty_itemContext context)
         {
+            string debug = context.ToStringTree(ParserWrapper.Parser);
             var line = InitializeOneRecord(context);
             if (!line.IsEmpty())
             {
@@ -60,12 +62,19 @@ namespace SmartAntlr
         }
     }
 
-    public class AntlrSoupParser : GeneralAntlrParser
+    public class AntlrSoupParser : GeneralAntlrParserWrapper
     {
+        public override Lexer CreateLexer(AntlrInputStream inputStream)
+        {
+            return new SoupLexer(inputStream, Output, ErrorOutput);
+        }
+
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
-            InitLexer(inputText, false);
+            InitLexer(inputText);
             var parser = new SoupParser(CommonTokenStream, Output, ErrorOutput);
+            //parser.Trace = true;
+            Parser = parser;
             // parser.ErrorHandler = new BailErrorStrategy();
             ///parser.ErrorHandler = new MyGrammarErrorStrategy();
             try
@@ -75,7 +84,7 @@ namespace SmartAntlr
                 visitor.Visit(context);
                 return visitor.Lines;
             }
-            catch (Exception e)
+            catch (RecognitionException e)
             {
                 return new List<GeneralParserPhrase>();
             }

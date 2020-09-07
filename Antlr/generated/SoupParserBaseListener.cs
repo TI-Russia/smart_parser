@@ -59,6 +59,54 @@ public partial class SoupParserBaseListener : ISoupParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAny_realty_item([NotNull] SoupParser.Any_realty_itemContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="SoupParser.realty_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRealty_id([NotNull] SoupParser.Realty_idContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SoupParser.realty_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRealty_id([NotNull] SoupParser.Realty_idContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SoupParser.square_value_without_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value_without_spaces([NotNull] SoupParser.Square_value_without_spacesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SoupParser.square_value_without_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value_without_spaces([NotNull] SoupParser.Square_value_without_spacesContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SoupParser.square_value_with_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value_with_spaces([NotNull] SoupParser.Square_value_with_spacesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SoupParser.square_value_with_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value_with_spaces([NotNull] SoupParser.Square_value_with_spacesContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SoupParser.square_value"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value([NotNull] SoupParser.Square_valueContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SoupParser.square_value"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value([NotNull] SoupParser.Square_valueContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="SoupParser.own_type"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

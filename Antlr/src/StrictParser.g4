@@ -17,7 +17,7 @@ realty :
        | (realty_type COMMA? square COMMA? own_type COMMA? COUNTRY?)
 
 		 /*Земельный участок сельхоз.назначения 1788452000 Долевая собственность 2697/17884 доли РФ*/
-       | (realty_type COMMA? REALTY_ID COMMA? own_type COMMA? COUNTRY?)      
+       | (realty_type COMMA? realty_id COMMA? own_type COMMA? COUNTRY?)      
 
 		 /*Участок под ЛПХ (1/2 доли), 14 000,00 м2. Россия*/
        | (realty_type  OPN_BRK? realty_share DOLYA_WORD? CLS_BRK? COMMA? square COMMA?  COUNTRY?)      

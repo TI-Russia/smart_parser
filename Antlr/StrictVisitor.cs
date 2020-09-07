@@ -8,9 +8,9 @@ namespace SmartAntlr
     public class StrictVisitor : StrictParserBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public GeneralAntlrParser Parser;
+        public GeneralAntlrParserWrapper Parser;
 
-        public StrictVisitor(GeneralAntlrParser parser)
+        public StrictVisitor(GeneralAntlrParserWrapper parser)
         {
             Parser = parser;
         }
@@ -26,10 +26,10 @@ namespace SmartAntlr
                 record.RealtyType = context.realty_type().REALTY_TYPE().GetText();
             }
 
-            if (context.square() != null && context.square().NUMBER() != null)
+            if (context.square() != null && context.square().square_value() != null)
             {
                 var sc = context.square();
-                var strVal = sc.NUMBER().GetText();
+                var strVal = sc.square_value().GetText();
                 record.Square = strVal.ParseDecimalValue();
                 if (sc.HECTARE() != null)
                 {
@@ -59,7 +59,7 @@ namespace SmartAntlr
         }
     }
 
-    public class AntlrStrictParser : GeneralAntlrParser
+    public class AntlrStrictParser : GeneralAntlrParserWrapper
     {
         public override List<GeneralParserPhrase> Parse(string inputText)
         {

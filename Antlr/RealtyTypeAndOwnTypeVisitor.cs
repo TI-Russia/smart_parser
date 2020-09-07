@@ -9,7 +9,7 @@ namespace SmartAntlr
         public string OwnType = "";
         public string RealtyShare = "";
 
-        public RealtyTypeAndOwnTypeFromText(GeneralAntlrParser parser, RealtyTypeAndOwnTypeParser.RealtyContext context) : 
+        public RealtyTypeAndOwnTypeFromText(GeneralAntlrParserWrapper parser, RealtyTypeAndOwnTypeParser.RealtyContext context) : 
             base(parser, context)
         {
             if (context.own_type() != null)
@@ -48,9 +48,9 @@ namespace SmartAntlr
     public class RealtyTypeAndOwnTypeVisitor : RealtyTypeAndOwnTypeParserBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public GeneralAntlrParser Parser;
+        public GeneralAntlrParserWrapper Parser;
 
-        public RealtyTypeAndOwnTypeVisitor(GeneralAntlrParser parser)
+        public RealtyTypeAndOwnTypeVisitor(GeneralAntlrParserWrapper parser)
         {
             Parser = parser;
         }
@@ -62,7 +62,7 @@ namespace SmartAntlr
         }
     }
 
-    public class AntlrRealtyTypeAndOwnTypeParser : GeneralAntlrParser
+    public class AntlrRealtyTypeAndOwnTypeParser : GeneralAntlrParserWrapper
     {
         public override List<GeneralParserPhrase> Parse(string inputText)
         {

@@ -6,9 +6,9 @@ namespace SmartAntlr
     { 
     
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
-        public GeneralAntlrParser Parser;
+        public GeneralAntlrParserWrapper Parser;
 
-        public RealtyTypeListVisitor(GeneralAntlrParser parser)
+        public RealtyTypeListVisitor(GeneralAntlrParserWrapper parser)
         {
             Parser = parser;
         }
@@ -21,7 +21,7 @@ namespace SmartAntlr
     }
 
 
-    public class AntlrRealtyTypeParser : GeneralAntlrParser
+    public class AntlrRealtyTypeParser : GeneralAntlrParserWrapper
     {
         public override List<GeneralParserPhrase> Parse(string inputText)
         {

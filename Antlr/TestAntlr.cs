@@ -30,7 +30,7 @@ namespace test
         }
 
 
-        void TestCase(GeneralAntlrParser parser, string filename)
+        void TestCase(GeneralAntlrParserWrapper parser, string filename)
         {
             string input = Path.Join(GetTestFilesFolder(), filename);
             string output = input + ".result";
@@ -55,6 +55,11 @@ namespace test
         public void CountryList()
         {
             TestCase(new AntlrCountryListParser(), "country_list.txt");
+        }
+        [TestMethod]
+        public void SquareList()
+        {
+            TestCase(new AntlrSquareParser(), "square_list.txt");
         }
     }
 

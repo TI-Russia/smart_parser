@@ -31,15 +31,65 @@ using IToken = Antlr4.Runtime.IToken;
 [System.CLSCompliant(false)]
 public interface ISquareListParserListener : IParseTreeListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="SquareListParser.squares"/>.
+	/// Enter a parse tree produced by <see cref="SquareListParser.bareSquares"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterSquares([NotNull] SquareListParser.SquaresContext context);
+	void EnterBareSquares([NotNull] SquareListParser.BareSquaresContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="SquareListParser.squares"/>.
+	/// Exit a parse tree produced by <see cref="SquareListParser.bareSquares"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitSquares([NotNull] SquareListParser.SquaresContext context);
+	void ExitBareSquares([NotNull] SquareListParser.BareSquaresContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.bareScore"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBareScore([NotNull] SquareListParser.BareScoreContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.bareScore"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBareScore([NotNull] SquareListParser.BareScoreContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRealty_id([NotNull] SquareListParser.Realty_idContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRealty_id([NotNull] SquareListParser.Realty_idContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value_without_spaces([NotNull] SquareListParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value_without_spaces([NotNull] SquareListParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value_with_spaces([NotNull] SquareListParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value_with_spaces([NotNull] SquareListParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="SquareListParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value([NotNull] SquareListParser.Square_valueContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="SquareListParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value([NotNull] SquareListParser.Square_valueContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="SquareListParser.own_type"/>.
 	/// </summary>

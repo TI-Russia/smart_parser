@@ -44,6 +44,30 @@ public interface IRealtyTypeAndOwnTypeParserVisitor<Result> : IParseTreeVisitor<
 	/// <return>The visitor result.</return>
 	Result VisitRealty([NotNull] RealtyTypeAndOwnTypeParser.RealtyContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRealty_id([NotNull] RealtyTypeAndOwnTypeParser.Realty_idContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_without_spaces([NotNull] RealtyTypeAndOwnTypeParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_with_spaces([NotNull] RealtyTypeAndOwnTypeParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value([NotNull] RealtyTypeAndOwnTypeParser.Square_valueContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

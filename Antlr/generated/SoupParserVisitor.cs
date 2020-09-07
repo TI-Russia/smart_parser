@@ -44,6 +44,30 @@ public interface ISoupParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAny_realty_item([NotNull] SoupParser.Any_realty_itemContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="SoupParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRealty_id([NotNull] SoupParser.Realty_idContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SoupParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_without_spaces([NotNull] SoupParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SoupParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_with_spaces([NotNull] SoupParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SoupParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value([NotNull] SoupParser.Square_valueContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="SoupParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -1,9 +1,8 @@
 lexer grammar SoupLexer;
 
-import  CommonForLexers, OwntypeLexer, CountryLexer, RealtyTypeLexer, SquareLexer;
+import  CommonForLexers, OwntypeLexer, CountryLexer, RealtyTypeLexer, SkipOtherLexer;
                   
-/* ignore unknown */
-FILTER : . -> skip;
+/* OTHER : . -> skip;  should be in separate file, because all importing goes after the main rules*/
 
 
 

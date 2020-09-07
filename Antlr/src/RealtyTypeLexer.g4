@@ -1,5 +1,5 @@
 lexer grammar RealtyTypeLexer;
-import  CommonForLexers;
+import  BaseLexer;
 
 fragment KOMNATA : 
       'комнаты' 

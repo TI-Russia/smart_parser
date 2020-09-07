@@ -51,6 +51,46 @@ public interface IStrictParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitRealty([NotNull] StrictParser.RealtyContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRealty_id([NotNull] StrictParser.Realty_idContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRealty_id([NotNull] StrictParser.Realty_idContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value_without_spaces([NotNull] StrictParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value_without_spaces([NotNull] StrictParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value_with_spaces([NotNull] StrictParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value_with_spaces([NotNull] StrictParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value([NotNull] StrictParser.Square_valueContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value([NotNull] StrictParser.Square_valueContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="StrictParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

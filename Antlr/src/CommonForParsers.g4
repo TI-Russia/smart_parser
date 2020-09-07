@@ -1,5 +1,25 @@
 parser grammar CommonForParsers;
 
+//options { tokenVocab=CommonForLexers; }
+
+
+/* long number */
+realty_id : INT 
+	{$INT.int > 100000}?;
+
+
+square_value_without_spaces : FLOATING | INT  
+	{$INT.int < 100000}?
+;
+
+square_value_with_spaces : INT (FLOATING | INT)
+	{$INT.int < 1000}?
+;
+
+square_value :   square_value_without_spaces
+               | square_value_with_spaces;
+
+
 own_type :    OWN_TYPE
 			| (OWN_TYPE DOLYA_WORD? COMMA? realty_share DOLYA_WORD? OT?);
 
@@ -9,7 +29,7 @@ realty_share : (FRACTION_UNICODE | FRACTION_ASCII);
 
 
 /*122 кв.м.*/
-square : NUMBER  (SQUARE_METER | HECTARE);
+square : square_value  (SQUARE_METER | HECTARE);
 
 
 realty_type : REALTY_TYPE;

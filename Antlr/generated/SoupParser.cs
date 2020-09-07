@@ -36,25 +36,28 @@ public partial class SoupParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		FILTER=1, SEMICOLON=2, COMMA=3, OPN_BRK=4, CLS_BRK=5, SPC=6, FRACTION_UNICODE=7, 
-		HYPHEN=8, OT=9, REALTY_ID=10, FRACTION_ASCII=11, DOLYA_WORD=12, OWN_TYPE=13, 
-		COUNTRY=14, REALTY_TYPE=15, SQUARE_METER=16, HECTARE=17, NUMBER=18;
+		SEMICOLON=1, COMMA=2, OPN_BRK=3, CLS_BRK=4, SPC=5, FRACTION_UNICODE=6, 
+		HYPHEN=7, FLOATING=8, INT=9, OT=10, SQUARE_METER=11, HECTARE=12, FRACTION_ASCII=13, 
+		DOLYA_WORD=14, OWN_TYPE=15, COUNTRY=16, REALTY_TYPE=17, OTHER=18;
 	public const int
-		RULE_any_realty_item_list = 0, RULE_any_realty_item = 1, RULE_own_type = 2, 
-		RULE_realty_share = 3, RULE_square = 4, RULE_realty_type = 5, RULE_country = 6;
+		RULE_any_realty_item_list = 0, RULE_any_realty_item = 1, RULE_realty_id = 2, 
+		RULE_square_value_without_spaces = 3, RULE_square_value_with_spaces = 4, 
+		RULE_square_value = 5, RULE_own_type = 6, RULE_realty_share = 7, RULE_square = 8, 
+		RULE_realty_type = 9, RULE_country = 10;
 	public static readonly string[] ruleNames = {
-		"any_realty_item_list", "any_realty_item", "own_type", "realty_share", 
+		"any_realty_item_list", "any_realty_item", "realty_id", "square_value_without_spaces", 
+		"square_value_with_spaces", "square_value", "own_type", "realty_share", 
 		"square", "realty_type", "country"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, null, "';'", "','", "'('", "')'", null, null, "'-'", "'\u043E\u0442'", 
-		null, null, null, null, null, null, null, "'\u0433\u0430'"
+		null, "';'", "','", "'('", "')'", null, null, "'-'", null, null, "'\u043E\u0442'", 
+		null, "'\u0433\u0430'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "FILTER", "SEMICOLON", "COMMA", "OPN_BRK", "CLS_BRK", "SPC", "FRACTION_UNICODE", 
-		"HYPHEN", "OT", "REALTY_ID", "FRACTION_ASCII", "DOLYA_WORD", "OWN_TYPE", 
-		"COUNTRY", "REALTY_TYPE", "SQUARE_METER", "HECTARE", "NUMBER"
+		null, "SEMICOLON", "COMMA", "OPN_BRK", "CLS_BRK", "SPC", "FRACTION_UNICODE", 
+		"HYPHEN", "FLOATING", "INT", "OT", "SQUARE_METER", "HECTARE", "FRACTION_ASCII", 
+		"DOLYA_WORD", "OWN_TYPE", "COUNTRY", "REALTY_TYPE", "OTHER"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -123,19 +126,19 @@ public partial class SoupParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 15;
+			State = 23;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 14; any_realty_item();
+				State = 22; any_realty_item();
 				}
 				}
-				State = 17;
+				State = 25;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << OWN_TYPE) | (1L << COUNTRY) | (1L << REALTY_TYPE) | (1L << NUMBER))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << COMMA) | (1L << FLOATING) | (1L << INT) | (1L << OWN_TYPE) | (1L << COUNTRY) | (1L << REALTY_TYPE))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -162,6 +165,9 @@ public partial class SoupParser : Parser {
 		public Own_typeContext own_type() {
 			return GetRuleContext<Own_typeContext>(0);
 		}
+		public ITerminalNode INT() { return GetToken(SoupParser.INT, 0); }
+		public ITerminalNode FLOATING() { return GetToken(SoupParser.FLOATING, 0); }
+		public ITerminalNode COMMA() { return GetToken(SoupParser.COMMA, 0); }
 		public Any_realty_itemContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -187,35 +193,278 @@ public partial class SoupParser : Parser {
 		Any_realty_itemContext _localctx = new Any_realty_itemContext(Context, State);
 		EnterRule(_localctx, 2, RULE_any_realty_item);
 		try {
-			State = 23;
+			State = 34;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case COUNTRY:
+			switch ( Interpreter.AdaptivePredict(TokenStream,1,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 19; country();
+				State = 27; country();
 				}
 				break;
-			case NUMBER:
+			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 20; square();
+				State = 28; square();
 				}
 				break;
-			case REALTY_TYPE:
+			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 21; realty_type();
+				State = 29; realty_type();
 				}
 				break;
-			case OWN_TYPE:
+			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 22; own_type();
+				State = 30; own_type();
+				}
+				break;
+			case 5:
+				EnterOuterAlt(_localctx, 5);
+				{
+				State = 31; Match(INT);
+				}
+				break;
+			case 6:
+				EnterOuterAlt(_localctx, 6);
+				{
+				State = 32; Match(FLOATING);
+				}
+				break;
+			case 7:
+				EnterOuterAlt(_localctx, 7);
+				{
+				State = 33; Match(COMMA);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Realty_idContext : ParserRuleContext {
+		public IToken _INT;
+		public ITerminalNode INT() { return GetToken(SoupParser.INT, 0); }
+		public Realty_idContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_realty_id; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.EnterRealty_id(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.ExitRealty_id(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISoupParserVisitor<TResult> typedVisitor = visitor as ISoupParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitRealty_id(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Realty_idContext realty_id() {
+		Realty_idContext _localctx = new Realty_idContext(Context, State);
+		EnterRule(_localctx, 4, RULE_realty_id);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 36; _localctx._INT = Match(INT);
+			State = 37;
+			if (!((_localctx._INT!=null?int.Parse(_localctx._INT.Text):0) > 100000)) throw new FailedPredicateException(this, "$INT.int > 100000");
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Square_value_without_spacesContext : ParserRuleContext {
+		public IToken _INT;
+		public ITerminalNode FLOATING() { return GetToken(SoupParser.FLOATING, 0); }
+		public ITerminalNode INT() { return GetToken(SoupParser.INT, 0); }
+		public Square_value_without_spacesContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_square_value_without_spaces; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.EnterSquare_value_without_spaces(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.ExitSquare_value_without_spaces(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISoupParserVisitor<TResult> typedVisitor = visitor as ISoupParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSquare_value_without_spaces(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Square_value_without_spacesContext square_value_without_spaces() {
+		Square_value_without_spacesContext _localctx = new Square_value_without_spacesContext(Context, State);
+		EnterRule(_localctx, 6, RULE_square_value_without_spaces);
+		try {
+			State = 42;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case FLOATING:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 39; Match(FLOATING);
+				}
+				break;
+			case INT:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 40; _localctx._INT = Match(INT);
+				State = 41;
+				if (!((_localctx._INT!=null?int.Parse(_localctx._INT.Text):0) < 100000)) throw new FailedPredicateException(this, "$INT.int < 100000");
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Square_value_with_spacesContext : ParserRuleContext {
+		public IToken _INT;
+		public ITerminalNode[] INT() { return GetTokens(SoupParser.INT); }
+		public ITerminalNode INT(int i) {
+			return GetToken(SoupParser.INT, i);
+		}
+		public ITerminalNode FLOATING() { return GetToken(SoupParser.FLOATING, 0); }
+		public Square_value_with_spacesContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_square_value_with_spaces; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.EnterSquare_value_with_spaces(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.ExitSquare_value_with_spaces(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISoupParserVisitor<TResult> typedVisitor = visitor as ISoupParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSquare_value_with_spaces(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Square_value_with_spacesContext square_value_with_spaces() {
+		Square_value_with_spacesContext _localctx = new Square_value_with_spacesContext(Context, State);
+		EnterRule(_localctx, 8, RULE_square_value_with_spaces);
+		int _la;
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 44; _localctx._INT = Match(INT);
+			State = 45;
+			_la = TokenStream.LA(1);
+			if ( !(_la==FLOATING || _la==INT) ) {
+			ErrorHandler.RecoverInline(this);
+			}
+			else {
+				ErrorHandler.ReportMatch(this);
+			    Consume();
+			}
+			State = 46;
+			if (!((_localctx._INT!=null?int.Parse(_localctx._INT.Text):0) < 1000)) throw new FailedPredicateException(this, "$INT.int < 1000");
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Square_valueContext : ParserRuleContext {
+		public Square_value_without_spacesContext square_value_without_spaces() {
+			return GetRuleContext<Square_value_without_spacesContext>(0);
+		}
+		public Square_value_with_spacesContext square_value_with_spaces() {
+			return GetRuleContext<Square_value_with_spacesContext>(0);
+		}
+		public Square_valueContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_square_value; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.EnterSquare_value(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			ISoupParserListener typedListener = listener as ISoupParserListener;
+			if (typedListener != null) typedListener.ExitSquare_value(this);
+		}
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISoupParserVisitor<TResult> typedVisitor = visitor as ISoupParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSquare_value(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Square_valueContext square_value() {
+		Square_valueContext _localctx = new Square_valueContext(Context, State);
+		EnterRule(_localctx, 10, RULE_square_value);
+		try {
+			State = 50;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 48; square_value_without_spaces();
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 49; square_value_with_spaces();
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -263,57 +512,57 @@ public partial class SoupParser : Parser {
 	[RuleVersion(0)]
 	public Own_typeContext own_type() {
 		Own_typeContext _localctx = new Own_typeContext(Context, State);
-		EnterRule(_localctx, 4, RULE_own_type);
+		EnterRule(_localctx, 12, RULE_own_type);
 		int _la;
 		try {
-			State = 40;
+			State = 67;
 			ErrorHandler.Sync(this);
-			switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,8,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 25; Match(OWN_TYPE);
+				State = 52; Match(OWN_TYPE);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
 				{
-				State = 26; Match(OWN_TYPE);
-				State = 28;
+				State = 53; Match(OWN_TYPE);
+				State = 55;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==DOLYA_WORD) {
 					{
-					State = 27; Match(DOLYA_WORD);
+					State = 54; Match(DOLYA_WORD);
 					}
 				}
 
-				State = 31;
+				State = 58;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==COMMA) {
 					{
-					State = 30; Match(COMMA);
+					State = 57; Match(COMMA);
 					}
 				}
 
-				State = 33; realty_share();
-				State = 35;
+				State = 60; realty_share();
+				State = 62;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==DOLYA_WORD) {
 					{
-					State = 34; Match(DOLYA_WORD);
+					State = 61; Match(DOLYA_WORD);
 					}
 				}
 
-				State = 38;
+				State = 65;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==OT) {
 					{
-					State = 37; Match(OT);
+					State = 64; Match(OT);
 					}
 				}
 
@@ -359,12 +608,12 @@ public partial class SoupParser : Parser {
 	[RuleVersion(0)]
 	public Realty_shareContext realty_share() {
 		Realty_shareContext _localctx = new Realty_shareContext(Context, State);
-		EnterRule(_localctx, 6, RULE_realty_share);
+		EnterRule(_localctx, 14, RULE_realty_share);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 42;
+			State = 69;
 			_la = TokenStream.LA(1);
 			if ( !(_la==FRACTION_UNICODE || _la==FRACTION_ASCII) ) {
 			ErrorHandler.RecoverInline(this);
@@ -387,7 +636,9 @@ public partial class SoupParser : Parser {
 	}
 
 	public partial class SquareContext : ParserRuleContext {
-		public ITerminalNode NUMBER() { return GetToken(SoupParser.NUMBER, 0); }
+		public Square_valueContext square_value() {
+			return GetRuleContext<Square_valueContext>(0);
+		}
 		public ITerminalNode SQUARE_METER() { return GetToken(SoupParser.SQUARE_METER, 0); }
 		public ITerminalNode HECTARE() { return GetToken(SoupParser.HECTARE, 0); }
 		public SquareContext(ParserRuleContext parent, int invokingState)
@@ -413,13 +664,13 @@ public partial class SoupParser : Parser {
 	[RuleVersion(0)]
 	public SquareContext square() {
 		SquareContext _localctx = new SquareContext(Context, State);
-		EnterRule(_localctx, 8, RULE_square);
+		EnterRule(_localctx, 16, RULE_square);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 44; Match(NUMBER);
-			State = 45;
+			State = 71; square_value();
+			State = 72;
 			_la = TokenStream.LA(1);
 			if ( !(_la==SQUARE_METER || _la==HECTARE) ) {
 			ErrorHandler.RecoverInline(this);
@@ -466,11 +717,11 @@ public partial class SoupParser : Parser {
 	[RuleVersion(0)]
 	public Realty_typeContext realty_type() {
 		Realty_typeContext _localctx = new Realty_typeContext(Context, State);
-		EnterRule(_localctx, 10, RULE_realty_type);
+		EnterRule(_localctx, 18, RULE_realty_type);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 47; Match(REALTY_TYPE);
+			State = 74; Match(REALTY_TYPE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -509,11 +760,11 @@ public partial class SoupParser : Parser {
 	[RuleVersion(0)]
 	public CountryContext country() {
 		CountryContext _localctx = new CountryContext(Context, State);
-		EnterRule(_localctx, 12, RULE_country);
+		EnterRule(_localctx, 20, RULE_country);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 49; Match(COUNTRY);
+			State = 76; Match(COUNTRY);
 			}
 		}
 		catch (RecognitionException re) {
@@ -527,52 +778,100 @@ public partial class SoupParser : Parser {
 		return _localctx;
 	}
 
+	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 2: return realty_id_sempred((Realty_idContext)_localctx, predIndex);
+		case 3: return square_value_without_spaces_sempred((Square_value_without_spacesContext)_localctx, predIndex);
+		case 4: return square_value_with_spaces_sempred((Square_value_with_spacesContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private bool realty_id_sempred(Realty_idContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0: return (_localctx._INT!=null?int.Parse(_localctx._INT.Text):0) > 100000;
+		}
+		return true;
+	}
+	private bool square_value_without_spaces_sempred(Square_value_without_spacesContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 1: return (_localctx._INT!=null?int.Parse(_localctx._INT.Text):0) < 100000;
+		}
+		return true;
+	}
+	private bool square_value_with_spaces_sempred(Square_value_with_spacesContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 2: return (_localctx._INT!=null?int.Parse(_localctx._INT.Text):0) < 1000;
+		}
+		return true;
+	}
+
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\x14', '\x36', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '\x14', 'Q', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
-		'\x3', '\x2', '\x6', '\x2', '\x12', '\n', '\x2', '\r', '\x2', '\xE', '\x2', 
-		'\x13', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x5', 
-		'\x3', '\x1A', '\n', '\x3', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', 
-		'\x5', '\x4', '\x1F', '\n', '\x4', '\x3', '\x4', '\x5', '\x4', '\"', '\n', 
-		'\x4', '\x3', '\x4', '\x3', '\x4', '\x5', '\x4', '&', '\n', '\x4', '\x3', 
-		'\x4', '\x5', '\x4', ')', '\n', '\x4', '\x5', '\x4', '+', '\n', '\x4', 
-		'\x3', '\x5', '\x3', '\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', 
-		'\x3', '\a', '\x3', '\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x2', 
-		'\x2', '\t', '\x2', '\x4', '\x6', '\b', '\n', '\f', '\xE', '\x2', '\x4', 
-		'\x4', '\x2', '\t', '\t', '\r', '\r', '\x3', '\x2', '\x12', '\x13', '\x2', 
-		'\x37', '\x2', '\x11', '\x3', '\x2', '\x2', '\x2', '\x4', '\x19', '\x3', 
-		'\x2', '\x2', '\x2', '\x6', '*', '\x3', '\x2', '\x2', '\x2', '\b', ',', 
-		'\x3', '\x2', '\x2', '\x2', '\n', '.', '\x3', '\x2', '\x2', '\x2', '\f', 
-		'\x31', '\x3', '\x2', '\x2', '\x2', '\xE', '\x33', '\x3', '\x2', '\x2', 
-		'\x2', '\x10', '\x12', '\x5', '\x4', '\x3', '\x2', '\x11', '\x10', '\x3', 
-		'\x2', '\x2', '\x2', '\x12', '\x13', '\x3', '\x2', '\x2', '\x2', '\x13', 
-		'\x11', '\x3', '\x2', '\x2', '\x2', '\x13', '\x14', '\x3', '\x2', '\x2', 
-		'\x2', '\x14', '\x3', '\x3', '\x2', '\x2', '\x2', '\x15', '\x1A', '\x5', 
-		'\xE', '\b', '\x2', '\x16', '\x1A', '\x5', '\n', '\x6', '\x2', '\x17', 
-		'\x1A', '\x5', '\f', '\a', '\x2', '\x18', '\x1A', '\x5', '\x6', '\x4', 
-		'\x2', '\x19', '\x15', '\x3', '\x2', '\x2', '\x2', '\x19', '\x16', '\x3', 
-		'\x2', '\x2', '\x2', '\x19', '\x17', '\x3', '\x2', '\x2', '\x2', '\x19', 
-		'\x18', '\x3', '\x2', '\x2', '\x2', '\x1A', '\x5', '\x3', '\x2', '\x2', 
-		'\x2', '\x1B', '+', '\a', '\xF', '\x2', '\x2', '\x1C', '\x1E', '\a', '\xF', 
-		'\x2', '\x2', '\x1D', '\x1F', '\a', '\xE', '\x2', '\x2', '\x1E', '\x1D', 
-		'\x3', '\x2', '\x2', '\x2', '\x1E', '\x1F', '\x3', '\x2', '\x2', '\x2', 
-		'\x1F', '!', '\x3', '\x2', '\x2', '\x2', ' ', '\"', '\a', '\x5', '\x2', 
-		'\x2', '!', ' ', '\x3', '\x2', '\x2', '\x2', '!', '\"', '\x3', '\x2', 
-		'\x2', '\x2', '\"', '#', '\x3', '\x2', '\x2', '\x2', '#', '%', '\x5', 
-		'\b', '\x5', '\x2', '$', '&', '\a', '\xE', '\x2', '\x2', '%', '$', '\x3', 
-		'\x2', '\x2', '\x2', '%', '&', '\x3', '\x2', '\x2', '\x2', '&', '(', '\x3', 
-		'\x2', '\x2', '\x2', '\'', ')', '\a', '\v', '\x2', '\x2', '(', '\'', '\x3', 
-		'\x2', '\x2', '\x2', '(', ')', '\x3', '\x2', '\x2', '\x2', ')', '+', '\x3', 
-		'\x2', '\x2', '\x2', '*', '\x1B', '\x3', '\x2', '\x2', '\x2', '*', '\x1C', 
-		'\x3', '\x2', '\x2', '\x2', '+', '\a', '\x3', '\x2', '\x2', '\x2', ',', 
-		'-', '\t', '\x2', '\x2', '\x2', '-', '\t', '\x3', '\x2', '\x2', '\x2', 
-		'.', '/', '\a', '\x14', '\x2', '\x2', '/', '\x30', '\t', '\x3', '\x2', 
-		'\x2', '\x30', '\v', '\x3', '\x2', '\x2', '\x2', '\x31', '\x32', '\a', 
-		'\x11', '\x2', '\x2', '\x32', '\r', '\x3', '\x2', '\x2', '\x2', '\x33', 
-		'\x34', '\a', '\x10', '\x2', '\x2', '\x34', '\xF', '\x3', '\x2', '\x2', 
-		'\x2', '\t', '\x13', '\x19', '\x1E', '!', '%', '(', '*',
+		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
+		'\x4', '\f', '\t', '\f', '\x3', '\x2', '\x6', '\x2', '\x1A', '\n', '\x2', 
+		'\r', '\x2', '\xE', '\x2', '\x1B', '\x3', '\x3', '\x3', '\x3', '\x3', 
+		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x5', 
+		'\x3', '%', '\n', '\x3', '\x3', '\x4', '\x3', '\x4', '\x3', '\x4', '\x3', 
+		'\x5', '\x3', '\x5', '\x3', '\x5', '\x5', '\x5', '-', '\n', '\x5', '\x3', 
+		'\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\x6', '\x3', '\a', '\x3', '\a', 
+		'\x5', '\a', '\x35', '\n', '\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', 
+		'\x5', '\b', ':', '\n', '\b', '\x3', '\b', '\x5', '\b', '=', '\n', '\b', 
+		'\x3', '\b', '\x3', '\b', '\x5', '\b', '\x41', '\n', '\b', '\x3', '\b', 
+		'\x5', '\b', '\x44', '\n', '\b', '\x5', '\b', '\x46', '\n', '\b', '\x3', 
+		'\t', '\x3', '\t', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\v', 
+		'\x3', '\v', '\x3', '\f', '\x3', '\f', '\x3', '\f', '\x2', '\x2', '\r', 
+		'\x2', '\x4', '\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', 
+		'\x16', '\x2', '\x5', '\x3', '\x2', '\n', '\v', '\x4', '\x2', '\b', '\b', 
+		'\xF', '\xF', '\x3', '\x2', '\r', '\xE', '\x2', 'S', '\x2', '\x19', '\x3', 
+		'\x2', '\x2', '\x2', '\x4', '$', '\x3', '\x2', '\x2', '\x2', '\x6', '&', 
+		'\x3', '\x2', '\x2', '\x2', '\b', ',', '\x3', '\x2', '\x2', '\x2', '\n', 
+		'.', '\x3', '\x2', '\x2', '\x2', '\f', '\x34', '\x3', '\x2', '\x2', '\x2', 
+		'\xE', '\x45', '\x3', '\x2', '\x2', '\x2', '\x10', 'G', '\x3', '\x2', 
+		'\x2', '\x2', '\x12', 'I', '\x3', '\x2', '\x2', '\x2', '\x14', 'L', '\x3', 
+		'\x2', '\x2', '\x2', '\x16', 'N', '\x3', '\x2', '\x2', '\x2', '\x18', 
+		'\x1A', '\x5', '\x4', '\x3', '\x2', '\x19', '\x18', '\x3', '\x2', '\x2', 
+		'\x2', '\x1A', '\x1B', '\x3', '\x2', '\x2', '\x2', '\x1B', '\x19', '\x3', 
+		'\x2', '\x2', '\x2', '\x1B', '\x1C', '\x3', '\x2', '\x2', '\x2', '\x1C', 
+		'\x3', '\x3', '\x2', '\x2', '\x2', '\x1D', '%', '\x5', '\x16', '\f', '\x2', 
+		'\x1E', '%', '\x5', '\x12', '\n', '\x2', '\x1F', '%', '\x5', '\x14', '\v', 
+		'\x2', ' ', '%', '\x5', '\xE', '\b', '\x2', '!', '%', '\a', '\v', '\x2', 
+		'\x2', '\"', '%', '\a', '\n', '\x2', '\x2', '#', '%', '\a', '\x4', '\x2', 
+		'\x2', '$', '\x1D', '\x3', '\x2', '\x2', '\x2', '$', '\x1E', '\x3', '\x2', 
+		'\x2', '\x2', '$', '\x1F', '\x3', '\x2', '\x2', '\x2', '$', ' ', '\x3', 
+		'\x2', '\x2', '\x2', '$', '!', '\x3', '\x2', '\x2', '\x2', '$', '\"', 
+		'\x3', '\x2', '\x2', '\x2', '$', '#', '\x3', '\x2', '\x2', '\x2', '%', 
+		'\x5', '\x3', '\x2', '\x2', '\x2', '&', '\'', '\a', '\v', '\x2', '\x2', 
+		'\'', '(', '\x6', '\x4', '\x2', '\x3', '(', '\a', '\x3', '\x2', '\x2', 
+		'\x2', ')', '-', '\a', '\n', '\x2', '\x2', '*', '+', '\a', '\v', '\x2', 
+		'\x2', '+', '-', '\x6', '\x5', '\x3', '\x3', ',', ')', '\x3', '\x2', '\x2', 
+		'\x2', ',', '*', '\x3', '\x2', '\x2', '\x2', '-', '\t', '\x3', '\x2', 
+		'\x2', '\x2', '.', '/', '\a', '\v', '\x2', '\x2', '/', '\x30', '\t', '\x2', 
+		'\x2', '\x2', '\x30', '\x31', '\x6', '\x6', '\x4', '\x3', '\x31', '\v', 
+		'\x3', '\x2', '\x2', '\x2', '\x32', '\x35', '\x5', '\b', '\x5', '\x2', 
+		'\x33', '\x35', '\x5', '\n', '\x6', '\x2', '\x34', '\x32', '\x3', '\x2', 
+		'\x2', '\x2', '\x34', '\x33', '\x3', '\x2', '\x2', '\x2', '\x35', '\r', 
+		'\x3', '\x2', '\x2', '\x2', '\x36', '\x46', '\a', '\x11', '\x2', '\x2', 
+		'\x37', '\x39', '\a', '\x11', '\x2', '\x2', '\x38', ':', '\a', '\x10', 
+		'\x2', '\x2', '\x39', '\x38', '\x3', '\x2', '\x2', '\x2', '\x39', ':', 
+		'\x3', '\x2', '\x2', '\x2', ':', '<', '\x3', '\x2', '\x2', '\x2', ';', 
+		'=', '\a', '\x4', '\x2', '\x2', '<', ';', '\x3', '\x2', '\x2', '\x2', 
+		'<', '=', '\x3', '\x2', '\x2', '\x2', '=', '>', '\x3', '\x2', '\x2', '\x2', 
+		'>', '@', '\x5', '\x10', '\t', '\x2', '?', '\x41', '\a', '\x10', '\x2', 
+		'\x2', '@', '?', '\x3', '\x2', '\x2', '\x2', '@', '\x41', '\x3', '\x2', 
+		'\x2', '\x2', '\x41', '\x43', '\x3', '\x2', '\x2', '\x2', '\x42', '\x44', 
+		'\a', '\f', '\x2', '\x2', '\x43', '\x42', '\x3', '\x2', '\x2', '\x2', 
+		'\x43', '\x44', '\x3', '\x2', '\x2', '\x2', '\x44', '\x46', '\x3', '\x2', 
+		'\x2', '\x2', '\x45', '\x36', '\x3', '\x2', '\x2', '\x2', '\x45', '\x37', 
+		'\x3', '\x2', '\x2', '\x2', '\x46', '\xF', '\x3', '\x2', '\x2', '\x2', 
+		'G', 'H', '\t', '\x3', '\x2', '\x2', 'H', '\x11', '\x3', '\x2', '\x2', 
+		'\x2', 'I', 'J', '\x5', '\f', '\a', '\x2', 'J', 'K', '\t', '\x4', '\x2', 
+		'\x2', 'K', '\x13', '\x3', '\x2', '\x2', '\x2', 'L', 'M', '\a', '\x13', 
+		'\x2', '\x2', 'M', '\x15', '\x3', '\x2', '\x2', '\x2', 'N', 'O', '\a', 
+		'\x12', '\x2', '\x2', 'O', '\x17', '\x3', '\x2', '\x2', '\x2', '\v', '\x1B', 
+		'$', ',', '\x34', '\x39', '<', '@', '\x43', '\x45',
 	};
 
 	public static readonly ATN _ATN =

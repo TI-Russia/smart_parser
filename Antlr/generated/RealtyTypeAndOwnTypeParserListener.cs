@@ -51,6 +51,46 @@ public interface IRealtyTypeAndOwnTypeParserListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitRealty([NotNull] RealtyTypeAndOwnTypeParser.RealtyContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRealty_id([NotNull] RealtyTypeAndOwnTypeParser.Realty_idContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRealty_id([NotNull] RealtyTypeAndOwnTypeParser.Realty_idContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value_without_spaces([NotNull] RealtyTypeAndOwnTypeParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value_without_spaces([NotNull] RealtyTypeAndOwnTypeParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value_with_spaces([NotNull] RealtyTypeAndOwnTypeParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value_with_spaces([NotNull] RealtyTypeAndOwnTypeParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSquare_value([NotNull] RealtyTypeAndOwnTypeParser.Square_valueContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSquare_value([NotNull] RealtyTypeAndOwnTypeParser.Square_valueContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="RealtyTypeAndOwnTypeParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -1,9 +1,16 @@
+64,7 кв.м.
+{
+  "OwnType": "",
+  "RealtyType": "",
+  "Square": "64,7"
+}
+
 ФРГ zzzz 12 344 кв.м
 {
   "OwnType": "",
   "RealtyType": "",
   "Square": "-1",
-  "Country": "фрг"
+  "Country": "ФРГ"
 }
 {
   "OwnType": "",
@@ -34,6 +41,6 @@
   "OwnType": "",
   "RealtyType": "",
   "Square": "-1",
-  "Country": "рф"
+  "Country": "РФ"
 }
 

@@ -59,6 +59,54 @@ public partial class StrictParserBaseListener : IStrictParserListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitRealty([NotNull] StrictParser.RealtyContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.realty_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRealty_id([NotNull] StrictParser.Realty_idContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.realty_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRealty_id([NotNull] StrictParser.Realty_idContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.square_value_without_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value_without_spaces([NotNull] StrictParser.Square_value_without_spacesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.square_value_without_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value_without_spaces([NotNull] StrictParser.Square_value_without_spacesContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.square_value_with_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value_with_spaces([NotNull] StrictParser.Square_value_with_spacesContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.square_value_with_spaces"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value_with_spaces([NotNull] StrictParser.Square_value_with_spacesContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="StrictParser.square_value"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSquare_value([NotNull] StrictParser.Square_valueContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="StrictParser.square_value"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSquare_value([NotNull] StrictParser.Square_valueContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="StrictParser.own_type"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

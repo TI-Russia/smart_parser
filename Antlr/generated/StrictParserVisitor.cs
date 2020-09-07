@@ -44,6 +44,30 @@ public interface IStrictParserVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitRealty([NotNull] StrictParser.RealtyContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="StrictParser.realty_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRealty_id([NotNull] StrictParser.Realty_idContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="StrictParser.square_value_without_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_without_spaces([NotNull] StrictParser.Square_value_without_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="StrictParser.square_value_with_spaces"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value_with_spaces([NotNull] StrictParser.Square_value_with_spacesContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="StrictParser.square_value"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSquare_value([NotNull] StrictParser.Square_valueContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="StrictParser.own_type"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
