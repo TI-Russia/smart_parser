@@ -4102,7 +4102,7 @@
       "real_estates": [
         {
           "text": "земельный участок",
-          "square": null,
+          "square": 1000.00,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "0,10га",
@@ -4170,7 +4170,7 @@
         },
         {
           "text": "земельный участок",
-          "square": null,
+          "square": 1000.00,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "0,10га",
