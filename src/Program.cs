@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
+using System.Text;
 using System.Globalization;
 using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
@@ -689,7 +689,7 @@ namespace Smart.Parser
             }
 
             Logger.Info("Writing json to " + outFile);
-            File.WriteAllText(outFile, output);
+            File.WriteAllBytes(outFile, Encoding.UTF8.GetBytes(output));
             return 0;
         }
     }
