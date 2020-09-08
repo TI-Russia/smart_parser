@@ -4,10 +4,26 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="tmp\**" />
+    <EmbeddedResource Remove="tmp\**" />
+    <None Remove="tmp\**" />
+  </ItemGroup>
+
 
 
 
     <ItemGroup>
+        <Antlr4 Include="src\BaseLexer.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
+        <Antlr4 Include="src\CommonLexer.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
         <Antlr4 Include="src\StrictLexer.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
@@ -22,6 +38,11 @@
 
 
 
+        <Antlr4 Include="src\Common.g4">
+          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
+          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
+          <AntOutDir>generated</AntOutDir>
+        </Antlr4>
         <Antlr4 Include="src\RealtyTypeAndOwnType.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>

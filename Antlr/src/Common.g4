@@ -3,14 +3,14 @@ parser grammar Common;
 
 /* long number */
 realty_id : INT 
-	{$INT.int > 100000}?;
+	{$INT.int > 6000000}?;
 
 
 square_value_without_spaces : FLOATING | INT  
-	{$INT.int < 100000}?
+	{$INT.int < 6000000}?
 ;
 
-square_value_with_spaces : INT (FLOATING | INT)
+square_value_with_spaces : INT INT? (FLOATING | INT)
 	{$INT.int < 1000}?
 ;
 

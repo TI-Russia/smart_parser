@@ -36,10 +36,10 @@ public partial class OwnTypeList : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		SEMICOLON=1, COMMA=2, OPN_BRK=3, CLS_BRK=4, SPC=5, FRACTION_UNICODE=6, 
-		HYPHEN=7, FLOATING=8, BULLET=9, INT=10, OT=11, SQUARE_METER=12, HECTARE=13, 
-		FRACTION_ASCII=14, DOLYA_WORD=15, OWN_TYPE=16, COUNTRY=17, REALTY_TYPE=18, 
-		OTHER=19;
+		SEMICOLON=1, COMMA=2, OPN_BRK=3, CLS_BRK=4, FRACTION_UNICODE=5, HYPHEN=6, 
+		FLOATING=7, BULLET=8, INT=9, OT=10, WEB_LINK=11, SQUARE_METER=12, HECTARE=13, 
+		FRACTION_ASCII=14, DOLYA_WORD=15, SPC=16, OWN_TYPE=17, COUNTRY=18, REALTY_TYPE=19, 
+		OTHER=20;
 	public const int
 		RULE_own_type_list = 0, RULE_own_type = 1;
 	public static readonly string[] ruleNames = {
@@ -47,14 +47,14 @@ public partial class OwnTypeList : Parser {
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "';'", "','", "'('", "')'", null, null, "'-'", null, null, null, 
-		"'\u043E\u0442'", null, "'\u0433\u0430'"
+		null, "';'", "','", "'('", "')'", null, "'-'", null, null, null, "'\u043E\u0442'", 
+		null, null, "'\u0433\u0430'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "SEMICOLON", "COMMA", "OPN_BRK", "CLS_BRK", "SPC", "FRACTION_UNICODE", 
-		"HYPHEN", "FLOATING", "BULLET", "INT", "OT", "SQUARE_METER", "HECTARE", 
-		"FRACTION_ASCII", "DOLYA_WORD", "OWN_TYPE", "COUNTRY", "REALTY_TYPE", 
-		"OTHER"
+		null, "SEMICOLON", "COMMA", "OPN_BRK", "CLS_BRK", "FRACTION_UNICODE", 
+		"HYPHEN", "FLOATING", "BULLET", "INT", "OT", "WEB_LINK", "SQUARE_METER", 
+		"HECTARE", "FRACTION_ASCII", "DOLYA_WORD", "SPC", "OWN_TYPE", "COUNTRY", 
+		"REALTY_TYPE", "OTHER"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -207,7 +207,7 @@ public partial class OwnTypeList : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\x15', '\x10', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '\x16', '\x10', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x3', '\x2', '\x6', '\x2', '\b', '\n', '\x2', '\r', '\x2', 
 		'\xE', '\x2', '\t', '\x3', '\x3', '\x3', '\x3', '\x5', '\x3', '\xE', '\n', 
 		'\x3', '\x3', '\x3', '\x2', '\x2', '\x4', '\x2', '\x4', '\x2', '\x2', 
@@ -215,7 +215,7 @@ public partial class OwnTypeList : Parser {
 		'\x2', '\x2', '\x2', '\x6', '\b', '\x5', '\x4', '\x3', '\x2', '\a', '\x6', 
 		'\x3', '\x2', '\x2', '\x2', '\b', '\t', '\x3', '\x2', '\x2', '\x2', '\t', 
 		'\a', '\x3', '\x2', '\x2', '\x2', '\t', '\n', '\x3', '\x2', '\x2', '\x2', 
-		'\n', '\x3', '\x3', '\x2', '\x2', '\x2', '\v', '\r', '\a', '\x12', '\x2', 
+		'\n', '\x3', '\x3', '\x2', '\x2', '\x2', '\v', '\r', '\a', '\x13', '\x2', 
 		'\x2', '\f', '\xE', '\a', '\x4', '\x2', '\x2', '\r', '\f', '\x3', '\x2', 
 		'\x2', '\x2', '\r', '\xE', '\x3', '\x2', '\x2', '\x2', '\xE', '\x5', '\x3', 
 		'\x2', '\x2', '\x2', '\x4', '\t', '\r',

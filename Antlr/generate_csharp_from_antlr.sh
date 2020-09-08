@@ -8,5 +8,7 @@ $antlr4 src/Strict.g4
 $antlr4 src/SquareList.g4
 $antlr4 src/CountryList.g4
 $antlr4 src/RealtyTypeAndOwnType.g4
+$antlr4 src/OwnTypeList.g4
+$antlr4 src/RealtyTypeList.g4
 
 
