@@ -3,7 +3,7 @@
 namespace SmartAntlr
 {
 
-    public class CountryListVisitor : CountryListParserBaseVisitor<object>
+    public class CountryListVisitor : CountryListBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
         public GeneralAntlrParserWrapper Parser;
@@ -12,7 +12,7 @@ namespace SmartAntlr
         {
             Parser = parser;
         }
-        public override object VisitCountry(CountryListParser.CountryContext context)
+        public override object VisitCountry(CountryList.CountryContext context)
         {
             var line = new GeneralParserPhrase(Parser, context);
             Lines.Add(line);
@@ -26,7 +26,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new CountryListParser(CommonTokenStream, Output, ErrorOutput);
+            var parser = new CountryList(CommonTokenStream, Output, ErrorOutput);
             var context = parser.countries();
             var visitor = new CountryListVisitor(this);
             visitor.Visit(context);

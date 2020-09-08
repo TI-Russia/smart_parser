@@ -5,8 +5,8 @@ using System.IO;
 using Antlr4.Runtime;
 using System;
 using Newtonsoft.Json;
-
-
+using TI.Declarator.ParserCommon;
+using Antlr4.Runtime.Tree;
 
 public class GeneralParserPhrase
 {
@@ -50,6 +50,22 @@ public class RealtyFromText : GeneralParserPhrase
 
     public RealtyFromText(GeneralAntlrParserWrapper parser, ParserRuleContext context) : base(parser, context) 
     { 
+    }
+
+    public void InitializeSquare(string strVal, bool hectare)
+    {
+        if (strVal != "")
+        {
+            Square = strVal.ParseDecimalValue();
+            if (hectare)
+            {
+                Square = Square * 10000;
+            }
+            if (Square == 0)
+            {
+                Square = -1;
+            }
+        }
     }
     public override string GetJsonString()
     {
@@ -154,6 +170,12 @@ public abstract class GeneralAntlrParserWrapper
         {
             return context.GetText();
         }
+    }
+    public string GetSourceTextByTerminalNode(ITerminalNode node)
+    {
+        int start = node.Symbol.StartIndex;
+        int end = node.Symbol.StopIndex + 1;
+        return InputTextCaseSensitive.Substring(start, end - start);
     }
 
 }

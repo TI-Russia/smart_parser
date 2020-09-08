@@ -5,7 +5,7 @@ using Antlr4.Runtime;
 namespace SmartAntlr
 {
 
-    public class SquareListVisitor : SquareListParserBaseVisitor<object>
+    public class SquareListVisitor : SquareListBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
         public GeneralAntlrParserWrapper ParserWrapper;
@@ -14,7 +14,7 @@ namespace SmartAntlr
         {
             ParserWrapper = parser;
         }
-        public override object VisitBareScore(SquareListParser.BareScoreContext context)
+        public override object VisitBareScore(SquareList.BareScoreContext context)
         {
             int start = context.Start.StartIndex;
             int end = context.Stop.StopIndex;
@@ -32,7 +32,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new SquareListParser(CommonTokenStream, Output, ErrorOutput);
+            var parser = new SquareList(CommonTokenStream, Output, ErrorOutput);
             Parser = parser;
             parser.ErrorHandler = new BailErrorStrategy();
             try

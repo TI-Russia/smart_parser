@@ -22,37 +22,37 @@
 
 
 
-        <Antlr4 Include="src\RealtyTypeAndOwnTypeParser.g4">
+        <Antlr4 Include="src\RealtyTypeAndOwnType.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-        <Antlr4 Include="src\RealtyTypeListParser.g4">
+        <Antlr4 Include="src\RealtyTypeList.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-        <Antlr4 Include="src\SquareListParser.g4">
+        <Antlr4 Include="src\SquareList.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-        <Antlr4 Include="src\CountryListParser.g4">
+        <Antlr4 Include="src\CountryList.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-        <Antlr4 Include="src\OwnTypeListParser.g4">
+        <Antlr4 Include="src\OwnTypeList.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-        <Antlr4 Include="src\StrictParser.g4">
+        <Antlr4 Include="src\Strict.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
-        <Antlr4 Include="src\SoupParser.g4">
+        <Antlr4 Include="src\Soup.g4">
           <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
           <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>

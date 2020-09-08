@@ -2,7 +2,7 @@
 
 namespace SmartAntlr
 {
-    public class OwnTypeListVisitor : OwnTypeListParserBaseVisitor<object> 
+    public class OwnTypeListVisitor : OwnTypeListBaseVisitor<object> 
     { 
     
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
@@ -12,7 +12,7 @@ namespace SmartAntlr
         {
             Parser = parser;
         }
-        public override object VisitOwn_type(OwnTypeListParser.Own_typeContext context)
+        public override object VisitOwn_type(OwnTypeList.Own_typeContext context)
         {
             var item = new GeneralParserPhrase(Parser, context);
             Lines.Add(item);
@@ -26,7 +26,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new OwnTypeListParser(CommonTokenStream, Output, ErrorOutput);
+            var parser = new OwnTypeList(CommonTokenStream, Output, ErrorOutput);
             var context = parser.own_type_list();
             var visitor = new OwnTypeListVisitor(this);
             visitor.Visit(context);

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using TI.Declarator.ParserCommon;
 using Antlr4.Runtime;
 
 namespace SmartAntlr
 {
 
-    public class SoupVisitor : SoupParserBaseVisitor<object>
+    public class SoupVisitor : SoupBaseVisitor<object>
     {
         public List<GeneralParserPhrase> Lines = new List<GeneralParserPhrase>();
         public GeneralAntlrParserWrapper ParserWrapper;
@@ -16,7 +14,7 @@ namespace SmartAntlr
         {
             ParserWrapper = parser;
         }
-        RealtyFromText InitializeOneRecord(SoupParser.Any_realty_itemContext  context)
+        RealtyFromText InitializeOneRecord(Soup.Any_realty_itemContext  context)
         {
             var record = new RealtyFromText(ParserWrapper, context);
             if (context.own_type() != null)
@@ -31,12 +29,7 @@ namespace SmartAntlr
             if (context.square() != null && context.square().square_value() != null)
             {
                 var sc = context.square();
-                var strVal = sc.square_value().GetText();
-                record.Square = strVal.ParseDecimalValue();
-                if (sc.HECTARE() != null)
-                {
-                    record.Square = record.Square * 10000;
-                }
+                record.InitializeSquare(sc.square_value().GetText(), sc.HECTARE() != null);
             }
             if (context.own_type() != null && context.own_type().realty_share() != null)
             {
@@ -44,13 +37,12 @@ namespace SmartAntlr
             }
             if (context.country() != null)
             {
-                // record.Country = context.country().GetText();
                 record.Country = ParserWrapper.GetSourceTextByParserContext(context.country());
             }
             return record;
         }
 
-        public override object VisitAny_realty_item(SoupParser.Any_realty_itemContext context)
+        public override object VisitAny_realty_item(Soup.Any_realty_itemContext context)
         {
             string debug = context.ToStringTree(ParserWrapper.Parser);
             var line = InitializeOneRecord(context);
@@ -72,7 +64,7 @@ namespace SmartAntlr
         public override List<GeneralParserPhrase> Parse(string inputText)
         {
             InitLexer(inputText);
-            var parser = new SoupParser(CommonTokenStream, Output, ErrorOutput);
+            var parser = new Soup(CommonTokenStream, Output, ErrorOutput);
             //parser.Trace = true;
             Parser = parser;
             // parser.ErrorHandler = new BailErrorStrategy();

@@ -61,6 +61,15 @@ namespace test
         {
             TestCase(new AntlrSquareParser(), "square_list.txt");
         }
+
+        [TestMethod]
+        public void SquareAndCountry()
+        {
+            var parser = new AntlrStrictParser();
+            parser.StartFromRoot = AntlrStrictParser.StartFromRootEnum.square_and_country;
+            TestCase(parser, "square_and_country.txt");
+        }
+
     }
 
 }
