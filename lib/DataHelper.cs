@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Text.RegularExpressions;
-using System.Globalization;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 using System.Reflection;
@@ -14,15 +11,11 @@ namespace Smart.Parser.Lib
 {
     public class DataHelper
     {
-        static Regex CountryRegexp;
         static Regex SquareRegexp;
         static AntlrStrictParser SquareAndCountry = new AntlrStrictParser(AntlrStrictParser.StartFromRootEnum.square_and_country);
+        static AntlrCountryListParser CountryListParser = new AntlrCountryListParser();
         static DataHelper()
         {
-            var countryList = ReadCountryList();
-            string anyCountry = "(" + string.Join(")|(", countryList.ToArray()) + ")";
-            CountryRegexp = new Regex(anyCountry, RegexOptions.IgnoreCase);
-
             // Non-breaking space or breaking space can be between digits like "1 680,0"
             string squareRegexpStr = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
             SquareRegexp = new Regex(squareRegexpStr, RegexOptions.IgnoreCase);
@@ -313,8 +306,7 @@ namespace Smart.Parser.Lib
         }
         public static bool IsCountryStrict(string str)
         {
-            var match = CountryRegexp.Match(str);
-            return match.Success;
+            return CountryListParser.ParseToStringList(str).Count > 0;
         }
 
         public static string ParseCountry(string str)
