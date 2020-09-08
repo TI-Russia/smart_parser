@@ -12206,9 +12206,19 @@
           "square": null,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "",
+          "square_raw": "0",
           "country_raw": "россия",
           "type_raw": "земельные участки",
+          "own_type_raw": ""
+        },
+        {
+          "text": "дом",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "0",
+          "country_raw": "россия",
+          "type_raw": "дом",
           "own_type_raw": ""
         },
         {
@@ -12216,7 +12226,7 @@
           "square": null,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "",
+          "square_raw": "0",
           "country_raw": "россия",
           "type_raw": "гаражи",
           "own_type_raw": ""
@@ -12226,7 +12236,7 @@
           "square": null,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "",
+          "square_raw": "0",
           "country_raw": "россия",
           "type_raw": "иное недвижимое имущество",
           "own_type_raw": ""
@@ -27305,7 +27315,7 @@
         },
         {
           "text": "Дачи",
-          "square": null,
+          "square": 12.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "12 соток",

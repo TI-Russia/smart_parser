@@ -52,7 +52,7 @@
         },
         {
           "text": "газопровод",
-          "square": null,
+          "square": 286.4,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "286,4 п,м",
