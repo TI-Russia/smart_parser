@@ -4,11 +4,10 @@ using System.Linq;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
-using TI.Declarator.DeclaratorApiClient;
-using TI.Declarator.JsonSerialization;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TI.Declarator.ParserCommon;
 
 namespace RegressionTesting
 {
@@ -424,7 +423,7 @@ namespace RegressionTesting
         [TestCategory("docx")]
         public void dnko2014()
         {
-            // внутри заголовка в таблице в конце написан бред, но падать не будем
+            // внутри заголовка в таблице в конце написан бред (перепутаны колонки), но падать не будем
             TestSmartParser("dnko-2014.docx", "prod");
         }
 
@@ -639,7 +638,7 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("xls")]
-        public void FixVehicleColumns()
+            public void FixVehicleColumns()
         {
             TestSmartParser("17497.xls", "prod");
         }
@@ -705,9 +704,9 @@ namespace RegressionTesting
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
             log4net.Config.XmlConfigurator.Configure(repo, new FileInfo("log4net.config"));
-            Parser.Lib.Logger.SetLogFileName("Main", "excel-parser-main.log");
-            Parser.Lib.Logger.SetSecondLogFileName("excel-parser-aux.log");
-            Parser.Lib.Logger.SetupForTests("Main", "Second");
+            Logger.SetLogFileName("Main", "excel-parser-main.log");
+            Logger.SetSecondLogFileName("excel-parser-aux.log");
+            Logger.SetupForTests("Main", "Second");
         }
 
         public static string RunFileCompare(string expectedFile, string actualFile, string executeCmd = "fc.exe")
