@@ -15,10 +15,8 @@ namespace Smart.Parser.Lib
     public class DataHelper
     {
         static Regex CountryRegexp;
-        static Regex SquareAndCountryRegexp;
         static Regex SquareRegexp;
         static AntlrStrictParser SquareAndCountry = new AntlrStrictParser(AntlrStrictParser.StartFromRootEnum.square_and_country);
-        static AntlrCountryListParser CountryListParser = new AntlrCountryListParser();
         static DataHelper()
         {
             var countryList = ReadCountryList();
@@ -27,7 +25,6 @@ namespace Smart.Parser.Lib
 
             // Non-breaking space or breaking space can be between digits like "1 680,0"
             string squareRegexpStr = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
-            SquareAndCountryRegexp = new Regex(squareRegexpStr + @"\s+(" + anyCountry + ")", RegexOptions.IgnoreCase);
             SquareRegexp = new Regex(squareRegexpStr, RegexOptions.IgnoreCase);
         }
 
@@ -292,14 +289,6 @@ namespace Smart.Parser.Lib
                     country = i.Country;
                 }
             }
-            /*
-            square = 0;
-            country = "";
-            var match = SquareAndCountryRegexp.Match(str);
-            if (!match.Success)
-                return false;
-            square = ConvertSquareFromString(match.Groups[1].ToString());
-            country = match.Groups[2].ToString();*/
         }
 
         public static decimal? ParseSquare(string strSquares)
