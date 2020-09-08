@@ -10,6 +10,7 @@ using System.Text;
 using System.Net;
 using Parser.Lib;
 using System.Runtime.InteropServices;
+using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Adapters
 {

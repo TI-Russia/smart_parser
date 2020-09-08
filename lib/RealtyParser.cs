@@ -50,7 +50,7 @@ namespace Smart.Parser.Lib
         }
         void ParseRealtiesByAntlr(string ownTypeByColumn, string cellText, Person person)
         {
-            var parser = new AntlrRealtyParser();
+            var parser = new AntlrStrictParser();
             foreach (var item in parser.Parse(cellText))
             {
                 RealtyFromText realty = (RealtyFromText)item;
@@ -99,7 +99,7 @@ namespace Smart.Parser.Lib
         {
             if (countryStr != "")
             {
-                if (new AntlrCountryParser().ParseToStringList(countryStr).Count > 1)
+                if (new AntlrCountryListParser().ParseToStringList(countryStr).Count > 1)
                 {
                     // может быть одна страна на все объекты недвижимости
                     return true;
@@ -479,7 +479,7 @@ namespace Smart.Parser.Lib
                         }
 
                     }
-                    Countries = new AntlrCountryParser().ParseToStringList(countryStr);
+                    Countries = new AntlrCountryListParser().ParseToStringList(countryStr);
                 }
             }
         }

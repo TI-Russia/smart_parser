@@ -8,6 +8,7 @@ using System.Globalization;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 using System.Reflection;
+using SmartAntlr;
 
 namespace Smart.Parser.Lib
 {
@@ -16,6 +17,8 @@ namespace Smart.Parser.Lib
         static Regex CountryRegexp;
         static Regex SquareAndCountryRegexp;
         static Regex SquareRegexp;
+        static AntlrStrictParser SquareAndCountry = new AntlrStrictParser(AntlrStrictParser.StartFromRootEnum.square_and_country);
+        static AntlrCountryListParser CountryListParser = new AntlrCountryListParser();
         static DataHelper()
         {
             var countryList = ReadCountryList();
@@ -273,24 +276,38 @@ namespace Smart.Parser.Lib
             return  Decimal.Round(str.ParseDecimalValue(), 2);
         }
 
-        static public bool ReadSquareAndCountry(string str, out decimal square, out string country)
+        static public void ReadSquareAndCountry(string str, out decimal square, out string country)
         {
+            square = -1;
+            country = "";
+            foreach (var r in SquareAndCountry.Parse(str))
+            {
+                var i = (RealtyFromText)r;
+                if (i.Square != -1)
+                {
+                    square = i.Square;
+                }
+                if (i.Country.Length != 0)
+                {
+                    country = i.Country;
+                }
+            }
+            /*
             square = 0;
             country = "";
             var match = SquareAndCountryRegexp.Match(str);
             if (!match.Success)
                 return false;
             square = ConvertSquareFromString(match.Groups[1].ToString());
-            country = match.Groups[2].ToString();
-            return true;
+            country = match.Groups[2].ToString();*/
         }
 
         public static decimal? ParseSquare(string strSquares)
         {
             decimal square;
             string dummy;
-            if (ReadSquareAndCountry(strSquares, out square, out dummy))
-            {
+            ReadSquareAndCountry(strSquares, out square, out dummy);
+            if (square != -1) {
                 return square;
             }
             if (Regex.Match(strSquares, "[а-я]+", RegexOptions.IgnoreCase).Success)
@@ -298,7 +315,12 @@ namespace Smart.Parser.Lib
 
             var match = SquareRegexp.Match(strSquares);
             if (!match.Success) return null;
-            return  Decimal.Round(match.Value.ParseDecimalValue(), 2);
+            square = Decimal.Round(match.Value.ParseDecimalValue(), 2);
+            if (square == 0)
+            {
+                return null;
+            }
+            return square;
         }
         public static bool IsCountryStrict(string str)
         {
@@ -310,12 +332,13 @@ namespace Smart.Parser.Lib
         {
             decimal dummy;
             string country;
-            if (ReadSquareAndCountry(str, out dummy, out country))
-            {
-                return country;
+            ReadSquareAndCountry(str, out dummy, out country);
+            if (country != "") {
+                return country; 
             }
             return str;
         }
+
         static public bool ParseDocumentFileName(string filename, out int? documentfile_id, out string archive_file)
         {
             documentfile_id = null;
