@@ -58,15 +58,16 @@ namespace test
         public void TestReadSquareAndCountry()
         {
             string s = "1 Россия";
-            decimal square;
+            decimal square = -1;
             string country;
-            var r = DataHelper.ReadSquareAndCountry(s, out square, out country);
+            DataHelper.ReadSquareAndCountry(s, out square, out country);
             Assert.IsTrue(square == 1);
             Assert.IsTrue(country == "Россия");
             
             s = "(Россия)";
-            r = DataHelper.ReadSquareAndCountry(s, out square, out country);
-            Assert.IsFalse(r);
+            square = -1;
+            DataHelper.ReadSquareAndCountry(s, out square, out country);
+            Assert.IsTrue(square == -1);
         }
 
         [TestMethod]

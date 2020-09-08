@@ -40,15 +40,15 @@ namespace AntlrTester
             string input = ParseArgs(args);
             var output = input + ".result";
             var texts = AntlrCommon.ReadTestCases(input);
-            GeneralAntlrParser parser = null;
+            GeneralAntlrParserWrapper parser = null;
             Console.Error.Write(String.Format("Grammar {0}\n", ParseType));
             if (ParseType == "realty_all")
             {
-                parser = new AntlrRealtyParser();
+                parser = new AntlrStrictParser();
             }
             else if (ParseType == "country"  )
             {
-                parser = new AntlrCountryParser();
+                parser = new AntlrCountryListParser();
             }
             else
             {
