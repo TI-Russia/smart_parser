@@ -144,6 +144,7 @@ namespace TI.Declarator.JsonSerialization
             }
 
             string json = JsonConvert.SerializeObject(JDeclaration, Formatting.Indented, new DecimalJsonConverter());
+            json = json.Replace("\r", String.Empty);
             return json;
         }
 
