@@ -14,11 +14,7 @@ export PYTHONPATH=$PYTHONPATH:~/smart_parser/tools
    copy geckodriver to  PATH (to ~/.local/bin ?)
    install Firefox
 
-5.  install dotnet according  https://docs.microsoft.com/ru-ru/dotnet/core/install/linux-package-manager-ubuntu-1904
-    run dotnet build -c Release ~/smart_parser/src
-    run dotnet test -c Release ~/smart_parser/src
-
-6.  Run tests for dlrobot
+5.  Run tests for dlrobot
      cd test
      bash run_tests.sh
 

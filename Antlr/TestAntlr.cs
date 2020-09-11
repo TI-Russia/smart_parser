@@ -3,13 +3,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
 using SmartAntlr;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+//using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System.Threading;
 
 namespace test
 {
     [TestClass]
     public class AntlrTest
     {
+        static AntlrTest()
+        {
+            // to print ","  for floating delimiter
+            var culture = new System.Globalization.CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = culture;
+        } 
         static bool FileEquals(string path1, string path2)
         {
             return File.ReadAllBytes(path1).SequenceEqual(File.ReadAllBytes(path2));

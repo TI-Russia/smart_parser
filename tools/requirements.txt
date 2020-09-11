@@ -24,3 +24,4 @@ djangorestframework
 xlsx2csv
 lxml
 django-meta
+requests

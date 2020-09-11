@@ -1,27 +1,4 @@
--1. install python 3.6.9
-0. install mysql 5.7
-   sudo apt install default-libmysqlclient-dev
-
-0.1 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
-query_cache_type        = ON
-query_cache_limit       = 1M
-query_cache_size        = 128M
-
-
-1. elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
-    sudo apt-get install apt-transport-https
-    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-    ?sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
-    sudo apt-get update 
-    sudo apt-get install elasticsearch
-    sudo /bin/systemctl daemon-reload
-    sudo /bin/systemctl enable elasticsearch.service
-    sudo systemctl start elasticsearch.service
-
-
-2. python3 modules
-    source ~/smart_parser/tools/venv/bin/activate
-    pip3 install -r ~/smart_parser/tools/requirements.txt
+1. follow ~/smart_parser/tools/INSTALL.txt
 
 3. create db and user
     cd ~/smart_parser/tools/disclosures
