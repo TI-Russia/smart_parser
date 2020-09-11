@@ -9,3 +9,5 @@
     python3 manage.py migrate --settings disclosures.settings.dev
     python3 manage.py test declarations/tests --settings disclosures.settings.test
 
+
+

@@ -33,8 +33,8 @@ query_cache_size        = 128M
     source ~/smart_parser/tools/venv/bin/activate
     pip3 install -r ~/smart_parser/tools/requirements.txt
 
-4. compile smart_parser itself (c#, ~/smart_parser/src)
-   4.0 install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
+
+4 install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
       wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
       sudo dpkg -i packages-microsoft-prod.deb
       sudo apt-get update
@@ -43,15 +43,16 @@ query_cache_size        = 128M
                        #sudo apt-get install -y aspnetcore-runtime-3.1
       sudo apt-get install -y dotnet-sdk-3.1
 
-
-   4.2 Compile smart_parser
-      dotnet build -c Release ~/smart_parser/src
-
-   4.3  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
+5  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
       export ASPOSE_LIC=~/lic.bin
 
-   4.4 Test smart_parser
+6. compile smart_parser itself (c#, ~/smart_parser/src)
+   6.1 Compile smart_parser
+      dotnet build -c Release ~/smart_parser/src
+
+   6.2 Test smart_parser
       dotnet test -c Release ~/smart_parser/src
 
-
-
+7. compile  ~/smart_parser/tools/Office2Txt
+   dotnet build -c Release ~/smart_parser/tools/Office2Txt
+   dotnet test -c Release ~/smart_parser/tools/Office2Tx
