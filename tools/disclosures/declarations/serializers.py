@@ -1,9 +1,8 @@
 from . import models
-from declarations.management.commands.common import normalize_whitespace
+from declarations.common import normalize_whitespace
 from declarations.countries import get_country_code
 from django.db import connection
-import json
-import os
+
 
 def read_incomes(section_json):
     for i in section_json.get('incomes', []):

@@ -1,7 +1,7 @@
 import csv
 import json
 from django.core.management import BaseCommand
-from .common import resolve_fullname
+from declarations.common import resolve_fullname
 import declarations.models as models
 from datetime import datetime
 from declarations.serializers import TSmartParserJsonReader, TSectionPassportFactory

@@ -6,7 +6,7 @@ import json
 import sys
 import math
 import logging
-from deduplicate.config import resolve_fullname
+from declarations.common import resolve_fullname
 
 
 class DedupeObjectJsonEncoder(json.JSONEncoder):
