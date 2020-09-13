@@ -70,6 +70,28 @@ class CommonSearchForm(forms.Form):
         label="Ведомство")
 
 
+def check_Russiam_name(name1, name2):
+    if name1 is None or name2 is None:
+        return True
+    if len(name1) == 0 or len(name2) == 0:
+        return True
+    name1 = name1.strip(".").lower()
+    name2 = name2.strip(".").lower()
+    return name1.startswith(name2) or name2.startswith(name1)
+
+
+def compare_Russian_fio(search_query, person_name):
+    if search_query.find(' ') == -1 and search_query.find('.') == -1:
+        return True
+    fio1 = resolve_person_name_from_search_request(search_query)
+    fio2 = resolve_fullname(person_name)
+    if fio1 is None or fio2 is None:
+        return True
+    if fio1['family_name'].lower() != fio2['family_name'].lower():
+        return False
+    return     check_Russiam_name(fio1.get('name'), fio2.get('name')) \
+           and check_Russiam_name(fio1.get('patronymic'), fio2.get('patronymic'))
+
 
 class CommonSearchView(FormView, generic.ListView):
 
@@ -91,7 +113,7 @@ class CommonSearchView(FormView, generic.ListView):
             'office_request': self.request.GET.get('office_request')
         }
 
-    def query_elastic_search(self):
+    def query_elastic_search(self, match_operator="OR"):
         query = self.get_initial().get('search_request')
         if query is None:
             return None
@@ -101,26 +123,36 @@ class CommonSearchView(FormView, generic.ListView):
             if query.startswith('{') and query.endswith('}'):
                 query_dict = json.loads(query)
             else:
-                query_dict = {self.elastic_search_document.default_field_name: query}
-            search_results = self.elastic_search_document.search().query('match', **query_dict)
+                query_dict = {
+                    #self.elastic_search_document.default_field_name: query,
+                    self.elastic_search_document.default_field_name : {
+                        'query': query,
+                        'operator': match_operator
+                    }
+                }
+
+
+                search_results = self.elastic_search_document.search().query('match', **query_dict)
             return search_results
         except Exception:
             return None
 
-    def process_search_results(self, search_results, max_count):
-        self.hits_count = search_results.count()
+    def process_search_results(self, search_results, max_count, person_name_filtering=False):
         object_list = list()
+        person_name_query = self.get_initial().get('search_request')
         for x in search_results[:max_count]:
             try:
-                rec = self.model.objects.get(pk=x.id)
+                if not person_name_filtering or compare_Russian_fio(person_name_query, x.person_name):
+                    rec = self.model.objects.get(pk=x.id)
+                    object_list.append(rec)
             except Exception as exp:
                 logging.getLogger('django').error("cannot get record, id={}".format(x.id))
                 raise
-            object_list.append(rec)
+        self.hits_count = len(object_list)
         return object_list
 
-    def process_query(self, max_count=100):
-        search_results = self.query_elastic_search()
+    def process_query(self, max_count=100, match_operator="OR"):
+        search_results = self.query_elastic_search(match_operator)
         if search_results is None:
             return []
         return self.process_search_results(search_results, max_count)
@@ -144,7 +176,7 @@ class OfficeSearchView(CommonSearchView):
             object_list = list(models.Office.objects.all())
             return object_list
         else:
-            object_list = self.process_query()
+            object_list = self.process_query(500, match_operator="and")
             object_list.sort(key=lambda x: x.source_document_count, reverse=True)
             return object_list
 
@@ -155,33 +187,13 @@ class PersonSearchView(CommonSearchView):
     elastic_search_document = ElasticPersonDocument
 
     def get_queryset(self):
-        object_list = self.process_query()
+        search_results = self.query_elastic_search()
+        if search_results is None:
+            return []
+        object_list = self.process_search_results(search_results, 1000, person_name_filtering=True)
 
         object_list.sort(key=lambda x: x.section_count, reverse=True)
         return object_list
-
-
-def check_Russiam_name(name1, name2):
-    if name1 is None or name2 is None:
-        return True
-    if len(name1) == 0 or len(name2) == 0:
-        return True
-    name1 = name1.strip(".").lower()
-    name2 = name2.strip(".").lower()
-    return name1.startswith(name2) or name2.startswith(name1)
-
-
-def compare_Russian_fio(search_query, person_name):
-    if search_query.find(' ') == -1 and search_query.find('.') == -1:
-        return True
-    fio1 = resolve_person_name_from_search_request(search_query)
-    fio2 = resolve_fullname(person_name)
-    if fio1 is None or fio2 is None:
-        return True
-    if fio1['family_name'].lower() != fio2['family_name'].lower():
-        return False
-    return     check_Russiam_name(fio1.get('name'), fio2.get('name')) \
-           and check_Russiam_name(fio1.get('patronymic'), fio2.get('patronymic'))
 
 
 class SectionSearchView(CommonSearchView):
@@ -216,26 +228,11 @@ class SectionSearchView(CommonSearchView):
         except Exception as e:
             return None
 
-    def process_search_results(self, search_results, max_count):
-        self.hits_count = search_results.count()
-        person_name_query = self.get_initial().get('search_request')
-        object_list = list()
-        for x in search_results[:max_count]:
-            try:
-                if compare_Russian_fio(person_name_query, x.person_name):
-                    rec = self.model.objects.get(pk=x.id)
-                    object_list.append(rec)
-            except Exception as exp:
-                logging.getLogger('django').error("cannot get record, id={}".format(x.id))
-                raise
-        return object_list
-
     def get_queryset(self):
         search_results = self.query_elastic_search()
         if search_results is None:
             return []
-        object_list = self.process_search_results(search_results, max_count=1000)
-        self.hits_count = len(object_list)
+        object_list = self.process_search_results(search_results, max_count=1000, person_name_filtering=True)
         object_list.sort(key=lambda x: x.person_name)
         return object_list
 
