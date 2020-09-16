@@ -5,7 +5,7 @@
     git clone sokirko@bitbucket.org:TI-Russia/declarator.git
     cd declarator/trasparency
     pip3 install -r ../deploy/requirements.txt
-    echo "CREATE DATABASE declarator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    echo "CREATE DATABASE declarator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
     create user if not exists 'declarator'@ identified by 'declarator';
     GRANT ALL PRIVILEGES ON *.* TO 'declarator'@;" | mysql
     wget https://declarator.org/manage/dump_files/prod????.tar.gz

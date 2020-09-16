@@ -16,7 +16,7 @@ class JoinDLrobotAndHuman(TestCase):
     def test_join_dlrobot_and_human(self):
         script = "../../../scripts/export_human_files.py"
         output_json = "human_files.json"
-        self.run_cmd("python {} --max-files-count 1 --table  declarations_documentfile --output-folder human_files --output-json {}".format(
+        self.run_cmd("python {} --document-file-id 4915 --table  declarations_documentfile --output-folder human_files --output-json {}".format(
             script, output_json))
 
         self.run_cmd("git diff {}".format(output_json))

@@ -10,7 +10,7 @@ ELASTICSEARCH_INDEX_NAMES = {
     'section_index_name': 'declaration_sections_test',
     'person_index_name': 'declaration_person_test',
     'office_index_name': 'declaration_office_test',
-    'office_index_name': 'declaration_office_prod',
+    'file_index_name': 'declaration_office_test',
 
 }
 

@@ -1,6 +1,58 @@
-1. I use python 3.6.9 and create virtualenv in tools/ven
-cd ~/smart_parser/tools
-python3 -m venv venv
 
-2. sudo apt install  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice python3-wheel calibre  catdoc xlsx2csv
-3. pip3 install -r requirements.txt
+This configuration is tested on Ubuntu 18, 20
+
+0.1 install python 3.8
+
+0.2 install mysql 8
+
+0.3 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
+query_cache_type        = ON
+query_cache_limit       = 1M
+query_cache_size        = 128M
+
+
+1. Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+    sudo apt-get install apt-transport-https
+    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
+    sudo apt-get update
+    sudo apt-get install elasticsearch
+    sudo /bin/systemctl daemon-reload
+    sudo /bin/systemctl enable elasticsearch.service
+    sudo systemctl start elasticsearch.service
+
+
+2.  sudo apt install  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
+        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus
+
+
+3. Install python3 modules in virtual env
+    cd ~/smart_parser/tools
+    mkdir venv
+    python3 -m venv venv
+    source ~/smart_parser/tools/venv/bin/activate
+    pip3 install -r ~/smart_parser/tools/requirements.txt
+
+
+4 install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
+      wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+      sudo dpkg -i packages-microsoft-prod.deb
+      sudo apt-get update
+      sudo apt-get install -y apt-transport-https
+      sudo apt-get update
+                       #sudo apt-get install -y aspnetcore-runtime-3.1
+      sudo apt-get install -y dotnet-sdk-3.1
+
+5  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
+      export ASPOSE_LIC=~/lic.bin
+
+6. compile smart_parser itself (c#, ~/smart_parser/src)
+   6.1 Compile smart_parser
+      dotnet build -c Release ~/smart_parser/src
+
+   6.2 Test smart_parser
+      dotnet test -c Release ~/smart_parser/src
+
+7. compile  ~/smart_parser/tools/Office2Txt
+   dotnet build -c Release ~/smart_parser/tools/Office2Txt
+   dotnet test -c Release ~/smart_parser/tools/Office2Tx

@@ -10,13 +10,13 @@
     <br/>
 </form>
 
-{% if query %}
+{% if form.search_request.value %}
   <br/>
   Число найденных ведомств: {{ hits_count }}
   <br/>
+{% endif %}
 
-
-  <table>
+<table>
     <tr>
       <th>ID</th>
       <th>Название</th>
@@ -33,11 +33,9 @@
         </td>
       </tr>
     {% endfor %}
-  </table>
+</table>
 
-  {% include "search/paginator.html" %}
-
-{% endif %}
+{% include "search/paginator.html" %}
 
 {% endblock content %}
 

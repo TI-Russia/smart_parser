@@ -11,7 +11,7 @@ from collections import defaultdict
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dlrobot-folder", dest='dlrobot_folder', required=True)
-    parser.add_argument("--human-json", dest='human_json', default="human_files.json")
+    parser.add_argument("--human-json", dest='human_json', required=False)
     parser.add_argument("--old-dlrobot-human-json", dest='old_dlrobot_human_json', required=False)
     parser.add_argument("--use-v", dest='old_dlrobot_human_json', required=False)
     parser.add_argument("--output-json", dest='output_json', default="dlrobot_human.json")
@@ -55,6 +55,9 @@ class TJoiner:
         self.logger = logger
 
         self.logger.info("load {}".format(args.human_json))
+        if args.human_json is None:
+            logger.info("No human json file is specified")
+
         self.dlrobot_human = TDlrobotHumanFile (args.human_json)
         self.saved_declarator_folder = self.dlrobot_human.document_folder
         self.dlrobot_human.document_folder = args.dlrobot_folder

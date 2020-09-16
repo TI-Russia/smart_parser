@@ -5,12 +5,16 @@
 {% block content %}
 
 <form action="{% url 'file_search' %}" method="get">
-    {{ form.search_request }}
-    <input type="submit" value="Поиск">
-    <br/>
-</form>
+    <table>
+        <tr>
+            <td>File path:</td>
+            <td>{{form.search_request}}</td>
+            <td><input type="submit" value="Поиск"></td>
+       </tr>
+    </table>
+    </form>
 
-{% if query %}
+{% if hits_count %}
 
     <br/>
       Число найденных документов: {{ hits_count }}

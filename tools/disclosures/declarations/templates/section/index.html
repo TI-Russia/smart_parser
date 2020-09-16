@@ -5,39 +5,48 @@
 {% block content %}
 
 <form action="{% url 'section_search' %}" method="get">
-    {{ form.search_request }}
-    <input type="submit" value="Поиск">
-    <br/>
+    <table>
+        <tr>
+            <td>{{form.search_request.label_tag}}</td>
+            <td>{{form.search_request}}</td>
+            <td><input type="submit" value="Поиск"></td>
+       </tr>
+        <tr>
+            <td><label for="id_office_request">Ведомство:</label></td>
+            <td>{{form.office_request}} </td>
+        </tr>
+    </table>
 </form>
 
-{% if query %}
-  <br/>
-      Число найденных деклараций: {{ hits_count }}
-  <br/>
+
+{% if form.search_request.value %}
+    <br/>
+    Число найденных деклараций: {{ hits_count }}
+    <br/>
 
 
-  <table cellpadding="5">
-      <tr>
-          <th>ID</th>
-          <th>ФИО</th>
-          <th>Год</th>
-          <th>Декларант</th>
-      </tr>
-    {% for section in object_list %}
-      <tr>
-          <td>{{section.id }}</td>
-          <td><a href="/section/{{ section.id }}">{{ section.person_name }} </a></td>
-          <td>{{ section.income_year }} </td>
-          <td>
-          {% if section.person_id %}
-            <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
-          {% endif %}
-          </td>
-      </tr>
-    {% endfor %}
-  </table>
+    <table cellpadding="5">
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Год</th>
+            <th>Декларант</th>
+        </tr>
+        {% for section in object_list %}
+        <tr>
+            <td>{{section.id }}</td>
+            <td><a href="/section/{{ section.id }}">{{ section.person_name }} </a></td>
+            <td>{{ section.income_year }}</td>
+            <td>
+                {% if section.person_id %}
+                <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
-  {% include "search/paginator.html" %}
+    {% include "search/paginator.html" %}
 
 {% endif %}
 
