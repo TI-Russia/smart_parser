@@ -26,7 +26,7 @@ if [ -d $HTML_FOLDER ]; then
 	fi
 
     cd $HTML_FOLDER
-	python -m http.server --bind $WEB_IP $WEB_PORT &>$TEST_FOLDER/server.log &
+	python3 -m http.server --bind $WEB_IP $WEB_PORT &>$TEST_FOLDER/server.log &
 	WEB_SERVER_PID=$!
 	disown
     cd $TEST_FOLDER

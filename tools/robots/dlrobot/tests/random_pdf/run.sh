@@ -13,7 +13,7 @@ rm random.txt
 cd -
 
 
-python ../../dlrobot.py --clear-cache-folder --project $PROJECT
+python3 ../../dlrobot.py --clear-cache-folder --project $PROJECT
 
 
 files_count=`/usr/bin/find result -type f | wc -l`
