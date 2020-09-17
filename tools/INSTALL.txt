@@ -23,7 +23,7 @@ query_cache_size        = 128M
 
 
 2.  sudo apt install  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
-        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus
+        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python-pip
 
 
 3. Install python3 modules in virtual env
@@ -51,7 +51,7 @@ query_cache_size        = 128M
       dotnet build -c Release ~/smart_parser/src
 
    6.2 Test smart_parser
-      dotnet test -c Release ~/smart_parser/src
+      dotnet test -c Release ~/smart_parser
 
 7. compile  ~/smart_parser/tools/Office2Txt
    dotnet build -c Release ~/smart_parser/tools/Office2Txt
