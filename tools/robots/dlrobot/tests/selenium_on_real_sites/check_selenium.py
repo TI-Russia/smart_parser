@@ -29,6 +29,7 @@ def parse_args():
     parser.add_argument("--assert-child-url", dest='assert_child_url')
     parser.add_argument("--visible", dest='headless', default=True, action="store_false")
     parser.add_argument("--download-folder", dest='download_folder', default=None)
+    parser.add_argument("--check-scroll-down", dest="check_scroll_down", action="store_true", default=False)
     return parser.parse_args()
 
 
@@ -56,7 +57,7 @@ def get_links(logger, links,  start_anchor_text):
     return urls
 
 
-def start_selenium_for_tests(logger, args):
+def start_selenium_for_tests(logger, args, scroll_to_bottom_and_wait_more_results=True):
     if os.path.exists("geckodriver.log"):
         os.unlink("geckodriver.log")
 
@@ -67,12 +68,19 @@ def start_selenium_for_tests(logger, args):
     try:
         driver_holder = TSeleniumDriver(logger, headless=args.headless,
                                         download_folder=args.download_folder,
-                                        loglevel="trace")
+                                        loglevel="trace",
+                                        scroll_to_bottom_and_wait_more_results=scroll_to_bottom_and_wait_more_results)
         driver_holder.start_executable()
     except Exception as exp:
         logger.error(exp)
         sys.exit(1)
     return driver_holder
+
+
+def error_exit(driver_holder, message):
+    print(message)
+    driver_holder.stop_executable()
+    sys.exit(1)
 
 
 if __name__ == "__main__":
@@ -83,16 +91,23 @@ if __name__ == "__main__":
     links = driver_holder.navigate_and_get_links(args.source_url)
     logger.info("Title:{}, type={}\n".format(driver_holder.the_driver.title, type(driver_holder.the_driver.title)))
     logger.info("html len: {0}".format(len(driver_holder.the_driver.page_source)))
-    logger.info("links and buttons found: {0}".format(len(links)))
+    links_count = len(links)
+    logger.info("links and buttons found: {0}".format(links_count))
     if args.anchor is not None:
         found_urls = get_links(logger, links, args.anchor)
         if len(found_urls) == 0:
-            print("no links with the given anchor found")
-            sys.exit(1)
+            error_exit(driver_holder, "no links with the given anchor found")
 
         if args.assert_child_url is not None:
             if args.assert_child_url not in found_urls:
-                print("cannot find {} in sublinks".format(args.assert_child_url))
-                sys.exit(1)
+                error_exit(driver_holder, "cannot find {} in sublinks".format(args.assert_child_url))
+
+    if args.check_scroll_down:
+        driver_holder.scroll_to_bottom_and_wait_more_results = False
+        logger.info("navigate to {}\n".format(args.source_url))
+        links1 = driver_holder.navigate_and_get_links(args.source_url)
+        links_count_without_scroll_down = len(links1)
+        if links_count <= links_count_without_scroll_down:
+            error_exit(driver_holder,"no additional information with page scroll down found")
 
     driver_holder.stop_executable()
