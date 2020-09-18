@@ -1,5 +1,5 @@
 bad_link	www.mvd.ru	www.yandex.ru
-bad_link	mvd.ru	мвд.рф
+good_link	mvd.ru	мвд.рф
 good_link	www.mvd.ru	mvd.ru
 bad_link	www.mvd.ru	www.mvd.ru/print=1
 good_link	bagaev.donland.ru	donland.ru
