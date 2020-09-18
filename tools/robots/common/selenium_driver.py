@@ -55,6 +55,7 @@ class TSeleniumDriver:
         for retry in range(3):
             try:
                 self.the_driver = webdriver.Firefox(firefox_options=options)
+                self.the_driver.implicitly_wait(10)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == 2:
@@ -85,7 +86,9 @@ class TSeleniumDriver:
         self.navigate(url)
         time.sleep(timeout)
 
-        if self.scroll_to_bottom_and_wait_more_results:
+        body = self.the_driver.find_element_by_tag_name('body')
+
+        if self.scroll_to_bottom_and_wait_more_results and body:
             self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(1)
             self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
