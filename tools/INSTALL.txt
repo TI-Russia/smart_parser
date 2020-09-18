@@ -1,7 +1,7 @@
 
 This configuration is tested on Ubuntu 18, 20
 
-0.1 install python 3.8
+0.1 install python 3.8 (cannot install http module to ububtu server under lower python versions)
 
 0.2 install mysql 8
 
@@ -23,7 +23,8 @@ query_cache_size        = 128M
 
 
 2.  sudo apt install  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
-        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python-pip
+        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python-pip python3.8-dev \
+        firefox 
 
 
 3. Install python3 modules in virtual env

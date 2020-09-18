@@ -26,7 +26,9 @@ def make_folder_empty(folder):
 
 
 class TSeleniumDriver:
-    def __init__(self, logger, headless=True, download_folder=None, loglevel=None):
+
+    def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
+                 scroll_to_bottom_and_wait_more_results=True):
         self.logger = logger
         self.the_driver = None
         self.driver_processed_urls_count = 0
@@ -34,6 +36,7 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
+        self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
     def start_executable(self):
         options = FirefoxOptions()
@@ -59,7 +62,6 @@ class TSeleniumDriver:
                 self.logger.error("Exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
 
-
     def stop_executable(self):
         if self.the_driver is not None:
             self.the_driver.quit()
@@ -82,10 +84,12 @@ class TSeleniumDriver:
     def _navigate_and_get_links(self, url, timeout=4):
         self.navigate(url)
         time.sleep(timeout)
-        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        time.sleep(1)
-        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        time.sleep(1)
+
+        if self.scroll_to_bottom_and_wait_more_results:
+            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(1)
+            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(1)
 
         links = self.get_buttons_and_links()
         try:
