@@ -2,6 +2,7 @@ import http.server
 import sys
 import threading
 from robots.common.download import TDownloadedFile,  TDownloadEnv
+from robots.common.http_request import TRequestPolicy
 import time
 from robots.common.http_request import RobotHttpException
 import logging
@@ -25,6 +26,7 @@ def setup_logging(logfilename):
     logger.addHandler(fh)
     return logger
 
+
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
     def build_headers(self):
@@ -42,7 +44,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.build_headers()
             self.wfile.write("<html> aaaaaaa </html>".encode("latin"))
         elif self.path == "/very_long":
-            time.sleep(TDownloadEnv.HTTP_TIMEOUT + 10)   # more than HTTP_TIMEOUT
+            time.sleep(TRequestPolicy.HTTP_TIMEOUT + 10)   # more than HTTP_TIMEOUT
             self.build_headers()
             self.wfile.write("<html> bbbb </html>".encode("latin"))
         else:
@@ -110,8 +112,8 @@ if __name__ == '__main__':
     logger.debug("request_timeouted")
     request_timeouted(web_addr + "/very_long")
 
-    logger.debug("sleep {}".format(TDownloadEnv.HTTP_TIMEOUT))
-    time.sleep(TDownloadEnv.HTTP_TIMEOUT)
+    logger.debug("sleep {}".format(TRequestPolicy.HTTP_TIMEOUT))
+    time.sleep(TRequestPolicy.HTTP_TIMEOUT)
 
     logger.debug("shutdown http server")
     HTTP_SERVER.shutdown()

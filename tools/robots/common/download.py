@@ -79,7 +79,7 @@ def get_content_charset(headers):
 
 
 def http_get_request_with_simple_js_redirect(logger, url):
-    redirected_url, headers, data = make_http_request(logger, url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+    redirected_url, headers, data = make_http_request(logger, url, "GET")
 
     try:
         if get_content_type_from_headers(headers).lower().startswith('text'):
@@ -89,7 +89,7 @@ def http_get_request_with_simple_js_redirect(logger, url):
                 if match:
                     redirect_url = match.group(3)
                     if redirect_url != url:
-                        return make_http_request(logger, redirect_url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+                        return make_http_request(logger, redirect_url, "GET")
             except (RobotHttpException, ValueError) as err:
                 pass
     except AttributeError:
