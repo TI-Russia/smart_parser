@@ -62,7 +62,6 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
 HTTP_SERVER = None
 def start_server(host, port):
     global HTTP_SERVER
-    HTTP_SERVER = http.server.HTTPServer((host, int(port)), THttpServer)
     HTTP_SERVER.serve_forever()
 
 
@@ -101,8 +100,9 @@ if __name__ == '__main__':
 
     logger.debug("start http server on {}".format(web_addr))
     server_thread = threading.Thread(target=start_server, args=(host, port))
+    HTTP_SERVER = http.server.HTTPServer((host, int(port)), THttpServer)
     server_thread.start()
-
+    time.sleep(1) # give time to open sockets in threads
     logger.debug("request_the_same")
     request_the_same(web_addr +"/somepath")
 
