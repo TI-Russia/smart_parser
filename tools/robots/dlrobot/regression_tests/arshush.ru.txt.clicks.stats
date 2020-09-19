@@ -1,9 +1,8 @@
 {
-    "files_count": 46,
+    "files_count": 45,
     "files_sorted (short report)": [
         "cached/arshush.ru/content/view/1042/dlrobot_data -1",
         "cached/arshush.ru/downloads/2011/doxod_za_2010_ot29042011.docx/dlrobot_data -1",
-        "cached/arshush.ru/downloads/2016/ruk_li_mu.zip/dlrobot_data 0",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 0",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 1",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 2",
@@ -12,16 +11,6 @@
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 5",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 6",
         "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data 7",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 0",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 1",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 2",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 3",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 4",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 5",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 6",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 7",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 8",
-        "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data 9",
         "cached/arshush.ru/downloads/2017/svedeniya-o-dohodah-2016.docx/dlrobot_data -1",
         "cached/arshush.ru/downloads/2018/svedeniya-o-dohodah-2017.docx/dlrobot_data -1",
         "cached/arshush.ru/downloads/2018/svedeniya-o-dohodah-zam-2017.docx/dlrobot_data -1",
@@ -46,7 +35,17 @@
         "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data 6",
         "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data 7",
         "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data 8",
-        "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data 9"
+        "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data 9",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 0",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 1",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 2",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 3",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 4",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 5",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 6",
+        "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data 7",
+        "cached/arshush.ru/downloads/2020/svedeniya-o-dohodah-2019.docx/dlrobot_data -1",
+        "cached/arshush.ru/downloads/2020/svedeniya_o_dohodah_deputatov-2019.pdf/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
         {
@@ -76,7 +75,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -89,7 +88,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "01abbd8d2f118bfd1d33e13770e30785a929bf6d535d280e63d8a73f55de527c",
-            "archive_index": 6
+            "archive_index": 3
         },
         {
             "click_path": [
@@ -118,7 +117,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -132,27 +131,6 @@
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "099adc7fb05a84b6875c4eea2a144fafc2f635fff9f50fbbd76713cd586ef5d6",
             "archive_index": 5
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Информация",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "0ae1ded6e4dd9a0d6eaefa63f90f82915f7a53c07f42cae8b87f1b51171f12df",
-            "archive_index": 8
         },
         {
             "click_path": [
@@ -201,28 +179,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Информация",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "14ad4272a5038ab26958d289135ca6f63a4a9f41c1cdf84e04c23b6b244eedff",
-            "archive_index": 2
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -264,11 +221,32 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Cведения о доходах муниципальных служащих - 2018 год",
+                    "target:anchor_text": "Информация",
                     "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "200d014f901dba2060e611d16d693b4aabd9037bc86dfb9ae713690dce181978",
+            "archive_index": 5
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://arshush.ru/downloads/2019/svedeniya-o-dohodah-2018.docx",
@@ -277,6 +255,34 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2019/svedeniya-o-dohodah-2018.docx/dlrobot_data",
             "sha256": "2aa1c9016e0f42052cefb7c2caea60683d7c81c4ff6414ab4b0de6bb7d351e01"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Информация",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "2dc942307472d1487ba337e1f2971dcee1d5c64a6a0ec5a309c0b1097cfe792d",
+            "archive_index": 0
         },
         {
             "click_path": [
@@ -308,6 +314,34 @@
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                     "source:step": "anticorruption_div",
                     "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Информация",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "3415d87015458a4de3872e0c4376988d5e2afa9e8f65a4968e066e27057ee8e5",
+            "archive_index": 4
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
                     "target:anchor_text": "Информация",
                     "target:engine": "selenium"
                 },
@@ -329,38 +363,24 @@
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                     "source:step": "anticorruption_div",
                     "source:title": "",
-                    "target:anchor_text": "Информация",
+                    "target:anchor_text": "Сведения за 2019 год",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "39c53ffdc36db03edf28e10a0c759fb32cfb7f4f61a34bb817c60d78357b465a",
-            "archive_index": 6
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
                     "step": "declarations"
                 }
             ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "4fde9dbb375adf9046651dbeeed1777c886c3c974088c328043d90f9d3ad2a97",
-            "archive_index": 4
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "403682d5d5b321708dd4872a7155a495a8d32cc568d2ecbd24209523d9996ce1",
+            "archive_index": 2
         },
         {
             "click_path": [
@@ -389,7 +409,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -402,7 +422,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "56d30c3408b9e8265809f669020661a6ea78135ee1b992af7737faaa39934488",
-            "archive_index": 1
+            "archive_index": 6
         },
         {
             "click_path": [
@@ -430,20 +450,47 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Cведения о доходах муниципальных служащих - 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2020/svedeniya-o-dohodah-2019.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniya-o-dohodah-2019.docx/dlrobot_data",
+            "sha256": "70aaec1a1eb4bd243e92e65565d5717a3bf89335a60dac6c803bd65d02bb12ca"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                     "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
                     "step": "declarations"
                 }
             ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "76d86d3983bf0dc891a381b67c0e665ce61ad41b42903e5d54a9b3bc98ae6b52",
-            "archive_index": 1
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "74b0ad6e8c3c18a54242ab8d313cf66a9260a6ac3a302c0b278552adbe00b258",
+            "archive_index": 3
         },
         {
             "click_path": [
@@ -475,17 +522,24 @@
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                     "source:step": "anticorruption_div",
                     "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
+                    "source:title": "",
                     "target:anchor_text": "Информация",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
                     "step": "declarations"
                 }
             ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "7d516cb1bfec3b81c9c0c03184d1b4d101bfb60e70da3ddbee8d712a9e909e95",
-            "archive_index": 9
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "7b179274b8c0993983c4e097f5fcfd4590d326d146012a66a832bed92256afbb",
+            "archive_index": 1
         },
         {
             "click_path": [
@@ -493,7 +547,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -542,27 +596,6 @@
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "85ed4ac010c2406c1f9ba5aa6691756b0945d0db087e5b48e2b4e53132562e8f",
-            "archive_index": 0
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Информация",
-                    "target:engine": "selenium"
-                },
-                {
                     "source:url": "http://arshush.ru/downloads/2019/svedeniya_za_2018.zip",
                     "step": "declarations"
                 }
@@ -570,26 +603,6 @@
             "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
             "sha256": "8ef23ef463c79baed18a059bf74d345acf553e6009801de6d159149e13c8042e",
             "archive_index": 7
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах - 2015 год",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/content/view/1042/",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
-            "sha256": "936ae64ebfe3b882fd57eebdb152e09373e8d047a5deba8c213dd36d1ffe3fe4"
         },
         {
             "click_path": [
@@ -611,27 +624,6 @@
             "cached_file": "cached/arshush.ru/downloads/2019/svedeniya_za_2018.zip/dlrobot_data",
             "sha256": "9432d22214632961770fdeab72b87cc568be61bc6b9613bdc0960f16d2f99dcd",
             "archive_index": 1
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Информация",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "95029b1b6897136030820bd0c44d0d833ecff043377d016a994a786346473b4c",
-            "archive_index": 7
         },
         {
             "click_path": [
@@ -681,6 +673,19 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "http://arshush.ru/content/view/1042/",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/content/view/1042/dlrobot_data",
+            "sha256": "a09cdbccd5085998c91d5181c0e1f36af878269bf07c04a6b2884f11e8138667"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
                     "source:step": "anticorruption_div",
                     "source:title": "",
@@ -702,7 +707,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -715,28 +720,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "aae524a047dcd8111dd63b18c7adec2c156d6054d23429f12b62b0b24ff6c1dc",
-            "archive_index": 0
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Информация",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "ac5363ec4b7edbd3088b0b7e753cae3d4114a7fbbac5c64ef08d1c3eb5596dce",
-            "archive_index": 3
+            "archive_index": 7
         },
         {
             "click_path": [
@@ -786,7 +770,63 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Информация",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "c112081e1ad7ce6ff010904b06cbcf2a9e7cad1f65f3061c1d9ba8873d00c49c",
+            "archive_index": 6
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/content/view/2355/72/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Информация",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://arshush.ru/downloads/2020/%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B7%D0%B0%202019%20%D0%B3%D0%BE%D0%B4.zip",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniia_za_2019_god.zip/dlrobot_data",
+            "sha256": "c4a6d87385fa0c33557d720c73c24c09c3ccc41350646e814e9ce497d4af8663",
+            "archive_index": 7
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -799,7 +839,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "c92f2fcc5c41782e3ed82528c163aa4ab1ce3eb605c4988ac513160842df55ef",
-            "archive_index": 7
+            "archive_index": 1
         },
         {
             "click_path": [
@@ -810,7 +850,7 @@
                     "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Cведения о доходах депутатов районого Совета - 2018 год",
+                    "target:anchor_text": "Cведения о доходах депутатов районного Совета - 2018 год",
                     "target:engine": "selenium"
                 },
                 {
@@ -848,7 +888,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48&submenu=10",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Информация",
@@ -861,7 +901,7 @@
             ],
             "cached_file": "cached/arshush.ru/downloads/2016/svedenia_za_2015_god.rar/dlrobot_data",
             "sha256": "da6f848f381257cdc27d4df0a57ce173493395c32255e0cd9f91e03c5e976da6",
-            "archive_index": 3
+            "archive_index": 0
         },
         {
             "click_path": [
@@ -890,41 +930,19 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.arshush.ru/index.php?option=com_content&task=blogcategory&id=32&Itemid=48",
+                    "source:url": "http://arshush.ru/index.php?option=com_content&task=view&id=1301",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Информация",
+                    "target:anchor_text": "Cведения о доходах депутатов районного Совета - 2019 год",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://arshush.ru/downloads/2016/ruk_li_mu.zip",
+                    "source:url": "http://arshush.ru/downloads/2020/svedeniya_o_dohodah_deputatov-2019.pdf",
                     "step": "declarations"
                 }
             ],
-            "cached_file": "cached/arshush.ru/downloads/2016/ruk_li_mu.zip/dlrobot_data",
-            "sha256": "e4e739862735e5f10e864a308965fd37ad779f3b5ac8811a96ac49ae87558276",
-            "archive_index": 0
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Информация",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://arshush.ru/downloads/2016/svedeniya2016.rar",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/arshush.ru/downloads/2016/svedeniya2016.rar/dlrobot_data",
-            "sha256": "e765fb0458e8684603be72bc89159e94fb499889ef6c82d645fffa7230664e31",
-            "archive_index": 5
+            "cached_file": "cached/arshush.ru/downloads/2020/svedeniya_o_dohodah_deputatov-2019.pdf/dlrobot_data",
+            "sha256": "ee72cd6e9190e61e2973e603b8caf435fdc201931434e77e4bbefedf8017fcdf"
         },
         {
             "click_path": [
