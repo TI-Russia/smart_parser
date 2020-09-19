@@ -1,5 +1,5 @@
 {
-    "files_count": 11,
+    "files_count": 12,
     "files_sorted (short report)": [
         "cached/3aas.arbitr.ru/files/dohod/dohod_2010.rtf/dlrobot_data -1",
         "cached/3aas.arbitr.ru/files/dohod/dohod_2011.rtf/dlrobot_data -1",
@@ -8,10 +8,11 @@
         "cached/3aas.arbitr.ru/files/dohod/dohod_2014.rtf/dlrobot_data -1",
         "cached/3aas.arbitr.ru/files/dohod/dohod_2015.rtf/dlrobot_data -1",
         "cached/3aas.arbitr.ru/files/korr/17.pdf/dlrobot_data -1",
+        "cached/3aas.arbitr.ru/files/korr/primernedostatkov.pdf/dlrobot_data -1",
         "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/dohod_2016.rtf/dlrobot_data -1",
         "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/dohod_2017.rtf/dlrobot_data -1",
         "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/dohod_2018_0.rtf/dlrobot_data -1",
-        "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/dohod_2019.rtf/dlrobot_data -1"
+        "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/income_information_2019.rtf/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
         {
@@ -73,6 +74,26 @@
             ],
             "cached_file": "cached/3aas.arbitr.ru/files/dohod/dohod_2013.rtf/dlrobot_data",
             "sha256": "3bce1fa851dfbd5858d738324fa2071f0270b7e20d73f515c358e0dae9f2ff48"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://3aas.arbitr.ru/corruption/materials",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Примеры",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://3aas.arbitr.ru/files/korr/primernedostatkov.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/3aas.arbitr.ru/files/korr/primernedostatkov.pdf/dlrobot_data",
+            "sha256": "459d072bca967c8b4ee7bfa0ba8597fdbbcacfdcb700f87790d068efd174445b"
         },
         {
             "click_path": [
@@ -156,26 +177,6 @@
                     "source:url": "https://3aas.arbitr.ru/corruption/income/ourJudges",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 1 января 2019 г. по 31 декабря 2019 г.",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/dohod_2019.rtf",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/dohod_2019.rtf/dlrobot_data",
-            "sha256": "ac2ea35ac97db19789fa7f591bb78450e21f57c9e0abeceecc102013efb27f04"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "https://3aas.arbitr.ru/corruption/income/ourJudges",
-                    "source:step": "declarations",
-                    "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 1 января 2018 г. по 31 декабря 2018 г.",
                     "target:engine": "selenium"
                 },
@@ -226,6 +227,26 @@
             ],
             "cached_file": "cached/3aas.arbitr.ru/files/dohod/dohod_2014.rtf/dlrobot_data",
             "sha256": "e019f95e79c536778d89e5c69c1843b416c19d569f0639bde9c46b10e91afa62"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://3aas.arbitr.ru/corruption/income/ourJudges",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 1 января 2019 г. по 31 декабря 2019 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/income_information_2019.rtf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/3aas.arbitr.ru/sites/3aas.arbitr.ru/files/doc/income_information_2019.rtf/dlrobot_data",
+            "sha256": "eb290d6ebb94efda448c9f8858858ec3ff07e490aaf026c5e72d9f5534407fc6"
         }
     ]
 }
