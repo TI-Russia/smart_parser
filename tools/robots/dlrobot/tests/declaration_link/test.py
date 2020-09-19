@@ -49,7 +49,6 @@ ROBOT_STEPS = [
 HTTP_SERVER = None
 def start_server(host, port):
     global HTTP_SERVER
-    HTTP_SERVER = http.server.HTTPServer((host, int(port)), THttpServer)
     HTTP_SERVER.serve_forever()
 
 
@@ -103,7 +102,9 @@ if __name__ == '__main__':
     TRequestPolicy.ENABLE = False
     host, port = args.web_addr.split(":")
     server_thread = threading.Thread(target=start_server, args=(host, port))
+    HTTP_SERVER = http.server.HTTPServer((host, int(port)), THttpServer)
     server_thread.start()
+    time.sleep(2)       # time to init sockets
     if not args.web_addr.startswith('http'):
         args.web_addr = 'http://' + args.web_addr
     try:
