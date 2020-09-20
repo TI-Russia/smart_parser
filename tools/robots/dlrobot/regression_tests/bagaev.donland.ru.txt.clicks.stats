@@ -1,12 +1,16 @@
 {
-    "files_count": 19,
+    "files_count": 24,
     "files_sorted (short report)": [
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_2015.doc/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_dlia_saita_za_2017_god.do_95a7fe035a22e6082f048091f1d3a480/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_god._30b75300b471f0dd8be677f9d573a1ff/dlrobot_data -1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_3d5908e8bcedc573a8dd405f1a01fea0/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_eee7e1c8020d47b024baae205dc9ebf5/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2017_go_99b626288f5b1299e654f7af5db596a5/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2018_go_f11c0e473950592c5b57e41c06d04c29/dlrobot_data -1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2019_go_8c1ba8f6b7c0d082763b33109e7a5bb6/dlrobot_data -1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/bibliotekasvedeniiaodokhodakh.doc/dlrobot_data -1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/muktskssvedeniiaodokhodakh.doc/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhza2013god.doc/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/svedeniiaodokhodakhzamov.doc/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2015_g_9ca892d995b4e8a37fc1ccd6466df624/dlrobot_data -1",
@@ -14,6 +18,7 @@
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_i_raskhodakh_za_2014_48366333aa2c375ad62201e177c65b47/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_za_2016_god.docx/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYA_o_dokhodakh_za_2018__431aab6e439573be0a1a35d4f8a756e1/dlrobot_data -1",
+        "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYA_o_dokhodakh_za_2019__a07ed96c305dfc9acad72f637667f465/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2016__303263d53b33fb87fa1c452313a891f3/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYa_o_dokhodakh_za_2017__756b3dc510e2a6d8908685e8aa00b735/dlrobot_data -1",
         "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/15.05.2017doc.docx/dlrobot_data -1",
@@ -61,6 +66,26 @@
             ],
             "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/uszn/Svedeniia_o_dokhodakh_dlia_saita_za_2015_g_9ca892d995b4e8a37fc1ccd6466df624/dlrobot_data",
             "sha256": "0831fcb74c462dd742c7ea8e78cc6cfcee3c51f560017814d3d6a8faab78f649"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=148212",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера депутатов Собрания депутатов Багаевского района, их супругов и несовершеннолетних детей за период с 01.01.2019 по 31.12.2019 года",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/сведения/SVEDENIYА_o_dokhodakh_za_2019_tablitsa.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/bag_rayon/sobrdeputat/svedeniia/SVEDENIYA_o_dokhodakh_za_2019__a07ed96c305dfc9acad72f637667f465/dlrobot_data",
+            "sha256": "17859e09f2b9ef4aa7bc8e253427f08c657e1044e4994a23abd27fc4edb10305"
         },
         {
             "click_path": [
@@ -188,6 +213,19 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/%D0%BC%D1%83%D0%BA%D1%86%D0%BA%D1%81%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%D0%BE%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/muktskssvedeniiaodokhodakh.doc/dlrobot_data",
+            "sha256": "46f28d3dc846612d67de96813825543752ef1b0a6784ac648590d6cd5b2d5552"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=93823",
                     "source:step": "declarations",
                     "source:title": "",
@@ -208,28 +246,55 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Май, 2018 (1)",
+                    "target:anchor_text": "СВЕДЕНИЯ о доходах, расходах, об имуществе и обязательствах имущественного характера  руководителей муниципальных учреждений Багаевского района  и руководителей  отраслевых (функциональных) органов Администрации Багаевского района, их супругов и несовершеннолетних детей за 2019 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20руководителей%20%20за%202019%20год.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_rukovoditelei__za_2019_go_8c1ba8f6b7c0d082763b33109e7a5bb6/dlrobot_data",
+            "sha256": "62250f17bc4c77b43fa7d557de7c38f2daf90c46f80f282f93717fc4a70fbead"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=139575",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, имуществе и обязательств имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Апрель, 2016 (1)",
-                    "target:engine": "selenium"
+                    "target:anchor_text": "Пропустить навигацию",
+                    "target:engine": "urllib"
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=4&year=2016&mid=160420&pageid=140885",
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=140885#startcontent",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "5 апреля 2016 г. 17:18:00",
+                    "target:anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2014 год",
                     "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=160322&mid=160420",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Пропустить навигацию",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=160322&mid=160420#startcontent",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах,  расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов инесовершеннолетних детей за 2014 год",
@@ -242,6 +307,19 @@
             ],
             "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/svedeniiaodokhodakhiraskhodakh.doc/dlrobot_data",
             "sha256": "647704695f24789ff2d7bad57cf8917486fefd10a4df3aae4a24c43683865fd2"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F%D0%BE%D0%B4%D0%BE%D1%85%D0%BE%D0%B4%D0%B0%D1%85.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/bibliotekasvedeniiaodokhodakh.doc/dlrobot_data",
+            "sha256": "659379778f16defab2c817ed680f11ff80a38eb99d1a6f7d51371d6f1aee7151"
         },
         {
             "click_path": [
@@ -272,11 +350,11 @@
                     "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Май, 2018 (1)",
+                    "target:anchor_text": "Апрель, 2016 (1)",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=4&year=2016&mid=160420&pageid=140885",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Май, 2017 (1)",
@@ -333,18 +411,18 @@
                     "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Май, 2018 (1)",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
-                    "source:step": "declarations",
-                    "source:title": "",
                     "target:anchor_text": "Май, 2016 (1)",
                     "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2016&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Пропустить навигацию",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2016&mid=160420&pageid=140885#startcontent",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "6 мая 2016 г. 11:47:00",
@@ -431,7 +509,49 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Май, 2016 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2016&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Апрель, 2016 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=4&year=2016&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Май, 2018 (1)",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Пропустить навигацию",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewArchive.aspx?month=5&year=2018&mid=160420&pageid=140885#startcontent",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "14 мая 2018 г. 18:17:00",
+                    "target:engine": "selenium"
+                },
+                {
                     "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Пропустить навигацию",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Blog/ViewPost.aspx?pageid=140885&ItemID=228542&mid=160420#startcontent",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового отдела Администрации Багаевского района, их супругов и несовершеннолетних детей за 2017 год.",
@@ -444,6 +564,26 @@
             ],
             "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/finotdel/doc/svedeniiaodokhodakhiraskhodakh-za2017god.doc/dlrobot_data",
             "sha256": "d3384583a0ab00dca181ba779999b8978a53a8fc63ebce9048ab6fb0c8e4f837"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Default.aspx?pageid=129266",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "СВЕДЕНИЯ о доходах, расходах, имуществе и обязательствах имущественного характера муниципальных служащих Администрации Багаевского района, их супругов и несовершеннолетних детей за 2019 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://bagaev.donland.ru/Data/Sites/23/media/administraciya/Сведения%20о%20доходах%20муниципальных%20служащих%202019%20год.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/bagaev.donland.ru/Data/Sites/23/media/administraciya/Svedeniia_o_dokhodakh_munitsipal_nykh_sluzhashc_3d5908e8bcedc573a8dd405f1a01fea0/dlrobot_data",
+            "sha256": "e8b88fbf92c5c062907b7c2de9d51ff6bd6c7047570dc8ea7b73d76023d00057"
         },
         {
             "click_path": [
