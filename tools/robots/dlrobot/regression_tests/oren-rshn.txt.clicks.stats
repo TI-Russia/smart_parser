@@ -1,5 +1,5 @@
 {
-    "files_count": 109,
+    "files_count": 113,
     "files_sorted (short report)": [
         "cached/oren-rshn.ru/Doc/dohodi/2009/Abdulino.doc/dlrobot_data -1",
         "cached/oren-rshn.ru/Doc/dohodi/2009/Admin.doc/dlrobot_data -1",
@@ -109,7 +109,11 @@
         "cached/oren-rshn.ru/index.php_do_download_id_247_area_static_viewonline_1/dlrobot_data -1",
         "cached/oren-rshn.ru/index.php_do_download_id_248_area_static_viewonline_1/dlrobot_data -1",
         "cached/oren-rshn.ru/index.php_do_download_id_249_area_static_viewonline_1/dlrobot_data -1",
-        "cached/oren-rshn.ru/index.php_do_download_id_250_area_static_viewonline_1/dlrobot_data -1"
+        "cached/oren-rshn.ru/index.php_do_download_id_250_area_static_viewonline_1/dlrobot_data -1",
+        "cached/oren-rshn.ru/index.php_do_download_id_335_area_static_viewonline_1/dlrobot_data -1",
+        "cached/oren-rshn.ru/index.php_do_download_id_336_area_static_viewonline_1/dlrobot_data -1",
+        "cached/oren-rshn.ru/index.php_do_download_id_337_area_static_viewonline_1/dlrobot_data -1",
+        "cached/oren-rshn.ru/index.php_do_download_id_338_area_static_viewonline_1/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
         {
@@ -138,21 +142,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -172,21 +162,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -206,21 +182,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -240,21 +202,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -274,21 +222,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -308,14 +242,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
@@ -362,21 +289,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -396,21 +309,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -430,14 +329,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
@@ -464,21 +356,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -498,21 +376,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -532,21 +396,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -566,21 +416,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -600,21 +436,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -634,21 +456,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -668,21 +476,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -702,7 +496,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Уточненные данные",
@@ -722,21 +523,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -756,21 +543,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -790,21 +563,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -824,21 +583,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -858,21 +603,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -892,21 +623,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -926,21 +643,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -960,21 +663,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -994,21 +683,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -1028,21 +703,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -1062,21 +723,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -1096,14 +743,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
@@ -1130,21 +770,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -1164,21 +790,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -1198,7 +810,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Межрайонные отделы",
@@ -1218,14 +837,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
@@ -1252,14 +864,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
@@ -1286,21 +891,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -1320,21 +911,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -1354,21 +931,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -1388,21 +951,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -1422,14 +971,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
@@ -1456,21 +998,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -1490,21 +1018,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -1524,21 +1038,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -1558,21 +1058,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -1592,21 +1078,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -1626,21 +1098,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -1660,21 +1118,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -1694,21 +1138,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -1728,14 +1158,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
@@ -1762,21 +1185,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -1796,21 +1205,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -1830,21 +1225,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -1864,21 +1245,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -1898,21 +1265,34 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
+                    "target:anchor_text": "2019 год",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2019-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
+                    "target:anchor_text": "Карантин и земельный отделы",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/index.php?do=download&id=338&area=static&viewonline=1",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/oren-rshn.ru/index.php_do_download_id_338_area_static_viewonline_1/dlrobot_data",
+            "sha256": "7b1f5baeefee5fe336ebf39fdc2194ddf0505219b1ecd2e57d626eb7651efebf"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -1932,21 +1312,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -1966,21 +1332,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -2000,21 +1352,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -2034,21 +1372,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -2068,21 +1392,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2102,21 +1412,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2136,7 +1432,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Ветеринарный надзор",
@@ -2156,21 +1459,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -2190,21 +1479,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2224,21 +1499,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2258,21 +1519,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -2292,21 +1539,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2326,21 +1559,34 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
+                    "target:anchor_text": "2019 год",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2019-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
+                    "target:anchor_text": "Межрайонные отделы",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/index.php?do=download&id=336&area=static&viewonline=1",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/oren-rshn.ru/index.php_do_download_id_336_area_static_viewonline_1/dlrobot_data",
+            "sha256": "9c50da086eae9618dd02c26898c73b8fb48d64b6c7da785e19764f2799ad4a8c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -2360,21 +1606,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -2394,21 +1626,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2428,7 +1646,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Административные отделы",
@@ -2448,21 +1673,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2482,21 +1693,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -2516,21 +1713,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -2550,21 +1733,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -2604,21 +1773,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2638,21 +1793,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2672,14 +1813,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
@@ -2706,21 +1840,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2740,21 +1860,34 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
+                    "target:anchor_text": "2019 год",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2019-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
+                    "target:anchor_text": "Административные отделы",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/index.php?do=download&id=335&area=static&viewonline=1",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/oren-rshn.ru/index.php_do_download_id_335_area_static_viewonline_1/dlrobot_data",
+            "sha256": "b47faa49285617b66b631940c8e9b1975252720a9f3392b06698d4d43114b9f0"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -2774,21 +1907,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2808,21 +1927,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -2842,21 +1947,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -2876,21 +1967,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -2910,21 +1987,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2944,21 +2007,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -2978,21 +2027,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3032,21 +2067,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -3066,21 +2087,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3100,21 +2107,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -3134,21 +2127,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014г.",
@@ -3168,21 +2147,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3202,21 +2167,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -3236,21 +2187,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3270,21 +2207,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -3304,21 +2227,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011г.",
@@ -3338,21 +2247,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3372,21 +2267,34 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
+                    "target:anchor_text": "2019 год",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2019-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
+                    "target:anchor_text": "Ветеринарный надзор",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/index.php?do=download&id=337&area=static&viewonline=1",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/oren-rshn.ru/index.php_do_download_id_337_area_static_viewonline_1/dlrobot_data",
+            "sha256": "e7539c3f577b7c9d110cf74b7141ed28bbf74c71b40bf8da885c222279faf3f3"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -3406,21 +2314,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -3440,21 +2334,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010г.",
@@ -3474,21 +2354,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3508,7 +2374,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-2017-goda.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Карантин и земельный отделы",
@@ -3528,21 +2401,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009г.",
@@ -3562,21 +2421,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012г.",
@@ -3616,21 +2461,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
@@ -3650,21 +2481,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.oren-rshn.ru/53-protivodejstvie-korrupcii.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera.html",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "2009 - 2014 года",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
+                    "source:url": "https://oren-rshn.ru/svedenija-o-dohodah-2009-2014.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013г.",
