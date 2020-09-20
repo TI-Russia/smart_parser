@@ -1,7 +1,7 @@
 {
-    "files_count": 18,
+    "files_count": 20,
     "files_sorted (short report)": [
-        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data -1",
+        "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12152880@cmsArticle/dlrobot_data -1",
         "cached/mil.ru/files/defense_income_2011.xls/dlrobot_data -1",
         "cached/mil.ru/files/morf/anti_korr_metod_pril_1.rtf/dlrobot_data -1",
         "cached/mil.ru/files/morf/defense_income_2009.doc/dlrobot_data -1",
@@ -18,7 +18,9 @@
         "cached/mil.ru/files/morf/income_2014.xlsx/dlrobot_data -1",
         "cached/mil.ru/files/morf/income_2015.xlsx/dlrobot_data -1",
         "cached/mil.ru/files/morf/income_2017.xlsx/dlrobot_data -1",
-        "cached/mil.ru/files/morf/income_2018.xlsx/dlrobot_data -1"
+        "cached/mil.ru/files/morf/income_2018.xlsx/dlrobot_data -1",
+        "cached/mil.ru/files/morf/income_2019.xlsx/dlrobot_data -1",
+        "cached/mil.ru/files/morf/method_spravka_nedostatki.pdf/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
         {
@@ -27,7 +29,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -54,7 +56,20 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12152880@cmsArticle",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12152880@cmsArticle/dlrobot_data",
+            "sha256": "3759cb35945cd1ac7b3231af06be12877ed3e03a24853454c378f81bee47bc43"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -81,7 +96,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -108,7 +123,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -135,7 +150,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -162,7 +177,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -189,7 +204,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -216,7 +231,34 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://mil.ru/anti-corruption/income_info.htm",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "income_2019.xlsx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://mil.ru/files/morf/income_2019.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/mil.ru/files/morf/income_2019.xlsx/dlrobot_data",
+            "sha256": "731f04b89ba5b6b876ac8015d565d32637161a2a57f94188a3f4e3e7497aaaea"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -243,7 +285,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -290,7 +332,27 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=11635481@cmsArticle",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Method_spravka_nedostatki.pdf",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://mil.ru/files/morf/method_spravka_nedostatki.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/mil.ru/files/morf/method_spravka_nedostatki.pdf/dlrobot_data",
+            "sha256": "9d12c9957abcfedbf9711242623b0d5d24f0730efaea537213df15f3ce7a43be"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -317,7 +379,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -344,7 +406,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -371,20 +433,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/mil.ru/anti-corruption/meth_materials/more.htm_id_12076853@cmsArticle/dlrobot_data",
-            "sha256": "bc559fa4bfbb32fddebbd2b058904ccd19794c196fe9733fc3f6d21506873812"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -411,7 +460,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -438,7 +487,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
@@ -465,7 +514,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://mil.ru/anti-corruption/meth_materials/more.htm?id=12076853@cmsArticle",
+                    "source:url": "http://mil.ru/anti-corruption/forms.htm",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах",
