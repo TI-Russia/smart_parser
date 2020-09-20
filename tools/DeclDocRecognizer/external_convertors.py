@@ -92,7 +92,7 @@ class TExternalConverters:
         return html
 
     def run_xlsx2csv(self, inp, out):
-        return run_cmd("python \"{}\" -c utf-8 -d tab {} {}".format(self.xlsx2csv, inp, out))
+        return run_cmd("python3 \"{}\" -c utf-8 -d tab {} {}".format(self.xlsx2csv, inp, out))
 
     def run_xls2csv(self, inp, out):
         return run_cmd("{} -q 0 -c ' ' -d utf-8 {} > {}".format(self.xls2csv, inp, out))
