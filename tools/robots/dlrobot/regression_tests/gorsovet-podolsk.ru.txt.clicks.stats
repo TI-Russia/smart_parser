@@ -1,5 +1,5 @@
 {
-    "files_count": 9,
+    "files_count": 10,
     "files_sorted (short report)": [
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_493/dlrobot_data -1",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_494/dlrobot_data -1",
@@ -9,9 +9,23 @@
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_714/dlrobot_data -1",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_834/dlrobot_data -1",
         "cached/www.gorsovet-podolsk.ru/getfile.php_fid_843/dlrobot_data -1",
-        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_934/dlrobot_data -1"
+        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_934/dlrobot_data -1",
+        "cached/www.gorsovet-podolsk.ru/getfile.php_fid_950/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=950",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.gorsovet-podolsk.ru/getfile.php_fid_950/dlrobot_data",
+            "sha256": "0bebdb00d487bc290e35b7680194ad91830dc2f396c8c3a096ec43e2c1209386"
+        },
         {
             "click_path": [
                 {
@@ -144,7 +158,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
+                    "source:url": "https://www.gorsovet-podolsk.ru/base/p13_sectionid/4/p13_fileid/843",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Скачать документ ( doc, 82.5 KB )",
@@ -164,7 +178,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.gorsovet-podolsk.ru/getfile.php?fid=62",
+                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Скачать документ ( pdf, 96.74 KB )",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=62",
                     "step": "declarations"
                 }
             ],
