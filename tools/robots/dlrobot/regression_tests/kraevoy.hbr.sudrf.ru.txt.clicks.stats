@@ -1,5 +1,5 @@
 {
-    "files_count": 13,
+    "files_count": 14,
     "files_sorted (short report)": [
         "cached/files.sudrf.ru/991/anticorruption/doc20160524-032423.xls/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data -1",
@@ -13,7 +13,8 @@
         "cached/files.sudrf.ru/991/anticorruption/doc20180606-025054.xlsx/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20190530-092749.xlsx/dlrobot_data -1",
         "cached/files.sudrf.ru/991/anticorruption/doc20190530-092820.xlsx/dlrobot_data -1",
-        "cached/kraevoy.hbr.sudrf.ru/modules.php_name_norm_akt_id_28/dlrobot_data -1"
+        "cached/files.sudrf.ru/991/anticorruption/doc20200810-045619.xlsx/dlrobot_data -1",
+        "cached/files.sudrf.ru/991/anticorruption/doc20200810-045949.xlsx/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
         {
@@ -25,11 +26,25 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
                     "target:anchor_text": "2015",
                     "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=91",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018",
@@ -63,7 +78,28 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015",
@@ -97,7 +133,28 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014",
@@ -131,7 +188,28 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015",
@@ -165,7 +243,28 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014",
@@ -202,11 +301,25 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
                     "target:anchor_text": "2015",
                     "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=91",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018",
@@ -240,27 +353,28 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=norm_akt&id=28",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/kraevoy.hbr.sudrf.ru/modules.php_name_norm_akt_id_28/dlrobot_data",
-            "sha256": "6a769c150641803404a1989da7596e0e6499453b515152b5ece0062fe65e684e"
-        },
-        {
-            "click_path": [
-                {
-                    "search_query": "\"сведения о доходах\""
-                },
-                {
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2015",
+                    "target:anchor_text": "2019",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=19",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016",
@@ -297,11 +411,80 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2015",
+                    "target:anchor_text": "2016",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2019",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=19",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=145",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Скачать документ",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://files.sudrf.ru/991/anticorruption/doc20200810-045619.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20200810-045619.xlsx/dlrobot_data",
+            "sha256": "7d9417c16f8660836e189a6237fb678adaee66701c823e32878808e17a72563e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017",
@@ -338,11 +521,25 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2015",
+                    "target:anchor_text": "2016",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017",
@@ -379,6 +576,27 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
                     "source:step": "declarations",
                     "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
+                    "source:step": "declarations",
+                    "source:title": "",
                     "target:anchor_text": "2014",
                     "target:engine": "selenium"
                 },
@@ -410,7 +628,28 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=4",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015",
@@ -447,11 +686,32 @@
                     "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "2015",
+                    "target:anchor_text": "2017",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=10",
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=15",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=117",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016",
@@ -478,6 +738,68 @@
             ],
             "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20170627-045935.xls/dlrobot_data",
             "sha256": "c71d05b6ea91ac78dc8818cb6049b0921d1ba3421d83916bcb12a8e3594bb864"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=55",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2016",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=11",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=104",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2018",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=16",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=126",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2019",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&rid=19",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://kraevoy.hbr.sudrf.ru/modules.php?name=anticorruption&id=144",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Скачать документ",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://files.sudrf.ru/991/anticorruption/doc20200810-045949.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/files.sudrf.ru/991/anticorruption/doc20200810-045949.xlsx/dlrobot_data",
+            "sha256": "faaf1b9a9b4bd3e65f7f04e8e458e87a195c5b0e122ff4371b8b066907b930de"
         }
     ]
 }
