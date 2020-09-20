@@ -1,5 +1,5 @@
 {
-    "files_count": 40,
+    "files_count": 44,
     "files_sorted (short report)": [
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/admin_income_2013.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2009.doc/dlrobot_data -1",
@@ -11,6 +11,7 @@
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2016.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2017.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2018.doc/dlrobot_data -1",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2019.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincomestart2015.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2013.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2014.doc/dlrobot_data -1",
@@ -18,6 +19,7 @@
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2016.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2017.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2018.doc/dlrobot_data -1",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2019.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2015.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2016.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2013-1.doc/dlrobot_data -1",
@@ -26,6 +28,7 @@
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2016.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2017.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2018.doc/dlrobot_data -1",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2019.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2015.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2016.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2017.doc/dlrobot_data -1",
@@ -39,6 +42,7 @@
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2016.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2017.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2018.doc/dlrobot_data -1",
+        "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2019.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2015.doc/dlrobot_data -1",
         "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2016.doc/dlrobot_data -1"
     ],
@@ -46,25 +50,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2018.doc",
@@ -77,25 +70,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Поступившие на службу в 2015 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincomestart2015.doc",
@@ -108,25 +90,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2014.doc",
@@ -139,25 +110,34 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
+                    "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
+                    "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "target:anchor_text": "2019 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2019.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2019.doc/dlrobot_data",
+            "sha256": "11cbed8d22ce7214acbcddcf453164f92ba97ced04d4ff2bf62858f9914db078"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2018.doc",
@@ -170,25 +150,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2010.doc",
@@ -201,25 +170,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2015.doc",
@@ -232,25 +190,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2016.doc",
@@ -263,25 +210,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2014.doc",
@@ -294,25 +230,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2012.doc",
@@ -325,25 +250,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2013.doc",
@@ -356,25 +270,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2011.doc",
@@ -387,25 +290,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2011 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2011.doc",
@@ -418,25 +310,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2014.doc",
@@ -449,25 +330,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Принятые на работу в 2016 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2016.doc",
@@ -480,25 +350,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2012 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2012.doc",
@@ -511,25 +370,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2015.doc",
@@ -542,25 +390,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2016.doc",
@@ -573,25 +410,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2009.doc",
@@ -604,25 +430,54 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
+                    "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
+                    "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "target:anchor_text": "2019 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2019.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2019.doc/dlrobot_data",
+            "sha256": "769f7fb8970fd28016c35aa0bfc0c0e277889ecf3b3f8b19172cc9887e534e6b"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2019 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2019.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2019.doc/dlrobot_data",
+            "sha256": "7fbb44af50e18ef13e17121ec4ff83ff8ee404838f4be730d8fac078b8fff698"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Поступившие на службу в 2016 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2016.doc",
@@ -635,25 +490,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2017.doc",
@@ -666,25 +510,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2017.doc",
@@ -697,25 +530,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Поступившие на службу в 2015 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2015.doc",
@@ -728,25 +550,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2015.doc",
@@ -759,25 +570,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Принятые на работу в 2015 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincomestart2015.doc",
@@ -790,25 +590,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2009 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincome2009.doc",
@@ -821,25 +610,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2015 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2015.doc",
@@ -852,25 +630,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Поступившие на службу в 2016 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2016.doc",
@@ -883,25 +650,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2017.doc",
@@ -914,25 +670,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/admin_income_2013.doc",
@@ -945,25 +690,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Поступившие на службу в 2017 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_start2017.doc",
@@ -976,25 +710,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2013.doc",
@@ -1007,25 +730,34 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
+                    "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
+                    "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "target:anchor_text": "2019 год",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2019.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.fsvps.ru/fsvps-docs/ru/corruption/income/fgbuincome2019.doc/dlrobot_data",
+            "sha256": "bb445c0e409700236dce53ce182778794dd39bdb92f3a5170008d5ba36774a80"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2018.doc",
@@ -1038,25 +770,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2016.doc",
@@ -1069,25 +790,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2014 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2014.doc",
@@ -1100,25 +810,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2016 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2016.doc",
@@ -1131,25 +830,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2018 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2018.doc",
@@ -1162,25 +850,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Поступившие на службу в 2015 году",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/topincomestart2015.doc",
@@ -1193,25 +870,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2013 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2013-1.doc",
@@ -1224,25 +890,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2017 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/terorgs_income_2017.doc",
@@ -1255,25 +910,14 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://www.fsvps.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://www.fsvps.ru/fsvps/corruption",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps/corruption/income.html",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "2010 год",
-                    "target:engine": "selenium"
+                    "target:engine": "urllib"
                 },
                 {
                     "source:url": "http://www.fsvps.ru/fsvps-docs/ru/corruption/income/adminincome2010.doc",
