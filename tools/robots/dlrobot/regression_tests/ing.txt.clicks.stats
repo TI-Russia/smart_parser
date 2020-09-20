@@ -1,5 +1,5 @@
 {
-    "files_count": 18,
+    "files_count": 19,
     "files_sorted (short report)": [
         "cached/voronovskoe.ru/sites/default/files/2012/09/_2011_doc_12366.doc/dlrobot_data -1",
         "cached/voronovskoe.ru/sites/default/files/2013/05/_2012_doc_15651.doc/dlrobot_data -1",
@@ -18,7 +18,8 @@
         "cached/voronovskoe.ru/sites/default/files/2019/05/__18045.doc/dlrobot_data -1",
         "cached/voronovskoe.ru/sites/default/files/2019/05/__20632.doc/dlrobot_data -1",
         "cached/voronovskoe.ru/sites/default/files/2020/04/__14611.doc/dlrobot_data -1",
-        "cached/voronovskoe.ru/sites/default/files/2020/04/__15732.doc/dlrobot_data -1"
+        "cached/voronovskoe.ru/sites/default/files/2020/04/__15732.doc/dlrobot_data -1",
+        "cached/voronovskoe.ru/sites/default/files/2020/04/__55934.doc/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
         {
@@ -207,18 +208,7 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://voronovskoe.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "3",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/taxonomy/term/42?page=2",
@@ -403,18 +393,7 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://voronovskoe.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2018 год",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/node/12437",
@@ -434,18 +413,7 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://voronovskoe.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2018 год",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/node/12437",
@@ -482,16 +450,16 @@
                     "source:url": "http://voronovskoe.ru/node/15882",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "О доходах, расходах, об имуществе и обязательствах имущественного характера за 2019г. руководителя муниципального бюджетного учреждения п.Вороновское.doc",
+                    "target:anchor_text": "О доходах, расходах, об имуществе и обязательствах имущественного характера, а так же супруги (супруга) и несовершеннолетних детей за 2019 год муниципальных служащих администрации п.Вороновское",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://voronovskoe.ru/sites/default/files/2020/04/__15732.doc",
+                    "source:url": "http://voronovskoe.ru/sites/default/files/2020/04/__55934.doc",
                     "step": "declarations"
                 }
             ],
-            "cached_file": "cached/voronovskoe.ru/sites/default/files/2020/04/__15732.doc/dlrobot_data",
-            "sha256": "b33ef4ccbbfc3801a70d3f21ec04f6b33aacbaa82c7512ed083d0eb2ae223520"
+            "cached_file": "cached/voronovskoe.ru/sites/default/files/2020/04/__55934.doc/dlrobot_data",
+            "sha256": "acbb9da96b63b921532d9e4661234a56bdc23f09b0bba570ffd612d15323bd25"
         },
         {
             "click_path": [
@@ -506,8 +474,28 @@
                     "source:url": "http://voronovskoe.ru/taxonomy/term/42",
                     "source:step": "anticorruption_div",
                     "source:title": "",
-                    "target:anchor_text": "3",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2019 год",
                     "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://voronovskoe.ru/node/15882",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "О доходах, расходах, об имуществе и обязательствах имущественного характера за 2019г. руководителя муниципального бюджетного учреждения п.Вороновское.doc",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://voronovskoe.ru/sites/default/files/2020/04/__15732.doc",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/voronovskoe.ru/sites/default/files/2020/04/__15732.doc/dlrobot_data",
+            "sha256": "b33ef4ccbbfc3801a70d3f21ec04f6b33aacbaa82c7512ed083d0eb2ae223520"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/taxonomy/term/42?page=2",
@@ -534,18 +522,7 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://voronovskoe.ru",
-                    "source:step": null,
-                    "source:title": "",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
-                    "source:step": "anticorruption_div",
-                    "source:title": "",
-                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за 2018 год",
-                    "target:engine": "selenium"
+                    "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "http://voronovskoe.ru/node/12437",
