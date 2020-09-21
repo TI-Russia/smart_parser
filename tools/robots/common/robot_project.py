@@ -5,7 +5,7 @@ import tempfile
 import time
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
-from robots.common.serp_parser import SearchEngine
+from robots.common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from robots.common.web_site import TRobotWebSite, TRobotStep
 from robots.common.http_request import RobotHttpException
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
@@ -140,17 +140,17 @@ class TRobotProject:
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         serp_urls = list()
-        for retry in range(3):
+        for search_engine in range (0, SearchEngineEnum.SearchEngineCount):
             try:
-                serp_urls = SearchEngine.site_search(site, request, self.selenium_driver)
+                serp_urls = SearchEngine.site_search(search_engine, site, request, self.selenium_driver)
                 break
-            except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
+            except (SerpException, RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
                 self.logger.error('cannot request search engine, exception {}'.format(err))
-                if retry == 2:
-                    return
-                else:
-                    time.sleep(5)
-                    self.logger.error('retry...')
+                self.logger.debug("sleep 10 seconds and retry other search engine")
+                time.sleep(10)
+                self.selenium_holder.restart()
+                time.sleep(5)
+                self.logger.error('retry...')
 
         links_count = 0
         for url in serp_urls:

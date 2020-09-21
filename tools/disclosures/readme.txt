@@ -108,8 +108,9 @@ export HOSTS=migalka,oldtimer,ventil,lena
 #11 mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 #12 удаление ненужных файлов
-    cd $DLROBOT_FOLDER
-    rm -rf $DISCLOSURES_FILES
+    #cd $DLROBOT_FOLDER
+    #rm -rf $DISCLOSURES_FILES
+    этого делать нельзя, поскольку web-сайт ссылается на эту директорию
 
 #13 go to prod
     mysqladmin drop  disclosures_db
