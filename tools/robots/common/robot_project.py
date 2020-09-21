@@ -140,15 +140,15 @@ class TRobotProject:
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         serp_urls = list()
-        for search_engine in range (0, SearchEngineEnum.SearchEngineCount):
+        for search_engine in range(0, SearchEngineEnum.SearchEngineCount):
             try:
                 serp_urls = SearchEngine.site_search(search_engine, site, request, self.selenium_driver)
                 break
             except (SerpException, RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
-                self.logger.error('cannot request search engine, exception {}'.format(err))
+                self.logger.error('cannot request search engine, exception: {}'.format(err))
                 self.logger.debug("sleep 10 seconds and retry other search engine")
                 time.sleep(10)
-                self.selenium_holder.restart()
+                self.selenium_driver.restart()
                 time.sleep(5)
                 self.logger.error('retry...')
 
