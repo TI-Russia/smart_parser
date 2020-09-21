@@ -1,0 +1,3 @@
+class DLROBOT_HTTP_CODE:
+    NO_MORE_JOBS = 530
+    TOO_BUSY = 531
