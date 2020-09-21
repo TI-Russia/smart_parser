@@ -176,6 +176,9 @@ namespace Smart.Parser.Adapters
             doc.RemoveMacros();
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
             Thread.CurrentThread.CurrentCulture = saveCulture;
+            doc = null;
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
             return docXPath;
 
         }
