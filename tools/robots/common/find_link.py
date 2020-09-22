@@ -99,6 +99,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     element_index = 0
     links_to_process = list(soup.findAll('a'))
     logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
+    page_title = soup.title.string if soup.title is not None else ""
     for html_link in links_to_process:
         href = html_link.attrs.get('href')
         if href is not None:
@@ -106,7 +107,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
                                   source_html=page_html, anchor_text=html_link.text, tag_name=html_link.name,
                                   element_index=element_index, element_class=html_link.attrs.get('class'),
-                                  source_page_title=soup.title.string)
+                                  source_page_title=page_title)
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 
@@ -116,7 +117,7 @@ def find_links_in_html_by_text(step_info, main_url, soup):
             element_index += 1
             link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
                                   source_html=page_html, anchor_text=frame.text, tag_name=frame.name,
-                                  element_index=element_index, source_page_title=soup.title.string)
+                                  element_index=element_index, source_page_title=page_title)
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 
@@ -167,7 +168,6 @@ def click_all_selenium(step_info, main_url, driver_holder):
                 TClickEngine.selenium, main_url, None,
                 source_html=page_html, anchor_text=link_text,
                 source_page_title=driver_holder.the_driver.title)
-            link_info.source_page_title = driver_holder.the_driver.title
             if step_info.normalize_and_check_link(only_anchor_text):
                 logger.debug("click element {}".format(element_index))
                 try:
