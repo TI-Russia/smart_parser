@@ -101,22 +101,30 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
     good_doc_type_anchor = re.search('(сведения)|(справк[аи])', anchor_text) is not None
     year_found_anchor = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
     income_page = re.search(income_regexp, page_html) is not None
+    source_page_title_has_income_word = re.search(income_regexp, link_info.source_page_title) is not None
     income_anchor = re.search(income_regexp, anchor_text) is not None
     role_anchor = is_public_servant_role(anchor_text)
     document_link = None
     sub_page = check_sub_page_or_iframe(link_info)
-    income_path = False
+    target_url_has_income_word = False
     good_doc_type_path = False
     if link_info.target_url is not None:
         target = link_info.target_url.lower()
         if re.search('(^sved)|(sveodoh)', target):
             good_doc_type_path = True
-        if re.search('(do[ck]?[hx]od)|(income)', target):
-            income_path = True
+        income_pattern = '(do[ck]?[hx]od)|(income)'
+        if re.search(income_pattern, target):
+            target_url_has_income_word = True
+        if link_info.element_class is not None:
+            if isinstance(link_info.element_class, list):
+                for css_class_name in link_info.element_class:
+                    if re.search(income_pattern, css_class_name):
+                        target_url_has_income_word = True
+
     positive_case = None
 
     if positive_case is None:
-        if income_page or income_path:
+        if income_page or target_url_has_income_word:
             if good_doc_type_anchor or year_found_anchor or sub_page:
                 positive_case = "case 1"
             else:
@@ -138,14 +146,18 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
                     positive_case = "case 2"
 
     if positive_case is None:
-        if (income_page or income_path) and role_anchor:
+        if (income_page or target_url_has_income_word) and role_anchor:
             positive_case = "case 3"
+
+    if positive_case is None:
+        if source_page_title_has_income_word and target_url_has_income_word:
+            positive_case = "case 4"
 
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         if income_anchor:
             weight += TLinkInfo.BEST_LINK_WEIGHT
-        if income_path:
+        if target_url_has_income_word:
             weight += TLinkInfo.BEST_LINK_WEIGHT
         if good_doc_type_anchor:
             weight += TLinkInfo.NORMAL_LINK_WEIGHT
@@ -154,7 +166,7 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
         if year_found_anchor:
             weight += TLinkInfo.TRASH_LINK_WEIGHT  # better than sub_page
 
-        all_features = (("income_page", income_page), ("income_path", income_path), ('income_anchor', income_anchor),
+        all_features = (("income_page", income_page), ("target_url_has_income_word", target_url_has_income_word), ('income_anchor', income_anchor),
                         ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
                         ("document_link", document_link),
                         ("sub_page", sub_page),

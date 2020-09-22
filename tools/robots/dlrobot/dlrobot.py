@@ -162,7 +162,7 @@ if __name__ == "__main__":
     try:
         TDownloadEnv.init_conversion()
         if args.cache_folder_tmp:
-            with tempfile.TemporaryDirectory(dir=".") as TDownloadEnv.FILE_CACHE_FOLDER:
+            with tempfile.TemporaryDirectory(prefix="cached.", dir=".") as TDownloadEnv.FILE_CACHE_FOLDER:
                 open_project(args)
         else:
             open_project(args)
