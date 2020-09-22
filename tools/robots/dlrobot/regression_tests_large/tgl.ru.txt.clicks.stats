@@ -1,9 +1,7 @@
 {
-    "files_count": 23,
+    "files_count": 21,
     "files_sorted (short report)": [
-        "cached/tgl.ru/files/files/metodicheskie-rekomendacii-po-predostavleniyu-svedeniy-za-2018_file_1551246238.do_d110be3cf04af3d4413c8cb64438f851/dlrobot_data -1",
-        "cached/tgl.ru/files/files/metodicheskie-rekomendacii-po-voprosam-zapolneniya-svedeniy-za-2019-god_file_1584_30627a018c04fa352126747c2313cd1b/dlrobot_data -1",
-        "cached/tgl.ru/files/files/metodicheskie-rekomendacii-po-zapolneniyu-svedeniy-o-dohodah-v-2018-godu-vsem_fil_675e97a9574cf6d185179a9b18de5839/dlrobot_data -1",
+        "cached/tgl.ru/files/files/metodichka-po-svedeniyam-2-krasivaya_file_1545738048.pdf/dlrobot_data -1",
         "cached/tgl.ru/files/incomedoc/dychenkova_1504201_income_1366268178.doc/dlrobot_data -1",
         "cached/tgl.ru/files/incomedoc/fetisovva_17042013_income_1366269536.doc/dlrobot_data -1",
         "cached/tgl.ru/files/incomedoc/gorkovenkonv_14042014_income_1399615158.doc/dlrobot_data -1",
@@ -34,7 +32,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -54,7 +52,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -74,7 +72,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -94,7 +92,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -114,7 +112,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },
@@ -134,7 +132,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },
@@ -154,7 +152,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2013 год",
                     "target:engine": "selenium"
                 },
@@ -172,9 +170,29 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://tgl.ru/structure/department/protivodeystvie-korrupcii-metodicheskie-materialy/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "скачать",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://tgl.ru/files/files/metodichka-po-svedeniyam-2-krasivaya_file_1545738048.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/tgl.ru/files/files/metodichka-po-svedeniyam-2-krasivaya_file_1545738048.pdf/dlrobot_data",
+            "sha256": "7264c404d61f6d61cf883e787cd1c6bbaccfec057398b5f1730af665e7af02ce"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -194,7 +212,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },
@@ -214,7 +232,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },
@@ -234,7 +252,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -254,7 +272,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -274,7 +292,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2013 год",
                     "target:engine": "selenium"
                 },
@@ -289,43 +307,12 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://tgl.ru",
-                    "source:step": null,
-                    "source:title": "Администрация городского округа Тольятти",
-                    "target:anchor_text": "Карта сайта",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/sitemap/",
-                    "source:step": "sitemap",
-                    "source:title": "Карта сайта / Администрация городского округа Тольятти",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/structure/department/vedomstvennyy-kontrol-protivodeystvie-korrupcii",
-                    "source:step": "anticorruption_div",
-                    "source:title": "Противодействие коррупции / Ведомственный контроль / Структура администрации / Власть / Администрация городского округа Тольятти",
-                    "target:anchor_text": "скачать",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/files/files/metodicheskie-rekomendacii-po-voprosam-zapolneniya-svedeniy-za-2019-god_file_1584334970.docx",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/tgl.ru/files/files/metodicheskie-rekomendacii-po-voprosam-zapolneniya-svedeniy-za-2019-god_file_1584_30627a018c04fa352126747c2313cd1b/dlrobot_data",
-            "sha256": "942f86d831d44dbb3efc0c6864707ccaa54d133c05042aca72828bdcfdaafafc"
-        },
-        {
-            "click_path": [
-                {
                     "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },
@@ -340,43 +327,12 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://tgl.ru",
-                    "source:step": null,
-                    "source:title": "Администрация городского округа Тольятти",
-                    "target:anchor_text": "Карта сайта",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/sitemap/",
-                    "source:step": "sitemap",
-                    "source:title": "Карта сайта / Администрация городского округа Тольятти",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/structure/department/vedomstvennyy-kontrol-protivodeystvie-korrupcii",
-                    "source:step": "anticorruption_div",
-                    "source:title": "Противодействие коррупции / Ведомственный контроль / Структура администрации / Власть / Администрация городского округа Тольятти",
-                    "target:anchor_text": "скачать",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/files/files/metodicheskie-rekomendacii-po-predostavleniyu-svedeniy-za-2018_file_1551246238.docx",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/tgl.ru/files/files/metodicheskie-rekomendacii-po-predostavleniyu-svedeniy-za-2018_file_1551246238.do_d110be3cf04af3d4413c8cb64438f851/dlrobot_data",
-            "sha256": "9fae9e385e6022b237c4a35c2ada6229211de487187b33468b4e24c157cbf21e"
-        },
-        {
-            "click_path": [
-                {
                     "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -396,7 +352,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -416,7 +372,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -436,7 +392,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },
@@ -456,7 +412,7 @@
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah/",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2012 год",
                     "target:engine": "selenium"
                 },
@@ -471,43 +427,12 @@
         {
             "click_path": [
                 {
-                    "source:url": "http://tgl.ru",
-                    "source:step": null,
-                    "source:title": "Администрация городского округа Тольятти",
-                    "target:anchor_text": "Карта сайта",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/sitemap/",
-                    "source:step": "sitemap",
-                    "source:title": "Карта сайта / Администрация городского округа Тольятти",
-                    "target:anchor_text": "Противодействие коррупции",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/structure/department/vedomstvennyy-kontrol-protivodeystvie-korrupcii",
-                    "source:step": "anticorruption_div",
-                    "source:title": "Противодействие коррупции / Ведомственный контроль / Структура администрации / Власть / Администрация городского округа Тольятти",
-                    "target:anchor_text": "скачать",
-                    "target:engine": "selenium"
-                },
-                {
-                    "source:url": "https://tgl.ru/files/files/metodicheskie-rekomendacii-po-zapolneniyu-svedeniy-o-dohodah-v-2018-godu-vsem_file_1515475269-1_file_1515654135.docx",
-                    "step": "declarations"
-                }
-            ],
-            "cached_file": "cached/tgl.ru/files/files/metodicheskie-rekomendacii-po-zapolneniyu-svedeniy-o-dohodah-v-2018-godu-vsem_fil_675e97a9574cf6d185179a9b18de5839/dlrobot_data",
-            "sha256": "e22de0b811b20207f5c90eed9675bbc6816264ab3e01429e83ff6fb0d9bcfdec"
-        },
-        {
-            "click_path": [
-                {
                     "search_query": "\"сведения о доходах\""
                 },
                 {
                     "source:url": "https://tgl.ru/municipal-service/svedeniya-o-dohodah-municipalnyh-sluzhashih",
                     "source:step": "declarations",
-                    "source:title": "Сведения о доходах, расходах, об имуществе и обязательствам имущественного характера, предоставляемые муниципальными служащими / Сведения о доходах, об имуществе и обязательствам имущественного характера руководителей муниципальных учерждений / Муниципальная служба / Власть / Администрация городского округа Тольятти",
+                    "source:title": "",
                     "target:anchor_text": "Справка за 2015 год",
                     "target:engine": "selenium"
                 },

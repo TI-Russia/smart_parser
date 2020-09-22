@@ -23,7 +23,8 @@ query_cache_size        = 128M
 
 1.1  For Yandex.Cloud, increase swap file
    sudo swapoff -a
-   sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
+   sudo dd if=/dev/zero of=/swapfile bs=2M count=1024
+   sudo mkswap /swapfile
    sudo swapon /swapfile
 
 2. sudo apt update
