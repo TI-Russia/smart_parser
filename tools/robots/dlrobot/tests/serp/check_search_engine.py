@@ -11,6 +11,8 @@ def parse_args():
     parser.add_argument("--search-engine-id", dest='search_engine_id',
                         default=0, required=False, type=int)
     parser.add_argument("--headless", dest='headless', default=True, required=False)
+    parser.add_argument("--site", dest='site',  required=False)
+    parser.add_argument("--query", dest='query', required=False)
     return parser.parse_args()
 
 
@@ -26,8 +28,14 @@ if __name__ == "__main__":
     sites = ["ru.wikipedia.org", "microsoft.com", "ru.stackoverflow.com", "news.ru"]
     queries = ["mother", "father", "virus", "windows"]
     random.seed()
-    site = random.choice(sites)
-    query = random.choice(queries)
+    if args.site is None:
+        site = random.choice(sites)
+    else:
+        site = args.site
+    if args.query is None:
+        query = random.choice(queries)
+    else:
+        query = args.query
     print ("site:{} {} ".format(site, query))
     assert args.search_engine_id < SearchEngineEnum.SearchEngineCount
     urls = SearchEngine().site_search(args.search_engine_id,

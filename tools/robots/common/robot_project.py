@@ -132,7 +132,6 @@ class TRobotProject:
             }
             json.dump(report, outf, ensure_ascii=False, indent=4)
 
-
     def use_search_engine(self, step_info):
         request = step_info.step_passport['search_engine']['request']
         max_results = step_info.step_passport['search_engine'].get('max_serp_results', 10)
@@ -160,7 +159,7 @@ class TRobotProject:
             links_count += 1
             if max_results == 1:
                 break  # one  link found
-        self.logger.info('found {} links using search engine'.format(links_count))
+        self.logger.info('found {} links using search engine id={}'.format(links_count, search_engine))
 
     def need_search_engine_before(self, step_info: TRobotStep):
         if not self.enable_search_engine:

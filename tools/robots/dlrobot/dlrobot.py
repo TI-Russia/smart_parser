@@ -10,6 +10,7 @@ from robots.common.web_site import TRobotWebSite
 from robots.common.primitives import  check_link_sitemap, check_anticorr_link_text
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
 import platform
+import tempfile
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_logger")
@@ -82,6 +83,8 @@ def parse_args():
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
+    parser.add_argument("--cache-folder-tmp", dest='cache_folder_tmp', default=False, action="store_true",
+                            help="create cache folder as a tmp folder and delete it upon exit")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
     parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
@@ -140,7 +143,7 @@ def make_steps(args, project):
 def open_project(args):
     logger = setup_logging(args.logfile)
     logger.debug("hostname={}".format(platform.node()))
-
+    logger.debug("use {} as a cache folder".format(TDownloadEnv.FILE_CACHE_FOLDER))
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
         if args.only_click_stats:
@@ -158,7 +161,11 @@ if __name__ == "__main__":
         TDownloadEnv.clear_cache_folder()
     try:
         TDownloadEnv.init_conversion()
-        open_project(args)
+        if args.cache_folder_tmp:
+            with tempfile.TemporaryDirectory(dir=".") as TDownloadEnv.FILE_CACHE_FOLDER:
+                open_project(args)
+        else:
+            open_project(args)
     except Exception as e:
         print("unhandled exception type={}, exception={} ".format(type(e), e))
         traceback.print_exc(file=sys.stdout)

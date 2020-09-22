@@ -162,7 +162,13 @@ class SearchEngine:
 
         search_results = SearchEngine._parse_serp(selenium_holder)
         if len(search_results) == 0:
-            raise SerpException("no search results")
+            html = selenium_holder.the_driver.page_source
+            if html.find("ничего не нашлось") == -1 or html.find("ничего не найдено") == -1 \
+                or html.find('did not match any documents') == -1:
+                with open("debug_captcha.html", "w") as outp:
+                    outp.write(selenium_holder.the_driver.page_source)
+                raise SerpException("no search results, look in debug_captcha.html, may be captcha")
+
         site_search_results = list()
         for url in search_results:
             curr_site = get_site_domain_wo_www(url)
