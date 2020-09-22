@@ -1,5 +1,5 @@
 import http.server
-import sys
+import urllib
 import os
 import threading
 from robots.common.download import TDownloadEnv
@@ -73,7 +73,6 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--web-addr", dest='web_addr', required=True)
     parser.add_argument("--start-page", dest='start_page', required=True)
-    parser.add_argument("--found-links-count", dest='found_links_count', type=int)
     return parser.parse_args()
 
 
@@ -91,7 +90,9 @@ def open_project(args):
         step_info.processed_pages = set()
         step_info.make_one_step()
         for url in step_info.step_urls:
-            print (urlurllib.parse.urlparse(url).path)
+            u = list(urllib.parse.urlparse(url))
+            u[1] = "dummy"
+            print (urllib.parse.urlunparse(u))
 
 
 if __name__ == '__main__':
