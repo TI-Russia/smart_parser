@@ -91,7 +91,7 @@ def open_project(args):
         step_info.processed_pages = set()
         step_info.make_one_step()
         for url in step_info.step_urls:
-            print (url)
+            print (urlurllib.parse.urlparse(url).path)
 
 
 if __name__ == '__main__':
