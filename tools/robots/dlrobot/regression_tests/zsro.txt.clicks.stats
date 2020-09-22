@@ -3400,13 +3400,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://zsro.ru/about/anti_corruption/declaration/",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Справка о доходах за 2015 год",
-                    "target:engine": "selenium"
-                },
-                {
                     "source:url": "https://zsro.ru/upload/iblock/aac/DorofeevVA_dekr2015.xlsx",
                     "step": "declarations"
                 }

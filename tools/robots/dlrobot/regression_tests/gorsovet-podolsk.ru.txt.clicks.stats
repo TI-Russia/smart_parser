@@ -32,13 +32,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Скачать документ ( doc, 355 KB )",
-                    "target:engine": "urllib"
-                },
-                {
                     "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=493",
                     "step": "declarations"
                 }
@@ -125,13 +118,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Скачать документ ( doc, 109.5 KB )",
-                    "target:engine": "urllib"
-                },
-                {
                     "source:url": "https://www.gorsovet-podolsk.ru/getfile.php?fid=494",
                     "step": "declarations"
                 }
@@ -158,7 +144,7 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.gorsovet-podolsk.ru/base/p13_sectionid/4/p13_fileid/843",
+                    "source:url": "https://www.gorsovet-podolsk.ru/otchety",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Скачать документ ( doc, 82.5 KB )",

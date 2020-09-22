@@ -208,7 +208,18 @@
         {
             "click_path": [
                 {
-                    "search_query": "\"сведения о доходах\""
+                    "source:url": "http://voronovskoe.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://voronovskoe.ru/taxonomy/term/42?page=2",
@@ -495,7 +506,18 @@
         {
             "click_path": [
                 {
-                    "search_query": "\"сведения о доходах\""
+                    "source:url": "http://voronovskoe.ru",
+                    "source:step": null,
+                    "source:title": "",
+                    "target:anchor_text": "Противодействие коррупции",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://voronovskoe.ru/taxonomy/term/42",
+                    "source:step": "anticorruption_div",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
                 },
                 {
                     "source:url": "http://voronovskoe.ru/taxonomy/term/42?page=2",
