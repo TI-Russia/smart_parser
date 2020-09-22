@@ -17,12 +17,13 @@ class TLinkInfo:
     NORMAL_LINK_WEIGHT = 10.0  # these links should be processed in normal case, if weight is less, then we can stop crawling
     BEST_LINK_WEIGHT = 50.0
 
-    def __init__(self, engine, source, target, page_html="", element_index=0, anchor_text="", tag_name=None):
+    def __init__(self, engine, source_url,  target_url, source_html="", element_index=0, anchor_text="",
+                 tag_name=None, source_page_title=None, element_class=None):
         self.engine = engine
         self.element_index = element_index
-        self.page_html = "" if page_html is None else page_html
-        self.source_url = source
-        self.target_url = target
+        self.page_html = "" if source_html is None else source_html
+        self.source_url = source_url
+        self.target_url = target_url
         self.anchor_text = ""
         self.set_anchor_text(anchor_text)
         self.tag_name = tag_name
@@ -31,6 +32,10 @@ class TLinkInfo:
         self.target_title = None
         self.weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
+        self.element_class = element_class
+        self.source_page_title = source_page_title
+        if self.source_page_title is None:
+            self.source_page_title = ""
 
     def set_anchor_text(self, anchor_text):
         self.anchor_text = '' if anchor_text is None else anchor_text.strip(" \r\n\t")

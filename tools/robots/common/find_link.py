@@ -99,21 +99,24 @@ def find_links_in_html_by_text(step_info, main_url, soup):
     element_index = 0
     links_to_process = list(soup.findAll('a'))
     logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
-    for l in links_to_process:
-        href = l.attrs.get('href')
+    for html_link in links_to_process:
+        href = html_link.attrs.get('href')
         if href is not None:
             element_index += 1
             link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
-                                  page_html=page_html, anchor_text=l.text, tag_name=l.name, element_index=element_index)
+                                  source_html=page_html, anchor_text=html_link.text, tag_name=html_link.name,
+                                  element_index=element_index, element_class=html_link.attrs.get('class'),
+                                  source_page_title=soup.title.string)
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 
-    for l in soup.findAll('iframe'):
-        href = l.attrs.get('src')
+    for frame in soup.findAll('iframe'):
+        href = frame.attrs.get('src')
         if href is not None:
             element_index += 1
             link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
-                                  page_html=page_html, anchor_text=l.text, tag_name=l.name, element_index=element_index)
+                                  source_html=page_html, anchor_text=frame.text, tag_name=frame.name,
+                                  element_index=element_index, source_page_title=soup.title.string)
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 
@@ -125,7 +128,8 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     TRequestPolicy.consider_request_policy(step_info.logger, main_url + " elem_index=" + str(element_index), "click_selenium")
 
     link_info = TLinkInfo(TClickEngine.selenium, main_url, None,
-                          page_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index)
+                          source_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index,
+                          source_page_title=driver_holder.the_driver.title)
 
     driver_holder.click_element(element, link_info)
 
@@ -150,12 +154,20 @@ def click_all_selenium(step_info, main_url, driver_holder):
         href = element.get_attribute('href')
         if href is not None:
             href = make_link(main_url, href) # may be we do not need it in selenium?
-            link_info = TLinkInfo(TClickEngine.selenium, main_url, href,
-                                  page_html=page_html, anchor_text=link_text,  tag_name=element.tag_name, element_index=element_index)
+            link_info = TLinkInfo(TClickEngine.selenium,
+                                  main_url,      href,
+                                  source_html=page_html, anchor_text=link_text,
+                                  tag_name=element.tag_name, element_index=element_index,
+                                  source_page_title=driver_holder.the_driver.title)
+
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
         else:
-            only_anchor_text = TLinkInfo(TClickEngine.selenium, main_url, None, page_html=page_html, anchor_text=link_text)
+            only_anchor_text = TLinkInfo(
+                TClickEngine.selenium, main_url, None,
+                source_html=page_html, anchor_text=link_text,
+                source_page_title=driver_holder.the_driver.title)
+            link_info.source_page_title = driver_holder.the_driver.title
             if step_info.normalize_and_check_link(only_anchor_text):
                 logger.debug("click element {}".format(element_index))
                 try:
