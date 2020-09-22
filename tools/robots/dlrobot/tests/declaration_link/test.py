@@ -2,8 +2,7 @@ import http.server
 import sys
 import os
 import threading
-from robots.common.download import get_file_extension_only_by_headers, TDownloadedFile, \
-             DEFAULT_HTML_EXTENSION, TDownloadEnv
+from robots.common.download import TDownloadEnv
 from robots.common.robot_step import TRobotStep, TUrlInfo
 from robots.common.robot_project import TRobotProject
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
@@ -47,6 +46,8 @@ ROBOT_STEPS = [
 
 
 HTTP_SERVER = None
+
+
 def start_server(host, port):
     global HTTP_SERVER
     HTTP_SERVER.serve_forever()
@@ -75,6 +76,7 @@ def parse_args():
     parser.add_argument("--found-links-count", dest='found_links_count', type=int)
     return parser.parse_args()
 
+
 def open_project(args):
     start_url = args.web_addr + THttpServer.INIT_URL_PATH
     with TRobotProject(logger, "project.txt", ROBOT_STEPS, "result", enable_search_engine=False,
@@ -88,9 +90,8 @@ def open_project(args):
         step_info.pages_to_process[start_url] = 0
         step_info.processed_pages = set()
         step_info.make_one_step()
-        print("found {} links".format(len(step_info.step_urls)))
-        if args.found_links_count is not None:
-            assert args.found_links_count == len(step_info.step_urls)
+        for url in step_info.step_urls:
+            print (url)
 
 
 if __name__ == '__main__':
