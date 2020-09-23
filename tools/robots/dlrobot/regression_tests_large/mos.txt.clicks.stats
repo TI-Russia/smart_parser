@@ -1,20 +1,27 @@
 {
-    "files_count": 55,
+    "files_count": 104,
     "files_sorted (short report)": [
         "cached/www.mos.ru/upload/documents/files/1247/dokhody_dlya_smi_2017_depir.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/1386/SAITTABLICANASAITDohodi2019.doc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/2030/Svodza2017obshii949.xlsx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/204/dokhody_dlya_smi_2017_gbu_depir.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/2705/Svedeniyaodohodahza2019gpodvedorganiazcii.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/2963/sprav2019.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/3231/Svodza2017DOgM2.xlsx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/3308/SvedeniyaodohodahGBY2018god.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/3580/Svedeniyaodohodah2018god.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/3828/Svedeniyaodohodah2017apparatypravleniya.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/4440/Svedeniyaodohodahrashodah_sait_-podvedi.pdf/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/4738/Svedeniyaodohodahrashodahobimyshestveiobyazatelstvahimyshestv_2227a0aeb93255837ddf819a62c62db6/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/4751/Svodza2018DOgM.XLSX/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/4991/Svedeniyaodohodahza2019_20082020_2.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/5354/Svodza2018obshii.xlsx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/56/Svedeniyaodohodah2017ggrajdanskieslyjashiena31052018.docx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/5603/Svedeniyaodohodahrashodahobimyshestveiobyazatelstvahimyshestv_6514893c9264bc61ea1e7de0e7cea667/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/5909/Svedeniyaodohodahza2018gpodvedomstvenorganiazcii.docx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/6099/SAITTABLICANASAITDohodi2017.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/6353/Cvedeniyaodohodah_GGS_2017god.doc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/6476/Svedeniyaodohodahrashodah_sait_-GGS.pdf/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/6759.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/7011/svedeniyaodohodahGBY2019god.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/7605/SAITGBYDOHODI2019.docx/dlrobot_data -1",
@@ -25,14 +32,31 @@
         "cached/www.mos.ru/upload/documents/files/7895/Svedeniyaodohodahrashodahobimyshestveiobyazatelstvahimyshestv_012a89dc1addab47b2cdeb21d22a0503/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/793/SAITTABLICANASAITDohodi2018.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/8039/Svedeniyaodohodah2019APPARAT.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/8261/06_05_2013-r2.xlsx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/8272/Svedeniyaodohodah_GBY_2017god.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/8466/Svedeniyaodohodah2018APPARATYPRAVLENIYa.docx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/8587/SvedeniyaodohodahrykovoditeleiGBYpodvedomstvennihDEPRichlenov_02184a08d58821858b48727ab8928c6c/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/9051/Svedeniyaodohodah2017gpodvedomstvenorganiazcii.docx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/9166/SAITGBYDOHODI2017.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/Svedeniyaodohodahrashodah_sait_-GGS_3_.pdf/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/files/Svedeniyaodohodahrashodah_sait_-podvedi.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/files/cvodpo.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/08_05_2015_2.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/08_06_2014_2.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/2013_1443_.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/cao_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/cao_2015_1_.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/directors.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/dogm_2015.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/doh_ggs_2014.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/doh_ggs_2015.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/doh_pod_2014.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/doh_pod_2015.pdf/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/dohodi_dlya_smi_2012_2_3_.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/dohodi_gbk_za_2012_god_2.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_1_.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_gbu_depir.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/dohody_podvedy_2017.pdf/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2014_depir.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2014_gbu_depir.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2015_depir.xls/dlrobot_data -1",
@@ -41,7 +65,15 @@
         "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2016_gbu_depir.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/dokhody_gbu_ritual_i_moskovskie_yarmarki_za_2016.docx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/doxod_smi_2011.doc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/ggs2016_1_.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/gorod_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/gorod_uzao_new_2015_2.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/sao_2014.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/sao_2015.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/spravka_o_dokhodakh_za_2016_god.doc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/sv2014_uo.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/svao_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/svao_2015_2.docx/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedenia-o-dohodah-2010.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedenia-o-dohodah-2011.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedenia-o-dohodah-2012-ruk-fhu.doc/dlrobot_data -1",
@@ -50,14 +82,106 @@
         "cached/www.mos.ru/upload/documents/oiv/svedenia-o-dohodah-2013_1_.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya-o-dokhodakh-2014-god-udmipm.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya-o-dokhodakh-gbu_fkhu_merii_moskvy-2014-god-.doc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/svedeniya_2011.pdf/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_2016_.xls/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gbu_2016.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gos_2016.doc/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_gosudarstvennykh_grazhdanskikh_sluzhashchikh_d_1f73854d1b57dbf9f13497ea0aa9d785/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_rukovoditeley_gbu_goroda_moskvy_za_period_s_1__daaf536d4e6425044ac524e8da69d7cc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_sluzhashchikh_sistemy_departamenta_obrazovaniy_085a4dd750be341d320c3c9ab8e3b907/dlrobot_data -1",
         "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_za_2015_god.doc/dlrobot_data -1",
-        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_za_2015_god_1_.doc/dlrobot_data -1"
+        "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_za_2015_god_1_.doc/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/szao_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/szao_2015_1_.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/tinao_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/tinao_2015_1_.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/uao_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/uvao_2015.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/uvao_2015_1_.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/uzao_2015.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/vao_2015_3_.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/vao_2015n.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/zao_2015_1_.xls/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/zao_2015_3_.xlsx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/zelao_2014.docx/dlrobot_data -1",
+        "cached/www.mos.ru/upload/documents/oiv/zelao_2015.xls/dlrobot_data -1"
     ],
     "files_with_click_path (full report)": [
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166424220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 110.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/uao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/uao_2015.xls/dlrobot_data",
+            "sha256": "00d9cdb1428556b2a853343b10cad3904da70353c6ff754db6df0b3ef7875648"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента образования и науки города Москвы и членов их семей за период с 1 января 2019 г. по 31 декабря 2019 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242358220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 43.7Kb ]Скачать файл",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/2963/sprav2019.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/2963/sprav2019.xlsx/dlrobot_data",
+            "sha256": "01834890d3705be9bf0ca9b0015d3fbd82ee80045c2c0f2d247ba48975c40664"
+        },
         {
             "click_path": [
                 {
@@ -91,6 +215,88 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/oiv/svedenia-o-dohodah-2012-ruk-fhu.doc/dlrobot_data",
             "sha256": "020c6e87b54f3544918c408ebef0b23c84c39f6948d1db6bc1872c205baaf75c"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166438220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 56.9Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/08_05_2015_2.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/08_05_2015_2.xlsx/dlrobot_data",
+            "sha256": "022087f1decf8c4b3e583296a30601e1a913720bafc87af3ec434707fd9a2d53"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СВАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166433220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ docx/ 67.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СВАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/svao_2015_2.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/svao_2015_2.docx/dlrobot_data",
+            "sha256": "03ccdfe3854afd4a9cb54a394fe2bc37091e62f83835ee8cf7e37588639dcf45"
         },
         {
             "click_path": [
@@ -138,6 +344,163 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/7715/Svod2019.xlsx/dlrobot_data",
             "sha256": "0756b519dd573a5bc3fc730442e9d23d6d2d700a728add2dc5c5a0553701312e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ВАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166413220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 119.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ВАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/vao_2015n.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/vao_2015n.xls/dlrobot_data",
+            "sha256": "07fdda130de8244150bd465978feaf6fa648d9beeb02da86113d6399607b32df"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮЗАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166432220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ docx/ 62.7Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮЗАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/uzao_2015.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/uzao_2015.docx/dlrobot_data",
+            "sha256": "09bc875a67878f45dd3af5828456539a5e0b98d5cdd5fc3af0043381aae573fd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166435220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 598.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/sv2014_uo.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/sv2014_uo.xls/dlrobot_data",
+            "sha256": "0a2e1d9996bdc80de7e0a0800dd98f577cdc1e3a75fdb34c7df3e6606b3b346d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений городского подчинения и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166437220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 252.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений городского подчинения и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/gorod_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/gorod_2015.xls/dlrobot_data",
+            "sha256": "0b46447e94e3cee6c0506a5473a0718c1d0f3b34d8d196d16db2beefbb53215a"
         },
         {
             "click_path": [
@@ -219,6 +582,40 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента градостроительной политики города Москвы и членов их семьи за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/225785220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 392.1Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента градостроительной политики города Москвы и членов их семьи за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/6476/Svedeniyaodohodahrashodah(sait)-GGS.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/6476/Svedeniyaodohodahrashodah_sait_-GGS.pdf/dlrobot_data",
+            "sha256": "0f14564dc35892e033d4877db42b83673eb0cb427a4847a1fe78b36199b68ef5"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -246,6 +643,149 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений, подведомственных Департаменту экономической политики и развития города, и членов их семей за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/164456220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 57.0Kb ]dohody_dla_cmi_2013_gbu_depir.xls",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_gbu_depir.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_gbu_depir.xls/dlrobot_data",
+            "sha256": "135311fb582dbd626960dabfd44c619c3b632aa4ddb5c779b7ea497cc8aaaf5d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗелАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166418220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 50.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗелАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/zelao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/zelao_2015.xls/dlrobot_data",
+            "sha256": "16417343161947cb43b4a9cc54e476eb0c78902942091eda5374cce9a198e367"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера руководителей учреждений городского подчинения и членов их семей за период с 1 января по 31 декабря 2012 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166442220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 649.5Kb ]Сведения о доходах, об имуществе и обязательствах имущественного характера руководителей учреждений городского подчинения и членов их семей за период с 1 января по 31 декабря 2012 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/directors.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/directors.pdf/dlrobot_data",
+            "sha256": "17149345f3f226a2a3e06f9c2549381a2f9c688c4fe08242aa322a23c3876556"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений города Москвы, подведомственных Департаменту градостроительной политики города Москвы, и членов их семьи за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/225786220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 271.1Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений города Москвы, подведомственных Департаменту градостроительной политики города Москвы, и членов их семьи за период с 1 января по 31 декабря 2018 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/4440/Svedeniyaodohodahrashodah(sait)-podvedi.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/4440/Svedeniyaodohodahrashodah_sait_-podvedi.pdf/dlrobot_data",
+            "sha256": "18a8f14d1e6c9405ccb4ba970121dc99980de9d066b8df44922d3c44992d60d6"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dgi/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -266,6 +806,81 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/8466/Svedeniyaodohodah2018APPARATYPRAVLENIYa.docx/dlrobot_data",
             "sha256": "1a9a1e9d3c29ca4c8af61e7d71a79db7e30974400740fb7c07fa29852a09e378"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента градостроительной политики города Москвы и членов их семьи за период с 1 января по 31 декабря 2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/69951220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 255.9Kb ]Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/ggs2016(1).pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/ggs2016_1_.pdf/dlrobot_data",
+            "sha256": "1bda9f40fee418a3b5f871f5c81a65d2c931c1f492223dccf46253457f2ffbfd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СЗАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166428220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 23.2Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СЗАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/szao_2015(1).xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/szao_2015_1_.xlsx/dlrobot_data",
+            "sha256": "1f09dd190e85bdeb8d25ba0e40be88e549c005d145301a8995b9f7464e80b914"
         },
         {
             "click_path": [
@@ -327,6 +942,47 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ВАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166426220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 51.7Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ВАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/vao_2015(3).xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/vao_2015_3_.xlsx/dlrobot_data",
+            "sha256": "244cf94d7419a6bcfa23b9d6d3d8aecd5036ace53c693604925dcb2ceb690ec0"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -347,6 +1003,40 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/oiv/dohodi_gbk_za_2012_god_2.docx/dlrobot_data",
             "sha256": "2698f2cd4a2553914aabf052e468c876912fb0b996f1a49af4b0b8ef638a38ae"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений города Москвы и членов их семей за период с 1 января 2017 г. по 31 декабря 2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/215031220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 412.7Kb ]Скачать файл",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/2030/Svodza2017obshii949.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/2030/Svodza2017obshii949.xlsx/dlrobot_data",
+            "sha256": "31b7c2a09340d90654fe09f8bca64553439d8856019249d6395cae77e19e7b0a"
         },
         {
             "click_path": [
@@ -388,6 +1078,40 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений города Москвы, подведомственных Департаменту градостроительной политики города Москвы, и членов их семьи за период с 1 января по 31 декабря 2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/219750220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/cvodpo.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/cvodpo.pdf/dlrobot_data",
+            "sha256": "37a4caef50d25748f7770ffec4a7253eb2372f1208271f4d77e61fee78b86c4f"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -408,6 +1132,149 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/oiv/dohodi_dlya_smi_2012_2_3_.doc/dlrobot_data",
             "sha256": "3ba22a112533accff8ca859ba7b9101de80f80512c17fee4f2e6b31c4b3e3729"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2018 г. по 31 декабря 2018 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/225631220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ XLSX/ 42.2Kb ]Скачать файл",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/4751/Svodza2018DOgM.XLSX",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/4751/Svodza2018DOgM.XLSX/dlrobot_data",
+            "sha256": "3cfa9b614ab83205ca869220757e8b1c8668817ad746a7a16dd374aa53271fa0"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЦАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166423220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 109.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЦАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/cao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/cao_2015.xls/dlrobot_data",
+            "sha256": "3d670d46dd4cbfe96d039961b57bc4e4eb86c5025ec32cc4a084e1a64bd666e8"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений и членов их семей за период с 1 января 2016 г. по 31 декабря 2016 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166445220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 726.5Kb ]svedeniya_o_dokhodakh_2016_.xls",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_2016_.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_2016_.xls/dlrobot_data",
+            "sha256": "4654510fb5333a683f251d980d74f1f1bf4873ef06a469a431c9ea7ae11e9432"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений города Москвы, подведомственных Департаменту градостроительной политики города Москвы, и членов их семьи за период с 1 января по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/69959220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 193.6Kb ]Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/doh_pod_2015.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/doh_pod_2015.pdf/dlrobot_data",
+            "sha256": "47f0a883ee88c1fc04c1f3af7d1052e45dac40d0313c0f6b30c02b1230d52104"
         },
         {
             "click_path": [
@@ -442,6 +1309,74 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений города Москвы и членов их семей за период с 1 января 2018 г. по 31 декабря 2018 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/225633220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 370.7Kb ]Скачать файл",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/5354/Svodza2018obshii.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/5354/Svodza2018obshii.xlsx/dlrobot_data",
+            "sha256": "4c32a547cf3ad88b6cecd392407f4e6b9e3cb8db886cf4245bf6f06b163a7d25"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2017 г. по 31 декабря 2017 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/215030220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 34.6Kb ]Скачать файл",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/3231/Svodza2017DOgM2.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/3231/Svodza2017DOgM2.xlsx/dlrobot_data",
+            "sha256": "4e4bd7e08f3e19e7f9231627d3cbb78c4a2866e049f6f6af3ec09ea49b08b06e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -462,6 +1397,40 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/oiv/dokhody_dlya_smi_2014_depir.xls/dlrobot_data",
             "sha256": "4e5d8f98ee88dfb520aea0485e712f15f3d67f400d1e0da41e0e3850901ca863"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента градостроительной политики города Москвы и членов их семьи за период с 1 января по 31 декабря 2017 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/215291220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/Svedeniyaodohodahrashodah(sait)-GGS(3).pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/Svedeniyaodohodahrashodah_sait_-GGS_3_.pdf/dlrobot_data",
+            "sha256": "4ee1ca229861292e862df35194fa271914d7232b6e089dbd629f77d9d38596b7"
         },
         {
             "click_path": [
@@ -496,6 +1465,47 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮВАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166427220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 64.3Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮВАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/uvao_2015(1).xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/uvao_2015_1_.xlsx/dlrobot_data",
+            "sha256": "4f8ef247c86cd1d94e7ca516b6c58cad6684effc1038607e10d917a6eb125249"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dgi/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -516,6 +1526,40 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/7808/Svedeniyaodohodahgrajdanskihslyjashih2018g.docx/dlrobot_data",
             "sha256": "5160bbb7014babc668ca1298ab98a0e3385a2c6c560afc2e2f51f3372f4daaed"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СЗАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166417220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 79.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СЗАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/szao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/szao_2015.xls/dlrobot_data",
+            "sha256": "597248f06ad70886564089f742a471e74611fb49e67da423ab8708bc07f7c3e0"
         },
         {
             "click_path": [
@@ -631,6 +1675,40 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента градостроительной политики города Москвы и членов их семьиза период с 1 января по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/69953220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 336.3Kb ]Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/doh_ggs_2014.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/doh_ggs_2014.pdf/dlrobot_data",
+            "sha256": "685e6b3570585696bd13ba80ad8f0bcfd7285640080594b3adc8263c59c956c3"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/ud/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -732,6 +1810,47 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/oiv/svedenia-o-dohodah-2013-rukfhu.doc/dlrobot_data",
             "sha256": "6e878f5234afa2d7903bfff793ccb0a7e14919873fc58119fd1177f04b5c744e"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений городского подчинения и членов их семей за период с 1 января 2013 г. по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166441220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 66.9Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений городского подчинения и членов их семей за период с 1 января 2013 г. по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/files/8261/06_05_2013-r2.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/files/8261/06_05_2013-r2.xlsx/dlrobot_data",
+            "sha256": "73e23980128212b5c5a87faeda77b91ead3660962f1af8f7f02a38935d9d7be5"
         },
         {
             "click_path": [
@@ -847,6 +1966,81 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЦАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166434220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 29.9Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЦАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/cao_2015(1).xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/cao_2015_1_.xlsx/dlrobot_data",
+            "sha256": "7d0cde09bac5259a4a8f46739f9ba7f3e104dd975bf3b700f5e6e7e06bbfbfe7"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 01 января 2013 года по 31 декабря 2013 года Департамент экономической политики и развития города Москвы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/164457220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 102.5Kb ]dohody_dla_cmi_2013.xls",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013(1).xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/dohody_dla_cmi_2013_1_.xls/dlrobot_data",
+            "sha256": "8534c8d4cf12114e2c47554d2768d1383cb3b0533671a37c9f866479bc4da102"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/ud/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -894,6 +2088,47 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/7605/SAITGBYDOHODI2019.docx/dlrobot_data",
             "sha256": "942a2805cbcb74536cf22fa8ed9c5c515f6230e1be8232b3de17e13dbcfeb0fa"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, имуществе и обязательствах имущественного характера за период с 1 января по 31 декабря 2011 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166444220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 4.0Mb ]Сведения о доходах, имуществе и обязательствах имущественного характера за период с 1 января по 31 декабря 2011 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/svedeniya_2011.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/svedeniya_2011.pdf/dlrobot_data",
+            "sha256": "94b51b246b5f566899cef3dc49b6ca1d1a4d61717fd6b5c8fc64d8cb2d620069"
         },
         {
             "click_path": [
@@ -1036,6 +2271,115 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166411220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 36.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/dogm_2015.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/dogm_2015.xlsx/dlrobot_data",
+            "sha256": "9bd6b489a5fbbb34e0a928781a72f9965d8af95a192a77def0f38be80af5a5e4"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента образования города Москвы и членов их семей за период с 1 января по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166440220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 55.9Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента образования города Москвы и членов их семей за период с 1 января по 31 декабря 2013 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/08_06_2014_2.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/08_06_2014_2.xlsx/dlrobot_data",
+            "sha256": "9cf7eaa660b11f1fbeec854151cfe1482325cd123fc711e5bac1dada8bfb9aaa"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений города Москвы, поведомственных Департаменту градостроительной политики города Москвы, и членов их семьи за период с 1 января по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/69955220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 197.9Kb ]Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/doh_pod_2014.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/doh_pod_2014.pdf/dlrobot_data",
+            "sha256": "9d3602220c82560cbeea433182bcfcdfe9ede789cd5406995dd35a57b5a23c1a"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dgi/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1117,6 +2461,47 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗелАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166429220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ docx/ 28.9Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗелАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/zelao_2014.docx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/zelao_2014.docx/dlrobot_data",
+            "sha256": "9e0a420a49e83f1f5004e052435814aefb4dd2cc572f46423e7b9f5f39dff147"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dtu/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1144,6 +2529,81 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента образования города Москвы и членов их семей за период с 1 января по 31 декабря 2012 год.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166443220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 525.1Kb ]Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента образования города Москвы и членов их семей за период с 1 января по 31 декабря 2012 год.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/2013(1443).pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/2013_1443_.pdf/dlrobot_data",
+            "sha256": "ad18dc3de2a9fce879e53917467c2ad7f8ddbe961ee69263f12828ddf54dcf75"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих системы Департамента образования города Москвы и членов их семей за период с 1 января 2016 г. по 31 декабря 2016 г.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166446220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 33.6Kb ]svedeniya_o_dokhodakh_sluzhashchikh_sistemy_departamenta_obrazovaniya_goroda_moskvy_i_chlenov_ikh_semey_s_1_yanvarya_2016_g._po_31_dekabrya_2016_g.xlsx",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_sluzhashchikh_sistemy_departamenta_obrazovaniya_goroda_moskvy_i_chlenov_ikh_semey_s_1_yanvarya_2016_g_po_31_dekabrya_2016_g.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_sluzhashchikh_sistemy_departamenta_obrazovaniy_085a4dd750be341d320c3c9ab8e3b907/dlrobot_data",
+            "sha256": "b22adac2c0e36c9c72680d6f33cd58b5f2acb2be65435231884adff42e2b20a3"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dgi/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1164,6 +2624,81 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/56/Svedeniyaodohodah2017ggrajdanskieslyjashiena31052018.docx/dlrobot_data",
             "sha256": "b367dbabe045f6064e25edc02c9b05c3e242b3d13ed654e1f34ae87063899958"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений САО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166425220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 87.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений САО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/sao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/sao_2015.xls/dlrobot_data",
+            "sha256": "b3feae373da43e79e3b9e132a26a92091a4e86e2182156877cb5b27563feb8de"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166420220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 98.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/zao_2015(1).xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/zao_2015_1_.xls/dlrobot_data",
+            "sha256": "b42146a0ed767cc781577886e6c14c33e6ba73063ffc994831a354c192f3491c"
         },
         {
             "click_path": [
@@ -1259,6 +2794,47 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СВАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166422220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 91.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений СВАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/svao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/svao_2015.xls/dlrobot_data",
+            "sha256": "c2054aca7523bd2a5c03998cf30313e7478a9bc75d27d9c0a07c7afa28c033ee"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1272,6 +2848,47 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/Svedeniyaodohodahrashodah_sait_-podvedi.xls/dlrobot_data",
             "sha256": "c5e7fb048f03afc3d2c396626549ca1246296377f4f618b1fb7fa63e2dd6b0df"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166431220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 220.3Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЗАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/zao_2015(3).xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/zao_2015_3_.xlsx/dlrobot_data",
+            "sha256": "c799a23a0989161a1e42865181c3c95ce6b673e1d30cf520d6d725752666947c"
         },
         {
             "click_path": [
@@ -1353,6 +2970,40 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ТиНАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166419220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 51.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ТиНАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/tinao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/tinao_2015.xls/dlrobot_data",
+            "sha256": "daccd6a3e454652c1e313f6b86108a3708caeec736fec6f2068c1e509d3f5d5d"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/ud/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1373,6 +3024,47 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/oiv/svedeniya_o_dokhodakh_za_2015_god.doc/dlrobot_data",
             "sha256": "debff7aebd29a30c6181599be182e02a394c03272f427bdced4a64daef726b88"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮЗАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166421220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 98.0Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮЗАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/gorod_uzao_new_2015_2.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/gorod_uzao_new_2015_2.xls/dlrobot_data",
+            "sha256": "e0eb49c4e7935817a2049c073bfb54228c026f5c3198a9ae627da80c21194e3b"
         },
         {
             "click_path": [
@@ -1407,6 +3099,40 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮВАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166415220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xls/ 111.5Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ЮВАО и членов их семей за период с 1 января 2015 г. по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/uvao_2015.xls",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/uvao_2015.xls/dlrobot_data",
+            "sha256": "e51aaa61b1991859dcbf1708aecec73b98523a36a02275ed591416618f662342"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/depr/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1427,6 +3153,81 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/8587/SvedeniyaodohodahrykovoditeleiGBYpodvedomstvennihDEPRichlenov_02184a08d58821858b48727ab8928c6c/dlrobot_data",
             "sha256": "e9d0f1cbca02bd1c430cae793f95418913bbbb8bed7ccd2a2eaec37ba57ae4ba"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "3",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=3",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений САО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166436220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 43.8Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений САО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/sao_2014.xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/sao_2014.xlsx/dlrobot_data",
+            "sha256": "e9de95ec6d3d2afef3d0d2fb48b6db7466ce500492335cb50050460cfa7ac8a8"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей государственных учреждений города Москвы, поведомственных Департаменту градостроительной политики города Москвы, и членов их семьи за период с 1 января по 31 декабря 2016 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/69949220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 192.4Kb ]Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/dohody_podvedy_2017.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/dohody_podvedy_2017.pdf/dlrobot_data",
+            "sha256": "eb1f157a26e6f67bd2d6a3fc0dec154fac6199223d893b3faca2f8414d9cc347"
         },
         {
             "click_path": [
@@ -1461,6 +3262,40 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/241909220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента градостроительной политики города Москвы и членов их семьи за период с 1 января по 31 декабря 2015 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/dgp/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/69957220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ pdf/ 275.0Kb ]Сведения о доходах",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/doh_ggs_2015.pdf",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/doh_ggs_2015.pdf/dlrobot_data",
+            "sha256": "ede13fb5fda7adbc799efc448083a3dd9642296402f47c7f7343db6cca1498dd"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
                     "source:url": "https://www.mos.ru/dtu/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
                     "source:step": "declarations",
                     "source:title": "",
@@ -1481,6 +3316,47 @@
             ],
             "cached_file": "cached/www.mos.ru/upload/documents/files/1386/SAITTABLICANASAITDohodi2019.doc/dlrobot_data",
             "sha256": "ef2be707ad20df8d6f1b0b766e9afacd34b36d4936bc767525d060377dd800a9"
+        },
+        {
+            "click_path": [
+                {
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/242359220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Документы",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Следующая",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/?page=2",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ТиНАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/donm/anticorruption/svedeniia-o-dokhodakh-raskhodakh-ob-imushchestve-i-obiazatelstvakh-imushchestvennogo-kharaktera/view/166430220/",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "[ xlsx/ 22.1Kb ]Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера руководителей учреждений ТиНАО и членов их семей за период с 1 января 2014 г. по 31 декабря 2014 года",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "https://www.mos.ru/upload/documents/oiv/tinao_2015(1).xlsx",
+                    "step": "declarations"
+                }
+            ],
+            "cached_file": "cached/www.mos.ru/upload/documents/oiv/tinao_2015_1_.xlsx/dlrobot_data",
+            "sha256": "ef7e65b36432263b9ef02f4f4c90a0991e417fd28e57adb9330f01f77ca32598"
         },
         {
             "click_path": [
