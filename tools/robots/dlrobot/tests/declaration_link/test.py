@@ -10,7 +10,7 @@ from robots.common.http_request import TRequestPolicy
 import logging
 import argparse
 import time
-
+#import yappi
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
     INIT_PAGE_FILE_PATH = ""
@@ -95,6 +95,17 @@ def open_project(args):
             print (urllib.parse.urlunparse(u))
 
 
+def print_all(stats):
+    if stats.empty():
+        return
+    sizes = [136, 5, 8, 8, 8]
+    columns = dict(zip(range(len(yappi.COLUMNS_FUNCSTATS)), zip(yappi.COLUMNS_FUNCSTATS, sizes)))
+    show_stats = stats
+    with open ('yappi.log', 'w') as outp:
+        outp.write(os.linesep)
+        for stat in show_stats:
+            stat._print(outp, columns)
+
 if __name__ == '__main__':
     logger = setup_logging("dlrobot.log")
     args = parse_args()
@@ -110,7 +121,9 @@ if __name__ == '__main__':
     if not args.web_addr.startswith('http'):
         args.web_addr = 'http://' + args.web_addr
     try:
+        #yappi.start()
         open_project(args)
+        #print_all(yappi.get_func_stats())
     finally:
         HTTP_SERVER.shutdown()
         server_thread.join(1)
