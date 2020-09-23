@@ -26,6 +26,13 @@ class TRequestPolicy:
     ALL_HTTP_REQUEST = dict()  # (url, method) -> time
     HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
     HTTP_503_ERRORS_COUNT = 0
+    SSL_CONTEXT = ssl._create_unverified_context()
+
+    # tested for python 3.8 and 301 http-code in test "content_type'
+    #redirect_handler = urllib.request.HTTPRedirectHandler()
+    #redirect_handler.max_redirections = 5
+    #opener = urllib.request.build_opener(redirect_handler)
+    #urllib.request.install_opener(opener)
 
     # decrement HTTP_503_ERRORS_COUNT on successful http_request
     @staticmethod
@@ -143,12 +150,6 @@ if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
 def make_http_request_urllib(logger, url, method):
     url = _prepare_url_before_http_request(logger, url, method)
 
-    context = ssl._create_unverified_context()
-    redirect_handler = urllib.request.HTTPRedirectHandler()
-    redirect_handler.max_redirections = 5
-    opener = urllib.request.build_opener(redirect_handler)
-    urllib.request.install_opener(opener)
-
     req = urllib.request.Request(
         url,
         data=None,
@@ -158,7 +159,7 @@ def make_http_request_urllib(logger, url, method):
 
     logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     try:
-        with urllib.request.urlopen(req, context=context, timeout=TRequestPolicy.HTTP_TIMEOUT) as request:
+        with urllib.request.urlopen(req, context=TRequestPolicy.SSL_CONTEXT, timeout=TRequestPolicy.HTTP_TIMEOUT) as request:
             data = '' if method == "HEAD" else request.read()
             headers = request.info()
             TRequestPolicy.register_successful_request()

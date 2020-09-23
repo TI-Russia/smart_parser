@@ -121,9 +121,9 @@ if __name__ == '__main__':
     if not args.web_addr.startswith('http'):
         args.web_addr = 'http://' + args.web_addr
     try:
-        #yappi.start()
+ #       yappi.start()
         open_project(args)
-        #print_all(yappi.get_func_stats())
+  #      print_all(yappi.get_func_stats())
     finally:
         HTTP_SERVER.shutdown()
         server_thread.join(1)
