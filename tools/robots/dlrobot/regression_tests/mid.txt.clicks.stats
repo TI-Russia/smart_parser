@@ -75,13 +75,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.mid.ru/activity/corruption/incomes",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Таблица сведений о доходах руководства министерства за 2019 год",
-                    "target:engine": "selenium"
-                },
-                {
                     "source:url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/4285040",
                     "source:step": "declarations",
                     "source:title": "",
@@ -132,7 +125,7 @@
                     "source:url": "https://www.mid.ru/activity/corruption/documents/-/asset_publisher/dVIKK3TSysQS/content/id/3469075",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Скачать файл",
+                    "target:anchor_text": "Download file",
                     "target:engine": "selenium"
                 },
                 {
@@ -230,6 +223,13 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
+                    "source:url": "https://www.mid.ru/activity/corruption/incomes",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Таблица сведений о доходах руководства министерства за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
                     "source:url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3211936",
                     "source:step": "declarations",
                     "source:title": "",
@@ -277,13 +277,6 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "https://www.mid.ru/activity/corruption/incomes",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров федеральных государственных учреждений, подведомственных Министерству иностранных дел Российской Федерации за 2018 год",
-                    "target:engine": "selenium"
-                },
-                {
                     "source:url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3584019",
                     "source:step": "declarations",
                     "source:title": "",
@@ -302,13 +295,6 @@
             "click_path": [
                 {
                     "search_query": "\"сведения о доходах\""
-                },
-                {
-                    "source:url": "https://www.mid.ru/activity/corruption/incomes",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Таблица сведений о доходах руководства министерства за 2018 год",
-                    "target:engine": "selenium"
                 },
                 {
                     "source:url": "https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/3637836",

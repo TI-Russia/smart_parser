@@ -36,7 +36,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2015 год*",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=82",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_82/dlrobot_data",
@@ -45,7 +91,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Тульского областного суда за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=153",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_153/dlrobot_data",
@@ -54,7 +146,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Тульского областного суда за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=207",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_207/dlrobot_data",
@@ -63,7 +201,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2018 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=195",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_195/dlrobot_data",
@@ -72,7 +256,11 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=74",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_74/dlrobot_data",
@@ -81,7 +269,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведенияо доходах, расходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Тульского областного суда за 2018 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=194",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_194/dlrobot_data",
@@ -90,7 +324,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2017 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=154",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_154/dlrobot_data",
@@ -99,7 +379,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Тульского областного суда за 2016 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=121",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_121/dlrobot_data",
@@ -108,7 +434,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2016 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=124",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_124/dlrobot_data",
@@ -117,7 +489,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера государственных служащих Тульского областного суда за 2015 год*",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=81",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_81/dlrobot_data",
@@ -126,7 +544,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2012 год *",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=33",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_33/dlrobot_data",
@@ -135,7 +599,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=73",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_73/dlrobot_data",
@@ -144,7 +654,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей за 2012 год.",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=31",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_31/dlrobot_data",
@@ -153,7 +709,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих, их супругов и несовершеннолетних детей за 2013 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=32",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_32/dlrobot_data",
@@ -162,7 +764,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2014 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=44",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_44/dlrobot_data",
@@ -171,7 +819,53 @@
         {
             "click_path": [
                 {
-                    "exception": "graph is too large, timeout is set to 2 seconds"
+                    "search_query": "\"сведения о доходах\""
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=23",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "27 декабря 2018 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=185",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "2017",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=22",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "15 марта 2017 года состоится заседание Комиссии по соблюдению требований к служебному поведению федеральных государственных гражданских служащих",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "показать на карте",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=118#ya_map_pub",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "5. Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&rid=5",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера судей Тульского областного суда за 2019 год",
+                    "target:engine": "selenium"
+                },
+                {
+                    "source:url": "http://oblsud.tula.sudrf.ru/modules.php?name=anticorruption&id=208",
+                    "step": "declarations"
                 }
             ],
             "cached_file": "cached/oblsud.tula.sudrf.ru/modules.php_name_anticorruption_id_208/dlrobot_data",

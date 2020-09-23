@@ -68,11 +68,18 @@
                     "source:url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о доходах",
+                    "target:anchor_text": "Полная версия сайта",
+                    "target:engine": "urllib"
+                },
+                {
+                    "source:url": "https://minvostokrazvitia.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/?view=desktop",
+                    "source:step": "declarations",
+                    "source:title": "",
+                    "target:anchor_text": "Подписаться на рассылку",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "https://minvr.gov.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/",
+                    "source:url": "https://minvr.gov.ru/opened-ministry/protivodeystvie-korruptsii/svedeniya-o-dokhodakh/?view=desktop",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Скачать XLSX (26.3 КБ)",
