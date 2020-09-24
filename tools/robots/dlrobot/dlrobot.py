@@ -143,7 +143,7 @@ def make_steps(args, project):
 def open_project(args):
     logger = setup_logging(args.logfile)
     logger.debug("hostname={}".format(platform.node()))
-    logger.debug("use {} as a cache folder".format(TDownloadEnv.FILE_CACHE_FOLDER))
+    logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
         if args.only_click_stats:

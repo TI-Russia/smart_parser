@@ -1,4 +1,4 @@
-    from robots.common.http_request import request_url_headers_with_global_cache, make_http_request, RobotHttpException
+from robots.common.http_request import request_url_headers_with_global_cache, make_http_request, RobotHttpException
 import logging
 
 
