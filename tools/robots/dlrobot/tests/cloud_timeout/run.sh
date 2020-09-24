@@ -6,7 +6,7 @@ WORKER_DIR=${TMPDIR:-/tmp}
 rm -rf $RESULT_FOLDER *.log
 
 python ../../scripts/cloud/dlrobot_central.py --server-address ${WEB_ADDR} \
-    --input-folder input_projects --result-folder  ${RESULT_FOLDER}  --input-thread-timeout 1s --dlrobot-project-timeout 2s&
+    --input-folder input_projects --result-folder  ${RESULT_FOLDER}  --central-heart-rate  1s --dlrobot-project-timeout 2s&
 WEB_SERVER_PID=$!
 sleep 2
 

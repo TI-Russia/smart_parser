@@ -12,6 +12,8 @@ import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
 import threading
 from robots.common.primitives import convert_timeout_to_seconds
+import shutil
+
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -41,12 +43,20 @@ def parse_args():
     parser.add_argument("--read-previous-results", dest='read_previous_results', default=False, action='store_true',
                         required=False, help="read file dlrobot_results.dat and exclude succeeded tasks from the input tasks")
 
-    parser.add_argument("--input-thread-timeout", dest='input_thread_timeout', required=False, default='20s')
+    parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='20s')
     parser.add_argument("--dlrobot-project-timeout", dest='dlrobot_project_timeout',
                          required=False, default='4h')
+    parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
+                        required=False, help="check yandex cloud health and restart workstations")
+
     args = parser.parse_args()
-    args.input_thread_timeout = convert_timeout_to_seconds(args.input_thread_timeout)
+    args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
     args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
+    args.yandex_cloud_console = shutil.which('yc')
+    if args.yandex_cloud_console is None:
+        args.yandex_cloud_console = os.path.expanduser('~/yandex-cloud/bin/yc')
+        if not os.path.exists (args.yandex_cloud_console):
+            raise FileNotFoundError("install yandex cloud console ( https://cloud.yandex.ru/docs/cli/operations/install-cli )")
     return args
 
 
@@ -94,6 +104,7 @@ class TJobTasks:
         self.worker_2_running_tasks = defaultdict(list)
         self.input_thread = None
         self.stop_input_thread = False
+        self.cloud_id_to_worker_ip = dict()
 
     def log_process_result(self, process_result):
         s = process_result.stdout.strip("\n\r ")
@@ -196,10 +207,57 @@ class TJobTasks:
                     rc.end_time = curtime
                     self.save_dlrobot_remote_call(rc)
 
+    def forget_remote_processes_for_yandex_worker(self, cloud_id):
+        worker_ip = self.cloud_id_to_worker_ip.get(cloud_id)
+        if worker_ip is None:
+            self.logger.info("I do not remember ip for cloud_id {}, cannot delete processes".format(cloud_id))
+            return
+
+        curtime = time.time()
+        running_procs = self.worker_2_running_tasks.get(worker_ip, list())
+        for i in range(len(running_procs) - 1, -1, -1):
+            rc = running_procs[i]
+            self.logger.debug(
+                "forget task {} on worker {} since the workstation was stopped".format(
+                    rc.project_file, rc.worker_ip
+                ))
+            running_procs.pop(i)
+            rc.exit_code = 125
+            rc.end_time = curtime
+            self.save_dlrobot_remote_call(rc)
+        if cloud_id in self.cloud_id_to_worker_ip:
+            del self.cloud_id_to_worker_ip[cloud_id]
+
+    def start_yandex_cloud_worker(self, id):
+        cmd = "{} compute instance start {}".format(self.args.yandex_cloud_console, id)
+        self.logger.info("start yandex cloud worker {}".format(id))
+        os.system(cmd)
+
+    def check_yandex_cloud(self):
+        try:
+            cmd = "{} compute instance list --format json >yc.json".format(self.args.yandex_cloud_console)
+            os.system(cmd)
+            with open("yc.json", "r") as inp:
+                yc_json = json.load(inp)
+            os.unlink("yc.json")
+            for m in yc_json:
+                cloud_id = m['id']
+                if m['status'] == 'STOPPED':
+                    self.forget_remote_processes_for_yandex_worker(cloud_id)
+                    self.start_yandex_cloud_worker(cloud_id)
+                elif m['status'] == "RUNNING":
+                    if cloud_id not in self.cloud_id_to_worker_ip:
+                        worker_ip = m['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
+                        self.cloud_id_to_worker_ip[cloud_id] = worker_ip
+        except Exception as exp:
+            self.logger.error(exp)
+
     def process_all_tasks(self):
         while not self.stop_input_thread:
-            time.sleep(args.input_thread_timeout)
+            time.sleep(args.central_heart_rate)
             self.forget_old_remote_processes()
+            if args.check_yandex_cloud:
+                self.check_yandex_cloud()
 
 JOB_TASKS = None
 
