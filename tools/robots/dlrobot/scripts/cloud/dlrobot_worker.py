@@ -2,18 +2,17 @@ import argparse
 import sys
 import logging
 import os
-from collections import defaultdict
 import time
-from  ConvStorage.conversion_client import TDocConversionClient
-import re
 import http.server
-import io, gzip, tarfile
+import io
+import tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
 import shutil
 import tarfile
 
+
 def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_parallel")
+    logger = logging.getLogger("dlrobot_worker")
     logger.setLevel(logging.DEBUG)
 
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -32,16 +31,19 @@ def setup_logging(logfilename):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
-    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="dlrobot_parallel.log")
+    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="dlrobot_worker.log")
     parser.add_argument("--tmp-folder",  dest='tmp_folder', required=True)
-    parser.add_argument("--run-forever",  dest='run_forever', required=False, action=)
+    parser.add_argument("--save-dlrobot-results",  dest='delete_dlrobot_results', default=True, action="store_false")
+    parser.add_argument("--run-forever",  dest='run_forever', required=False, action="store_true", default=False)
     parser.add_argument("--timeout", dest='timeout', type=int, required=False, default=60*5)
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
                             default="3h",
                             help="crawling timeout in seconds (there is also conversion step after crawling)")
-    args = parser.parse_args()
-    return args
 
+    args = parser.parse_args()
+    args.dlrobot_path = os.path.realpath(os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py"))
+    assert os.path.exists (args.dlrobot_path)
+    return args
 
 
 def get_new_task_job(args, logger):
@@ -53,55 +55,58 @@ def get_new_task_job(args, logger):
             logger.error("cannot get a new project from dlrobot central, httpcode={}".format(
                 response.status
             ))
-            return None, None
+        return None
     project_file = response.getheader('dlrobot_project_file_name')
     if project_file is None:
         logger.error("cannot find filepath header")
-        return None, None
+        return None
     file_data = response.read()
     logger.debug("get task {} size={}".format(project_file, len(file_data)))
     basename_project_file = os.path.basename(project_file)
     base_folder, _ = os.path.splitext(basename_project_file)
     folder = os.path.join(args.tmp_folder, base_folder)
+
+    if os.path.exists(folder):
+        shutil.rmtree(folder, ignore_errors=True)
     os.makedirs(folder, exist_ok=True)
-    local_project_file = os.path.join(folder, basename_project_file)
-    with open (local_project_file, "wb") as outp:
+
+    project_file = os.path.join(folder, basename_project_file)
+    with open (project_file, "wb") as outp:
         outp.write(file_data)
-    return local_project_file
+    return project_file
 
 
 def run_dlrobot(args, logger, project_file):
-    os.chdir(os.path.dirname(project_file))
-    dlrobot = os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py")
-    cmd = "export TMP=. ; timeout 4h python3 {} --project {} --crawling-timeout {} --last-conversion-timeout 30m >dlrobot.out 2>dlrobot.err".format(
-        dlrobot, project_file, args.crawling_timeout)
+    project_folder = os.path.dirname(project_file)
+    cmd = "cd {}; export TMP=. ; timeout 4h python3 {} --cache-folder-tmp --project {} --crawling-timeout {} --last-conversion-timeout 30m >dlrobot.out 2>dlrobot.err".format(
+        project_folder, args.dlrobot_path, os.path.basename(project_file), args.crawling_timeout)
+    logger.debug(cmd)
     exit_code = os.system(cmd)
-    if os.path.exists("cached"):
-        shutil.rmtree("cached", ignore_errors=True)
-    if exit_code == 0 and os.path.exists("geckodriver.log"):
-        os.unlink("geckodriver.log")
+    logger.debug("exit_code={}".format(exit_code))
+
+    geckodriver_log = os.path.join(project_folder, "geckodriver.log")
+    if exit_code == 0 and os.path.exists(geckodriver_log):
+        os.unlink(geckodriver_log)
     goal_file = project_file + ".clicks.stats"
     if not os.path.exists(goal_file):
-        logger.error("cannot find {}, dlrobot.py failed, delete result folder".format(goal_file))
         exit_code = 1
-        shutil.rmtree("result", ignore_errors=True)
 
     return exit_code
 
 
 def send_results_back(args, logger, project_file, exitcode):
-    os.chdir("..")
-    basename_project_file = os.path.basename(project_file)
-    base_folder, _ = os.path.splitext(basename_project_file)
+    project_folder = os.path.dirname(project_file)
     headers = {
         "exitcode" : exitcode,
         "dlrobot_project_file_name": os.path.basename(project_file)
     }
+    logger.debug("send results back for {} exitcode={}".format(project_file, exitcode))
     conn = http.client.HTTPConnection(args.server_address)
     if exitcode == 0:
-        dlrobot_results_file_name = base_folder + ".tar.gz"
+        dlrobot_results_file_name = os.path.basename(project_file) + ".tar.gz"
         with tarfile.open(dlrobot_results_file_name, "w:gz") as tar:
-            tar.add(base_folder)
+            for f in os.listdir(project_folder):
+                tar.add(os.path.join(project_folder, f), arcname=f)
         with open(dlrobot_results_file_name, "rb") as inp:
             conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
             response = conn.getresponse()
@@ -109,14 +114,16 @@ def send_results_back(args, logger, project_file, exitcode):
                 dlrobot_results_file_name,
                 os.stat(dlrobot_results_file_name).st_size,
                 response.status))
+        os.unlink(dlrobot_results_file_name)
     else:
-        conn.request("PUT", "error", "", headers={"exitcode": exitcode})
+        conn.request("PUT", "error", "", headers=headers)
         response = conn.getresponse()
         logger.error("sent dlrobot error, input_project={}, exitcode={} http_code={}".format(
-            basename_project_file,
+            project_file,
             exitcode,
             response.status))
-    return base_folder
+    if args.delete_dlrobot_results:
+        shutil.rmtree(project_folder, ignore_errors=True)
 
 
 if __name__ == "__main__":
@@ -125,19 +132,30 @@ if __name__ == "__main__":
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
 
+    running_project_file = None
     try:
         while True:
+            running_project_file = None
             try:
-                project_file = get_new_task_job(args, logger)
-                if project_file is not None:
-                    exit_code = run_dlrobot(args, logger, project_file)
-                    base_folder = send_results_back(args, logger, project_file, exit_code)
-                    shutil.rmtree(base_folder, ignore_errors=True)
+                running_project_file = get_new_task_job(args, logger)
+                if running_project_file is not None:
+                    exit_code = run_dlrobot(args, logger, running_project_file)
+                    send_results_back(args, logger, running_project_file, exit_code)
+                    running_project_file = None
             except ConnectionError as err:
                 logger.error(str(err))
-
+            if not args.run_forever:
+                break
             time.sleep(args.timeout)
+        logger.info("successful exit")
+        sys.exit(0)
     except KeyboardInterrupt:
         logger.info("ctrl+c received")
-        sys.exit(1)
+    except Exception as exp:
+        logger.error(exp)
 
+    if running_project_file is not None:
+        send_results_back(args, logger, running_project_file, 1)
+    sys.exit(1)
+
+x

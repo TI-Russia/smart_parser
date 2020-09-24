@@ -34,6 +34,13 @@ class TDownloadEnv:
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
     @staticmethod
+    def get_search_engine_cache_folder():
+        d = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "search_engine_requests")
+        if not os.path.exists(d):
+            os.makedirs(d)
+        return d
+
+    @staticmethod
     def send_pdf_to_conversion(filename, file_extension, sha256):
         if TDownloadEnv.CONVERSION_CLIENT is None:
             return

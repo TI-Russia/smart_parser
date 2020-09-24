@@ -5,11 +5,12 @@ import os
 from collections import defaultdict
 import time
 from  ConvStorage.conversion_client import TDocConversionClient
-import re
+import json
 import urllib
 import http.server
 import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
+
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -32,7 +33,7 @@ def setup_logging(logfilename):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
-    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="dlrobot_parallel.log")
+    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="dlrobot_central.log")
     parser.add_argument("--input-folder",  dest='input_folder', required=False, default="input_projects")
     parser.add_argument("--result-folder",  dest='result_folder', required=True)
     parser.add_argument("--retries-count", dest='retries_count', required=False, default=2, type=int)
@@ -43,15 +44,45 @@ def parse_args():
     return args
 
 
+class TDlrobotResult:
+
+    def __init__ (self, worker_ip, project_file, exit_code):
+        self.worker_ip = worker_ip
+        self.project_file = project_file
+        self.exit_code = exit_code
+        self.time = int(time.time())
+
+    def read_from_json(self, str):
+        d = json.loads(str)
+        self.worker_ip = d['worker_ip']
+        self.project_file = d['project_file']
+        self.exit_code = d['exit_code']
+        self.time = d['time']
+
+    def write_to_json(self):
+        d =  {
+                'worker_ip': self.worker_ip,
+                'project_file' : self.project_file,
+                'exit_code': self.exit_code,
+                'time': self.time
+        }
+        return json.dumps(d)
+
+
 class TJobTasks:
     def __init__(self, args, logger):
         self.conversion_client = TDocConversionClient(logger)
         self.args = args
         self.logger = logger
-        self.tries_count = defaultdict(int)
-        self.input_files = list(os.path.join(args.input_folder, x) for x in self.get_input_files())
-        logger.debug("we are going to process {} files".format(len(self.input_files)))
-        self.worker_2_tasks = defaultdict(set)
+        self.dlrobot_results = defaultdict(list)
+        self.input_files = list(x for x in os.listdir(self.args.input_folder) if x.endswith('.txt'))
+        if not os.path.exists(self.args.result_folder):
+            os.makedirs(self.args.result_folder)
+
+        if args.skip_already_processed:
+            self.read_prev_dlrobot_results()
+        logger.debug("there are {} dlrobot projects to process".format(len(self.input_files)))
+        self.worker_2_running_tasks = defaultdict(set)
 
     def log_process_result(self, process_result):
         s = process_result.stdout.strip("\n\r ")
@@ -63,31 +94,27 @@ class TJobTasks:
             for line in s.split("\n"):
                 self.logger.error("task stderr: {}".format(line))
 
-    def get_input_files(self):
-        already_processed = set()
-        failed_tasks = defaultdict(int)
-        if args.skip_already_processed:
-            with open(args.log_file_name, "r", encoding="utf8") as inp:
-                for line in inp:
-                    m = re.search('success on (.+txt)\s*$', line)
-                    if m:
-                        filename = os.path.basename(m.group(1))
-                        already_processed.add(filename)
-                    m = re.search('task failed: (.+txt)\s*$', line)
-                    if m:
-                        filename = os.path.basename(m.group(1))
-                        failed_tasks[filename] += 1
+    def get_dlrobot_results_filename(self):
+        return os.path.join( self.args.result_folder, "dlrobot_results.dat")
 
-        for x in os.listdir(self.args.input_folder):
-            if x in already_processed:
-                self.logger.debug("exclude {}, already processed".format(x))
-            elif failed_tasks[x] >= args.retries_count:
-                self.logger.debug("exclude {}, too many retries".format(x))
-            else:
-                yield x
+    def save_dlrobot_result(self, worker_ip, project_file, exit_code):
+        res = TDlrobotResult(worker_ip,project_file,exit_code)
+        with open (self.get_dlrobot_results_filename(), "a") as outp:
+            outp.write(res.write_to_json() + "\n")
+        self.dlrobot_results[project_file].append(res)
+
+    def read_prev_dlrobot_results(self):
+        with open(self.get_dlrobot_results_filename(), "r") as inp:
+            for line in inp:
+                line = line.strip()
+                res = TDlrobotResult()
+                res.read_from_json(line)
+                self.dlrobot_results[res.project_file].append(res)
+                if res.exit_code == 0 and res.project_file in self.input_files:
+                    self.input_files.remove(res.project_file)
 
     def running_jobs_count(self):
-        return sum(len(w) for w in self.worker_2_tasks.values())
+        return sum(len(w) for w in self.worker_2_running_tasks.values())
 
     def conversion_server_queue_is_short(self):
         input_queue_size = self.conversion_client.get_pending_all_file_size()
@@ -98,12 +125,13 @@ class TJobTasks:
         project_file = self.input_files.pop()
         self.logger.info("start job: {} on {}, left jobs: {}, running jobs: {}".format(
                 project_file, worker_ip, len(self.input_files), self.running_jobs_count()))
-        self.worker_2_tasks[worker_ip].add(os.path.basename(project_file))
+        self.worker_2_running_tasks[worker_ip].add(project_file)
         return project_file
+
 
     def register_bad_task_result(self, worker_ip, project_file):
         self.logger.debug("fail to process task {} processed by worker {}".format(project_file, worker_ip))
-        if self.tries_count[project_file] < args.retries_count:
+        if len(self.dlrobot_results[project_file]) < args.retries_count:
             self.input_files.append(project_file)
             self.logger.debug("register retry for {}".format(project_file))
 
@@ -114,26 +142,28 @@ class TJobTasks:
         output_folder = os.path.join(args.result_folder, base_folder)
         if os.path.exists(output_folder):
             output_folder += ".{}".format(int(time.time()))
-        compressed_file = io.BytesIO(result_archive.read())
+        compressed_file = io.BytesIO(result_archive)
         decompressed_file = gzip.GzipFile(fileobj=compressed_file)
         tar = tarfile.open(fileobj=decompressed_file)
         tar.extractall(output_folder)
 
     def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
-        if worker_ip not in self.worker_2_tasks:
+        if worker_ip not in self.worker_2_running_tasks:
             raise Exception("{} is missing in the worker table".format(worker_ip))
-        host_worker_tasks = self.worker_2_tasks[worker_ip]
-        if project_file not in host_worker_tasks:
+        worker_running_tasks = self.worker_2_running_tasks[worker_ip]
+        if project_file not in worker_running_tasks:
             raise Exception("{} is missing in the worker {} task table".format(project_file,worker_ip))
+        self.save_dlrobot_result(worker_ip, project_file, exit_code)
+        worker_running_tasks.remove(project_file)
 
-        host_worker_tasks.remove(project_file)
-        self.tries_count[project_file] += 1
         if exit_code != 0:
-            self.register_bad_task_result(project_file, worker_ip)
+            self.register_bad_task_result(worker_ip, project_file)
         else:
             self.register_good_task_result(worker_ip, project_file, result_archive)
 
+
 JOB_TASKS = None
+
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
 
@@ -171,15 +201,16 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
 
         worker_ip = self.client_address[0]
         try:
-            file_path = JOB_TASKS.get_new_job_task(worker_ip)
+            project_file = JOB_TASKS.get_new_job_task(worker_ip)
         except Exception as exp:
             send_error(str(exp))
             return
 
         self.send_response(200)
-        self.send_header('dlrobot_project_file_name',  os.path.basename(file_path))
+        self.send_header('dlrobot_project_file_name',  project_file)
         self.end_headers()
 
+        file_path = os.path.join(JOB_TASKS.args.input_folder, project_file)
         with open(file_path, 'rb') as fh:
             self.wfile.write(fh.read())
 
@@ -223,8 +254,10 @@ if __name__ == "__main__":
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
     host, port = args.server_address.split(":")
     JOB_TASKS = TJobTasks(args, logger)
-    myServer = http.server.HTTPServer((host, int(port)), THttpServer)
+    if len(JOB_TASKS.input_files) == 0:
+        logger.error("no more tasks")
 
+    myServer = http.server.HTTPServer((host, int(port)), THttpServer)
     try:
         myServer.serve_forever()
     except KeyboardInterrupt:

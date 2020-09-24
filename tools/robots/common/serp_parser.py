@@ -1,6 +1,4 @@
-import urllib.parse
 import json
-from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import time
 import os
 import random
@@ -42,10 +40,6 @@ SEARCH_URLS = {
              ]
 }
 
-REQUEST_CACHE_FOLDER = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "search_engine_requests")
-if not os.path.exists(REQUEST_CACHE_FOLDER):
-    os.makedirs(REQUEST_CACHE_FOLDER)
-
 
 class SearchEngine:
 
@@ -56,11 +50,7 @@ class SearchEngine:
         filename = filename.replace('"', '_')
         filename = filename.replace(':', '_')
         filename = filename.replace('\\', '_').replace('/', '_')
-        return os.path.join(REQUEST_CACHE_FOLDER, filename)
-
-    @staticmethod
-    def get_random_main_search_engine():
-        random.choice(GOOGLE_SEARCH_URLS)
+        return os.path.join(TDownloadEnv.get_search_engine_cache_folder(), filename)
 
     @staticmethod
     def read_cache(site_url,  query):
@@ -165,8 +155,8 @@ class SearchEngine:
             html = selenium_holder.the_driver.page_source
             if html.find("ничего не нашлось") == -1 or html.find("ничего не найдено") == -1 \
                 or html.find('did not match any documents') == -1:
-                with open("debug_captcha.html", "w") as outp:
-                    outp.write(selenium_holder.the_driver.page_source)
+                #with open("debug_captcha.html", "w") as outp:
+                #    outp.write(selenium_holder.the_driver.page_source)
                 raise SerpException("no search results, look in debug_captcha.html, may be captcha")
 
         site_search_results = list()
