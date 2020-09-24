@@ -35,10 +35,10 @@ def parse_args():
     parser.add_argument("--tmp-folder",  dest='tmp_folder', required=True)
     parser.add_argument("--save-dlrobot-results",  dest='delete_dlrobot_results', default=True, action="store_false")
     parser.add_argument("--run-forever",  dest='run_forever', required=False, action="store_true", default=False)
-    parser.add_argument("--timeout", dest='timeout', type=int, required=False, default=60*5)
+    parser.add_argument("--timeout-before-next-task", dest='timeout_before_next_task', type=int, required=False, default=60*5)
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
                             default="3h",
-                            help="crawling timeout in seconds (there is also conversion step after crawling)")
+                            help="crawling timeout (there is also conversion step after crawling, that takes time)")
 
     args = parser.parse_args()
     args.dlrobot_path = os.path.realpath(os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py"))
@@ -142,7 +142,7 @@ if __name__ == "__main__":
                 logger.error(str(err))
             if not args.run_forever:
                 break
-            time.sleep(args.timeout)
+            time.sleep(args.timeout_before_next_task)
         logger.info("successful exit")
         sys.exit(0)
     except KeyboardInterrupt:

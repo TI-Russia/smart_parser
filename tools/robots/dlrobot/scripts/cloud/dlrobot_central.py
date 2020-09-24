@@ -10,6 +10,7 @@ import urllib
 import http.server
 import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
+import threading
 
 
 def setup_logging(logfilename):
@@ -40,31 +41,36 @@ def parse_args():
     parser.add_argument("--read-previous-results", dest='read_previous_results', default=False, action='store_true',
                         required=False, help="read file dlrobot_results.dat and exclude succeeded tasks from the input tasks")
 
+    parser.add_argument("--input-thread-timeout", dest='input_thread_timeout', type=int, required=False, default=10)
+
     args = parser.parse_args()
     return args
 
 
-class TDlrobotResult:
+class TRemoteDlrobotCall:
 
-    def __init__ (self, worker_ip="", project_file="", exit_code=""):
+    def __init__ (self, worker_ip="", project_file="", exit_code=1):
         self.worker_ip = worker_ip
         self.project_file = project_file
         self.exit_code = exit_code
-        self.time = int(time.time())
+        self.start_time = int(time.time())
+        self.end_time = int(time.time())
 
     def read_from_json(self, str):
         d = json.loads(str)
         self.worker_ip = d['worker_ip']
         self.project_file = d['project_file']
         self.exit_code = d['exit_code']
-        self.time = d['time']
+        self.start_time = d['start_time']
+        self.end_time = d['end_time']
 
     def write_to_json(self):
         d =  {
                 'worker_ip': self.worker_ip,
                 'project_file' : self.project_file,
                 'exit_code': self.exit_code,
-                'time': self.time
+                'start_time': self.start_time,
+                'end_time': self.end_time
         }
         return json.dumps(d)
 
@@ -74,15 +80,17 @@ class TJobTasks:
         self.conversion_client = TDocConversionClient(logger)
         self.args = args
         self.logger = logger
-        self.dlrobot_results = defaultdict(list)
+        self.dlrobot_remote_calls = defaultdict(list)
         self.input_files = list(x for x in os.listdir(self.args.input_folder) if x.endswith('.txt'))
         if not os.path.exists(self.args.result_folder):
             os.makedirs(self.args.result_folder)
 
         if args.read_previous_results:
-            self.read_prev_dlrobot_results()
+            self.read_prev_dlrobot_remote_calls()
         logger.debug("there are {} dlrobot projects to process".format(len(self.input_files)))
-        self.worker_2_running_tasks = defaultdict(set)
+        self.worker_2_running_tasks = defaultdict(list)
+        self.input_thread = None
+        self.stop_input_thread = False
 
     def log_process_result(self, process_result):
         s = process_result.stdout.strip("\n\r ")
@@ -94,30 +102,29 @@ class TJobTasks:
             for line in s.split("\n"):
                 self.logger.error("task stderr: {}".format(line))
 
-    def get_dlrobot_results_filename(self):
-        return os.path.join( self.args.result_folder, "dlrobot_results.dat")
+    def get_dlrobot_remote_calls_filename(self):
+        return os.path.join( self.args.result_folder, "dlrobot_remote_calls.dat")
 
-    def save_dlrobot_result(self, worker_ip, project_file, exit_code):
-        res = TDlrobotResult(worker_ip,project_file,exit_code)
-        with open (self.get_dlrobot_results_filename(), "a") as outp:
-            outp.write(res.write_to_json() + "\n")
-        self.dlrobot_results[project_file].append(res)
-        if exit_code != 0:
-            if len(self.dlrobot_results[project_file]) < args.retries_count:
-                self.input_files.append(project_file)
-                self.logger.debug("register retry for {}".format(project_file))
+    def save_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
+        with open (self.get_dlrobot_remote_calls_filename(), "a") as outp:
+            outp.write(remote_call.write_to_json() + "\n")
+        self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
+        if remote_call.exit_code != 0:
+            if len(self.dlrobot_remote_calls[remote_call.project_file]) < args.retries_count:
+                self.input_files.append(remote_call.project_file)
+                self.logger.debug("register retry for {}".format(remote_call.project_file))
 
-    def read_prev_dlrobot_results(self):
-        self.logger.debug("read {}".format(self.get_dlrobot_results_filename()))
-        with open(self.get_dlrobot_results_filename(), "r") as inp:
+    def read_prev_dlrobot_remote_calls(self):
+        self.logger.debug("read {}".format(self.get_dlrobot_remote_calls_filename()))
+        with open(self.get_dlrobot_remote_calls_filename(), "r") as inp:
             for line in inp:
                 line = line.strip()
-                res = TDlrobotResult()
-                res.read_from_json(line)
-                self.dlrobot_results[res.project_file].append(res)
-                if res.exit_code == 0 and res.project_file in self.input_files:
-                    self.logger.debug("delete {}, since it is already processed".format(res.project_file))
-                    self.input_files.remove(res.project_file)
+                remote_call = TRemoteDlrobotCall()
+                remote_call.read_from_json(line)
+                self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
+                if remote_call.exit_code == 0 and remote_call.project_file in self.input_files:
+                    self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
+                    self.input_files.remove(remote_call.project_file)
 
     def running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())
@@ -131,7 +138,8 @@ class TJobTasks:
         project_file = self.input_files.pop()
         self.logger.info("start job: {} on {}, left jobs: {}, running jobs: {}".format(
                 project_file, worker_ip, len(self.input_files), self.running_jobs_count()))
-        self.worker_2_running_tasks[worker_ip].add(project_file)
+        res = TRemoteDlrobotCall(worker_ip, project_file)
+        self.worker_2_running_tasks[worker_ip].append(res)
         return project_file
 
     def untar_file(self, project_file, result_archive):
@@ -144,19 +152,37 @@ class TJobTasks:
         tar = tarfile.open(fileobj=decompressed_file)
         tar.extractall(output_folder)
 
-    def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
+    def pop_project_from_running_tasks (self, worker_ip, project_file):
         if worker_ip not in self.worker_2_running_tasks:
             raise Exception("{} is missing in the worker table".format(worker_ip))
         worker_running_tasks = self.worker_2_running_tasks[worker_ip]
-        if project_file not in worker_running_tasks:
-            raise Exception("{} is missing in the worker {} task table".format(project_file,worker_ip))
-        worker_running_tasks.remove(project_file)
+        for i in range(len(worker_running_tasks)):
+            if worker_running_tasks[i].project_file == project_file:
+                return worker_running_tasks.pop(i)
+        raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
-        self.save_dlrobot_result(worker_ip, project_file, exit_code)
+    def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
+        remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+        remote_call.exit_code = exit_code
+        remote_call.end_time = int(time.time())
+        self.save_dlrobot_remote_call(remote_call)
         self.untar_file(project_file, result_archive)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
             exit_code, project_file, worker_ip))
+
+    def start_input_files_thread(self):
+        self.input_thread = threading.Thread(target=self.process_all_tasks, args=())
+        self.input_thread.start()
+
+    def stop_input_files_thread(self):
+        self.stop_input_thread = True
+        self.input_thread.join()
+
+    def process_all_tasks(self):
+        while not self.stop_input_thread:
+            time.sleep(args.input_thread_timeout)
+
 
 JOB_TASKS = None
 
@@ -252,6 +278,7 @@ if __name__ == "__main__":
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
     host, port = args.server_address.split(":")
     JOB_TASKS = TJobTasks(args, logger)
+    JOB_TASKS.start_input_files_thread()
     if len(JOB_TASKS.input_files) == 0:
         logger.error("no more tasks")
 
@@ -260,5 +287,11 @@ if __name__ == "__main__":
         myServer.serve_forever()
     except KeyboardInterrupt:
         logger.info("ctrl+c received")
+        JOB_TASKS.stop_input_files_thread()
+        sys.exit(1)
+    except Exception as exp:
+        sys.stderr.write("general exception: {}\n".format(exp))
+        logger.error("general exception: {}".format(exp))
+        JOB_TASKS.stop_input_files_thread()
         sys.exit(1)
 

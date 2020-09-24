@@ -11,7 +11,7 @@ sleep 1
 
 python ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
 
-DLROBOT_RESULTS=${RESULT_FOLDER}/dlrobot_results.dat
+DLROBOT_RESULTS=${RESULT_FOLDER}/dlrobot_remote_calls.dat
 
 function run_worker() {
   local expected_lines=$1

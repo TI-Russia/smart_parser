@@ -10,7 +10,7 @@ python ../../scripts/cloud/dlrobot_central.py --retries-count 2 --server-address
 WEB_SERVER_PID=$!
 sleep 1
 
-DLROBOT_RESULTS=${RESULT_FOLDER}/dlrobot_results.dat
+DLROBOT_RESULTS=${RESULT_FOLDER}/dlrobot_remote_calls.dat
 
 function run_worker() {
   local expected_lines=$1
