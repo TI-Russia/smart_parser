@@ -7,10 +7,11 @@ from robots.common.download import TDownloadEnv
 from robots.common.robot_project import TRobotProject
 from robots.common.robot_step import TRobotStep
 from robots.common.web_site import TRobotWebSite
-from robots.common.primitives import  check_link_sitemap, check_anticorr_link_text
+from robots.common.primitives import check_link_sitemap, check_anticorr_link_text, convert_timeout_to_seconds
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
 import platform
 import tempfile
+
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_logger")
@@ -63,14 +64,7 @@ ROBOT_STEPS = [
 ]
 
 
-def convert_to_seconds(s):
-    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
-    if s is None or len(s) == 0:
-        return 0
-    if seconds_per_unit.get(s[-1]) is not None:
-        return int(s[:-1]) * seconds_per_unit[s[-1]]
-    else:
-        return int(s)
+
 
 def parse_args():
     global ROBOT_STEPS
@@ -104,8 +98,8 @@ def parse_args():
         args.stop_after = args.step
     if args.logfile is None:
         args.logfile = args.project + ".log"
-    TRobotWebSite.CRAWLING_TIMEOUT = convert_to_seconds(args.crawling_timeout)
-    TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_to_seconds(args.last_conversion_timeout)
+    TRobotWebSite.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
+    TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
     TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
     return args
 

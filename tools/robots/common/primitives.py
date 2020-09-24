@@ -89,3 +89,14 @@ def get_html_title(html):
     except Exception as err:
         return ""
 
+
+def convert_timeout_to_seconds(s):
+    if isinstance(s, int):
+        return s
+    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
+    if s is None or len(s) == 0:
+        return 0
+    if seconds_per_unit.get(s[-1]) is not None:
+        return int(s[:-1]) * seconds_per_unit[s[-1]]
+    else:
+        return int(s)

@@ -11,7 +11,7 @@ import http.server
 import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
 import threading
-
+from robots.common.primitives import convert_timeout_to_seconds
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -41,9 +41,12 @@ def parse_args():
     parser.add_argument("--read-previous-results", dest='read_previous_results', default=False, action='store_true',
                         required=False, help="read file dlrobot_results.dat and exclude succeeded tasks from the input tasks")
 
-    parser.add_argument("--input-thread-timeout", dest='input_thread_timeout', type=int, required=False, default=10)
-
+    parser.add_argument("--input-thread-timeout", dest='input_thread_timeout', required=False, default='20s')
+    parser.add_argument("--dlrobot-project-timeout", dest='dlrobot_project_timeout',
+                         required=False, default='4h')
     args = parser.parse_args()
+    args.input_thread_timeout = convert_timeout_to_seconds(args.input_thread_timeout)
+    args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
     return args
 
 
@@ -179,10 +182,24 @@ class TJobTasks:
         self.stop_input_thread = True
         self.input_thread.join()
 
+    def forget_old_remote_processes(self):
+        curtime = time.time()
+        for running_procs in self.worker_2_running_tasks.values():
+            for i in range(len(running_procs) - 1, -1, -1):
+                rc = running_procs[i]
+                if curtime - rc.start_time > args.dlrobot_project_timeout:
+                    self.logger.debug("task {} on worker {} takes {} seconds, probably it failed, stop waiting for a result".format(
+                        rc.project_file, rc.worker_ip, curtime - rc.start_time
+                    ))
+                    running_procs.pop(i)
+                    rc.exit_code = 126
+                    rc.end_time = curtime
+                    self.save_dlrobot_remote_call(rc)
+
     def process_all_tasks(self):
         while not self.stop_input_thread:
             time.sleep(args.input_thread_timeout)
-
+            self.forget_old_remote_processes()
 
 JOB_TASKS = None
 
