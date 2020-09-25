@@ -79,3 +79,16 @@ query_cache_size        = 128M
       tar xfz geckodriver-v0.26.0-linux64.tar.gz
     9.2  for windows
         todo
+
+10. install yandex cloud console
+   curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+   source ~/.profile
+   get token from sokirko@yandex.ru (more ~/.config/yandex-cloud/config.yaml)
+   yc init
+   Which zone do you want to use as a profile default ru-central1-c
+
+   yc compute instance list
+
+11. установка даты
+   sudo dpkg-reconfigure tzdata
+

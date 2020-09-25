@@ -35,10 +35,11 @@ def parse_args():
     parser.add_argument("--tmp-folder",  dest='tmp_folder', required=True)
     parser.add_argument("--save-dlrobot-results",  dest='delete_dlrobot_results', default=True, action="store_false")
     parser.add_argument("--run-forever",  dest='run_forever', required=False, action="store_true", default=False)
-    parser.add_argument("--timeout-before-next-task", dest='timeout_before_next_task', type=int, required=False, default=60*5)
+    parser.add_argument("--timeout-before-next-task", dest='timeout_before_next_task', type=int, required=False, default=60)
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
                             default="3h",
                             help="crawling timeout (there is also conversion step after crawling, that takes time)")
+    parser.add_argument("--only-send-back-this-project", dest='only_send_back_this_project', required=False)
 
     args = parser.parse_args()
     args.dlrobot_path = os.path.realpath(os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py"))
@@ -108,6 +109,8 @@ def send_results_back(args, logger, project_file, exitcode):
         for f in os.listdir(project_folder):
             tar.add(os.path.join(project_folder, f), arcname=f)
 
+    logger.debug("create file {} size={}".format(dlrobot_results_file_name, os.stat(dlrobot_results_file_name).st_size))
+
     with open(dlrobot_results_file_name, "rb") as inp:
         conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
         response = conn.getresponse()
@@ -127,6 +130,10 @@ if __name__ == "__main__":
     logger = setup_logging(args.log_file_name)
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
+
+    if args.only_send_back_this_project is not None:
+        send_results_back(args, logger, args.only_send_back_this_project, 0)
+        sys.exit(0)
 
     running_project_file = None
     try:
