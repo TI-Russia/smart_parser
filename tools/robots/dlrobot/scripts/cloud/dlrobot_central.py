@@ -48,6 +48,8 @@ def parse_args():
                          required=False, default='4h')
     parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
                         required=False, help="check yandex cloud health and restart workstations")
+    parser.add_argument("--skip-worker-check", dest='skip_worker_check', default=False, action='store_true',
+                        required=False, help="skip checking that this tast was given to this worker")
 
     args = parser.parse_args()
     args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -176,7 +178,10 @@ class TJobTasks:
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
     def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
-        remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+        if args.skip_worker_check:
+            remote_call = TRemoteDlrobotCall(worker_ip, project_file)
+        else:
+            remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         self.save_dlrobot_remote_call(remote_call)
@@ -276,17 +281,18 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         return True
 
     def do_GET(self):
-        def send_error(message, http_code=http.HTTPStatus.BAD_REQUEST):
-            JOB_TASKS.logger.error(message)
+        def send_error(message, http_code=http.HTTPStatus.BAD_REQUEST, log_error=True):
+            if log_error:
+                JOB_TASKS.logger.error(message)
             http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
         global JOB_TASKS
         query_components = dict()
         if not self.parse_cgi(query_components):
-            send_error('bad request')
+            send_error('bad request', log_error=False)
             return
         dummy_code = query_components.get('authorization_code', None)
         if not dummy_code:
-            send_error('No authorization_code provided')
+            send_error('No authorization_code provided', log_error=False)
             return
 
         if len(JOB_TASKS.input_files) == 0:
@@ -324,8 +330,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
 
         _, file_extension = os.path.splitext(os.path.basename(self.path))
         file_length = int(self.headers['Content-Length'])
-        filepath = self.headers.get('dlrobot_project_file_name')
-        if filepath is None:
+        project_file = self.headers.get('dlrobot_project_file_name')
+        if project_file is None:
             send_error('cannot find header  dlrobot_project_file_name')
             return
 
@@ -333,11 +339,18 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         if exitcode is None or not exitcode.isdigit():
             send_error('missing exitcode or bad exit code')
             return
-        archive_file_bytes = self.rfile.read(file_length)
         worker_ip = self.client_address[0]
+        JOB_TASKS.logger.debug(
+            "start reading file {} file size {} from {}".format(project_file, file_length, worker_ip))
 
         try:
-            JOB_TASKS.register_task_result(worker_ip, filepath, int(exitcode),  archive_file_bytes)
+            archive_file_bytes = self.rfile.read(file_length)
+        except Exception as exp:
+            send_error('file reading failed: {}'.format(str(exp)))
+            return
+
+        try:
+            JOB_TASKS.register_task_result(worker_ip, project_file, int(exitcode),  archive_file_bytes)
         except Exception as exp:
             send_error('register_task_result failed: {}'.format(str(exp)))
             return
