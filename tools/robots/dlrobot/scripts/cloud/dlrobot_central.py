@@ -107,6 +107,7 @@ class TJobTasks:
         self.input_thread = None
         self.stop_input_thread = False
         self.cloud_id_to_worker_ip = dict()
+        self.lock = threading.Lock()
 
     def log_process_result(self, process_result):
         s = process_result.stdout.strip("\n\r ")
@@ -131,16 +132,17 @@ class TJobTasks:
                 self.logger.debug("register retry for {}".format(remote_call.project_file))
 
     def read_prev_dlrobot_remote_calls(self):
-        self.logger.debug("read {}".format(self.get_dlrobot_remote_calls_filename()))
-        with open(self.get_dlrobot_remote_calls_filename(), "r") as inp:
-            for line in inp:
-                line = line.strip()
-                remote_call = TRemoteDlrobotCall()
-                remote_call.read_from_json(line)
-                self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
-                if remote_call.exit_code == 0 and remote_call.project_file in self.input_files:
-                    self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
-                    self.input_files.remove(remote_call.project_file)
+        if os.path.exists(self.get_dlrobot_remote_calls_filename()):
+            self.logger.debug("read {}".format(self.get_dlrobot_remote_calls_filename()))
+            with open(self.get_dlrobot_remote_calls_filename(), "r") as inp:
+                for line in inp:
+                    line = line.strip()
+                    remote_call = TRemoteDlrobotCall()
+                    remote_call.read_from_json(line)
+                    self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
+                    if remote_call.exit_code == 0 and remote_call.project_file in self.input_files:
+                        self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
+                        self.input_files.remove(remote_call.project_file)
 
     def running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())
@@ -178,13 +180,18 @@ class TJobTasks:
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
     def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
-        if args.skip_worker_check:
-            remote_call = TRemoteDlrobotCall(worker_ip, project_file)
-        else:
-            remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
-        remote_call.exit_code = exit_code
-        remote_call.end_time = int(time.time())
-        self.save_dlrobot_remote_call(remote_call)
+        self.lock.acquire()
+        try:
+            if args.skip_worker_check:
+                remote_call = TRemoteDlrobotCall(worker_ip, project_file)
+            else:
+                remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+            remote_call.exit_code = exit_code
+            remote_call.end_time = int(time.time())
+            self.save_dlrobot_remote_call(remote_call)
+        finally:
+            self.lock.release()
+
         self.untar_file(project_file, result_archive)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
@@ -207,10 +214,14 @@ class TJobTasks:
                     self.logger.debug("task {} on worker {} takes {} seconds, probably it failed, stop waiting for a result".format(
                         rc.project_file, rc.worker_ip, curtime - rc.start_time
                     ))
-                    running_procs.pop(i)
-                    rc.exit_code = 126
-                    rc.end_time = curtime
-                    self.save_dlrobot_remote_call(rc)
+                    self.lock.acquire()
+                    try:
+                        running_procs.pop(i)
+                        rc.exit_code = 126
+                        rc.end_time = curtime
+                        self.save_dlrobot_remote_call(rc)
+                    finally:
+                        self.lock.release()
 
     def forget_remote_processes_for_yandex_worker(self, cloud_id):
         worker_ip = self.cloud_id_to_worker_ip.get(cloud_id)
@@ -221,15 +232,19 @@ class TJobTasks:
         curtime = time.time()
         running_procs = self.worker_2_running_tasks.get(worker_ip, list())
         for i in range(len(running_procs) - 1, -1, -1):
-            rc = running_procs[i]
-            self.logger.debug(
-                "forget task {} on worker {} since the workstation was stopped".format(
-                    rc.project_file, rc.worker_ip
-                ))
-            running_procs.pop(i)
-            rc.exit_code = 125
-            rc.end_time = curtime
-            self.save_dlrobot_remote_call(rc)
+            self.lock.acquire()
+            try:
+                rc = running_procs[i]
+                self.logger.debug(
+                    "forget task {} on worker {} since the workstation was stopped".format(
+                        rc.project_file, rc.worker_ip
+                    ))
+                running_procs.pop(i)
+                rc.exit_code = 125
+                rc.end_time = curtime
+                self.save_dlrobot_remote_call(rc)
+            finally:
+                self.lock.release()
         if cloud_id in self.cloud_id_to_worker_ip:
             del self.cloud_id_to_worker_ip[cloud_id]
 
@@ -280,6 +295,15 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             query_components[items[0]] = items[1]
         return True
 
+    def process_special_commands(self):
+        global CONV_PROCESSOR
+        if self.path == "/ping":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"pong\n")
+            return True
+        return False
+
     def do_GET(self):
         def send_error(message, http_code=http.HTTPStatus.BAD_REQUEST, log_error=True):
             if log_error:
@@ -290,6 +314,10 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         if not self.parse_cgi(query_components):
             send_error('bad request', log_error=False)
             return
+
+        if self.process_special_commands():
+            return
+
         dummy_code = query_components.get('authorization_code', None)
         if not dummy_code:
             send_error('No authorization_code provided', log_error=False)
