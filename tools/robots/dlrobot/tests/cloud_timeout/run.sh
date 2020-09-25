@@ -5,13 +5,13 @@ RESULT_FOLDER=processed_projects
 WORKER_DIR=${TMPDIR:-/tmp}
 rm -rf $RESULT_FOLDER *.log
 
-python ../../scripts/cloud/dlrobot_central.py --server-address ${WEB_ADDR} \
+python3 ../../scripts/cloud/dlrobot_central.py --server-address ${WEB_ADDR} \
     --input-folder input_projects --result-folder  ${RESULT_FOLDER}  --central-heart-rate  1s --dlrobot-project-timeout 2s&
 WEB_SERVER_PID=$!
 sleep 2
 
 
-python ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR} &
+python3 ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR} &
 WORKER_PID=$!
 sleep 2
 kill ${WORKER_PID}

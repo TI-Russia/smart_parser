@@ -112,9 +112,9 @@ def send_results_back(args, logger, project_file, exitcode):
 
     for try_id in range(3):
         try:
-            conn = http.client.HTTPConnection(args.server_address)
+            conn = http.client.HTTPConnection(args.server_address, timeout=60*10)
             with open(dlrobot_results_file_name, "rb") as inp:
-                conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers, timeout=60*10)
+                conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
                 response = conn.getresponse()
                 logger.debug("sent dlrobot result file {}, exitcode={}. size={}, http_code={}".format(
                     dlrobot_results_file_name,

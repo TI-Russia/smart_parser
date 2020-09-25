@@ -5,17 +5,17 @@ RESULT_FOLDER=processed_projects
 WORKER_DIR=${TMPDIR:-/tmp}
 rm -rf $RESULT_FOLDER *.log
 
-python ../../scripts/cloud/dlrobot_central.py --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER} &
+python3 ../../scripts/cloud/dlrobot_central.py --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER} &
 WEB_SERVER_PID=$!
 sleep 1
 
-python ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
+python3 ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
 
 DLROBOT_RESULTS=${RESULT_FOLDER}/dlrobot_remote_calls.dat
 
 function run_worker() {
   local expected_lines=$1
-  python ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
+  python3 ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
   number_projects=`wc ${DLROBOT_RESULTS} -l | awk '{print $1}'`
   if [ ${number_projects} != $expected_lines ]; then
       echo "${DLROBOT_RESULTS} is not updated properly"
@@ -36,7 +36,7 @@ fi
 kill ${WEB_SERVER_PID}
 
 #restart central and read previous results
-python ../../scripts/cloud/dlrobot_central.py --read-previous-results --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER} &
+python3 ../../scripts/cloud/dlrobot_central.py --read-previous-results --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER} &
 WEB_SERVER_PID=$!
 sleep 1
 run_worker 1
