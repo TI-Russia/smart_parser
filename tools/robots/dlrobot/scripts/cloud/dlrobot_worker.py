@@ -9,7 +9,7 @@ import tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
 import shutil
 import tarfile
-
+import socket
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_worker")
@@ -40,6 +40,7 @@ def parse_args():
                             default="3h",
                             help="crawling timeout (there is also conversion step after crawling, that takes time)")
     parser.add_argument("--only-send-back-this-project", dest='only_send_back_this_project', required=False)
+    parser.add_argument("--http-put-timeout", dest='http_put_timeout', required=False, type=int, default=60*10)
 
     args = parser.parse_args()
     args.dlrobot_path = os.path.realpath(os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py"))
@@ -112,7 +113,7 @@ def send_results_back(args, logger, project_file, exitcode):
 
     for try_id in range(3):
         try:
-            conn = http.client.HTTPConnection(args.server_address, timeout=60*10)
+            conn = http.client.HTTPConnection(args.server_address, timeout=args.http_put_timeout)
             with open(dlrobot_results_file_name, "rb") as inp:
                 conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
                 response = conn.getresponse()
@@ -122,11 +123,12 @@ def send_results_back(args, logger, project_file, exitcode):
                     os.stat(dlrobot_results_file_name).st_size,
                     response.status))
                 break
-        except (HTTPError, URLError) as error:
+        except Exception as error:
             logger.error('Exception: %s', error)
-        except timeout:
-            logger.error('socket timed out ')
+            if try_id == 2:
+                raise
 
+    logger.debug("delete file {}".format(dlrobot_results_file_name))
     os.unlink(dlrobot_results_file_name)
 
     if args.delete_dlrobot_results:
