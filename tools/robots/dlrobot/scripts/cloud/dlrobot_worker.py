@@ -102,7 +102,6 @@ def send_results_back(args, logger, project_file, exitcode):
         "dlrobot_project_file_name": os.path.basename(project_file)
     }
     logger.debug("send results back for {} exitcode={}".format(project_file, exitcode))
-    conn = http.client.HTTPConnection(args.server_address)
     dlrobot_results_file_name = os.path.basename(project_file) + ".tar.gz"
 
     with tarfile.open(dlrobot_results_file_name, "w:gz") as tar:
@@ -111,14 +110,23 @@ def send_results_back(args, logger, project_file, exitcode):
 
     logger.debug("create file {} size={}".format(dlrobot_results_file_name, os.stat(dlrobot_results_file_name).st_size))
 
-    with open(dlrobot_results_file_name, "rb") as inp:
-        conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
-        response = conn.getresponse()
-        logger.debug("sent dlrobot result file {}, exitcode={}. size={}, http_code={}".format(
-            dlrobot_results_file_name,
-            exitcode,
-            os.stat(dlrobot_results_file_name).st_size,
-            response.status))
+    for try_id in range(3):
+        try:
+            conn = http.client.HTTPConnection(args.server_address)
+            with open(dlrobot_results_file_name, "rb") as inp:
+                conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers, timeout=60*10)
+                response = conn.getresponse()
+                logger.debug("sent dlrobot result file {}, exitcode={}. size={}, http_code={}".format(
+                    dlrobot_results_file_name,
+                    exitcode,
+                    os.stat(dlrobot_results_file_name).st_size,
+                    response.status))
+                break
+        except (HTTPError, URLError) as error:
+            logger.error('Exception: %s', error)
+        except timeout:
+            logger.error('socket timed out ')
+
     os.unlink(dlrobot_results_file_name)
 
     if args.delete_dlrobot_results:
