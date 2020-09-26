@@ -93,4 +93,4 @@ query_cache_size        = 128M
    sudo dpkg-reconfigure tzdata
 
 12. в /etc/environment добавляем:
-bash /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh
+    bash /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh

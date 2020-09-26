@@ -10,7 +10,6 @@ import urllib
 import http.server
 import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
-import threading
 from robots.common.primitives import convert_timeout_to_seconds
 import shutil
 
@@ -59,6 +58,9 @@ def parse_args():
         args.yandex_cloud_console = os.path.expanduser('~/yandex-cloud/bin/yc')
         if not os.path.exists (args.yandex_cloud_console):
             raise FileNotFoundError("install yandex cloud console ( https://cloud.yandex.ru/docs/cli/operations/install-cli )")
+    if args.server_address is None:
+        args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
+
     return args
 
 
@@ -90,8 +92,10 @@ class TRemoteDlrobotCall:
         return json.dumps(d)
 
 
-class TJobTasks:
+class TDlrobotHTTPServer(http.server.HTTPServer):
+
     def __init__(self, args, logger):
+        self.timeout = 60 * 10
         self.conversion_client = TDocConversionClient(logger)
         self.args = args
         self.logger = logger
@@ -104,10 +108,11 @@ class TJobTasks:
             self.read_prev_dlrobot_remote_calls()
         logger.debug("there are {} dlrobot projects to process".format(len(self.input_files)))
         self.worker_2_running_tasks = defaultdict(list)
-        self.input_thread = None
-        self.stop_input_thread = False
         self.cloud_id_to_worker_ip = dict()
-        self.lock = threading.Lock()
+        host, port = self.args.server_address.split(":")
+        super().__init__((host, int(port)), TDlrobotRequestHandler)
+        self.last_service_action_time_stamp = time.time()
+
 
     def log_process_result(self, process_result):
         s = process_result.stdout.strip("\n\r ")
@@ -180,71 +185,49 @@ class TJobTasks:
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
     def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
-        self.lock.acquire()
-        try:
-            if args.skip_worker_check:
-                remote_call = TRemoteDlrobotCall(worker_ip, project_file)
-            else:
-                remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
-            remote_call.exit_code = exit_code
-            remote_call.end_time = int(time.time())
-            self.save_dlrobot_remote_call(remote_call)
-        finally:
-            self.lock.release()
+        if args.skip_worker_check:
+            remote_call = TRemoteDlrobotCall(worker_ip, project_file)
+        else:
+            remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+        remote_call.exit_code = exit_code
+        remote_call.end_time = int(time.time())
+        self.save_dlrobot_remote_call(remote_call)
 
         self.untar_file(project_file, result_archive)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
             exit_code, project_file, worker_ip))
 
-    def start_input_files_thread(self):
-        self.input_thread = threading.Thread(target=self.process_all_tasks, args=())
-        self.input_thread.start()
-
-    def stop_input_files_thread(self):
-        self.stop_input_thread = True
-        self.input_thread.join()
-
-    def forget_old_remote_processes(self):
-        curtime = time.time()
+    def forget_old_remote_processes(self, current_time):
         for running_procs in self.worker_2_running_tasks.values():
             for i in range(len(running_procs) - 1, -1, -1):
                 rc = running_procs[i]
-                if curtime - rc.start_time > args.dlrobot_project_timeout:
+                if current_time - rc.start_time > args.dlrobot_project_timeout:
                     self.logger.debug("task {} on worker {} takes {} seconds, probably it failed, stop waiting for a result".format(
-                        rc.project_file, rc.worker_ip, curtime - rc.start_time
+                        rc.project_file, rc.worker_ip, current_time - rc.start_time
                     ))
-                    self.lock.acquire()
-                    try:
-                        running_procs.pop(i)
-                        rc.exit_code = 126
-                        rc.end_time = curtime
-                        self.save_dlrobot_remote_call(rc)
-                    finally:
-                        self.lock.release()
+                    running_procs.pop(i)
+                    rc.exit_code = 126
+                    rc.end_time = current_time
+                    self.save_dlrobot_remote_call(rc)
 
-    def forget_remote_processes_for_yandex_worker(self, cloud_id):
+    def forget_remote_processes_for_yandex_worker(self, cloud_id, current_time):
         worker_ip = self.cloud_id_to_worker_ip.get(cloud_id)
-        if worker_ip is None:
+        if worker_ip is None and len(self.cloud_id_to_worker_ip) > 0:
             self.logger.info("I do not remember ip for cloud_id {}, cannot delete processes".format(cloud_id))
             return
 
-        curtime = time.time()
         running_procs = self.worker_2_running_tasks.get(worker_ip, list())
         for i in range(len(running_procs) - 1, -1, -1):
-            self.lock.acquire()
-            try:
-                rc = running_procs[i]
-                self.logger.debug(
-                    "forget task {} on worker {} since the workstation was stopped".format(
-                        rc.project_file, rc.worker_ip
-                    ))
-                running_procs.pop(i)
-                rc.exit_code = 125
-                rc.end_time = curtime
-                self.save_dlrobot_remote_call(rc)
-            finally:
-                self.lock.release()
+            rc = running_procs[i]
+            self.logger.debug(
+                "forget task {} on worker {} since the workstation was stopped".format(
+                    rc.project_file, rc.worker_ip
+                ))
+            running_procs.pop(i)
+            rc.exit_code = 125
+            rc.end_time = current_time
+            self.save_dlrobot_remote_call(rc)
         if cloud_id in self.cloud_id_to_worker_ip:
             del self.cloud_id_to_worker_ip[cloud_id]
 
@@ -272,18 +255,18 @@ class TJobTasks:
         except Exception as exp:
             self.logger.error(exp)
 
-    def process_all_tasks(self):
-        while not self.stop_input_thread:
-            time.sleep(args.central_heart_rate)
-            self.forget_old_remote_processes()
+    def service_actions(self):
+        current_time = time.time()
+        if current_time - self.last_service_action_time_stamp >= args.central_heart_rate:
+            self.last_service_action_time_stamp = current_time
+            self.forget_old_remote_processes(current_time)
             if args.check_yandex_cloud:
                 self.check_yandex_cloud()
 
-JOB_TASKS = None
+HTTP_SERVER = None
 
 
-class THttpServer(http.server.BaseHTTPRequestHandler):
-    timeout = 60*10
+class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def parse_cgi(self, query_components):
         query = urllib.parse.urlparse(self.path).query
@@ -297,7 +280,6 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         return True
 
     def process_special_commands(self):
-        global CONV_PROCESSOR
         if self.path == "/ping":
             self.send_response(200)
             self.end_headers()
@@ -308,9 +290,9 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         def send_error(message, http_code=http.HTTPStatus.BAD_REQUEST, log_error=True):
             if log_error:
-                JOB_TASKS.logger.error(message)
+                HTTP_SERVER.logger.error(message)
             http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
-        global JOB_TASKS
+        global HTTP_SERVER
         query_components = dict()
         if not self.parse_cgi(query_components):
             send_error('bad request', log_error=False)
@@ -324,17 +306,17 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             send_error('No authorization_code provided', log_error=False)
             return
 
-        if len(JOB_TASKS.input_files) == 0:
+        if len(HTTP_SERVER.input_files) == 0:
             send_error("no more jobs", DLROBOT_HTTP_CODE.NO_MORE_JOBS)
             return
 
-        if not JOB_TASKS.conversion_server_queue_is_short():
+        if not HTTP_SERVER.conversion_server_queue_is_short():
             send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
             return
 
         worker_ip = self.client_address[0]
         try:
-            project_file = JOB_TASKS.get_new_job_task(worker_ip)
+            project_file = HTTP_SERVER.get_new_job_task(worker_ip)
         except Exception as exp:
             send_error(str(exp))
             return
@@ -343,16 +325,16 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         self.send_header('dlrobot_project_file_name',  project_file)
         self.end_headers()
 
-        file_path = os.path.join(JOB_TASKS.args.input_folder, project_file)
+        file_path = os.path.join(HTTP_SERVER.args.input_folder, project_file)
         with open(file_path, 'rb') as fh:
             self.wfile.write(fh.read())
 
     def do_PUT(self):
         def send_error(message, http_code=http.HTTPStatus.BAD_REQUEST):
-            JOB_TASKS.logger.error(message)
+            HTTP_SERVER.logger.error(message)
             http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
 
-        global JOB_TASKS
+        global HTTP_SERVER
         if self.path is None:
             send_error("no file specified")
             return
@@ -375,7 +357,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             send_error('missing exitcode or bad exit code')
             return
         worker_ip = self.client_address[0]
-        JOB_TASKS.logger.debug(
+        HTTP_SERVER.logger.debug(
             "start reading file {} file size {} from {}".format(project_file, file_length, worker_ip))
 
         try:
@@ -385,7 +367,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            JOB_TASKS.register_task_result(worker_ip, project_file, int(exitcode),  archive_file_bytes)
+            HTTP_SERVER.register_task_result(worker_ip, project_file, int(exitcode),  archive_file_bytes)
         except Exception as exp:
             send_error('register_task_result failed: {}'.format(str(exp)))
             return
@@ -397,24 +379,14 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
 if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging(args.log_file_name)
-    if args.server_address is None:
-        args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
-    host, port = args.server_address.split(":")
-    JOB_TASKS = TJobTasks(args, logger)
-    JOB_TASKS.start_input_files_thread()
-    if len(JOB_TASKS.input_files) == 0:
-        logger.error("no more tasks")
-
-    myServer = http.server.HTTPServer((host, int(port)), THttpServer)
+    HTTP_SERVER = TDlrobotHTTPServer(args, logger)
     try:
-        myServer.serve_forever()
+        HTTP_SERVER.serve_forever()
     except KeyboardInterrupt:
         logger.info("ctrl+c received")
-        JOB_TASKS.stop_input_files_thread()
         sys.exit(1)
     except Exception as exp:
         sys.stderr.write("general exception: {}\n".format(exp))
         logger.error("general exception: {}".format(exp))
-        JOB_TASKS.stop_input_files_thread()
         sys.exit(1)
 
