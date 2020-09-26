@@ -53,7 +53,7 @@ def parse_args():
                         help="save db on each Nth get request")
     parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
                         help="restart ocr if it produces no results", default="3h")
-    parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='10')
+    parser.add_argument("--central-heart-rate", dest='central_heart_rate', type=int,  required=False, default='10')
 
     args = parser.parse_args()
     TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
@@ -131,6 +131,7 @@ class TConvertProcessor(http.server.HTTPServer):
         self.successful_get_requests = 0
         host, port = self.args.server_address.split(":")
         super().__init__((host, int(port)), THttpServerRequestHandler)
+        logger.debug("start server {}:{}".format(host, port))
 
         self.last_heart_beat = time.time()
         self.file_garbage_collection_timestamp = 0
@@ -544,7 +545,6 @@ if __name__ == '__main__':
     HTTP_SERVER = TConvertProcessor(args, logger)
     HTTP_SERVER.create_folders()
 
-    logger.debug("start server {}:{}".format(host, port))
     exit_code = 0
     try:
         logger.debug("myServer.serve_forever()...")

@@ -45,3 +45,5 @@
 
 17. run all ConvStorage tests
     bash run_tests.sh
+
+18. Be careful, set correct time to your workstation, tests can fail if time is wrong
