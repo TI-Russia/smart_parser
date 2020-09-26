@@ -283,6 +283,7 @@ JOB_TASKS = None
 
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
+    timeout = 60*10
 
     def parse_cgi(self, query_components):
         query = urllib.parse.urlparse(self.path).query
@@ -357,10 +358,16 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             return
 
         _, file_extension = os.path.splitext(os.path.basename(self.path))
-        file_length = int(self.headers['Content-Length'])
+
+        file_length = self.headers.get('Content-Length')
+        if file_length is None or not file_length.isdigit():
+            send_error('cannot find header  dlrobot_project_file_name')
+            return
+        file_length = int(file_length)
+
         project_file = self.headers.get('dlrobot_project_file_name')
         if project_file is None:
-            send_error('cannot find header  dlrobot_project_file_name')
+            send_error('cannot find header "dlrobot_project_file_name"')
             return
 
         exitcode = self.headers.get('exitcode')

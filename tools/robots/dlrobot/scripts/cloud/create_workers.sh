@@ -9,5 +9,11 @@ function create_worker() {
   fi
 }
 
+workers_count=`ps -x | grep -c dlrobot_worker`
+if [ $workers_count != 0 ]; then
+  echo "process workers are still running, delete workers first"
+  exit 1
+fi
+
 create_worker /tmp/dlrobot_worker1
 create_worker /tmp/dlrobot_worker2
