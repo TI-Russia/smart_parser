@@ -12,7 +12,7 @@ import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
 from robots.common.primitives import convert_timeout_to_seconds
 import shutil
-
+import ipaddress
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -112,7 +112,15 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         host, port = self.args.server_address.split(":")
         super().__init__((host, int(port)), TDlrobotRequestHandler)
         self.last_service_action_time_stamp = time.time()
+        self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
+        self.permitted_hosts.add('127.0.0.1')
+        self.permitted_hosts.add('95.165.96.61') # disclosures.ru
 
+    def verify_request(self, request, client_address):
+        (ip, dummy) = client_address
+        if ip not in self.permitted_hosts:
+            return False
+        return True
 
     def log_process_result(self, process_result):
         s = process_result.stdout.strip("\n\r ")
@@ -251,6 +259,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 elif m['status'] == "RUNNING":
                     if cloud_id not in self.cloud_id_to_worker_ip:
                         worker_ip = m['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
+                        self.permitted_hosts.add(worker_ip)
                         self.cloud_id_to_worker_ip[cloud_id] = worker_ip
         except Exception as exp:
             self.logger.error(exp)
@@ -267,6 +276,8 @@ HTTP_SERVER = None
 
 
 class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
+
+    timeout = 10*60
 
     def parse_cgi(self, query_components):
         query = urllib.parse.urlparse(self.path).query
@@ -343,7 +354,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
 
         file_length = self.headers.get('Content-Length')
         if file_length is None or not file_length.isdigit():
-            send_error('cannot find header  dlrobot_project_file_name')
+            send_error('cannot find header  Content-Length')
             return
         file_length = int(file_length)
 
@@ -380,6 +391,7 @@ if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging(args.log_file_name)
     HTTP_SERVER = TDlrobotHTTPServer(args, logger)
+    HTTP_SERVER.check_yandex_cloud() # to get worker ips
     try:
         HTTP_SERVER.serve_forever()
     except KeyboardInterrupt:
