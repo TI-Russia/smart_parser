@@ -74,7 +74,7 @@ query_cache_size        = 128M
 
 9.  download https://github.com/mozilla/geckodriver/releases/tag/v0.26.0 (linux or windows);
    9.1 for linux
-      cd  ~/.local/bin
+      cd  /usr/local/bin
       wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
       tar xfz geckodriver-v0.26.0-linux64.tar.gz
     9.2  for windows
@@ -93,6 +93,10 @@ query_cache_size        = 128M
    sudo dpkg-reconfigure tzdata
 
 12. add to /etc/environment:
-    bash /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh
+HS=/home/sokirko
+export ASPOSE_LIC=$HS/lic.bin
+export PYTHONPATH=$HS/smart_parser/tools
+export DECLARATOR_CONV_URL=disclosures.ru:8091
+bash -x $HS/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh
 
 
