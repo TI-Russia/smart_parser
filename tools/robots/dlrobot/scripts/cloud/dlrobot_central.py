@@ -258,10 +258,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                     self.forget_remote_processes_for_yandex_worker(cloud_id, current_time)
                     self.start_yandex_cloud_worker(cloud_id)
                 elif m['status'] == "RUNNING":
-                    if cloud_id not in self.cloud_id_to_worker_ip:
-                        worker_ip = m['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
-                        self.permitted_hosts.add(worker_ip)
-                        self.cloud_id_to_worker_ip[cloud_id] = worker_ip
+                    worker_ip = m['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
+                    self.permitted_hosts.add(worker_ip)
+                    self.cloud_id_to_worker_ip[cloud_id] = worker_ip
         except Exception as exp:
             self.logger.error(exp)
 
