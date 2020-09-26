@@ -11,7 +11,6 @@ import hashlib
 import shutil
 import subprocess
 import logging
-import threading
 import tempfile
 import sys
 import queue
@@ -54,10 +53,13 @@ def parse_args():
                         help="save db on each Nth get request")
     parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
                         help="restart ocr if it produces no results", default="3h")
+    parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='10')
 
     args = parser.parse_args()
     TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
     TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
+    if args.server_address is None:
+        args.server_address = os.environ['DECLARATOR_CONV_URL']
     return args
 
 
@@ -104,7 +106,7 @@ class TInputTask:
         self.creation_time = time.time()
 
 
-class TConvertProcessor:
+class TConvertProcessor(http.server.HTTPServer):
     #max time between putting file to ocr queue and getting the result
     ocr_timeout_with_waiting_in_queue = 60 * 60 * 3 #3 hours
 
@@ -127,6 +129,14 @@ class TConvertProcessor:
         self.processed_files_size = 0
         self.failed_files_size = 0
         self.successful_get_requests = 0
+        host, port = self.args.server_address.split(":")
+        super().__init__((host, int(port)), THttpServerRequestHandler)
+
+        self.last_heart_beat = time.time()
+        self.file_garbage_collection_timestamp = 0
+        self.save_get_requests = 0
+        self.ocr_queue_is_empty_last_time_stamp = time.time()
+        self.got_ocred_file_last_time_stamp = time.time()
 
     def delete_file_silently(self, full_path):
         try:
@@ -368,58 +378,47 @@ class TConvertProcessor:
         taskkill_windows('fineexec.exe')
 
     def process_all_tasks(self):
-        file_garbage_collection_timestamp = 0
-        sleep_seconds = 10
-        save_get_requests = 0
-        ocr_queue_is_empty_last_time_stamp = time.time()
-        got_ocred_file_last_time_stamp = time.time()
-        while not self.stop_input_thread:
-            time.sleep(sleep_seconds)
-            if len(self.ocr_tasks) == 0:
-                ocr_queue_is_empty_last_time_stamp = time.time()
-            new_files_from_winword = self.try_convert_with_winword()
-            new_files_from_ocr = self.process_docx_from_ocr()
-            if new_files_from_ocr:
-                got_ocred_file_last_time_stamp = time.time()
-            # file garbage tasks
-            current_time = time.time()
-            if current_time - file_garbage_collection_timestamp >= 60:  # just not too often
-                file_garbage_collection_timestamp = current_time
-                self.process_ocr_logs()
-                self.process_stalled_files()
+        if len(self.ocr_tasks) == 0:
+            self.ocr_queue_is_empty_last_time_stamp = time.time()
+        new_files_from_winword = self.try_convert_with_winword()
+        new_files_from_ocr = self.process_docx_from_ocr()
+        if new_files_from_ocr:
+            self.got_ocred_file_last_time_stamp = time.time()
+        # file garbage tasks
+        current_time = time.time()
+        if current_time - self.file_garbage_collection_timestamp >= 60:  # just not too often
+            self.file_garbage_collection_timestamp = current_time
+            self.process_ocr_logs()
+            self.process_stalled_files()
 
-            if  time.time() - got_ocred_file_last_time_stamp > TConvertProcessor.ocr_restart_time and \
-                    time.time() - ocr_queue_is_empty_last_time_stamp > TConvertProcessor.ocr_restart_time :
-                self.logger.debug("last ocr file was received long ago and all this time the ocr queue was not empty")
-                self.restart_ocr()
-                got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
+        current_time = time.time()
+        if  current_time - self.got_ocred_file_last_time_stamp > TConvertProcessor.ocr_restart_time and \
+                current_time - self.ocr_queue_is_empty_last_time_stamp > TConvertProcessor.ocr_restart_time :
+            self.logger.debug("last ocr file was received long ago and all this time the ocr queue was not empty")
+            self.restart_ocr()
+            self.got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
 
-            # periodic save db:
-            # new files or each 100 requests or 15 minutes
-            if new_files_from_winword or \
-                    new_files_from_ocr or \
-                    self.successful_get_requests - save_get_requests >= self.args.request_rate_serialize or \
-                    current_time - self.convert_storage.last_save_time > 60*15:  # each 100 requests or 15 minutes
-                save_get_requests = self.successful_get_requests
-                self.convert_storage.save_database()
+        # periodic save db:
+        # new files or each 100 requests or 15 minutes
+        if new_files_from_winword or \
+                new_files_from_ocr or \
+                self.successful_get_requests - self.save_get_requests >= self.args.request_rate_serialize or \
+                current_time - self.convert_storage.last_save_time > 60*15:  # each 100 requests or 15 minutes
+            self.save_get_requests = self.successful_get_requests
+            self.convert_storage.save_database()
 
-    def start_input_files_thread(self):
-        self.input_thread = threading.Thread(target=self.process_all_tasks, args=())
-        self.input_thread.start()
-
-    def stop_input_files_thread(self):
-        self.stop_input_thread = True
-        self.input_thread.join()
-
-    def input_files_thread_is_alive(self):
-        self.input_thread.is_alive()
+    def service_actions(self):
+        current_time = time.time()
+        if current_time - self.last_heart_beat >= self.args.central_heart_rate:
+            self.process_all_tasks()
+            self.last_heart_beat = time.time()
 
 
-CONV_PROCESSOR = None
+HTTP_SERVER = None
 ALLOWED_FILE_EXTENSTIONS={'.pdf'}
 
 
-class THttpServer(http.server.BaseHTTPRequestHandler):
+class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def parse_cgi(self, query_components):
         query = urllib.parse.urlparse(self.path).query
@@ -433,11 +432,11 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         return True
 
     def log_message(self, msg_format, *args):
-        global CONV_PROCESSOR
-        CONV_PROCESSOR.logger.debug(msg_format % args)
+        global HTTP_SERVER
+        HTTP_SERVER.logger.debug(msg_format % args)
 
     def process_special_commands(self):
-        global CONV_PROCESSOR
+        global HTTP_SERVER
         if self.path == "/ping":
             self.send_response(200)
             self.end_headers()
@@ -446,7 +445,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         if self.path == "/stat":
             self.send_response(200)
             self.end_headers()
-            stats = json.dumps(CONV_PROCESSOR.get_stats())
+            stats = json.dumps(HTTP_SERVER.get_stats())
             self.wfile.write(stats.encode("utf8"))
             return True
         return False
@@ -455,9 +454,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
 
-        global CONV_PROCESSOR
-        CONV_PROCESSOR.input_files_thread_is_alive()
-        #CONV_PROCESSOR.logger.debug(self.path)
+        global HTTP_SERVER
         if self.process_special_commands():
             return
 
@@ -471,7 +468,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             send_error('No SHA256 provided')
             return
 
-        file_path = CONV_PROCESSOR.convert_storage.get_converted_file_name(sha256)
+        file_path = HTTP_SERVER.convert_storage.get_converted_file_name(sha256)
         if file_path is None or not os.path.exists(file_path):
             send_error('File not found')
             return
@@ -480,8 +477,8 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
             self.end_headers()
-            CONV_PROCESSOR.convert_storage.register_access_request(sha256)
-            CONV_PROCESSOR.successful_get_requests += 1;
+            HTTP_SERVER.convert_storage.register_access_request(sha256)
+            HTTP_SERVER.successful_get_requests += 1;
             if query_components.get("download_converted_file", True):
                 with open(file_path, 'rb') as fh:
                     self.wfile.write(fh.read())  # Read the file and send the contents
@@ -491,8 +488,7 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
     def do_PUT(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
-        global CONV_PROCESSOR, ALLOWED_FILE_EXTENSTIONS
-        CONV_PROCESSOR.input_files_thread_is_alive()
+        global HTTP_SERVER, ALLOWED_FILE_EXTENSTIONS
         if self.path is None:
             send_error("no file specified")
             return
@@ -514,22 +510,22 @@ class THttpServer(http.server.BaseHTTPRequestHandler):
         if file_length > max_file_size:
             send_error("file is too large (size must less than {} bytes ".format(max_file_size))
             return
-        CONV_PROCESSOR.logger.debug("receive file {} length {}".format(self.path, file_length))
+        HTTP_SERVER.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
         sha256 = hashlib.sha256(file_bytes).hexdigest()
         if rebuild:
-            CONV_PROCESSOR.convert_storage.delete_conversion_record(sha256)
+            HTTP_SERVER.convert_storage.delete_conversion_record(sha256)
         else:
-            if CONV_PROCESSOR.convert_storage.has_converted_file(sha256):
+            if HTTP_SERVER.convert_storage.has_converted_file(sha256):
                 self.send_response(201, 'Already exists')
                 self.end_headers()
                 return
-        if not CONV_PROCESSOR.save_new_file(sha256, file_bytes,  file_extension):
+        if not HTTP_SERVER.save_new_file(sha256, file_bytes,  file_extension):
             self.send_response(201, 'Already registered as a conversion task, wait ')
             self.end_headers()
             return
 
-        CONV_PROCESSOR.all_put_files_count += 1
+        HTTP_SERVER.all_put_files_count += 1
 
         self.send_response(201, 'Created')
         self.end_headers()
@@ -542,32 +538,24 @@ if __name__ == '__main__':
     assert shutil.which("pdfcrack") is not None #https://sourceforge.net/projects/pdfcrack/files/
 
     args = parse_args()
-    if args.server_address is None:
-        args.server_address = os.environ['DECLARATOR_CONV_URL']
     logger = logging.getLogger("db_conv_logger")
     setup_logging(logger, args.logfile)
 
-    CONV_PROCESSOR = TConvertProcessor(args, logger)
-    CONV_PROCESSOR.create_folders()
-    CONV_PROCESSOR.start_input_files_thread()
+    HTTP_SERVER = TConvertProcessor(args, logger)
+    HTTP_SERVER.create_folders()
 
-    host, port = args.server_address.split(":")
     logger.debug("start server {}:{}".format(host, port))
+    exit_code = 0
     try:
-        myServer = http.server.HTTPServer((host, int(port)), THttpServer)
         logger.debug("myServer.serve_forever()...")
-        myServer.serve_forever()
+        HTTP_SERVER.serve_forever()
         logger.debug("myServer.server_close()")
-        sys.stderr.write("myServer.server_close()\n")  #try to detect silent exits
-        myServer.server_close()
     except KeyboardInterrupt as exp:
-        sys.stderr.write("ctrl+c received, exception: {}\n".format(exp))
         logger.error("ctrl+c received, exception: {}".format(exp))
-        CONV_PROCESSOR.stop_input_files_thread()
-        sys.exit(1)
+        exit_code = 1
     except Exception as exp:
-        sys.stderr.write("general exception: {}\n".format(exp))
         logger.error("general exception: {}".format(exp))
-        CONV_PROCESSOR.stop_input_files_thread()
-        sys.exit(1)
+        exit_code = 1
+    HTTP_SERVER.server_close()
     logger.debug("reach the end of the main")
+    sys.exit(exit_code)
