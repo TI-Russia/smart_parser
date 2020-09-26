@@ -251,10 +251,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             with open("yc.json", "r") as inp:
                 yc_json = json.load(inp)
             os.unlink("yc.json")
+            current_time = time.time()
             for m in yc_json:
                 cloud_id = m['id']
                 if m['status'] == 'STOPPED':
-                    self.forget_remote_processes_for_yandex_worker(cloud_id)
+                    self.forget_remote_processes_for_yandex_worker(cloud_id, current_time)
                     self.start_yandex_cloud_worker(cloud_id)
                 elif m['status'] == "RUNNING":
                     if cloud_id not in self.cloud_id_to_worker_ip:
