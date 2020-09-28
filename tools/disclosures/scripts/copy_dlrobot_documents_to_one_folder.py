@@ -9,6 +9,7 @@ from robots.common.robot_project import TRobotProject
 import re
 import json
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-glob", dest='input_glob', required=True)

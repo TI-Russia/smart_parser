@@ -63,7 +63,6 @@ class TMatch:
         }
 
 
-
 def process_smart_parser_json(json_file):
     with open(json_file, "r", encoding="utf8") as inpf:
         smart_parser_json = json.load(inpf)
@@ -76,12 +75,7 @@ def get_smart_parser_result(source_file):
     global EXTERNAl_CONVERTORS
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
-    cmd = "{} -converted-storage-url {} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(
-        EXTERNAl_CONVERTORS.smart_parser,
-        TDocConversionClient.DECLARATOR_CONV_URL,
-        source_file)
-    os.system(cmd)
-
+    EXTERNAl_CONVERTORS.run_smart_parser_short(source_file)
     json_file = source_file + ".json"
     if os.path.exists(json_file):
         people_count = process_smart_parser_json(json_file)
