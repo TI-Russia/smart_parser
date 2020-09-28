@@ -63,32 +63,18 @@ class TMatch:
         }
 
 
-def process_smart_parser_json(json_file):
-    with open(json_file, "r", encoding="utf8") as inpf:
-        smart_parser_json = json.load(inpf)
-        people_count = len(smart_parser_json.get("persons", []))
-    os.remove(json_file)
-    return people_count
-
-
 def get_smart_parser_result(source_file):
     global EXTERNAl_CONVERTORS
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
         return 0
     EXTERNAl_CONVERTORS.run_smart_parser_short(source_file)
     json_file = source_file + ".json"
-    if os.path.exists(json_file):
-        people_count = process_smart_parser_json(json_file)
-    else:
-        sheet_index = 0
-        people_count = 0
-        while True:
-            json_file = "{}_{}.json".format(source_file, sheet_index)
-            if not os.path.exists(json_file):
-                break
-            people_count += process_smart_parser_json(json_file)
-            sheet_index += 1
-    return people_count
+    if not os.path.exists(json_file):
+        return 0
+    with open(json_file, "r", encoding="utf8") as inpf:
+        smart_parser_json = json.load(inpf)
+    #os.remove(json_file)
+    return len(smart_parser_json.get("persons", []))
 
 
 class TTextFeature:
