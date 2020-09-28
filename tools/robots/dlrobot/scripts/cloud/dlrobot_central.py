@@ -53,11 +53,12 @@ def parse_args():
     args = parser.parse_args()
     args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
     args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
-    args.yandex_cloud_console = shutil.which('yc')
-    if args.yandex_cloud_console is None:
-        args.yandex_cloud_console = os.path.expanduser('~/yandex-cloud/bin/yc')
-        if not os.path.exists (args.yandex_cloud_console):
-            raise FileNotFoundError("install yandex cloud console ( https://cloud.yandex.ru/docs/cli/operations/install-cli )")
+    if args.check_yandex_cloud:
+        args.yandex_cloud_console = shutil.which('yc')
+        if args.yandex_cloud_console is None:
+            args.yandex_cloud_console = os.path.expanduser('~/yandex-cloud/bin/yc')
+            if not os.path.exists (args.yandex_cloud_console):
+                raise FileNotFoundError("install yandex cloud console ( https://cloud.yandex.ru/docs/cli/operations/install-cli )")
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
 
@@ -245,6 +246,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         os.system(cmd)
 
     def check_yandex_cloud(self):
+        if not self.args.check_yandex_cloud:
+            return None
         try:
             cmd = "{} compute instance list --format json >yc.json".format(self.args.yandex_cloud_console)
             os.system(cmd)
@@ -269,8 +272,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if current_time - self.last_service_action_time_stamp >= args.central_heart_rate:
             self.last_service_action_time_stamp = current_time
             self.forget_old_remote_processes(current_time)
-            if args.check_yandex_cloud:
-                self.check_yandex_cloud()
+            self.check_yandex_cloud()
 
 HTTP_SERVER = None
 

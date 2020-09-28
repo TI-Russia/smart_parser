@@ -16,11 +16,12 @@ class TRobotProject:
     def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
         self.selenium_driver = TSeleniumDriver(logger)
-        self.project_file = filename + ".clicks"
-        if not os.path.exists(self.project_file):
-            shutil.copy2(filename, self.project_file)
+        self.visited_pages_file = filename + ".visited_pages"
+        self.click_paths_file = filename + ".click_paths"
+        self.result_summary_file = filename + ".result_summary"
+        if not os.path.exists(self.visited_pages_file):
+            shutil.copy2(filename, self.visited_pages_file)
         self.offices = list()
-        self.human_files = list()
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
@@ -41,7 +42,7 @@ class TRobotProject:
             shutil.rmtree(self.selenium_driver.download_folder)
 
     def write_project(self):
-        with open(self.project_file, "w", encoding="utf8") as outf:
+        with open(self.visited_pages_file, "w", encoding="utf8") as outf:
             output =  {
                 'sites': [o.to_json() for o in self.offices],
                 'step_names': self.get_robot_step_names()
@@ -57,7 +58,7 @@ class TRobotProject:
 
     def read_project(self, fetch_morda_url=True, check_step_names=True):
         self.offices = list()
-        with open(self.project_file, "r", encoding="utf8") as inpf:
+        with open(self.visited_pages_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
             if check_step_names:
                 if 'step_names' in json_dict:
@@ -122,13 +123,18 @@ class TRobotProject:
                     rec['archive_index'] = export_record.archive_index
                 files_with_click_path.append(rec)
         files_with_click_path.sort(key=(lambda x: x['sha256']))
+
+        # full report
+        with open(self.click_paths_file, "w", encoding="utf8") as outf:
+            json.dump(files_with_click_path, outf, ensure_ascii=False, indent=4)
+
         cached_files = list("{} {}".format(x['cached_file'], x.get('archive_index', -1)) for x in files_with_click_path)
         cached_files.sort()
-        with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
+        # short report to commit to git
+        with open(self.result_summary_file, "w", encoding="utf8") as outf:
             report = {
                 "files_count": len(cached_files),
-                "files_sorted (short report)": cached_files,
-                "files_with_click_path (full report)": files_with_click_path
+                "files_sorted": cached_files,
             }
             json.dump(report, outf, ensure_ascii=False, indent=4)
 

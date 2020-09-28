@@ -80,7 +80,7 @@ def parse_args():
     parser.add_argument("--cache-folder-tmp", dest='cache_folder_tmp', default=False, action="store_true",
                             help="create cache folder as a tmp folder and delete it upon exit")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
-    parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
+    parser.add_argument("--only-click-paths", dest='only_click_paths', default=False, action="store_true")
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
                             default="3h",
                             help="crawling timeout in seconds (there is also conversion step after crawling)")
@@ -140,7 +140,7 @@ def open_project(args):
     logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.read_project()
-        if args.only_click_stats:
+        if args.only_click_paths:
             project.write_export_stats()
         else:
             make_steps(args, project)

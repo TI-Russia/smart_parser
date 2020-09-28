@@ -46,7 +46,7 @@ def parse_args():
     parser.add_argument("--fake-dlrobot", dest='fake_dlrobot', required=False, default=False, action="store_true")
 
     args = parser.parse_args()
-    args.dlrobot_path = os.path.realpath(os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py"))
+    args.dlrobot_path = os.path.realpath(os.path.join(os.path.dirname(__file__ ), "../../dlrobot.py")).replace('\\', '/')
     assert os.path.exists (args.dlrobot_path)
     return args
 
@@ -70,12 +70,14 @@ def get_new_task_job(args, logger):
     logger.debug("get task {} size={}".format(project_file, len(file_data)))
     basename_project_file = os.path.basename(project_file)
     base_folder, _ = os.path.splitext(basename_project_file)
-    folder = os.path.join(args.tmp_folder, base_folder)
-
+    folder = os.path.join(args.tmp_folder, base_folder).replace('\\', '/')
     if os.path.exists(folder):
         shutil.rmtree(folder, ignore_errors=True)
+
+    logger.debug("mkdir {}".format(folder))
     os.makedirs(folder, exist_ok=True)
 
+    logger.debug("write {}  to  {}".format(basename_project_file, folder))
     project_file = os.path.join(folder, basename_project_file)
     with open (project_file, "wb") as outp:
         outp.write(file_data)
@@ -84,13 +86,13 @@ def get_new_task_job(args, logger):
 
 def run_dlrobot(args, logger, project_file):
 
-    project_folder = os.path.dirname(project_file)
+    project_folder = os.path.dirname(project_file).replace('\\', '/')
     if args.fake_dlrobot:
         with open(project_file  + ".dummy_random", "wb") as outp:
             outp.write(bytearray(random.getrandbits(8) for _ in range(200*1024*1024)))
         return 1
 
-    cmd = "cd {}; export TMP=. ; timeout 4h python3 {} --cache-folder-tmp --project {} --crawling-timeout {} --last-conversion-timeout 30m >dlrobot.out 2>dlrobot.err".format(
+    cmd = 'bash -c "cd {}; export TMP=. ; /usr/bin/timeout 4h python3 {} --cache-folder-tmp --project {} --crawling-timeout {} --last-conversion-timeout 30m >dlrobot.out 2>dlrobot.err" '.format(
         project_folder, args.dlrobot_path, os.path.basename(project_file), args.crawling_timeout)
     logger.debug(cmd)
     exit_code = os.system(cmd)
@@ -99,7 +101,7 @@ def run_dlrobot(args, logger, project_file):
     geckodriver_log = os.path.join(project_folder, "geckodriver.log")
     if exit_code == 0 and os.path.exists(geckodriver_log):
         os.unlink(geckodriver_log)
-    goal_file = project_file + ".clicks.stats"
+    goal_file = project_file + ".click_paths"
     if not os.path.exists(goal_file):
         exit_code = 1
 

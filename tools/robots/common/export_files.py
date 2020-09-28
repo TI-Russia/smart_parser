@@ -59,6 +59,7 @@ class TExportFile:
         else:
             self.sha256 = build_sha256(export_path)
         self.file_extension = os.path.splitext(self.export_path)[1]
+        self.smartparser_json_sha256 = None
 
     def to_json(self):
         return {
@@ -229,7 +230,9 @@ class TExportEnvironment:
             len(self.exported_files),
             office_folder))
 
-        # temporal comment (
-        #global EXTERNAl_CONVERTORS
-        #for export_file in self.exported_files:
-        #    EXTERNAl_CONVERTORS.run_smart_parser_full(export_file.export_path)
+        global EXTERNAl_CONVERTORS
+        for export_file in self.exported_files:
+            EXTERNAl_CONVERTORS.run_smart_parser_full(export_file.export_path)
+            smart_parser_json = export_file.export_path + ".json"
+            if os.path.exists(smart_parser_json):
+                export_file.smartparser_json_sha256 = build_sha256(smart_parser_json)

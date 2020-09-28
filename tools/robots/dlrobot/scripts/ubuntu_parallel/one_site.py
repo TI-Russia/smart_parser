@@ -36,7 +36,7 @@ if __name__ == "__main__":
     if not os.path.exists(basename_project_file):
         raise Exception("cannot copy {}".format(args.project_file))
     dlrobot = os.path.join(args.smart_parser_folder, "tools/robots/dlrobot/dlrobot.py")
-    goal_file = basename_project_file + ".clicks.stats"
+    goal_file = basename_project_file + ".click_paths"
     cmd = "export TMP=. ; timeout 4h python3 {} --project {} --crawling-timeout {} --last-conversion-timeout 30m >dlrobot.out 2>dlrobot.err".format(
         dlrobot, basename_project_file, args.crawling_timeout)
     exit_code = os.system(cmd)

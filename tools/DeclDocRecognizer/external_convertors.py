@@ -11,7 +11,7 @@ def find_program_on_windows(program):
             return full_path
 
 def run_cmd(cmd):
-    print (cmd)
+    #print (cmd)
     return os.system(cmd)
 
 
@@ -111,7 +111,7 @@ class TExternalConverters:
         return exit_code
 
     def run_smart_parser_full(self, inp):
-        cmd = "{} -disclosures -decimal-raw-normalization -converted-storage-url {} {}".format(
+        cmd = "{} -disclosures -decimal-raw-normalization -skip-logging -converted-storage-url {} {}".format(
             self.smart_parser,
             TDocConversionClient.DECLARATOR_CONV_URL,
             inp)

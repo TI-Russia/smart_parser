@@ -3,6 +3,10 @@ WEB_ADDR=$2
 cd "$(dirname "$0")"
 RESULT_FOLDER=processed_projects
 WORKER_DIR=${TMPDIR:-/tmp}
+if [ $OSTYPE == "cygwin" ]; then
+    WORKER_DIR=c:/tmp
+fi
+
 rm -rf $RESULT_FOLDER
 
 
