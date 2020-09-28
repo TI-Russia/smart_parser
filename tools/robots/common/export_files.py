@@ -11,6 +11,7 @@ from robots.common.find_link import TLinkInfo
 import re
 import copy
 import time
+from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 
 
 def html_to_text(html):
@@ -23,8 +24,8 @@ def html_to_text(html):
         'html',
         'meta',
         'head',
-        'input',
         'script',
+        'input',
         'style',
     ]
 
@@ -44,9 +45,9 @@ def build_sha256(filename):
 
 
 class TExportFile:
-    def __init__(self, parent_record=None, url=None, cached_file=None, export_path=None,
+    def __init__(self, link_info : TLinkInfo = None, url=None, cached_file=None, export_path=None,
                  archive_index: int = -1, name_in_archive:str=None, init_json=None):
-        self.parent_record = parent_record
+        self.last_link_info = link_info
         self.url = url
         self.cached_file = cached_file
         self.export_path = export_path
@@ -122,7 +123,7 @@ class TExportEnvironment:
             self.exported_files = list(TExportFile(init_json=x) for x in rec)
 
     # todo: do not save file copies
-    def export_one_file_tmp(self, url, cached_file, extension, parent_record):
+    def export_one_file_or_send_to_conversion(self, url, cached_file, extension, link_info):
         if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             return
         index = self.sent_to_export_files_count
@@ -136,12 +137,12 @@ class TExportEnvironment:
         if is_archive_extension(extension):
             for archive_index, name_in_archive, export_filename in dearchive_one_archive(extension, cached_file, index, office_folder):
                 self.logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
-                new_files.append(TExportFile(parent_record, url, cached_file, export_filename, archive_index, name_in_archive))
+                new_files.append(TExportFile(link_info, url, cached_file, export_filename, archive_index, name_in_archive))
 
         else:
             self.logger.debug("export temporal file {} to {}".format(cached_file, export_path))
             shutil.copyfile(cached_file, export_path)
-            new_files.append(TExportFile(parent_record, url, cached_file, export_path))
+            new_files.append(TExportFile(link_info, url, cached_file, export_path))
 
         for new_file in new_files:
             found_file = self.export_files_by_sha256.get(new_file.sha256)
@@ -160,7 +161,7 @@ class TExportEnvironment:
             else:
                 found_file.file_copies.append(new_file)
 
-    def export_file(self, downloaded_file: TDownloadedFile, parent_record):
+    def export_file_if_relevant(self, downloaded_file: TDownloadedFile, link_info: TLinkInfo):
         url = downloaded_file.original_url
         if url in self.exported_urls:
             return
@@ -171,12 +172,12 @@ class TExportEnvironment:
                 self.logger.debug("do not export {} because of preliminary check".format(url))
                 return
 
-        self.export_one_file_tmp(url, downloaded_file.data_file_path, downloaded_file.file_extension, parent_record)
+        self.export_one_file_or_send_to_conversion(url, downloaded_file.data_file_path, downloaded_file.file_extension, link_info)
 
-    def export_selenium_doc(self, link_info: TLinkInfo):
+    def export_selenium_doc_if_relevant(self, link_info: TLinkInfo):
         cached_file = link_info.downloaded_file
         extension = os.path.splitext(cached_file)[1]
-        self.export_one_file_tmp(link_info.source_url, cached_file, extension, link_info)
+        self.export_one_file_or_send_to_conversion(link_info.source_url, cached_file, extension, link_info)
 
     # more than 1 document in archive are declarations
     # consider other documents to be also declarations
@@ -219,11 +220,16 @@ class TExportEnvironment:
                 self.exported_files.append(chosen_file)
 
             for r in file_set.file_copies:
-                r.parent_record.dl_recognizer_result = file_set.dl_recognizer_result # copy to click graph
+                r.last_link_info.dl_recognizer_result = file_set.dl_recognizer_result # copy to click graph
                 self.logger.debug("remove temporally exported file cached:{} url: {}".format(r.export_path, r.url))
                 os.remove(r.export_path)
+
         self.logger.info("found {} files, exported {} files to {}".format(
             self.sent_to_export_files_count,
             len(self.exported_files),
             office_folder))
 
+        # temporal comment (
+        #global EXTERNAl_CONVERTORS
+        #for export_file in self.exported_files:
+        #    EXTERNAl_CONVERTORS.run_smart_parser_full(export_file.export_path)

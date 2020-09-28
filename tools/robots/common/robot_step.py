@@ -35,7 +35,6 @@ class TUrlInfo:
             self.title = init_json['title']
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
-            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
             self.downloaded_files = list()
             for rec in init_json.get('downloaded_files', list()):
                 self.downloaded_files.append(TLinkInfo(None, None, None).from_json(rec))
@@ -45,7 +44,6 @@ class TUrlInfo:
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
-            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
 
     def to_json(self):
         record = {
@@ -56,8 +54,6 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = list(x.to_json() for x in self.downloaded_files)
-        if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
-            record['dl_recognizer_result'] = self.dl_recognizer_result
         return record
 
     def add_downloaded_file(self, link_info: TLinkInfo):
@@ -155,7 +151,7 @@ class TRobotStep:
         self.website.url_nodes[href].parent_nodes.add(link_info.source_url)
 
         if self.is_last_step():
-            self.website.export_env.export_file(downloaded_file, self.website.url_nodes[href])
+            self.website.export_env.export_file_if_relevant(downloaded_file, link_info)
 
         if self.step_passport.get('transitive', False):
             if href not in self.processed_pages:
@@ -167,7 +163,7 @@ class TRobotStep:
     def add_downloaded_file_wrapper(self, link_info: TLinkInfo):
         self.website.url_nodes[link_info.source_url].add_downloaded_file(link_info)
         if self.is_last_step():
-            self.website.export_env.export_selenium_doc(link_info)
+            self.website.export_env.export_selenium_doc_if_relevant(link_info)
 
     def get_check_func_name(self):
         return self.step_passport['check_link_func'].__name__

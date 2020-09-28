@@ -8,6 +8,7 @@ import json
 import logging
 from collections import defaultdict
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dlrobot-folder", dest='dlrobot_folder', required=True)

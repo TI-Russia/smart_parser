@@ -2,6 +2,7 @@ import subprocess
 import os
 import shutil
 import sys
+from ConvStorage.conversion_client import TDocConversionClient
 
 def find_program_on_windows(program):
     for prefix in ["C:\\Program Files", "C:\\Program Files (x86)"]:
@@ -99,5 +100,23 @@ class TExternalConverters:
 
     def run_catdoc(self, inp, out):
         return run_cmd("{} -d utf-8 {} > {}".format(self.catdoc, inp, out))
+
+    def run_smart_parser_short(self, inp):
+        cmd = "{} -converted-storage-url {} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(
+            self.smart_parser,
+            TDocConversionClient.DECLARATOR_CONV_URL,
+            inp)
+        exit_code = run_cmd(cmd)
+        run_cmd("rm -f main.txt second.txt smart_parser*log {}.log".format(inp))
+        return exit_code
+
+    def run_smart_parser_full(self, inp):
+        cmd = "{} -decimal-raw-normalization -converted-storage-url {} {}".format(
+            self.smart_parser,
+            TDocConversionClient.DECLARATOR_CONV_URL,
+            inp)
+        exit_code = run_cmd(cmd)
+        run_cmd("rm -f main.txt second.txt smart_parser*log {}.log".format(inp))
+        return exit_code
 
 EXTERNAl_CONVERTORS = TExternalConverters()
