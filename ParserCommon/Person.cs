@@ -26,5 +26,6 @@ namespace TI.Declarator.ParserCommon
 
         public string document_position { set; get; }
         virtual public int? PersonIndex { set; get; } = null;
+        public int? sheet_index { set; get; }
     }
 }

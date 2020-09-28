@@ -47,13 +47,11 @@ namespace Smart.Parser.Lib
 
             DeclarationProperties properties = new DeclarationProperties()
             {
-                Title = columnOrdering.Title,
-                MinistryName = columnOrdering.MinistryName,
+                SheetTitle = columnOrdering.Title,
                 Year = columnOrdering.Year,
-                SheetName = Adapter.GetWorksheetName(),
-                documentfile_id = documentfile_id,
-                archive_file = archive,
-                sheet_number = Adapter.GetWorksheetIndex()
+                DocumentFileId = documentfile_id,
+                ArchiveFileName = archive,
+                SheetNumber = Adapter.GetWorksheetIndex()
             };
             if (properties.Year == null)
             {
@@ -89,8 +87,6 @@ namespace Smart.Parser.Lib
             {
                 CurrentSection = new DeclarationSection() { Row = row, Name = sectionTitle };
                 Logger.Debug(String.Format("find section at line {0}:'{1}'", row, sectionTitle));
-                _Declaration.Sections.Add(CurrentSection);
-
                 FinishDeclarant();
             }
 
@@ -253,6 +249,7 @@ namespace Smart.Parser.Lib
 
                 CurrentPerson = CurrentDeclarant;
                 CurrentPerson.document_position = row.NameDocPosition;
+                CurrentPerson.sheet_index = _Declaration.Properties.SheetNumber;
                 _Declaration.PublicServants.Add(CurrentDeclarant);
             }
 
@@ -283,6 +280,7 @@ namespace Smart.Parser.Lib
                 }
                 relative.RelationType = relationType;
                 relative.document_position = row.NameDocPosition;
+                relative.sheet_index = _Declaration.Properties.SheetNumber;
             }
 
         }
@@ -444,7 +442,7 @@ namespace Smart.Parser.Lib
                 Decimal medianIncome = incomes[incomes.Count / 2];
                 if (medianIncome > 10000)
                 {
-                    declaration.IgnoreThousandMultipler = true;
+                    declaration.Properties.IgnoreThousandMultipler = true;
                 }
             }
         }
@@ -567,7 +565,7 @@ namespace Smart.Parser.Lib
                     {
                         if (!foundIncomeInfo)
                         {
-                            if (ParseIncome(currRow, person, declaration.IgnoreThousandMultipler))
+                            if (ParseIncome(currRow, person, declaration.Properties.IgnoreThousandMultipler))
                             {
                                 totalIncome += person.DeclaredYearlyIncome == null ? 0 : person.DeclaredYearlyIncome.Value;
                                 foundIncomeInfo = true;
