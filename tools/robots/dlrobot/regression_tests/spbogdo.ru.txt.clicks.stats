@@ -19,11 +19,11 @@
                     "source:url": "http://www.spbogdo.ru/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о принятых по внесенным представлениям и предписаниям мерах",
+                    "target:anchor_text": "Деятельность",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://www.spbogdo.ru/activities/47",
+                    "source:url": "http://www.spbogdo.ru/activities",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
@@ -53,11 +53,11 @@
                     "source:url": "http://www.spbogdo.ru/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о принятых по внесенным представлениям и предписаниям мерах",
+                    "target:anchor_text": "Деятельность",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://www.spbogdo.ru/activities/47",
+                    "source:url": "http://www.spbogdo.ru/activities",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
@@ -87,11 +87,11 @@
                     "source:url": "http://www.spbogdo.ru/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о принятых по внесенным представлениям и предписаниям мерах",
+                    "target:anchor_text": "Деятельность",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://www.spbogdo.ru/activities/47",
+                    "source:url": "http://www.spbogdo.ru/activities",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
@@ -121,11 +121,11 @@
                     "source:url": "http://www.spbogdo.ru/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о принятых по внесенным представлениям и предписаниям мерах",
+                    "target:anchor_text": "Деятельность",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://www.spbogdo.ru/activities/47",
+                    "source:url": "http://www.spbogdo.ru/activities",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
@@ -155,11 +155,11 @@
                     "source:url": "http://www.spbogdo.ru/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о принятых по внесенным представлениям и предписаниям мерах",
+                    "target:anchor_text": "Деятельность",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://www.spbogdo.ru/activities/47",
+                    "source:url": "http://www.spbogdo.ru/activities",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",
@@ -202,11 +202,11 @@
                     "source:url": "http://www.spbogdo.ru/",
                     "source:step": "declarations",
                     "source:title": "",
-                    "target:anchor_text": "Сведения о принятых по внесенным представлениям и предписаниям мерах",
+                    "target:anchor_text": "Деятельность",
                     "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://www.spbogdo.ru/activities/47",
+                    "source:url": "http://www.spbogdo.ru/activities",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера",

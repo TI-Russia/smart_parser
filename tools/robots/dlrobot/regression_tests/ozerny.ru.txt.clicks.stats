@@ -271,21 +271,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://ozerny.ru/duma/deputaty/",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Документы",
-                    "target:engine": "urllib"
-                },
-                {
-                    "source:url": "http://ozerny.ru/city/kumi/docs/",
+                    "source:url": "https://ozerny.ru/city/kumi/docs/",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах муниципальных служащих за 2013 год",
-                    "target:engine": "urllib"
+                    "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://ozerny.ru/docs/kumi/dohodMS2013.doc",
+                    "source:url": "https://ozerny.ru/docs/kumi/dohodMS2013.doc",
                     "step": "declarations"
                 }
             ],
@@ -811,21 +804,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://ozerny.ru/duma/deputaty/",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Документы",
-                    "target:engine": "urllib"
-                },
-                {
-                    "source:url": "http://ozerny.ru/city/kumi/docs/",
+                    "source:url": "https://ozerny.ru/city/kumi/docs/",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах муниципальных служащих за 2015 год",
-                    "target:engine": "urllib"
+                    "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://ozerny.ru/docs/kumi/dohodMS2015.doc",
+                    "source:url": "https://ozerny.ru/docs/kumi/dohodMS2015.doc",
                     "step": "declarations"
                 }
             ],
@@ -900,21 +886,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://ozerny.ru/duma/deputaty/",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Документы",
-                    "target:engine": "urllib"
-                },
-                {
-                    "source:url": "http://ozerny.ru/city/kumi/docs/",
+                    "source:url": "https://ozerny.ru/city/kumi/docs/",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах муниципальных служащих за 2016 год",
-                    "target:engine": "urllib"
+                    "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://ozerny.ru/kumi/2017/dohodMS2016.doc",
+                    "source:url": "https://ozerny.ru/kumi/2017/dohodMS2016.doc",
                     "step": "declarations"
                 }
             ],
@@ -1053,21 +1032,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://ozerny.ru/duma/deputaty/",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Документы",
-                    "target:engine": "urllib"
-                },
-                {
-                    "source:url": "http://ozerny.ru/city/kumi/docs/",
+                    "source:url": "https://ozerny.ru/city/kumi/docs/",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах муниципальных служащих за 2012 год",
-                    "target:engine": "urllib"
+                    "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://ozerny.ru/docs/kumi/dohodMS2012.doc",
+                    "source:url": "https://ozerny.ru/docs/kumi/dohodMS2012.doc",
                     "step": "declarations"
                 }
             ],
@@ -1268,21 +1240,14 @@
                     "search_query": "\"сведения о доходах\""
                 },
                 {
-                    "source:url": "http://ozerny.ru/duma/deputaty/",
-                    "source:step": "declarations",
-                    "source:title": "",
-                    "target:anchor_text": "Документы",
-                    "target:engine": "urllib"
-                },
-                {
-                    "source:url": "http://ozerny.ru/city/kumi/docs/",
+                    "source:url": "https://ozerny.ru/city/kumi/docs/",
                     "source:step": "declarations",
                     "source:title": "",
                     "target:anchor_text": "Сведения о доходах муниципальных служащих за 2014 год",
-                    "target:engine": "urllib"
+                    "target:engine": "selenium"
                 },
                 {
-                    "source:url": "http://ozerny.ru/docs/kumi/dohodMS2014.doc",
+                    "source:url": "https://ozerny.ru/docs/kumi/dohodMS2014.doc",
                     "step": "declarations"
                 }
             ],
