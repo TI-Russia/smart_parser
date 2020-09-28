@@ -16,7 +16,7 @@ cd -
 python3 ../../dlrobot.py --clear-cache-folder --project $PROJECT
 
 
-files_count=`/usr/bin/find result -type f | wc -l`
+files_count=`/usr/bin/find result -type f | grep -v json | wc -l`
 if [ $files_count != 0 ]; then
     echo "export a generated pdf file, but it is not a declaration file"
     exit 1
