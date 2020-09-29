@@ -3,7 +3,7 @@ Description=workers for dlrobots
 
 [Service]
 ExecStart=/bin/bash -x /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh
-ExecStop=pkill -f dlrobot_worker.py; pkill -f firefox;
+ExecStop=pkill -f dlrobot_worker.py; pkill -f firefox
 Type=oneshot
 RemainAfterExit=yes
 

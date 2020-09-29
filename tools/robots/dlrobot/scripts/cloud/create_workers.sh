@@ -7,13 +7,14 @@ export DLROBOT_CENTRAL_URL=disclosures.ru:8089
 
 function create_worker() {
   local path=$1
-  if [ ! -d $path ]; then
-    mkdir -p $path
-    cd $path
-    rm nohup.out; nohup /usr/bin/python3 $HOME_DIR/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py \
-              --server-address $DLROBOT_CENTRAL_URL  --tmp-folder /tmp --run-forever &
-    cd -
+  if [ -d $path ]; then
+    rm -rf $path
   fi
+
+  mkdir -p $path
+  cd $path
+  nohup /usr/bin/python3 $HOME_DIR/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py \
+              --server-address $DLROBOT_CENTRAL_URL  --tmp-folder /tmp --run-forever &
 }
 
 workers_count=`ps -x | grep -c dlrobot_worker.py`
