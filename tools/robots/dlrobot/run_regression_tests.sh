@@ -1,6 +1,4 @@
-date
-
-rm regression_tests/*.txt.clicks.stats regression_tests/*.txt.clicks regression_tests/*.txt.log
+rm regression_tests/*.txt.visited_pages regression_tests/*.txt.result_summary regression_tests/*.txt.click_paths regression_tests/*.txt.log
 
 ls regression_tests/*.txt | xargs --verbose -n 1 -P 4 python3 dlrobot.py --project
 
@@ -10,6 +8,3 @@ if [ $? -eq 0 ]; then
 else
     echo  "==== TESTS FAILED ====="!
 fi
-
-date
-
