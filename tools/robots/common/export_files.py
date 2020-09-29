@@ -152,8 +152,9 @@ class TExportEnvironment:
             if found_file is None:
                 file_set = TExportFileSet(new_file)
                 self.logger.debug("run_dl_recognizer for {}".format(new_file.export_path))
-                if new_file.file_extension == DEFAULT_PDF_EXTENSION and \
-                    not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
+                if new_file.file_extension == DEFAULT_PDF_EXTENSION  \
+                    and TDownloadEnv.CONVERSION_CLIENT is not None \
+                    and not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
                     file_set.waiting_conversion = True
                 else:
                     file_set.run_dl_recognizer_wrapper(self.logger)

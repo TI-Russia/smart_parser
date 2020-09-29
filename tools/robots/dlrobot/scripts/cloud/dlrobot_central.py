@@ -14,6 +14,7 @@ from robots.common.primitives import convert_timeout_to_seconds
 import shutil
 import ipaddress
 
+
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
     logger.setLevel(logging.DEBUG)
@@ -49,6 +50,8 @@ def parse_args():
                         required=False, help="check yandex cloud health and restart workstations")
     parser.add_argument("--skip-worker-check", dest='skip_worker_check', default=False, action='store_true',
                         required=False, help="skip checking that this tast was given to this worker")
+    parser.add_argument("--enable-ip-checking", dest='enable_ip_checking', default=False, action='store_true',
+                        required=False)
 
     args = parser.parse_args()
     args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -118,9 +121,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.permitted_hosts.add('95.165.96.61') # disclosures.ru
 
     def verify_request(self, request, client_address):
-        (ip, dummy) = client_address
-        if ip not in self.permitted_hosts:
-            return False
+        if self.args.enable_ip_checking:
+            (ip, dummy) = client_address
+            if ip not in self.permitted_hosts:
+                return False
         return True
 
     def log_process_result(self, process_result):

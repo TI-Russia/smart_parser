@@ -34,7 +34,7 @@ def strip_html_url(url):
 
 def normalize_and_russify_anchor_text(text):
     if text is not None:
-        text = text.strip(' \n\t\r').strip('"').lower()
+        text = text.strip(' \n\t\r"').lower()
         text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
         return text
     return ""
@@ -100,3 +100,10 @@ def convert_timeout_to_seconds(s):
         return int(s[:-1]) * seconds_per_unit[s[-1]]
     else:
         return int(s)
+
+if __name__ == '__main__':
+    s = " Законодательные требования к официальным   сайтам федеральных   органов   исполнительной власти  "
+    for x in range(1000):
+        a = normalize_and_russify_anchor_text(s)
+        print (a)
+        
