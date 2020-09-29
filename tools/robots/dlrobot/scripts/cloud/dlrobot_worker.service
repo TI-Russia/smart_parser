@@ -1,0 +1,10 @@
+[Unit]
+Description=workers for dlrobots
+
+[Service]
+ExecStart=/bin/bash -x /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
