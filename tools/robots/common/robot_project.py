@@ -128,13 +128,13 @@ class TRobotProject:
         with open(self.click_paths_file, "w", encoding="utf8") as outf:
             json.dump(files_with_click_path, outf, ensure_ascii=False, indent=4)
 
-        cached_files = list("{} {}".format(x['cached_file'], x.get('archive_index', -1)) for x in files_with_click_path)
-        cached_files.sort()
+        unique_files = list(set(x.get('smart_parser_json_sha256', x.get('sha256')) for x in files_with_click_path))
+        unique_files.sort()
         # short report to commit to git
         with open(self.result_summary_file, "w", encoding="utf8") as outf:
             report = {
-                "files_count": len(cached_files),
-                "files_sorted": cached_files,
+                "files_count": len(unique_files),
+                "files_sorted": unique_files,
             }
             json.dump(report, outf, ensure_ascii=False, indent=4)
 

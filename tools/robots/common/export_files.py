@@ -59,7 +59,7 @@ class TExportFile:
         else:
             self.sha256 = build_sha256(export_path)
         self.file_extension = os.path.splitext(self.export_path)[1]
-        self.smartparser_json_sha256 = None
+        self.smart_parser_json_sha256 = None
 
     def to_json(self):
         return {
@@ -67,7 +67,8 @@ class TExportFile:
             "cached_file": self.cached_file,
             "export_path": self.export_path.replace('\\', '/'),  # to compare windows and unix,
             "archive_index": self.archive_index,
-            "sha256": self.sha256
+            "sha256": self.sha256,
+            "smart_parser_json_sha256": self.smart_parser_json_sha256
         }
 
     def from_json(self, rec):
@@ -76,6 +77,7 @@ class TExportFile:
         self.export_path = rec["export_path"]
         self.sha256 = rec["sha256"]
         self.archive_index = rec.get("archive_index", -1)
+        self.smart_parser_json_sha256 = rec.get("smart_parser_json_sha256")
 
 
 class TExportFileSet:
@@ -235,4 +237,4 @@ class TExportEnvironment:
             EXTERNAl_CONVERTORS.run_smart_parser_full(export_file.export_path)
             smart_parser_json = export_file.export_path + ".json"
             if os.path.exists(smart_parser_json):
-                export_file.smartparser_json_sha256 = build_sha256(smart_parser_json)
+                export_file.smart_parser_json_sha256 = build_sha256(smart_parser_json)
