@@ -10,13 +10,13 @@ function create_worker() {
   if [ ! -d $path ]; then
     mkdir -p $path
     cd $path
-    rm nohup.out; nohup python3 $HOME_DIR/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py \
+    rm nohup.out; nohup /usr/bin/python3 $HOME_DIR/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py \
               --server-address $DLROBOT_CENTRAL_URL  --tmp-folder /tmp --run-forever &
     cd -
   fi
 }
 
-workers_count=`ps -x | grep -c dlrobot_worker`
+workers_count=`ps -x | grep -c dlrobot_worker.py`
 if [ $workers_count != 1 ]; then
   echo "process workers are still running, delete workers first"
   exit 1
