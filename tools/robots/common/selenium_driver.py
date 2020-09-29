@@ -74,9 +74,15 @@ class TSeleniumDriver:
             self.start_executable()
             self.driver_processed_urls_count = 0
         self.driver_processed_urls_count += 1
+
+        #leave only one window tab, close other tabs
         while len(self.the_driver.window_handles) > 1:
+            self.the_driver.switch_to.window(self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
             self.the_driver.close()
         self.logger.debug("selenium navigate to {}, window tabs count={}".format(url, len(self.the_driver.window_handles)))
+        self.the_driver.switch_to.window(self.the_driver.window_handles[0])
+
+        # navigation
         self.the_driver.get(url)
 
     def get_buttons_and_links(self):
