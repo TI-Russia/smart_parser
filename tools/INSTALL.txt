@@ -42,7 +42,7 @@ query_cache_size        = 128M
         source ~/smart_parser/tools/venv/bin/activate
         pip3 install -r ~/smart_parser/tools/requirements.txt
     3.2 production version
-        sudo -H pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
+        pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
 
 
 5. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
@@ -96,4 +96,5 @@ query_cache_size        = 128M
 sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
 sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
 sudo systemctl enable dlrobot_worker.service
+sudo systemctl daemon-reload
 sudo systemctl start dlrobot_worker

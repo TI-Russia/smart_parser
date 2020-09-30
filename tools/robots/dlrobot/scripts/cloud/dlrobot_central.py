@@ -212,9 +212,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
-        self.save_dlrobot_remote_call(remote_call)
-
         remote_call.result_folder = self.untar_file(project_file, result_archive)
+
+        self.save_dlrobot_remote_call(remote_call)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
             exit_code, project_file, worker_ip))

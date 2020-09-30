@@ -2,23 +2,20 @@ DUMMY=$1
 WEB_ADDR=$2
 cd "$(dirname "$0")"
 RESULT_FOLDER=processed_projects
-WORKER_DIR=${TMPDIR:-/tmp}
-if [ $OSTYPE == "cygwin" ]; then
-    WORKER_DIR=c:/tmp    
-fi
+WORKER_DIR=workdir
 rm -rf $RESULT_FOLDER *.log
 
 python3 ../../scripts/cloud/dlrobot_central.py --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER} &
 WEB_SERVER_PID=$!
 sleep 1
 
-python3 ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
+python3 ../../scripts/cloud/dlrobot_worker.py run_once --server-address ${WEB_ADDR} --working-folder ${WORKER_DIR}
 
 DLROBOT_RESULTS=${RESULT_FOLDER}/dlrobot_remote_calls.dat
 
 function run_worker() {
   local expected_lines=$1
-  python3 ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR}
+  python3 ../../scripts/cloud/dlrobot_worker.py run_once --server-address ${WEB_ADDR} --working-folder ${WORKER_DIR}
   number_projects=`wc ${DLROBOT_RESULTS} -l | awk '{print $1}'`
   if [ ${number_projects} != $expected_lines ]; then
       echo "${DLROBOT_RESULTS} is not updated properly"

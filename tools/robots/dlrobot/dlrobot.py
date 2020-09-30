@@ -1,7 +1,7 @@
 ﻿import os
+import sys
 import argparse
 import logging
-import sys
 import traceback
 from robots.common.download import TDownloadEnv
 from robots.common.robot_project import TRobotProject

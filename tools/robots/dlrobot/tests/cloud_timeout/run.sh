@@ -2,10 +2,6 @@ DUMMY=$1
 WEB_ADDR=$2
 cd "$(dirname "$0")"
 RESULT_FOLDER=processed_projects
-WORKER_DIR=${TMPDIR:-/tmp}
-if [ $OSTYPE == "cygwin" ]; then
-    WORKER_DIR=c:/tmp
-fi
 
 rm -rf $RESULT_FOLDER *.log
 
@@ -15,7 +11,7 @@ WEB_SERVER_PID=$!
 sleep 2
 
 
-python3 ../../scripts/cloud/dlrobot_worker.py --server-address ${WEB_ADDR} --tmp-folder ${WORKER_DIR} &
+python3 ../../scripts/cloud/dlrobot_worker.py run_once --server-address ${WEB_ADDR} --working-folder workdir &
 WORKER_PID=$!
 sleep 2
 kill ${WORKER_PID}

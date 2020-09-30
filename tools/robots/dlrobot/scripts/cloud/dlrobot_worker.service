@@ -2,10 +2,11 @@
     Description=workers for dlrobots
 
     [Service]
-    ExecStart=python3 /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker_service.py start
-    ExecStop=python3 /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker_service.py stop
-    Type=oneshot
-    RemainAfterExit=yes
+    User=sokirko
+    ExecStart=/usr/bin/python3 /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py start --server-address disclosures.ru:8089 --worker-count 2
+    ExecStop=/usr/bin/python3 /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py stop
+    Type=simple
+
 
     [Install]
     WantedBy=multi-user.target
