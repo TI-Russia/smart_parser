@@ -95,6 +95,6 @@ query_cache_size        = 128M
 12. Crete dlrobot worker service:
 sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
 sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
-sudo systemctl enable dlrobot_worker.service
+sudo systemctl enable dlrobot_worker
 sudo systemctl daemon-reload
 sudo systemctl start dlrobot_worker

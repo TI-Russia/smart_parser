@@ -1,6 +1,7 @@
 import urllib.parse
 import re
 from robots.common.link_info import TLinkInfo
+import socket
 
 
 def strip_viewer_prefix(href):
@@ -101,9 +102,15 @@ def convert_timeout_to_seconds(s):
     else:
         return int(s)
 
-if __name__ == '__main__':
-    s = " Законодательные требования к официальным   сайтам федеральных   органов   исполнительной власти  "
-    for x in range(1000):
-        a = normalize_and_russify_anchor_text(s)
-        print (a)
-        
+
+
+def check_internet(host="8.8.8.8", port=53, timeout=3):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        print(ex)
+        return False
+
+

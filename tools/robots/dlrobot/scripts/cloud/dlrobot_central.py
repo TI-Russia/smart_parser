@@ -10,7 +10,7 @@ import urllib
 import http.server
 import io, gzip, tarfile
 from custom_http_codes import DLROBOT_HTTP_CODE
-from robots.common.primitives import convert_timeout_to_seconds
+from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import shutil
 import ipaddress
 
@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="dlrobot_central.log")
     parser.add_argument("--input-folder",  dest='input_folder', required=False, default="input_projects")
     parser.add_argument("--result-folder",  dest='result_folder', required=True)
-    parser.add_argument("--retries-count", dest='retries_count', required=False, default=2, type=int)
+    parser.add_argument("--tries-count", dest='tries_count', required=False, default=2, type=int)
     parser.add_argument("--read-previous-results", dest='read_previous_results', default=False, action='store_true',
                         required=False, help="read file dlrobot_results.dat and exclude succeeded tasks from the input tasks")
 
@@ -149,7 +149,16 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             outp.write(remote_call.write_to_json() + "\n")
         self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
         if remote_call.exit_code != 0:
-            if len(self.dlrobot_remote_calls[remote_call.project_file]) < args.retries_count:
+            max_tries_count = args.tries_count
+            tries_count = len(self.dlrobot_remote_calls[remote_call.project_file])
+            if remote_call.result_folder is None and tries_count == max_tries_count:
+                # if the last result was not obtained, may be,
+                # worker is down, so the problem is not in the task but in the worker
+                # so give this task one more chance
+                max_tries_count += 1
+                self.logger.debug("increase max_tries_count for {} to {}".format(remote_call.project_file, max_tries_count))
+
+            if tries_count < max_tries_count:
                 self.input_files.append(remote_call.project_file)
                 self.logger.debug("register retry for {}".format(remote_call.project_file))
 
@@ -261,6 +270,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if not self.args.check_yandex_cloud:
             return None
         try:
+            if not check_internet():
+                self.logger.error("cannot connect to google dns, probably internet is down")
+                return None
             cmd = "{} compute instance list --format json >yc.json".format(self.args.yandex_cloud_console)
             os.system(cmd)
             with open("yc.json", "r") as inp:
@@ -316,7 +328,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             stats = {
                 'running_count': HTTP_SERVER.get_running_jobs_count(),
                 'input_tasks': len(HTTP_SERVER.input_files),
-                'processed_tasks': len(HTTP_SERVER.get_processed_jobs_count()),
+                'processed_tasks': HTTP_SERVER.get_processed_jobs_count(),
             }
             self.send_response(200)
             self.end_headers()
