@@ -35,7 +35,8 @@ def start_worker(args, worker_id):
     proc = subprocess.Popen(['/usr/bin/python3', worker_path, '--tmp-folder', '.',  '--run-forever'],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        cwd=path
+        cwd=path,
+        env=os.environ
     )
     #proc.communicate(12)
     #os.system("cd {}; /usr/bin/python3 {} --tmp-folder . --run-forever &".format(path, worker_path))
