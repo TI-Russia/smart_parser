@@ -42,7 +42,7 @@ query_cache_size        = 128M
         source ~/smart_parser/tools/venv/bin/activate
         pip3 install -r ~/smart_parser/tools/requirements.txt
     3.2 production version
-        pip3 install -r ~/smart_parser/tools/requirements.txt
+        sudo -H pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
 
 
 5. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1

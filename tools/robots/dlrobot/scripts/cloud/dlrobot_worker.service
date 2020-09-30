@@ -1,11 +1,11 @@
-[Unit]
-Description=workers for dlrobots
+    [Unit]
+    Description=workers for dlrobots
 
-[Service]
-ExecStart=/bin/bash -x /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/create_workers.sh
-ExecStop=pkill -f dlrobot_worker.py; pkill -f firefox
-Type=oneshot
-RemainAfterExit=yes
+    [Service]
+    ExecStart=python3 /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker_service.py start
+    ExecStop=python3 /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker_service.py stop
+    Type=oneshot
+    RemainAfterExit=yes
 
-[Install]
-WantedBy=multi-user.target
+    [Install]
+    WantedBy=multi-user.target

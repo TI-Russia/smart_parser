@@ -14,7 +14,7 @@ function create_worker() {
   mkdir -p $path
   cd $path
   nohup /usr/bin/python3 $HOME_DIR/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.py \
-              --server-address $DLROBOT_CENTRAL_URL  --tmp-folder /tmp --run-forever &
+              --server-address $DLROBOT_CENTRAL_URL  --tmp-folder . --run-forever &
 }
 
 workers_count=`ps -x | grep -c dlrobot_worker.py`

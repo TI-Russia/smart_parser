@@ -76,6 +76,7 @@ class TRemoteDlrobotCall:
         self.exit_code = exit_code
         self.start_time = int(time.time())
         self.end_time = int(time.time())
+        self.result_folder = None
 
     def read_from_json(self, str):
         d = json.loads(str)
@@ -84,6 +85,7 @@ class TRemoteDlrobotCall:
         self.exit_code = d['exit_code']
         self.start_time = d['start_time']
         self.end_time = d['end_time']
+        self.result_folder = d['result_folder']
 
     def write_to_json(self):
         d =  {
@@ -91,7 +93,8 @@ class TRemoteDlrobotCall:
                 'project_file' : self.project_file,
                 'exit_code': self.exit_code,
                 'start_time': self.start_time,
-                'end_time': self.end_time
+                'end_time': self.end_time,
+                'result_folder': self.result_folder
         }
         return json.dumps(d)
 
@@ -116,9 +119,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         host, port = self.args.server_address.split(":")
         super().__init__((host, int(port)), TDlrobotRequestHandler)
         self.last_service_action_time_stamp = time.time()
-        self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
-        self.permitted_hosts.add('127.0.0.1')
-        self.permitted_hosts.add('95.165.96.61') # disclosures.ru
+        if self.args.enable_ip_checking:
+            self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
+            self.permitted_hosts.add('127.0.0.1')
+            self.permitted_hosts.add('95.165.96.61') # disclosures.ru
 
     def verify_request(self, request, client_address):
         if self.args.enable_ip_checking:
@@ -162,8 +166,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                         self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
                         self.input_files.remove(remote_call.project_file)
 
-    def running_jobs_count(self):
+    def get_running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())
+
+    def get_processed_jobs_count(self):
+        return sum(len(w) for w in self.dlrobot_remote_calls.values())
 
     def conversion_server_queue_is_short(self):
         input_queue_size = self.conversion_client.get_pending_all_file_size()
@@ -173,7 +180,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def get_new_job_task(self, worker_ip):
         project_file = self.input_files.pop()
         self.logger.info("start job: {} on {}, left jobs: {}, running jobs: {}".format(
-                project_file, worker_ip, len(self.input_files), self.running_jobs_count()))
+                project_file, worker_ip, len(self.input_files), self.get_running_jobs_count()))
         res = TRemoteDlrobotCall(worker_ip, project_file)
         self.worker_2_running_tasks[worker_ip].append(res)
         return project_file
@@ -187,6 +194,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         decompressed_file = gzip.GzipFile(fileobj=compressed_file)
         tar = tarfile.open(fileobj=decompressed_file)
         tar.extractall(output_folder)
+        return output_folder
 
     def pop_project_from_running_tasks (self, worker_ip, project_file):
         if worker_ip not in self.worker_2_running_tasks:
@@ -206,7 +214,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.end_time = int(time.time())
         self.save_dlrobot_remote_call(remote_call)
 
-        self.untar_file(project_file, result_archive)
+        remote_call.result_folder = self.untar_file(project_file, result_archive)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
             exit_code, project_file, worker_ip))
@@ -266,7 +274,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                     self.start_yandex_cloud_worker(cloud_id)
                 elif m['status'] == "RUNNING":
                     worker_ip = m['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
-                    self.permitted_hosts.add(worker_ip)
+                    if self.args.enable_ip_checking:
+                        self.permitted_hosts.add(worker_ip)
                     self.cloud_id_to_worker_ip[cloud_id] = worker_ip
         except Exception as exp:
             self.logger.error(exp)
@@ -297,10 +306,21 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
         return True
 
     def process_special_commands(self):
+        global HTTP_SERVER
         if self.path == "/ping":
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"pong\n")
+            return True
+        if self.path == "/stats":
+            stats = {
+                'running_count': HTTP_SERVER.get_running_jobs_count(),
+                'input_tasks': len(HTTP_SERVER.input_files),
+                'processed_tasks': len(HTTP_SERVER.get_processed_jobs_count()),
+            }
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(stats).encode("utf8"))
             return True
         return False
 
