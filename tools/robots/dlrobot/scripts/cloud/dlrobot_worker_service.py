@@ -23,8 +23,8 @@ def parse_args():
 def start_worker(args, worker_id):
     os.putenv('ASPOSE_LIC', os.path.join(args.home, "lic.bin"))
     os.putenv('PYTHONPATH', os.path.join(args.home, "smart_parse/tools"))
-    os.putenv('DECLARATOR_CONV_URL', os.path.join(args.home, "disclosures.ru:8091"))
-    os.putenv('DLROBOT_CENTRAL_SERVER_ADDRESS', os.path.join(args.home, "disclosures.ru:8089"))
+    os.putenv('DECLARATOR_CONV_URL', "disclosures.ru:8091")
+    os.putenv('DLROBOT_CENTRAL_SERVER_ADDRESS', "disclosures.ru:8089")
 
     path = os.path.join(TEMP_FOLDER, WORKER_FOLDER_PREFIX + str(worker_id))
     if os.path.exists(path):
@@ -32,11 +32,12 @@ def start_worker(args, worker_id):
     os.makedirs(path, exist_ok=True)
     worker_path = os.path.join(SCRIPT_PATH, WORKER_BASE_NAME)
     #os.spawnve(os.P_NOWAIT, '/usr/bin/python3', args, os.environ)-
-    subprocess.Popen(['/usr/bin/python3', worker_path, '--tmp-folder', '.',  '--run-forever'],
+    proc = subprocess.Popen(['/usr/bin/python3', worker_path, '--tmp-folder', '.',  '--run-forever'],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         cwd=path
     )
+    #proc.communicate(12)
     #os.system("cd {}; /usr/bin/python3 {} --tmp-folder . --run-forever &".format(path, worker_path))
 
 

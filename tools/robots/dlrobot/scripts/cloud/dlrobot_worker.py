@@ -51,6 +51,26 @@ def parse_args():
     return args
 
 
+def ping_central(args, logger):
+    logger.debug("pinging {}".format(args.server_address))
+    try:
+        conn = http.client.HTTPConnection(args.server_address)
+        conn.request("GET", "/ping")
+        response = conn.getresponse()
+        logger.debug("response status = {}".format(response.status))
+        if response.status != http.HTTPStatus.OK:
+            logger.error("dlrobot central does not answer")
+        answer = response.read().decode("utf8").strip()
+    except Exception as exp:
+        logger.error(exp)
+        return False
+    if answer != "pong":
+        logger.error("ping dlrobot central, answer={}, must be 'pong'".format(answer))
+        return False
+    logger.debug("dlrobot_central is alive")
+    return True
+
+
 def get_new_task_job(args, logger):
     conn = http.client.HTTPConnection(args.server_address)
     conn.request("GET", "?authorization_code=456788")
@@ -161,6 +181,8 @@ if __name__ == "__main__":
     if args.only_send_back_this_project is not None:
         send_results_back(args, logger, args.only_send_back_this_project, 0)
         sys.exit(0)
+
+    ping_central(args, logger)
 
     running_project_file = None
     try:
