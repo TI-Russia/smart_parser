@@ -9,7 +9,7 @@ import json
 import urllib
 import http.server
 import io, gzip, tarfile
-from custom_http_codes import DLROBOT_HTTP_CODE
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import shutil
 import ipaddress
@@ -45,7 +45,7 @@ def parse_args():
 
     parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='20s')
     parser.add_argument("--dlrobot-project-timeout", dest='dlrobot_project_timeout',
-                         required=False, default='4h')
+                         required=False, default=TTimeouts.OVERALL_HARD_TIMEOUT_IN_CENTRAL)
     parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
                         required=False, help="check yandex cloud health and restart workstations")
     parser.add_argument("--skip-worker-check", dest='skip_worker_check', default=False, action='store_true',

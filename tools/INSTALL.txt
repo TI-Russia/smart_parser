@@ -23,7 +23,7 @@ query_cache_size        = 128M
 
 1.1  For Yandex.Cloud, increase swap file
    sudo swapoff -a
-   sudo dd if=/dev/zero of=/swapfile bs=2M count=1024
+   sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
    sudo mkswap /swapfile
    sudo swapon /swapfile
 
@@ -32,7 +32,7 @@ query_cache_size        = 128M
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
         firefox git
 
-3. git clone git@github.com:TI-Russia/smart_parser.git ~/smart_parser
+3. git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
 4. Install python3 modules in virtual env
     3.1 developer version:
@@ -56,10 +56,11 @@ query_cache_size        = 128M
 6.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
    scp -P 2223 disclosures.ru:~/lic.bin ~/
 
-  6.1 update ~/.profile
+6.1 update ~/.profile
     export ASPOSE_LIC=~/lic.bin
     export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
     export DECLARATOR_CONV_URL=disclosures.ru:8091
+    source ~/.profile
 
 7. compile smart_parser itself (c#, ~/smart_parser/src)
    7.1 Compile smart_parser
@@ -75,24 +76,27 @@ query_cache_size        = 128M
 9.  download https://github.com/mozilla/geckodriver/releases/tag/v0.26.0 (linux or windows);
    9.1 for linux
       cd  /usr/local/bin
-      wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-      tar xfz geckodriver-v0.26.0-linux64.tar.gz
+      sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
+      sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
     9.2  for windows
         todo
 
-10. install yandex cloud console
+10. Test dlrobot
+    cd ~/smart_parser/tools/robots/dlrobot
+    bash run_tests.sh
+
+11. install yandex cloud console (central)
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
    source ~/.profile
    get token from sokirko@yandex.ru (more ~/.config/yandex-cloud/config.yaml)
    yc init
    Which zone do you want to use as a profile default ru-central1-c
-
    yc compute instance list
 
-11. установка даты
+12. установка даты
    sudo dpkg-reconfigure tzdata
 
-12. Crete dlrobot worker service:
+13. Crete dlrobot worker service:
 sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
 sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
 sudo systemctl enable dlrobot_worker

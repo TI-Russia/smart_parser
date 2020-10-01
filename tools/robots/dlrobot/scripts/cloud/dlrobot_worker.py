@@ -4,7 +4,7 @@ import logging
 import os
 import time
 import http.server
-from custom_http_codes import DLROBOT_HTTP_CODE
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts
 import shutil
 import tarfile
 import subprocess
@@ -51,7 +51,8 @@ def parse_args():
     parser.add_argument("--save-dlrobot-results",  dest='delete_dlrobot_results', default=True, action="store_false")
     parser.add_argument("--timeout-before-next-task", dest='timeout_before_next_task', type=int, required=False, default=60)
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
-                            default="3h",
+                            type=int,
+                            default=TTimeouts.MAIN_CRAWLING_TIMEOUT,
                             help="crawling timeout (there is also conversion step after crawling, that takes time)")
     parser.add_argument("--only-send-back-this-project", dest='only_send_back_this_project', required=False)
     parser.add_argument("--http-put-timeout", dest='http_put_timeout', required=False, type=int, default=60*10)
@@ -167,8 +168,8 @@ def run_dlrobot(args,  project_file):
                 DLROBOT_PATH,
                 '--cache-folder-tmp',
                 '--project',  os.path.basename(project_file),
-                '--crawling-timeout',  args.crawling_timeout,
-                '--last-conversion-timeout',  '30m'
+                '--crawling-timeout',  str(args.crawling_timeout),
+                '--last-conversion-timeout',  str(TTimeouts.WAIT_CONVERSION_TIMEOUT)
 
             ]
         args.logger.debug(" ".join(dlrobot_call))
@@ -178,7 +179,7 @@ def run_dlrobot(args,  project_file):
             stderr=subprocess.PIPE,
             env=my_env,
             cwd=project_folder)
-        exit_code = proc.wait(60*60*4) # 4 hours
+        exit_code = proc.wait(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER) # 4 hours
 
         if exit_code != 0:
             dlrobot_error_file = os.path.join(project_folder, "dlrobot.err")
@@ -188,7 +189,9 @@ def run_dlrobot(args,  project_file):
                         line = line.decode('utf8')
                         args.logger.error(line)
                         outp.write(line)
-
+    except subprocess.TimeoutExpired as exp:
+        args.logger.error("wait raises timeout exception:{},  timeout={}".format(
+            str(exp), TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER))
     except Exception as exp:
         args.logger.error(exp)
 
