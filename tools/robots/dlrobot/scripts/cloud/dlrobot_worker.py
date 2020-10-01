@@ -102,9 +102,12 @@ def setup_environment(args):
     if os.path.exists(args.working_folder):
         shutil.rmtree(args.working_folder, ignore_errors=True)
     os.makedirs(args.working_folder, exist_ok=True)
+
+    # important
     os.chdir(args.working_folder)
 
     args.logger = setup_logging(args.log_file_name)
+    args.logger.debug("current dir: {}".format(os.path.realpath(os.path.curdir)))
 
     os.environ['ASPOSE_LIC'] =  os.path.join(args.home, "lic.bin")
     os.environ['PYTHONPATH'] = os.path.join(args.home, "smart_parser/tools")
@@ -137,11 +140,10 @@ def get_new_task_job(args):
     file_data = response.read()
     args.logger.debug("get task {} size={}".format(project_file, len(file_data)))
     basename_project_file = os.path.basename(project_file)
-    base_folder, _ = os.path.splitext(basename_project_file)
-    folder = os.path.join(args.working_folder, base_folder).replace('\\', '/')
+    folder, _ = os.path.splitext(basename_project_file)
+
     if os.path.exists(folder):
         shutil.rmtree(folder, ignore_errors=True)
-
     args.logger.debug("mkdir {}".format(folder))
     os.makedirs(folder, exist_ok=True)
 
@@ -173,22 +175,17 @@ def run_dlrobot(args,  project_file):
 
             ]
         args.logger.debug(" ".join(dlrobot_call))
-        proc = subprocess.Popen(
-            dlrobot_call,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            env=my_env,
-            cwd=project_folder)
+        with open(os.path.join(project_folder, "dlrobot.out"), "w") as dout:
+            with open(os.path.join(project_folder, "dlrobot.err"), "w") as derr:
+                proc = subprocess.Popen(
+                    dlrobot_call,
+                    stdout=dout,
+                    stderr=derr,
+                    env=my_env,
+                    cwd=project_folder,
+                    text=True)
         exit_code = proc.wait(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER) # 4 hours
 
-        if exit_code != 0:
-            dlrobot_error_file = os.path.join(project_folder, "dlrobot.err")
-            with proc.stderr:
-                with open(dlrobot_error_file, "w") as outp:
-                    for line in proc.stderr:
-                        line = line.decode('utf8')
-                        args.logger.error(line)
-                        outp.write(line)
     except subprocess.TimeoutExpired as exp:
         args.logger.error("wait raises timeout exception:{},  timeout={}".format(
             str(exp), TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER))
@@ -305,6 +302,6 @@ if __name__ == "__main__":
         args.logger.error(exp)
     finally:
         pool.close()
-        print( "pool terminate")
+        print("pool terminate")
         pool.terminate()
 
