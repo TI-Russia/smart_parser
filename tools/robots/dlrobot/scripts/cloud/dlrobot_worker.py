@@ -14,6 +14,8 @@ import tempfile
 from multiprocessing import Pool
 from functools import partial
 import psutil
+import threading
+
 
 SCRIPT_DIR_NAME = os.path.realpath(os.path.dirname(__file__))
 DLROBOT_PATH = os.path.realpath(os.path.join(SCRIPT_DIR_NAME, "../../dlrobot.py")).replace('\\', '/')
@@ -247,21 +249,23 @@ def send_results_back(args, project_file, exitcode):
 
 
 def run_dlrobot_and_send_results_in_thread(args, process_id):
-    try:
-        while True:
+    while True:
+        running_project_file = None
+        if os.path.exists(".dlrobot_pit_stop"):
+            break
+        if not threading.main_thread().is_alive():
+            break
+        try:
             running_project_file = get_new_task_job(args)
-            if running_project_file is None:
-                if args.action == "run_once":
-                    break
-                time.sleep(args.timeout_before_next_task)
-            else:
-                print("running_project_file = {}".format(running_project_file))
+            if running_project_file is not None:
                 exit_code = run_dlrobot(args,  running_project_file)
                 send_results_back(args,  running_project_file, exit_code)
-            if args.action == "run_once":
-                break
-    except ConnectionError as err:
-        args.logger.error(str(err))
+        except ConnectionError as err:
+            args.logger.error(str(err))
+        if args.action == "run_once":
+            break
+        if running_project_file is None:
+            time.sleep(args.timeout_before_next_task)
 
 
 def stop(args):
@@ -270,6 +274,11 @@ def stop(args):
         if proc.pid != os.getpid():
             if 'dlrobot_worker.py' in cmdline or 'firefox' in cmdline:
                 proc.kill()
+
+
+def signal_term_handler(signum, frame):
+    # to stop pool process
+    raise Exception("the process was killed!")
 
 
 if __name__ == "__main__":
@@ -282,9 +291,8 @@ if __name__ == "__main__":
         send_results_back(args, args.only_send_back_this_project, 0)
         sys.exit(0)
     running_project_file = None
-    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     pool = Pool(args.worker_count)
-    signal.signal(signal.SIGINT, original_sigint_handler)
+    signal.signal(signal.SIGTERM, signal_term_handler)
     try:
         res = pool.map(partial(run_dlrobot_and_send_results_in_thread, args), range(args.worker_count))
         sys.exit(0)
@@ -294,4 +302,6 @@ if __name__ == "__main__":
         args.logger.error(exp)
     finally:
         pool.close()
+        print( "pool terminate")
+        pool.terminate()
 
