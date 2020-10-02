@@ -120,7 +120,9 @@ def setup_environment(args):
     assert (test_dlrobot_script(args))
     if args.action == "run_once":
         args.worker_count = 1
-
+    geckodriver = shutil.which("geckodriver")
+    if geckodriver is None:
+        raise Exception("cannot find geckodriver (selenium)")
 
 def get_new_task_job(args):
     conn = http.client.HTTPConnection(args.server_address)

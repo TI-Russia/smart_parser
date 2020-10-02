@@ -82,7 +82,7 @@ query_cache_size        = 128M
         todo
 
 10. Test dlrobot
-    cd ~/smart_parser/tools/robots/dlrobot
+    cd ~/smart_parser/tools/robots/dlrobot/tests
     bash run_tests.sh
 
 11. install yandex cloud console (central)
@@ -101,4 +101,16 @@ sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service
 sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
 sudo systemctl enable dlrobot_worker
 sudo systemctl daemon-reload
+
+
+#adjust depending on workstation (on yandex-cloud --worker-count 2, otherwise --worker-count 4)
+sudo nano /etc/systemd/system/dlrobot_worker.service
 sudo systemctl start dlrobot_worker
+
+14. For notebooks, uncomment in /etc/systemd/logind.conf the following lines:
+
+ HandleLidSwitch=ignore
+ HandleLidSwitchDocked=ignore
+
+ then
+   sudo systemctl restart systemd-logind

@@ -128,3 +128,8 @@ export HOSTS=migalka,oldtimer,ventil,lena
 
     # some query example
     #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
+
+
+14. restart disclosures service
+     sudo systemctl stop disclosures
+     sudo systemctl start disclosures
