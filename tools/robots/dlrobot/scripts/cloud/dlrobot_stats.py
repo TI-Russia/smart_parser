@@ -28,7 +28,7 @@ class TCumulativeStats:
         self.cumulative_processed_websites_count = []
         self.end_times = []
         self.websites = []
-        self.host_names = []
+        self.worker_host_names = []
         self.build_stats(min_date)
 
     def build_stats(self, min_date=None):
@@ -40,7 +40,7 @@ class TCumulativeStats:
                 continue
             self.end_times.append(remote_call.end_time)
             self.websites.append(remote_call.get_website())
-            self.host_names.append(remote_call.host_name)
+            self.worker_host_names.append(remote_call.host_name)
 
             sum_count += remote_call.result_files_count
             self.cumulative_declaration_files_count.append(sum_count)
@@ -78,9 +78,9 @@ def process_cumulative_stats(central_stats_file):
     stats.write_website_progress('file_progress_12h.html')
 
 
-    df = pd.DataFrame({'host_names': stats.host_names})
-    fig = px.histogram(df, x="host_names")
-    build_html(fig, "host_stats.html")
+    df = pd.DataFrame({'worker_host_names': stats.worker_host_names})
+    fig = px.histogram(df, x="worker_host_names")
+    build_html(fig, "worker_stats.html")
 
 
 class TPointStats:

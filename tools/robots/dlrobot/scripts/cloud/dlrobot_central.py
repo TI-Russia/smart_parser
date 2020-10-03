@@ -177,12 +177,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 return worker_running_tasks.pop(i)
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
-    def register_task_result(self, host_name, worker_ip, project_file, exit_code, result_archive):
+    def register_task_result(self, worker_host_name, worker_ip, project_file, exit_code, result_archive):
         if args.skip_worker_check:
             remote_call = TRemoteDlrobotCall(worker_ip, project_file)
         else:
             remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
-        remote_call.host_name = host_name
+        remote_call.worker_host_name = worker_host_name
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         remote_call.result_folder = self.untar_file(project_file, result_archive)
@@ -372,9 +372,9 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('missing exitcode or bad exit code')
             return
 
-        host_name = self.headers.get('hostname')
-        if host_name is None:
-            send_error('cannot find header "hostname"')
+        worker_host_name = self.headers.get('hostname')
+        if worker_host_name is None:
+            send_error('cannot find header "hostname" (worker host name)')
             return
 
         worker_ip = self.client_address[0]

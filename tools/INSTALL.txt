@@ -119,3 +119,12 @@ sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl
 
  then
    sudo systemctl restart systemd-logind
+
+15.  crontab in central for monitoring
+SHELL=/bin/bash
+MAILTO=username
+#Mins  Hours  Days   Months  Day of the week
+*/10       *     *        *      *      cd ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static; python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat
+*/10       *     *        *      *       python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
+*/10       *     *        *      *       cd ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static; python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py  --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt
+~
