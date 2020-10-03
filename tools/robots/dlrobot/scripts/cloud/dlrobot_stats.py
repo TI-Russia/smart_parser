@@ -25,9 +25,10 @@ class TCumulativeStats:
     def __init__(self, central_stats_file, min_date=None):
         self.remote_calls = TRemoteDlrobotCall.read_remote_calls_from_file(central_stats_file)
         self.cumulative_declaration_files_count = []
-        self.cumulative_processes_websites_count = []
+        self.cumulative_processed_websites_count = []
         self.end_times = []
         self.websites = []
+        self.host_names = []
         self.build_stats(min_date)
 
     def build_stats(self, min_date=None):
@@ -38,14 +39,14 @@ class TCumulativeStats:
             if remote_call.end_time is None or remote_call.end_time < min_time_stamp:
                 continue
             self.end_times.append(remote_call.end_time)
-
             self.websites.append(remote_call.get_website())
+            self.host_names.append(remote_call.host_name)
 
             sum_count += remote_call.result_files_count
             self.cumulative_declaration_files_count.append(sum_count)
 
             website_count += 1
-            self.cumulative_processes_websites_count.append(website_count)
+            self.cumulative_processed_websites_count.append(website_count)
 
     def write_declaration_crawling_stats(self, html_file):
         df = pd.DataFrame({'Date': self.end_times,
@@ -59,7 +60,7 @@ class TCumulativeStats:
     def write_website_progress(self, html_file):
         df = pd.DataFrame({
              'Date': self.end_times,
-             "WebSiteCount": self.cumulative_processes_websites_count,
+             "WebSiteCount": self.cumulative_processed_websites_count,
              "website": self.websites})
         fig = px.line(df, x='Date', y='WebSiteCount', title='Web Site Progress', hover_data=["website"])
         build_html(fig, html_file)
@@ -69,11 +70,17 @@ def process_cumulative_stats(central_stats_file):
     stats = TCumulativeStats(central_stats_file)
     stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
     stats.write_website_progress('file_progress.html')
+    print(stats.host_names)
 
     min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
     stats = TCumulativeStats(central_stats_file, min_time)
     stats.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
     stats.write_website_progress('file_progress_12h.html')
+
+
+    df = pd.DataFrame({'host_names': stats.host_names})
+    fig = px.histogram(df, x="host_names")
+    build_html(fig, "host_stats.html")
 
 
 class TPointStats:
@@ -83,7 +90,7 @@ class TPointStats:
         self.websites = []
         self.host_names = []
         self.exported_files_counts = []
-        self.start_time_stamps = []
+        self.end_time_stamps = []
         self.build_stats()
 
     def build_stats(self):
@@ -96,8 +103,8 @@ class TPointStats:
             self.websites.append(remote_call.get_website())
             self.host_names.append(remote_call.host_name)
             self.exported_files_counts.append(remote_call.result_files_count)
-            start_time = datetime.datetime.fromtimestamp(remote_call.start_time)
-            self.start_time_stamps.append(start_time.strftime("%Y-%m-%d %H:%M:%S"))
+            end_time = datetime.datetime.fromtimestamp(remote_call.end_time)
+            self.end_time_stamps.append(end_time.strftime("%Y-%m-%d %H:%M:%S"))
 
     def write_stats(self, html_file):
         df = pd.DataFrame({
@@ -105,10 +112,10 @@ class TPointStats:
             "Websites": self.websites,
             "hostnames": self.host_names,
             "exported_files_counts": self.exported_files_counts,
-            'start_times': self.start_time_stamps})
+            'end_times': self.end_time_stamps})
 
-        fig = px.line(df, x='start_times', y='Minutes',
-                      hover_data=['Websites', "hostnames", "exported_files_counts", "start_times"],
+        fig = px.line(df, x='end_times', y='Minutes',
+                      hover_data=['Websites', "hostnames", "exported_files_counts", "end_times"],
                       title='Crawl Website Speed')
         build_html(fig, html_file)
 
