@@ -88,7 +88,7 @@ class TRemoteDlrobotCall:
         self.result_folder = d['result_folder']
 
     def write_to_json(self):
-        d =  {
+        return {
                 'worker_ip': self.worker_ip,
                 'project_file' : self.project_file,
                 'exit_code': self.exit_code,
@@ -96,7 +96,8 @@ class TRemoteDlrobotCall:
                 'end_time': self.end_time,
                 'result_folder': self.result_folder
         }
-        return json.dumps(d)
+    def default(self, o):
+        return o.write_to_json()
 
 
 class TDlrobotHTTPServer(http.server.HTTPServer):
@@ -146,7 +147,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def save_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
         with open (self.get_dlrobot_remote_calls_filename(), "a") as outp:
-            outp.write(remote_call.write_to_json() + "\n")
+            outp.write(json.dumps(remote_call.write_to_json()) + "\n")
         self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
         if remote_call.exit_code != 0:
             max_tries_count = args.tries_count
@@ -299,6 +300,19 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.forget_old_remote_processes(current_time)
             self.check_yandex_cloud()
 
+    def get_stats(self):
+        workers = dict((k, list(r.write_to_json() for r in v))
+                            for (k, v) in self.worker_2_running_tasks.items())
+
+        return {
+            'running_count': self.get_running_jobs_count(),
+            'input_tasks': len(self.input_files),
+            'processed_tasks': self.get_processed_jobs_count(),
+            'worker_2_running_tasks':  workers
+        }
+
+
+
 HTTP_SERVER = None
 
 
@@ -325,14 +339,10 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(b"pong\n")
             return True
         if self.path == "/stats":
-            stats = {
-                'running_count': HTTP_SERVER.get_running_jobs_count(),
-                'input_tasks': len(HTTP_SERVER.input_files),
-                'processed_tasks': HTTP_SERVER.get_processed_jobs_count(),
-            }
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(json.dumps(stats).encode("utf8"))
+            stats = json.dumps(HTTP_SERVER.get_stats()) + "\n"
+            self.wfile.write(stats.encode('utf8'))
             return True
         return False
 
@@ -347,7 +357,11 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('bad request', log_error=False)
             return
 
-        if self.process_special_commands():
+        try:
+            if self.process_special_commands():
+                return
+        except Exception as exp:
+            HTTP_SERVER.logger.error(exp)
             return
 
         dummy_code = query_components.get('authorization_code', None)
