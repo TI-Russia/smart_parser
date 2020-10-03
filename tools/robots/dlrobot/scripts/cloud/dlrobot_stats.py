@@ -41,7 +41,7 @@ class TCumulativeStats:
             dttime = datetime.datetime.fromtimestamp(remote_call.end_time)
             self.end_times.append(pd.Timestamp(dttime))
             self.websites.append(remote_call.get_website())
-            self.worker_host_names.append(remote_call.host_name)
+            self.worker_host_names.append(remote_call.worker_host_name)
 
             sum_count += remote_call.result_files_count
             self.cumulative_declaration_files_count.append(sum_count)
@@ -71,7 +71,6 @@ def process_cumulative_stats(central_stats_file):
     stats = TCumulativeStats(central_stats_file)
     stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
     stats.write_website_progress('file_progress.html')
-    print(stats.host_names)
 
     min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
     stats = TCumulativeStats(central_stats_file, min_time)
@@ -89,7 +88,7 @@ class TPointStats:
         self.remote_calls = TRemoteDlrobotCall.read_remote_calls_from_file(central_stats_file)
         self.minutes = []
         self.websites = []
-        self.host_names = []
+        self.worker_host_names = []
         self.exported_files_counts = []
         self.end_time_stamps = []
         self.build_stats()
@@ -102,7 +101,7 @@ class TPointStats:
                 continue
             self.minutes.append(remote_call.get_total_minutes())
             self.websites.append(remote_call.get_website())
-            self.host_names.append(remote_call.host_name)
+            self.worker_host_names.append(remote_call.worker_host_name)
             self.exported_files_counts.append(remote_call.result_files_count)
             end_time = datetime.datetime.fromtimestamp(remote_call.end_time)
             self.end_time_stamps.append(end_time.strftime("%Y-%m-%d %H:%M:%S"))
@@ -111,7 +110,7 @@ class TPointStats:
         df = pd.DataFrame({
             'Minutes': self.minutes,
             "Websites": self.websites,
-            "hostnames": self.host_names,
+            "hostnames": self.worker_host_names,
             "exported_files_counts": self.exported_files_counts,
             'end_times': self.end_time_stamps})
 
