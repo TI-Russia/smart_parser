@@ -13,6 +13,7 @@ from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import shutil
 import ipaddress
+from remote_call import TRemoteDlrobotCall
 
 
 def setup_logging(logfilename):
@@ -66,38 +67,6 @@ def parse_args():
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
 
     return args
-
-
-class TRemoteDlrobotCall:
-
-    def __init__ (self, worker_ip="", project_file="", exit_code=1):
-        self.worker_ip = worker_ip
-        self.project_file = project_file
-        self.exit_code = exit_code
-        self.start_time = int(time.time())
-        self.end_time = int(time.time())
-        self.result_folder = None
-
-    def read_from_json(self, str):
-        d = json.loads(str)
-        self.worker_ip = d['worker_ip']
-        self.project_file = d['project_file']
-        self.exit_code = d['exit_code']
-        self.start_time = d['start_time']
-        self.end_time = d['end_time']
-        self.result_folder = d['result_folder']
-
-    def write_to_json(self):
-        return {
-                'worker_ip': self.worker_ip,
-                'project_file' : self.project_file,
-                'exit_code': self.exit_code,
-                'start_time': self.start_time,
-                'end_time': self.end_time,
-                'result_folder': self.result_folder
-        }
-    def default(self, o):
-        return o.write_to_json()
 
 
 class TDlrobotHTTPServer(http.server.HTTPServer):
@@ -166,15 +135,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def read_prev_dlrobot_remote_calls(self):
         if os.path.exists(self.get_dlrobot_remote_calls_filename()):
             self.logger.debug("read {}".format(self.get_dlrobot_remote_calls_filename()))
-            with open(self.get_dlrobot_remote_calls_filename(), "r") as inp:
-                for line in inp:
-                    line = line.strip()
-                    remote_call = TRemoteDlrobotCall()
-                    remote_call.read_from_json(line)
-                    self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
-                    if remote_call.exit_code == 0 and remote_call.project_file in self.input_files:
-                        self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
-                        self.input_files.remove(remote_call.project_file)
+            calls = TRemoteDlrobotCall.read_remote_calls_from_file(self.get_dlrobot_remote_calls_filename())
+            for remote_call in calls:
+                self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
+                if remote_call.exit_code == 0 and remote_call.project_file in self.input_files:
+                    self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
+                    self.input_files.remove(remote_call.project_file)
 
     def get_running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())
@@ -223,7 +189,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         remote_call.result_folder = self.untar_file(project_file, result_archive)
-
+        remote_call.calc_project_stats()
         self.save_dlrobot_remote_call(remote_call)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
@@ -239,7 +205,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                     ))
                     running_procs.pop(i)
                     rc.exit_code = 126
-                    rc.end_time = current_time
                     self.save_dlrobot_remote_call(rc)
 
     def forget_remote_processes_for_yandex_worker(self, cloud_id, current_time):
@@ -257,7 +222,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 ))
             running_procs.pop(i)
             rc.exit_code = 125
-            rc.end_time = current_time
             self.save_dlrobot_remote_call(rc)
         if cloud_id in self.cloud_id_to_worker_ip:
             del self.cloud_id_to_worker_ip[cloud_id]
