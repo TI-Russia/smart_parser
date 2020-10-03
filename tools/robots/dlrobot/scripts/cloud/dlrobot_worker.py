@@ -4,7 +4,7 @@ import logging
 import os
 import time
 import http.server
-from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE
 import shutil
 import tarfile
 import subprocess
@@ -15,7 +15,7 @@ from multiprocessing import Pool
 from functools import partial
 import psutil
 import threading
-
+import platform
 
 SCRIPT_DIR_NAME = os.path.realpath(os.path.dirname(__file__))
 DLROBOT_PATH = os.path.realpath(os.path.join(SCRIPT_DIR_NAME, "../../dlrobot.py")).replace('\\', '/')
@@ -124,6 +124,7 @@ def setup_environment(args):
     if geckodriver is None:
         raise Exception("cannot find geckodriver (selenium)")
 
+
 def get_new_task_job(args):
     conn = http.client.HTTPConnection(args.server_address)
     conn.request("GET", "?authorization_code=456788")
@@ -211,6 +212,7 @@ def send_results_back(args, project_file, exitcode):
     headers = {
         "exitcode" : exitcode,
         "dlrobot_project_file_name": os.path.basename(project_file),
+        "hostname": platform.node(),
         "Content-Type": "application/binary"
     }
     args.logger.debug("send results back for {} exitcode={}".format(project_file, exitcode))
@@ -253,7 +255,7 @@ def send_results_back(args, project_file, exitcode):
 def run_dlrobot_and_send_results_in_thread(args, process_id):
     while True:
         running_project_file = None
-        if os.path.exists(".dlrobot_pit_stop"):
+        if os.path.exists(PITSTOP_FILE):
             break
         if not threading.main_thread().is_alive():
             break

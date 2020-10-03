@@ -9,7 +9,7 @@ import json
 import urllib
 import http.server
 import io, gzip, tarfile
-from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import shutil
 import ipaddress
@@ -181,11 +181,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 return worker_running_tasks.pop(i)
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
-    def register_task_result(self, worker_ip, project_file, exit_code, result_archive):
+    def register_task_result(self, host_name, worker_ip, project_file, exit_code, result_archive):
         if args.skip_worker_check:
             remote_call = TRemoteDlrobotCall(worker_ip, project_file)
         else:
             remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+        remote_call.host_name = host_name
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         remote_call.result_folder = self.untar_file(project_file, result_archive)
@@ -228,7 +229,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def start_yandex_cloud_worker(self, id):
         cmd = "{} compute instance start {}".format(self.args.yandex_cloud_console, id)
-        self.logger.info("start yandex cloud worker {}".format(id))
         os.system(cmd)
 
     def check_yandex_cloud(self):
@@ -238,19 +238,15 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             if not check_internet():
                 self.logger.error("cannot connect to google dns, probably internet is down")
                 return None
-            cmd = "{} compute instance list --format json >yc.json".format(self.args.yandex_cloud_console)
-            os.system(cmd)
-            with open("yc.json", "r") as inp:
-                yc_json = json.load(inp)
-            os.unlink("yc.json")
             current_time = time.time()
-            for m in yc_json:
+            for m in TYandexCloud.list_instances():
                 cloud_id = m['id']
                 if m['status'] == 'STOPPED':
                     self.forget_remote_processes_for_yandex_worker(cloud_id, current_time)
-                    self.start_yandex_cloud_worker(cloud_id)
+                    self.logger.info("start yandex cloud worker {}".format(cloud_id))
+                    TYandexCloud.start_yandex_cloud_worker(cloud_id)
                 elif m['status'] == "RUNNING":
-                    worker_ip = m['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
+                    worker_ip = TYandexCloud.get_worker_ip(m)
                     if self.args.enable_ip_checking:
                         self.permitted_hosts.add(worker_ip)
                     self.cloud_id_to_worker_ip[cloud_id] = worker_ip
@@ -383,6 +379,12 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
         if exitcode is None or not exitcode.isdigit():
             send_error('missing exitcode or bad exit code')
             return
+
+        host_name = self.headers.get('hostname')
+        if host_name is None:
+            send_error('cannot find header "hostname"')
+            return
+
         worker_ip = self.client_address[0]
         HTTP_SERVER.logger.debug(
             "start reading file {} file size {} from {}".format(project_file, file_length, worker_ip))
@@ -394,7 +396,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            HTTP_SERVER.register_task_result(worker_ip, project_file, int(exitcode),  archive_file_bytes)
+            HTTP_SERVER.register_task_result(host_name, worker_ip, project_file, int(exitcode),  archive_file_bytes)
         except Exception as exp:
             send_error('register_task_result failed: {}'.format(str(exp)))
             return

@@ -94,7 +94,7 @@ class TPointStats:
                 continue
             self.minutes.append(remote_call.get_total_minutes())
             self.websites.append(remote_call.get_website())
-            self.host_names.append(remote_call.worker_ip)
+            self.host_names.append(remote_call.host_name)
             self.exported_files_counts.append(remote_call.result_files_count)
             start_time = datetime.datetime.fromtimestamp(remote_call.start_time)
             self.start_time_stamps.append(start_time.strftime("%Y-%m-%d %H:%M:%S"))

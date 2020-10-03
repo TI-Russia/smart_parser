@@ -23,3 +23,6 @@ fi
 kill $CENTRAL_PID
 
 python3 ../../scripts/cloud/dlrobot_stats.py --central-stats-file $RESULT_FOLDER/dlrobot_remote_calls.dat
+if [ $? != 0 ]; then
+  echo "dlrobot_stats.py failed"
+fi

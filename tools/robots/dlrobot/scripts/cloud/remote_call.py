@@ -12,6 +12,7 @@ class TRemoteDlrobotCall:
         self.end_time = None
         self.result_folder = None
         self.result_files_count = 0
+        self.host_name = None
 
     def get_website(self):
         website = self.project_file
@@ -32,16 +33,18 @@ class TRemoteDlrobotCall:
         self.end_time = d['end_time']
         self.result_folder = d['result_folder']
         self.result_files_count = d['result_files_count']
+        self.host_name = d['host_name']
 
     def write_to_json(self):
         return {
                 'worker_ip': self.worker_ip,
-                'project_file' : self.project_file,
+                'project_file': self.project_file,
                 'exit_code': self.exit_code,
                 'start_time': self.start_time,
                 'end_time': self.end_time,
                 'result_folder': self.result_folder,
-                'result_files_count': self.result_files_count
+                'result_files_count': self.result_files_count,
+                'host_name': self.host_name
         }
 
     def calc_project_stats(self):
