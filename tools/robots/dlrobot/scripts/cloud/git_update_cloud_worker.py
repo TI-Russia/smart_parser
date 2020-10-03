@@ -4,12 +4,13 @@ import shutil
 import psutil
 import time
 from common_server_worker import PITSTOP_FILE, TYandexCloud
-
+import subprocess
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cloud",  dest='cloud', default=False, action="store_true",
                         required=False)
+    parser.add_argument("--host",  dest='host', default=None,  required=False)
 
     parser.add_argument("--smart-parser-folder",  dest='smart_parser_folder', default='/home/sokirko/smart_parser',
                         required=False)
@@ -59,7 +60,11 @@ def check_free_disk_space():
         raise Exception("at least 1GB free disk space must be available")
 
 
-def get_hosts():
+def get_hosts(args):
+    if args.host is not None:
+        yield args.host
+        return
+
     for m in TYandexCloud.list_instances():
         cloud_id = m['id']
         if m['status'] == 'STOPPED':
@@ -77,30 +82,30 @@ def update_one_worker_on_the_worker():
     print("initalize success")
 
 
-def update_cloud_from_central():
+def update_cloud_from_central(args):
     script = os.path.realpath(__file__)
     updaters = list()
-    for host in get_hosts():
-        proc = subprocess.Popen(
-            ['ssh',
+    for host in get_hosts(args):
+        cmd_args =['ssh',
+              '-o',  "StrictHostKeyChecking no",
               host,
-             "python3",
-             script,
-             ],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
+              "python3",
+               script
+             ]
+        print(" ".join(cmd_args))
+        proc = subprocess.Popen(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         updaters.append(proc)
 
     for p in updaters:
         exit_code = p.wait(60*60)
         if exit_code != 0:
+            print (p.communicate(timeout=10))
             raise Exception("cannot update cloud")
 
 
 if __name__ == "__main__":
     args = parse_args()
     if args.cloud:
-        update_cloud_from_central()
+        update_cloud_from_central(args)
     else:
         update_one_worker_on_the_worker()

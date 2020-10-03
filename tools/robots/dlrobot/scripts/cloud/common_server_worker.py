@@ -35,15 +35,19 @@ def find_yandex_console_utility():
 
 
 class TYandexCloud:
-    yandex_cloud_console = find_yandex_console_utility()
+    yandex_cloud_console = None
 
     @staticmethod
     def start_yandex_cloud_worker(id):
-        cmd = "{} compute instance start {}".format(TYandexCloud.yandex_cloud_console, id)
+        if TYandexCloud.yandex_cloud_console is None:
+            TYandexCloud.yandex_cloud_console = find_yandex_console_utility()
+        cmd = "{} compute instance start {}".format(yandex_cloud_console, id)
         os.system(cmd)
 
     @staticmethod
     def list_instances():
+        if TYandexCloud.yandex_cloud_console is None:
+            TYandexCloud.yandex_cloud_console = find_yandex_console_utility()
         cmd = "{} compute instance list --format json >yc.json".format(TYandexCloud.yandex_cloud_console)
         os.system(cmd)
         with open("yc.json", "r") as inp:
