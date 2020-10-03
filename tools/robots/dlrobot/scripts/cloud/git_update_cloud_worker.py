@@ -72,7 +72,7 @@ def get_hosts(args):
         yield (TYandexCloud.get_worker_ip(m), m['name'])
     yield ("avito", "avito")
     yield ("lena", "lena")
-    
+
 
 def update_one_worker_on_the_worker():
     stop_dlrobot_worker()

@@ -11,7 +11,6 @@ import http.server
 import io, gzip, tarfile
 from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
-import shutil
 import ipaddress
 from remote_call import TRemoteDlrobotCall
 
@@ -57,14 +56,11 @@ def parse_args():
     args = parser.parse_args()
     args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
     args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
-    if args.check_yandex_cloud:
-        args.yandex_cloud_console = shutil.which('yc')
-        if args.yandex_cloud_console is None:
-            args.yandex_cloud_console = os.path.expanduser('~/yandex-cloud/bin/yc')
-            if not os.path.exists (args.yandex_cloud_console):
-                raise FileNotFoundError("install yandex cloud console ( https://cloud.yandex.ru/docs/cli/operations/install-cli )")
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
+
+    if args.check_yandex_cloud:
+        assert TYandexCloud.get_yc() is not None
 
     return args
 
@@ -226,10 +222,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.save_dlrobot_remote_call(rc)
         if cloud_id in self.cloud_id_to_worker_ip:
             del self.cloud_id_to_worker_ip[cloud_id]
-
-    def start_yandex_cloud_worker(self, id):
-        cmd = "{} compute instance start {}".format(self.args.yandex_cloud_console, id)
-        os.system(cmd)
 
     def check_yandex_cloud(self):
         if not self.args.check_yandex_cloud:
