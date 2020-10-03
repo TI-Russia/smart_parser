@@ -38,7 +38,8 @@ class TCumulativeStats:
         for remote_call in self.remote_calls:
             if remote_call.end_time is None or remote_call.end_time < min_time_stamp:
                 continue
-            self.end_times.append(remote_call.end_time)
+            dttime = datetime.datetime.fromtimestamp(remote_call.end_time)
+            self.end_times.append(pd.Timestamp(dttime))
             self.websites.append(remote_call.get_website())
             self.worker_host_names.append(remote_call.host_name)
 
