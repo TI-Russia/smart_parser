@@ -107,6 +107,11 @@ sudo systemctl daemon-reload
 sudo nano /etc/systemd/system/dlrobot_worker.service
 sudo systemctl start dlrobot_worker
 
+run
+  sudo visudo
+add line:
+sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl stop  dlrobot_worker
+
 14. For notebooks, uncomment in /etc/systemd/logind.conf the following lines:
 
  HandleLidSwitch=ignore
