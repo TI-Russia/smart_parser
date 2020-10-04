@@ -14,6 +14,7 @@ def parse_args():
 
     parser.add_argument("--smart-parser-folder",  dest='smart_parser_folder', default='/home/sokirko/smart_parser',
                         required=False)
+    parser.add_argument("--break-crawling",  dest='break_crawling', default=False,  required=False, action="store_true")
     args = parser.parse_args()
     return args
 
@@ -26,13 +27,13 @@ def git_pull(path):
         raise Exception(cmd + " failed")
 
 
-def kill_firefox():
+def kill_crawling():
     os.system("pkill -f firefox")
     os.system("pkill -f geckodriver")
     os.system("pkill -f dlrobot.py")
 
 
-def stop_dlrobot_worker():
+def stop_dlrobot_worker_gently():
     with open(os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE), "w") as outp:
         pass
     start_time = time.time()
@@ -47,7 +48,12 @@ def stop_dlrobot_worker():
             break
         if time.time() - start_time > 60*60:
             raise Exception ("cannot stop dlrobot_worker in one hour")
-    kill_firefox()
+    kill_crawling()
+
+
+def stop_dlrobot_worker_with_losses():
+    kill_crawling()
+    os.system('sudo systemctl stop dlrobot_worker')
 
 
 def start_dlrobot_worker():
@@ -74,8 +80,11 @@ def get_hosts(args):
     yield ("lena", "lena")
 
 
-def update_one_worker_on_the_worker():
-    stop_dlrobot_worker()
+def update_one_worker_on_the_worker(args):
+    if args.break_crawling:
+        stop_dlrobot_worker_with_losses()
+    else:
+        stop_dlrobot_worker_gently()
     check_free_disk_space()
     git_pull(args.smart_parser_folder)
     start_dlrobot_worker()
@@ -93,6 +102,8 @@ def update_cloud_from_central(args):
               "python3",
                script
              ]
+        if args.break_crawling:
+            cmd_args.append("--break-crawling")
         print(" ".join(cmd_args))
         proc = subprocess.Popen(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         updaters.append(proc)
@@ -109,4 +120,4 @@ if __name__ == "__main__":
     if args.cloud or args.host is not None:
         update_cloud_from_central(args)
     else:
-        update_one_worker_on_the_worker()
+        update_one_worker_on_the_worker(args)
