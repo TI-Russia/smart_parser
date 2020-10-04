@@ -9,7 +9,7 @@ import json
 import urllib
 import http.server
 import io, gzip, tarfile
-from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import ipaddress
 from remote_call import TRemoteDlrobotCall
@@ -149,11 +149,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.logger.debug("conversion pdf input_queue_size={}".format(input_queue_size))
         return input_queue_size < 100 * 2**20
 
-    def get_new_job_task(self, worker_ip):
+    def get_new_job_task(self, worker_host_name, worker_ip):
         project_file = self.input_files.pop()
-        self.logger.info("start job: {} on {}, left jobs: {}, running jobs: {}".format(
-                project_file, worker_ip, len(self.input_files), self.get_running_jobs_count()))
+        self.logger.info("start job: {} on {} (host name={}), left jobs: {}, running jobs: {}".format(
+                project_file, worker_ip, worker_host_name, len(self.input_files), self.get_running_jobs_count()))
         res = TRemoteDlrobotCall(worker_ip, project_file)
+        res.worker_host_name = worker_host_name
         self.worker_2_running_tasks[worker_ip].append(res)
         return project_file
 
@@ -329,9 +330,14 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
             return
 
+        worker_host_name = self.headers.get(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME)
+        if worker_host_name is None:
+            send_error('cannot find header "{]'.format(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME))
+            return
+
         worker_ip = self.client_address[0]
         try:
-            project_file = HTTP_SERVER.get_new_job_task(worker_ip)
+            project_file = HTTP_SERVER.get_new_job_task(worker_host_name, worker_ip)
         except Exception as exp:
             send_error(str(exp))
             return
@@ -367,14 +373,14 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('cannot find header "dlrobot_project_file_name"')
             return
 
-        exitcode = self.headers.get('exitcode')
+        exitcode = self.headers.get(DLROBOT_HEADER_KEYS.EXIT_CODE)
         if exitcode is None or not exitcode.isdigit():
             send_error('missing exitcode or bad exit code')
             return
 
-        worker_host_name = self.headers.get('hostname')
+        worker_host_name = self.headers.get(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME)
         if worker_host_name is None:
-            send_error('cannot find header "hostname" (worker host name)')
+            send_error('cannot find header "{]'.format(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME))
             return
 
         worker_ip = self.client_address[0]

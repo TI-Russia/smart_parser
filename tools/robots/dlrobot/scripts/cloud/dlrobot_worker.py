@@ -4,7 +4,7 @@ import logging
 import os
 import time
 import http.server
-from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE, DLROBOT_HEADER_KEYS
 import shutil
 import tarfile
 import subprocess
@@ -127,7 +127,10 @@ def setup_environment(args):
 
 def get_new_task_job(args):
     conn = http.client.HTTPConnection(args.server_address)
-    conn.request("GET", "?authorization_code=456788")
+    headers = {
+        DLROBOT_HEADER_KEYS.WORKER_HOST_NAME : platform.node(),
+    }
+    conn.request("GET", "?authorization_code=456788", headers=headers)
     response = conn.getresponse()
     conn.close()
     if response.status != http.HTTPStatus.OK:
@@ -136,9 +139,9 @@ def get_new_task_job(args):
                 response.status
             ))
         return
-    project_file = response.getheader('dlrobot_project_file_name')
+    project_file = response.getheader(DLROBOT_HEADER_KEYS.PROJECT_FILE)
     if project_file is None:
-        args.logger.error("cannot find filepath header")
+        args.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.PROJECT_FILE))
         return
     file_data = response.read()
     args.logger.debug("get task {} size={}".format(project_file, len(file_data)))
@@ -210,9 +213,9 @@ def run_dlrobot(args,  project_file):
 def send_results_back(args, project_file, exitcode):
     project_folder = os.path.dirname(project_file)
     headers = {
-        "exitcode" : exitcode,
-        "dlrobot_project_file_name": os.path.basename(project_file),
-        "hostname": platform.node(),
+        DLROBOT_HEADER_KEYS.EXIT_CODE: exitcode,
+        DLROBOT_HEADER_KEYS.PROJECT_FILE: os.path.basename(project_file),
+        DLROBOT_HEADER_KEYS.WORKER_HOST_NAME : platform.node(),
         "Content-Type": "application/binary"
     }
     args.logger.debug("send results back for {} exitcode={}".format(project_file, exitcode))
