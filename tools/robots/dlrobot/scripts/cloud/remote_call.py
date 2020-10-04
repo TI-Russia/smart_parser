@@ -12,7 +12,7 @@ class TRemoteDlrobotCall:
         self.end_time = None
         self.result_folder = None
         self.result_files_count = 0
-        self.host_name = None
+        self.worker_host_name = None
 
     def get_website(self):
         website = self.project_file
@@ -33,7 +33,7 @@ class TRemoteDlrobotCall:
         self.end_time = d['end_time']
         self.result_folder = d['result_folder']
         self.result_files_count = d['result_files_count']
-        self.worker_host_name = d['host_name']
+        self.worker_host_name = d['worker_host_name']
 
     def write_to_json(self):
         return {
@@ -44,7 +44,7 @@ class TRemoteDlrobotCall:
                 'end_time': self.end_time,
                 'result_folder': self.result_folder,
                 'result_files_count': self.result_files_count,
-                'host_name': self.worker_host_name
+                'worker_host_name': self.worker_host_name
         }
 
     def calc_project_stats(self):
