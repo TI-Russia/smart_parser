@@ -388,7 +388,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            HTTP_SERVER.register_task_result(host_name, worker_ip, project_file, int(exitcode),  archive_file_bytes)
+            HTTP_SERVER.register_task_result(worker_host_name, worker_ip, project_file, int(exitcode),  archive_file_bytes)
         except Exception as exp:
             send_error('register_task_result failed: {}'.format(str(exp)))
             return
