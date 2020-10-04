@@ -326,13 +326,13 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error("no more jobs", DLROBOT_HTTP_CODE.NO_MORE_JOBS)
             return
 
-        if not HTTP_SERVER.conversion_server_queue_is_short():
-            send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
-            return
-
         worker_host_name = self.headers.get(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME)
         if worker_host_name is None:
-            send_error('cannot find header "{]'.format(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME))
+            send_error('cannot find header {}'.format(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME))
+            return
+
+        if not HTTP_SERVER.conversion_server_queue_is_short():
+            send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
             return
 
         worker_ip = self.client_address[0]
