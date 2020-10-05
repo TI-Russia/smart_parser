@@ -12,10 +12,22 @@ using TI.Declarator.JsonSerialization;
 using CMDLine;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
-
+using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Smart.Parser
-{
+    {
+    public class SmartParserVersions
+    {
+        public List<Version> versions = new List<Version>();
+
+        public class Version
+        {
+            public string id = "";
+            public string info = "";
+        }
+    }
+
     public class Program
     {
         public static string OutFile = "";
@@ -69,6 +81,8 @@ namespace Smart.Parser
                 "print raw floats in Russian traditional format");
             CMDLineParser.Option disclosuresOpt = parser.AddBoolSwitch("-disclosures",
                 "use disclosures output format: save sheet id to each each section, do not produce many output files but one");
+            CMDLineParser.Option versionOpt = parser.AddBoolSwitch("-version",
+                "print version");
             parser.AddHelpOption();
             try
             {
@@ -84,6 +98,11 @@ namespace Smart.Parser
                 throw;
             }
 
+            if (versionOpt.isMatched)
+            {
+                PrintVersion();
+                System.Environment.Exit(0);
+            }
             if (licenseOpt.isMatched)
             {
                 AsposeLicense.SetLicense(licenseOpt.Value.ToString());
@@ -191,6 +210,20 @@ namespace Smart.Parser
             ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
             var freeArgs = parser.RemainingArgs();
             return String.Join(" ", freeArgs).Trim(new char[] { '"' });
+        }
+
+        public static void PrintVersion()
+        {
+            var currentAssembly = Assembly.GetExecutingAssembly();
+            using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Resources.versions.txt"))
+            {
+                using (var file = new System.IO.StreamReader(stream))
+                {
+                    string jsonStr = file.ReadToEnd();
+                    var versions = JsonConvert.DeserializeObject<SmartParserVersions>(jsonStr);
+                    Console.WriteLine(versions.versions[versions.versions.Count - 1].id);
+                }
+            }
         }
 
         public static string BuildOutFileNameByInput(string inputFile)
