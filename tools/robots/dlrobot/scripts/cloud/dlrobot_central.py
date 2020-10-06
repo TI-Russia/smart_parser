@@ -343,7 +343,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         self.send_response(200)
-        self.send_header('dlrobot_project_file_name',  project_file)
+        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE,  project_file)
         self.end_headers()
 
         file_path = os.path.join(HTTP_SERVER.args.input_folder, project_file)
