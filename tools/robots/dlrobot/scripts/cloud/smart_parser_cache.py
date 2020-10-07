@@ -59,6 +59,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread)
         self.session_write_count = 0
         host, port = self.args.server_address.split(":")
+        self.logger.debug("start server on {}:{}".format(host, int(port)))
         super().__init__((host, int(port)), TSmartParserRequestHandler)
 
     def initialize_input_queue(self):
