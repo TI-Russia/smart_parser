@@ -14,7 +14,7 @@ from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from urllib.parse import urlparse
 import hashlib
 from robots.common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
-from multiprocessing import Pool
+from multiprocessing.pool import ThreadPool
 from functools import partial
 
 
@@ -166,7 +166,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
 
     def run_smart_parser_thread(self):
         self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
-        pool = Pool(self.args.worker_count)
+        pool = ThreadPool(self.args.worker_count)
         try:
             task_results = pool.imap_unordered(partial(run_smart_parser, self.logger), self.get_tasks())
             for (sha256, json_data) in task_results:
