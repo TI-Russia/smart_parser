@@ -13,6 +13,9 @@ from pathlib import Path
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from urllib.parse import urlparse
 import hashlib
+from robots.common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
+from multiprocessing import Pool
+from functools import partial
 
 
 def setup_logging(logfilename):
@@ -40,11 +43,31 @@ def parse_args():
     parser.add_argument("--cache-file",  dest='cache_file', required=False, default="smart_parser_cache.dbm")
     parser.add_argument("--input-task-directory", dest='input_task_directory',
                         required=False, default="input_tasks")
+    parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
 
     args = parser.parse_args()
     if args.server_address is None:
         args.server_address = os.environ['SMART_PARSER_SERVER_ADDRESS']
     return args
+
+
+def run_smart_parser(logger, file_path):
+    try:
+        logger.debug("process {} with smart_parser".format(file_path))
+        EXTERNAl_CONVERTORS.run_smart_parser_full(file_path)
+        smart_parser_json = file_path + ".json"
+        json_data = TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
+        if os.path.exists(smart_parser_json):
+            with open(smart_parser_json, "rb") as inp:
+                json_data = zlib.compress(inp.read())
+            os.unlink(smart_parser_json)
+        sha256, _ = os.path.splitext(os.path.basename(file_path))
+        logger.debug("remove file {}".format(file_path))
+        os.unlink(file_path)
+        return sha256, json_data
+    except Exception as exp:
+        logger.error("Exception in run_smart_parser_thread:{}".format(exp))
+        raise
 
 
 class TSmartParserHTTPServer(http.server.HTTPServer):
@@ -62,6 +85,10 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.logger.debug("start server on {}:{}".format(host, int(port)))
         super().__init__((host, int(port)), TSmartParserRequestHandler)
 
+    def check_file_extension(self, filename):
+        _, extension = os.path.splitext(filename)
+        return extension in ACCEPTED_DOCUMENT_EXTENSIONS
+
     def initialize_input_queue(self):
         if not os.path.exists(self.args.input_task_directory):
             try:
@@ -71,9 +98,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
                 raise
         task_queue = queue.Queue()
         for file_name in sorted(Path(args.input_task_directory).iterdir(), key=os.path.getmtime):
-            if str(file_name).endswith(".json"):
-                os.unlink(file_name)  # delete thrash
-            else:
+            if self.check_file_extension(str(file_name)):
                 task_queue.put(os.path.basename(file_name))
         self.logger.error("initialize input task queue with {} files".format(task_queue.qsize()))
         return task_queue
@@ -92,7 +117,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         return ",".join([sha256, smart_parser_version])
 
     def get_smart_parser_json(self, sha256, smart_parser_version):
-        key =  self.build_key(sha256, smart_parser_version)
+        key = self.build_key(sha256, smart_parser_version)
         js = self.json_cache.get(key)
         if js is None:
             self.logger.debug("cannot find key {}".format(key))
@@ -107,40 +132,39 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         sha256 = hashlib.sha256(file_bytes).hexdigest()
         file_name = os.path.join(self.args.input_task_directory, sha256 + file_extension)
         if os.path.exists(file_name):
-            self.logger.debug("file {} already exists".format(file_name))
+            self.logger.debug("file {} already exists in the input queue".format(file_name))
             return
+        key = self.build_key(sha256, None)
+        if self.json_cache.get(key) is not None:
+            self.logger.debug("file {} already exists in the db".format(file_name))
+            return
+
+        if not self.check_file_extension(str(file_name)):
+            self.logger.debug("bad file extension  {}".format(file_name))
+            return
+
         self.task_queue.put(os.path.basename(file_name))
         with open (file_name, "wb") as outp:
             outp.write(file_bytes)
 
-    def process_file(self, file_name):
-        file_path = os.path.join(self.args.input_task_directory, file_name)
-        self.logger.debug("process {} with smart_parser".format(file_path))
-        EXTERNAl_CONVERTORS.run_smart_parser_full(file_path)
-        smart_parser_json = file_path + ".json"
-        json_data = TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
-        if os.path.exists(smart_parser_json):
-            with open(smart_parser_json, "rb") as inp:
-                json_data = zlib.compress(inp.read())
-            os.unlink(smart_parser_json)
-        sha256, _ = os.path.splitext(file_name)
+    def register_built_smart_parser_json(self, sha256, json_data):
         key = self.build_key(sha256, None)
-        self.session_write_count += 1
-        self.json_cache[key] = json_data
         self.logger.debug("add json to key  {}".format(key))
-        self.logger.debug("remove file {}".format(file_path))
-        os.unlink(file_path)
+        self.session_write_count += 1
+        # do we need here a thread lock?
+        self.json_cache[key] = json_data
+
+    def get_tasks(self):
+        while True:
+            file_name = self.task_queue.get()
+            yield os.path.join(self.args.input_task_directory, file_name)
 
     def run_smart_parser_thread(self):
-        while True:
-            try:
-                file_name = self.task_queue.get(block=True, timeout=10)
-            except queue.Empty as exp:
-                continue
-            try:
-                self.process_file(file_name)
-            except Exception as exp:
-                self.logger.error("Exception in run_smart_parser_thread:{}".format(exp))
+        self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
+        pool = Pool(self.args.worker_count)
+        task_results = pool.imap_unordered(partial(run_smart_parser, self.logger), self.get_tasks())
+        for (sha256, json_data) in task_results:
+            self.register_built_smart_parser_json(sha256, json_data)
 
     def get_stats(self):
         return {
