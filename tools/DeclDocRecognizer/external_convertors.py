@@ -119,4 +119,16 @@ class TExternalConverters:
         #run_cmd("rm -f main.txt second.txt smart_parser*log {}.log".format(inp))
         return exit_code
 
+    def get_smart_parser_version(self):
+        tmp_file = "version.tmp"
+        cmd = "{} -version > {}".format(self.smart_parser, tmp_file)
+        run_cmd(cmd)
+        version = None
+        if os.path.exists(tmp_file):
+            with open(tmp_file, "r") as inp:
+                version = inp.read()
+                version = version.strip()
+            os.unlink(tmp_file)
+        return version
+
 EXTERNAl_CONVERTORS = TExternalConverters()

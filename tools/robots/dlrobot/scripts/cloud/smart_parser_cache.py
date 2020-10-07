@@ -109,6 +109,10 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             last_version = versions['versions'][-1]['id']
             assert last_version is not None
             self.logger.error("last smart parser version is {}".format(last_version))
+            version_in_binary = EXTERNAl_CONVERTORS.get_smart_parser_version()
+            if version_in_binary != last_version:
+                self.logger.error("smart parser binary is outdated, compile it  ")
+                assert version_in_binary == last_version
             return last_version
 
     def build_key(self, sha256, smart_parser_version):

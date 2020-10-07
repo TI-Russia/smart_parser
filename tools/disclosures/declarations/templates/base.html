@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Home {% endblock title %}</title>
+
     {% block head_favicon %}
-    <link rel="icon" type="image/png"
-          href="{{ STATIC_URL }}images/favicon.ico">
+    <link rel="icon" type="image/png" href="/static/images/favicon.ico">
     {% endblock head_favicon %}
+
     {% block head_meta %}
     {% block head_meta_charset %}
     <meta http-equiv="Content-Type"
