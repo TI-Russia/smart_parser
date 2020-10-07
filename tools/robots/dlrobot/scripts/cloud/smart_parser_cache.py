@@ -143,9 +143,9 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             self.logger.debug("bad file extension  {}".format(file_name))
             return
 
-        self.task_queue.put(os.path.basename(file_name))
         with open (file_name, "wb") as outp:
             outp.write(file_bytes)
+        self.task_queue.put(os.path.basename(file_name))
 
     def register_built_smart_parser_json(self, sha256, json_data):
         key = self.build_key(sha256, None)
@@ -157,7 +157,11 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
     def get_tasks(self):
         while True:
             file_name = self.task_queue.get()
-            yield os.path.join(self.args.input_task_directory, file_name)
+            file_path = os.path.join(self.args.input_task_directory, file_name)
+            if os.path.exists(file_path):
+                yield file_path
+            else:
+                self.logger.error("file {} does not exist".format(file_path))
 
     def run_smart_parser_thread(self):
         self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
