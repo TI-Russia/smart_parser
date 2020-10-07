@@ -111,7 +111,7 @@ class TExternalConverters:
         return exit_code
 
     def run_smart_parser_full(self, inp):
-        cmd = "{} -disclosures -decimal-raw-normalization -skip-logging -converted-storage-url {} {}".format(
+        cmd = "/usr/bin/timeout 30m {} -disclosures -decimal-raw-normalization -skip-logging -converted-storage-url {} {}".format(
             self.smart_parser,
             TDocConversionClient.DECLARATOR_CONV_URL,
             inp)

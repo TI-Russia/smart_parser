@@ -60,11 +60,12 @@ query_cache_size        = 128M
     export ASPOSE_LIC=~/lic.bin
     export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
     export DECLARATOR_CONV_URL=disclosures.ru:8091
+    export SMART_PARSER_SERVER_ADDRESS=disclosures.ru:8165
     source ~/.profile
 
 7. compile smart_parser itself (c#, ~/smart_parser/src)
    7.1 Compile smart_parser
-      dotnet build -c Release ~/smart_parser/src
+          dotnet build -c Release ~/smart_parser/src
 
    7.2 Test smart_parser
       dotnet test -c Release ~/smart_parser
