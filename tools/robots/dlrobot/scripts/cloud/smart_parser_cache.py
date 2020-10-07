@@ -146,6 +146,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         with open (file_name, "wb") as outp:
             outp.write(file_bytes)
         self.task_queue.put(os.path.basename(file_name))
+        self.logger.debug("put {} to queue".format(file_name))
 
     def register_built_smart_parser_json(self, sha256, json_data):
         key = self.build_key(sha256, None)
@@ -166,9 +167,13 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
     def run_smart_parser_thread(self):
         self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
         pool = Pool(self.args.worker_count)
-        task_results = pool.imap_unordered(partial(run_smart_parser, self.logger), self.get_tasks())
-        for (sha256, json_data) in task_results:
-            self.register_built_smart_parser_json(sha256, json_data)
+        try:
+            task_results = pool.imap_unordered(partial(run_smart_parser, self.logger), self.get_tasks())
+            for (sha256, json_data) in task_results:
+                self.register_built_smart_parser_json(sha256, json_data)
+        except Exception as exp:
+            self.logger.error("general exception in run_smart_parser_thread: {} ".format(exp))
+            raise
 
     def get_stats(self):
         return {
