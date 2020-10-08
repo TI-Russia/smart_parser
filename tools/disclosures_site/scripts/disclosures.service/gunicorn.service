@@ -7,7 +7,7 @@ After=network.target
 User=sokirko
 WorkingDirectory=/var/www/smart_parser/tools/disclosures_site
 Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures_site
-ExecStart=/var/www/smart_parser/env/bin/gunicorn \
+ExecStart=/var/www/smart_parser/tools/venv/bin/gunicorn \
           --access-logfile - \
           --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
           --workers 3 \

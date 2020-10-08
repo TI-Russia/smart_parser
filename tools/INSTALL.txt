@@ -147,52 +147,41 @@ git clone https://github.com/TI-Russia/smart_parser.git
 
 cd /var/www/smart_parser/tools
 python3 -m venv  venv
-source env/bin/activate
+source venv/bin/activate
 pip3 install -r requirements.txt
 
+4.2 install disclosures service
+    cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
+    sudo cp disclosures.service  /etc/systemd/system
+    sudo systemctl restart disclosures.service
 
-4.1 install nginx
-    sudo apt install nginx
+4.3 create gunicorn service
 
-4.3 test gunicorn
-  test gunicorn
+  4.3.1  create gunicorn service
+    cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
+    sudo cp gunicorn.socket  /etc/systemd/system
+    sudo cp gunicorn.service /etc/systemd/system
+
+    sudo systemctl start gunicorn.socket
+    sudo systemctl enable gunicorn.socket
+
+    sudo systemctl restart gunicorn.service
+    sudo systemctl status gunicorn.service
+
+  4.3.2 test gunicorn (optional)
      /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
 
-4.4 create socket definition
 
-sudo nano /etc/systemd/system/gunicorn.socket
+4.4 install nginx
 
-add to this file:
+    sudo apt install nginx
+    cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
+    sudo cp nginx.config /etc/nginx/sites-available/disclosures.ru
+    sudo ln -s  /etc/nginx/sites-available/disclosures.ru  /etc/nginx/sites-enabled
+    sudo rm /etc/nginx/sites-enabled/default
+    sudo systemctl restart nginx
+    sudo systemctl status nginx
 
-[Unit]
-Description=gunicorn socket
-[Socket]
-ListenStream=/run/gunicorn.sock
-[Install]
-WantedBy=sockets.target
-
-4.5  Create gunicorn service
-sudo nano /etc/systemd/system/gunicorn.service
-
-Unit]
-Description=gunicorn daemon
-Requires=gunicorn.socket
-After=network.target
-
-[Service]
-User=sokirko
-WorkingDirectory=/var/www/smart_parser/tools/disclosures_site
-Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures_site
-ExecStart=/var/www/smart_parser/env/bin/gunicorn \
-          --access-logfile - \
-          --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
-          --workers 3 \
-          --bind unix:/run/gunicorn.sock \
-          disclosures.wsgi:application
-
-[Install]
-WantedBy=multi-user.target
-
-4.6
-sudo systemctl start gunicorn.socket
-sudo systemctl enable gunicorn.socket
+4.5 install https
+    sudo apt-get install certbot python3-certbot-nginx
+    sudo certbot --nginx
