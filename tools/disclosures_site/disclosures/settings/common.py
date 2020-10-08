@@ -1,6 +1,6 @@
 import os
 from django.utils.translation import gettext_lazy as _
-#from disclosures.disclosures.elastic_signal import ElasticSignalProcessor
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,8 +9,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '++rv=$@125pu%jb@f)2qgj5&8m_8v063ny%y_7im%pu!+l=d1e'
+secret_key_file = os.path.join(os.path.dirname(__file__),  "secret_key.txt")
+if os.path.exists(secret_key_file):
+    with open (secret_key_file, "r") as inp:
+        SECRET_KEY = inp.read().strip()
+else:
+    from django.core.management.utils import get_random_secret_key
+    SECRET_KEY = get_random_secret_key()
+    with open (secret_key_file, "w") as out:
+        out.write(SECRET_KEY)
+
 
 
 # Application definition
