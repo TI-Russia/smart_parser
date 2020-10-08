@@ -153,7 +153,8 @@ pip3 install -r requirements.txt
 4.2 install disclosures service
     cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
     sudo cp disclosures.service  /etc/systemd/system
-    sudo systemctl restart disclosures.service
+    sudo systemctl restart disclosures
+    sudo systemctl enable disclosures
 
 4.3 create gunicorn service
 

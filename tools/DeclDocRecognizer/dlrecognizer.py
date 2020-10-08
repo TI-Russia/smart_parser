@@ -73,7 +73,7 @@ def get_smart_parser_result(source_file):
         return 0
     with open(json_file, "r", encoding="utf8") as inpf:
         smart_parser_json = json.load(inpf)
-    #os.remove(json_file)
+    os.remove(json_file)
     return len(smart_parser_json.get("persons", []))
 
 

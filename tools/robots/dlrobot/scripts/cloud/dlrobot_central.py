@@ -62,7 +62,7 @@ def parse_args():
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
     if args.smart_parser_server_address is None:
-        args.smart_parser_server_address = os.environ['SMART_PARSER_SERVER_ADDRESS']
+        args.smart_parser_server_address = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
     if args.check_yandex_cloud:
         assert TYandexCloud.get_yc() is not None
 
@@ -184,6 +184,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
     def send_declaraion_files_to_smart_parser(self, result_folder):
+        if self.args.smart_parser_server_address is None:
+            self.error("cannot send document to smart_parser_cache server, since its address in unknown")
+            return
+
         doc_folder = os.path.join(result_folder, "result")
         if os.path.exists(doc_folder):
             for website in os.listdir(doc_folder):
