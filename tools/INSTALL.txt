@@ -130,7 +130,7 @@ SHELL=/bin/bash
 MAILTO=username
 #Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static/dlrobot
+*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static/dlrobot
 
 3.7 Make all steps od "COMMON WORKER/SERVER ACTIONS" (2.1 - 2.10)
 
@@ -181,8 +181,8 @@ After=network.target
 
 [Service]
 User=sokirko
-WorkingDirectory=/var/www/smart_parser/tools/disclosures
-Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures
+WorkingDirectory=/var/www/smart_parser/tools/disclosures_site
+Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures_site
 ExecStart=/var/www/smart_parser/env/bin/gunicorn \
           --access-logfile - \
           --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
