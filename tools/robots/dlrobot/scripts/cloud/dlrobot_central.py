@@ -13,6 +13,7 @@ from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLR
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import ipaddress
 from remote_call import TRemoteDlrobotCall
+from robots.common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 
 
 def setup_logging(logfilename):
@@ -52,13 +53,16 @@ def parse_args():
                         required=False, help="skip checking that this tast was given to this worker")
     parser.add_argument("--enable-ip-checking", dest='enable_ip_checking', default=False, action='store_true',
                         required=False)
+    parser.add_argument("--smart-parser-server-address", dest='smart_parser_server_address',
+                        default=None, help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
 
     args = parser.parse_args()
     args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
     args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
-
+    if args.smart_parser_server_address is None:
+        args.smart_parser_server_address = os.environ['SMART_PARSER_SERVER_ADDRESS']
     if args.check_yandex_cloud:
         assert TYandexCloud.get_yc() is not None
 
@@ -83,6 +87,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.worker_2_running_tasks = defaultdict(list)
         self.cloud_id_to_worker_ip = dict()
         host, port = self.args.server_address.split(":")
+        self.logger.debug("start server on {}:{}".format(host, port))
         super().__init__((host, int(port)), TDlrobotRequestHandler)
         self.last_service_action_time_stamp = time.time()
         if self.args.enable_ip_checking:
@@ -178,6 +183,20 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 return worker_running_tasks.pop(i)
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
+    def send_declaraion_files_to_smart_parser(self, result_folder):
+        doc_folder = os.path.join(result_folder, "result")
+        if os.path.exists(doc_folder):
+            for website in os.listdir(doc_folder):
+                website_folder = os.path.join(doc_folder, website)
+                for doc in os.listdir(website_folder):
+                    _, extension = os.path.splitext(doc)
+                    if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
+                        path = os.path.join(website_folder, doc)
+                        cmd = "curl -T {} http://{} ".format(doc, self.args.smart_parser_server_address)
+                        self.logger.debug(cmd)
+                        exitcode = os.system(cmd)
+                        self.logger.debug("exitcode={}".format(exitcode))
+
     def register_task_result(self, worker_host_name, worker_ip, project_file, exit_code, result_archive):
         if args.skip_worker_check:
             remote_call = TRemoteDlrobotCall(worker_ip, project_file)
@@ -188,6 +207,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.end_time = int(time.time())
         remote_call.result_folder = self.untar_file(project_file, result_archive)
         remote_call.calc_project_stats()
+        self.send_declaraion_files_to_smart_parser(remote_call.result_folder)
         self.save_dlrobot_remote_call(remote_call)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(

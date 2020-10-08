@@ -24,6 +24,8 @@ class  TTimeouts:
     #add 20 minutes to send data back to central
     OVERALL_HARD_TIMEOUT_IN_CENTRAL = OVERALL_HARD_TIMEOUT_IN_WORKER + 20*60
 
+    TIMEOUT_IN_WORKER_CLEAN_JUNK = OVERALL_HARD_TIMEOUT_IN_WORKER + 60 * 60 # 5 hours
+
 
 PITSTOP_FILE = ".dlrobot_pit_stop"
 

@@ -255,6 +255,20 @@ def send_results_back(args, project_file, exitcode):
         shutil.rmtree(project_folder, ignore_errors=True)
 
 
+def check_free_disk_space():
+    total, used, free = shutil.disk_usage(os.curdir)
+    return free > 2 * 2**30 #at least 2GB free disk space must be available
+
+
+def delete_very_old_folders(args):
+    args.logger.debug("delete_very_old_folders")
+    now = time.time()
+    with os.scandir(".") as it:
+        for entry in it:
+            if entry.is_dir() and entry.stat().st_mtime < now - TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK:
+                args.logger.error("delete folder {} while it is too old, see TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK".format(entry.name))
+                shutil.rmtree(str(entry.name), ignore_errors=True)
+
 def run_dlrobot_and_send_results_in_thread(args, process_id):
     while True:
         running_project_file = None
@@ -262,13 +276,19 @@ def run_dlrobot_and_send_results_in_thread(args, process_id):
             break
         if not threading.main_thread().is_alive():
             break
-        try:
-            running_project_file = get_new_task_job(args)
-            if running_project_file is not None:
-                exit_code = run_dlrobot(args,  running_project_file)
-                send_results_back(args,  running_project_file, exit_code)
-        except ConnectionError as err:
-            args.logger.error(str(err))
+
+        if not check_free_disk_space():
+            delete_very_old_folders(args)
+            args.logger.debug("check_free_disk_space failed, sleep 10 minutes")
+            time.sleep(60*10)  #there is a hope that the second process frees the disk
+        else:
+            try:
+                running_project_file = get_new_task_job(args)
+                if running_project_file is not None:
+                    exit_code = run_dlrobot(args,  running_project_file)
+                    send_results_back(args,  running_project_file, exit_code)
+            except ConnectionError as err:
+                args.logger.error(str(err))
         if args.action == "run_once":
             break
         if running_project_file is None:

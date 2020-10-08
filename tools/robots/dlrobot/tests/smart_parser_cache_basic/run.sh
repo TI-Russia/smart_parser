@@ -1,5 +1,6 @@
 PROJECT=$1
 WEB_ADDR=$2
+
 INPUT_FOLDER=input_tasks
 rm -rf $INPUT_FOLDER smart_parser_cache.dbm smart_parser_cache.log
 

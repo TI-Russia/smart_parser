@@ -11,7 +11,6 @@ from robots.common.find_link import TLinkInfo
 import re
 import copy
 import time
-from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 
 
 def html_to_text(html):
@@ -233,9 +232,3 @@ class TExportEnvironment:
             len(self.exported_files),
             office_folder))
 
-        global EXTERNAl_CONVERTORS
-        for export_file in self.exported_files:
-            EXTERNAl_CONVERTORS.run_smart_parser_full(export_file.export_path)
-            smart_parser_json = export_file.export_path + ".json"
-            if os.path.exists(smart_parser_json):
-                export_file.smart_parser_json_sha256 = build_sha256(smart_parser_json)
