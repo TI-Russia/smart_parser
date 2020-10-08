@@ -1,7 +1,7 @@
 1. follow ~/smart_parser/tools/INSTALL.txt
 
 3. create db and user
-    cd ~/smart_parser/tools/disclosures
+    cd ~/smart_parser/tools/disclosures_site
     cat create_disclosures_db.sql | sudo mysql
 
 4. installing and testing

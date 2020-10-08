@@ -1,17 +1,113 @@
+=====================================================================================
+============ 1. INSTALLATION GUIDE FOR WORKERS        ===============================
+=====================================================================================
 
-This configuration is tested on Ubuntu 18, 20
+This configuration is tested on Ubuntu 18, 20 (preferable)
 
-0.1 install python 3.8 (cannot install http module to ububtu server under lower python versions)
+1.1. Yandex cloud worker, create workstation
+   2 ГБ RAM, 1 ГБ своп, 25 ГБ HDD, Ubuntu 20, "interruptable", public IP, price 300 RUB
 
-0.2 install mysql 8
+   For Yandex.Cloud, increase swap file
+   sudo swapoff -a
+   sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
+   sudo mkswap /swapfile
+   sudo swapon /swapfile
 
-0.3 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
+1.2 set date
+   sudo dpkg-reconfigure tzdata
+
+1.3.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
+   scp -P 2223 disclosures.ru:~/lic.bin ~/
+
+1.4 Run all steps of COMMON WORKER/SERVER ACTIONS (2.1 -- 2.10)
+
+1.5 Create dlrobot worker service:
+    sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
+    sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
+    sudo systemctl enable dlrobot_worker
+    sudo systemctl daemon-reload
+    #adjust depending on workstation (on yandex-cloud --worker-count 2, otherwise --worker-count 4)
+    sudo nano /etc/systemd/system/dlrobot_worker.service
+    sudo systemctl start dlrobot_worker
+
+1.6 Enable start/stop  service dlrobot_worker without password
+  sudo visudo
+  add line:
+     sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl stop  dlrobot_worker
+
+1.7 For laptops (not cloud servers), set in /etc/systemd/logind.conf the following lines:
+ HandleLidSwitch=ignore
+ HandleLidSwitchDocked=ignore
+
+ then
+   sudo systemctl restart systemd-logind
+
+
+
+==========================================================
+===== 2.  COMMON WORKER/SERVER ACTIONS  ==================
+==========================================================
+
+2.1 sudo apt update
+   sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
+        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
+        firefox git
+
+2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
+
+2.3 Install python3
+   pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
+
+2.4. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
+      wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+      sudo dpkg -i packages-microsoft-prod.deb
+      sudo apt-get update
+      sudo apt-get install -y apt-transport-https
+      sudo apt-get update
+      sudo apt-get install -y dotnet-sdk-3.1
+
+
+2.6 update ~/.profile
+    export ASPOSE_LIC=~/lic.bin
+    export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
+    export DECLARATOR_CONV_URL=disclosures.ru:8091
+    export SMART_PARSER_SERVER_ADDRESS=disclosures.ru:8165
+    source ~/.profile
+
+2.7 compile and test smart_parser (c#, ~/smart_parser/src)
+   dotnet build -c Release ~/smart_parser/src
+   dotnet test -c Release ~/smart_parser
+
+2.8 compile  and test ~/smart_parser/tools/Office2Txt
+   dotnet build -c Release ~/smart_parser/tools/Office2Txt
+   dotnet test -c Release ~/smart_parser/tools/Office2Txt
+
+2.9.  download https://github.com/mozilla/geckodriver/releases/tag/v0.26.0 (linux or windows);
+      cd  /usr/local/bin
+      sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
+      sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
+
+2.10. Test dlrobot
+    cd ~/smart_parser/tools/robots/dlrobot/tests
+    bash run_tests.sh
+
+
+=====================================================================================
+============ 3. INSTALLATION GUIDE FOR CENTRAL (server)  ===============================
+=====================================================================================
+
+3.1 set date
+   sudo dpkg-reconfigure tzdata
+
+3.2. install mysql 8
+
+3.3 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
 query_cache_type        = ON
 query_cache_limit       = 1M
 query_cache_size        = 128M
 
 
-1. Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+3.4. Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
     sudo apt-get install apt-transport-https
     echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
@@ -21,72 +117,7 @@ query_cache_size        = 128M
     sudo /bin/systemctl enable elasticsearch.service
     sudo systemctl start elasticsearch.service
 
-1.1  For Yandex.Cloud, increase swap file
-   sudo swapoff -a
-   sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
-   sudo mkswap /swapfile
-   sudo swapon /swapfile
-
-2. sudo apt update
-   sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
-        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git
-
-3. git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
-
-4. Install python3 modules in virtual env
-    3.1 developer version:
-        cd ~/smart_parser/tools
-        mkdir venv
-        python3 -m venv venv
-        source ~/smart_parser/tools/venv/bin/activate
-        pip3 install -r ~/smart_parser/tools/requirements.txt
-    3.2 production version
-        pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
-
-
-5. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
-      wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-      sudo dpkg -i packages-microsoft-prod.deb
-      sudo apt-get update
-      sudo apt-get install -y apt-transport-https
-      sudo apt-get update
-      sudo apt-get install -y dotnet-sdk-3.1
-
-6.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
-   scp -P 2223 disclosures.ru:~/lic.bin ~/
-
-6.1 update ~/.profile
-    export ASPOSE_LIC=~/lic.bin
-    export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
-    export DECLARATOR_CONV_URL=disclosures.ru:8091
-    export SMART_PARSER_SERVER_ADDRESS=disclosures.ru:8165
-    source ~/.profile
-
-7. compile smart_parser itself (c#, ~/smart_parser/src)
-   7.1 Compile smart_parser
-          dotnet build -c Release ~/smart_parser/src
-
-   7.2 Test smart_parser
-      dotnet test -c Release ~/smart_parser
-
-8. compile  ~/smart_parser/tools/Office2Txt
-   dotnet build -c Release ~/smart_parser/tools/Office2Txt
-   dotnet test -c Release ~/smart_parser/tools/Office2Txt
-
-9.  download https://github.com/mozilla/geckodriver/releases/tag/v0.26.0 (linux or windows);
-   9.1 for linux
-      cd  /usr/local/bin
-      sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-      sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
-    9.2  for windows
-        todo
-
-10. Test dlrobot
-    cd ~/smart_parser/tools/robots/dlrobot/tests
-    bash run_tests.sh
-
-11. install yandex cloud console (central)
+3.5. install yandex cloud console (central)
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
    source ~/.profile
    get token from sokirko@yandex.ru (more ~/.config/yandex-cloud/config.yaml)
@@ -94,38 +125,74 @@ query_cache_size        = 128M
    Which zone do you want to use as a profile default ru-central1-c
    yc compute instance list
 
-12. установка даты
-   sudo dpkg-reconfigure tzdata
-
-13. Crete dlrobot worker service:
-sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
-sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
-sudo systemctl enable dlrobot_worker
-sudo systemctl daemon-reload
-
-
-#adjust depending on workstation (on yandex-cloud --worker-count 2, otherwise --worker-count 4)
-sudo nano /etc/systemd/system/dlrobot_worker.service
-sudo systemctl start dlrobot_worker
-
-run
-  sudo visudo
-add line:
-sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl stop  dlrobot_worker
-
-14. For notebooks, uncomment in /etc/systemd/logind.conf the following lines:
-
- HandleLidSwitch=ignore
- HandleLidSwitchDocked=ignore
-
- then
-   sudo systemctl restart systemd-logind
-
-15.  crontab in central for monitoring
+3.6.  init crontab in central for monitoring
 SHELL=/bin/bash
 MAILTO=username
 #Mins  Hours  Days   Months  Day of the week
-*/10       *     *        *      *      cd ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static; python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat
-*/10       *     *        *      *       python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-*/10       *     *        *      *       cd ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static; python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py  --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-~
+*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
+*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static/dlrobot
+
+3.7 Make all steps od "COMMON WORKER/SERVER ACTIONS" (2.1 - 2.10)
+
+
+=====================================================================================
+============ 4. INSTALLATION GUIDE FOR WWW (can be on the central)  =================
+=====================================================================================
+Following https://habr.com/ru/post/501414/
+
+4.1   Install python environment in /var/www/smart_parser
+cd /var/www
+sudo chmod a+rwx .
+git clone https://github.com/TI-Russia/smart_parser.git
+
+cd /var/www/smart_parser/tools
+python3 -m venv  venv
+source env/bin/activate
+pip3 install -r requirements.txt
+
+
+4.1 install nginx
+    sudo apt install nginx
+
+4.3 test gunicorn
+  test gunicorn
+     /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
+
+4.4 create socket definition
+
+sudo nano /etc/systemd/system/gunicorn.socket
+
+add to this file:
+
+[Unit]
+Description=gunicorn socket
+[Socket]
+ListenStream=/run/gunicorn.sock
+[Install]
+WantedBy=sockets.target
+
+4.5  Create gunicorn service
+sudo nano /etc/systemd/system/gunicorn.service
+
+Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=sokirko
+WorkingDirectory=/var/www/smart_parser/tools/disclosures
+Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures
+ExecStart=/var/www/smart_parser/env/bin/gunicorn \
+          --access-logfile - \
+          --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          disclosures.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+4.6
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket

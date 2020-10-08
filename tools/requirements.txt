@@ -25,4 +25,5 @@ xlsx2csv
 lxml
 django-meta
 requests
-
+gunicorn
+psycopg2-binary

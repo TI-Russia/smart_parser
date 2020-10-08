@@ -11,7 +11,7 @@ from remote_call import TRemoteDlrobotCall
 #MAILTO=username
 ##Mins  Hours  Days   Months  Day of the week
 #*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-#*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static/dlrobot
+#*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_stats/disclosures/static/dlrobot
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument("--conversion-server-stats", dest='conversion_server_stats', required=False,
                         help="for example /home/sokirko/declarator_hdd/declarator/convert_stats.txt")
     parser.add_argument("--output-folder", dest='output_folder', required=False, default=".",
-                        help="for example ~/smart_parser.disclosures_prod/tools/disclosures/disclosures/static")
+                        help="for example ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static")
     args = parser.parse_args()
     return args
 
