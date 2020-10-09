@@ -1,4 +1,3 @@
-import logging
 import urllib.error
 import urllib.parse
 from robots.common.download import are_web_mirrors
@@ -8,6 +7,7 @@ from robots.common.primitives import get_site_domain_wo_www
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import re
 from robots.common.link_info import TLinkInfo, TClickEngine
+from robots.common.html_parser import THtmlParser
 
 
 def get_office_domain(web_domain):
@@ -82,42 +82,32 @@ def get_base_url(main_url, soup):
     return main_url
 
 
-def get_soup_title(soup):
-    if soup.title is None:
-        return ""
-    if soup.title.string is None:
-        return ""
-    return soup.title.string
-
-
-def find_links_in_html_by_text(step_info, main_url, soup):
-    logger = logging.getLogger("dlrobot_logger")
-    base = get_base_url(main_url, soup)
+def find_links_in_html_by_text(step_info, main_url, html_parser: THtmlParser):
+    logger = step_info.logger
+    base = get_base_url(main_url, html_parser.soup)
     if base.startswith('/'):
         base = make_link(main_url, base)
-    page_html = str(soup)
     element_index = 0
-    links_to_process = list(soup.findAll('a'))
+    links_to_process = list(html_parser.soup.findAll('a'))
     logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
-    page_title = soup.title.string if soup.title is not None else ""
     for html_link in links_to_process:
         href = html_link.attrs.get('href')
         if href is not None:
             element_index += 1
             link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
-                                  source_html=page_html, anchor_text=html_link.text, tag_name=html_link.name,
+                                  source_html=html_parser.html_text, anchor_text=html_link.text, tag_name=html_link.name,
                                   element_index=element_index, element_class=html_link.attrs.get('class'),
-                                  source_page_title=page_title)
+                                  source_page_title=html_parser.page_title)
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 
-    for frame in soup.findAll('iframe'):
+    for frame in html_parser.soup.findAll('iframe'):
         href = frame.attrs.get('src')
         if href is not None:
             element_index += 1
             link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
-                                  source_html=page_html, anchor_text=frame.text, tag_name=frame.name,
-                                  element_index=element_index, source_page_title=page_title)
+                                  source_html=html_parser.html_text, anchor_text=frame.text, tag_name=frame.name,
+                                  element_index=element_index, source_page_title=html_parser.page_title)
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 

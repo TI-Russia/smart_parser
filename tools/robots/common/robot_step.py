@@ -1,8 +1,7 @@
 from robots.common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
-from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from collections import defaultdict
 from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
-from bs4 import BeautifulSoup
+from robots.common.html_parser import THtmlParser
 from selenium.common.exceptions import WebDriverException,InvalidSwitchToTargetException
 from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
                     web_link_is_absolutely_prohibited
@@ -93,7 +92,6 @@ class TRobotStep:
     def is_last_step(self):
         return self.get_step_name() == self.website.parent_project.robot_step_passports[-1]['step_name']
 
-
     def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
         for u in self.step_urls:
@@ -109,7 +107,7 @@ class TRobotStep:
     def to_json(self):
         return {
             'step_name': self.get_step_name(),
-            'step_urls': dict( (k,v) for (k, v)  in self.step_urls.items() ),
+            'step_urls': dict((k, v) for (k, v)  in self.step_urls.items()),
             'profiler': self.profiler
         }
 
@@ -176,17 +174,18 @@ class TRobotStep:
             return
         if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
             return
+        html_parser = None
         try:
             if use_urllib:
-                soup = BeautifulSoup(downloaded_file.data, "html.parser")
+                html_parser = THtmlParser(downloaded_file.data)
+                already_processed = self.website.find_a_web_page_with_a_similar_html(self, url, html_parser.html_text)
         except Exception as e:
             self.logger.error('cannot parse html, exception {}'.format(url, e))
             return
-        if use_urllib:
-            already_processed = self.website.find_a_web_page_with_a_similar_html(self, url, soup)
+
         try:
             if use_urllib and already_processed is None:
-                find_links_in_html_by_text(self, url, soup)
+                find_links_in_html_by_text(self, url, html_parser)
             else:
                 if use_urllib:
                     self.logger.debug(

@@ -145,8 +145,7 @@ class TRobotWebSite:
             shutil.rmtree(office_folder)
         os.makedirs(office_folder)
 
-    def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, soup):
-        html_text = str(soup)
+    def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, html_text):
         if len(html_text) > 1000:
             html_text = re.sub('[0-9]+', 'd', html_text)
             hash_code = "{}_{}".format(step_info.get_step_name(),
