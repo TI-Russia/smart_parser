@@ -74,8 +74,8 @@ class TDlrobotStats:
 
             website_count += 1
             self.cumulative_processed_websites_count.append(website_count)
-
-            self.failures.append(remote_call.exit_code != 0)
+            if remote_call.exit_code != 0:
+                self.failures.append(remote_call.worker_host_name)
 
     def write_declaration_crawling_stats(self, html_file):
         df = pd.DataFrame({'Date': self.end_times,
