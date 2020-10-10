@@ -30,37 +30,52 @@ def build_html(args, fig, output_file):
     fig.write_html(output_file, include_plotlyjs='cdn')
 
 
-class TCumulativeStats:
-    def __init__(self,  args, min_date=None):
+class TDlrobotStats:
+    def __init__(self,  args, min_date=None,  min_total_minutes=0):
         self.args = args
         self.min_date = min_date
         self.remote_calls = TRemoteDlrobotCall.read_remote_calls_from_file(args.central_stats_file)
         self.cumulative_declaration_files_count = []
         self.cumulative_processed_websites_count = []
         self.end_times = []
+        self.end_time_stamps = []
         self.websites = []
-        self.projects_by_workers = []
+        self.total_minutes = []
+        self.host_names = []
         self.declaration_files_by_workers = []
+        self.exported_files_counts = []
+        self.failures = []
         self.build_stats(min_date)
 
-    def build_stats(self, min_date=None):
+    def build_stats(self, min_date=None, min_total_minutes=0):
         min_time_stamp = min_date.timestamp() if min_date is not None else 0;
         website_count = 0
         sum_count = 0
         for remote_call in self.remote_calls:
             if remote_call.end_time is None or remote_call.end_time < min_time_stamp:
                 continue
-            dttime = datetime.datetime.fromtimestamp(remote_call.end_time)
-            self.end_times.append(pd.Timestamp(dttime))
+            if remote_call.get_total_minutes() < min_total_minutes:
+                continue
+            end_time = datetime.datetime.fromtimestamp(remote_call.end_time)
+            self.end_times.append(pd.Timestamp(end_time))
+            self.end_time_stamps.append(end_time.strftime("%Y-%m-%d %H:%M:%S"))
+
             self.websites.append(remote_call.get_website())
-            self.projects_by_workers.append(remote_call.worker_host_name)
+            self.host_names.append(remote_call.worker_host_name)
+
+            # len (self.declaration_files_by_workers) != len(self.remote_calls)
             self.declaration_files_by_workers.extend([remote_call.worker_host_name] * remote_call.result_files_count)
+
+            self.total_minutes.append(remote_call.get_total_minutes())
+            self.exported_files_counts.append(remote_call.result_files_count)
 
             sum_count += remote_call.result_files_count
             self.cumulative_declaration_files_count.append(sum_count)
 
             website_count += 1
             self.cumulative_processed_websites_count.append(website_count)
+
+            self.failures.append(remote_call.exit_code != 0)
 
     def write_declaration_crawling_stats(self, html_file):
         df = pd.DataFrame({'Date': self.end_times,
@@ -85,55 +100,11 @@ class TCumulativeStats:
         fig = px.line(df, x='Date', y='WebSiteCount', title=title, hover_data=["website"])
         build_html(self.args, fig, html_file)
 
-
-def process_cumulative_stats(args):
-    stats = TCumulativeStats(args)
-    stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
-    stats.write_website_progress( 'file_progress.html')
-
-    min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
-    stats = TCumulativeStats(args, min_time)
-    stats.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
-    stats.write_website_progress('file_progress_12h.html')
-
-    df = pd.DataFrame({'projects_by_workers': stats.projects_by_workers})
-    fig = px.histogram(df, x="projects_by_workers", title="Projects By Workers (12 hours)")
-    build_html(args, fig, "worker_stats_12h.html")
-
-    df = pd.DataFrame({'declaration_files_by_workers': stats.declaration_files_by_workers})
-    fig = px.histogram(df, x="declaration_files_by_workers", title="Declaration Files By Workers (12 hours)")
-    build_html(args, fig, "declaration_files_by_workers_12h.html")
-
-
-class TPointStats:
-    def __init__(self, args):
-        self.args = args
-        self.remote_calls = TRemoteDlrobotCall.read_remote_calls_from_file(args.central_stats_file)
-        self.minutes = []
-        self.websites = []
-        self.projects_by_workers = []
-        self.exported_files_counts = []
-        self.end_time_stamps = []
-        self.build_stats()
-
-    def build_stats(self):
-        for remote_call in self.remote_calls:
-            if remote_call.end_time is None:
-                continue
-            if remote_call.get_total_minutes() < 10:
-                continue
-            self.minutes.append(remote_call.get_total_minutes())
-            self.websites.append(remote_call.get_website())
-            self.projects_by_workers.append(remote_call.worker_host_name)
-            self.exported_files_counts.append(remote_call.result_files_count)
-            end_time = datetime.datetime.fromtimestamp(remote_call.end_time)
-            self.end_time_stamps.append(end_time.strftime("%Y-%m-%d %H:%M:%S"))
-
-    def write_stats(self,  html_file):
+    def write_web_site_speed(self,  html_file):
         df = pd.DataFrame({
-            'Minutes': self.minutes,
+            'Minutes': self.total_minutes,
             "Websites": self.websites,
-            "hostnames": self.projects_by_workers,
+            "hostnames": self.host_names,
             "exported_files_counts": self.exported_files_counts,
             'end_times': self.end_time_stamps})
 
@@ -143,9 +114,30 @@ class TPointStats:
         build_html(self.args, fig, html_file)
 
 
-def process_point_stats(args):
-    stats = TPointStats(args)
-    stats.write_stats('web_site_speed.html')
+def process_dlrobot_stats(args):
+    stats = TDlrobotStats(args)
+    stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
+    stats.write_website_progress('file_progress.html')
+
+    min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
+    stats12hours = TDlrobotStats(args, min_time)
+    stats12hours.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
+    stats12hours.write_website_progress('file_progress_12h.html')
+
+    df = pd.DataFrame({'host_names': stats12hours.host_names})
+    fig = px.histogram(df, x="host_names", title="Projects By Workers (12 hours)")
+    build_html(args, fig, "worker_stats_12h.html")
+
+    df = pd.DataFrame({'declaration_files_by_workers': stats12hours.declaration_files_by_workers})
+    fig = px.histogram(df, x="declaration_files_by_workers", title="Declaration Files By Workers (12 hours)")
+    build_html(args, fig, "declaration_files_by_workers_12h.html")
+
+    df = pd.DataFrame({'failures': stats12hours.failures})
+    fig = px.histogram(df, x="failures", title="Worker Failures (12 hours)")
+    build_html(args, fig, "failures_12h.html")
+
+    statsMin10Minutes = TDlrobotStats(args, min_date=None, min_total_minutes=10)
+    statsMin10Minutes.write_web_site_speed('web_site_speed.html')
 
 
 def process_convert_stats(args):
@@ -166,8 +158,7 @@ def process_convert_stats(args):
 
 def main(args):
     if args.central_stats_file is not None:
-        process_cumulative_stats(args)
-        process_point_stats(args)
+        process_dlrobot_stats(args)
     if args.conversion_server_stats is not None:
         process_convert_stats(args)
 

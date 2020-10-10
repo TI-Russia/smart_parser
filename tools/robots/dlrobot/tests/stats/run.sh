@@ -5,7 +5,7 @@ RESULT_FOLDER=processed_projects
 INPUT_FOLDER=input_projects
 WORKER_DIR=workdir
 
-rm -rf $INPUT_FOLDER $RESULT_FOLDER *.log
+rm -rf $INPUT_FOLDER $RESULT_FOLDER *.log *.html $WORKER_DIR
 mkdir $INPUT_FOLDER
 mv $PROJECT $INPUT_FOLDER
 
@@ -25,4 +25,5 @@ kill $CENTRAL_PID
 python3 ../../scripts/cloud/dlrobot_stats.py --central-stats-file $RESULT_FOLDER/dlrobot_remote_calls.dat
 if [ $? != 0 ]; then
   echo "dlrobot_stats.py failed"
+  exit 1
 fi

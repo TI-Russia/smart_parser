@@ -185,7 +185,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def send_declaraion_files_to_smart_parser(self, result_folder):
         if self.args.smart_parser_server_address is None:
-            self.error("cannot send document to smart_parser_cache server, since its address in unknown")
+            self.logger.error("cannot send document to smart_parser_cache server, since its address in unknown")
             return
 
         doc_folder = os.path.join(result_folder, "result")

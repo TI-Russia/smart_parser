@@ -72,7 +72,7 @@ def test_dlrobot_script(args):
         env=os.environ
         )
     exit_code = proc.wait()
-    args.logger.debug ("exit_code=".format(exit_code))
+    args.logger.debug ("run dlrobot.py --help, exit_code={}".format(exit_code))
     return exit_code == 0
 
 
@@ -160,6 +160,24 @@ def get_new_task_job(args):
     return project_file
 
 
+def clean_folder_before_archiving(args,  project_folder, result_folder, exit_code):
+    with os.scandir(project_folder) as it:
+        for entry in it:
+            if entry.is_dir() and entry.name != result_folder:
+                args.logger.error("delete temp folder {}".format(entry.name))
+                shutil.rmtree(str(entry.name), ignore_errors=True)
+
+    if exit_code == 0:
+        geckodriver_log = os.path.join(project_folder, "geckodriver.log")
+        if os.path.exists(geckodriver_log):
+            os.unlink(geckodriver_log)
+    else:
+        folder = os.path.join(project_folder, result_folder)
+        if os.path.exists(folder):
+            args.logger.debug("delete folder {} since dlrobot failed".format(folder))
+            shutil.rmtree(folder, ignore_errors=True)
+
+
 def run_dlrobot(args,  project_file):
     project_folder = os.path.dirname(os.path.realpath(project_file)).replace('\\', '/')
     if args.fake_dlrobot:
@@ -170,6 +188,7 @@ def run_dlrobot(args,  project_file):
     my_env = os.environ.copy()
     my_env['TMP'] = project_folder
     exit_code = 1
+    result_folder = "result"
     try:
         dlrobot_call = [
                 '/usr/bin/python3',
@@ -177,8 +196,8 @@ def run_dlrobot(args,  project_file):
                 '--cache-folder-tmp',
                 '--project',  os.path.basename(project_file),
                 '--crawling-timeout',  str(args.crawling_timeout),
-                '--last-conversion-timeout',  str(TTimeouts.WAIT_CONVERSION_TIMEOUT)
-
+                '--last-conversion-timeout',  str(TTimeouts.WAIT_CONVERSION_TIMEOUT),
+                '--result-folder', "result"
             ]
         args.logger.debug(" ".join(dlrobot_call))
         with open(os.path.join(project_folder, "dlrobot.out"), "w") as dout:
@@ -199,14 +218,12 @@ def run_dlrobot(args,  project_file):
         args.logger.error(exp)
 
     args.logger.debug("exit_code={}".format(exit_code))
-
-    geckodriver_log = os.path.join(project_folder, "geckodriver.log")
-    if exit_code == 0 and os.path.exists(geckodriver_log):
-        os.unlink(geckodriver_log)
     goal_file = project_file + ".click_paths"
     if not os.path.exists(goal_file):
+        args.logger.debug("set exit code=1, since {} not found".format(goal_file))
         exit_code = 1
 
+    clean_folder_before_archiving(args, project_folder, result_folder, exit_code)
     return exit_code
 
 
