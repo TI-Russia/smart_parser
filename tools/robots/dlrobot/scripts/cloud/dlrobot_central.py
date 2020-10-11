@@ -241,7 +241,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.end_time = int(time.time())
         remote_call.result_folder = self.untar_file(project_file, result_archive)
         remote_call.calc_project_stats()
-        self.send_declaraion_files_to_smart_parser(remote_call.result_folder)
+        if self.args.enable_smart_parser:
+            self.send_declaraion_files_to_smart_parser(remote_call.result_folder)
         self.save_dlrobot_remote_call(remote_call)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
