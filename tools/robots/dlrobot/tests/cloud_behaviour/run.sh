@@ -6,7 +6,7 @@ RESULT_FOLDER=processed_projects
 
 rm -rf $RESULT_FOLDER *.log $WORKDIR
 
-python3 ../../scripts/cloud/dlrobot_worker.py start --server-address ${WEB_ADDR} --working-folder $WORKDIR --timeout-before-next-task 2 &
+python3 ../../scripts/cloud/dlrobot_worker.py start --server-address ${WEB_ADDR} --working-folder $WORKDIR --timeout-before-next-task 2&
 WORKER_PID=$!
 sleep 3
 kill -0 $WORKER_PID

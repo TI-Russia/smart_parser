@@ -1,26 +1,18 @@
 # Процесс создание базы disclosures = dlrobot+declarator
 
-#1.1 получение declarator:
-    cd ~
-    git clone sokirko@bitbucket.org:TI-Russia/declarator.git
-    cd declarator/trasparency
-    pip3 install -r ../deploy/requirements.txt
-    echo "CREATE DATABASE declarator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
-    create user if not exists 'declarator'@ identified by 'declarator';
-    GRANT ALL PRIVILEGES ON *.* TO 'declarator'@;" | mysql
-    wget https://declarator.org/manage/dump_files/prod????.tar.gz
-    zcat prod????.tar.gz | mysql -D declarator
+#======================================================================
+#========                     Инициализация                    ========
+#=====================================================================
 
-#1.2 получение smart_parser:
-    git clone git@github.com:TI-Russia/smart_parser.git ~/smart_parser
+#1.1 идем в  ~/smart_parser/tools/INSTALL.txt и выполняем все шаги
 
-#1.3 Объявление переменных
+#1.2. Объявление переменных (кроме тех, что уже объявлены в ~/smart_parser/tools/INSTALL.txt)
 
 export TOOLS=~/smart_parser/tools
 CURRENT_DATE=`date  +'%Y-%m-%d'`
-export CRAWL_EPOCH=2
-export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-02-01
-export DLROBOT_FOLDER=~/declarator_hdd/declarator/$CURRENT_DATE
+export CRAWL_EPOCH=3
+export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-05-15
+export DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-09-29
 export HUMAN_FILES_JSON=human_files.json
 export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
 export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
@@ -28,26 +20,65 @@ export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 export INPUT_DLROBOT_PROJECTS=input_projects
 export DISCLOSURES_FILES=domains
 export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
-export HOSTS=migalka,oldtimer,ventil,lena
 
-#2. создание нового каталога dlrobot  (стоит переименовать в disclosures)
+
+#======================================================================
+#======== Запуск сервиса smart_parser_cach в вечном режиме     ========
+#=====================================================================
+#2.1
+ export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
+ mkdir $SMART_PARSER_CACHE_FOLDER
+ cd $SMART_PARSER_CACHE_FOLDER
+
+#======================================================================
+#======== Обновление ручной базы (declarator), раз в квартал?  ========
+#=====================================================================
+#3.1 построение базы declarator:
+    cd ~
+    git clone sokirko@bitbucket.org:TI-Russia/declarator.git
+    cd declarator/trasparency
+    pip3 install -r ../deploy/requirements.txt
+    echo "CREATE DATABASE declarator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+    create user if not exists 'declarator'@ identified by 'declarator';
+    GRANT ALL PRIVILEGES ON *.* TO 'declarator'@;" | mysql
+    #browse https://declarator.org/manage/dump_files/ и найти свежий дамп
+    wget https://declarator.org/manage/dump_files/prod????.tar.gz
+    zcat prod????.tar.gz | mysql -D declarator
+
+
+#3.2  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
+    python $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
+
+#3.3  Отправляем все новые Pdf на конвертацию
+    find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving
+
+#3.3 процессим все human files c помощью smart_parser
+     find $HUMAN_FILES_FOLDER -type  f  | xargs -n 1 --verbose  curl http://$SMART_PARSER_SERVER_ADDRESS/ -T
+
+#======================================================================
+#======== Запуск dlrobot_central в вечном режиме            ========
+#=====================================================================
+
+#======================================================================
+#======== Обход с помощью dlrobot (раз в месяц?)            ========
+#=====================================================================
+
+#4.1 создание нового каталога
     mkdir $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
 
-#3  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
-    python $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
-
-#3.1  Отправляем все новые Pdf на конвертацию
-    find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving
-
-#4. Запуск dlrobot, получение каталога domains
+#4.2 Построение списка всех входных доменов
     # optional python $TOOLS/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains ../domains/new_domains.txt  --timeouted-domains timeouted-domains.txt
-    python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS --portion-size 1000
-    for d in INPUT_DLROBOT_PROJECTS*; do
-        portion_id="${filename##*.}"
-        $TOOLS/robots/dlrobot/scripts/ubuntu_parallel/run.sh $d $DLROBOT_FOLDER/processed_projects.$portion_id $HOSTS
-    done
-    python $TOOLS/disclosures_site/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects.*' --output-folder $DISCLOSURES_FILES --output-json copy_to_one_folder.json
+    python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS
+
+#4.3  Запуск dlrobot
+   cd $DLROBOT_FOLDER
+   rm nohup.out
+   # взять порт из DLROBOT_CENTRAL_SERVER_ADDRESS
+   nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  --server-address 192.168.100.151:8089 --input-folder $INPUT_DLROBOT_PROJECTS --result-folder processed_projects --read-previous-results --check-yandex-cloud &
+
+#4.4 получение каталога domains
+    python $TOOLS/disclosures_site/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects' --output-folder $DISCLOSURES_FILES --output-json copy_to_one_folder.json
 
 
 #5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json

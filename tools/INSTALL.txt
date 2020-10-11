@@ -1,5 +1,5 @@
 =====================================================================================
-============ 1. INSTALLATION GUIDE FOR WORKERS        ===============================
+============ 1. INSTALLATION GUIDE FOR DLROBOT WORKERS (HARDWARE) ===================
 =====================================================================================
 
 This configuration is tested on Ubuntu 18, 20 (preferable)
@@ -19,23 +19,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 1.3.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
    scp -P 2223 disclosures.ru:~/lic.bin ~/
 
-1.4 Run all steps of COMMON WORKER/SERVER ACTIONS (2.1 -- 2.10)
-
-1.5 Create dlrobot worker service:
-    sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
-    sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
-    sudo systemctl enable dlrobot_worker
-    sudo systemctl daemon-reload
-    #adjust depending on workstation (on yandex-cloud --worker-count 2, otherwise --worker-count 4)
-    sudo nano /etc/systemd/system/dlrobot_worker.service
-    sudo systemctl start dlrobot_worker
-
-1.6 Enable start/stop  service dlrobot_worker without password
-  sudo visudo
-  add line:
-     sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl stop  dlrobot_worker
-
-1.7 For laptops (not cloud servers), set in /etc/systemd/logind.conf the following lines:
+1.4 For laptops (not cloud servers), set in /etc/systemd/logind.conf the following lines:
  HandleLidSwitch=ignore
  HandleLidSwitchDocked=ignore
 
@@ -44,9 +28,9 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
 
 
-==========================================================
-===== 2.  COMMON WORKER/SERVER ACTIONS  ==================
-==========================================================
+==========================================================================
+===== 2.  COMMON WORKER/SERVER ACTIONS (do it for all workstations)  =====
+==========================================================================
 
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
@@ -71,7 +55,12 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
     export ASPOSE_LIC=~/lic.bin
     export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
     export DECLARATOR_CONV_URL=disclosures.ru:8091
-    export SMART_PARSER_SERVER_ADDRESS=disclosures.ru:8165
+
+    # local central network names
+    export CENTRAL_HOST_NAME=migalka
+    export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165
+    export DLROBOT_CENTRAL_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8089
+
     source ~/.profile
 
 2.7 compile and test smart_parser (c#, ~/smart_parser/src)
@@ -93,31 +82,11 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
 
 =====================================================================================
-============ 3. INSTALLATION GUIDE FOR CENTRAL (server)  ===============================
+========================= 3. INSTALL DLROBOT_CENTRAL SERVICE=========================
 =====================================================================================
+#
 
-3.1 set date
-   sudo dpkg-reconfigure tzdata
-
-3.2. install mysql 8
-
-3.3 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
-query_cache_type        = ON
-query_cache_limit       = 1M
-query_cache_size        = 128M
-
-
-3.4. Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
-    sudo apt-get install apt-transport-https
-    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
-    sudo apt-get update
-    sudo apt-get install elasticsearch
-    sudo /bin/systemctl daemon-reload
-    sudo /bin/systemctl enable elasticsearch.service
-    sudo systemctl start elasticsearch.service
-
-3.5. install yandex cloud console (central)
+3.1 install yandex cloud console (central)
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
    source ~/.profile
    get token from sokirko@yandex.ru (more ~/.config/yandex-cloud/config.yaml)
@@ -125,22 +94,60 @@ query_cache_size        = 128M
    Which zone do you want to use as a profile default ru-central1-c
    yc compute instance list
 
-3.6.  init crontab in central for monitoring
+3.2  init crontab in central for monitoring
 SHELL=/bin/bash
 MAILTO=username
 #Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
 */10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static/dlrobot
 
-3.7 Make all steps od "COMMON WORKER/SERVER ACTIONS" (2.1 - 2.10)
+3.3  eternal mode
+       export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
+       mkdir $DLROBOT_CENTRAL_FOLDER
+       cd $DLROBOT_CENTRAL_FOLDER
+       nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  \
+                     --server-address DLROBOT_CENTRAL_SERVER_ADDRESS \
+                     --input-folder $INPUT_DLROBOT_PROJECTS \
+                     --result-folder processed_projects \
+                     --read-previous-results --check-yandex-cloud &
+
 
 
 =====================================================================================
-============ 4. INSTALLATION GUIDE FOR WWW (can be on the central)  =================
+========================= 4. INSTALL SMART_PARSER_CACHE SERVICE =======================
 =====================================================================================
+ export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
+ mkdir $SMART_PARSER_CACHE_FOLDER
+ cd $SMART_PARSER_CACHE_FOLDER
+ ...
+
+
+=====================================================================================
+============ 5. INSTALLATION GUIDE FOR DLROBOT_WORKER (SOFTWARE)   =================
+=====================================================================================
+
+5.1 Create dlrobot worker service:
+    sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
+    sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
+    sudo systemctl enable dlrobot_worker
+    sudo systemctl daemon-reload
+    #adjust depending on workstation (on yandex-cloud --worker-count 2, otherwise --worker-count 4)
+    sudo nano /etc/systemd/system/dlrobot_worker.service
+    sudo systemctl start dlrobot_worker
+
+5.2 Enable start/stop  service dlrobot_worker without password
+  sudo visudo
+  add line:
+     sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl stop  dlrobot_worker
+
+
+=====================================================================================
+============ 5. INSTALLATION GUIDE FOR WWW (can be on the central)  =================
+=====================================================================================
+
 Following https://habr.com/ru/post/501414/
 
-4.1   Install python environment in /var/www/smart_parser
+5.1   Install python environment in /var/www/smart_parser
 cd /var/www
 sudo chmod a+rwx .
 git clone https://github.com/TI-Russia/smart_parser.git
@@ -150,15 +157,15 @@ python3 -m venv  venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 
-4.2 install disclosures service
+5.2 install disclosures service
     cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
     sudo cp disclosures.service  /etc/systemd/system
     sudo systemctl restart disclosures
     sudo systemctl enable disclosures
 
-4.3 create gunicorn service
+5.3 create gunicorn service
 
-  4.3.1  create gunicorn service
+  5.3.1  create gunicorn service
     cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
     sudo cp gunicorn.socket  /etc/systemd/system
     sudo cp gunicorn.service /etc/systemd/system
@@ -169,11 +176,11 @@ pip3 install -r requirements.txt
     sudo systemctl restart gunicorn.service
     sudo systemctl status gunicorn.service
 
-  4.3.2 test gunicorn (optional)
+  5.3.2 test gunicorn (optional)
      /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
 
 
-4.4 install nginx
+5.4 install nginx
 
     sudo apt install nginx
     cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
@@ -183,6 +190,6 @@ pip3 install -r requirements.txt
     sudo systemctl restart nginx
     sudo systemctl status nginx
 
-4.5 install https
+5.5 install https
     sudo apt-get install certbot python3-certbot-nginx
     sudo certbot --nginx
