@@ -175,23 +175,24 @@ class TRobotStep:
         if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
             return
         html_parser = None
+        already_processed_by_urllib = None
         try:
             if use_urllib:
                 html_parser = THtmlParser(downloaded_file.data)
-                already_processed = self.website.find_a_web_page_with_a_similar_html(self, url, html_parser.html_text)
+                already_processed_by_urllib = self.website.find_a_web_page_with_a_similar_html(self, url, html_parser.html_text)
         except Exception as e:
             self.logger.error('cannot parse html, exception {}'.format(url, e))
             return
 
         try:
-            if use_urllib and already_processed is None:
+            if use_urllib and already_processed_by_urllib is None:
                 find_links_in_html_by_text(self, url, html_parser)
             else:
                 if use_urllib:
                     self.logger.debug(
-                        'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed))
+                        'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed_by_urllib))
 
-                if not use_selenium and len(list(soup.findAll('a'))) < 10:
+                if not use_selenium and len(list(html_parser.soup.findAll('a'))) < 10:
                     self.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
                     use_selenium = True
 
