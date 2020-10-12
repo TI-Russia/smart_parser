@@ -9,7 +9,7 @@ import json
 import urllib
 import http.server
 import io, gzip, tarfile
-from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import ipaddress
 from remote_call import TRemoteDlrobotCall
@@ -103,7 +103,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if self.args.enable_smart_parser:
             self.smart_parser_cache_client = TSmartParserCacheClient(self.logger)
         self.crawl_epoch_id = self.args.crawl_epoch_id
-
+        self.stop_process = False
         if self.args.enable_ip_checking:
             self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
             self.permitted_hosts.add('127.0.0.1')
@@ -128,6 +128,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def get_dlrobot_remote_calls_filename(self):
         return os.path.join( self.args.result_folder, "dlrobot_remote_calls.dat")
+
+    def have_tasks(self):
+        return len(self.input_files) > 0  and not self.stop_process
 
     def save_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
         with open (self.get_dlrobot_remote_calls_filename(), "a") as outp:
@@ -155,6 +158,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         return False
 
     def can_start_new_epoch(self):
+        if self.stop_process:
+            return False
         if not self.input_tasks_exist():
             return False
         if self.get_running_jobs_count() > 0:
@@ -307,6 +312,13 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.last_service_action_time_stamp = current_time
             self.forget_old_remote_processes(current_time)
             self.check_yandex_cloud()
+        if os.path.exists(PITSTOP_FILE):
+            self.stop_process = True
+            self.logger.debug("stop sending tasks, exit for a pit stop")
+            os.unlink(PITSTOP_FILE)
+        if self.stop_process and self.get_running_jobs_count() == 0:
+            raise Exception("exit for pit stop")
+
 
     def get_stats(self):
         workers = dict((k, list(r.write_to_json() for r in v))
@@ -380,7 +392,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
         if len(HTTP_SERVER.input_files) == 0 and HTTP_SERVER.can_start_new_epoch():
             HTTP_SERVER.start_new_epoch()
 
-        if len(HTTP_SERVER.input_files) == 0:
+        if not HTTP_SERVER.have_tasks():
             send_error("no more jobs", DLROBOT_HTTP_CODE.NO_MORE_JOBS)
             return
 

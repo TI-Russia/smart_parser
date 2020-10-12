@@ -287,6 +287,7 @@ def delete_very_old_folders(args):
                 args.logger.error("delete folder {} while it is too old, see TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK".format(entry.name))
                 shutil.rmtree(str(entry.name), ignore_errors=True)
 
+
 def run_dlrobot_and_send_results_in_thread(args, process_id):
     while True:
         running_project_file = None
@@ -317,7 +318,7 @@ def stop(args):
     for proc in psutil.process_iter():
         cmdline = " ".join(proc.cmdline())
         if proc.pid != os.getpid():
-            if 'dlrobot_worker.py' in cmdline or 'firefox' in cmdline:
+            if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'dlrobot_worker.py' in cmdline:
                 proc.kill()
 
 
