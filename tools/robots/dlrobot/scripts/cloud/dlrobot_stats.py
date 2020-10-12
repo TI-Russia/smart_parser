@@ -5,18 +5,18 @@ import datetime
 import os
 import json
 from remote_call import TRemoteDlrobotCall
-
+from collections import defaultdict
 #edit crontab
 #SHELL=/bin/bash
 #MAILTO=username
 ##Mins  Hours  Days   Months  Day of the week
 #*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-#*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_stats/disclosures/static/dlrobot
+#*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_stats/disclosures/static/dlrobot
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--central-stats-file", dest='central_stats_file', required=False,
-                        help="for example /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat")
+                        help="for example /home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat")
     parser.add_argument("--conversion-server-stats", dest='conversion_server_stats', required=False,
                         help="for example /home/sokirko/declarator_hdd/declarator/convert_stats.txt")
     parser.add_argument("--output-folder", dest='output_folder', required=False, default=".",
@@ -45,6 +45,9 @@ class TDlrobotStats:
         self.declaration_files_by_workers = []
         self.exported_files_counts = []
         self.failures = []
+        self.failures_by_hostnames = defaultdict(int)
+        self.successes_by_hostnames = defaultdict(int)
+
         self.build_stats(min_date)
 
     def build_stats(self, min_date=None, min_total_minutes=0):
@@ -76,6 +79,9 @@ class TDlrobotStats:
             self.cumulative_processed_websites_count.append(website_count)
             if remote_call.exit_code != 0:
                 self.failures.append(remote_call.worker_host_name)
+                self.failures_by_hostnames[remote_call.worker_host_name] += 1
+            else:
+                self.successes_by_hostnames[remote_call.worker_host_name] += 1
 
     def write_declaration_crawling_stats(self, html_file):
         df = pd.DataFrame({'Date': self.end_times,
@@ -113,6 +119,14 @@ class TDlrobotStats:
                       title='Crawl Website Speed')
         build_html(self.args, fig, html_file)
 
+    def get_project_error_rates(self):
+        error_rates = dict()
+        for host_name in set (self.host_names):
+            f = self.failures_by_hostnames[host_name]
+            s = self.successes_by_hostnames[host_name]
+            error_rates[host_name] = 100 * (f / (s + f))
+        return error_rates
+
 
 def process_dlrobot_stats(args):
     stats = TDlrobotStats(args)
@@ -135,6 +149,12 @@ def process_dlrobot_stats(args):
     df = pd.DataFrame({'failures': stats12hours.failures})
     fig = px.histogram(df, x="failures", title="Worker Failures (12 hours)")
     build_html(args, fig, "failures_12h.html")
+
+    host2error_rates = stats12hours.get_project_error_rates()
+    df = pd.DataFrame({'hostnames': host2error_rates.keys(), 'error_rate': host2error_rates.values()})
+    fig = px.bar(df, x='hostnames', y='error rate in percent')
+    build_html(args, fig, "error_rates_12h.html")
+
 
     statsMin10Minutes = TDlrobotStats(args, min_date=None, min_total_minutes=10)
     statsMin10Minutes.write_web_site_speed('web_site_speed.html')

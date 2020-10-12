@@ -198,7 +198,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         return input_queue_size < self.args.pdf_conversion_queue_limit
 
     def get_new_job_task(self, worker_host_name, worker_ip):
-        project_file = self.input_files.pop()
+        project_file = self.input_files.pop(0)
         self.logger.info("start job: {} on {} (host name={}), left jobs: {}, running jobs: {}".format(
                 project_file, worker_ip, worker_host_name, len(self.input_files), self.get_running_jobs_count()))
         res = TRemoteDlrobotCall(worker_ip, project_file)
