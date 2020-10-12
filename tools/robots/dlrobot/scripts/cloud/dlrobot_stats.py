@@ -151,8 +151,8 @@ def process_dlrobot_stats(args):
     build_html(args, fig, "failures_12h.html")
 
     host2error_rates = stats12hours.get_project_error_rates()
-    df = pd.DataFrame({'hostnames': host2error_rates.keys(), 'error_rate': host2error_rates.values()})
-    fig = px.bar(df, x='hostnames', y='error rate in percent')
+    df = pd.DataFrame({'hostnames': host2error_rates.keys(), 'error_rate_in_percent': host2error_rates.values()})
+    fig = px.bar(df, x='hostnames', y='error_rate_in_percent')
     build_html(args, fig, "error_rates_12h.html")
 
 
