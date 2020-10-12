@@ -164,8 +164,9 @@ def clean_folder_before_archiving(args,  project_folder, result_folder, exit_cod
     with os.scandir(project_folder) as it:
         for entry in it:
             if entry.is_dir() and entry.name != result_folder:
-                args.logger.error("delete temp folder {}".format(entry.name))
-                shutil.rmtree(str(entry.name), ignore_errors=True)
+                unknown_tmp_folder = os.path.join(project_folder, str(entry.name))
+                args.logger.debug("delete temp folder {}".format(unknown_tmp_folder))
+                shutil.rmtree(unknown_tmp_folder, ignore_errors=True)
 
     if exit_code == 0:
         geckodriver_log = os.path.join(project_folder, "geckodriver.log")
