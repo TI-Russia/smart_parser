@@ -312,12 +312,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.last_service_action_time_stamp = current_time
             self.forget_old_remote_processes(current_time)
             self.check_yandex_cloud()
-        if os.path.exists(PITSTOP_FILE):
-            self.stop_process = True
-            self.logger.debug("stop sending tasks, exit for a pit stop")
-            os.unlink(PITSTOP_FILE)
-        if self.stop_process and self.get_running_jobs_count() == 0:
-            raise Exception("exit for pit stop")
+            if os.path.exists(PITSTOP_FILE):
+                self.stop_process = True
+                self.logger.debug("stop sending tasks, exit for a pit stop")
+                os.unlink(PITSTOP_FILE)
+            if self.stop_process and self.get_running_jobs_count() == 0:
+                raise Exception("exit for pit stop")
 
 
     def get_stats(self):
