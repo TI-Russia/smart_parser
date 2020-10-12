@@ -1,6 +1,7 @@
 import os
 import time
 import json
+import sys
 
 class TRemoteDlrobotCall:
 
@@ -58,10 +59,17 @@ class TRemoteDlrobotCall:
     @staticmethod
     def read_remote_calls_from_file(filename):
         result = list()
-        with open(filename, "r") as inp:
-            for line in inp:
-                line = line.strip()
-                remote_call = TRemoteDlrobotCall()
-                remote_call.read_from_json(line)
-                result.append(remote_call)
+        line_no = 1
+        try:
+            with open(filename, "r") as inp:
+                for line in inp:
+                    line = line.strip()
+                    remote_call = TRemoteDlrobotCall()
+                    remote_call.read_from_json(line)
+                    result.append(remote_call)
+                    line_no += 1
+        except Exception as exp:
+            sys.stderr.write("cannot read file {}, line no {}\n".format(filename, line_no))
+            raise
         return result
+
