@@ -17,6 +17,7 @@ import pycurl
 from io import BytesIO
 import certifi
 
+
 class TRequestPolicy:
     HTTP_TIMEOUT = 30  # in seconds
     ENABLE = True
@@ -26,13 +27,13 @@ class TRequestPolicy:
     ALL_HTTP_REQUEST = dict()  # (url, method) -> time
     HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
     HTTP_503_ERRORS_COUNT = 0
-    SSL_CONTEXT = ssl._create_unverified_context()
+    SSL_CONTEXT = None
+    USE_CURL = False
 
-    # tested for python 3.8 and 301 http-code in test "content_type'
-    #redirect_handler = urllib.request.HTTPRedirectHandler()
-    #redirect_handler.max_redirections = 5
-    #opener = urllib.request.build_opener(redirect_handler)
-    #urllib.request.install_opener(opener)
+    @staticmethod
+    def initialize():
+        TRequestPolicy.SSL_CONTEXT = ssl._create_unverified_context()
+        TRequestPolicy.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
 
     # decrement HTTP_503_ERRORS_COUNT on successful http_request
     @staticmethod
@@ -94,6 +95,8 @@ class TRequestPolicy:
             TRequestPolicy.wait_until_policy_compliance(logger, "request_rate_10_min", TRequestPolicy.REQUEST_RATE_10_MIN)
 
         TRequestPolicy.ALL_HTTP_REQUEST[(url, method)] = time.time()
+
+TRequestPolicy.initialize()
 
 
 def has_cyrillic(text):
@@ -175,6 +178,7 @@ def make_http_request_urllib(logger, url, method):
         code = -1
         if hasattr(exp, 'code'):
             code = exp.code
+
         raise RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
@@ -266,7 +270,11 @@ def request_url_headers_with_global_cache(logger, url):
     return redirected_url, headers
 
 
-make_http_request=make_http_request_urllib
-#make_http_request=make_http_request_curl
+def make_http_request(logger, url, method):
+    if TRequestPolicy.USE_CURL:
+        return make_http_request_curl(logger, url, method)
+    else:
+        return make_http_request_urllib(logger, url, method)
+
 
 
