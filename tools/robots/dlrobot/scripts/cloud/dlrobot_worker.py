@@ -124,6 +124,9 @@ def setup_environment(args):
     if geckodriver is None:
         raise Exception("cannot find geckodriver (selenium)")
 
+    if os.path.exists(PITSTOP_FILE):
+        os.unlink(PITSTOP_FILE)
+
 
 def get_new_task_job(args):
     conn = http.client.HTTPConnection(args.server_address)
@@ -292,6 +295,7 @@ def run_dlrobot_and_send_results_in_thread(args, process_id):
     while True:
         running_project_file = None
         if os.path.exists(PITSTOP_FILE):
+            args.logger.debug("exit because file {} exists".format(PITSTOP_FILE))
             break
         if not threading.main_thread().is_alive():
             break
@@ -319,7 +323,10 @@ def stop(args):
         cmdline = " ".join(proc.cmdline())
         if proc.pid != os.getpid():
             if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'dlrobot_worker.py' in cmdline:
-                proc.kill()
+                try:
+                    proc.kill()
+                except Exception as exp:
+                    continue
 
 
 def signal_term_handler(signum, frame):
@@ -347,7 +354,7 @@ if __name__ == "__main__":
     except Exception as exp:
         args.logger.error(exp)
     finally:
+        if os.path.exists(PITSTOP_FILE):
+            os.unlink(PITSTOP_FILE)
         pool.close()
-        print("pool terminate")
         pool.terminate()
-

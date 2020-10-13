@@ -34,8 +34,10 @@ def kill_crawling():
 
 
 def stop_dlrobot_worker_gently():
-    with open(os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE), "w") as outp:
+    pitstop_file = os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE)
+    with open(pitstop_file, "w") as outp:
         pass
+    assert os.path.exists(pitstop_file)
     start_time = time.time()
     while True:
         still_active = False
