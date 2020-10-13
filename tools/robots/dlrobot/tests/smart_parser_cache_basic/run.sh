@@ -6,7 +6,7 @@ INPUT_FOLDER=input_tasks
 
 python3 ../../scripts/cloud/smart_parser_cache.py --input-task-directory $INPUT_FOLDER &
 SERVER_PID=$!
-sleep 1
+sleep 2
 
 not_found=`python3 ../../scripts/cloud/smart_parser_cache_client.py --action get MainWorkPositionIncome.docx`
 if [ "$not_found" != "not found" ]; then
