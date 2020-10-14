@@ -26,7 +26,7 @@
 11. install FineReader
 
 12. set in environmet variable 
-   PYTHONPATH=C:\tmp\smart_parser\smart_parser\tools;C:\tmp\smart_parser\smart_parser\tools\disclosures
+   PYTHONPATH=C:\tmp\smart_parser\smart_parser\tools;C:\tmp\smart_parser\smart_parser\tools\disclosures_site
 
 13. go to c:/tmp/smart_parser/smart_parser/tools/ConvStorage/tests
 
