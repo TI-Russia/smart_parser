@@ -145,13 +145,15 @@ class TJoiner:
                 self.logger.error("old file {} does not exist,though it is registered in {}".format(
                     infile, json_file_name))
                 continue
-            folder = os.path.dirname(src_doc.document_path)
-            if not os.path.exists(folder):
-                self.logger.debug("create folder for domain {}".format(folder))
-                os.mkdir(folder)
+            web_domain = os.path.dirname(src_doc.document_path)
+            assert (web_domain.find('/') == -1)
+            output_folder = os.path.join(self.args.dlrobot_folder, web_domain)
+            if not os.path.exists(output_folder):
+                self.logger.debug("create folder {}".format(output_folder))
+                os.mkdir(output_folder)
             _, file_extension = os.path.splitext(src_doc.document_path)
             output_basename = TJoiner.old_file_name_prefix + sha256 + file_extension
-            src_doc.document_path = os.path.join(folder, output_basename)
+            src_doc.document_path = os.path.join(web_domain, output_basename)
             self.dlrobot_human.document_collection[sha256] = src_doc
             outfile = self.dlrobot_human.get_document_path(src_doc)
             self.logger.debug("copy {} to {}".format(infile, outfile))

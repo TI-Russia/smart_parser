@@ -1,8 +1,8 @@
 
-#from django.test import SimpleTestCase
 from django.test import TestCase
 import os
 import shutil
+import time
 
 
 class JoinDLrobotAndHuman(TestCase):
@@ -23,8 +23,8 @@ class JoinDLrobotAndHuman(TestCase):
         script = "../../../scripts/copy_dlrobot_documents_to_one_folder.py"
         input_folder = "processed_projects"
         copy_to_one_folder_json = "copy_to_one_folder.json"
-        self.run_cmd("python3 {} --input-glob {} --output-folder {} --use-pseudo-tmp --output-json {}".format(
-            script, input_folder, self.domains_folder,  copy_to_one_folder_json))
+        self.run_cmd("python3 {} --input-folder {} --output-folder {} --use-pseudo-tmp --output-json {} --max-ctime {}".format(
+            script, input_folder, self.domains_folder,  copy_to_one_folder_json, int(time.time())))
 
         script = "../../../scripts/join_human_and_dlrobot.py"
         human_files = "human_files.json"
