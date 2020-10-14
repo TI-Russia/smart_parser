@@ -1,4 +1,6 @@
 ﻿0. Install Windows 10 Pro
+0.1 Disable the Windows Update Service
+    https://www.cleverfiles.com/howto/disable-update-windows-10.html
 1. Install Microsoft Word 2019
 2. Install Cygwin в c:\cygwin64 with 
       g++, git, p7zip, wget, jq

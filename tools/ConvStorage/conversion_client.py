@@ -37,7 +37,8 @@ class TDocConversionClient(object):
         self.db_conv_url = TDocConversionClient.DECLARATOR_CONV_URL
         self.input_task_timeout = 5
         self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
-        self.all_pdf_size_sent_to_conversion  = 0
+        self.all_pdf_size_sent_to_conversion = 0
+        self.default_http_timeout = 60*10
 
     def start_conversion_thread(self):
         self.conversion_thread = threading.Thread(target=self._process_files_to_convert_in_a_separate_thread, args=())
@@ -61,7 +62,7 @@ class TDocConversionClient(object):
                     self._send_file_to_conversion_db(task.file_path, task.file_extension, task.rebuild)
 
     def _register_task(self, file_extension, file_contents, sha256, rebuild):
-        conn = http.client.HTTPConnection(self.db_conv_url)
+        conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
         if rebuild:
             path = '/convert_mandatory/file'
         else:
@@ -120,14 +121,14 @@ class TDocConversionClient(object):
                 break
 
     def check_file_was_converted(self, sha256):
-        conn = http.client.HTTPConnection(self.db_conv_url)
+        conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
         conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
         return conn.getresponse().code == 200
 
     def get_stats(self):
         data = None
         try:
-            conn = http.client.HTTPConnection(self.db_conv_url)
+            conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
             conn.request("GET", "/stat")
             response = conn.getresponse()
             data = response.read().decode('utf8')
@@ -146,7 +147,7 @@ class TDocConversionClient(object):
         return stats['ocr_pending_all_file_size']
 
     def retrieve_document(self, sha256, output_file_name):
-        conn = http.client.HTTPConnection(self.db_conv_url)
+        conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
         conn.request("GET", "?sha256=" + sha256)
         response = conn.getresponse()
         if response.code == 200:
