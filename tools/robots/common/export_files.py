@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from robots.common.html_parser import THtmlParser
 import os
 from collections import defaultdict
 import shutil
@@ -11,36 +11,14 @@ from robots.common.find_link import TLinkInfo
 import re
 import copy
 import time
-from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
-
-
-def html_to_text(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    text = soup.find_all(text=True)
-    blacklist = [
-        '[document]',
-        'noscript',
-        'header',
-        'html',
-        'meta',
-        'head',
-        'script',
-        'input',
-        'style',
-    ]
-
-    output = ''
-    for t in text:
-        if t.parent.name not in blacklist:
-            output += '{} '.format(t)
-    return output
 
 
 def build_sha256(filename):
     with open(filename, "rb") as f:
         file_data = f.read()
         if filename.endswith(DEFAULT_HTML_EXTENSION):
-            file_data = html_to_text(file_data).encode("utf-8", errors="ignore")
+            text = THtmlParser(file_data).get_text()
+            file_data = text.encode("utf-8", errors="ignore")
         return hashlib.sha256(file_data).hexdigest()
 
 
@@ -233,9 +211,3 @@ class TExportEnvironment:
             len(self.exported_files),
             office_folder))
 
-        global EXTERNAl_CONVERTORS
-        for export_file in self.exported_files:
-            EXTERNAl_CONVERTORS.run_smart_parser_full(export_file.export_path)
-            smart_parser_json = export_file.export_path + ".json"
-            if os.path.exists(smart_parser_json):
-                export_file.smart_parser_json_sha256 = build_sha256(smart_parser_json)

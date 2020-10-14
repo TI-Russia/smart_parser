@@ -72,7 +72,7 @@ def test_dlrobot_script(args):
         env=os.environ
         )
     exit_code = proc.wait()
-    args.logger.debug ("exit_code=".format(exit_code))
+    args.logger.debug ("run dlrobot.py --help, exit_code={}".format(exit_code))
     return exit_code == 0
 
 
@@ -124,6 +124,9 @@ def setup_environment(args):
     if geckodriver is None:
         raise Exception("cannot find geckodriver (selenium)")
 
+    if os.path.exists(PITSTOP_FILE):
+        os.unlink(PITSTOP_FILE)
+
 
 def get_new_task_job(args):
     conn = http.client.HTTPConnection(args.server_address)
@@ -160,6 +163,25 @@ def get_new_task_job(args):
     return project_file
 
 
+def clean_folder_before_archiving(args,  project_folder, result_folder, exit_code):
+    with os.scandir(project_folder) as it:
+        for entry in it:
+            if entry.is_dir() and entry.name != result_folder:
+                unknown_tmp_folder = os.path.join(project_folder, str(entry.name))
+                args.logger.debug("delete temp folder {}".format(unknown_tmp_folder))
+                shutil.rmtree(unknown_tmp_folder, ignore_errors=True)
+
+    if exit_code == 0:
+        geckodriver_log = os.path.join(project_folder, "geckodriver.log")
+        if os.path.exists(geckodriver_log):
+            os.unlink(geckodriver_log)
+    else:
+        folder = os.path.join(project_folder, result_folder)
+        if os.path.exists(folder):
+            args.logger.debug("delete folder {} since dlrobot failed".format(folder))
+            shutil.rmtree(folder, ignore_errors=True)
+
+
 def run_dlrobot(args,  project_file):
     project_folder = os.path.dirname(os.path.realpath(project_file)).replace('\\', '/')
     if args.fake_dlrobot:
@@ -170,6 +192,7 @@ def run_dlrobot(args,  project_file):
     my_env = os.environ.copy()
     my_env['TMP'] = project_folder
     exit_code = 1
+    result_folder = "result"
     try:
         dlrobot_call = [
                 '/usr/bin/python3',
@@ -177,8 +200,8 @@ def run_dlrobot(args,  project_file):
                 '--cache-folder-tmp',
                 '--project',  os.path.basename(project_file),
                 '--crawling-timeout',  str(args.crawling_timeout),
-                '--last-conversion-timeout',  str(TTimeouts.WAIT_CONVERSION_TIMEOUT)
-
+                '--last-conversion-timeout',  str(TTimeouts.WAIT_CONVERSION_TIMEOUT),
+                '--result-folder', "result"
             ]
         args.logger.debug(" ".join(dlrobot_call))
         with open(os.path.join(project_folder, "dlrobot.out"), "w") as dout:
@@ -199,14 +222,12 @@ def run_dlrobot(args,  project_file):
         args.logger.error(exp)
 
     args.logger.debug("exit_code={}".format(exit_code))
-
-    geckodriver_log = os.path.join(project_folder, "geckodriver.log")
-    if exit_code == 0 and os.path.exists(geckodriver_log):
-        os.unlink(geckodriver_log)
     goal_file = project_file + ".click_paths"
     if not os.path.exists(goal_file):
+        args.logger.debug("set exit code=1, since {} not found".format(goal_file))
         exit_code = 1
 
+    clean_folder_before_archiving(args, project_folder, result_folder, exit_code)
     return exit_code
 
 
@@ -255,20 +276,42 @@ def send_results_back(args, project_file, exitcode):
         shutil.rmtree(project_folder, ignore_errors=True)
 
 
+def check_free_disk_space():
+    total, used, free = shutil.disk_usage(os.curdir)
+    return free > 2 * 2**30 #at least 2GB free disk space must be available
+
+
+def delete_very_old_folders(args):
+    args.logger.debug("delete_very_old_folders")
+    now = time.time()
+    with os.scandir(".") as it:
+        for entry in it:
+            if entry.is_dir() and entry.stat().st_mtime < now - TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK:
+                args.logger.error("delete folder {} while it is too old, see TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK".format(entry.name))
+                shutil.rmtree(str(entry.name), ignore_errors=True)
+
+
 def run_dlrobot_and_send_results_in_thread(args, process_id):
     while True:
         running_project_file = None
         if os.path.exists(PITSTOP_FILE):
+            args.logger.debug("exit because file {} exists".format(PITSTOP_FILE))
             break
         if not threading.main_thread().is_alive():
             break
-        try:
-            running_project_file = get_new_task_job(args)
-            if running_project_file is not None:
-                exit_code = run_dlrobot(args,  running_project_file)
-                send_results_back(args,  running_project_file, exit_code)
-        except ConnectionError as err:
-            args.logger.error(str(err))
+
+        if not check_free_disk_space():
+            delete_very_old_folders(args)
+            args.logger.debug("check_free_disk_space failed, sleep 10 minutes")
+            time.sleep(60*10)  #there is a hope that the second process frees the disk
+        else:
+            try:
+                running_project_file = get_new_task_job(args)
+                if running_project_file is not None:
+                    exit_code = run_dlrobot(args,  running_project_file)
+                    send_results_back(args,  running_project_file, exit_code)
+            except ConnectionError as err:
+                args.logger.error(str(err))
         if args.action == "run_once":
             break
         if running_project_file is None:
@@ -279,8 +322,11 @@ def stop(args):
     for proc in psutil.process_iter():
         cmdline = " ".join(proc.cmdline())
         if proc.pid != os.getpid():
-            if 'dlrobot_worker.py' in cmdline or 'firefox' in cmdline:
-                proc.kill()
+            if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'dlrobot_worker.py' in cmdline:
+                try:
+                    proc.kill()
+                except Exception as exp:
+                    continue
 
 
 def signal_term_handler(signum, frame):
@@ -308,7 +354,7 @@ if __name__ == "__main__":
     except Exception as exp:
         args.logger.error(exp)
     finally:
+        if os.path.exists(PITSTOP_FILE):
+            os.unlink(PITSTOP_FILE)
         pool.close()
-        print("pool terminate")
         pool.terminate()
-

@@ -7,7 +7,7 @@ WORKER_DIR=worker
 rm -rf $RESULT_FOLDER
 
 
-python3 ../../scripts/cloud/dlrobot_central.py --tries-count 2 --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER} &
+python3 ../../scripts/cloud/dlrobot_central.py --tries-count 2 --server-address ${WEB_ADDR} --input-folder input_projects --result-folder  ${RESULT_FOLDER}  --disable-smart-parser-cache&
 WEB_SERVER_PID=$!
 sleep 1
 

@@ -34,20 +34,26 @@ def kill_crawling():
 
 
 def stop_dlrobot_worker_gently():
-    with open(os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE), "w") as outp:
+    pitstop_file = os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE)
+    with open(pitstop_file, "w") as outp:
         pass
+    assert os.path.exists(pitstop_file)
     start_time = time.time()
     while True:
+        time.sleep(60)
         still_active = False
         for proc in psutil.process_iter():
-            cmdline = " ".join(proc.cmdline())
-            if proc.pid != os.getpid():
-                if 'dlrobot_worker.py' in cmdline:
-                    still_active = True
+            try:
+                cmdline = " ".join(proc.cmdline())
+                if proc.pid != os.getpid():
+                    if 'dlrobot_worker.py' in cmdline:
+                        still_active = True
+            except Exception as exp:
+                continue
         if not still_active:
             break
-        if time.time() - start_time > 60*60:
-            raise Exception ("cannot stop dlrobot_worker in one hour")
+        if time.time() - start_time > 4*60*60:
+            raise Exception ("cannot stop dlrobot_worker in 4 hours")
     kill_crawling()
 
 

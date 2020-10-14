@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dlrobot monitoring</title>
+    <style>
+        iframe {
+          height: 400px;
+          width: 100%;
+          border: 1;
+        }
+        tr {
+          height: 400px;
+          border: 1;
+        }
+    </style>
+</head>
+<body>
+<table width="100%" border="1">
+    <tr>
+        <td>
+            <iframe src="/static/dlrobot/ocr_pending_file_sizes.html">
+            </iframe>
+        </td>
+        <td>
+            <iframe src="/static/dlrobot/declaration_crawling_stats.html"> </iframe>
+        </td>
+        <td>
+            <iframe src="/static/dlrobot/declaration_crawling_stats_12h.html"> </iframe>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <iframe src="/static/dlrobot/declaration_files_by_workers_12h.html"> </iframe>
+        </td>
+        <td>
+            <iframe src="/static/dlrobot/file_progress.html"> </iframe>
+        </td>
+        <td>
+            <iframe src="/static/dlrobot/file_progress_12h.html"> </iframe>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <iframe src="/static/dlrobot/worker_stats_12h.html"> </iframe>
+        </td>
+        <td>
+            <iframe src="/static/dlrobot/web_site_speed.html"> </iframe>
+        </td>
+        <td>
+            <iframe src="/static/dlrobot/error_rates_12h.html"> </iframe>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

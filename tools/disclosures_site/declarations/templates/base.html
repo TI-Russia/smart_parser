@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Home {% endblock title %}</title>
+
+    {% block head_favicon %}
+    <link rel="icon" type="image/png" href="/static/images/favicon.ico">
+    {% endblock head_favicon %}
+
+    {% block head_meta %}
+    {% block head_meta_charset %}
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8"/>
+    {% endblock head_meta_charset %}
+    <meta name="yandex-verification" content="5c8f653019005048" />
+    <meta name="google-site-verification" content="z3C44ad-5G9K768OYL0xzTf6xtJeshD-WMGmdqMe9oU" />
+    {% endblock head_meta %}
+</head>
+
+
+<body bgcolor="#F3F3F3" text="#000000" link="#000000" vlink="#999999" alink="#000000">
+
+<header>
+    <table border="0" cellspacing="0" cellpadding="5">
+        <tbody>
+        <tr>
+            <td width="20%"><font size="+3" face="Arial, Helvetica, sans-serif"><b>Дискложес</b></font></td>
+            <td width="1%">&nbsp;</td>
+            <td width="60%" valign="baseline"><font size="+1" face="Arial, Helvetica, sans-serif">
+                Автоматизированный сбор деклараций о доходах</font></td>
+        </tr>
+        <tr>
+            <td >
+                <div id="menu_div">
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+</header>
+
+{# The Document Body #}
+<div id="site-wrapper">
+    {% block content %}
+    if you see this, something is wrong!
+    {% endblock content %}
+</div>
+
+
+<script>
+  function menuCreate() {
+      var menu_div = document.getElementById("menu_div");
+      var tbl = document.createElement('table');
+      tbl.style.width = "100%";
+      tbl.border = "0";
+      menu = [{
+                "text":"главная",
+                "href":"/",
+              },
+              {
+                "text":"о&nbsp;проекте",
+                "href":"/about.html",
+              },
+              {
+                "text":"ведомства",
+                "href":"/office/",
+              },
+              {
+                "text":"декларанты",
+                "href":"/person/",
+              },
+              {
+                "text":"декларации",
+                "href":"/section/",
+              },
+              {
+                "text":"документы",
+                "href":"/file/",
+              },
+              {
+                "text":"статистика",
+                "href":"/statistics/",
+              },
+             ]
+
+      tbl.appendChild(  document.createElement('tr').appendChild( document.createElement('td')) );
+      var tr = document.createElement('tr');
+
+      for (var i = 0; i < menu.length; i++) {
+          var td = document.createElement('td');
+          td.width = "20%";
+          var anchor = menu[i].text;
+          var link =  document.createElement('a');
+          link.href = menu[i].href;
+          if (window.location.pathname == menu[i].href) {
+                var spanNode = document.createElement('span');
+                spanNode.style.backgroundColor = "black";
+                spanNode.style.color = "white";
+                spanNode.innerHTML = anchor;
+                link.appendChild(spanNode);
+          } else {
+                link.innerHTML = anchor;
+          }
+          td.appendChild(link);
+          tr.appendChild(td);
+      }
+      tbl.appendChild( tr );
+      menu_div.appendChild(tbl);
+  }
+  menuCreate();
+</script>
+
+</body>
+</html>
+

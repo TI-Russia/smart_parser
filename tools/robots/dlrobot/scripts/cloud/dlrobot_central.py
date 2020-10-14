@@ -9,11 +9,13 @@ import json
 import urllib
 import http.server
 import io, gzip, tarfile
-from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS
+from common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
 from robots.common.primitives import convert_timeout_to_seconds, check_internet
 import ipaddress
 from remote_call import TRemoteDlrobotCall
-
+from robots.common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
+from robots.dlrobot.scripts.cloud.smart_parser_cache_client import TSmartParserCacheClient
+import shutil
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -52,13 +54,18 @@ def parse_args():
                         required=False, help="skip checking that this tast was given to this worker")
     parser.add_argument("--enable-ip-checking", dest='enable_ip_checking', default=False, action='store_true',
                         required=False)
+    parser.add_argument("--pdf-conversion-queue-limit", dest='pdf_conversion_queue_limit', type=int,
+                        default=100 * 2 ** 20, help="max sum size of al pdf files that are in pdf conversion queue",
+                        required=False)
+    parser.add_argument("--crawl-epoch-id", dest="crawl_epoch_id", default="1", type=int)
+    parser.add_argument("--disable-smart-parser-cache", dest="enable_smart_parser",
+                        default=True, action="store_false", required=False)
 
     args = parser.parse_args()
     args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
     args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
     if args.server_address is None:
         args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
-
     if args.check_yandex_cloud:
         assert TYandexCloud.get_yc() is not None
 
@@ -67,24 +74,36 @@ def parse_args():
 
 class TDlrobotHTTPServer(http.server.HTTPServer):
 
+    def initialize_tasks(self):
+        self.dlrobot_remote_calls.clear()
+        self.worker_2_running_tasks.clear()
+        self.input_files = list(x for x in os.listdir(self.args.input_folder) if x.endswith('.txt'))
+        if not os.path.exists(self.args.result_folder):
+            os.makedirs(self.args.result_folder)
+        if args.read_previous_results:
+            self.read_prev_dlrobot_remote_calls()
+        logger.debug("there are {} dlrobot projects to process".format(len(self.input_files)))
+        self.worker_2_running_tasks.clear()
+
     def __init__(self, args, logger):
         self.timeout = 60 * 10
         self.conversion_client = TDocConversionClient(logger)
         self.args = args
         self.logger = logger
         self.dlrobot_remote_calls = defaultdict(list)
-        self.input_files = list(x for x in os.listdir(self.args.input_folder) if x.endswith('.txt'))
-        if not os.path.exists(self.args.result_folder):
-            os.makedirs(self.args.result_folder)
-
-        if args.read_previous_results:
-            self.read_prev_dlrobot_remote_calls()
-        logger.debug("there are {} dlrobot projects to process".format(len(self.input_files)))
+        self.input_files = list()
         self.worker_2_running_tasks = defaultdict(list)
+        self.initialize_tasks()
         self.cloud_id_to_worker_ip = dict()
         host, port = self.args.server_address.split(":")
+        self.logger.debug("start server on {}:{}".format(host, port))
         super().__init__((host, int(port)), TDlrobotRequestHandler)
         self.last_service_action_time_stamp = time.time()
+        self.smart_parser_cache_client = None
+        if self.args.enable_smart_parser:
+            self.smart_parser_cache_client = TSmartParserCacheClient(self.logger)
+        self.crawl_epoch_id = self.args.crawl_epoch_id
+        self.stop_process = False
         if self.args.enable_ip_checking:
             self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
             self.permitted_hosts.add('127.0.0.1')
@@ -110,6 +129,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def get_dlrobot_remote_calls_filename(self):
         return os.path.join( self.args.result_folder, "dlrobot_remote_calls.dat")
 
+    def have_tasks(self):
+        return len(self.input_files) > 0  and not self.stop_process
+
     def save_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
         with open (self.get_dlrobot_remote_calls_filename(), "a") as outp:
             outp.write(json.dumps(remote_call.write_to_json()) + "\n")
@@ -127,6 +149,32 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             if tries_count < max_tries_count:
                 self.input_files.append(remote_call.project_file)
                 self.logger.debug("register retry for {}".format(remote_call.project_file))
+
+    def input_tasks_exist(self):
+        with os.scandir(self.args.input_folder) as it:
+            for entry in it:
+                if entry.name.endswith(".txt"):
+                    return True
+        return False
+
+    def can_start_new_epoch(self):
+        if self.stop_process:
+            return False
+        if not self.input_tasks_exist():
+            return False
+        if self.get_running_jobs_count() > 0:
+            return False
+        return True
+
+    def start_new_epoch(self):
+        archive_filename = "{}.{}".format( self.get_dlrobot_remote_calls_filename(), self.crawl_epoch_id)
+        if os.path.exists(archive_filename):
+            self.logger.error("cannot create file {}, already exists".format(archive_filename))
+            raise Exception("bad crawl epoch id")
+        shutil.move(self.get_dlrobot_remote_calls_filename(), archive_filename)
+        self.crawl_epoch_id += 1
+        self.logger.error("start new epoch {}".format(self.crawl_epoch_id))
+        self.initialize_tasks()
 
     def read_prev_dlrobot_remote_calls(self):
         if os.path.exists(self.get_dlrobot_remote_calls_filename()):
@@ -147,10 +195,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def conversion_server_queue_is_short(self):
         input_queue_size = self.conversion_client.get_pending_all_file_size()
         self.logger.debug("conversion pdf input_queue_size={}".format(input_queue_size))
-        return input_queue_size < 100 * 2**20
+        return input_queue_size < self.args.pdf_conversion_queue_limit
 
     def get_new_job_task(self, worker_host_name, worker_ip):
-        project_file = self.input_files.pop()
+        project_file = self.input_files.pop(0)
         self.logger.info("start job: {} on {} (host name={}), left jobs: {}, running jobs: {}".format(
                 project_file, worker_ip, worker_host_name, len(self.input_files), self.get_running_jobs_count()))
         res = TRemoteDlrobotCall(worker_ip, project_file)
@@ -178,6 +226,16 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 return worker_running_tasks.pop(i)
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
+    def send_declaraion_files_to_smart_parser(self, result_folder):
+        doc_folder = os.path.join(result_folder, "result")
+        if os.path.exists(doc_folder):
+            for website in os.listdir(doc_folder):
+                website_folder = os.path.join(doc_folder, website)
+                for doc in os.listdir(website_folder):
+                    _, extension = os.path.splitext(doc)
+                    if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
+                        self.smart_parser_cache_client.send_file(os.path.join(website_folder, doc))
+
     def register_task_result(self, worker_host_name, worker_ip, project_file, exit_code, result_archive):
         if args.skip_worker_check:
             remote_call = TRemoteDlrobotCall(worker_ip, project_file)
@@ -188,6 +246,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.end_time = int(time.time())
         remote_call.result_folder = self.untar_file(project_file, result_archive)
         remote_call.calc_project_stats()
+        if self.args.enable_smart_parser:
+            self.send_declaraion_files_to_smart_parser(remote_call.result_folder)
         self.save_dlrobot_remote_call(remote_call)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
@@ -252,6 +312,13 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.last_service_action_time_stamp = current_time
             self.forget_old_remote_processes(current_time)
             self.check_yandex_cloud()
+            if os.path.exists(PITSTOP_FILE):
+                self.stop_process = True
+                self.logger.debug("stop sending tasks, exit for a pit stop")
+                os.unlink(PITSTOP_FILE)
+            if self.stop_process and self.get_running_jobs_count() == 0:
+                raise Exception("exit for pit stop")
+
 
     def get_stats(self):
         workers = dict((k, list(r.write_to_json() for r in v))
@@ -322,7 +389,10 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('No authorization_code provided', log_error=False)
             return
 
-        if len(HTTP_SERVER.input_files) == 0:
+        if len(HTTP_SERVER.input_files) == 0 and HTTP_SERVER.can_start_new_epoch():
+            HTTP_SERVER.start_new_epoch()
+
+        if not HTTP_SERVER.have_tasks():
             send_error("no more jobs", DLROBOT_HTTP_CODE.NO_MORE_JOBS)
             return
 
@@ -343,7 +413,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         self.send_response(200)
-        self.send_header('dlrobot_project_file_name',  project_file)
+        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE,  project_file)
         self.end_headers()
 
         file_path = os.path.join(HTTP_SERVER.args.input_folder, project_file)
@@ -407,6 +477,10 @@ if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging(args.log_file_name)
     HTTP_SERVER = TDlrobotHTTPServer(args, logger)
+    if not HTTP_SERVER.input_tasks_exist():
+        logger.error("no input tasks found")
+        sys.exit(1)
+
     HTTP_SERVER.check_yandex_cloud() # to get worker ips
     try:
         HTTP_SERVER.serve_forever()

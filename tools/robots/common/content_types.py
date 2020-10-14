@@ -4,12 +4,24 @@ DEFAULT_RAR_EXTENSION = ".rar"
 DEFAULT_7Z_EXTENSION = ".7z"
 DEFAULT_PDF_EXTENSION = ".pdf"
 
-ACCEPTED_DECLARATION_FILE_EXTENSIONS = {'.doc', '.docx', '.xls', '.xlsx', '.rtf',
-                                        DEFAULT_PDF_EXTENSION,
-                                        DEFAULT_ZIP_EXTENSION,
-                                        DEFAULT_RAR_EXTENSION,
-                                        DEFAULT_7Z_EXTENSION,
-                                        DEFAULT_HTML_EXTENSION}
+ACCEPTED_ARCHIVE_EXTENSION = {
+    DEFAULT_7Z_EXTENSION,
+    DEFAULT_RAR_EXTENSION,
+    DEFAULT_ZIP_EXTENSION
+}
+
+ACCEPTED_DOCUMENT_EXTENSIONS = {
+    '.doc',
+    '.docx',
+    '.xls',
+    '.xlsx',
+    '.rtf',
+    DEFAULT_PDF_EXTENSION,
+    DEFAULT_HTML_EXTENSION
+}
+
+ACCEPTED_DECLARATION_FILE_EXTENSIONS = ACCEPTED_DOCUMENT_EXTENSIONS.union(ACCEPTED_ARCHIVE_EXTENSION)
+
 
 content_types = [
 "application/excel",
