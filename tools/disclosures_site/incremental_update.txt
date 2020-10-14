@@ -9,11 +9,8 @@
 #1.2. Объявление переменных (кроме тех, что уже объявлены в ~/smart_parser/tools/INSTALL.txt)
 
 export TOOLS=~/smart_parser/tools
-CURRENT_DATE=`date  +'%Y-%m-%d'`
-export CRAWL_EPOCH=3
-export OLD_DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-05-15
-export DLROBOT_FOLDER=~/declarator_hdd/declarator/2020-09-29
-export HUMAN_FILES_JSON=human_files.json
+export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
+export HUMAN_FILES_JSON=~/declarator_hdd/declarator/human_files.json
 export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
 export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 
@@ -22,18 +19,11 @@ export DISCLOSURES_FILES=domains
 export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 
-#======================================================================
-#======== Запуск сервиса smart_parser_cach в вечном режиме     ========
-#=====================================================================
-#2.1
- export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
- mkdir $SMART_PARSER_CACHE_FOLDER
- cd $SMART_PARSER_CACHE_FOLDER
 
 #======================================================================
 #======== Обновление ручной базы (declarator), раз в квартал?  ========
 #=====================================================================
-#3.1 построение базы declarator:
+#2.1 построение базы declarator:
     cd ~
     git clone sokirko@bitbucket.org:TI-Russia/declarator.git
     cd declarator/trasparency
@@ -46,49 +36,48 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     zcat prod????.tar.gz | mysql -D declarator
 
 
-#3.2  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
+#2.2  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
     python $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
 
-#3.3  Отправляем все новые Pdf на конвертацию
+#2.3  Отправляем все новые Pdf на конвертацию
     find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving
 
-#3.3 процессим все human files c помощью smart_parser
+#2.4 процессим все human files c помощью smart_parser
      find $HUMAN_FILES_FOLDER -type  f  | xargs -n 1 --verbose  curl http://$SMART_PARSER_SERVER_ADDRESS/ -T
-
-#======================================================================
-#======== Запуск dlrobot_central в вечном режиме            ========
-#=====================================================================
 
 #======================================================================
 #======== Обход с помощью dlrobot (раз в месяц?)            ========
 #=====================================================================
 
-#4.1 создание нового каталога
-    mkdir $DLROBOT_FOLDER
+#3.1 создание нового каталога
+    # all projects that older than 5 hours in order not to get a race condition
+    export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
+    export CRAWL_EPOCH=`python3 -c "import time; print (int(time.time() - 60 * 5))"`
+    export DLROBOT_FOLDER=$DLROBOT_UPDATES_FOLDER/$CRAWL_EPOCH
+
+    mkdir -p $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
 
-#4.2 Построение списка всех входных доменов
-    # optional python $TOOLS/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains ../domains/new_domains.txt  --timeouted-domains timeouted-domains.txt
-    python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS
-
-#4.3  Запуск dlrobot
-   cd $DLROBOT_FOLDER
-   rm nohup.out
-   # взять порт из DLROBOT_CENTRAL_SERVER_ADDRESS
-   nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  --server-address 192.168.100.151:8089 --input-folder $INPUT_DLROBOT_PROJECTS --result-folder processed_projects --read-previous-results --check-yandex-cloud &
-
-#4.4 получение каталога domains
-    python $TOOLS/disclosures_site/scripts/copy_dlrobot_documents_to_one_folder.py --input-glob  'processed_projects' --output-folder $DISCLOSURES_FILES --output-json copy_to_one_folder.json
+#3.2 получение каталога domains
+    python3 $TOOLS/disclosures_site/scripts/copy_dlrobot_documents_to_one_folder.py \
+            --input-folder  $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
+            --output-folder $DISCLOSURES_FILES \
+            --max-ctime $CRAWL_EPOCH \
+            --output-json copy_to_one_folder.json
 
 
-#5.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
-    python $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py --dlrobot-folder $DISCLOSURES_FILES  --copy-to-one-folder-json copy_to_one_folder.json \
-        --human-json $HUMAN_FILES_JSON --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
-        --crawl-epoch $CRAWL_EPOCH --output-json dlrobot_human.json
+#3.3.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
+    python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
+        --dlrobot-folder $DISCLOSURES_FILES \
+        --copy-to-one-folder-json copy_to_one_folder.json \
+        --human-json $HUMAN_FILES_JSON \
+        --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
+        --crawl-epoch $CRAWL_EPOCH \
+        --output-json dlrobot_human.json
 
 
-#5.1  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
-    python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
+#3.4  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
+    python3 $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
 #5.2  факультативно, переконвертация  pdf, которые не были переконвертированы раньше
  find  $DISCLOSURES_FILES -name '*.pdf' -type f | xargs -n 100 --verbose python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving --conversion-timeout 20

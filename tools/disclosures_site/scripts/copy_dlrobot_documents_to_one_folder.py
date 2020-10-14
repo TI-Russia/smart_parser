@@ -1,7 +1,6 @@
 import shutil
 import os
 import argparse
-import glob
 import hashlib
 import logging
 import tempfile
@@ -12,7 +11,8 @@ import json
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input-glob", dest='input_glob', required=True)
+    parser.add_argument("--max-ctime", dest='max_ctime', required=True, type=int, help="max ctime of an input folder")
+    parser.add_argument("--input-folder", dest='input_folder', required=True)
     parser.add_argument("--output-folder", dest='output_folder', default="domains")
     parser.add_argument("--output-json", dest='output_json', default="copy_to_one_folder.json")
     parser.add_argument("--use-pseudo-tmp", dest='use_pseudo_tmp', action="store_true", default=False)
@@ -29,10 +29,6 @@ def setup_logging(logfilename):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
-    # create console handler with a higher log level
-    #ch = logging.StreamHandler()
-    #ch.setLevel(logging.DEBUG)
-    #logger.addHandler(ch)
     return logger
 
 
@@ -128,27 +124,29 @@ class TCopier:
         except Exception as exp:
             self.logger.debug("Fail on {}, exception={}".format(robot_project_path, exp))
 
-    def copy_files(self):
-        for folder in glob.glob(self.args.input_glob):
-            self.logger.debug ("check {}".format(folder))
-            assert os.path.isdir(folder)
+    def copy_files_of_one_project(self, entry: os.DirEntry):
+        dlrobot_project = entry.name
+        self.logger.debug("process {}".format(dlrobot_project))
+        project_folder = os.path.join(self.args.input_folder, dlrobot_project)
+        result_folder = os.path.join(project_folder, "result")
+        if not os.path.exists(result_folder):
+            self.logger.debug("no result found in {}, skip it".format(project_folder))
+            return
+        dlrobot_project_without_timestamp = re.sub('\.[0-9]+$', '', dlrobot_project)
+        robot_project = os.path.join(project_folder, dlrobot_project_without_timestamp + ".txt")
+        if not os.path.exists(robot_project):
+            self.logger.error("no dlrobot project file found".format(project_folder))
+            return
+        file_info = self.get_file_urls(robot_project)
+        if file_info is not None:
+            for web_site in os.listdir(result_folder):
+                self.copy_files_of_one_web_site(web_site, file_info, result_folder, self.args.output_folder)
 
-        for folder in glob.glob(self.args.input_glob):
-            for dlrobot_project in os.listdir(folder):
-                self.logger.debug("process {}".format(dlrobot_project))
-                project_folder = os.path.join(folder, dlrobot_project)
-                if not os.path.isdir(project_folder):
-                    continue
-                result_folder = os.path.join(project_folder, "result")
-                if not os.path.exists(result_folder):
-                    self.logger.error("no result found in {}, skip it".format(project_folder))
-                    continue
-                dlrobot_project_without_timestamp = re.sub('\.15[0-9]+$', '', dlrobot_project)
-                robot_project = os.path.join(project_folder, dlrobot_project_without_timestamp + ".txt")
-                file_info = self.get_file_urls(robot_project)
-                if file_info is not None:
-                    for web_site in os.listdir(result_folder):
-                        self.copy_files_of_one_web_site(web_site, file_info, result_folder, self.args.output_folder)
+    def copy_files(self):
+        with os.scandir(self.args.input_folder) as it:
+            for entry in it:
+                if entry.is_dir() and entry.stat().st_ctime < self.args.max_ctime:
+                    self.copy_files_of_one_project(entry)
 
 
 def main():
