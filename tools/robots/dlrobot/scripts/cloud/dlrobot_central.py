@@ -45,7 +45,7 @@ def parse_args():
     parser.add_argument("--read-previous-results", dest='read_previous_results', default=False, action='store_true',
                         required=False, help="read file dlrobot_results.dat and exclude succeeded tasks from the input tasks")
 
-    parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='20s')
+    parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='60s')
     parser.add_argument("--dlrobot-project-timeout", dest='dlrobot_project_timeout',
                          required=False, default=TTimeouts.OVERALL_HARD_TIMEOUT_IN_CENTRAL)
     parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
@@ -108,6 +108,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
             self.permitted_hosts.add('127.0.0.1')
             self.permitted_hosts.add('95.165.96.61') # disclosures.ru
+        self.pdf_conversion_queue_length = self.conversion_client.get_pending_all_file_size()
 
     def verify_request(self, request, client_address):
         if self.args.enable_ip_checking:
@@ -139,7 +140,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if remote_call.exit_code != 0:
             max_tries_count = args.tries_count
             tries_count = len(self.dlrobot_remote_calls[remote_call.project_file])
-            if remote_call.result_folder is None and tries_count == max_tries_count:
+            if remote_call.project_folder is None and tries_count == max_tries_count:
                 # if the last result was not obtained, may be,
                 # worker is down, so the problem is not in the task but in the worker
                 # so give this task one more chance
@@ -193,9 +194,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         return sum(len(w) for w in self.dlrobot_remote_calls.values())
 
     def conversion_server_queue_is_short(self):
-        input_queue_size = self.conversion_client.get_pending_all_file_size()
-        self.logger.debug("conversion pdf input_queue_size={}".format(input_queue_size))
-        return input_queue_size < self.args.pdf_conversion_queue_limit
+        return self.pdf_conversion_queue_length < self.args.pdf_conversion_queue_limit
 
     def get_new_job_task(self, worker_host_name, worker_ip):
         project_file = self.input_files.pop(0)
@@ -208,9 +207,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def untar_file(self, project_file, result_archive):
         base_folder, _ = os.path.splitext(project_file)
-        output_folder = os.path.join(args.result_folder, base_folder)
-        if os.path.exists(output_folder):
-            output_folder += ".{}".format(int(time.time()))
+        output_folder = os.path.join(args.result_folder, base_folder) + ".{}".format(int(time.time()))
         compressed_file = io.BytesIO(result_archive)
         decompressed_file = gzip.GzipFile(fileobj=compressed_file)
         tar = tarfile.open(fileobj=decompressed_file)
@@ -226,8 +223,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 return worker_running_tasks.pop(i)
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
-    def send_declaraion_files_to_smart_parser(self, result_folder):
-        doc_folder = os.path.join(result_folder, "result")
+    def send_declaraion_files_to_smart_parser(self, dlrobot_project_folder):
+        doc_folder = os.path.join(dlrobot_project_folder, "result")
         if os.path.exists(doc_folder):
             for website in os.listdir(doc_folder):
                 website_folder = os.path.join(doc_folder, website)
@@ -244,10 +241,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.worker_host_name = worker_host_name
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
-        remote_call.result_folder = self.untar_file(project_file, result_archive)
+        remote_call.project_folder = self.untar_file(project_file, result_archive)
         remote_call.calc_project_stats()
         if self.args.enable_smart_parser:
-            self.send_declaraion_files_to_smart_parser(remote_call.result_folder)
+            self.send_declaraion_files_to_smart_parser(remote_call.project_folder)
         self.save_dlrobot_remote_call(remote_call)
 
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
@@ -318,7 +315,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 os.unlink(PITSTOP_FILE)
             if self.stop_process and self.get_running_jobs_count() == 0:
                 raise Exception("exit for pit stop")
-
+            self.pdf_conversion_queue_length = self.conversion_client.get_pending_all_file_size()
+            if not self.conversion_server_queue_is_short():
+                self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(self.input_queue_size))
 
     def get_stats(self):
         workers = dict((k, list(r.write_to_json() for r in v))
@@ -404,7 +403,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
         if not HTTP_SERVER.conversion_server_queue_is_short():
             send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
             return
-
+    
         worker_ip = self.client_address[0]
         try:
             project_file = HTTP_SERVER.get_new_job_task(worker_host_name, worker_ip)

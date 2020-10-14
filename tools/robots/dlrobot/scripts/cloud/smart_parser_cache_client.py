@@ -47,7 +47,10 @@ class TSmartParserCacheClient(object):
             self.logger.error(message)
             return None
 
-    def retrieve_json_by_sha256(self, sha256):
+    def retrieve_json_by_source_file(self, file_path):
+        with open(f, "rb") as inp:
+            sha256 = hashlib.sha256(inp.read()).hexdigest()
+
         conn = http.client.HTTPConnection(self.db_conv_url)
         conn.request("GET", "/get_json?sha256=" + sha256)
         response = conn.getresponse()
@@ -105,13 +108,11 @@ if __name__ == "__main__":
     else:
         for f in args.files:
             if args.action == "get":
-                with open (f, "rb") as inp:
-                    sha256 = hashlib.sha256(inp.read()).hexdigest()
-                js = client.retrieve_json_by_sha256(sha256)
+                js = client.retrieve_json_by_source_file(f)
                 if js is None:
                     print("not found")
                 else:
-                    print(json.dumps(js))
+                    print(json.dumps(js, ensure_ascii=False))
             else:
                 client.send_file(f)
 
