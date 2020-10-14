@@ -23,8 +23,8 @@ if [ "$running_count" != "1" ]; then
 fi
 
 wait $WORKER_PID
-
-if [ ! -f ${RESULT_FOLDER}/aot.ru/aot.ru.txt.click_paths ]; then
+result_files_count=`ls ${RESULT_FOLDER}/aot.ru.*/aot.ru.txt.click_paths | wc -l | awk '{print $1}' `
+if [ "$result_files_count" != "1" ]; then
   echo "aot.ru.txt.click_paths is not sent by the worker"
   kill ${CENTRAL_PID}
   exit 1

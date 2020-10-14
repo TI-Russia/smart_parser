@@ -228,6 +228,14 @@ def run_dlrobot(args,  project_file):
         exit_code = 1
 
     clean_folder_before_archiving(args, project_folder, result_folder, exit_code)
+
+
+    if exit_code != 0:
+        #this pkill was not tested
+        cmd = "pkill -f \"project {}\"".format(project_file)
+        args.logger.debug(cmd)
+        os.system(cmd)
+
     return exit_code
 
 
@@ -276,9 +284,16 @@ def send_results_back(args, project_file, exitcode):
         shutil.rmtree(project_folder, ignore_errors=True)
 
 
-def check_free_disk_space():
+def check_system_resources(logger):
     total, used, free = shutil.disk_usage(os.curdir)
-    return free > 2 * 2**30 #at least 2GB free disk space must be available
+    if  free < 2 * 2**30:
+        logger.error("no enough disk space")
+        return False  #at least 2 GB free disk space must be available
+    free_mem = psutil.virtual_memory().free
+    if free_mem < 2*29:
+        logger.error("no enough memory")
+        return False  # at least 0.5 GB free memory
+    return True
 
 
 def delete_very_old_folders(args):
@@ -300,9 +315,9 @@ def run_dlrobot_and_send_results_in_thread(args, process_id):
         if not threading.main_thread().is_alive():
             break
 
-        if not check_free_disk_space():
+        if not check_system_resources(args.logger):
             delete_very_old_folders(args)
-            args.logger.debug("check_free_disk_space failed, sleep 10 minutes")
+            args.logger.debug("check_system_resources failed, sleep 10 minutes")
             time.sleep(60*10)  #there is a hope that the second process frees the disk
         else:
             try:

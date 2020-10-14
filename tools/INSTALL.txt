@@ -5,11 +5,11 @@
 This configuration is tested on Ubuntu 18, 20 (preferable)
 
 1.1. Yandex cloud worker, create workstation
-   2 ГБ RAM, 1 ГБ своп, 25 ГБ HDD, Ubuntu 20, "interruptable", public IP, price 300 RUB
+   2 ГБ RAM, 3 ГБ своп, 25 ГБ HDD, Ubuntu 20, "interruptable", public IP, price 300 RUB
 
    For Yandex.Cloud, increase swap file
    sudo swapoff -a
-   sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
+   sudo dd if=/dev/zero of=/swapfile bs=3M count=1024
    sudo mkswap /swapfile
    sudo swapon /swapfile
 
