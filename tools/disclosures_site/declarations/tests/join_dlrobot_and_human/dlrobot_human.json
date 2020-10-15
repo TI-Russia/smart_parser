@@ -1,0 +1,57 @@
+{
+    "document_folder": "domains",
+    "documents": {
+        "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
+            "document_path": "05.fsin.su/1.xlsx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 4,
+            "w_refs": [
+                {
+                    "crawl_epoch": 0,
+                    "url": null
+                }
+            ]
+        },
+        "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865": {
+            "d_refs": [
+                {
+                    "document_file_id": 1,
+                    "document_id": 1,
+                    "income_year": 2009,
+                    "media_url": "https://declarator.org/media/documents/1.doc",
+                    "office_id": 4,
+                    "web_domain": "05.fsin.su"
+                }
+            ],
+            "document_path": "05.fsin.su/3.xlsx",
+            "intersection_status": "only_human",
+            "office_id": 4
+        },
+        "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
+            "d_refs": [
+                {
+                    "document_file_id": 1432,
+                    "document_id": 19,
+                    "income_year": 2009,
+                    "media_url": "https://declarator.org/media/documents/2.doc",
+                    "office_id": 4,
+                    "web_domain": "05.fsin.su"
+                }
+            ],
+            "document_path": "05.fsin.su/4.xlsx",
+            "intersection_status": "only_human",
+            "office_id": 4
+        },
+        "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
+            "document_path": "05.fsin.su/2.xlsx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 4,
+            "w_refs": [
+                {
+                    "crawl_epoch": 0,
+                    "url": null
+                }
+            ]
+        }
+    }
+}

@@ -33,9 +33,9 @@ class TDeclaratorReference:
 
 
 class TWebReference:
-    def __init__(self, from_json=dict()):
-        self.url = from_json.get('url')
-        self.crawl_epoch = from_json.get('crawl_epoch')
+    def __init__(self, from_json=dict(), url=None, crawl_epoch=None):
+        self.url = from_json.get('url', url)
+        self.crawl_epoch = from_json.get('crawl_epoch', crawl_epoch)
         assert len(from_json) == 0 or len(from_json) == 2
 
     def write_to_json(self):
@@ -64,6 +64,12 @@ class TSourceDocument:
         for ref in from_json.get('w_refs', []):
             self.web_references.append(TWebReference(from_json=ref))
 
+    def update_intersection_status(self, new_status):
+        if self.intersection_status is None:
+            self.intersection_status = new_status
+        elif self.intersection_status != new_status:
+            self.intersection_status = TSourceDocument.both_found
+
     def get_web_site(self):
         return os.path.dirname(self.document_path)
 
@@ -74,11 +80,11 @@ class TSourceDocument:
         return None
 
     def add_web_reference(self, web_ref):
-        if web_ref not in self.web_references:
+        if web_ref is not None and web_ref not in self.web_references:
             self.web_references.append(web_ref)
 
     def add_decl_reference(self, decl_ref):
-        if decl_ref not in self.decl_references:
+        if decl_ref is not None and decl_ref not in self.decl_references:
             self.decl_references.append(decl_ref)
 
     def write_to_json(self):
@@ -95,27 +101,33 @@ class TSourceDocument:
 
 
 class TDlrobotHumanFile:
-    def __init__(self, input_file_name=None):
-        from_json = dict()
-        self.input_file_name_dir_name = ""
-        if input_file_name is not None:
-            with open(input_file_name, "r") as inp:
+    def __init__(self, db_file_path, read_db=True, document_folder=None):
+        self.db_file_path = db_file_path
+        self.db_file_dirname = os.path.dirname(db_file_path)
+        if read_db:
+            with open(self.db_file_path, "r") as inp:
                 from_json = json.load(inp)
-            self.input_file_name_dir_name = os.path.dirname(input_file_name)
-        self.document_folder = from_json.get('document_folder')
-        self.document_collection = dict((k, TSourceDocument(from_json=v)) for k, v in from_json.get('documents', dict()).items())
+            self.document_folder = from_json.get('document_folder')
+            self.document_collection = dict(
+                (k, TSourceDocument(from_json=v)) for k, v in from_json.get('documents', dict()).items())
+        else:
+            self.document_folder = document_folder
+            self.document_collection = dict()
+            if document_folder is not None:
+                if not os.path.exists(document_folder):
+                    os.mkdir(document_folder)
 
     def add_source_document(self, sha256, src_doc: TSourceDocument):
         self.document_collection[sha256] = src_doc
 
     def get_document_path(self, src_doc: TSourceDocument, absolute=False):
         if absolute:
-            return os.path.join(self.input_file_name_dir_name, self.document_folder, src_doc.document_path)
+            return os.path.join(self.db_file_dirname, self.document_folder, src_doc.document_path)
         else:
             return os.path.join(self.document_folder, src_doc.document_path)
 
-    def write(self, output_file_name):
-        with open(output_file_name, "w", encoding="utf8") as out:
+    def write(self):
+        with open(self.db_file_path, "w", encoding="utf8") as out:
             output_json = {
                 'document_folder': self.document_folder,
                 'documents': dict((k, v.write_to_json()) for k,v in self.document_collection.items())
@@ -125,3 +137,5 @@ class TDlrobotHumanFile:
     def get_all_offices(self):
         return set(x.calculated_office_id for x in self.document_collection.values() if x.calculated_office_id is not None)
 
+    def get_documents_count(self):
+        return len(self.document_collection)

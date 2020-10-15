@@ -16,20 +16,23 @@ class JoinDLrobotAndHuman(TestCase):
             os.unlink(self.dlrobot_human_path)
 
     def run_cmd(self, cmd):
+        print (cmd)
         exit_value = os.system(cmd)
         self.assertEqual(exit_value,  0)
 
     def test_join_dlrobot_and_human(self):
-        script = "../../../scripts/copy_dlrobot_documents_to_one_folder.py"
         input_folder = "processed_projects"
-        copy_to_one_folder_json = "copy_to_one_folder.json"
-        self.run_cmd("python3 {} --input-folder {} --output-folder {} --use-pseudo-tmp --output-json {} --max-ctime {}".format(
-            script, input_folder, self.domains_folder,  copy_to_one_folder_json, int(time.time())))
-
         script = "../../../scripts/join_human_and_dlrobot.py"
         human_files = "human_files.json"
-        old_json = "old/dlrobot_human.json"
-        self.run_cmd("python3 {} --crawl-epoch 91 --dlrobot-folder {} --copy-to-one-folder-json {}  --human-json {} --old-dlrobot-human-json {} --output-json {}".format(
-            script,  self.domains_folder, copy_to_one_folder_json, human_files, old_json, self.dlrobot_human_path))
+        old_db = "old/dlrobot_human.json"
+        self.run_cmd("python3 {} --max-ctime {} --input-dlrobot-folder {} --human-json {} --old-dlrobot-human-json {}"
+                     " --output-domains-folder {}  --output-json {}".format(
+            script,
+            int(time.time()),
+            input_folder,
+            human_files,
+            old_db,
+            self.domains_folder,
+            self.dlrobot_human_path))
         self.run_cmd("git diff {}".format(self.dlrobot_human_path))
 

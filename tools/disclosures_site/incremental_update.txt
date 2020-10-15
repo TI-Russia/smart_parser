@@ -58,25 +58,18 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     mkdir -p $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
 
-#3.2 получение каталога domains
-    python3 $TOOLS/disclosures_site/scripts/copy_dlrobot_documents_to_one_folder.py \
-            --input-folder  $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
-            --output-folder $DISCLOSURES_FILES \
-            --max-ctime $CRAWL_EPOCH \
-            --output-json copy_to_one_folder.json
 
-
-#3.3.  слияние по файлам dlrobot, declarator  и старого disclosures , получение dlrobot_human.json
+#3.2  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
     python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
-        --dlrobot-folder $DISCLOSURES_FILES \
-        --copy-to-one-folder-json copy_to_one_folder.json \
+        --max-ctime $CRAWL_EPOCH \
+        --input-dlrobot-folder  $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
         --human-json $HUMAN_FILES_JSON \
         --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
-        --crawl-epoch $CRAWL_EPOCH \
+        --output-domains-folder $DISCLOSURES_FILES \
         --output-json dlrobot_human.json
 
 
-#3.4  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
+#3.3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
 #5.2  факультативно, переконвертация  pdf, которые не были переконвертированы раньше

@@ -88,7 +88,7 @@ class TImporter:
 
     def __init__(self, args):
         self.args = args
-        self.dlrobot_human = TDlrobotHumanFile(input_file_name=args['dlrobot_human'])
+        self.dlrobot_human = TDlrobotHumanFile(args['dlrobot_human'])
         self.all_section_passports = set()
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
