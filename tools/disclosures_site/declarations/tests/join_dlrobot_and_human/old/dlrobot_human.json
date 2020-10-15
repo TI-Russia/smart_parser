@@ -8,7 +8,7 @@
             "w_refs": [
                 {
                     "crawl_epoch": 0,
-                    "url": null
+                    "url": "http://05.fsin.su/old_link1"
                 }
             ]
         },
@@ -19,7 +19,7 @@
             "w_refs": [
                 {
                     "crawl_epoch": 0,
-                    "url": null
+                    "url": "http://05.fsin.su/old_link2"
                 }
             ]
         }

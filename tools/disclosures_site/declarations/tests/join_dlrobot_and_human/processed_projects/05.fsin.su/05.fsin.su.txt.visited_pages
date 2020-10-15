@@ -1,0 +1,40 @@
+{
+    "sites": [
+        {
+            "morda_url": "http://05.fsin.su",
+            "name": "",
+            "steps": [],
+            "exported_files": [
+                {
+                    "url": "http://05.fsin.su/1984.xlsx",
+                    "cached_file": "cached/05.fsin.su/1984.xlsx",
+                    "export_path": "result/05.fsin.su/1984.xlsx",
+                    "archive_index": -1,
+                    "sha256": "1",
+                    "smart_parser_json_sha256": null
+                },
+                {
+                    "url": "http://05.fsin.su/old_dlrobot.xlsx",
+                    "cached_file": "cached/05.fsin.su/old_dlrobot.xlsx",
+                    "export_path": "result/05.fsin.su/old_dlrobot.xlsx",
+                    "archive_index": -1,
+                    "sha256": "2",
+                    "smart_parser_json_sha256": null
+                },
+                {
+                    "url": "http://05.fsin.su/new_dlrobot.xlsx",
+                    "cached_file": "cached/05.fsin.su/new_dlrobot.xlsx",
+                    "export_path": "result/05.fsin.su/new_dlrobot.xlsx",
+                    "archive_index": -1,
+                    "sha256": "3",
+                    "smart_parser_json_sha256": null
+                }
+            ]
+        }
+    ],
+    "step_names": [
+        "sitemap",
+        "anticorruption_div",
+        "declarations"
+    ]
+}

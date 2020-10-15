@@ -115,7 +115,7 @@ class TJoiner:
                         self.skipped_files_count += 1
                         continue
                     input_file_path = os.path.join(input_folder, base_file_name)
-                    web_ref = TWebReference(reference_url, self.args.max_ctime)
+                    web_ref = TWebReference(url=reference_url, crawl_epoch=self.args.max_ctime)
                     self.copy_dlrobot_file(web_site, input_file_path, TIntersectionStatus.only_dlrobot, web_ref)
 
     def read_file_urls_from_dlrobot_project(self, robot_project_path):
@@ -176,7 +176,7 @@ class TJoiner:
                 continue
             input_file_path = old_json.get_document_path(src_doc, absolute=True)
             if not os.path.exists(input_file_path):
-                self.logger.error("old file {} does not exist,though it is registered in {}".format(
+                self.logger.error("old file {} does not exist, though it is registered in {}".format(
                     input_file_path, args.old_dlrobot_human_json))
                 continue
             web_domain = os.path.dirname(src_doc.document_path)
@@ -212,7 +212,6 @@ class TJoiner:
             office_id = max(offices.keys(), key=lambda x: offices[x])
             web_domain_to_office[web_site] = office_id
 
-        #print(web_domain_to_office)
         self.logger.info("update calculated_office_id...")
 
         for src_doc in self.output_dlrobot_human.document_collection.values():
@@ -244,6 +243,7 @@ def main(args):
             logger.error("file {} has no office".format(src_doc.document_path))
 
     joiner.output_dlrobot_human.write()
+
 
 if __name__ == '__main__':
     args = parse_args()
