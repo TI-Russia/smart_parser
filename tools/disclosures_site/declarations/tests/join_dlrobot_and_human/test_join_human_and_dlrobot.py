@@ -28,11 +28,20 @@ class JoinDLrobotAndHuman(TestCase):
         self.run_cmd("python3 {} --max-ctime {} --input-dlrobot-folder {} --human-json {} --old-dlrobot-human-json {}"
                      " --output-domains-folder {}  --output-json {}".format(
             script,
-            int(time.time()),
+            5602811863, #the far future
             input_folder,
             human_files,
             old_db,
             self.domains_folder,
             self.dlrobot_human_path))
         self.run_cmd("git diff {}".format(self.dlrobot_human_path))
+
+        self.run_cmd("python3 {} {} > {}".format(
+            "../../../scripts/dlrobot_human_stats.py",
+            self.dlrobot_human_path,
+            "dlrobot_human.json.stats",
+        ))
+        self.run_cmd("git diff {}".format("dlrobot_human.json.stats"))
+
+
 

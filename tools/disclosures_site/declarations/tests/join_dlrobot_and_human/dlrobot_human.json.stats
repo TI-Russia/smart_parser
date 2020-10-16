@@ -1,0 +1,14 @@
+{
+    "web_sites_count": 1,
+    "files_count": 6,
+    "both_found": 1,
+    "only_human": 1,
+    "only_dlrobot": 4,
+    "crawl_epochs": {
+        "5602811863": 5,
+        "0": 1
+    },
+    "extensions": {
+        ".xlsx": 6
+    }
+}
