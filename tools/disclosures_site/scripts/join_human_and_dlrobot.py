@@ -86,11 +86,15 @@ class TJoiner:
             _, extension = os.path.splitext(input_file_path)
             src_doc.document_path = os.path.join(web_domain, str(self.web_domain_file_count[web_domain]) + extension)
             src_doc.add_web_reference(web_ref)
-            self.output_dlrobot_human.document_collection[sha256] = src_doc
-            absolute_output_path = self.output_dlrobot_human.get_document_path(src_doc, absolute=True)
-            self.create_folder_if_absent(os.path.dirname(absolute_output_path))
-            self.logger.debug("copy {} to {}".format(input_file_path, absolute_output_path))
-            shutil.copyfile(input_file_path, absolute_output_path)
+            if not os.path.exists(input_file_path):
+                self.logger.error("source file {} does not exist, cannot copy it".format(input_file_path))
+                return new_file
+            else:
+                self.output_dlrobot_human.document_collection[sha256] = src_doc
+                absolute_output_path = self.output_dlrobot_human.get_document_path(src_doc, absolute=True)
+                self.create_folder_if_absent(os.path.dirname(absolute_output_path))
+                self.logger.debug("copy {} to {}".format(input_file_path, absolute_output_path))
+                shutil.copyfile(input_file_path, absolute_output_path)
 
         assert os.path.exists(self.output_dlrobot_human.get_document_path(src_doc, absolute=True))
 
@@ -175,13 +179,9 @@ class TJoiner:
             if src_doc.intersection_status == TSourceDocument.only_human:
                 continue
             input_file_path = old_json.get_document_path(src_doc, absolute=True)
-            if not os.path.exists(input_file_path):
-                self.logger.error("old file {} does not exist, though it is registered in {}".format(
-                    input_file_path, args.old_dlrobot_human_json))
-                continue
             web_domain = os.path.dirname(src_doc.document_path)
             assert (web_domain.find('/') == -1)
-            self.copy_dlrobot_file(web_domain, input_file_path, TIntersectionStatus.only_dlrobot,
+            self.copy_dlrobot_file(web_domain, input_file_path, src_doc.intersection_status,
                                    src_doc.web_references[0])
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
@@ -196,6 +196,28 @@ class TJoiner:
                 web_site = "unknown_domain"
             input_file_path = human_files.get_document_path(src_doc, absolute=True)
             self.copy_dlrobot_file(web_site, input_file_path, TIntersectionStatus.only_human, None, decl_ref)
+        self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
+
+    def copy_old_human_files_that_were_deleted_in_declarator(self):
+        self.logger.info("read {}".format(args.old_dlrobot_human_json))
+        old_json = TDlrobotHumanFile(args.old_dlrobot_human_json)
+
+        self.logger.info("copy_old_human_files_that_were_deleted_in_declarator ...")
+        for sha256, src_doc in old_json.document_collection.items():
+            if sha256 in self.output_dlrobot_human.document_collection:
+                continue
+            if src_doc.intersection_status != TSourceDocument.only_human:
+                continue
+            input_file_path = old_json.get_document_path(src_doc, absolute=True)
+            web_domain = os.path.dirname(src_doc.document_path)
+            assert (web_domain.find('/') == -1)
+            if len(src_doc.decl_references) == 0:
+                self.logger.error("file {}  has  not reference to declarator".format(input_file_path))
+                continue
+            decl_ref = src_doc.decl_references[0]
+            decl_ref.deleted_in_declarator_db = True
+            self.copy_dlrobot_file(web_domain, input_file_path, TIntersectionStatus.only_human,
+                                   None, decl_ref)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
     def calc_office_id(self):
@@ -234,6 +256,7 @@ def main(args):
         joiner.copy_new_dlrobot_files()
         joiner.copy_old_dlrobot_files()
         joiner.copy_human_files()
+        joiner.copy_old_human_files_that_were_deleted_in_declarator()
         joiner.output_dlrobot_human.write()
 
     joiner.calc_office_id()

@@ -63,6 +63,22 @@
             "intersection_status": "only_human",
             "office_id": 4
         },
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": {
+            "d_refs": [
+                {
+                    "deleted_in_declarator_db": true,
+                    "document_file_id": 1,
+                    "document_id": 60000,
+                    "income_year": 2009,
+                    "media_url": "https://declarator.org/human_file_deleted_on_site/1.doc",
+                    "office_id": 4,
+                    "web_domain": "05.fsin.su"
+                }
+            ],
+            "document_path": "05.fsin.su/7.xlsx",
+            "intersection_status": "only_human",
+            "office_id": 4
+        },
         "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
             "document_path": "05.fsin.su/5.xlsx",
             "intersection_status": "only_dlrobot",

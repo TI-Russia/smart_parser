@@ -16,10 +16,14 @@ class TDeclaratorReference:
         self.document_id = from_json.get('document_id')
         self.document_file_id = from_json.get('document_file_id')
         self.document_file_url = from_json.get('media_url')
-        assert len(from_json) == 0 or len(from_json) == 6
+        self.deleted_in_declarator_db = from_json.get('deleted_in_declarator_db')
+        items_count = 6
+        if self.deleted_in_declarator_db is not None:
+            items_count += 1
+        assert len(from_json) == 0 or len(from_json) == items_count
 
     def write_to_json(self):
-        return  {
+        s = {
             'web_domain': self.web_domain,
             'office_id': self.office_id,
             'income_year': self.income_year,
@@ -27,6 +31,9 @@ class TDeclaratorReference:
             'document_file_id': self.document_file_id,
             'media_url': self.document_file_url,
         }
+        if self.deleted_in_declarator_db is not None:
+            s["deleted_in_declarator_db"] = True
+        return s
 
     def __eq__(self, other):
         return self.document_file_id == other.document_file_id
