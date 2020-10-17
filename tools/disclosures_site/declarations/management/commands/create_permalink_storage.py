@@ -38,16 +38,20 @@ class Command(BaseCommand):
             help='write mapping to this fiie'
         )
 
-    def save_permalinks(self, django_db_model, dbm):
+    def save_permalinks(self, logger, django_db_model, dbm):
+        cnt  = 0
         for d in django_db_model.objects.all():
+            cnt += 1
+            if (cnt % 3000) == 0:
+                logger.debug("{}:{}".format(str(django_db_model), cnt))
             dbm[d.permalink_passport()] = str(d.id)
 
     def handle(self, *args, **options):
         logger = setup_logging()
         db = dbm.gnu.open(options.get('output_dbm_file'), "cs")
-        self.save_permalinks(models.Source_Document, db)
-        self.save_permalinks(models.Section, db)
-        self.save_permalinks(models.Person, db)
+        self.save_permalinks(logger, models.Source_Document, db)
+        self.save_permalinks(logger, models.Section, db)
+        self.save_permalinks(logger, models.Person, db)
         logger.info("all done")
 
 CreatePermalinksStorage=Command
