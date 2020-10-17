@@ -222,6 +222,7 @@ def run_dlrobot(args,  project_file):
         args.logger.error(exp)
 
     args.logger.debug("exit_code={}".format(exit_code))
+    # up to now we do not need a .click_paths file, but this file is written at the very end (after file export)
     goal_file = project_file + ".click_paths"
     if not os.path.exists(goal_file):
         args.logger.debug("set exit code=1, since {} not found".format(goal_file))

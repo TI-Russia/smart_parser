@@ -41,7 +41,7 @@ class TRobotProject:
             self.selenium_driver.stop_executable()
             shutil.rmtree(self.selenium_driver.download_folder)
 
-    def write_project(self):
+    def     write_project(self):
         with open(self.visited_pages_file, "w", encoding="utf8") as outf:
             output =  {
                 'sites': [o.to_json() for o in self.offices],

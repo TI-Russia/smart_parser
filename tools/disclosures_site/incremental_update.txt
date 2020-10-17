@@ -42,11 +42,15 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #2.3  Отправляем все новые Pdf на конвертацию
     find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving
 
-#2.4 процессим все human files c помощью smart_parser
-     find $HUMAN_FILES_FOLDER -type  f  | xargs -n 1 --verbose  curl http://$SMART_PARSER_SERVER_ADDRESS/ -T
+#2.4 создание ручных json
+    [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
+    cd ~/declarator/transparency
+    source ../venv/bin/activate
+    python3 manage.py export_in_smart_parser_format --output-folder $HUMAN_JSONS_FOLDER
+
 
 #======================================================================
-#======== Обход с помощью dlrobot (раз в месяц?)            ========
+#======== Получение данных от dlrobot (раз в месяц?)            ========
 #=====================================================================
 
 #3.1 создание нового каталога
@@ -72,25 +76,24 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #3.3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
-#5.2  факультативно, переконвертация  pdf, которые не были переконвертированы раньше
+#3.4 новый смартпарсер через старые файлы dlrobot
+  python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py  --walk-folder-recursive $DISCLOSURES_FILES --action put
+
+#3.5  (факультативно) переконвертация  pdf, которые не были переконвертированы раньше
  find  $DISCLOSURES_FILES -name '*.pdf' -type f | xargs -n 100 --verbose python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving --conversion-timeout 20
 
-#5.3  Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
+#3.6  (факультативно) Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
   find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
   python $TOOLS/disclosures_site/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
   python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
-#6.  запуск smart_parser
-    bash $TOOLS/CorpusProcess/ubuntu_parallel/run_smart_parser_all.sh $DLROBOT_FOLDER/$DISCLOSURES_FILES $HOSTS
 
-#6.1 создание ручных json
-    [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
-    cd ~/declarator/transparency
-    source ../venv/bin/activate
-    python3 manage.py export_in_smart_parser_format --output-folder $HUMAN_JSONS_FOLDER
+#3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок
+   python3 manage.py  $TOOLS/disclosures_site/create_permalink_storage  --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
-#7.  инициализация базы disclosures
+#3.8.  инициализация базы disclosures
     follow $TOOLS/disclosures_site/INSTALL.txt
+
 
 
 #8.  Импорт json в dislosures_db
@@ -120,12 +123,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 #11 mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
-#12 удаление ненужных файлов
-    #cd $DLROBOT_FOLDER
-    #rm -rf $DISCLOSURES_FILES
-    этого делать нельзя, поскольку web-сайт ссылается на эту директорию
 
-#13 go to prod
+#12 go to prod
     mysqladmin drop  disclosures_db
     cd ~/smart_parser.disclosures_prod/tools/disclosures_site
     cat create_disclosures_db.sql | sudo mysql
@@ -143,6 +142,6 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
 
 
-14. restart disclosures service
+13. restart disclosures service
      sudo systemctl stop disclosures
      sudo systemctl start disclosures

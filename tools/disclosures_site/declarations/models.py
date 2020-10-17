@@ -188,6 +188,9 @@ class Source_Document(models.Model):
             doc_path = doc_path[:-len('.json')]
         return doc_path
 
+    def permalink_passport(self):
+        return "sd;{}".format(self.sha256)
+
 
 class Person(models.Model):
     person_name = models.CharField(max_length=64, verbose_name='person name')
@@ -196,6 +199,11 @@ class Person(models.Model):
     @property
     def section_count(self):
         return self.section_set.all().count()
+
+    def permalink_passport(self):
+        sections = list(str(s.id) for s in self.section_set.all())
+        sections.sort()
+        return "ps;" + ";".join(sections)
 
 
 class RealEstate(models.Model):
@@ -251,7 +259,12 @@ class Section(models.Model):
         result = Relative.sort_by_visual_order(list(relatives))
         return result
 
-
+    def permalink_passport(self):
+        main_income = 0
+        for i in self.income_set.all():
+            if i.relative == Relative.main_declarant_code:
+                main_income = i.size
+        return "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
 
 
 

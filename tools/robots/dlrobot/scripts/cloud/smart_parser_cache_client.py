@@ -6,6 +6,8 @@ import hashlib
 import os
 import json
 import argparse
+from robots.common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
+from robots.dlrobot.scripts.cloud.smart_parser_cache import TSmartParserHTTPServer
 
 
 class TSmartParserCacheClient(object):
@@ -55,7 +57,11 @@ class TSmartParserCacheClient(object):
         conn.request("GET", "/get_json?sha256=" + sha256)
         response = conn.getresponse()
         if response.code == 200:
-            return json.loads(response.read())
+            json_bytes = response.read()
+            if json_bytes == TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT:
+                return {}
+            else:
+                return json.loads(json_bytes)
         else:
             return None
 
@@ -94,9 +100,21 @@ def setup_logging(logfilename):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=True)
-    parser.add_argument('files', nargs='*')
+    parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
     args = parser.parse_args()
     return args
+
+
+def get_files(args):
+    if args.walk_folder_recursive is not None:
+        for root, dirs, files in os.walk(args.walk_folder_recursive):
+            for filename in files:
+                _, extension = os.path.splitext(filename)
+                if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
+                    yield os.path.join(root, filename)
+    else:
+        for f in args.files:
+            yield f
 
 
 if __name__ == "__main__":
@@ -106,7 +124,7 @@ if __name__ == "__main__":
     if args.action == "stats":
         print(json.dumps(client.get_stats()))
     else:
-        for f in args.files:
+        for f in get_files(args):
             if args.action == "get":
                 js = client.retrieve_json_by_source_file(f)
                 if js is None:
