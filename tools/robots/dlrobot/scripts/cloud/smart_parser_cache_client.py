@@ -11,18 +11,34 @@ from robots.dlrobot.scripts.cloud.smart_parser_cache import TSmartParserHTTPServ
 
 
 class TSmartParserCacheClient(object):
-    SERVER_ADDRESS = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
 
-    def __init__(self, logger):
-        if TSmartParserCacheClient.SERVER_ADDRESS is None:
+    def assert_server_alive(self):
+        if self.server_address is None:
+            raise Exception("environment variable SERVER_ADDRESS is not set")
+
+        self.logger.debug("check server {} is alive".format(self.server_address))
+
+        try:
+            with urllib.request.urlopen("http://" + self.server_address + "/ping",
+                                        timeout=self.timeout) as response:
+                if response.read() == "yes":
+                    self.logger.debug("server {} is alive".format(self.server_address))
+                    return True
+        except Exception as exp:
+            self.logger.error("cannot connect to {} (smart parser cache server)".format(self.server_address))
+            raise
+
+    def __init__(self, logger, timeout=300):
+        self.server_address = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
+        if self.server_address is None:
             logger.error("specify environment variable SMART_PARSER_SERVER_ADDRESS")
-            assert TSmartParserCacheClient.SERVER_ADDRESS is not None
-        assert_server_alive()
-        self.db_conv_url = TSmartParserCacheClient.SERVER_ADDRESS
+            assert self.server_address is not None
         self.logger = logger
+        self.timeout = timeout
+        self.assert_server_alive()
 
     def send_file(self, file_path):
-        conn = http.client.HTTPConnection(self.db_conv_url)
+        conn = http.client.HTTPConnection(self.server_address)
         with open(file_path, "rb") as inp:
             file_contents = inp.read()
         self.logger.debug("send {} to smart parser cache".format(file_path))
@@ -37,7 +53,7 @@ class TSmartParserCacheClient(object):
     def get_stats(self):
         data = None
         try:
-            conn = http.client.HTTPConnection(self.db_conv_url)
+            conn = http.client.HTTPConnection(self.server_address)
             conn.request("GET", "/stats")
             response = conn.getresponse()
             data = response.read().decode('utf8')
@@ -49,11 +65,8 @@ class TSmartParserCacheClient(object):
             self.logger.error(message)
             return None
 
-    def retrieve_json_by_source_file(self, file_path):
-        with open(f, "rb") as inp:
-            sha256 = hashlib.sha256(inp.read()).hexdigest()
-
-        conn = http.client.HTTPConnection(self.db_conv_url)
+    def retrieve_json_by_sha256(self, sha256):
+        conn = http.client.HTTPConnection(self.server_address)
         conn.request("GET", "/get_json?sha256=" + sha256)
         response = conn.getresponse()
         if response.code == 200:
@@ -65,18 +78,10 @@ class TSmartParserCacheClient(object):
         else:
             return None
 
-
-def assert_server_alive():
-    if TSmartParserCacheClient.SERVER_ADDRESS is None:
-        raise Exception("environment variable SERVER_ADDRESS is not set")
-
-    try:
-        with urllib.request.urlopen("http://" + TSmartParserCacheClient.SERVER_ADDRESS + "/ping", timeout=300) as response:
-            if response.read() == "yes":
-                return True
-    except Exception as exp:
-        print("cannot connect to {} (smart parser cache server)".format(TSmartParserCacheClient.SERVER_ADDRESS))
-        raise
+    def retrieve_json_by_source_file(self, file_path):
+        with open(file_path, "rb") as inp:
+            sha256 = hashlib.sha256(inp.read()).hexdigest()
+            return self.retrieve_json_by_sha256(sha256)
 
 
 def setup_logging(logfilename):
@@ -101,6 +106,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=True)
     parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
+    parser.add_argument("--timeout", dest='timeout', default=300, type=int)
     args = parser.parse_args()
     return args
 
@@ -120,7 +126,7 @@ def get_files(args):
 if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging("smart_parser_cache_client.log")
-    client = TSmartParserCacheClient(logger)
+    client = TSmartParserCacheClient(logger, args.timeout)
     if args.action == "stats":
         print(json.dumps(client.get_stats()))
     else:

@@ -176,6 +176,7 @@ class Declarator_File_Reference(models.Model):
 
 
 class Source_Document(models.Model):
+    id = models.IntegerField(primary_key=True)
     office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
     sha256 = models.CharField(max_length=200)
     file_path = models.CharField(max_length=128)
@@ -193,6 +194,7 @@ class Source_Document(models.Model):
 
 
 class Person(models.Model):
+    id = models.IntegerField(primary_key=True)
     person_name = models.CharField(max_length=64, verbose_name='person name')
     declarator_person_id = models.IntegerField(null=True)
 
@@ -242,6 +244,7 @@ def get_relatives(records):
 
 
 class Section(models.Model):
+    id = models.IntegerField(primary_key=True)
     source_document = models.ForeignKey('declarations.source_document', null=True, verbose_name="source document", on_delete=models.CASCADE)
     person = models.ForeignKey('declarations.Person', null=True, verbose_name="person id", on_delete=models.CASCADE)
     person_name = models.CharField(max_length=64, verbose_name='person name')
@@ -261,7 +264,11 @@ class Section(models.Model):
 
     def permalink_passport(self):
         main_income = 0
-        for i in self.income_set.all():
+        if hasattr(self, "tmp_income_set"):
+            incomes = self.tmp_income_set
+        else:
+            incomes = self.income_set.all()
+        for i in incomes:
             if i.relative == Relative.main_declarant_code:
                 main_income = i.size
         return "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)

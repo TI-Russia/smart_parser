@@ -2,8 +2,8 @@ import declarations.models as models
 from django.core.management import BaseCommand
 import logging
 import os
-import dbm.gnu
-import gc   
+from declarations.management.commands.permalinks import TPermaLinksDB
+import gc
 
 
 def setup_logging(logfilename="create_permalink_storage.log"):
@@ -50,20 +50,25 @@ class Command(BaseCommand):
             help='write mapping to this fiie'
         )
 
-    def save_permalinks(self, logger, django_db_model, dbm):
-        cnt  = 0
-        for d in queryset_iterator(django_db_model.objects.all()):
+    def save_permalinks(self, logger, django_db_model, db:TPermaLinksDB):
+        cnt = 0
+        for record in queryset_iterator(django_db_model.objects.all()):
             cnt += 1
             if (cnt % 3000) == 0:
                 logger.debug("{}:{}".format(str(django_db_model), cnt))
-            dbm[d.permalink_passport()] = str(d.id)
+            db.put_record_id(record)
+
+        db.save_records_count(django_db_model, django_db_model.objects.count())
 
     def handle(self, *args, **options):
         logger = setup_logging()
-        db = dbm.gnu.open(options.get('output_dbm_file'), "cs")
+
+        db = TPermaLinksDB(options.get('output_dbm_file'), create=True)
         self.save_permalinks(logger, models.Source_Document, db)
         self.save_permalinks(logger, models.Section, db)
         self.save_permalinks(logger, models.Person, db)
+        db.close()
+
         logger.info("all done")
 
 CreatePermalinksStorage=Command

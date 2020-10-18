@@ -141,8 +141,5 @@ class TDlrobotHumanFile:
             }
             json.dump(output_json, out,  indent=4, sort_keys=True, ensure_ascii=False)
 
-    def get_all_offices(self):
-        return set(x.calculated_office_id for x in self.document_collection.values() if x.calculated_office_id is not None)
-
     def get_documents_count(self):
         return len(self.document_collection)

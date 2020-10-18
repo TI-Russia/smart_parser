@@ -83,7 +83,11 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.session_write_count = 0
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
-        super().__init__((host, int(port)), TSmartParserRequestHandler)
+        try:
+            super().__init__((host, int(port)), TSmartParserRequestHandler)
+        except Exception as exp:
+            self.logger.error(exp)
+            raise
 
     def check_file_extension(self, filename):
         _, extension = os.path.splitext(filename)
@@ -287,6 +291,7 @@ if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging(args.log_file_name)
     HTTP_SERVER = TSmartParserHTTPServer(args, logger)
+    HTTP_SERVER.logger.debug("start main smart_parser_thread")
     HTTP_SERVER.smart_parser_thread.start()
     try:
         HTTP_SERVER.serve_forever()

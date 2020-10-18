@@ -142,7 +142,7 @@ class TSmartParserJsonReader:
         def __str__(self):
             return (repr(self.value))
 
-    def __init__(self, income_year, source_document, section_json):
+    def __init__(self, income_year, source_document, section_json, id=None):
         self.section_json = section_json
         self.section = models.Section(
             source_document=source_document,
@@ -179,8 +179,9 @@ class TSmartParserJsonReader:
             r.section = self.section
             yield r
 
-    def save_to_database(self):
-        self.section.save() # to obtain id
+    def save_to_database(self, id):
+        self.section.id = id
+        self.section.save()
         models.Income.objects.bulk_create(self.set_section(self.incomes))
         models.RealEstate.objects.bulk_create(self.set_section(self.real_estates))
         models.Vehicle.objects.bulk_create(self.set_section(self.vehicles))
