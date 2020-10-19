@@ -46,7 +46,7 @@ class SmartParserServerForTesting:
             env=os.environ,
             )
         client.wait()
-        time.sleep(3) # normally we should ask the server in cycle till it finishes
+        time.sleep(4) # normally we should ask the server in cycle till it finishes
 
     def __exit__(self, exc_type, exc_value, traceback):
         if self.server is not None:

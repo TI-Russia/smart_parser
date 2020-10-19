@@ -15,4 +15,6 @@ ELASTICSEARCH_INDEX_NAMES = {
     'file_index_name': 'declaration_file_prod',
 }
 
+os.environ['DISCLOSURES_DATABASE_NAME'] = 'disclosures_db'
+
 from .common import *
