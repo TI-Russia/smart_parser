@@ -133,7 +133,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         if js == TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT:
             return TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
         js = zlib.decompress(js)
-        self.logger.debug("find value of length {} by  key {}".format(len(js), key))
+        self.logger.debug("found value of length {} by key {}".format(len(js), key))
         return js
 
     def put_to_task_queue(self, file_bytes, file_extension):
