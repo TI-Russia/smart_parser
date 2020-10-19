@@ -17,7 +17,6 @@ from collections import defaultdict
 from robots.dlrobot.scripts.cloud.smart_parser_cache_client import TSmartParserCacheClient
 
 
-
 def setup_logging(logfilename):
     logger = logging.getLogger("import_json")
     logger.setLevel(logging.DEBUG)
@@ -40,6 +39,9 @@ class TImporter:
 
     def build_office_to_file_mapping(self):
         db_offices = set(o.id for o in models.Office.objects.all())
+        TImporter.logger.debug("there are {} records in table {} ".format(
+            len(db_offices),
+            models.Office.objects.model._meta.db_table))
         office_to_source_documents = defaultdict(list)
         for sha256, src_doc in self.dlrobot_human.document_collection.items():
             office_id = src_doc.calculated_office_id
