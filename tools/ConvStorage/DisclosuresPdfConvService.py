@@ -81,7 +81,7 @@ class AppServerSvc (win32serviceutil.ServiceFramework):
             try:
                 conversion_server_main(args)
             except Exception as exp:
-                self.logger.error(exp)
+                self.logger.error("general exception: {}".format(str(exp)))
                 HTTP_SERVER.stop_http_server()
                 raise
             if not self.stop_requested:

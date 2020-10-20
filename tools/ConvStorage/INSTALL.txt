@@ -10,6 +10,8 @@
 4. Install Cygwin в c:\cygwin64 with
       g++, git, p7zip, wget, jq, git
 
+4.1 add C:\cygwin64\bin to PATH for all users!
+
 5. Get repository
    mkdir c:/tmp/smart_parser; cd  c:/tmp/smart_parser
    git clone git@github.com:TI-Russia/smart_parser.git
@@ -66,3 +68,5 @@
   copy C:\Python37\Lib\site-packages\pywin32_system32\*.dll c:\windows\system32
   python3 C:\tmp\smart_parser\smart_parser\tools\ConvStorage\DisclosuresPdfConvService.py install
   net start DisclosuresPdfConvService
+
+22.  Add a firewall rule for C:\Python37\Lib\site-packages\win32\pythonservice.exe 

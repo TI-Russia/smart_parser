@@ -561,12 +561,16 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 LOGGER = None
 
 def conversion_server_main(args):
-    assert shutil.which("qpdf") is not None  # sudo apt install qpdf
-    assert shutil.which("pdfcrack") is not None  # https://sourceforge.net/projects/pdfcrack/files/
 
     global  LOGGER
     if LOGGER is None:
         LOGGER = setup_logging(args.logfile)
+    if shutil.which("qpdf") is None:
+        LOGGER.error("cannot find qpdf, sudo apt install qpdf")
+        return 0
+    if shutil.which("qpdf") is None:
+        LOGGER.error("cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/")
+        return 0
 
     exit_code = 0
     try:
