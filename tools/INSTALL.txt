@@ -5,11 +5,11 @@
 This configuration is tested on Ubuntu 18, 20 (preferable)
 
 1.1. Yandex cloud worker, create workstation
-   2 ГБ RAM, 1 ГБ своп, 25 ГБ HDD, Ubuntu 20, "interruptable", public IP, price 300 RUB
+   2 ГБ RAM, 3 ГБ своп, 25 ГБ HDD, Ubuntu 20, "interruptable", public IP, price 300 RUB
 
    For Yandex.Cloud, increase swap file
    sudo swapoff -a
-   sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
+   sudo dd if=/dev/zero of=/swapfile bs=3M count=1024
    sudo mkswap /swapfile
    sudo swapon /swapfile
 
@@ -84,7 +84,6 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 =====================================================================================
 ========================= 3. INSTALL DLROBOT_CENTRAL SERVICE=========================
 =====================================================================================
-#
 
 3.1 install yandex cloud console (central)
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
@@ -94,51 +93,56 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
    Which zone do you want to use as a profile default ru-central1-c
    yc compute instance list
 
-3.2  init crontab in central for monitoring
+3.2 Запуск сервиса smart_parser_cache
+    export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
+    mkdir -p $SMART_PARSER_CACHE_FOLDER
+    cd $SMART_PARSER_CACHE_FOLDER
+    rm nohup.out; nohup python3 ~/smart_parser/tools/robots/dlrobot/scripts/cloud/smart_parser_cache.py &
+
+3.3 Построение списка всех входных доменов
+    # optional python $TOOLS/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains ../domains/new_domains.txt  --timeouted-domains timeouted-domains.txt
+    python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS
+
+
+3.4  Запуск сервиса dlrobot_central
+   export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
+   mkdir $DLROBOT_CENTRAL_FOLDER
+   cd $DLROBOT_CENTRAL_FOLDER
+   nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  \
+                 --input-folder input_projects \
+                 --result-folder processed_projects \
+                 --read-previous-results --check-yandex-cloud &
+
+3.5  init crontab in central for monitoring:
+crontab -e
+
 SHELL=/bin/bash
 MAILTO=username
 #Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
 */10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static/dlrobot
 
-3.3  eternal mode
-       export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
-       mkdir $DLROBOT_CENTRAL_FOLDER
-       cd $DLROBOT_CENTRAL_FOLDER
-       nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  \
-                     --server-address DLROBOT_CENTRAL_SERVER_ADDRESS \
-                     --input-folder $INPUT_DLROBOT_PROJECTS \
-                     --result-folder processed_projects \
-                     --read-previous-results --check-yandex-cloud &
-
 
 
 =====================================================================================
-========================= 4. INSTALL SMART_PARSER_CACHE SERVICE =======================
-=====================================================================================
- export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
- mkdir $SMART_PARSER_CACHE_FOLDER
- cd $SMART_PARSER_CACHE_FOLDER
- ...
-
-
-=====================================================================================
-============ 5. INSTALLATION GUIDE FOR DLROBOT_WORKER (SOFTWARE)   =================
+============ 4. INSTALLATION GUIDE FOR DLROBOT_WORKER (SOFTWARE)   =================
 =====================================================================================
 
-5.1 Create dlrobot worker service:
+4.1 Create dlrobot worker service:
     sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
     sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
     sudo systemctl enable dlrobot_worker
     sudo systemctl daemon-reload
     #adjust depending on workstation (on yandex-cloud --worker-count 2, otherwise --worker-count 4)
     sudo nano /etc/systemd/system/dlrobot_worker.service
-    sudo systemctl start dlrobot_worker
 
-5.2 Enable start/stop  service dlrobot_worker without password
+4.2 Enable start/stop  service dlrobot_worker without password
   sudo visudo
   add line:
      sokirko ALL=(ALL) NOPASSWD: /bin/systemctl start dlrobot_worker,  /bin/systemctl stop  dlrobot_worker
+
+4.3 Start  dlrobot_worker
+    sudo systemctl start dlrobot_worker
 
 
 =====================================================================================
@@ -165,7 +169,7 @@ pip3 install -r requirements.txt
 
 5.3 create gunicorn service
 
-  5.3.1  create gunicorn service
+ 5.3.1  create gunicorn service
     cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
     sudo cp gunicorn.socket  /etc/systemd/system
     sudo cp gunicorn.service /etc/systemd/system
@@ -193,3 +197,4 @@ pip3 install -r requirements.txt
 5.5 install https
     sudo apt-get install certbot python3-certbot-nginx
     sudo certbot --nginx
+    (здесь точно все дописано?)

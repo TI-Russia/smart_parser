@@ -115,7 +115,7 @@ def update_cloud_from_central(args):
         updaters.append(proc)
 
     for p in updaters:
-        exit_code = p.wait(60*60)
+        exit_code = p.wait(5*60*60)
         print(p.communicate(timeout=10))
         if exit_code != 0:
             raise Exception("cannot update cloud")

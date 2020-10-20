@@ -4,8 +4,9 @@ import os
 from collections import defaultdict
 from declarations.input_json import TIntersectionStatus, TDlrobotHumanFile
 
+
 if __name__ == '__main__':
-    dlrobot_human = TDlrobotHumanFile(input_file_name=sys.argv[1])
+    dlrobot_human = TDlrobotHumanFile(sys.argv[1])
     websites = set()
     files_count = 0
     both_found = 0

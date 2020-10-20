@@ -22,10 +22,12 @@ class ElasticTestCase(TestCase):
         ofc.save()
 
         src_doc = models.Source_Document()
+        src_doc.id = 1
         src_doc.office  = ofc
         src_doc.save()
 
         section = models.Section()
+        section.id = 1
         section.person_name = "Иванов Иван"
         section.source_document = src_doc
         section.save()

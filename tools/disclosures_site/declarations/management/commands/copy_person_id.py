@@ -9,6 +9,7 @@ import os
 import gc
 import json
 
+
 def setup_logging(logfilename="copy_person.log"):
     logger = logging.getLogger("copy_person")
     logger.setLevel(logging.DEBUG)
@@ -27,6 +28,7 @@ def setup_logging(logfilename="copy_person.log"):
 
 
 def copy_human_merge(logger, section, person_id):
+    #we think that person ids in declarator db are stable
     person = models.Person.objects.get_or_create(id=person_id)[0]
     logger.debug("connect section {} to person {}".format(section.id, person_id))
     person.declarator_person_id = person_id

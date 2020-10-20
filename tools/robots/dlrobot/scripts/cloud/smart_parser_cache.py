@@ -76,14 +76,18 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
     def __init__(self, args, logger):
         self.args = args
         self.logger = logger
-        self.json_cache = dbm.gnu.open(args.cache_file, "ws" if os.path.exists(args.cache_file) else "cs")
+        self.json_cache_dbm = dbm.gnu.open(args.cache_file, "ws" if os.path.exists(args.cache_file) else "cs")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
         self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread)
         self.session_write_count = 0
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
-        super().__init__((host, int(port)), TSmartParserRequestHandler)
+        try:
+            super().__init__((host, int(port)), TSmartParserRequestHandler)
+        except Exception as exp:
+            self.logger.error(exp)
+            raise
 
     def check_file_extension(self, filename):
         _, extension = os.path.splitext(filename)
@@ -122,14 +126,14 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
 
     def get_smart_parser_json(self, sha256, smart_parser_version):
         key = self.build_key(sha256, smart_parser_version)
-        js = self.json_cache.get(key)
+        js = self.json_cache_dbm.get(key)
         if js is None:
             self.logger.debug("cannot find key {}".format(key))
             return None
         if js == TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT:
             return TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
         js = zlib.decompress(js)
-        self.logger.debug("find value of length {} by  key {}".format(len(js), key))
+        self.logger.debug("found value of length {} by key {}".format(len(js), key))
         return js
 
     def put_to_task_queue(self, file_bytes, file_extension):
@@ -139,7 +143,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             self.logger.debug("file {} already exists in the input queue".format(file_name))
             return
         key = self.build_key(sha256, None)
-        if self.json_cache.get(key) is not None:
+        if self.json_cache_dbm.get(key) is not None:
             self.logger.debug("file {} already exists in the db".format(file_name))
             return
 
@@ -157,7 +161,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.logger.debug("add json to key  {}".format(key))
         self.session_write_count += 1
         # do we need here a thread lock?
-        self.json_cache[key] = json_data
+        self.json_cache_dbm[key] = json_data
 
     def get_tasks(self):
         while True:
@@ -287,6 +291,7 @@ if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging(args.log_file_name)
     HTTP_SERVER = TSmartParserHTTPServer(args, logger)
+    HTTP_SERVER.logger.debug("start main smart_parser_thread")
     HTTP_SERVER.smart_parser_thread.start()
     try:
         HTTP_SERVER.serve_forever()

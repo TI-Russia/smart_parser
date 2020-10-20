@@ -31,6 +31,7 @@ class CopyPersonIdTestCase(TestCase):
         office.save()
 
         src_doc = models.Source_Document(office=office)
+        src_doc.id = 1
         src_doc.save()
 
         decl_info = models.Declarator_File_Reference(source_document=src_doc,
@@ -40,6 +41,7 @@ class CopyPersonIdTestCase(TestCase):
         models.Section.objects.all().delete()
         section = models.Section(source_document=src_doc,
                                  person_name=fio)
+        section.id = 1
         section.save()
 
         income = models.Income(section=section,

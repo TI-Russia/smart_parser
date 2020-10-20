@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'disclosures.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'disclosures_db',
+        'NAME': os.environ['DISCLOSURES_DATABASE_NAME'],
         'USER': 'disclosures',
         'PASSWORD': 'disclosures',
         'HOST': os.environ.get('DISCLOSURES_DB_HOST', 'localhost'),

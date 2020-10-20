@@ -8,7 +8,22 @@
             "w_refs": [
                 {
                     "crawl_epoch": 0,
-                    "url": null
+                    "url": "http://05.fsin.su/old_link1"
+                }
+            ]
+        },
+        "unknown": {
+            "document_path": "05.fsin.su/human_file_deleted_on_site.xlsx",
+            "intersection_status": "only_human",
+            "office_id": null,
+            "d_refs": [
+                {
+                    "document_file_id": 1,
+                    "document_id": 60000,
+                    "income_year": 2009,
+                    "media_url": "https://declarator.org/human_file_deleted_on_site/1.doc",
+                    "office_id": 4,
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -19,7 +34,7 @@
             "w_refs": [
                 {
                     "crawl_epoch": 0,
-                    "url": null
+                    "url": "http://05.fsin.su/old_link2"
                 }
             ]
         }

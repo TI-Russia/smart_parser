@@ -1,5 +1,5 @@
 from declarations.input_json import TSourceDocument, TDeclaratorReference,  TDlrobotHumanFile, TIntersectionStatus
-from robots.common.archives import  dearchive_one_archive
+from robots.common.archives import dearchive_one_archive
 
 import pymysql
 import os
@@ -121,8 +121,7 @@ def export_file_to_folder(logger, declarator_url_path, document_file_id, out_fol
 
 
 def build_declarator_squeezes(logger, args):
-    dlrobot_humam = TDlrobotHumanFile()
-    dlrobot_humam.document_folder = args.output_folder
+    human_files_db = TDlrobotHumanFile(args.output_file, read_db=False, document_folder=args.output_folder)
     files_count = 0
     for document_file_id, document_id, file_path, link, office_id, income_year in get_all_file_sql_records(logger, args):
         web_site = urlparse(link).netloc
@@ -148,18 +147,14 @@ def build_declarator_squeezes(logger, args):
                 ref.income_year = income_year
                 ref.document_file_url = declarator_url
                 source_document.add_decl_reference(ref)
-                dlrobot_humam.add_source_document(sha256, source_document)
+                human_files_db.add_source_document(sha256, source_document)
                 files_count += 1
-    return dlrobot_humam
+    human_files_db.write()
 
 
 def main(args):
     logger = setup_logging("download.log")
-    if not os.path.exists(args.output_folder):
-        logger.debug("create {}".format(args.output_folder))
-        os.mkdir(args.output_folder)
-    human_json = build_declarator_squeezes(logger, args)
-    human_json.write(args.output_file)
+    build_declarator_squeezes(logger, args)
 
 
 if __name__ == '__main__':

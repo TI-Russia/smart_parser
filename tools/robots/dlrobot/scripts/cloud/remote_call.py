@@ -11,7 +11,7 @@ class TRemoteDlrobotCall:
         self.exit_code = exit_code
         self.start_time = int(time.time())
         self.end_time = None
-        self.result_folder = None
+        self.project_folder = None
         self.result_files_count = 0
         self.worker_host_name = None
 
@@ -32,7 +32,7 @@ class TRemoteDlrobotCall:
         self.exit_code = d['exit_code']
         self.start_time = d['start_time']
         self.end_time = d['end_time']
-        self.result_folder = d['result_folder']
+        self.project_folder = d['result_folder']
         self.result_files_count = d['result_files_count']
         self.worker_host_name = d['worker_host_name']
 
@@ -43,15 +43,15 @@ class TRemoteDlrobotCall:
                 'exit_code': self.exit_code,
                 'start_time': self.start_time,
                 'end_time': self.end_time,
-                'result_folder': self.result_folder,
+                'result_folder': self.project_folder,
                 'result_files_count': self.result_files_count,
                 'worker_host_name': self.worker_host_name
         }
 
     def calc_project_stats(self):
-        if self.result_folder is None:
+        if self.project_folder is None:
             return
-        summary_file = os.path.join( self.result_folder,  self.project_file + '.result_summary')
+        summary_file = os.path.join(self.project_folder,  self.project_file + '.result_summary')
         if os.path.exists(summary_file):
             with open(summary_file) as inp:
                 self.result_files_count = json.load(inp)['files_count']

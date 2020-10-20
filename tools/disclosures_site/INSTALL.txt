@@ -20,12 +20,13 @@ query_cache_size        = 128M
 
 3. create db and user
     cd ~/smart_parser/tools/disclosures_site
-    cat create_disclosures_db.sql | sudo mysql
+    sudo python3 manage.py create_database --settings disclosures.settings.dev --password ??? --skip-checks
+
 
 4. installing and testing
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
-    python3 manage.py test declarations/tests --settings disclosures.settings.test
+    python3 manage.py test declarations/tests --settings disclosures.settings.dev
 
 
 
