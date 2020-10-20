@@ -6,6 +6,11 @@ from django.db import connection
 
 class TPermaLinksDB:
 
+    def __init__(self, filename):
+        self.filename = filename
+        self.models = {models.Person, models.Section, models.Source_Document}
+        self.db = None
+
     def get_auto_increment_table_name(self, model):
         return model.objects.model._meta.db_table + "_auto_increment"
 
@@ -17,24 +22,26 @@ class TPermaLinksDB:
             cursor.execute("create table {} (id int auto_increment, PRIMARY KEY (id))".format(auto_increment_table))
             cursor.execute("alter table {} auto_increment = {}".format(auto_increment_table, start_from))
 
-    def __init__(self, filename, create=False):
-        self.models = {models.Person, models.Section, models.Source_Document}
-        if create:
-            self.create_mode = True
-            if os.path.exists(filename):
-                os.unlink(filename)
-            self.db = dbm.gnu.open(filename, "c")
-            self.lock = None
-            for typ in self.models:
-                self.save_records_count(typ, 0)
-        else:
-            self.db = dbm.gnu.open(filename)
-            self.create_mode = False
-            for model in self.models:
-                self.recreate_auto_increment_table(model)
+    def close_db(self):
+        self.db.close()
+        self.db = None
+
+    def open_db_read_only(self):
+        self.db = dbm.gnu.open(self.filename)
+
+    def create_sql_sequences(self):
+        for model in self.models:
+            self.recreate_auto_increment_table(model)
+
+    def create_db(self):
+        if os.path.exists(self.filename):
+            os.unlink(self.filename)
+        self.db = dbm.gnu.open(self.filename, "c")
+        for typ in self.models:
+            self.save_records_count(typ, 0)
+
 
     def save_records_count(self, model_type, records_count):
-        assert self.create_mode == True
         assert model_type in self.models
         self.db[str(model_type)] = str(records_count)
 

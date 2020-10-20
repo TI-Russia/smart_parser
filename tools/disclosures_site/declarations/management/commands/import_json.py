@@ -60,8 +60,21 @@ class TImporter:
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
         self.office_to_source_documents = self.build_office_to_file_mapping()
+        self.primary_keys_builder = TPermaLinksDB(args['permanent_links_db'])
+        self.primary_keys_builder.open_db_read_only()
+        self.primary_keys_builder.create_sql_sequences()
+        self.smart_parser_cache_client = None
+
+    def delete_before_fork(self):
+        self.primary_keys_builder.close_db()
+        from django import db
+        db.connections.close_all()
+
+    def init_after_fork(self):
+        from django.db import connection
+        connection.connect()
         self.smart_parser_cache_client = TSmartParserCacheClient(TImporter.logger)
-        self.primary_keys_builder = TPermaLinksDB(args['permanent_links_db'], create=False)
+        self.primary_keys_builder.open_db_read_only()
 
     def get_human_smart_parser_json(self, src_doc, already_imported):
         for ref in src_doc.decl_references:
@@ -157,8 +170,7 @@ class TImporter:
 
 
 def process_one_file_in_thread(importer: TImporter, office_id):
-    from django.db import connection
-    connection.connect()
+    importer.init_after_fork()
     try:
         importer.import_office(office_id)
     except TSmartParserJsonReader.SerializerException as exp:
@@ -210,8 +222,7 @@ class ImportJsonCommand(BaseCommand):
 
         self.stdout.write("start importing")
         if options.get('process_count', 0) > 1:
-            from django import db
-            db.connections.close_all()
+            importer.delete_before_fork()
             pool = Pool(processes=options.get('process_count'))
             pool.map(partial(process_one_file_in_thread, importer), importer.office_to_source_documents.keys())
         else:
@@ -221,6 +232,7 @@ class ImportJsonCommand(BaseCommand):
                     break
                 importer.import_office(office_id)
                 cnt += 1
+        importer.init_after_fork()
         TImporter.logger.info ("Section count={}".format(models.Section.objects.all().count()))
         ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
         start_elastic_indexing()

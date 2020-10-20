@@ -18,7 +18,8 @@ class SimpleImportTestCase(TestCase):
 
         section_count = 111999
         doc_old_id = 111110
-        p = TPermaLinksDB(permalinks_path, create=True)
+        p = TPermaLinksDB(permalinks_path)
+        p.create_db()
         p.save_records_count(models.Section, section_count)
         p.put_record_id(models.Source_Document(id=doc_old_id, sha256="f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a"))
         p.close()
@@ -26,7 +27,7 @@ class SimpleImportTestCase(TestCase):
         with SmartParserServerForTesting(sp_workdir, domains_folder):
             importer = ImportJsonCommand(None, None)
             input_path = os.path.join(os.path.dirname(__file__), "dlrobot_human.json")
-            importer.handle(None, dlrobot_human=input_path, permanent_links_db=permalinks_path)
+            importer.handle(None, dlrobot_human=input_path, permanent_links_db=permalinks_path,process_count=2)
 
         self.assertEqual(models.Source_Document.objects.count(), 1)
         self.assertEqual(list(models.Source_Document.objects.all())[0].id, doc_old_id)

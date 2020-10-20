@@ -63,7 +63,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         logger = setup_logging()
 
-        db = TPermaLinksDB(options.get('output_dbm_file'), create=True)
+        db = TPermaLinksDB(options.get('output_dbm_file'))
+        db.create_db()
         self.save_permalinks(logger, models.Source_Document, db)
         self.save_permalinks(logger, models.Section, db)
         self.save_permalinks(logger, models.Person, db)
