@@ -107,6 +107,7 @@ def parse_args():
     parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=True)
     parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
     parser.add_argument("--timeout", dest='timeout', default=300, type=int)
+    parser.add_argument('files', nargs='*')
     args = parser.parse_args()
     return args
 
