@@ -7,7 +7,7 @@ import time
 import sys
 import logging
 import os
-from ConvStorage.conv_storage_server import conversion_server_main, parse_args, HTTP_SERVER
+from conv_storage_server import conversion_server_main, parse_args, HTTP_SERVER
 
 WORKING_DIR = "c:\\tmp\\conv_db"
 SERVER_ADDRESS = "192.168.100.152:8091" #production
@@ -56,7 +56,7 @@ class AppServerSvc (win32serviceutil.ServiceFramework):
         self.logger.info('start')
         try:
             servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE,
-                    x              servicemanager.PYS_SERVICE_STARTED,
+                                  servicemanager.PYS_SERVICE_STARTED,
                                   (self._svc_name_, ''))
         except Exception as exp:
             self.logger.error(exp)

@@ -1,4 +1,4 @@
-from ConvStorage.convert_storage import TConvertStorage, move_file_with_retry
+from convert_storage import TConvertStorage, move_file_with_retry
 
 import argparse
 import json
