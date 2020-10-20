@@ -63,7 +63,8 @@ def parse_args():
     return args
 
 
-def setup_logging(logger, logfilename):
+def setup_logging(logfilename):
+    logger = logging.getLogger("db_conv_logger")
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     if os.path.exists(logfilename):
@@ -72,7 +73,7 @@ def setup_logging(logger, logfilename):
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
-
+    return logger
 
 def strip_drm(logger, filename, stripped_file):
     with open("crack.info", "w", encoding="utf8") as outf:
@@ -113,13 +114,11 @@ class TConvertProcessor(http.server.HTTPServer):
     # if the ocr queue is not empty and ocr produces no results in  1 hour, we have to restart ocr
     ocr_restart_time = 60*60  #1 hour
 
-    def __init__(self, args, logger):
-        self.args = args
-        self.logger = logger
-        self.convert_storage = TConvertStorage(logger, args.db_json)
+    def __init__(self):
+        self.args = None
+        self.logger = None
+        self.convert_storage = None
 
-        if args.clear_json:
-            self.convert_storage.clear_database()
         self.input_thread = None
         self.stop_input_thread = False
         self.input_task_queue = queue.Queue()
@@ -129,15 +128,36 @@ class TConvertProcessor(http.server.HTTPServer):
         self.processed_files_size = 0
         self.failed_files_size = 0
         self.successful_get_requests = 0
-        host, port = self.args.server_address.split(":")
-        super().__init__((host, int(port)), THttpServerRequestHandler)
-        logger.debug("start server {}:{}".format(host, port))
 
         self.last_heart_beat = time.time()
         self.file_garbage_collection_timestamp = 0
         self.save_get_requests = 0
         self.ocr_queue_is_empty_last_time_stamp = time.time()
         self.got_ocred_file_last_time_stamp = time.time()
+        self.http_server_is_working = False
+
+    def start_http_server(self, args, logger):
+        self.args = args
+        self.logger = logger
+        self.convert_storage = TConvertStorage(self.logger, args.db_json)
+        if args.clear_json:
+            self.convert_storage.clear_database()
+        self.create_folders()
+        host, port = self.args.server_address.split(":")
+        super().__init__((host, int(port)), THttpServerRequestHandler)
+        self.logger.debug("started server {}:{}".format(host, port))
+        self.http_server_is_working = True
+        self.logger.debug("myServer.serve_forever()...  ")
+        self.serve_forever()
+
+    def stop_http_server(self):
+        if self.http_server_is_working:
+            self.logger.debug("try to stop http server  ")
+            self.http_server_is_working = False
+            self.server_close()
+            if os.path.exists(self.args.input_folder_cracked):
+                shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
+            self.logger.debug("http server was stopped")
 
     def delete_file_silently(self, full_path):
         try:
@@ -235,6 +255,16 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.convert_storage.save_input_file(input_file, input_task.sha256)
                 self.ocr_tasks[input_task.sha256] = input_task
 
+    def create_cracked_folder(self):
+        cracked_prefix = 'input_files_cracked'
+        for x in os.listdir('.'):
+            if x.startswith(cracked_prefix):
+                self.logger.debug("rm {}".format(x))
+                shutil.rmtree(x, ignore_errors=True)
+        self.args.input_folder_cracked = tempfile.mkdtemp(prefix=cracked_prefix, dir=".")
+        self.logger.debug("input_folder_cracked = {}".format(self.args.input_folder_cracked))
+        assert os.path.isdir(self.args.input_folder_cracked)
+
     def create_folders(self):
         self.logger.debug("use {} as  microsoft word converter".format(self.args.microsoft_pdf_2_docx))
 
@@ -252,9 +282,7 @@ class TConvertProcessor(http.server.HTTPServer):
             os.mkdir(self.args.ocr_input_folder)
 
         assert os.path.exists(self.args.microsoft_pdf_2_docx)
-        self.args.input_folder_cracked = tempfile.mkdtemp(prefix="input_files_cracked", dir=".")
-        self.logger.debug("input_folder_cracked = {}".format(self.args.input_folder_cracked))
-        assert os.path.isdir(self.args.input_folder_cracked)
+        self.create_cracked_folder()
 
     def process_ocr_logs(self):
         for log_file in os.listdir(self.args.ocr_output_folder):
@@ -339,6 +367,7 @@ class TConvertProcessor(http.server.HTTPServer):
         return new_files_in_db
 
     def get_stats(self):
+
         try:
             ocr_pending_all_file_size = sum(x.file_size for x in self.ocr_tasks.values())
             input_task_queue = self.input_task_queue.qsize()
@@ -415,7 +444,7 @@ class TConvertProcessor(http.server.HTTPServer):
             self.last_heart_beat = time.time()
 
 
-HTTP_SERVER = None
+HTTP_SERVER = TConvertProcessor()
 ALLOWED_FILE_EXTENSTIONS={'.pdf'}
 
 
@@ -433,11 +462,9 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         return True
 
     def log_message(self, msg_format, *args):
-        global HTTP_SERVER
         HTTP_SERVER.logger.debug(msg_format % args)
 
     def process_special_commands(self):
-        global HTTP_SERVER
         if self.path == "/ping":
             self.send_response(200)
             self.end_headers()
@@ -455,7 +482,6 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
 
-        global HTTP_SERVER
         if self.process_special_commands():
             return
 
@@ -489,7 +515,6 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_PUT(self):
         def send_error(message):
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
-        global HTTP_SERVER, ALLOWED_FILE_EXTENSTIONS
         if self.path is None:
             send_error("no file specified")
             return
@@ -533,29 +558,32 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         #reply_body = 'Saved file {} (file length={})\n'.format(self.path, file_length)
         #self.wfile.write(reply_body.encode('utf-8'))
 
+LOGGER = None
 
-if __name__ == '__main__':
-    assert shutil.which("qpdf") is not None # sudo apt install qpdf
-    assert shutil.which("pdfcrack") is not None #https://sourceforge.net/projects/pdfcrack/files/
+def conversion_server_main(args):
+    assert shutil.which("qpdf") is not None  # sudo apt install qpdf
+    assert shutil.which("pdfcrack") is not None  # https://sourceforge.net/projects/pdfcrack/files/
 
-    args = parse_args()
-    logger = logging.getLogger("db_conv_logger")
-    setup_logging(logger, args.logfile)
-
-    HTTP_SERVER = TConvertProcessor(args, logger)
-    HTTP_SERVER.create_folders()
+    global  LOGGER
+    if LOGGER is None:
+        LOGGER = setup_logging(args.logfile)
 
     exit_code = 0
     try:
-        logger.debug("myServer.serve_forever()...")
-        HTTP_SERVER.serve_forever()
-        logger.debug("myServer.server_close()")
-    except KeyboardInterrupt as exp:
-        logger.error("ctrl+c received, exception: {}".format(exp))
-        exit_code = 1
+        HTTP_SERVER.start_http_server(args, LOGGER)
     except Exception as exp:
-        logger.error("general exception: {}".format(exp))
+        LOGGER.error("general exception: {}".format(exp))
         exit_code = 1
-    HTTP_SERVER.server_close()
-    logger.debug("reach the end of the main")
+    HTTP_SERVER.stop_http_server()
+    LOGGER.debug("reach the end of the main")
+    return exit_code
+
+
+if __name__ == '__main__':
+    args = parse_args()
+    try:
+        exit_code = conversion_server_main(args)
+    except KeyboardInterrupt as exp:
+        sys.stderr.write("ctrl+c received, exception\n")
+        exit_code = 1
     sys.exit(exit_code)
