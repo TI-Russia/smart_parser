@@ -4,7 +4,7 @@ INPUT_FILE=test.pdf
 [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
 cp db_input_files/f7e2614eba5c3baa2cf38cd7f1ab00c40cca0980c63a0a2a52fbf9559d5797d0.pdf $INPUT_FILE
 
-python ../../scripts/recreate_database.py
+python ../../scripts/recreate_database.py --forget-old-data
 [ ! -d input_files ] || rm -rf input_files
 
 python ../../conv_storage_server.py --db-json converted_file_storage.json &

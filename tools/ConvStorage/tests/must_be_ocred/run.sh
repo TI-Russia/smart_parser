@@ -1,6 +1,6 @@
 rm *.pdf.docx 2> /dev/null
 source ../setup_tests.sh
-python ../../scripts/recreate_database.py
+python ../../scripts/recreate_database.py --forget-old-data
 python ../../conv_storage_server.py --clear-db --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json --ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out  --disable-killing-winword &
 conv_server_pid=$!
 disown

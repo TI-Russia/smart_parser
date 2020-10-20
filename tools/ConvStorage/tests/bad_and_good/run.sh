@@ -4,7 +4,7 @@ INPUT_FILE=good.pdf
                                                
 source ../setup_tests.sh
 
-python ../../scripts/recreate_database.py
+python ../../scripts/recreate_database.py --forget-old-data
 
 python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json \
 	--ocr-input-folder ../pdf.ocr --ocr-output-folder  ../pdf.ocr.out --ocr-logs-folder  ../ocr.logs --disable-killing-winword &
