@@ -1,31 +1,30 @@
-from django.test import TestCase
-from declarations.management.commands.copy_person_id import CopyPersonIdCommand, build_key
+from declarations.management.commands.copy_person_id import CopyPersonIdCommand, build_section_passport
 import declarations.models as models
 import os
 import json
+from declarations.management.commands.permalinks import TPermaLinksDB
+from django.test import TransactionTestCase
 
 
-class CopyPersonIdTestCase(TestCase):
-    def setUp(self):
-        pass
+class CopyPersonIdTestCase(TransactionTestCase):
 
     def check_case(self, use_only_surname, check_ambiguity):
         fio = "Иванов Иван Иванович"
-        document_id = 178
+        document_id = 1784
         income_main = 12534
-        person_id = 178
+        declarator_person_id = 178
         person_ids_path = os.path.join(os.path.dirname(__file__), "person_ids.json")
         with open(person_ids_path, "w") as outp:
             fio_key = fio
             if use_only_surname:
                 fio_key = fio.split()[0]
-            value = person_id
+            value = declarator_person_id
             if check_ambiguity:
                 value = "AMBIGUOUS_KEY"
             record = {
-                build_key(document_id, fio_key, income_main): value
+                build_section_passport(document_id, fio_key, income_main): value
             }
-            json.dump(record, outp)
+            json.dump(record, outp, ensure_ascii=False, indent=4)
 
         office = models.Office()
         office.save()
@@ -35,7 +34,7 @@ class CopyPersonIdTestCase(TestCase):
         src_doc.save()
 
         decl_info = models.Declarator_File_Reference(source_document=src_doc,
-                                                     declarator_document_id=person_id)
+                                                     declarator_document_id=document_id)
         decl_info.save()
 
         models.Section.objects.all().delete()
@@ -50,14 +49,19 @@ class CopyPersonIdTestCase(TestCase):
                                )
         income.save()
 
-        importer = CopyPersonIdCommand(None, None)
+        permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
+        p = TPermaLinksDB(permalinks_path)
+        p.create_db()
+        p.close_db()
 
-        importer.handle(None, read_person_from_json=person_ids_path)
+        copier = CopyPersonIdCommand(None, None)
+        copier.handle(None, read_person_from_json=person_ids_path, permanent_links_db=permalinks_path)
+
         section.refresh_from_db()
         if check_ambiguity:
             self.assertEqual(section.person, None)
         else:
-            self.assertEqual(section.person.id, person_id)
+            self.assertEqual(section.person.declarator_person_id, declarator_person_id)
 
     def test_simple_import(self):
         self.check_case(False, False)

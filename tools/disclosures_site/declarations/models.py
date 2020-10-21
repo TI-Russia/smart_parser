@@ -189,8 +189,8 @@ class Source_Document(models.Model):
             doc_path = doc_path[:-len('.json')]
         return doc_path
 
-    def permalink_passport(self):
-        return "sd;{}".format(self.sha256)
+    def permalink_passports(self):
+        yield "sd;{}".format(self.sha256)
 
 
 class Person(models.Model):
@@ -202,10 +202,12 @@ class Person(models.Model):
     def section_count(self):
         return self.section_set.all().count()
 
-    def permalink_passport(self):
+    def permalink_passports(self):
         sections = list(str(s.id) for s in self.section_set.all())
         sections.sort()
-        return "ps;" + ";".join(sections)
+        yield "ps;" + ";".join(sections)
+        if self.declarator_person_id is not None:
+            yield "psd;" + str(self.declarator_person_id)
 
 
 class RealEstate(models.Model):
@@ -262,7 +264,7 @@ class Section(models.Model):
         result = Relative.sort_by_visual_order(list(relatives))
         return result
 
-    def permalink_passport(self):
+    def permalink_passports(self):
         main_income = 0
         if hasattr(self, "tmp_income_set"):
             incomes = self.tmp_income_set
@@ -271,7 +273,7 @@ class Section(models.Model):
         for i in incomes:
             if i.relative == Relative.main_declarant_code:
                 main_income = i.size
-        return "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
+        yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
 
 
 

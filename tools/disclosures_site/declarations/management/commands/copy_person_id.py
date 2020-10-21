@@ -1,6 +1,5 @@
 import declarations.models as models
 from declarations.documents import stop_elastic_indexing, start_elastic_indexing
-
 from django.core.management import BaseCommand
 from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
 import logging
@@ -8,6 +7,7 @@ import pymysql
 import os
 import gc
 import json
+from declarations.management.commands.permalinks import TPermaLinksDB
 
 
 def setup_logging(logfilename="copy_person.log"):
@@ -27,20 +27,7 @@ def setup_logging(logfilename="copy_person.log"):
     return logger
 
 
-def copy_human_merge(logger, section, person_id):
-    #we think that person ids in declarator db are stable
-    person = models.Person.objects.get_or_create(id=person_id)[0]
-    logger.debug("connect section {} to person {}".format(section.id, person_id))
-    person.declarator_person_id = person_id
-    if person.person_name is None or len(person.person_name) < len(section.person_name):
-        person.person_name = section.person_name
-    person.save()
-    section.person = person
-    section.dedupe_score = None
-    section.save()
-
-
-def build_key(document_id, fio, income_main):
+def build_section_passport(document_id, fio, income_main):
     if income_main is None:
         income_main = 0
     return "{}_{}_{}".format(document_id, fio.lower(), int(income_main))
@@ -70,12 +57,12 @@ def get_all_section_from_declarator_with_person_id():
         fio = original_fio
         if fio is None:
             fio = person_fio
-        key1 = build_key(document_id, fio, income_main)
+        key1 = build_section_passport(document_id, fio, income_main)
         if key1 in props_to_person_id:
             props_to_person_id[key1] = "AMBIGUOUS_KEY"
         else:
             props_to_person_id[key1] = person_id
-        key2 = build_key(document_id, fio.split(" ")[0], income_main)
+        key2 = build_section_passport(document_id, fio.split(" ")[0], income_main)
         if key2 in props_to_person_id:
             props_to_person_id[key2] = "AMBIGUOUS_KEY"
         else:
@@ -101,6 +88,8 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
+        self.primary_keys_builder = None
+        self.logger = None
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -109,60 +98,86 @@ class Command(BaseCommand):
             default=None,
             help='read person info  from json for testing'
         )
+        parser.add_argument(
+            '--permanent-links-db',
+            dest='permanent_links_db',
+            required=True
+        )
 
+    def open_permalinks_db(self):
+        self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
+        self.primary_keys_builder.open_db_read_only()
+        self.primary_keys_builder.create_sql_sequences()
+
+    def build_passport_to_person_id_mapping_from_declarator(self):
+        if self.options.get('read_person_from_json') is not None:
+            with open(self.options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
+                return json.load(inpf)
+        else:
+            return get_all_section_from_declarator_with_person_id()
+
+    def copy_human_merge(self, section, declarator_person_id):
+        # we think that person ids in declarator db are stable
+        person = models.Person(declarator_person_id=declarator_person_id)
+        person.id = self.primary_keys_builder.get_record_id(person)
+        self.logger.debug("connect section {} to person {}, declarator_person_id=".format(section.id, person.id, declarator_person_id))
+        if person.person_name is None or len(person.person_name) < len(section.person_name):
+            person.person_name = section.person_name
+        person.save()
+        section.person = person
+        section.dedupe_score = None
+        section.save()
+
+    def process_section(self, section, section_passports):
+        main_income = 0
+        for i in section.income_set.all():
+            if i.relative == models.Relative.main_declarant_code:
+                main_income = i.size
+        checked_results = set()
+        for declaration_info in section.source_document.declarator_file_reference_set.all():
+            key1 = build_section_passport(declaration_info.declarator_document_id, section.person_name, main_income)
+            checked_results.add(section_passports.get(key1))
+            words = section.person_name.split()
+            if len(words) > 0:
+                key2 = build_section_passport(declaration_info.declarator_document_id, words[0], main_income)
+                checked_results.add(section_passports.get(key2))
+            else:
+                self.logger.error(
+                    "section {} fio={} cannot find surname(first word)".format(section.id, section.person_name))
+
+        if len(checked_results) == 1 and None in checked_results:
+            self.logger.debug("section {} fio={} cannot be found in declarator".format(section.id, section.person_name))
+        else:
+            for person_id in checked_results:
+                if person_id is not None and person_id != "AMBIGUOUS_KEY":
+                    self.copy_human_merge(section, person_id)
+                    return True
+            self.logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
+        return False
 
     def handle(self, *args, **options):
-        logger = setup_logging()
-        if options.get('read_person_from_json') is not None:
-            with open(options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
-                prop_to_person = json.load(inpf)
-        else:
-            prop_to_person = get_all_section_from_declarator_with_person_id()
-        logger.info("found {} mergings in declarator".format(len(prop_to_person)))
-        logger.info("stop_elastic_indexing")
+        self.logger = setup_logging()
+        self.options = options
+        self.open_permalinks_db()
+        section_passports = self.build_passport_to_person_id_mapping_from_declarator()
+        self.logger.info("found {} merges in declarator".format(len(section_passports)))
+        self.logger.info("stop_elastic_indexing")
         stop_elastic_indexing()
         cnt = 0
-        mergings_count = 0
+        merge_count = 0
         for section  in queryset_iterator(models.Section.objects):
             cnt += 1
             if (cnt % 10000) == 0:
-                logger.debug("number processed sections = {}".format(cnt))
+                self.logger.debug("number processed sections = {}".format(cnt))
+            if self.process_section(section, section_passports):
+                merge_count += 1
 
-            main_income = 0
-            for i in section.income_set.all():
-                if i.relative == models.Relative.main_declarant_code:
-                    main_income = i.size
-            checked_results = set()
-            for declaration_info in section.source_document.declarator_file_reference_set.all():
-                key1 = build_key(declaration_info.declarator_document_id, section.person_name, main_income)
-                checked_results.add(prop_to_person.get(key1))
-                words = section.person_name.split()
-                if len(words) > 0:
-                    key2 = build_key(declaration_info.declarator_document_id, words[0], main_income)
-                    checked_results.add(prop_to_person.get(key2))
-                else:
-                    logger.error("section {} fio={} cannot find surname(first word)".format(section.id, section.person_name))
+        self.logger.info("set human person id to {} records".format(merge_count))
 
-            if len(checked_results) == 1 and None in checked_results:
-                logger.debug("section {} fio={} cannot be found in declarator".format(section.id, section.person_name))
-            else:
-                found = False
-                for person_id in checked_results:
-                    if  person_id is not None and person_id != "AMBIGUOUS_KEY":
-                        copy_human_merge(logger, section, person_id)
-                        mergings_count += 1
-                        found = True
-                        break
-                if not found:
-                    logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
-
-
-        logger.info("set human person id to {} records".format(mergings_count))
-
-        logger.info("rebuild elastic search for person")
+        self.logger.info("rebuild elastic search for person")
         ElasticManagement().handle(action="rebuild", models=["declarations.Person"], force=True, parallel=True,
                                    count=True)
         start_elastic_indexing()
-        logger.info("all done")
+        self.logger.info("all done")
 
 CopyPersonIdCommand=Command

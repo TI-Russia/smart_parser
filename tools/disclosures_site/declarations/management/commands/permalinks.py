@@ -40,17 +40,16 @@ class TPermaLinksDB:
         for typ in self.models:
             self.save_records_count(typ, 0)
 
-
     def save_records_count(self, model_type, records_count):
         assert model_type in self.models
         self.db[str(model_type)] = str(records_count)
 
     def get_record_id(self, django_db_model):
         assert type(django_db_model) in self.models
-        passport = django_db_model.permalink_passport()
-        old_id = self.db.get(passport)
-        if old_id is not None:
-            return old_id
+        for passport in django_db_model.permalink_passports():
+            old_id = self.db.get(passport)
+            if old_id is not None:
+                return old_id
         auto_increment_table = self.get_auto_increment_table_name(type(django_db_model))
         with connection.cursor() as cursor:
             cursor.execute("insert into {} (id) values (null);".format(auto_increment_table))
@@ -58,7 +57,8 @@ class TPermaLinksDB:
         return record_id
 
     def put_record_id(self, django_db_model):
-        self.db[django_db_model.permalink_passport()] = str(django_db_model.id)
+        for passport in django_db_model.permalink_passports():
+            self.db[passport] = str(django_db_model.id)
 
     def close(self):
         self.db.close()

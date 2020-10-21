@@ -70,11 +70,14 @@ class TImporter:
         from django import db
         db.connections.close_all()
 
+    def init_non_pickable(self):
+        self.smart_parser_cache_client = TSmartParserCacheClient(TImporter.logger)
+        self.primary_keys_builder.open_db_read_only()
+
     def init_after_fork(self):
         from django.db import connection
         connection.connect()
-        self.smart_parser_cache_client = TSmartParserCacheClient(TImporter.logger)
-        self.primary_keys_builder.open_db_read_only()
+        self.init_non_pickable()
 
     def get_human_smart_parser_json(self, src_doc, already_imported):
         for ref in src_doc.decl_references:
@@ -132,7 +135,6 @@ class TImporter:
             with transaction.atomic():
                 try:
                     json_reader = TSmartParserJsonReader(income_year, source_document_in_db, p)
-
                     passport = json_reader.get_passport_factory().get_passport_collection()[0]
                     if self.register_section_passport(passport):
                         json_reader.section.tmp_income_set = json_reader.incomes
@@ -225,14 +227,16 @@ class ImportJsonCommand(BaseCommand):
             importer.delete_before_fork()
             pool = Pool(processes=options.get('process_count'))
             pool.map(partial(process_one_file_in_thread, importer), importer.office_to_source_documents.keys())
+            importer.init_after_fork()
         else:
+            importer.init_non_pickable()
             cnt = 0
             for office_id in importer.office_to_source_documents.keys():
                 if options.get('take_first_n_offices') is not None and cnt >= options.get('take_first_n_offices'):
                     break
                 importer.import_office(office_id)
                 cnt += 1
-        importer.init_after_fork()
+
         TImporter.logger.info ("Section count={}".format(models.Section.objects.all().count()))
         ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
         start_elastic_indexing()
