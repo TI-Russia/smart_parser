@@ -3,6 +3,7 @@ from django.test import TestCase
 import os
 import shutil
 import time
+import declarations.models as models
 
 
 class JoinDLrobotAndHuman(TestCase):
@@ -21,6 +22,8 @@ class JoinDLrobotAndHuman(TestCase):
         self.assertEqual(exit_value,  0)
 
     def test_join_dlrobot_and_human(self):
+        self.assertGreater(models.Office.objects.count(), 0)
+
         input_folder = "processed_projects"
         script = "../../../scripts/join_human_and_dlrobot.py"
         human_files = "human_files.json"
@@ -42,6 +45,6 @@ class JoinDLrobotAndHuman(TestCase):
             "dlrobot_human.json.stats",
         ))
         self.run_cmd("git diff {}".format("dlrobot_human.json.stats"))
-
+        self.assertGreater(models.Office.objects.count(), 0)
 
 

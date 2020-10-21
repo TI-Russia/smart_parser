@@ -49,12 +49,12 @@ class TPermaLinksDB:
         for passport in django_db_model.permalink_passports():
             old_id = self.db.get(passport)
             if old_id is not None:
-                return old_id
+                return int(old_id)
         auto_increment_table = self.get_auto_increment_table_name(type(django_db_model))
         with connection.cursor() as cursor:
             cursor.execute("insert into {} (id) values (null);".format(auto_increment_table))
             record_id = cursor.lastrowid
-        return record_id
+        return int(record_id)
 
     def put_record_id(self, django_db_model):
         for passport in django_db_model.permalink_passports():

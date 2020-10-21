@@ -7,10 +7,11 @@ from declarations.management.commands.permalinks import TPermaLinksDB
 
 
 class SimpleImportTestCase(TestCase):
-    def setUp(self):
-        pass
 
     def test_simple_import(self):
+        models.Section.objects.all().delete()
+        models.Source_Document.objects.all().delete()
+        self.assertGreater(models.Office.objects.count(), 0)
         os.environ['SMART_PARSER_SERVER_ADDRESS'] = "localhost:8178"
         domains_folder = os.path.join(os.path.dirname(__file__), "domains")
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
@@ -40,3 +41,4 @@ class SimpleImportTestCase(TestCase):
         self.assertEqual(models.Income.objects.count(), 1)
         self.assertEqual(models.Income.objects.count(), 1)
         self.assertEqual(models.Income.objects.all()[:1].get().size, 1462642)
+        self.assertGreater(models.Office.objects.count(), 0)

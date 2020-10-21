@@ -104,7 +104,9 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
                --process-count 3  \
                --permanent-links-db permalinks.dbm
 
-   python $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev
+   python3 $TOOLS/disclosures_site/manage.py copy_person_id
+        --settings disclosures.settings.dev \
+        --permanent-links-db permalinks.dbm
 
 #9.  тестирование сливалки
    export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info

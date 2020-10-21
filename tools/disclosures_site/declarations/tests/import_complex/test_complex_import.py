@@ -1,16 +1,18 @@
-from django.test import TestCase
 from declarations.management.commands.import_json import ImportJsonCommand
 import os
 import declarations.models as models
 from declarations.tests.test_smart_parser import SmartParserServerForTesting
 from declarations.management.commands.permalinks import TPermaLinksDB
+from django.test import TestCase
 
 
 class ComplexImportTestCase(TestCase):
-    def setUp(self):
-        pass
 
     def test_complex_import(self):
+        self.assertGreater(models.Office.objects.count(), 0)
+        models.Section.objects.all().delete()
+        models.Source_Document.objects.all().delete()
+
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
         p = TPermaLinksDB(permalinks_path)
         p.create_db()
@@ -31,3 +33,4 @@ class ComplexImportTestCase(TestCase):
         self.assertEqual(models.RealEstate.objects.count(), 3)
         self.assertEqual(models.Income.objects.count(), 3)
         self.assertEqual(models.Income.objects.count(), 3)
+        self.assertGreater(models.Office.objects.count(), 0)

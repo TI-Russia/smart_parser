@@ -120,7 +120,8 @@ class Command(BaseCommand):
         # we think that person ids in declarator db are stable
         person = models.Person(declarator_person_id=declarator_person_id)
         person.id = self.primary_keys_builder.get_record_id(person)
-        self.logger.debug("connect section {} to person {}, declarator_person_id=".format(section.id, person.id, declarator_person_id))
+        self.logger.debug("connect section {} to person {}, declarator_person_id={}".format(
+            section.id, person.id, declarator_person_id))
         if person.person_name is None or len(person.person_name) < len(section.person_name):
             person.person_name = section.person_name
         person.save()

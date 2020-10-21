@@ -4,11 +4,15 @@ import os
 import json
 from declarations.management.commands.permalinks import TPermaLinksDB
 from django.test import TransactionTestCase
+from django.test import TestCase
 
 
-class CopyPersonIdTestCase(TransactionTestCase):
+class CopyPersonIdTestCaseBase(TestCase):
 
     def check_case(self, use_only_surname, check_ambiguity):
+        models.Section.objects.all().delete()
+        self.assertGreater(models.Office.objects.count(), 0)
+
         fio = "Иванов Иван Иванович"
         document_id = 1784
         income_main = 12534
@@ -25,11 +29,8 @@ class CopyPersonIdTestCase(TransactionTestCase):
                 build_section_passport(document_id, fio_key, income_main): value
             }
             json.dump(record, outp, ensure_ascii=False, indent=4)
-
-        office = models.Office()
-        office.save()
-
-        src_doc = models.Source_Document(office=office)
+        src_doc = models.Source_Document()
+        src_doc.office_id = 1
         src_doc.id = 1
         src_doc.save()
 
@@ -37,7 +38,6 @@ class CopyPersonIdTestCase(TransactionTestCase):
                                                      declarator_document_id=document_id)
         decl_info.save()
 
-        models.Section.objects.all().delete()
         section = models.Section(source_document=src_doc,
                                  person_name=fio)
         section.id = 1
@@ -63,11 +63,18 @@ class CopyPersonIdTestCase(TransactionTestCase):
         else:
             self.assertEqual(section.person.declarator_person_id, declarator_person_id)
 
-    def test_simple_import(self):
+
+class Simple(CopyPersonIdTestCaseBase):
+    def test(self):
         self.check_case(False, False)
 
-    def test_only_surname_match(self):
+
+class OnlySurnameMatch(CopyPersonIdTestCaseBase):
+    def test_(self):
         self.check_case(True, False)
 
-    def test_ambiguity(self):
+
+class Ambiguity(CopyPersonIdTestCaseBase):
+    def test(self):
         self.check_case(False, True)
+
