@@ -14,8 +14,11 @@ class TPermaLinksDB:
     def get_auto_increment_table_name(self, model):
         return model.objects.model._meta.db_table + "_auto_increment"
 
+    def get_first_new_primary_key(self, model):
+        return int(self.db.get(str(model)).decode('utf8'))
+
     def recreate_auto_increment_table(self, model):
-        start_from = int(self.db.get(str(model)).decode('utf8'))
+        start_from = self.get_first_new_primary_key(model)
         auto_increment_table = self.get_auto_increment_table_name(model)
         with connection.cursor() as cursor:
             cursor.execute("drop table if exists {}".format(auto_increment_table))

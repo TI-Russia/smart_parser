@@ -63,6 +63,7 @@ class TImporter:
         self.primary_keys_builder = TPermaLinksDB(args['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
         self.primary_keys_builder.create_sql_sequences()
+        self.first_new_section_id = self.primary_keys_builder.get_first_new_primary_key(models.Section)
         self.smart_parser_cache_client = None
 
     def delete_before_fork(self):
@@ -139,6 +140,10 @@ class TImporter:
                     if self.register_section_passport(passport):
                         json_reader.section.tmp_income_set = json_reader.incomes
                         section_id = self.primary_keys_builder.get_record_id(json_reader.section)
+                        if section_id >= self.first_new_section_id:
+                            passports = list(json_reader.section.permalink_passports())
+                            TImporter.logger.error("found new section {}, set section.id to {}".format(
+                                passports[0], section_id))
                         json_reader.save_to_database(section_id)
                         imported_sections += 1
                 except (DatabaseError, TSmartParserJsonReader.SerializerException) as exp:
@@ -237,7 +242,7 @@ class ImportJsonCommand(BaseCommand):
                 importer.import_office(office_id)
                 cnt += 1
 
-        TImporter.logger.info ("Section count={}".format(models.Section.objects.all().count()))
+        TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
         ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
         start_elastic_indexing()
 
