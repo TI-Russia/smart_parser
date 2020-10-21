@@ -317,7 +317,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 raise Exception("exit for pit stop")
             self.pdf_conversion_queue_length = self.conversion_client.get_pending_all_file_size()
             if not self.conversion_server_queue_is_short():
-                self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(self.input_queue_size))
+                self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(
+                    self.pdf_conversion_queue_length))
 
     def get_stats(self):
         workers = dict((k, list(r.write_to_json() for r in v))
