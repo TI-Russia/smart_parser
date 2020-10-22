@@ -67,6 +67,7 @@ class TExportFileSet:
     def run_dl_recognizer_wrapper(self, logger):
         try:
             self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
+            logger.debug("run_dl_recognizer for {}".format(self.file_copies[0].export_path))
             self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
         except Exception as exp:
             logger.error(exp)
@@ -189,6 +190,7 @@ class TExportEnvironment:
         self.set_archive_contain_declarations_if_two_files_are_declarations()
         office_folder = self.website.get_export_folder()
         self.exported_files = list()
+        self.logger.debug("start proccessing {} temporally exported files".format(len(self.export_files_by_sha256.keys())))
         for sha256, file_set in self.export_files_by_sha256.items():
             # make test results stable
             if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
