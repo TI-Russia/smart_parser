@@ -15,6 +15,8 @@ class TRobotProject:
 
     def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
+        self.start_time = time.time()
+        self.total_timeout = 0
         self.selenium_driver = TSeleniumDriver(logger)
         self.visited_pages_file = filename + ".visited_pages"
         self.click_paths_file = filename + ".click_paths"
@@ -26,6 +28,15 @@ class TRobotProject:
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
         self.enable_selenium = enable_selenium
+
+    def have_time_for_last_dl_recognizer(self):
+        if self.total_timeout == 0:
+            return True
+        future_kill_time = self.start_time + self.total_timeout
+        if future_kill_time - time.time() < 60*20:
+            #we need at least 20 minutes to export files
+            return False
+        return True
 
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.robot_step_passports)

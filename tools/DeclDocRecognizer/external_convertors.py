@@ -4,18 +4,20 @@ import shutil
 import sys
 from ConvStorage.conversion_client import TDocConversionClient
 
+
 def find_program_on_windows(program):
     for prefix in ["C:\\Program Files", "C:\\Program Files (x86)"]:
         full_path = os.path.join(prefix, program)
         if os.path.exists(full_path):
             return full_path
 
+
 def run_cmd(cmd):
     #print (cmd)
     return os.system(cmd)
 
 
-def run_with_timeout(args, timeout=30*60):
+def run_with_timeout(args, timeout=20*60):
     p = subprocess.Popen(args, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     try:
         p.wait(timeout)

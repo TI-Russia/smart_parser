@@ -87,6 +87,9 @@ def parse_args():
     parser.add_argument("--last-conversion-timeout", dest='last_conversion_timeout',
                             default="30m",
                             help="pdf conversion timeout after crawling")
+    parser.add_argument("--total-timeout", dest='total_timeout',
+                        default="4h",
+                        help="dlrobot must finish its work in this time otherwise it would be killed externally")
     parser.add_argument("--pdf-quota-conversion", dest='pdf_quota_conversion',
                             default=20 * 2**20,
                             type=int,
@@ -139,6 +142,7 @@ def open_project(args):
     logger.debug("hostname={}".format(platform.node()))
     logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
+        project.total_timeout = args.total_timeout
         project.read_project()
         if args.only_click_paths:
             project.write_export_stats()
