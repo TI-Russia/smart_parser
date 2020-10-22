@@ -142,7 +142,7 @@ def open_project(args):
     logger.debug("hostname={}".format(platform.node()))
     logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
-        project.total_timeout = args.total_timeout
+        project.total_timeout = convert_timeout_to_seconds(args.total_timeout)
         project.read_project()
         if args.only_click_paths:
             project.write_export_stats()

@@ -202,7 +202,7 @@ def run_dlrobot(args,  project_file):
                 '--crawling-timeout',  str(args.crawling_timeout),
                 '--last-conversion-timeout',  str(TTimeouts.WAIT_CONVERSION_TIMEOUT),
                 '--result-folder', "result",
-                '--total-timeout', TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER
+                '--total-timeout', str(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER)
             ]
         args.logger.debug(" ".join(dlrobot_call))
         with open(os.path.join(project_folder, "dlrobot.out"), "w") as dout:
