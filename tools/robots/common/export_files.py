@@ -182,7 +182,7 @@ class TExportEnvironment:
     def run_postponed_dl_recognizers(self):
         for sha256, file_set in self.export_files_by_sha256.items():
             if not self.website.parent_project.have_time_for_last_dl_recognizer():
-                self.logger("stop running dl_recognizer, because there is no time")
+                self.logger.error("stop running dl_recognizer, because there is no time")
                 break
             if file_set.waiting_conversion:
                 file_set.run_dl_recognizer_wrapper(self.logger)

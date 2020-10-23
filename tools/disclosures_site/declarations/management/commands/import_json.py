@@ -243,7 +243,10 @@ class ImportJsonCommand(BaseCommand):
                 cnt += 1
 
         TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
+
+        TImporter.logger.info("reindex elastic index declarations.Section")
         ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
         start_elastic_indexing()
+        TImporter.logger.info("all done")
 
 Command=ImportJsonCommand
