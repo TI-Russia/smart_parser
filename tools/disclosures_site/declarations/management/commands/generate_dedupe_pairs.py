@@ -129,6 +129,7 @@ class Command(BaseCommand):
         self.logger = setup_logging()
         self.primary_keys_builder = None
         self.rebuild = False
+        self.threshold = 0
 
     def init_options(self, options):
         self.options = options
@@ -145,6 +146,11 @@ class Command(BaseCommand):
         self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
         self.primary_keys_builder.create_sql_sequences()
+        if options.get('threshold', 0) != 0:
+            self.threshold = options.get('threshold')
+        else:
+            self.logger.info('Warning! Threshold is not set. Is it just a test?')
+
 
     def filter_table(self, model_type, lower_bound, upper_bound):
         records = model_type.objects
@@ -298,8 +304,8 @@ class Command(BaseCommand):
         else:
             try:
                 self.logger.debug(
-                    'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), threshold))
-                return self.dedupe.match(self.dedupe_objects, threshold)
+                    'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), self.threshold))
+                return self.dedupe.match(self.dedupe_objects, self.threshold)
             except Exception as e:
                 self.logger.error(
                     'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
@@ -313,13 +319,6 @@ class Command(BaseCommand):
             return
         stop_elastic_indexing()
         self.load_dedupe_model()
-
-        threshold = 0
-        if options.get('threshold', 0) != 0:
-            threshold = options.get('threshold')
-        else:
-            self.logger.info('Warning! Threshold is not set. Is it just a test?')
-
         dump_stream = None
         dump_file_name = self.options.get("result_pairs_file")
         if dump_file_name:
