@@ -146,16 +146,22 @@ class Command(BaseCommand):
         self.primary_keys_builder.open_db_read_only()
         self.primary_keys_builder.create_sql_sequences()
 
-    def read_sections(self, lower_bound, upper_bound):
-        sections = models.Section.objects
+    def filter_table(self, model_type, lower_bound, upper_bound):
+        records = model_type.objects
         if lower_bound != '':
-            sections = sections.filter(person_name__gte=lower_bound)
+            records = records.filter(person_name__gte=lower_bound)
         if upper_bound != '':
-            sections = sections.filter(person_name__lt=upper_bound)
+            records = records.filter(person_name__lt=upper_bound)
+        if not self.rebuild:
+            records = records.filter(person=None)
+        records_count = records.count()
+        self.logger.info("Start reading {} records from {}... ".format(records_count, model_type._meta.db_table))
+        return records
+
+    def read_sections(self, lower_bound, upper_bound):
+        sections = self.filter_table(models.Section, lower_bound, upper_bound)
         if not self.rebuild:
             sections = sections.filter(person=None)
-        sections_count = sections.count()
-        self.logger.info("Start reading {} sections from DB... ".format(sections_count))
         cnt = 0
         for s in sections.all():
             if s.person is not None:
@@ -179,14 +185,7 @@ class Command(BaseCommand):
         self.logger.info("Read {0} records from section table".format(cnt))
 
     def read_people(self, lower_bound, upper_bound):
-        persons = models.Person.objects
-        if lower_bound != '':
-            persons = persons.filter(section__person_name__gte=lower_bound)
-        if upper_bound != '':
-            persons = persons.filter(section__person_name__lt=upper_bound)
-        persons = persons.distinct()
-        persons_count = persons.count()
-        self.logger.info("Start reading {} people records from DB...".format(persons_count))
+        persons = self.filter_table(models.Person, lower_bound, upper_bound)
         cnt = 0
         deleted_cnt = 0
         for p in persons.all():
