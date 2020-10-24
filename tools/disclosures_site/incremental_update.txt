@@ -115,10 +115,9 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
    bash -x make_pools.sh
 
 #10.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
-   cd $TOOLS/disclosures_site
-   export SURNAME_SPANS=`python manage.py generate_dedupe_pairs  --print-family-prefixes   --settings disclosures.settings.dev`
+   python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    export DISCLOSURES_DB_HOST=migalka
-   python3 manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
+   python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
    export HOSTS=lena,avito
    export HOSTS_SPACES="lena avito"
    for host in $HOSTS_SPACES; do
@@ -129,8 +128,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
         fi
    done
    sleep 3h # till dlrobot worker stops
-   parallel --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
-        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev ::: $SURNAME_SPANS
+   parallel -a surname_spans.txt --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
+        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev
 
 
 
