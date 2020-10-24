@@ -2,12 +2,13 @@ from __future__ import unicode_literals
 import dedupe
 import logging
 from datetime import datetime
-from django.core.management import BaseCommand, CommandError
-from declarations.models import Person, Section
+from django.core.management import BaseCommand
 from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
     get_pairs_from_clusters
 import sys
 from declarations.documents import stop_elastic_indexing, start_elastic_indexing
+from declarations.management.commands.permalinks import TPermaLinksDB
+import declarations.models as models
 
 
 def setup_logging(logfilename="generate_dedupe_pairs.log"):
@@ -108,6 +109,17 @@ class Command(BaseCommand):
             default=False,
             help='write back to DB',
         )
+        parser.add_argument(
+            '--permanent-links-db',
+            dest='permanent_links_db',
+            required=True
+        )
+        parser.add_argument(
+            '--fake-dedupe',
+            dest='fake_dedupe',
+            required=False,
+            help='create one person for all sections without dedupe (test purpose)'
+        )
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -115,9 +127,12 @@ class Command(BaseCommand):
         self.dedupe_objects = None
         self.options = None
         self.logger = setup_logging()
+        self.primary_keys_builder = None
+        self.rebuild = False
 
     def init_options(self, options):
         self.options = options
+        self.rebuild = options.get('rebuild', False)
         log_level = logging.WARNING
         if options.get("verbose"):
             if options.get("verbose") == 1:
@@ -125,24 +140,34 @@ class Command(BaseCommand):
             elif options.get("verbose") >= 2:
                 log_level = logging.DEBUG
         self.logger.setLevel(log_level)
-        if options['rebuild'] and not options['write_to_db']:
+        if self.rebuild and not options['write_to_db']:
             self.logger.info("please add --write-to-db  option if you use --rebuild")
+        self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
+        self.primary_keys_builder.open_db_read_only()
+        self.primary_keys_builder.create_sql_sequences()
 
     def read_sections(self, lower_bound, upper_bound):
-        sections = Section.objects.filter(person_name__gte=lower_bound).filter(person_name__lt=upper_bound)
-        if not self.options['rebuild']:
+        sections = models.Section.objects
+        if lower_bound != '':
+            sections = sections.filter(person_name__gte=lower_bound)
+        if upper_bound != '':
+            sections = sections.filter(person_name__lt=upper_bound)
+        if not self.rebuild:
             sections = sections.filter(person=None)
         sections_count = sections.count()
         self.logger.info("Start reading {} sections from DB... ".format(sections_count))
         cnt = 0
         for s in sections.all():
-            if s.person_id is not None and s.dedupe_score is None:
-                # this merging was copied from declarator, do not touch it
-                continue
-            if self.options['rebuild'] and s.person_id is not None:
-                s.dedupe_score = None
-                s.person_id = None
-                s.save() # do it to disable constraint delete
+            if s.person is not None:
+                if s.person.declarator_person_id is not None:
+                    # this merging was copied from declarator, do not touch it
+                    continue
+                else:
+                    if self.rebuild:
+                        # this merging was created by the previous dedupe run
+                        s.dedupe_score = None
+                        s.person_id = None
+                        s.save() # do it to disable constraint delete
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()
             assert k is not None
             if len(v['family_name']) == 0:
@@ -154,17 +179,23 @@ class Command(BaseCommand):
         self.logger.info("Read {0} records from section table".format(cnt))
 
     def read_people(self, lower_bound, upper_bound):
-        persons = Person.objects.filter(section__person_name__gte=lower_bound).filter(section__person_name__lt=upper_bound).distinct()
+        persons = models.Person.objects
+        if lower_bound != '':
+            persons = persons.filter(section__person_name__gte=lower_bound)
+        if upper_bound != '':
+            persons = persons.filter(section__person_name__lt=upper_bound)
+        persons = persons.distinct()
         persons_count = persons.count()
         self.logger.info("Start reading {} people records from DB...".format(persons_count))
         cnt = 0
         deleted_cnt = 0
         for p in persons.all():
-            if self.options['rebuild'] and p.declarator_person_id is None:
+            if self.rebuild and p.declarator_person_id is None:
                 # the record was created by the previous deduplication run
                 p.delete()
                 deleted_cnt += 1
             else:
+                #p.refresh_from_db()
                 k, v = TPersonFields(p).get_dedupe_id_and_object()
                 if k is None:
                     continue
@@ -193,7 +224,7 @@ class Command(BaseCommand):
 
         self.logger.info("All objects  for dedupe = {} ".format(len(self.dedupe_objects)))
 
-        dump_file_name = self.options["dump_dedupe_objects_file"]
+        dump_file_name = self.options.get("dump_dedupe_objects_file")
         if dump_file_name:
             with open(dump_file_name, "w", encoding="utf-8") as of:
                 for k, v in self.dedupe_objects.items():
@@ -214,46 +245,35 @@ class Command(BaseCommand):
             person.save()
 
     def link_sections_to_a_new_person(self, section_ids):
-        person = Person()
+        person = models.Person()
+        person.tmp_section_set = set(str(id) for (id, score) in section_ids)
+        person.id = self.primary_keys_builder.get_record_id(person)
         person.save()
-        for id in section_ids:
-            section = Section.objects.get(id=id)
-            # dedupe_score is unknown but it must be > 0 for dedupe linked (person, section) pairs
-            self.link_section_to_person(section, person, 0.9)
+        for (section_id, score) in section_ids:
+            section = models.Section.objects.get(id=section_id)
+            self.link_section_to_person(section, person, score)
 
-    def write_results_to_db(self, clustered_dupes):
-        self.logger.info('write {} results to db'.format(len(clustered_dupes)))
-        linked_sections = set()
-        if clustered_dupes != None:
-            self.logger.info('Write back to DB'.format(len(clustered_dupes)))
-            for id1, id2, score1, score2 in get_pairs_from_clusters(clustered_dupes):
-                if id1.startswith("person-") and id2.startswith("section-"):
-                    person_id = int(id1[len("person-"):])
-                    section_id = int(id2[len("section-"):])
-                    section = Section.objects.get(id=section_id)
-                    person = Person.get(pk=int(person_id))
-                    self.link_section_to_person(section, person, float(score2))
-                    linked_sections.add(section_id)
-
-        self.logger.info('Create new people by dedupe clusters... ')
-        if clustered_dupes is not None:
-            for (cluster_id, cluster) in enumerate(clustered_dupes):
-                new_sections = set()
-                id_set, scores = cluster
-                has_person_in_cluster = False
-                for id, score in zip(id_set, scores):
-                    if id.startswith("section-"):
-                        section_id = int(id[len("section-"):])
-                        if section_id not in linked_sections:
-                            new_sections.add(section_id)
-                    if id.startswith("person-"):
-                        has_person_in_cluster = True
-                if len(new_sections) != 0:
-                    if has_person_in_cluster:
-                        self.logger.info('ignore a strange cluster with section ids = {0} ... '.format(new_sections))
-                    else:
-                        self.link_sections_to_a_new_person(new_sections)
-                        linked_sections.update(new_sections)
+    def write_results_to_db(self, dedupe_clusters):
+        self.logger.info('write {} results to db'.format(len(dedupe_clusters)))
+        for id_set, scores in dedupe_clusters:
+            self.logger.debug("process cluster {}".format(";".join((id for id in id_set))))
+            person_ids = set()
+            section_ids = set()
+            for id, score in zip(id_set, scores):
+                if id.startswith("person-"):
+                    person_ids.add((int(id[len("person-"):]), score))
+                else:
+                    section_ids.add((int(id[len("section-"):]), score))
+            if len(person_ids) == 0:
+                self.link_sections_to_a_new_person(section_ids)
+            elif len(person_ids) == 1:
+                person_id = list(person_ids)[0][0]
+                person = models.Person.objects.get(id=person_id)
+                for section_id, score in section_ids:
+                    section = models.Section.objects.get(id=section_id)
+                    self.link_section_to_person(section, person, score)
+            else:
+                self.logger.error("a cluster with two people found, I do not know what to do")
 
     def get_family_name_bounds(self):
         if self.options.get('surname_bounds') is not None:
@@ -261,12 +281,33 @@ class Command(BaseCommand):
         elif self.options.get("input_dedupe_objects") is not None:
             yield None, None
         else:
-            all_borders = '0,А,Б,БП,В,Г,ГП,Д,Е,Ж,З,И,К,КН,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,Щ,Э,Ю,Я,♪'.split(',')
+            all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,З,И,К,КН,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,Щ,Э,Ю,Я,'.split(',')
             for x in range(1, len(all_borders)):
                 yield all_borders[x-1], all_borders[x]
 
-    def handle(self, *args, **options):
+    def load_dedupe_model(self):
+        if not self.options.get("fake_dedupe", False):
+            with open(self.options["model_file"], 'rb') as sf:
+                self.logger.info('read dedupe settings from {}'.format(sf.name))
+                self.dedupe = dedupe.StaticDedupe(sf, num_cores=self.options['num_cores'])
+                if logging.getLogger().getEffectiveLevel() > 1:
+                    describe_dedupe(self.stdout, self.dedupe)
 
+    def cluster_with_dedupe(self):
+        if self.options.get("fake_dedupe", False):
+            # all records in one cluster
+            ids = list(k for k in self.dedupe_objects.keys())
+            return [(ids, [50]*len(ids))]
+        else:
+            try:
+                self.logger.debug(
+                    'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), threshold))
+                return self.dedupe.match(self.dedupe_objects, threshold)
+            except Exception as e:
+                self.logger.error(
+                    'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
+
+    def handle(self, *args, **options):
         self.logger.info('Started at: {}'.format(datetime.now()))
         self.init_options(options)
         if options.get('print_family_prefixes'):
@@ -274,12 +315,7 @@ class Command(BaseCommand):
                 sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
             return
         stop_elastic_indexing()
-
-        with open(options["model_file"], 'rb') as sf:
-            self.logger.info('read dedupe settings from {}'.format(sf.name))
-            self.dedupe = dedupe.StaticDedupe(sf, num_cores=options['num_cores'])
-            if logging.getLogger().getEffectiveLevel() > 1:
-                describe_dedupe(self.stdout, self.dedupe)
+        self.load_dedupe_model()
 
         threshold = 0
         if options.get('threshold', 0) != 0:
@@ -296,22 +332,15 @@ class Command(BaseCommand):
         for lower_bound, upper_bound in self.get_family_name_bounds():
             self.logger.debug("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
             self.fill_dedupe_data(lower_bound, upper_bound)
-            clustered_dupes = None
-
-            try:
-                self.logger.debug(
-                    'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), threshold))
-                clustered_dupes = self.dedupe.match(self.dedupe_objects, threshold)
-            except Exception as e:
-                self.logger.error(
-                    'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
-
+            clustered_dupes = self.cluster_with_dedupe()
             if clustered_dupes is not None:
                 if dump_stream is not None:
                     self.write_results_to_file(clustered_dupes, dump_stream)
-            if options['write_to_db']:
-                self.write_results_to_db(clustered_dupes)
+                if options['write_to_db']:
+                    self.write_results_to_db(clustered_dupes)
 
         if dump_stream is not None:
             dump_stream.close()
         start_elastic_indexing()
+
+RunDedupe=Command

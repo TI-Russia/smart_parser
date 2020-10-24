@@ -41,11 +41,11 @@ class TPermaLinksDB:
             os.unlink(self.filename)
         self.db = dbm.gnu.open(self.filename, "c")
         for typ in self.models:
-            self.save_records_count(typ, 0)
+            self.save_next_primary_key_value(typ, 0)
 
-    def save_records_count(self, model_type, records_count):
+    def save_next_primary_key_value(self, model_type, next_value):
         assert model_type in self.models
-        self.db[str(model_type)] = str(records_count)
+        self.db[str(model_type)] = str(next_value)
 
     def get_record_id(self, django_db_model):
         assert type(django_db_model) in self.models

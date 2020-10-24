@@ -203,8 +203,12 @@ class Person(models.Model):
         return self.section_set.all().count()
 
     def permalink_passports(self):
-        sections = list(str(s.id) for s in self.section_set.all())
-        sections.sort()
+        if hasattr(self, "tmp_section_set"):
+            sections = self.tmp_section_set
+        else:
+            sections = list(str(s.id) for s in self.section_set.all())
+            sections.sort()
+
         yield "ps;" + ";".join(sections)
         if self.declarator_person_id is not None:
             yield "psd;" + str(self.declarator_person_id)
