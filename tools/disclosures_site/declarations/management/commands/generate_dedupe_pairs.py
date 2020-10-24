@@ -152,8 +152,6 @@ class Command(BaseCommand):
             records = records.filter(person_name__gte=lower_bound)
         if upper_bound != '':
             records = records.filter(person_name__lt=upper_bound)
-        if not self.rebuild:
-            records = records.filter(person=None)
         records_count = records.count()
         self.logger.info("Start reading {} records from {}... ".format(records_count, model_type._meta.db_table))
         return records
