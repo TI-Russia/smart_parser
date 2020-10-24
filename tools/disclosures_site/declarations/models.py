@@ -208,8 +208,12 @@ class Person(models.Model):
         else:
             sections = list(str(s.id) for s in self.section_set.all())
             sections.sort()
+        if len(sections) > 0:
+            #a person without sections exists before  saving to the db in copy_person_id.py
+            yield "ps;" + ";".join(sections)
+        else:
+            assert self.declarator_person_id is not None
 
-        yield "ps;" + ";".join(sections)
         if self.declarator_person_id is not None:
             yield "psd;" + str(self.declarator_person_id)
 
