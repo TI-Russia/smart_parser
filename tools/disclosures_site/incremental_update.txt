@@ -122,6 +122,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
    export HOSTS=lena,avito,migalka
    for host in $HOSTS; do
         scp $DLROBOT_FOLDER/permalinks.dbm $host:/tmp
+        ssh $host git -C ~/smart_parser pull
         if [ -d /tmp/dlrobot_worker ]; then
             touch /tmp/dlrobot_worker/.dlrobot_pit_stop
         fi
