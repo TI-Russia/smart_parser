@@ -118,9 +118,9 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    export DISCLOSURES_DB_HOST=migalka
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
-   export HOSTS=lena,avito
-   export HOSTS_SPACES="lena avito"
-   for host in $HOSTS_SPACES; do
+   export DEDUPE_HOSTS=lena,avito
+   export DEDUPE_HOSTS_SPACES="lena avito"
+   for host in $DEDUPE_HOSTS_SPACES; do
         scp $DLROBOT_FOLDER/permalinks.dbm $host:/tmp
         ssh $host git -C ~/smart_parser pull
         if [ -d /tmp/dlrobot_worker ]; then
@@ -128,10 +128,12 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
         fi
    done
    sleep 3h # till dlrobot worker stops
-   parallel -a surname_spans.txt --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $HOSTS --basefile $DEDUPE_MODEL  --verbose \
-        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev
-
-
+   export HOSTNAME=`hostname`
+   mkdir dedupe_logs
+   parallel -a surname_spans.txt --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
+        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL  \
+                --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
+                 
 
 #11 mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 

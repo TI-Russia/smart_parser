@@ -11,7 +11,9 @@ from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
 
 
-def setup_logging(logfilename="generate_dedupe_pairs.log"):
+def setup_logging(logfilename):
+    if logfilename is None:
+        logfilename = "generate_dedupe_pairs.log"
     logger = logging.getLogger("generate_dedupe_pairs")
     logger.setLevel(logging.DEBUG)
 
@@ -120,18 +122,25 @@ class Command(BaseCommand):
             required=False,
             help='create one person for all sections without dedupe (test purpose)'
         )
+        parser.add_argument(
+            '--logfile',
+            dest='logfile',
+            required=False,
+            help='set logfile name'
+        )
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.dedupe = None
         self.dedupe_objects = None
         self.options = None
-        self.logger = setup_logging()
+        self.logger = None
         self.primary_keys_builder = None
         self.rebuild = False
         self.threshold = 0
 
     def init_options(self, options):
+        self.logger = setup_logging(options.get('logfile'))
         self.options = options
         self.rebuild = options.get('rebuild', False)
         log_level = logging.WARNING
@@ -311,8 +320,8 @@ class Command(BaseCommand):
                     'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
 
     def handle(self, *args, **options):
-        self.logger.info('Started at: {}'.format(datetime.now()))
         self.init_options(options)
+        self.logger.info('Started at: {}'.format(datetime.now()))
         if options.get('print_family_prefixes'):
             for lower_bound, upper_bound in self.get_family_name_bounds():
                 sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
