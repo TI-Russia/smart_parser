@@ -130,9 +130,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
         fi
    done
    sleep 3h # till dlrobot worker stops
-   export HOSTNAME=`hostname`
-   mkdir dedupe_logs
-   parallel -a surname_spans.txt --jobs 1 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
+   parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL  \
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
                  
