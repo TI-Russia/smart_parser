@@ -62,7 +62,6 @@ class TImporter:
         self.office_to_source_documents = self.build_office_to_file_mapping()
         self.primary_keys_builder = TPermaLinksDB(args['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
-        self.primary_keys_builder.create_sql_sequences()
         self.first_new_section_id = self.primary_keys_builder.get_first_new_primary_key(models.Section)
         self.smart_parser_cache_client = None
 

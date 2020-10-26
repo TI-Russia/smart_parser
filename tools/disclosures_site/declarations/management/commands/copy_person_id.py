@@ -107,7 +107,10 @@ class Command(BaseCommand):
     def open_permalinks_db(self):
         self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
-        self.primary_keys_builder.create_sql_sequences()
+
+    def update_primary_keys(self):
+        self.primary_keys_builder.close()
+        self.primary_keys_builder.update_person_records_count_and_close()
 
     def build_passport_to_person_id_mapping_from_declarator(self):
         if self.options.get('read_person_from_json') is not None:
@@ -178,7 +181,9 @@ class Command(BaseCommand):
         self.logger.info("rebuild elastic search for person")
         ElasticManagement().handle(action="rebuild", models=["declarations.Person"], force=True, parallel=True,
                                    count=True)
+        
         start_elastic_indexing()
+        self.update_primary_keys()
         self.logger.info("all done")
 
 CopyPersonIdCommand=Command

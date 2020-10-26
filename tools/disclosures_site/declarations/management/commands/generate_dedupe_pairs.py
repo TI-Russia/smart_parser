@@ -154,7 +154,6 @@ class Command(BaseCommand):
             self.logger.info("please add --write-to-db  option if you use --rebuild")
         self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
-        self.primary_keys_builder.create_sql_sequences()
         if options.get('threshold', 0) != 0:
             self.threshold = options.get('threshold')
         else:

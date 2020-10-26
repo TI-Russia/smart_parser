@@ -2,7 +2,7 @@ import dbm.gnu
 import os
 import declarations.models as models
 from django.db import connection
-
+import sys
 
 class TPermaLinksDB:
 
@@ -65,3 +65,21 @@ class TPermaLinksDB:
 
     def close(self):
         self.db.close()
+
+
+    def update_person_records_count_and_close(self):
+        self.db = dbm.gnu.open(self.filename, "w")
+        with connection.cursor() as cursor:
+            cursor.execute("select max(id) m from declarations_person;")
+            old_value = self.get_first_new_primary_key(models.Person)
+            if old_value is None:
+                old_value = 0                
+            new_value = cursor.fetchone()[0]
+            if new_value is None:
+                new_value = 0                
+            if new_value > old_value:
+                sys.stderr.write("person old next primary key = {}, new one = {}\n".format(old_value, new_value))
+                self.save_next_primary_key_value(models.Person, new_value)
+            self.recreate_auto_increment_table(models.Person)
+        self.close()
+    

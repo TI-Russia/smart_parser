@@ -90,6 +90,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 #3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок
    python3 $TOOLS/disclosures_site/manage.py  create_permalink_storage  --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
+   python3 $TOOLS/disclosures_site/manage.py create_sql_sequences.py  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+
 
 #3.8.  инициализация базы disclosures
     follow $TOOLS/disclosures_site/INSTALL.txt
