@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
-
+import sys
 
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
