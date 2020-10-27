@@ -1,0 +1,16 @@
+[
+    {
+        "crawl_epoch": 15000000,
+        "metrics": {
+            "source_document_count": 401892,
+            "source_document_only_dlrobot_count": 156302,
+            "source_document_only_human_count": 163823,
+            "source_document_both_found_count": 81767,
+            "sections_count": 3968237,
+            "sections_count_only_dlrobot": 1007781,
+            "sections_count_both_found": 1103267,
+            "sections_dedupe_score_greater_0": 2394276,
+            "person_count": 759811
+        }
+    }
+]
