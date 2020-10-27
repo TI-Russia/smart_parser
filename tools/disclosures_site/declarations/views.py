@@ -2,12 +2,12 @@ from . import models
 from django.views import generic
 from django.views.generic.edit import FormView
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
-from declarations.input_json import TIntersectionStatus
 from django import forms
 import json
 import logging
 import urllib
 from declarations.common import resolve_fullname, resolve_person_name_from_search_request
+from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -39,22 +39,13 @@ class AboutPageView(generic.TemplateView):
 
 class StatisticsView(generic.TemplateView):
     template_name = "statistics/statistics.html"
+    history = TDisclosuresStatisticsHistory()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['source_document_count'] = models.Source_Document.objects.all().count()
-        context['source_document_only_dlrobot_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_dlrobot).count()
-        context['source_document_only_human_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_human).count()
-        context['source_document_both_found_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.both_found).count()
-
-        context['sections_count'] = models.Section.objects.all().count()
-        context['sections_count_only_dlrobot'] = models.Section.objects.filter(
-            source_document__intersection_status=TIntersectionStatus.only_dlrobot).count()
-        context['sections_count_both_found'] = models.Section.objects.filter(
-            source_document__intersection_status=TIntersectionStatus.both_found).count()
-        context['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
-            dedupe_score__gt=0).count()
-        context['person_count'] = models.Person.objects.all().count()
+        for key, value in StatisticsView.history.get_last().metrics.items():
+            context[key] = value
+            context[key+"_name"] = TDisclosuresStatisticsHistory.get_metric_name(key)
         return context
 
 
