@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
 using SmartAntlr;
-//using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Threading;
+using System.Text;
 
 namespace test
 {
@@ -19,7 +18,9 @@ namespace test
         } 
         static bool FileEquals(string path1, string path2)
         {
-            return File.ReadAllBytes(path1).SequenceEqual(File.ReadAllBytes(path2));
+            var text1 = File.ReadAllText(path1, Encoding.UTF8).Replace("\r","") ;
+            var text2 = File.ReadAllText(path2, Encoding.UTF8).Replace("\r","");
+            return text1 == text2;
         }
             
         public String GetTestFilesFolder()
