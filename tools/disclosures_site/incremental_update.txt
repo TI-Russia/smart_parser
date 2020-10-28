@@ -148,12 +148,32 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #13. создание индексов для elasticsearch
    python3 manage.py search_index --rebuild  --settings disclosures.settings.dev
 
-#14 go to prod (migalka)
-    mysqladmin drop  disclosures_db
-    cd /var/www/smart_parser/disclosures_site
-    sudo python3 manage.py create_database --settings disclosures.settings.dev --password ??? --skip-checks
-    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
-    python3 $TOOLS/disclosures_site/scripts/copy_elastic_search_indices.py --action dev-to-prod
+#14 go to prod (migalka), disclosures.ru is offline
+
+    cd /var/www/smart_parser/tools/disclosures_site
+
+    # it takes more than 30 minutes  to unpack database, in future we have to use a temp databse
+    # something like this (not tested yet)
+    export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
+    sudo python3 manage.py create_database --settings disclosures.settings.prod --password ??? --skip-checks
+    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
+    python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
+    python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
+    sudo systemctl stop disclosures
+    sudo systemctl start disclosures
+    # now prod works on database disclosures_prod_temp
+
+
+    export DISCLOSURES_DATABASE_NAME=disclosures_db
+    mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures
+    sudo python3 manage.py create_database --settings disclosures.settings.prod --password ??? --skip-checks
+    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
+    sudo systemctl stop disclosures
+    sudo systemctl start disclosures
+    # now prod works on database disclosures_db
+
+    mysqladmin drop  disclosures_prod_temp -u disclosures -pdisclosures
+
 
     # to rebuild one index
     #python manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
@@ -164,7 +184,5 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     # some query example
     #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
 
-
-#15. restart disclosures service
      sudo systemctl stop disclosures
      sudo systemctl start disclosures
