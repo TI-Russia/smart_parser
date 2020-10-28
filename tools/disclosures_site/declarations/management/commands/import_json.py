@@ -202,7 +202,7 @@ class ImportJsonCommand(BaseCommand):
         parser.add_argument(
             '--dlrobot-human',
             dest='dlrobot_human',
-            required=True
+            required=True`
         )
         parser.add_argument(
             '--smart-parser-human-json-folder',

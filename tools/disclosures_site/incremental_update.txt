@@ -135,16 +135,25 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
                  
 
-#11 mysqldump -u disclosures -pdisclosures disclosures_db  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
+#11  Коммит статистики
+   cd $TOOLS/disclosures_site
+   python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
+   git commit data/statistics.json
+   git push
 
+#12
+ cd $DLROBOT_FOLDER
+ mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
-#12 go to prod
+#13. создание индексов для elasticsearch
+   python3 manage.py search_index --rebuild  --settings disclosures.settings.dev
+
+#14 go to prod (migalka)
     mysqladmin drop  disclosures_db
-    cd ~/smart_parser.disclosures_prod/tools/disclosures_site
-    cat create_disclosures_db.sql | sudo mysql
+    cd /var/www/smart_parser/disclosures_site
+    sudo python3 manage.py create_database --settings disclosures.settings.dev --password ??? --skip-checks
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D disclosures_db
-
-    python manage.py search_index --rebuild  --settings disclosures.settings.prod
+    python3 $TOOLS/disclosures_site/scripts/copy_elastic_search_indices.py --action dev-to-prod
 
     # to rebuild one index
     #python manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
@@ -156,6 +165,6 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
 
 
-13. restart disclosures service
+#15. restart disclosures service
      sudo systemctl stop disclosures
      sudo systemctl start disclosures

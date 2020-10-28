@@ -20,7 +20,7 @@ class Command(BaseCommand):
                 '--password',
             dest='password',
             required=True,
-            help="mysql password"
+            help="mysql root password"
         )
 
     def run_sql(self, cursor, cmd):
