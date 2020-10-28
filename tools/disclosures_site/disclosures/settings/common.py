@@ -135,8 +135,7 @@ from . import log_setup
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "static/domains")
+    os.path.join(BASE_DIR, "static")
 ]
 
 ELASTICSEARCH_DSL = {
