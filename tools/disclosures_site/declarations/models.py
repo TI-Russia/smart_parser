@@ -57,6 +57,24 @@ class Office(models.Model):
         return self.get_child_offices(max_count=5)
 
 
+class Region(models.Model):
+    name = models.TextField(verbose_name='region name')
+    wikibase_id = models.CharField(max_length=10,null=True)
+
+
+class SynonymClass:
+    Russian = 0
+    English = 1
+    EnglishShort = 2
+    RussianShort = 3
+
+
+class Region_Synonyms(models.Model):
+    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
+    synonym = models.TextField(verbose_name='region synonym')
+    synonym_class = models.IntegerField(null=True) #see SynonymClass
+
+
 class TOfficeHierarchy:
     group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
 

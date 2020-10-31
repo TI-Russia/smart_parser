@@ -1,10 +1,8 @@
 from django.db import migrations, models
 import gzip
-#from declarations.models import Office
 
 def add_offices(apps, schema_editor):
-    Office = apps.get_model('declarations', 'Office')
-    Office.objects.all().delete()
+    clear_offices(apps, schema_editor)
     # select id, parent_id, type_id, region_id, name_ru from declarations_office into outfile "/var/lib/mysql-files/offices.txt";
     # mv /var/lib/mysql-files/offices.txt data
     # gzip data/offices.txt
@@ -21,9 +19,11 @@ def add_offices(apps, schema_editor):
             c.region_id = int(region_id)
         c.save()
 
+
 def clear_offices(apps, schema_editor):
     Office = apps.get_model('declarations', 'Office')
     Office.objects.all().delete()
+
 
 
 class Migration(migrations.Migration):
