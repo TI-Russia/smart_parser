@@ -12,6 +12,7 @@ using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
 using CMDLine;
 using System.Security.Cryptography;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 
 
@@ -637,8 +638,7 @@ namespace Smart.Parser
                 {
                     // TODO сначала поискать первый section_row и проверить, именно там может быть ФИО
                     // https://declarator.org/admin/declarations/jsonfile/186842/change/
-                    Logger.Error("Insufficient fields: No any of Declarant Name fields found.");
-                    return 0;
+                    throw new SmartParserException("Insufficient fields: No any of Declarant Name fields found.");
                 }
 
                 if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) ||
@@ -648,8 +648,7 @@ namespace Smart.Parser
                 {
                     if (!ColumnOrdering.SearchForFioColumnOnly)
                     {
-                        Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
-                        return 0;
+                        throw new SmartParserException("Insufficient fields: No any of Declarant Income fields found.");
                     }
                 }
 

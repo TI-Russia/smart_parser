@@ -7,6 +7,7 @@ import logging
 import tqdm
 import signal
 import argparse
+import glob
 
 import requests
 from requests.packages.urllib3.util.retry import Retry
@@ -44,8 +45,11 @@ def parse_args():
     parser.add_argument("--skip-upload", dest='skip_upload',
                         help="Skip upload for ALL files.",
                         default=False, action="store_true")
-    parser.add_argument("--joblist", dest='joblist', help="API URL with joblist or folder with files",
-                        default="https://declarator.org/api/fixed_document_file/?document_file=83450", type=str)
+    parser.add_argument("--fns", dest='fns',
+                        help="FNS style HTMLs and JSONs with additional data",
+                        default=False, action="store_true")
+    parser.add_argument("--joblist", dest='joblist', help="API URL with joblist | folder with files",
+                        default="https://declarator.org/api/fixed_document_file/?document_file=92764", type=str)
     parser.add_argument("-e", dest='extensions', default=['doc', 'docx', 'pdf', 'xls', 'xlsx', 'htm', 'html', 'rtf'],
                         action='append',
                         help="extensions: doc, docx, pdf, xsl, xslx, take all extensions if this argument is absent")
@@ -110,7 +114,7 @@ def download_file(file_url, filename):
 def run_smart_parser(filepath, args):
     """start SmartParser for one file"""
     start_time = datetime.now()
-    sourcefile = filepath[:filepath.rfind('.')]
+    _, sourcefile = os.path.split(filepath)
 
     json_list = glob.glob("%s*.json" % glob.escape(sourcefile))
     if json_list:
@@ -135,7 +139,7 @@ def run_smart_parser(filepath, args):
     return (datetime.now() - start_time).total_seconds(), os.popen(cmd).read()
 
 
-def post_results(sourcefile, job, time_delta=None, skip_upload=False):
+def post_results(sourcefile, job, args, time_delta=None):
     df_id, archive_file = job.get('document_file', None), job.get('archive_file', None)
     filename = sourcefile[:sourcefile.rfind('.')]
 
@@ -189,6 +193,15 @@ def post_results(sourcefile, job, time_delta=None, skip_upload=False):
     if archive_file:
         data['document']['archive_file'] = archive_file
 
+    if args.fns:
+        # department
+        path, _ = os.path.split(sourcefile)
+        page_data = json.load(open(os.path.join(path, "page.json")))
+        data['persons'] = list(map(lambda x: dict(
+            department=page_data['departament'],
+            **x), data['persons']))
+        data['document_id'] = page_data['document_id']
+
     # if time_delta == PARSER_TIMEOUT:
     #     data['document']['parser_log'] += "\nTimeout %i exceeded for smart_parser.exe" % PARSER_TIMEOUT
 
@@ -215,11 +228,8 @@ def post_results(sourcefile, job, time_delta=None, skip_upload=False):
         if job['status'] == 'ok' and not parsed:
             result['new_status'] = 'degrade'
         else:
-            # logger.info("POSTing results (id=%i): %i persons, %i files, file_size %i" % (
-            #     df_id, len(data['persons']), len(json_list), data['document']['file_size']))
-
             response = None
-            if not skip_upload:
+            if not args.skip_upload:
                 while response is None:
                     try:
                         response = client.post(declarator_domain +
@@ -280,7 +290,7 @@ class ProcessOneFile(object):
             return
 
         time_delta, parser_log = run_smart_parser(file_path, self.args)
-        return post_results(file_path, job, time_delta, self.args.skip_upload)
+        return post_results(file_path, job, self.args, time_delta)
 
 
 def download_jobs(url=None, stop=False):
@@ -313,17 +323,19 @@ def download_jobs(url=None, stop=False):
 def get_folder_jobs(folder, args):
     """Generate job list from folder with files"""
     filenames = os.listdir(folder)
-    joblist = []
+    if args.fns:
+        filenames = glob.glob(folder + "**/page.html", recursive=True)
+    jobs = []
     for name in filenames:
         if not check_extension(name, args.extensions):
             continue
         if name.startswith("~") and name.endswith(".doc"):
             continue
-        joblist.append({
+        jobs.append({
             "download_url": os.path.join(folder, name),
             "status": 'new'
         })
-    return joblist
+    return jobs
 
 
 if __name__ == '__main__':
