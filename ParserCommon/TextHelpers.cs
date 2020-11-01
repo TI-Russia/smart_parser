@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace TI.Declarator.ParserCommon
@@ -41,20 +43,31 @@ namespace TI.Declarator.ParserCommon
             }
         }
 
+        private static readonly IReadOnlyList<(char from, char to)> TranslitCharacters = new[] {
+            ('A', 'А'), ('a', 'а'),
+            ('C', 'С'), ('c', 'с'),
+            ('E', 'Е'), ('e', 'е'),
+            ('M', 'М'),
+            ('O', 'О'), ('o', 'о'),
+            ('P', 'Р'), ('p', 'р'),
+            ('T', 'Т'),
+            ('X', 'Х'), ('x', 'х'),
+        };
         /// <summary>
         /// Replaces Latin characters that accidentally found their way into Russian words
         /// with their Cyrillic counterparts. Use with caution.
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static string RemoveStupidTranslit(this string str) => str.Replace('A', 'А').Replace('a', 'а')
-                .Replace('C', 'С').Replace('c', 'с')
-                .Replace('E', 'Е').Replace('e', 'е')
-                .Replace('M', 'М')
-                .Replace('O', 'О').Replace('o', 'о')
-                .Replace('P', 'Р').Replace('p', 'р')
-                .Replace('T', 'Т')
-                .Replace('X', 'Х').Replace('x', 'х');
+        public static string RemoveStupidTranslit(this string str)
+        {
+            var builder = new StringBuilder(str);
+            foreach (var (from, to) in TranslitCharacters)
+            {
+                builder.Replace(from, to);
+            }
+            return builder.ToString();
+        }
 
         public static string ReplaceEolnWithSpace(this string str) => str.Replace('\n', ' ').Trim();
 
@@ -89,6 +102,15 @@ namespace TI.Declarator.ParserCommon
         {
             s = s.OnlyRussianLowercase();
             return !s.IsNullOrWhiteSpace() && s.ContainsAny(RoleStrings);
+        }
+
+        public static string RemoveCharacters(this string source, params char[] patterns)
+        {
+            if (source.IndexOfAny(patterns) < 0)
+            {
+                return source;
+            }
+            return new string(source.Where(c => Array.IndexOf(patterns, c) < 0).ToArray());
         }
 
         public static bool EndsWithAny(this string source, params string[] patterns) => patterns.Any(pattern => source.EndsWith(pattern, StringComparison.OrdinalIgnoreCase));

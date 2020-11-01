@@ -6,8 +6,9 @@ namespace TI.Declarator.ParserCommon
 {
     public static class HeaderHelpers
     {
-        public static bool HasRealEstateStr(string str) =>
-            str.ToLower().Replace("-", string.Empty).Replace(" ", string.Empty)
+        public static bool HasRealEstateStr(string str) =>str
+            .ToLowerInvariant()
+            .RemoveCharacters('-', ' ')
             .ContainsAny("недвижимости", "недвижимого", "иноенедвижимоеимущество(кв.м)");
 
         public static DeclarationField GetField(string str) => TryGetField(str) switch
@@ -16,105 +17,109 @@ namespace TI.Declarator.ParserCommon
             DeclarationField value => value,
         };
 
-        public static DeclarationField TryGetField(string str) => (str = NormalizeString(str)) switch
-        {
-            _ when str.IsNumber()                                                           => Number,
-            _ when str.IsNameAndOccupation()                                                => NameAndOccupationOrRelativeType,
-            _ when str.IsName()                                                             => NameOrRelativeType,
-            _ when str.IsRelativeType()                                                     => RelativeTypeStrict,
-            _ when str.IsOccupation()                                                       => Occupation,
-            _ when str.IsDepartment() && !str.IsDeclaredYearlyIncome()                      => Department,
-
-            _ when str.IsSpendingsField()                                                   => Spendings,
-
-            _ when str.IsMixedRealEstateType()                                              => MixedRealEstateType,
-            _ when str.IsMixedRealEstateSquare() && !str.IsMixedRealEstateCountry()         => MixedRealEstateSquare,
-            _ when str.IsMixedRealEstateCountry() && !str.IsMixedRealEstateSquare()         => MixedRealEstateCountry,
-            _ when str.IsMixedRealEstateOwnershipType() && !str.IsMixedRealEstateSquare()   => MixedRealEstateOwnershipType,
-            _ when str.IsMixedLandAreaSquare()                                              => MixedLandAreaSquare,
-            _ when str.IsMixedLivingHouseSquare()                                           => MixedLivingHouseSquare,
-            _ when str.IsMixedAppartmentSquare()                                            => MixedAppartmentSquare,
-            _ when str.IsMixedSummerHouseSquare()                                           => MixedSummerHouseSquare,
-            _ when str.IsMixedGarageSquare()                                                => MixedGarageSquare,
-
-            _ when str.IsOwnedRealEstateType()                                              => OwnedRealEstateType,
-            _ when str.IsOwnedRealEstateOwnershipType()                                     => OwnedRealEstateOwnershipType,
-            _ when str.IsOwnedRealEstateSquare()                                            => OwnedRealEstateSquare,
-            _ when str.IsOwnedRealEstateCountry()                                           => OwnedRealEstateCountry,
-
-            _ when str.IsStatePropertyType()                                                => StatePropertyType,
-            _ when str.IsStatePropertySquare()                                              => StatePropertySquare,
-            _ when str.IsStatePropertyCountry()                                             => StatePropertyCountry,
-            _ when str.IsStatePropertyOwnershipType()                                       => StatePropertyOwnershipType,
-
-            _ when str.HasChild() && str.IsVehicle() && !(str.HasMainDeclarant() || str.HasSpouse()) => ChildVehicle,
-
-            _ when str.HasSpouse() && str.IsVehicle() && !(str.HasMainDeclarant() || str.HasChild()) => SpouseVehicle,
-
-            _ when str.HasMainDeclarant() && str.IsVehicle() => DeclarantVehicle,
-
-            _ when str.IsVehicleType()                                                      => VehicleType,
-            _ when str.IsVehicleModel()                                                     => VehicleModel,
-            _ when str.IsVehicle()                                                          => DeclarationField.Vehicle,
-
-            _ when str.IsDeclaredYearlyIncomeThousands() => str switch
+        public static DeclarationField TryGetField(string str)
+        { 
+            str = NormalizeString(str);
+            return str switch
             {
-                _ when str.HasChild()                                                       => ChildIncomeInThousands,
-                _ when str.HasSpouse()                                                      => SpouseIncomeInThousands,
-                _ when str.HasMainDeclarant()                                               => DeclarantIncomeInThousands,
-                _                                                                           => DeclaredYearlyIncomeThousands,
-            },
+                _ when str.IsNumber()                                                           => Number,
+                _ when str.IsNameAndOccupation()                                                => NameAndOccupationOrRelativeType,
+                _ when str.IsName()                                                             => NameOrRelativeType,
+                _ when str.IsRelativeType()                                                     => RelativeTypeStrict,
+                _ when str.IsOccupation()                                                       => Occupation,
+                _ when str.IsDepartment() && !str.IsDeclaredYearlyIncome()                      => Department,
 
-            _ when str.IsDeclaredYearlyIncome() => str switch
-            {
-                _ when str.HasChild() && !(str.HasMainDeclarant() || str.HasSpouse())       => ChildIncome,
-                _ when str.HasSpouse() && !(str.HasMainDeclarant() || str.HasChild())       => SpouseIncome,
-                _ when str.HasMainDeclarant()                                               => DeclarantIncome,
-                _                                                                           => DeclaredYearlyIncome,
-            },
+                _ when str.IsSpendingsField()                                                   => Spendings,
 
-            _ when str.IsMainWorkPositionIncome()                                           => MainWorkPositionIncome,
-            _ when str.IsDataSources()                                                      => DataSources,
-            _ when str.IsComments()                                                         => Comments,
+                _ when str.IsMixedRealEstateType()                                              => MixedRealEstateType,
+                _ when str.IsMixedRealEstateSquare() && !str.IsMixedRealEstateCountry()         => MixedRealEstateSquare,
+                _ when str.IsMixedRealEstateCountry() && !str.IsMixedRealEstateSquare()         => MixedRealEstateCountry,
+                _ when str.IsMixedRealEstateOwnershipType() && !str.IsMixedRealEstateSquare()   => MixedRealEstateOwnershipType,
+                _ when str.IsMixedLandAreaSquare()                                              => MixedLandAreaSquare,
+                _ when str.IsMixedLivingHouseSquare()                                           => MixedLivingHouseSquare,
+                _ when str.IsMixedAppartmentSquare()                                            => MixedAppartmentSquare,
+                _ when str.IsMixedSummerHouseSquare()                                           => MixedSummerHouseSquare,
+                _ when str.IsMixedGarageSquare()                                                => MixedGarageSquare,
 
-            _ when str.IsMixedRealEstateDeclarant()                                         => DeclarantMixedColumnWithNaturalText,
-            _ when str.IsMixedRealEstateSpouse()                                            => SpouseMixedColumnWithNaturalText,
-            _ when str.IsMixedRealEstateChild()                                             => ChildMixedColumnWithNaturalText,
+                _ when str.IsOwnedRealEstateType()                                              => OwnedRealEstateType,
+                _ when str.IsOwnedRealEstateOwnershipType()                                     => OwnedRealEstateOwnershipType,
+                _ when str.IsOwnedRealEstateSquare()                                            => OwnedRealEstateSquare,
+                _ when str.IsOwnedRealEstateCountry()                                           => OwnedRealEstateCountry,
 
-            _ when str.IsMixedRealEstate()                                                  => MixedColumnWithNaturalText,
-            _ when str.IsOwnedRealEstate()                                                  => OwnedColumnWithNaturalText,
-            _ when str.IsStateRealEstate()                                                  => StateColumnWithNaturalText,
-            _ when HasCountryString(str) && HasRealEstateStr(str)                           => MixedRealEstateCountry,
-            _ when HasRealEstateStr(str)                                                    => MixedColumnWithNaturalText,
+                _ when str.IsStatePropertyType()                                                => StatePropertyType,
+                _ when str.IsStatePropertySquare()                                              => StatePropertySquare,
+                _ when str.IsStatePropertyCountry()                                             => StatePropertyCountry,
+                _ when str.IsStatePropertyOwnershipType()                                       => StatePropertyOwnershipType,
 
-            _ when str.IsAcquiredProperty()                                                 => AcquiredProperty,
-            _ when str.IsTransactionSubject()                                               => TransactionSubject,
-            _ when str.IsMoneySources()                                                     => MoneySources,
-            _ when str.IsMoneyOnBankAccounts()                                              => MoneyOnBankAccounts,
-            _ when str.IsSecuritiesField()                                                  => Securities,
-            _ when str.IsStocksField()                                                      => Stocks,
+                _ when str.HasChild() && str.IsVehicle() && !(str.HasMainDeclarant() || str.HasSpouse()) => ChildVehicle,
 
-            _ when str.HasSquareString()                                                    => MixedRealEstateSquare,
-            _ when str.HasCountryString()                                                   => MixedRealEstateCountry,
+                _ when str.HasSpouse() && str.IsVehicle() && !(str.HasMainDeclarant() || str.HasChild()) => SpouseVehicle,
 
-            _                                                                               => None,
-        };
+                _ when str.HasMainDeclarant() && str.IsVehicle() => DeclarantVehicle,
+
+                _ when str.IsVehicleType()                                                      => VehicleType,
+                _ when str.IsVehicleModel()                                                     => VehicleModel,
+                _ when str.IsVehicle()                                                          => DeclarationField.Vehicle,
+
+                _ when str.IsDeclaredYearlyIncomeThousands() => str switch
+                {
+                    _ when str.HasChild()                                                       => ChildIncomeInThousands,
+                    _ when str.HasSpouse()                                                      => SpouseIncomeInThousands,
+                    _ when str.HasMainDeclarant()                                               => DeclarantIncomeInThousands,
+                    _                                                                           => DeclaredYearlyIncomeThousands,
+                },
+
+                _ when str.IsDeclaredYearlyIncome() => str switch
+                {
+                    _ when str.HasChild() && !(str.HasMainDeclarant() || str.HasSpouse())       => ChildIncome,
+                    _ when str.HasSpouse() && !(str.HasMainDeclarant() || str.HasChild())       => SpouseIncome,
+                    _ when str.HasMainDeclarant()                                               => DeclarantIncome,
+                    _                                                                           => DeclaredYearlyIncome,
+                },
+
+                _ when str.IsMainWorkPositionIncome()                                           => MainWorkPositionIncome,
+                _ when str.IsDataSources()                                                      => DataSources,
+                _ when str.IsComments()                                                         => Comments,
+
+                _ when str.IsMixedRealEstateDeclarant()                                         => DeclarantMixedColumnWithNaturalText,
+                _ when str.IsMixedRealEstateSpouse()                                            => SpouseMixedColumnWithNaturalText,
+                _ when str.IsMixedRealEstateChild()                                             => ChildMixedColumnWithNaturalText,
+
+                _ when str.IsMixedRealEstate()                                                  => MixedColumnWithNaturalText,
+                _ when str.IsOwnedRealEstate()                                                  => OwnedColumnWithNaturalText,
+                _ when str.IsStateRealEstate()                                                  => StateColumnWithNaturalText,
+                _ when HasCountryString(str) && HasRealEstateStr(str)                           => MixedRealEstateCountry,
+                _ when HasRealEstateStr(str)                                                    => MixedColumnWithNaturalText,
+
+                _ when str.IsAcquiredProperty()                                                 => AcquiredProperty,
+                _ when str.IsTransactionSubject()                                               => TransactionSubject,
+                _ when str.IsMoneySources()                                                     => MoneySources,
+                _ when str.IsMoneyOnBankAccounts()                                              => MoneyOnBankAccounts,
+                _ when str.IsSecuritiesField()                                                  => Securities,
+                _ when str.IsStocksField()                                                      => Stocks,
+
+                _ when str.HasSquareString()                                                    => MixedRealEstateSquare,
+                _ when str.HasCountryString()                                                   => MixedRealEstateCountry,
+
+                _                                                                               => None,
+            };
+        }
 
         private static string NormalizeString(string str) =>
-            string.Join(" ", str.ToLower().Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries))
+            string.Join(" ", str.ToLowerInvariant().Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries))
             .RemoveStupidTranslit();
 
         public static bool IsNumber(this string str)
         {
-            str = str.Replace(" ", string.Empty);
-            return str.StartsWith("№") ||
-                   str.ContainsAny("nп/п", "№п/п", "nпп") ||
-                   str.ToLower().Replace("\\", "/").Equals("п/п");
+            str = str.RemoveCharacters(' ');
+            return str.StartsWith("№")
+                   || str.ContainsAny("nп/п", "№п/п", "nпп")
+                   || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsName(this string s)
         {
-            var clean = s.Replace(",", string.Empty).Replace("-", string.Empty).Replace("\n", string.Empty).Replace(" ", string.Empty).ToLower();
+            var clean = s.RemoveCharacters(',', '-', '\n', ' ').ToLowerInvariant();
             return clean.StartsWithAny("лицаодоходах", "подающиесведения", "подающийсведения")
                     || clean.ContainsAny("фамилия", "фамилимя", "фио", ".иф.о.", "сведенияодепутате", "ф.и.о");
         }
@@ -126,14 +131,14 @@ namespace TI.Declarator.ParserCommon
         private static bool IsRelativeType(this string s) => s.ContainsAny("члены семьи", "степень родства") && !s.IsName();
 
         private static bool IsOccupation(this string s) => s
-            .Replace("-", string.Empty).Replace(" ", string.Empty).ToLower()
+            .RemoveCharacters('-', ' ').ToLowerInvariant()
             .ContainsAny("должность", "должности", "должностей");
 
         private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте");
 
         private static bool IsMixedRealEstateOwnershipType(this string s) => s.IsMixedColumn() && HasOwnershipTypeString(s);
 
-        public static string OnlyRussianLowercase(this string s) => Regex.Replace(s.ToLower(), "[^а-яё]", string.Empty);
+        public static string OnlyRussianLowercase(this string s) => Regex.Replace(s.ToLowerInvariant(), "[^а-яё]", string.Empty);
 
         private static bool HasRealEstateTypeStr(this string s) => s
             .OnlyRussianLowercase()
@@ -223,7 +228,8 @@ namespace TI.Declarator.ParserCommon
         private static bool IsVehicleModel(this string s)
         {
             var clean = s.OnlyRussianLowercase();
-            return clean.ContainsAny("транспорт", "трнспорт", "движимоеимущество") && clean.Contains("марка") && !clean.Contains("вид");
+            return clean.ContainsAny("транспорт", "трнспорт", "движимоеимущество")
+                && clean.Contains("марка") && !clean.Contains("вид");
         }
 
         private static bool IsDeclaredYearlyIncome(this string str)

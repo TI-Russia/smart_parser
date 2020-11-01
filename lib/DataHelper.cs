@@ -84,19 +84,19 @@ namespace Smart.Parser.Lib
 
         public static RelationType ParseRelationType(string strRel, bool throwException = true)
         {
-            var clean = strRel.ToLower()
-                .Replace(" ", string.Empty)
-                .Replace(":", string.Empty)
-                .Replace("-", string.Empty)
-                .Replace("\n", string.Empty)
-                .Replace("ё", "е")
-                .Replace(".", string.Empty).Trim().RemoveStupidTranslit().ToLower();
+            var clean = strRel
+                .ToLower()
+                .RemoveCharacters(' ', ':', '-', '\n', '.')
+                .Replace('ё', 'е')
+                .Trim()
+                .RemoveStupidTranslit()
+                .ToLower();
 
             return clean switch
             {
-                _ when RelationSpouseStrings.Contains(clean) || clean.StartsWith("супруг") => RelationType.Spouse,
-                _ when RelationChildStrings.Contains(clean) || clean.StartsWithAny("ребенок", "ребёнок", "сын", "дочь", "несовершеннол") => RelationType.Child,
-                _ when RelationOtherStrings.Contains(clean) => RelationType.Other,
+                _ when RelationSpouseStrings.Contains(clean) || clean.StartsWith("супруг")                                                  => RelationType.Spouse,
+                _ when RelationChildStrings.Contains(clean) || clean.StartsWithAny("ребенок", "ребёнок", "сын", "дочь", "несовершеннол")    => RelationType.Child,
+                _ when RelationOtherStrings.Contains(clean)                                                                                 => RelationType.Other,
                 _ => throwException ? throw new ArgumentOutOfRangeException(strRel, $"Неизвестный тип родственника: {strRel}") : RelationType.Error,
             };
         }
@@ -114,7 +114,7 @@ namespace Smart.Parser.Lib
             }
 
             s = s.Trim().ToLowerInvariant();
-            return Regex.Match(s, @"^[\s-_]+$").Success || EmptyStrings.Contains(s);
+            return EmptyStrings.Contains(s) || Regex.Match(s, @"^[\s-_]+$").Success;
         }
 
         private static decimal ParseRoubles(string val, bool inThousands)
