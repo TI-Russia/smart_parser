@@ -1,4 +1,4 @@
-python check_selenium.py \
+python3 check_selenium.py \
     --url http://www.mid.ru  \
     --start-anchor "противодействие"  \
     --assert-child-url "https://www.mid.ru/activity/corruption/general"
@@ -10,23 +10,21 @@ if [ $? != 0 ]; then
 fi
 
 
-python check_selenium.py --url http://aot.ru/docs/Nozhov/supplement1.pdf --download-folder download
+python3 check_selenium.py --url http://aot.ru/docs/Nozhov/supplement1.pdf --download-folder download
 if [ $? != 0 ]; then
   echo "download pdf failed"
   exit 1
 fi
 
 # example to ajax adding search results while scrolling the page down
-python check_selenium.py \
-    --start-anchor "сведения" \
-    --url "http://minpromtorg.gov.ru/search_results/index.php?q_24=имущество&sources_24%5B0%5D=group_documents&source_id_24=1&aj_24=1&from_18=19#-1"
+python3 check_selenium.py   --url "https://minpromtorg.gov.ru/search_results/?date_from_38=&date_to_38=&q_38=%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE&sortby_38=date&sources_38%5B%5D=contents_news%2Ccontents_documents_list%2Ccontents_documents_list_file%2Ccontents_files_list%2Ccontents_npa%2Ccontents_person%2Ccontents_dep%2Ccontents_regions%2Ccontents_text%2Ccontents_list&source_id_38=1&spec_filter_38%5B%5D=" --check-scroll-down
 
 if [ $? != 0 ]; then
   echo "minpromtorg.gov.ru failed"
   exit 1
 fi
 
-python check_selenium.py \
+python3 check_selenium.py \
  --start-anchor "загрузить" \
   --url "http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278"
 

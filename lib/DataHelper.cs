@@ -1,50 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using System.Text.RegularExpressions;
-using System.Globalization;
 using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 using System.Reflection;
+using SmartAntlr;
 
 namespace Smart.Parser.Lib
 {
     public class DataHelper
     {
-        static Regex CountryRegexp;
-        static Regex SquareAndCountryRegexp;
         static Regex SquareRegexp;
+        static AntlrStrictParser SquareAndCountry = new AntlrStrictParser(AntlrStrictParser.StartFromRootEnum.square_and_country);
+        static AntlrCountryListParser CountryListParser = new AntlrCountryListParser();
         static DataHelper()
         {
-            var countryList = ReadCountryList();
-            string anyCountry = "(" + string.Join(")|(", countryList.ToArray()) + ")";
-            CountryRegexp = new Regex(anyCountry, RegexOptions.IgnoreCase);
-
             // Non-breaking space or breaking space can be between digits like "1 680,0"
             string squareRegexpStr = "(\\d[\\d\u00A0 ]*(?:[,.]\\d+)?)";
-            SquareAndCountryRegexp = new Regex(squareRegexpStr + @"\s+(" + anyCountry + ")", RegexOptions.IgnoreCase);
             SquareRegexp = new Regex(squareRegexpStr, RegexOptions.IgnoreCase);
-        }
-
-        static public List<string> ParseCountryList(string s)   {
-            s = s.Trim();
-            var countries = new List<string>();
-            while (s.Length > 0)
-            {
-                var match = CountryRegexp.Match(s);
-                if (match.Success && match.Index == 0 && match.Length > 0)
-                {
-                    countries.Add(match.Value);
-                }
-                else
-                {
-                    return new List<string>();
-                }
-                s = s.Substring(match.Length).Trim();
-            }
-            return countries;
         }
 
         static List<string> ReadCountryList() {
@@ -292,24 +266,30 @@ namespace Smart.Parser.Lib
             return  Decimal.Round(str.ParseDecimalValue(), 2);
         }
 
-        static public bool ReadSquareAndCountry(string str, out decimal square, out string country)
+        static public void ReadSquareAndCountry(string str, out decimal square, out string country)
         {
-            square = 0;
+            square = -1;
             country = "";
-            var match = SquareAndCountryRegexp.Match(str);
-            if (!match.Success)
-                return false;
-            square = ConvertSquareFromString(match.Groups[1].ToString());
-            country = match.Groups[2].ToString();
-            return true;
+            foreach (var r in SquareAndCountry.Parse(str))
+            {
+                var i = (RealtyFromText)r;
+                if (i.Square != -1)
+                {
+                    square = i.Square;
+                }
+                if (i.Country.Length != 0)
+                {
+                    country = i.Country;
+                }
+            }
         }
 
         public static decimal? ParseSquare(string strSquares)
         {
             decimal square;
             string dummy;
-            if (ReadSquareAndCountry(strSquares, out square, out dummy))
-            {
+            ReadSquareAndCountry(strSquares, out square, out dummy);
+            if (square != -1) {
                 return square;
             }
             if (Regex.Match(strSquares, "[а-я]+", RegexOptions.IgnoreCase).Success)
@@ -317,24 +297,29 @@ namespace Smart.Parser.Lib
 
             var match = SquareRegexp.Match(strSquares);
             if (!match.Success) return null;
-            return  Decimal.Round(match.Value.ParseDecimalValue(), 2);
+            square = Decimal.Round(match.Value.ParseDecimalValue(), 2);
+            if (square == 0)
+            {
+                return null;
+            }
+            return square;
         }
         public static bool IsCountryStrict(string str)
         {
-            var match = CountryRegexp.Match(str);
-            return match.Success;
+            return CountryListParser.ParseToStringList(str).Count > 0;
         }
 
         public static string ParseCountry(string str)
         {
             decimal dummy;
             string country;
-            if (ReadSquareAndCountry(str, out dummy, out country))
-            {
-                return country;
+            ReadSquareAndCountry(str, out dummy, out country);
+            if (country != "") {
+                return country; 
             }
             return str;
         }
+
         static public bool ParseDocumentFileName(string filename, out int? documentfile_id, out string archive_file)
         {
             documentfile_id = null;

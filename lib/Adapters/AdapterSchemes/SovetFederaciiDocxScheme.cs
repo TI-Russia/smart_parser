@@ -47,7 +47,7 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
             ColumnOrdering columnOrdering = new ColumnOrdering();
             var declaration = parser.InitializeDeclaration(columnOrdering, userDocumentFileId);
             declaration.Properties.Year = GetYear();
-            declaration.Properties.Title = FindTitleAboveTheTable();
+            declaration.Properties.SheetTitle = FindTitleAboveTheTable();
 
             var currentDeclarant = CreatePublicServant(columnOrdering);
             declaration.PublicServants.Add(currentDeclarant);

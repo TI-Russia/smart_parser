@@ -9,7 +9,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--domains",  dest='domains_files', required=True,  action="append")
     parser.add_argument("--output-folder", dest='folder', required=True)
-    parser.add_argument("--portion-size", dest='portion_count', required=False, default=None, type=int)
+    parser.add_argument("--portion-size", dest='portion_size', required=False, default=None, type=int)
     args = parser.parse_args()
     return args
 
@@ -38,7 +38,7 @@ def main():
 
     domains = list(domains)
     random.shuffle(domains)
-    if args.portion_count is None:
+    if args.portion_size is None:
         if os.path.exists(args.folder):
             shutil.rmtree(args.folder, ignore_errors=True)
         os.mkdir(args.folder)
@@ -47,8 +47,8 @@ def main():
     else:
         output_folder = None
         for i in range(len(domains)):
-            if i % args.portion_count == 0:
-                output_folder = "{}.{:02}".format(args.folder, (int)(i / args.portion_count))
+            if i % args.portion_size == 0:
+                output_folder = "{}.{:02}".format(args.folder, (int)(i / args.portion_size))
                 if os.path.exists(output_folder):
                     shutil.rmtree(output_folder, ignore_errors=True)
                 os.mkdir(output_folder)

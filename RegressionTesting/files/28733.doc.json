@@ -150,6 +150,16 @@
           "own_type_raw": "Долевая собственность"
         },
         {
+          "text": "1/2доля жилого дома",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "1/2доля жилого дома",
+          "own_type_raw": "Долевая собственность"
+        },
+        {
           "text": "квартира",
           "square": 42.8,
           "relative": null,

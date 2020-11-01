@@ -1,0 +1,12 @@
+{"versions":
+[
+  {
+    "id": "0.0",
+    "info": "Baseline, for disclosures.ru, apprx: 2020.03.01"
+  },
+  {
+    "id": "0.1",
+    "info": "Add ANTLR Parsing"
+  }
+]
+}

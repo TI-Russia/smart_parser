@@ -309,11 +309,11 @@
         },
         {
           "text": "жилой дом",
-          "square": null,
+          "square": 63.9,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "63,9 Республика Беларусь",
-          "country_raw": "63,9 Республика Беларусь",
+          "country_raw": "Беларусь",
           "type_raw": "жилой дом",
           "own_type_raw": "общая долевая 1/2"
         },

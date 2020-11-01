@@ -11,13 +11,15 @@ import json
 import socket
 import http.client
 from functools import partial
-
+import os
 #for curl
 import pycurl
 from io import BytesIO
 import certifi
 
+
 class TRequestPolicy:
+    HTTP_TIMEOUT = 30  # in seconds
     ENABLE = True
     SECONDS_BETWEEN_HEAD_REQUESTS = 1.0
     REQUEST_RATE_1_MIN = 50
@@ -25,6 +27,13 @@ class TRequestPolicy:
     ALL_HTTP_REQUEST = dict()  # (url, method) -> time
     HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
     HTTP_503_ERRORS_COUNT = 0
+    SSL_CONTEXT = None
+    USE_CURL = False
+
+    @staticmethod
+    def initialize():
+        TRequestPolicy.SSL_CONTEXT = ssl._create_unverified_context()
+        TRequestPolicy.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
 
     # decrement HTTP_503_ERRORS_COUNT on successful http_request
     @staticmethod
@@ -87,8 +96,7 @@ class TRequestPolicy:
 
         TRequestPolicy.ALL_HTTP_REQUEST[(url, method)] = time.time()
 
-
-
+TRequestPolicy.initialize()
 
 
 def has_cyrillic(text):
@@ -111,8 +119,6 @@ class RobotHttpException(Exception):
     def __str__(self):
         return "cannot make http-request ({}) to {} got code {}, initial exception: {}".format( \
             self.http_method, self.url, self.http_code, self.value)
-
-
 
 
 def convert_russian_web_domain_if_needed(url):
@@ -139,14 +145,13 @@ def get_user_agent():
     return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
 
 
-def make_http_request_urllib(logger, url, method, timeout=30.0):
-    url = _prepare_url_before_http_request(logger, url, method)
+if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
+    #print ("set http timeout to {}".format(os.environ.get("DLROBOT_HTTP_TIMEOUT")))
+    TRequestPolicy.HTTP_TIMEOUT = int(os.environ.get("DLROBOT_HTTP_TIMEOUT"))
 
-    context = ssl._create_unverified_context()
-    redirect_handler = urllib.request.HTTPRedirectHandler()
-    redirect_handler.max_redirections = 5
-    opener = urllib.request.build_opener(redirect_handler)
-    urllib.request.install_opener(opener)
+
+def make_http_request_urllib(logger, url, method):
+    url = _prepare_url_before_http_request(logger, url, method)
 
     req = urllib.request.Request(
         url,
@@ -157,7 +162,7 @@ def make_http_request_urllib(logger, url, method, timeout=30.0):
 
     logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     try:
-        with urllib.request.urlopen(req, context=context, timeout=timeout) as request:
+        with urllib.request.urlopen(req, context=TRequestPolicy.SSL_CONTEXT, timeout=TRequestPolicy.HTTP_TIMEOUT) as request:
             data = '' if method == "HEAD" else request.read()
             headers = request.info()
             TRequestPolicy.register_successful_request()
@@ -173,6 +178,7 @@ def make_http_request_urllib(logger, url, method, timeout=30.0):
         code = -1
         if hasattr(exp, 'code'):
             code = exp.code
+
         raise RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
     except urllib.error.HTTPError as e:
         if e.code == 503:
@@ -200,7 +206,7 @@ def collect_http_headers_for_curl(header_dict, header_line):
     header_dict[h_name] = h_value # Header name and value.
 
 
-def make_http_request_curl(logger, url, method, timeout=30.0):
+def make_http_request_curl(logger, url, method):
     url = _prepare_url_before_http_request(logger, url, method)
     buffer = BytesIO()
     curl = pycurl.Curl()
@@ -215,9 +221,9 @@ def make_http_request_curl(logger, url, method, timeout=30.0):
     else:
         curl.setopt(curl.WRITEDATA, buffer)
     curl.setopt(curl.FOLLOWLOCATION, True)
-    assert timeout > 20
+    assert TRequestPolicy.HTTP_TIMEOUT > 20
     curl.setopt(curl.CONNECTTIMEOUT, 20)
-    curl.setopt(curl.TIMEOUT, int(timeout))
+    curl.setopt(curl.TIMEOUT, TRequestPolicy.HTTP_TIMEOUT)
 
     curl.setopt(curl.CAINFO, certifi.where())
     user_agent = get_user_agent()
@@ -264,7 +270,11 @@ def request_url_headers_with_global_cache(logger, url):
     return redirected_url, headers
 
 
-make_http_request=make_http_request_urllib
-#make_http_request=make_http_request_curl
+def make_http_request(logger, url, method):
+    if TRequestPolicy.USE_CURL:
+        return make_http_request_curl(logger, url, method)
+    else:
+        return make_http_request_urllib(logger, url, method)
+
 
 

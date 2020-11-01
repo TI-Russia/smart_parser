@@ -26,7 +26,9 @@ def make_folder_empty(folder):
 
 
 class TSeleniumDriver:
-    def __init__(self, logger, headless=True, download_folder=None, loglevel=None):
+
+    def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
+                 scroll_to_bottom_and_wait_more_results=True):
         self.logger = logger
         self.the_driver = None
         self.driver_processed_urls_count = 0
@@ -34,6 +36,7 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
+        self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
     def start_executable(self):
         options = FirefoxOptions()
@@ -52,13 +55,13 @@ class TSeleniumDriver:
         for retry in range(3):
             try:
                 self.the_driver = webdriver.Firefox(firefox_options=options)
+                self.the_driver.implicitly_wait(10)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == 2:
                     raise
                 self.logger.error("Exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
-
 
     def stop_executable(self):
         if self.the_driver is not None:
@@ -71,28 +74,40 @@ class TSeleniumDriver:
             self.start_executable()
             self.driver_processed_urls_count = 0
         self.driver_processed_urls_count += 1
+
+        #leave only one window tab, close other tabs
         while len(self.the_driver.window_handles) > 1:
+            self.the_driver.switch_to.window(self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
             self.the_driver.close()
         self.logger.debug("selenium navigate to {}, window tabs count={}".format(url, len(self.the_driver.window_handles)))
+        self.the_driver.switch_to.window(self.the_driver.window_handles[0])
+
+        # navigation
         self.the_driver.get(url)
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
     def _navigate_and_get_links(self, url, timeout=4):
+        self.logger.debug("navigate to {}".format(url))
         self.navigate(url)
-        time.sleep(timeout)
-        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        time.sleep(1)
-        self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        time.sleep(1)
 
-        links = self.get_buttons_and_links()
+        self.logger.debug("sleep for {}".format(timeout))
+        time.sleep(timeout)
+
+        body = self.the_driver.find_element_by_tag_name('body')
+
+        self.logger.debug("scroll down")
+        if self.scroll_to_bottom_and_wait_more_results and body:
+            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(1)
+            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(1)
+
         try:
-            for link in links:
-                text = link.text
-                return links
-        finally:
+            return self.get_buttons_and_links()
+        except Exception as exp:
+            self.logger.error("Exception = {}, retry get links, after timeout".format(exp))
             #  second timeout
             time.sleep(timeout)
             return self.get_buttons_and_links()

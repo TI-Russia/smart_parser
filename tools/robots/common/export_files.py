@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from robots.common.html_parser import THtmlParser
 import os
 from collections import defaultdict
 import shutil
@@ -13,40 +13,19 @@ import copy
 import time
 
 
-def html_to_text(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    text = soup.find_all(text=True)
-    blacklist = [
-        '[document]',
-        'noscript',
-        'header',
-        'html',
-        'meta',
-        'head',
-        'input',
-        'script',
-        'style',
-    ]
-
-    output = ''
-    for t in text:
-        if t.parent.name not in blacklist:
-            output += '{} '.format(t)
-    return output
-
-
 def build_sha256(filename):
     with open(filename, "rb") as f:
         file_data = f.read()
         if filename.endswith(DEFAULT_HTML_EXTENSION):
-            file_data = html_to_text(file_data).encode("utf-8", errors="ignore")
+            text = THtmlParser(file_data).get_text()
+            file_data = text.encode("utf-8", errors="ignore")
         return hashlib.sha256(file_data).hexdigest()
 
 
 class TExportFile:
-    def __init__(self, parent_record=None, url=None, cached_file=None, export_path=None,
+    def __init__(self, link_info : TLinkInfo = None, url=None, cached_file=None, export_path=None,
                  archive_index: int = -1, name_in_archive:str=None, init_json=None):
-        self.parent_record = parent_record
+        self.last_link_info = link_info
         self.url = url
         self.cached_file = cached_file
         self.export_path = export_path
@@ -58,6 +37,7 @@ class TExportFile:
         else:
             self.sha256 = build_sha256(export_path)
         self.file_extension = os.path.splitext(self.export_path)[1]
+        self.smart_parser_json_sha256 = None
 
     def to_json(self):
         return {
@@ -65,7 +45,8 @@ class TExportFile:
             "cached_file": self.cached_file,
             "export_path": self.export_path.replace('\\', '/'),  # to compare windows and unix,
             "archive_index": self.archive_index,
-            "sha256": self.sha256
+            "sha256": self.sha256,
+            "smart_parser_json_sha256": self.smart_parser_json_sha256
         }
 
     def from_json(self, rec):
@@ -74,6 +55,7 @@ class TExportFile:
         self.export_path = rec["export_path"]
         self.sha256 = rec["sha256"]
         self.archive_index = rec.get("archive_index", -1)
+        self.smart_parser_json_sha256 = rec.get("smart_parser_json_sha256")
 
 
 class TExportFileSet:
@@ -85,6 +67,7 @@ class TExportFileSet:
     def run_dl_recognizer_wrapper(self, logger):
         try:
             self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
+            logger.debug("run_dl_recognizer for {}".format(self.file_copies[0].export_path))
             self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
         except Exception as exp:
             logger.error(exp)
@@ -122,7 +105,7 @@ class TExportEnvironment:
             self.exported_files = list(TExportFile(init_json=x) for x in rec)
 
     # todo: do not save file copies
-    def export_one_file_tmp(self, url, cached_file, extension, parent_record):
+    def export_one_file_or_send_to_conversion(self, url, cached_file, extension, link_info):
         if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
             return
         index = self.sent_to_export_files_count
@@ -136,20 +119,21 @@ class TExportEnvironment:
         if is_archive_extension(extension):
             for archive_index, name_in_archive, export_filename in dearchive_one_archive(extension, cached_file, index, office_folder):
                 self.logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
-                new_files.append(TExportFile(parent_record, url, cached_file, export_filename, archive_index, name_in_archive))
+                new_files.append(TExportFile(link_info, url, cached_file, export_filename, archive_index, name_in_archive))
 
         else:
             self.logger.debug("export temporal file {} to {}".format(cached_file, export_path))
             shutil.copyfile(cached_file, export_path)
-            new_files.append(TExportFile(parent_record, url, cached_file, export_path))
+            new_files.append(TExportFile(link_info, url, cached_file, export_path))
 
         for new_file in new_files:
             found_file = self.export_files_by_sha256.get(new_file.sha256)
             if found_file is None:
                 file_set = TExportFileSet(new_file)
                 self.logger.debug("run_dl_recognizer for {}".format(new_file.export_path))
-                if new_file.file_extension == DEFAULT_PDF_EXTENSION and \
-                    not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
+                if new_file.file_extension == DEFAULT_PDF_EXTENSION  \
+                    and TDownloadEnv.CONVERSION_CLIENT is not None \
+                    and not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
                     file_set.waiting_conversion = True
                 else:
                     file_set.run_dl_recognizer_wrapper(self.logger)
@@ -160,7 +144,7 @@ class TExportEnvironment:
             else:
                 found_file.file_copies.append(new_file)
 
-    def export_file(self, downloaded_file: TDownloadedFile, parent_record):
+    def export_file_if_relevant(self, downloaded_file: TDownloadedFile, link_info: TLinkInfo):
         url = downloaded_file.original_url
         if url in self.exported_urls:
             return
@@ -171,12 +155,12 @@ class TExportEnvironment:
                 self.logger.debug("do not export {} because of preliminary check".format(url))
                 return
 
-        self.export_one_file_tmp(url, downloaded_file.data_file_path, downloaded_file.file_extension, parent_record)
+        self.export_one_file_or_send_to_conversion(url, downloaded_file.data_file_path, downloaded_file.file_extension, link_info)
 
-    def export_selenium_doc(self, link_info: TLinkInfo):
+    def export_selenium_doc_if_relevant(self, link_info: TLinkInfo):
         cached_file = link_info.downloaded_file
         extension = os.path.splitext(cached_file)[1]
-        self.export_one_file_tmp(link_info.source_url, cached_file, extension, link_info)
+        self.export_one_file_or_send_to_conversion(link_info.source_url, cached_file, extension, link_info)
 
     # more than 1 document in archive are declarations
     # consider other documents to be also declarations
@@ -197,6 +181,9 @@ class TExportEnvironment:
 
     def run_postponed_dl_recognizers(self):
         for sha256, file_set in self.export_files_by_sha256.items():
+            if not self.website.parent_project.have_time_for_last_dl_recognizer():
+                self.logger.error("stop running dl_recognizer, because there is no time")
+                break
             if file_set.waiting_conversion:
                 file_set.run_dl_recognizer_wrapper(self.logger)
                 file_set.waiting_conversion = False
@@ -206,6 +193,7 @@ class TExportEnvironment:
         self.set_archive_contain_declarations_if_two_files_are_declarations()
         office_folder = self.website.get_export_folder()
         self.exported_files = list()
+        self.logger.debug("start proccessing {} temporally exported files".format(len(self.export_files_by_sha256.keys())))
         for sha256, file_set in self.export_files_by_sha256.items():
             # make test results stable
             if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
@@ -219,9 +207,10 @@ class TExportEnvironment:
                 self.exported_files.append(chosen_file)
 
             for r in file_set.file_copies:
-                r.parent_record.dl_recognizer_result = file_set.dl_recognizer_result # copy to click graph
+                r.last_link_info.dl_recognizer_result = file_set.dl_recognizer_result # copy to click graph
                 self.logger.debug("remove temporally exported file cached:{} url: {}".format(r.export_path, r.url))
                 os.remove(r.export_path)
+
         self.logger.info("found {} files, exported {} files to {}".format(
             self.sent_to_export_files_count,
             len(self.exported_files),

@@ -2254,7 +2254,7 @@
         },
         {
           "text": "парковочная конструкция",
-          "square": 0.00,
+          "square": null,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "0",

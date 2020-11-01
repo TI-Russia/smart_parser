@@ -1,5 +1,4 @@
 www.mvd.ru	www.yandex.ru
-mvd.ru	мвд.рф
 www.mvd.ru	mvd.ru
 www.mvd.ru	www.mvd.ru/print=1
 bagaev.donland.ru	donland.ru

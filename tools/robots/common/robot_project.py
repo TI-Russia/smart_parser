@@ -5,7 +5,7 @@ import tempfile
 import time
 from robots.common.selenium_driver import TSeleniumDriver
 from robots.common.link_info import TLinkInfo, TClickEngine
-from robots.common.serp_parser import SearchEngine
+from robots.common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from robots.common.web_site import TRobotWebSite, TRobotStep
 from robots.common.http_request import RobotHttpException
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
@@ -15,16 +15,28 @@ class TRobotProject:
 
     def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
+        self.start_time = time.time()
+        self.total_timeout = 0
         self.selenium_driver = TSeleniumDriver(logger)
-        self.project_file = filename + ".clicks"
-        if not os.path.exists(self.project_file):
-            shutil.copy2(filename, self.project_file)
+        self.visited_pages_file = filename + ".visited_pages"
+        self.click_paths_file = filename + ".click_paths"
+        self.result_summary_file = filename + ".result_summary"
+        if not os.path.exists(self.visited_pages_file):
+            shutil.copy2(filename, self.visited_pages_file)
         self.offices = list()
-        self.human_files = list()
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
         self.enable_selenium = enable_selenium
+
+    def have_time_for_last_dl_recognizer(self):
+        if self.total_timeout == 0:
+            return True
+        future_kill_time = self.start_time + self.total_timeout
+        if future_kill_time - time.time() < 60*20:
+            #we need at least 20 minutes to export files
+            return False
+        return True
 
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.robot_step_passports)
@@ -40,8 +52,8 @@ class TRobotProject:
             self.selenium_driver.stop_executable()
             shutil.rmtree(self.selenium_driver.download_folder)
 
-    def write_project(self):
-        with open(self.project_file, "w", encoding="utf8") as outf:
+    def     write_project(self):
+        with open(self.visited_pages_file, "w", encoding="utf8") as outf:
             output =  {
                 'sites': [o.to_json() for o in self.offices],
                 'step_names': self.get_robot_step_names()
@@ -57,7 +69,7 @@ class TRobotProject:
 
     def read_project(self, fetch_morda_url=True, check_step_names=True):
         self.offices = list()
-        with open(self.project_file, "r", encoding="utf8") as inpf:
+        with open(self.visited_pages_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
             if check_step_names:
                 if 'step_names' in json_dict:
@@ -122,16 +134,20 @@ class TRobotProject:
                     rec['archive_index'] = export_record.archive_index
                 files_with_click_path.append(rec)
         files_with_click_path.sort(key=(lambda x: x['sha256']))
-        cached_files = list("{} {}".format(x['cached_file'], x.get('archive_index', -1)) for x in files_with_click_path)
-        cached_files.sort()
-        with open(self.project_file + ".stats", "w", encoding="utf8") as outf:
+
+        # full report
+        with open(self.click_paths_file, "w", encoding="utf8") as outf:
+            json.dump(files_with_click_path, outf, ensure_ascii=False, indent=4)
+
+        unique_files = list(set(x.get('smart_parser_json_sha256', x.get('sha256')) for x in files_with_click_path))
+        unique_files.sort()
+        # short report to commit to git
+        with open(self.result_summary_file, "w", encoding="utf8") as outf:
             report = {
-                "files_count": len(cached_files),
-                "files_sorted (short report)": cached_files,
-                "files_with_click_path (full report)": files_with_click_path
+                "files_count": len(unique_files),
+                "files_sorted": unique_files,
             }
             json.dump(report, outf, ensure_ascii=False, indent=4)
-
 
     def use_search_engine(self, step_info):
         request = step_info.step_passport['search_engine']['request']
@@ -140,17 +156,17 @@ class TRobotProject:
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         serp_urls = list()
-        for retry in range(3):
+        for search_engine in range(0, SearchEngineEnum.SearchEngineCount):
             try:
-                serp_urls = SearchEngine.site_search(site, request, self.selenium_driver)
+                serp_urls = SearchEngine.site_search(search_engine, site, request, self.selenium_driver)
                 break
-            except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
-                self.logger.error('cannot request search engine, exception {}'.format(err))
-                if retry == 2:
-                    return
-                else:
-                    time.sleep(5)
-                    self.logger.error('retry...')
+            except (SerpException, RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
+                self.logger.error('cannot request search engine, exception: {}'.format(err))
+                self.logger.debug("sleep 10 seconds and retry other search engine")
+                time.sleep(10)
+                self.selenium_driver.restart()
+                time.sleep(5)
+                self.logger.error('retry...')
 
         links_count = 0
         for url in serp_urls:
@@ -160,7 +176,7 @@ class TRobotProject:
             links_count += 1
             if max_results == 1:
                 break  # one  link found
-        self.logger.info('found {} links using search engine'.format(links_count))
+        self.logger.info('found {} links using search engine id={}'.format(links_count, search_engine))
 
     def need_search_engine_before(self, step_info: TRobotStep):
         if not self.enable_search_engine:

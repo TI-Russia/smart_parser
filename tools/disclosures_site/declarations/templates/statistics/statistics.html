@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Статистика{% endblock title %}
+
+{% block content %}
+
+<table>
+    <tr><td><b>Documents</b></td></tr>
+    <tr>
+        <td>{{source_document_only_dlrobot_count_name}}: </td>
+        <td>{{source_document_only_dlrobot_count}} </td>
+    </tr>
+    <tr>
+        <td>{{source_document_only_human_count_name}}: </td>
+        <td>{{source_document_only_human_count}} </td>
+    </tr>
+    <tr>
+        <td>{{source_document_both_found_count_name}}: </td>
+        <td>{{source_document_both_found_count}} </td>
+    </tr>
+    <tr>
+        <td>{{source_document_count_name}}: </td>
+        <td>{{source_document_count}} </td>
+    </tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td><b>Sections</b></td></tr>
+    <tr>
+        <td>{{sections_count_only_dlrobot_name}}: </td>
+        <td>{{sections_count_only_dlrobot}} </td>
+    </tr>
+    <tr>
+        <td>{{sections_count_both_found_name}}: </td>
+        <td>{{sections_count_both_found}} </td>
+    </tr>
+    <tr>
+        <td>{{sections_count_name}}: </td>
+        <td>{{sections_count}} </td>
+    </tr>
+
+    <tr>
+        <td>{{sections_dedupe_score_greater_0_name}}: </td>
+        <td>{{sections_dedupe_score_greater_0}} </td>
+    </tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+    <tr><td><b>People</b></td></tr>
+    <tr>
+        <td>{{person_count_name}}: </td>
+        <td>{{person_count}} </td>
+    </tr>
+</table>
+
+{% endblock content %}

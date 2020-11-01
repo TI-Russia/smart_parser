@@ -10,6 +10,7 @@ using System.Text;
 using System.Net;
 using Parser.Lib;
 using System.Runtime.InteropServices;
+using TI.Declarator.ParserCommon;
 
 namespace Smart.Parser.Adapters
 {
@@ -124,6 +125,8 @@ namespace Smart.Parser.Adapters
                     try
                     {
                         client.DownloadFile(url, docXPath);
+                        Logger.Debug("WebClient.DownloadFile downloaded file successfully");
+                        Logger.Debug(String.Format("file {0}, size is {1}", docXPath, new System.IO.FileInfo(docXPath).Length));
                     }
                     catch (WebException exp)
                     {
@@ -173,6 +176,9 @@ namespace Smart.Parser.Adapters
             doc.RemoveMacros();
             doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
             Thread.CurrentThread.CurrentCulture = saveCulture;
+            doc = null;
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
             return docXPath;
 
         }

@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument("--dropbox-folder", dest='dropbox_folder')
     parser.add_argument("--smart-parser", dest='smart_parser')
     parser.add_argument("--smart-parser-options", dest='smart_parser_options',
-                        default="-v debug -max-rows 100 -decimal-raw-normalization -converted-storage-url  http://declarator.zapto.org:8091")
+                        default="-disclosures -v debug -max-rows 100 -adapter prod -converted-storage-url  http://disclosures.ru:8091")
     parser.add_argument("--toloka", dest='toloka', default=False, action="store_true")
     parser.add_argument("--process-count", dest='parallel_pool_size', help="run smart parser in N parallel processes",
                         default=4, type=int)
@@ -125,15 +125,21 @@ class TCorpusFile:
         self.SourceFile = sourcefile
         s = sourcefile + ".json"
         self.JsonFile = s if os.path.exists(s) else None
-        if self.JsonFile is None:
-            s = sourcefile + "_0.json"
-            self.JsonFile = s if os.path.exists(s) else None
         self.SourceFileSize = os.path.getsize(self.SourceFile)
 
 
-def check_json(fileName):
+def calc_metrics_by_json(fileName):
     data = json.load(open(fileName, encoding="utf8"))
-    return len(data.get('persons', []))  > 0
+    person_count = len(data.get('persons', []))
+    valid_realty_squares_count = 0
+    for p in data.get('persons', []):
+        for r in p.get('real_estates', []):
+            if r.get('square') != None :
+                valid_realty_squares_count += 1                
+    return {
+        'person_count' :  person_count,
+        'valid_realty_squares_count' : valid_realty_squares_count
+    }
 
 
 def report(args):
@@ -144,11 +150,17 @@ def report(args):
     jsons_count = 0
     all_size = 0
     good_size = 0
+    all_person_count = 0
+    valid_realty_squares_count = 0
     for x in processed_files:
         all_size += x.SourceFileSize
-        if x.JsonFile is not None and check_json(x.JsonFile):
-            jsons_count += 1
-            good_size += x.SourceFileSize
+        if x.JsonFile is not None:
+            metrics = calc_metrics_by_json(x.JsonFile)
+            if metrics['person_count'] > 0:
+                jsons_count += 1
+                good_size += x.SourceFileSize
+                all_person_count += metrics['person_count']
+                valid_realty_squares_count += metrics['valid_realty_squares_count']
 
     processed_files = sorted(processed_files, key=lambda x: x.SourceFileSize, reverse=True)
     errors = open("errors.txt", "w")
@@ -161,7 +173,10 @@ def report(args):
         "All found jsons": jsons_count,
         "Source file size": all_size,
         "Source file with jsons size": good_size,
-        "header_recall": round(good_size / all_size, 2)
+        "header_recall": round(good_size / all_size, 2),
+        "all_person_count": all_person_count,
+        "valid_realty_squares_count" : valid_realty_squares_count,
+        "square_recall":    round(valid_realty_squares_count / (all_person_count + 0.000000001), 2)
     }
 
 

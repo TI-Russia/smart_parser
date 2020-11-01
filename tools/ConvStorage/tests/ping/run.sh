@@ -1,6 +1,6 @@
 source ../setup_tests.sh
 
-python ../../scripts/recreate_database.py
+python ../../scripts/recreate_database.py --forget-old-data
 [ ! -d input_files ] || rm -rf input_files
 
 python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json &

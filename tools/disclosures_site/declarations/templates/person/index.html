@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Декларанты {% endblock title %}
+
+{% block content %}
+
+<form action="{% url 'person_search' %}" method="get">
+    {{ form.search_request }}
+    <input type="submit" value="Поиск">
+    <br/>
+</form>
+
+{% if form.search_request.value %}
+
+    <br/>
+      Число найденных декларантов: {{ hits_count }}
+    <br/>
+
+    <table>
+      {% for person in object_list %}
+        <tr>
+          <td> {{ person.id }}: </td>
+          <td>
+              <a href="/person/{{ person.id }}">
+                  {% for section in person.section_set.all|slice:":1" %}
+                    {{ section.person_name }}
+                  {% endfor %}
+              </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {% include "search/paginator.html" %}
+{% endif %}
+
+{% endblock content %}
+
+

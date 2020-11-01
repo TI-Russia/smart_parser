@@ -1,9 +1,8 @@
 import http.server
-import sys
+import urllib
 import os
 import threading
-from robots.common.download import get_file_extension_only_by_headers, TDownloadedFile, \
-             DEFAULT_HTML_EXTENSION, TDownloadEnv
+from robots.common.download import TDownloadEnv
 from robots.common.robot_step import TRobotStep, TUrlInfo
 from robots.common.robot_project import TRobotProject
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
@@ -11,6 +10,7 @@ from robots.common.http_request import TRequestPolicy
 import logging
 import argparse
 import time
+#import yappi
 
 
 class THttpServer(http.server.BaseHTTPRequestHandler):
@@ -47,9 +47,10 @@ ROBOT_STEPS = [
 
 
 HTTP_SERVER = None
+
+
 def start_server(host, port):
     global HTTP_SERVER
-    HTTP_SERVER = http.server.HTTPServer((host, int(port)), THttpServer)
     HTTP_SERVER.serve_forever()
 
 
@@ -73,13 +74,15 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--web-addr", dest='web_addr', required=True)
     parser.add_argument("--start-page", dest='start_page', required=True)
-    parser.add_argument("--found-links-count", dest='found_links_count', type=int)
+    parser.add_argument("--project", dest='project', required=False, default="project.txt")
+    parser.add_argument("--enable-selenium", dest='enable_selenium', required=False, default=False, action="store_true")
     return parser.parse_args()
+
 
 def open_project(args):
     start_url = args.web_addr + THttpServer.INIT_URL_PATH
-    with TRobotProject(logger, "project.txt", ROBOT_STEPS, "result", enable_search_engine=False,
-                       enable_selenium=False) as project:
+    with TRobotProject(logger, args.project, ROBOT_STEPS, "result", enable_search_engine=False,
+                       enable_selenium=args.enable_selenium) as project:
         project.add_office(args.web_addr)
         office_info = project.offices[0]
         office_info.create_export_folder()
@@ -89,25 +92,43 @@ def open_project(args):
         step_info.pages_to_process[start_url] = 0
         step_info.processed_pages = set()
         step_info.make_one_step()
-        print("found {} links".format(len(step_info.step_urls)))
-        if args.found_links_count is not None:
-            assert args.found_links_count == len(step_info.step_urls)
+        for url in step_info.step_urls:
+            u = list(urllib.parse.urlparse(url))
+            u[1] = "dummy"
+            print (urllib.parse.urlunparse(u))
 
+
+def print_all(stats):
+    if stats.empty():
+        return
+    sizes = [136, 5, 8, 8, 8]
+    columns = dict(zip(range(len(yappi.COLUMNS_FUNCSTATS)), zip(yappi.COLUMNS_FUNCSTATS, sizes)))
+    show_stats = stats
+    with open ('yappi.log', 'w') as outp:
+        outp.write(os.linesep)
+        for stat in show_stats:
+            stat._print(outp, columns)
 
 if __name__ == '__main__':
     logger = setup_logging("dlrobot.log")
     args = parse_args()
+    ROBOT_STEPS[0]['fallback_to_selenium']  = args.enable_selenium
     assert os.path.exists(args.start_page)
     THttpServer.INIT_PAGE_FILE_PATH = args.start_page
     TDownloadEnv.clear_cache_folder()
     TRequestPolicy.ENABLE = False
     host, port = args.web_addr.split(":")
     server_thread = threading.Thread(target=start_server, args=(host, port))
+    HTTP_SERVER = http.server.HTTPServer((host, int(port)), THttpServer)
     server_thread.start()
+    time.sleep(2)       # time to init sockets
     if not args.web_addr.startswith('http'):
         args.web_addr = 'http://' + args.web_addr
     try:
+        #yappi.start()
         open_project(args)
+        logger.debug("normal exit")
+        #print_all(yappi.get_func_stats())
     finally:
         HTTP_SERVER.shutdown()
         server_thread.join(1)

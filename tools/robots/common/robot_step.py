@@ -1,8 +1,7 @@
 from robots.common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
-from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from collections import defaultdict
 from robots.common.primitives import prepare_for_logging, strip_viewer_prefix
-from bs4 import BeautifulSoup
+from robots.common.html_parser import THtmlParser
 from selenium.common.exceptions import WebDriverException,InvalidSwitchToTargetException
 from robots.common.find_link import click_all_selenium,  find_links_in_html_by_text, \
                     web_link_is_absolutely_prohibited
@@ -35,7 +34,6 @@ class TUrlInfo:
             self.title = init_json['title']
             self.parent_nodes = set(init_json.get('parents', list()))
             self.linked_nodes = init_json.get('links', dict())
-            self.dl_recognizer_result = init_json.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
             self.downloaded_files = list()
             for rec in init_json.get('downloaded_files', list()):
                 self.downloaded_files.append(TLinkInfo(None, None, None).from_json(rec))
@@ -45,7 +43,6 @@ class TUrlInfo:
             self.parent_nodes = set()
             self.linked_nodes = dict()
             self.downloaded_files = list()
-            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
 
     def to_json(self):
         record = {
@@ -56,8 +53,6 @@ class TUrlInfo:
         }
         if len(self.downloaded_files) > 0:
             record['downloaded_files'] = list(x.to_json() for x in self.downloaded_files)
-        if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
-            record['dl_recognizer_result'] = self.dl_recognizer_result
         return record
 
     def add_downloaded_file(self, link_info: TLinkInfo):
@@ -97,7 +92,6 @@ class TRobotStep:
     def is_last_step(self):
         return self.get_step_name() == self.website.parent_project.robot_step_passports[-1]['step_name']
 
-
     def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
         for u in self.step_urls:
@@ -113,7 +107,7 @@ class TRobotStep:
     def to_json(self):
         return {
             'step_name': self.get_step_name(),
-            'step_urls': dict( (k,v) for (k, v)  in self.step_urls.items() ),
+            'step_urls': dict((k, v) for (k, v)  in self.step_urls.items()),
             'profiler': self.profiler
         }
 
@@ -155,7 +149,7 @@ class TRobotStep:
         self.website.url_nodes[href].parent_nodes.add(link_info.source_url)
 
         if self.is_last_step():
-            self.website.export_env.export_file(downloaded_file, self.website.url_nodes[href])
+            self.website.export_env.export_file_if_relevant(downloaded_file, link_info)
 
         if self.step_passport.get('transitive', False):
             if href not in self.processed_pages:
@@ -167,12 +161,12 @@ class TRobotStep:
     def add_downloaded_file_wrapper(self, link_info: TLinkInfo):
         self.website.url_nodes[link_info.source_url].add_downloaded_file(link_info)
         if self.is_last_step():
-            self.website.export_env.export_selenium_doc(link_info)
+            self.website.export_env.export_selenium_doc_if_relevant(link_info)
 
     def get_check_func_name(self):
         return self.step_passport['check_link_func'].__name__
 
-    def add_page_links(self, url, fallback_to_selenium=True):
+    def add_page_links(self, url, use_selenium=True, use_urllib=True):
         try:
             downloaded_file = TDownloadedFile(url)
         except RobotHttpException as err:
@@ -180,24 +174,29 @@ class TRobotStep:
             return
         if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
             return
+        html_parser = None
+        already_processed_by_urllib = None
         try:
-            soup = BeautifulSoup(downloaded_file.data, "html.parser")
+            if use_urllib:
+                html_parser = THtmlParser(downloaded_file.data)
+                already_processed_by_urllib = self.website.find_a_web_page_with_a_similar_html(self, url, html_parser.html_text)
         except Exception as e:
             self.logger.error('cannot parse html, exception {}'.format(url, e))
             return
-        already_processed = self.website.find_a_web_page_with_a_similar_html(self, url, soup)
+
         try:
-            if already_processed is None:
-                find_links_in_html_by_text(self, url, soup)
+            if use_urllib and already_processed_by_urllib is None:
+                find_links_in_html_by_text(self, url, html_parser)
             else:
-                self.logger.debug(
-                    'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed))
+                if use_urllib:
+                    self.logger.debug(
+                        'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed_by_urllib))
 
-                if not fallback_to_selenium and len(list(soup.findAll('a'))) < 10:
+                if not use_selenium and len(list(html_parser.soup.findAll('a'))) < 10:
                     self.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
-                    fallback_to_selenium = True
+                    use_selenium = True
 
-            if fallback_to_selenium:  # switch off selenium is almost a panic mode (too many links)
+            if use_selenium:  # switch off selenium is almost a panic mode (too many links)
                 if downloaded_file.get_file_extension_only_by_headers() != DEFAULT_HTML_EXTENSION:
                     # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
                     self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
@@ -231,16 +230,17 @@ class TRobotStep:
     def make_one_step(self):
         assert len(self.pages_to_process) > 0
         self.url_weights = list()
-        fallback_to_selenium = self.step_passport.get('fallback_to_selenium', True)
+        use_selenium = self.step_passport.get('fallback_to_selenium', True)
+        use_urllib = self.step_passport.get('use_urllib', True)
         for url_index in range(TRobotStep.max_step_url_count):
             url = self.pop_url_with_max_weight(url_index)
             if url is None:
                 break
 
-            self.add_page_links(url, fallback_to_selenium)
+            self.add_page_links(url, use_selenium, use_urllib)
 
-            if fallback_to_selenium and len(self.step_urls.keys()) >= TRobotStep.panic_mode_url_count:
-                fallback_to_selenium = False
+            if use_selenium and len(self.step_urls.keys()) >= TRobotStep.panic_mode_url_count:
+                use_selenium = False
                 self.website.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
                     TRobotStep.panic_mode_url_count))
 

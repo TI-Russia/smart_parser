@@ -1,6 +1,7 @@
 import urllib.parse
 import re
 from robots.common.link_info import TLinkInfo
+import socket
 
 
 def strip_viewer_prefix(href):
@@ -34,7 +35,7 @@ def strip_html_url(url):
 
 def normalize_and_russify_anchor_text(text):
     if text is not None:
-        text = text.strip(' \n\t\r').strip('"').lower()
+        text = text.strip(' \n\t\r"').lower()
         text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
         return text
     return ""
@@ -88,4 +89,28 @@ def get_html_title(html):
         return soup.title.string.strip(" \n\r\t")
     except Exception as err:
         return ""
+
+
+def convert_timeout_to_seconds(s):
+    if isinstance(s, int):
+        return s
+    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
+    if s is None or len(s) == 0:
+        return 0
+    if seconds_per_unit.get(s[-1]) is not None:
+        return int(s[:-1]) * seconds_per_unit[s[-1]]
+    else:
+        return int(s)
+
+
+
+def check_internet(host="8.8.8.8", port=53, timeout=3):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        print(ex)
+        return False
+
 

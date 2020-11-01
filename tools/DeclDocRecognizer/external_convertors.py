@@ -2,6 +2,8 @@ import subprocess
 import os
 import shutil
 import sys
+from ConvStorage.conversion_client import TDocConversionClient
+
 
 def find_program_on_windows(program):
     for prefix in ["C:\\Program Files", "C:\\Program Files (x86)"]:
@@ -9,12 +11,13 @@ def find_program_on_windows(program):
         if os.path.exists(full_path):
             return full_path
 
+
 def run_cmd(cmd):
     #print (cmd)
     return os.system(cmd)
 
 
-def run_with_timeout(args, timeout=30*60):
+def run_with_timeout(args, timeout=20*60):
     p = subprocess.Popen(args, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
     try:
         p.wait(timeout)
@@ -92,12 +95,42 @@ class TExternalConverters:
         return html
 
     def run_xlsx2csv(self, inp, out):
-        return run_cmd("python \"{}\" -c utf-8 -d tab {} {}".format(self.xlsx2csv, inp, out))
+        return run_cmd("python3 \"{}\" -c utf-8 -d tab {} {}".format(self.xlsx2csv, inp, out))
 
     def run_xls2csv(self, inp, out):
         return run_cmd("{} -q 0 -c ' ' -d utf-8 {} > {}".format(self.xls2csv, inp, out))
 
     def run_catdoc(self, inp, out):
         return run_cmd("{} -d utf-8 {} > {}".format(self.catdoc, inp, out))
+
+    def run_smart_parser_short(self, inp):
+        cmd = "{} -disclosures -converted-storage-url {} -skip-relative-orphan -skip-logging -adapter prod -fio-only {}".format(
+            self.smart_parser,
+            TDocConversionClient.DECLARATOR_CONV_URL,
+            inp)
+        exit_code = run_cmd(cmd)
+        #run_cmd("rm -f main.txt second.txt smart_parser*log {}.log".format(inp))
+        return exit_code
+
+    def run_smart_parser_full(self, inp):
+        cmd = "/usr/bin/timeout 30m {} -disclosures -decimal-raw-normalization -skip-logging -converted-storage-url {} {}".format(
+            self.smart_parser,
+            TDocConversionClient.DECLARATOR_CONV_URL,
+            inp)
+        exit_code = run_cmd(cmd)
+        #run_cmd("rm -f main.txt second.txt smart_parser*log {}.log".format(inp))
+        return exit_code
+
+    def get_smart_parser_version(self):
+        tmp_file = "version.tmp"
+        cmd = "{} -version > {}".format(self.smart_parser, tmp_file)
+        run_cmd(cmd)
+        version = None
+        if os.path.exists(tmp_file):
+            with open(tmp_file, "r") as inp:
+                version = inp.read()
+                version = version.strip()
+            os.unlink(tmp_file)
+        return version
 
 EXTERNAl_CONVERTORS = TExternalConverters()

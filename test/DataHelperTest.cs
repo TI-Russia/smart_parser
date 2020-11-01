@@ -55,34 +55,19 @@ namespace test
         }
 
         [TestMethod]
-        public void TestCountriesRegexp()
-        {
-            string s = "Италия";
-            var countries = DataHelper.ParseCountryList(s);
-            Assert.IsTrue(countries.Count == 1 );
-            Assert.IsTrue(countries[0] == "Италия");
-
-            s = "Саудовская Аравия  Российская Федерация";
-            countries = DataHelper.ParseCountryList(s);
-            Assert.IsTrue(countries.Count == 2);
-            Assert.IsTrue(countries[0] == "Саудовская Аравия");
-            Assert.IsTrue(countries[1] == "Российская Федерация");
-
-        }
-
-        [TestMethod]
         public void TestReadSquareAndCountry()
         {
             string s = "1 Россия";
-            decimal square;
+            decimal square = -1;
             string country;
-            var r = DataHelper.ReadSquareAndCountry(s, out square, out country);
+            DataHelper.ReadSquareAndCountry(s, out square, out country);
             Assert.IsTrue(square == 1);
             Assert.IsTrue(country == "Россия");
             
             s = "(Россия)";
-            r = DataHelper.ReadSquareAndCountry(s, out square, out country);
-            Assert.IsFalse(r);
+            square = -1;
+            DataHelper.ReadSquareAndCountry(s, out square, out country);
+            Assert.IsTrue(square == -1);
         }
 
         [TestMethod]

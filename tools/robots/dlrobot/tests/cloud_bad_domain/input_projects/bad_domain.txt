@@ -1,0 +1,8 @@
+{
+    "sites": [
+        {
+            "morda_url": "http://bad"
+        }
+    ],
+    "disable_search_engine": true
+}

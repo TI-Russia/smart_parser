@@ -1588,7 +1588,7 @@
         },
         {
           "text": "Машиноместо",
-          "square": 0.00,
+          "square": null,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
           "square_raw": "0",
@@ -4071,7 +4071,7 @@
         },
         {
           "text": "Жилой дом, дача",
-          "square": 0.00,
+          "square": null,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "0,00",

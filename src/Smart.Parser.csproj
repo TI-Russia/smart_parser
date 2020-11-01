@@ -11,6 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\versions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\versions.txt" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <ProjectReference Include="..\DeclaratorApiClient\DeclaratorApiClient.csproj" />
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj" />
     <ProjectReference Include="..\lib\Smart.Parser.Lib.csproj" />

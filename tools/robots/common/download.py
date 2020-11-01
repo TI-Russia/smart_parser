@@ -34,6 +34,13 @@ class TDownloadEnv:
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
     @staticmethod
+    def get_search_engine_cache_folder():
+        d = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "search_engine_requests")
+        if not os.path.exists(d):
+            os.makedirs(d)
+        return d
+
+    @staticmethod
     def send_pdf_to_conversion(filename, file_extension, sha256):
         if TDownloadEnv.CONVERSION_CLIENT is None:
             return
@@ -79,7 +86,7 @@ def get_content_charset(headers):
 
 
 def http_get_request_with_simple_js_redirect(logger, url):
-    redirected_url, headers, data = make_http_request(logger, url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+    redirected_url, headers, data = make_http_request(logger, url, "GET")
 
     try:
         if get_content_type_from_headers(headers).lower().startswith('text'):
@@ -89,7 +96,7 @@ def http_get_request_with_simple_js_redirect(logger, url):
                 if match:
                     redirect_url = match.group(3)
                     if redirect_url != url:
-                        return make_http_request(logger, redirect_url, "GET", timeout=TDownloadEnv.HTTP_TIMEOUT)
+                        return make_http_request(logger, redirect_url, "GET")
             except (RobotHttpException, ValueError) as err:
                 pass
     except AttributeError:

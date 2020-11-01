@@ -11,9 +11,11 @@ TEST_FOLDER=`pwd`
 [ ! -f test_log.out ] || rm test_log.out
 [ ! -d cached ] || rm -rf cached
 [ ! -d result ] || rm -rf result
-[ ! -f $PROJECT.clicks ] || rm -rf $PROJECT.clicks
+[ ! -f $PROJECT.visited_pages ] || rm -rf $PROJECT.visited_pages
+[ ! -f $PROJECT.click_paths ] || rm -rf $PROJECT.click_paths
+[ ! -f $PROJECT.result_summary ] || rm -rf $PROJECT.result_summary
+[ ! -f $PROJECT.log ] || rm -rf $PROJECT.log
 [ ! -f geckodriver.log ] || rm -rf geckodriver.log
-[ ! -f dlrobot.log ] || rm -rf dlrobot.log
 
 
 if [ -d $HTML_FOLDER ]; then
@@ -26,7 +28,7 @@ if [ -d $HTML_FOLDER ]; then
 	fi
 
     cd $HTML_FOLDER
-	python -m http.server --bind $WEB_IP $WEB_PORT &>$TEST_FOLDER/server.log &
+	python3 -m http.server --bind $WEB_IP $WEB_PORT &>$TEST_FOLDER/server.log &
 	WEB_SERVER_PID=$!
 	disown
     cd $TEST_FOLDER

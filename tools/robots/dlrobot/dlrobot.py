@@ -1,15 +1,17 @@
 ﻿import os
+import sys
 import argparse
 import logging
-import sys
 import traceback
 from robots.common.download import TDownloadEnv
 from robots.common.robot_project import TRobotProject
 from robots.common.robot_step import TRobotStep
 from robots.common.web_site import TRobotWebSite
-from robots.common.primitives import  check_link_sitemap, check_anticorr_link_text
+from robots.common.primitives import check_link_sitemap, check_anticorr_link_text, convert_timeout_to_seconds
 from robots.dlrobot.declaration_link import looks_like_a_declaration_link
 import platform
+import tempfile
+
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_logger")
@@ -62,14 +64,7 @@ ROBOT_STEPS = [
 ]
 
 
-def convert_to_seconds(s):
-    seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
-    if s is None or len(s) == 0:
-        return 0
-    if seconds_per_unit.get(s[-1]) is not None:
-        return int(s[:-1]) * seconds_per_unit[s[-1]]
-    else:
-        return int(s)
+
 
 def parse_args():
     global ROBOT_STEPS
@@ -82,14 +77,19 @@ def parse_args():
     parser.add_argument("--click-features", dest='click_features_file', default=None)
     parser.add_argument("--result-folder", dest='result_folder', default="result")
     parser.add_argument("--clear-cache-folder", dest='clear_cache_folder', default=False, action="store_true")
+    parser.add_argument("--cache-folder-tmp", dest='cache_folder_tmp', default=False, action="store_true",
+                            help="create cache folder as a tmp folder and delete it upon exit")
     parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
-    parser.add_argument("--only-click-stats", dest='only_click_stats', default=False, action="store_true")
+    parser.add_argument("--only-click-paths", dest='only_click_paths', default=False, action="store_true")
     parser.add_argument("--crawling-timeout", dest='crawling_timeout',
                             default="3h",
                             help="crawling timeout in seconds (there is also conversion step after crawling)")
     parser.add_argument("--last-conversion-timeout", dest='last_conversion_timeout',
                             default="30m",
                             help="pdf conversion timeout after crawling")
+    parser.add_argument("--total-timeout", dest='total_timeout',
+                        default="4h",
+                        help="dlrobot must finish its work in this time otherwise it would be killed externally")
     parser.add_argument("--pdf-quota-conversion", dest='pdf_quota_conversion',
                             default=20 * 2**20,
                             type=int,
@@ -101,8 +101,8 @@ def parse_args():
         args.stop_after = args.step
     if args.logfile is None:
         args.logfile = args.project + ".log"
-    TRobotWebSite.CRAWLING_TIMEOUT = convert_to_seconds(args.crawling_timeout)
-    TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_to_seconds(args.last_conversion_timeout)
+    TRobotWebSite.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
+    TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
     TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
     return args
 
@@ -140,10 +140,11 @@ def make_steps(args, project):
 def open_project(args):
     logger = setup_logging(args.logfile)
     logger.debug("hostname={}".format(platform.node()))
-
+    logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
+        project.total_timeout = convert_timeout_to_seconds(args.total_timeout)
         project.read_project()
-        if args.only_click_stats:
+        if args.only_click_paths:
             project.write_export_stats()
         else:
             make_steps(args, project)
@@ -158,7 +159,11 @@ if __name__ == "__main__":
         TDownloadEnv.clear_cache_folder()
     try:
         TDownloadEnv.init_conversion()
-        open_project(args)
+        if args.cache_folder_tmp:
+            with tempfile.TemporaryDirectory(prefix="cached.", dir=".") as TDownloadEnv.FILE_CACHE_FOLDER:
+                open_project(args)
+        else:
+            open_project(args)
     except Exception as e:
         print("unhandled exception type={}, exception={} ".format(type(e), e))
         traceback.print_exc(file=sys.stdout)
