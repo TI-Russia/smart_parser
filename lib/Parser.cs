@@ -285,19 +285,9 @@ namespace Smart.Parser.Lib
 
         }
 
-        bool IsNumbersRow(DataRow row)
-        {
-            string s = "";
-            foreach (var c in row.Cells)
-            {
-                s += c.Text.Replace("\n", "").Replace(" ", "") + " ";
-            }
-
-            if (s.StartsWith("1 2 3 4"))
-                return true;
-
-            return false;
-        }
+        bool IsNumbersRow(DataRow row) => string
+            .Join(" ", row.Cells.Select(c => c.Text.RemoveCharacters('\n', ' ')))
+            .StartsWith("1 2 3 4");
 
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
