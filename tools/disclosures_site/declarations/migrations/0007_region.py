@@ -1,58 +1,45 @@
 from django.db import migrations, models
 from declarations.models import SynonymClass
 import gzip
+import json
 
-
-#echo  "select * from declarations_region" | mysql -D declarator -u declarator -pdeclarator | gzip -c > data/regions.txt.gz
+#echo  "select *  from declarations_region" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator  | gzip -c > data/regions.txt.gz
 def add_regions(apps, schema_editor):
     clear_regions(apps, schema_editor)
-    cnt = 0
-    header = ""
     Region = apps.get_model('declarations', 'Region')
     RegionSynonyms = apps.get_model('declarations', 'Region_Synonyms')
+    with gzip.open("data/regions.txt.gz") as inp:
+        regions = json.load(inp)
+    for r in regions:
+        rec = Region(
+            id=r['id'],
+            name=r['name']
+        )
+        rec.save()
+        synonyms = {
+            r['name']: SynonymClass.Russian,
+            r["short_name"]: SynonymClass.RussianShort,
+            r["extra_short_name"]: SynonymClass.RussianShort,
+            r["name_en"]: SynonymClass.English,
+            r["extra_short_name"]: SynonymClass.EnglishShort
+        }
 
-    for line in gzip.open("data/regions.txt.gz"):
-        line = line.decode('utf8').strip()
-        cnt += 1
-        if cnt == 1:
-            assert line.find('federal_district_id') != -1
-            header = list(line.split("\t"))
-        else:
-            items = list(line.split("\t"))
-            r = Region()
-            synonyms = dict()
-            assert len(header) == len(items)
-            for k, v in zip(header, items):
-                print ("{} {}".format(k, v))
-                if k == 'id':
-                    r.id = int(v)
-                elif k == "name":
-                    r.name = v
-                    synonyms[v] = SynonymClass.Russian
-                elif k == "short_name" or k == "extra_short_name":
-                    synonyms[v] = SynonymClass.RussianShort
-                elif k == "name_en":
-                    synonyms[v] = SynonymClass.English
-                elif k == "short_name_en":
-                    synonyms[v] = SynonymClass.EnglishShort
-            r.save()
-            for k, v in synonyms.items():
-                if k is None or k == "":
-                    continue
-                k = k.strip('*')
-                s = RegionSynonyms()
-                s.region = r
-                s.synonym = k
-                s.synonym_class = v
-                s.save()
-
+        for k, v in synonyms.items():
+            if k == "":
+                continue
+            k = k.strip('*')
+            s = RegionSynonyms()
+            s.region = rec
+            s.synonym = k
+            s.synonym_class = v
+            s.save()
 
 
 def clear_regions(apps, schema_editor):
-    Region = apps.get_model('declarations', 'Region')
-    Region.objects.all().delete()
     RegionSynonyms = apps.get_model('declarations', 'Region_Synonyms')
     RegionSynonyms.objects.all().delete()
+    Region = apps.get_model('declarations', 'Region')
+    Region.objects.all().delete()
 
 
 class Migration(migrations.Migration):
