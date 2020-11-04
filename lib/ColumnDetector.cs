@@ -26,7 +26,7 @@ namespace Smart.Parser.Lib
 
             text = text.ToLower();
             string[] title_words = { "сведения", "обязательствах", "доход", "период" };
-            bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
+            bool has_title_words = title_words.Any(s => text.Contains(s));
             if (!has_title_words)
                 return false;
 

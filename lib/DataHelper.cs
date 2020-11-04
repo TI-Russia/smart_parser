@@ -90,8 +90,7 @@ namespace Smart.Parser.Lib
                 .RemoveCharacters(' ', ':', '-', '\n', '.')
                 .Replace('ё', 'е')
                 .Trim()
-                .RemoveStupidTranslit()
-                .ToLower();
+                .RemoveStupidTranslit();
 
             return clean switch
             {

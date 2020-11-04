@@ -96,7 +96,7 @@ namespace Smart.Parser.Adapters
             bool hasStopWord = false;
             foreach (var word in stopWords)
             {
-                if (rowText.ToLower() == word) hasStopWord = true;
+                if (rowText.Equals(word, StringComparison.OrdinalIgnoreCase)) hasStopWord = true;
             }
             if (hasStopWord) return false;
             

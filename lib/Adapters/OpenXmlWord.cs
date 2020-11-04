@@ -682,7 +682,7 @@ namespace Smart.Parser.Adapters
                     tableIndex,
                     tableText));
             }
-            if (Title.Length == 0 && table.InnerText.Length > 30 && table.InnerText.ToLower().IndexOf("декабря") != -1)
+            if (Title.Length == 0 && table.InnerText.Length > 30 && table.InnerText.Contains("декабря", StringComparison.OrdinalIgnoreCase))
             {
                 var rows = new List<String>();
                 foreach (var r in table.Descendants<TableRow>())

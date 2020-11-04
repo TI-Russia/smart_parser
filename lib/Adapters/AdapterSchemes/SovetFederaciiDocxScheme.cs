@@ -23,7 +23,7 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
             var tables = docPart.Document.Descendants<Table>().ToList();
 
             var paragraphs = docPart.Document.Descendants<Paragraph>().ToList();
-            var titles = paragraphs.FindAll(x => x.InnerText.ToLower().Contains("раздел"));
+            var titles = paragraphs.FindAll(x => x.InnerText.Contains("раздел", StringComparison.OrdinalIgnoreCase));
 
             if (titles.Count == 0)
                 return false;

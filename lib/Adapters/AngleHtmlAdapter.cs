@@ -386,7 +386,7 @@ namespace Smart.Parser.Adapters
                     tableIndex,
                     tableText));
             }
-            if (Title.Length == 0 && table.TextContent.Length > 30 && table.TextContent.ToLower().IndexOf("декабря") != -1)
+            if (Title.Length == 0 && table.TextContent.Length > 30 && table.TextContent.Contains("декабря", StringComparison.OrdinalIgnoreCase))
             {
                 var rows = new List<String>();
                 foreach (var r in GetHtmlTableRows(table))
