@@ -7,7 +7,6 @@ namespace TI.Declarator.ParserCommon
     public static class HeaderHelpers
     {
         public static bool HasRealEstateStr(string str) =>str
-            .ToLowerInvariant()
             .RemoveCharacters('-', ' ')
             .ContainsAny("недвижимости", "недвижимого", "иноенедвижимоеимущество(кв.м)");
 
@@ -119,7 +118,7 @@ namespace TI.Declarator.ParserCommon
 
         public static bool IsName(this string s)
         {
-            var clean = s.RemoveCharacters(',', '-', '\n', ' ').ToLowerInvariant();
+            var clean = s.RemoveCharacters(',', '-', '\n', ' ');
             return clean.StartsWithAny("лицаодоходах", "подающиесведения", "подающийсведения")
                     || clean.ContainsAny("фамилия", "фамилимя", "фио", ".иф.о.", "сведенияодепутате", "ф.и.о");
         }
@@ -131,7 +130,7 @@ namespace TI.Declarator.ParserCommon
         private static bool IsRelativeType(this string s) => s.ContainsAny("члены семьи", "степень родства") && !s.IsName();
 
         private static bool IsOccupation(this string s) => s
-            .RemoveCharacters('-', ' ').ToLowerInvariant()
+            .RemoveCharacters('-', ' ')
             .ContainsAny("должность", "должности", "должностей");
 
         private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте");
