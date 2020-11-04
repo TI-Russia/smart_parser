@@ -246,12 +246,8 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
             if (_collegiumColumNum == -1)
                 return;
-            string value;
-            if (isMain)
-                value = _collegium;
-            else
-                value = "";
-            for(int i = 1; i < lines.Count; i += 1)
+            string value = isMain ? _collegium : "";
+            for (int i = 1; i < lines.Count; i += 1)
             {
                 lines[i].Insert(_collegiumColumNum, value);
             }
@@ -279,12 +275,7 @@ namespace Smart.Parser.Lib.Adapters.HtmlSchemes
 
         protected static string GetMatchResult(Match match)
         {
-            if (match.Success)
-            {
-                return match.Value;
-            }
-
-            return "-";
+            return match.Success ? match.Value : "-";
         }
 
         #endregion

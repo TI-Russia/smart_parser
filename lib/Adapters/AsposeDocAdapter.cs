@@ -100,14 +100,14 @@ namespace Smart.Parser.Adapters
             { 
                 node = node.PreviousSibling;
             }
-            string text = "";
+            var text = new StringBuilder();
             while (node.NextSibling != table)
             {
-                text += node.ToString();
+                text.Append(node.ToString());
                 node = node.NextSibling;
             }
 
-            title = text;
+            title = text.ToString();
         }
 
         private Aspose.Words.Tables.Table table;

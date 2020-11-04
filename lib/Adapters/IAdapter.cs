@@ -208,27 +208,28 @@ namespace Smart.Parser.Adapters
 
         string GetHtmlByRow(List<Cell> row, int rowIndex)
         {
-            string res = string.Format("<tr rowindex={0}>\n", rowIndex);
+            StringBuilder res = new StringBuilder();
+            res.AppendFormat("<tr rowindex={0}>\n", rowIndex);
             foreach (var c in row)
             {
                 if (c.FirstMergedRow != rowIndex)
                 {
                     continue;
                 }
-                res += "\t<td";
+                res.Append("\t<td");
                 if (c.MergedColsCount > 1)
                 {
-                    res += string.Format(" colspan={0}", c.MergedColsCount);
+                    res.AppendFormat(" colspan={0}", c.MergedColsCount);
                 }
                 if (c.MergedRowsCount > 1)
                 {
-                    res += string.Format(" rowspan={0}", c.MergedRowsCount);
+                    res.AppendFormat(" rowspan={0}", c.MergedRowsCount);
                 }
                 string text = c.Text.Replace("\n", "<br/>");
-                res += ">" + text + "</td>\n";
+                res.AppendFormat(">" + text + "</td>\n");
             }
-            res += "</tr>\n";
-            return res;
+            res.Append("</tr>\n");
+            return res.ToString();
         }
 
         public TJsonTablePortion TablePortionToJson(ColumnOrdering columnOrdering, int body_start, int body_end)

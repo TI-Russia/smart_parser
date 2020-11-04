@@ -11,6 +11,7 @@ using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 using EP.Ner;
 using EP.Ner.Core;
 using EP.Morph;
+using System.Text;
 
 namespace Smart.Parser.Lib.Adapters.AdapterSchemes
 {
@@ -309,7 +310,7 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
 
         public string FindTitleAboveTheTable()
         {
-            string title = "";
+            var title = new StringBuilder();
             var body = Document.Body;
             foreach (var p in Document.Descendants<Paragraph>())
             {
@@ -318,10 +319,10 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
                     break;
                 }
 
-                title += p.InnerText + "\n";
+                title.Append(p.InnerText).Append('\n');
             }
 
-            return title.Trim().Replace("\n", " ");
+            return title.Replace('\n', ' ').ToString().Trim();
         }
 
         private int GetYear()

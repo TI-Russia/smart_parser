@@ -5,6 +5,7 @@ using System.IO;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using System.Text;
 
 namespace Office2Txt
 {
@@ -12,24 +13,24 @@ namespace Office2Txt
     {
         static string ProcessDocxPart(OpenXmlPartRootElement part)
         {
-            string s = "";
+            var s = new StringBuilder();
             foreach (var p in part.Descendants<Paragraph>())
             {
-                s += p.InnerText + "\n";
+                s.Append(p.InnerText).Append('\n');
             }
-            return s;
+            return s.ToString();
         }
         static string ProcessDocx(string inputFile)
         {
             WordprocessingDocument doc =
                 WordprocessingDocument.Open(inputFile, false);
-            string s = "";
+            var s = new StringBuilder();
             foreach (OpenXmlPart h in doc.MainDocumentPart.HeaderParts) {
-                s += ProcessDocxPart(h.RootElement);
+                s.Append(ProcessDocxPart(h.RootElement));
             };
-            s += ProcessDocxPart(doc.MainDocumentPart.Document);
+            s.Append(ProcessDocxPart(doc.MainDocumentPart.Document));
             doc.Close();
-            return s;
+            return s.ToString();
         }
         static void Main(string[] args)
         {

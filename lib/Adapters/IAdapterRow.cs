@@ -138,12 +138,14 @@ namespace Smart.Parser.Adapters
         }
         public string DebugString()
         {
-            string s = "";
+            var s = new StringBuilder();
             foreach (var c in Cells)
             {
-                s += string.Format("\"{0}\"[{1}], ",c.Text.Replace("\n", "\\n"),c.CellWidth);
+                s.AppendFormat("\"{0}\"[{1}], ", c.Text, c.CellWidth);
             }
-            return s;
+            s.Replace("\n", "\\n");
+
+            return s.ToString();
         }
 
         public DataRow DeepClone()

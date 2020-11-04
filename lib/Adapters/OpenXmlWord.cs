@@ -13,6 +13,7 @@ using Parser.Lib;
 using System.Xml.Linq;
 using Smart.Parser.Lib.Adapters.AdapterSchemes;
 using Smart.Parser.Lib.Adapters.DocxSchemes;
+using System.Text;
 
 namespace Smart.Parser.Adapters
 {
@@ -150,7 +151,7 @@ namespace Smart.Parser.Adapters
         }
         public string FindTitleAboveTheTable()
         {
-            string title = "";
+            var title = new StringBuilder();
             var body = WordDocument.MainDocumentPart.Document.Body;
             foreach (var p in WordDocument.MainDocumentPart.Document.Descendants<Paragraph>())
             {
@@ -158,9 +159,9 @@ namespace Smart.Parser.Adapters
                 {
                     break;
                 }
-                title += p.InnerText + "\n";
+                title.Append(p.InnerText).Append("\n");
             }
-            return title;
+            return title.ToString();
         }
 
     }
@@ -250,7 +251,7 @@ namespace Smart.Parser.Adapters
 
         private void InitTextProperties(WordDocHolder docHolder, OpenXmlElement inputCell)
         {
-            string s = "";
+            var s = new StringBuilder();
             FontName = "";
             FontSize = 0;
             foreach (var p in inputCell.Elements<Paragraph>())
@@ -276,35 +277,36 @@ namespace Smart.Parser.Adapters
                     }
                     else if (textOrBreak.LocalName == "t")
                     {
-                        s += textOrBreak.InnerText;
+                        s.Append(textOrBreak.InnerText);
                     }
                     else if (textOrBreak.LocalName == "cr")
                     {
-                        s += "\n";
+                        s.Append("\n");
                     }
                     else if (textOrBreak.LocalName == "br")
                     /* do  not use lastRenderedPageBreak, see MinRes2011 for wrong lastRenderedPageBreak in Семенов 
                     ||
                           (textOrBreak.Name == w + "lastRenderedPageBreak") */
                     {
-                        s += "\n";
+                        s.Append("\n");
                     } else if (textOrBreak.LocalName == "numPr")
                     {
-                        s += "- ";
+                        s.Append("- ");
                     }
                 }
-                s += "\n";
+                s.Append("\n");
                 ParagraphProperties pPr = p.ParagraphProperties;
                 if (pPr != null)
                 {
                     for (int l = 0; l < AfterLinesCount(pPr.SpacingBetweenLines); ++l)
                     {
-                        s += "\n";
+                        s.Append("\n");
                     }
                 }
             }
-            Text = s;
-            IsEmpty = s.IsNullOrWhiteSpace();
+            var text = s.ToString();
+            Text = text;
+            IsEmpty = text.IsNullOrWhiteSpace();
             if (string.IsNullOrEmpty(FontName))
             {
                 FontName = docHolder.DefaultFontName;

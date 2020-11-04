@@ -22,11 +22,8 @@ namespace Smart.Parser.Lib
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
-            if (title == null)
-                title = text;
-            else
-                title += " " + text;
-            
+            title = title == null ? text : title + " " + text;
+
             text = text.ToLower();
             string[] title_words = { "сведения", "обязательствах", "доход", "период" };
             bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
@@ -188,8 +185,8 @@ namespace Smart.Parser.Lib
             if (subCells.Count == 1)
                 return;
 
-            string cleanHeader = headerCell.Text.ToLower().Replace(" ", "");
-            if (cleanHeader.Contains("транспортныесредства") && cleanHeader.Contains("марка") && cleanHeader.Contains("вид"))
+
+            if (headerCell.Text.RemoveCharacters(' ').ContainsAll("транспортныесредства", "марка", "вид"))
             {
 
                 TColumnInfo columnVehicleType = new TColumnInfo();

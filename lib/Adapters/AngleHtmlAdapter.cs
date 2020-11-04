@@ -6,6 +6,7 @@ using TI.Declarator.ParserCommon;
 using AngleSharp;
 using AngleSharp.Dom;
 using Parser.Lib;
+using System.Text;
 
 namespace Smart.Parser.Adapters
 {
@@ -23,7 +24,7 @@ namespace Smart.Parser.Adapters
         
         public string FindTitleAboveTheTable()
         {
-            string title = "";
+            var title = new StringBuilder();
             bool foundTable = false;
             var addedLines = new HashSet<string>();
             foreach (var p in HtmlDocument.All.ToList() )
@@ -34,11 +35,11 @@ namespace Smart.Parser.Adapters
                 addedLines.Add(p.TextContent);
                 if (p.LocalName == "h1" || p.LocalName == "h2")
                 {
-                    title += p.TextContent + " ";
+                    title.Append(p.TextContent).Append(' ');
                 }
                 else if ((p.LocalName == "p" || p.LocalName == "div" || p.LocalName == "span") && p.TextContent.IndexOf("декабря") != -1)
                 {
-                    title += p.TextContent + " ";
+                    title.Append(p.TextContent).Append(' ');
                 }
                 else
                 {
@@ -50,12 +51,12 @@ namespace Smart.Parser.Adapters
                     {
                         if (p.LocalName == "p")
                         {
-                            title += p.TextContent + " ";
+                            title.Append(p.TextContent).Append(' ');
                         }
                     }
                 }
             }
-            return title;
+            return title.ToString();
         }
 
     }
