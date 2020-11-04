@@ -6,6 +6,7 @@ using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
 using System.Reflection;
 using SmartAntlr;
+using System.Text;
 
 namespace Smart.Parser.Lib
 {
@@ -192,13 +193,17 @@ namespace Smart.Parser.Lib
 
         public static string TryParseRealEstateType(string strType)
         {
-            var key = strType.ToLower().RemoveStupidTranslit()
-                                          .Trim('\"')
-                                          .Replace('\n', ' ')
-                                          .Replace(';', ' ')
-                                          .Replace("не имеет", string.Empty)
-                                          .CoalesceWhitespace()
-                                          .Trim();
+            var key = new StringBuilder(
+                    strType
+                        .ToLower()
+                        .Trim('"'))
+                .RemoveStupidTranslit()
+                .Replace('\n', ' ')
+                .Replace(';', ' ')
+                .Replace("не имеет", string.Empty)
+                .ToString()
+                .CoalesceWhitespace()
+                .Trim();
 
             return key;
         }

@@ -107,7 +107,7 @@ namespace Smart.Parser.Adapters
                             joinExplanation = "non-closed ) regexp";
                         }
 
-                        if (firstWord.Trim()[0] == '(')
+                        if (firstWord.TrimStart()[0] == '(')
                         {
                             joinExplanation = "open ( regexp";
                         }

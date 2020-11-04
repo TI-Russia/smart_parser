@@ -62,11 +62,18 @@ namespace TI.Declarator.ParserCommon
         public static string RemoveStupidTranslit(this string str)
         {
             var builder = new StringBuilder(str);
+            builder.RemoveStupidTranslit();
+            return builder.ToString();
+        }
+
+        public static StringBuilder RemoveStupidTranslit(this StringBuilder builder)
+        {
             foreach (var (from, to) in TranslitCharacters)
             {
                 builder.Replace(from, to);
             }
-            return builder.ToString();
+
+            return builder;
         }
 
         public static string ReplaceEolnWithSpace(this string str) => str.Replace('\n', ' ').Trim();

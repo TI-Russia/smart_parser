@@ -188,7 +188,7 @@ namespace Smart.Parser.Adapters
             //var myFormatter = new AngleSharp.Html.PrettyMarkupFormatter();
             Text = inputCell.ToHtml(myFormatter);
             IsEmpty = Text.IsNullOrWhiteSpace();
-            if (FontName == null || FontName == "")
+            if (string.IsNullOrEmpty(FontName))
             {
                 FontName = docHolder.DefaultFontName;
             }

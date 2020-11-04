@@ -133,10 +133,11 @@ namespace Smart.Parser.Adapters
             }
             return -1;
         }
+
+        private static readonly ISet<string> DaysOfWeek = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
         protected static List<List<T>> DropDayOfWeekRows<T>(List<List<T>> tableRows) where T : Cell
         {
-            List<string> daysOfWeek = new List<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
-            return  tableRows.TakeWhile(x => !x.All(y => daysOfWeek.Contains(y.Text.ToLower().Trim()))).ToList();
+            return  tableRows.TakeWhile(x => !x.All(y => DaysOfWeek.Contains(y.Text.Trim()))).ToList();
         }
 
         protected static bool CheckNameColumnIsEmpty<T>(List<List<T>> tableRows, int start) where T : Cell

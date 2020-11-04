@@ -199,8 +199,9 @@ namespace Smart.Parser.Lib
 
         static public void SwapCountryAndSquare(ref string squareStr, ref string countryStr)
         {
-            if ((squareStr.ToLower().Trim() == "россия" ||
-                 squareStr.ToLower().Trim() == "рф") &&
+            string squareStrClean = squareStr.ToLower().Trim();
+            if ((squareStrClean == "россия" ||
+                 squareStrClean == "рф") &&
                 Regex.Match(countryStr.Trim(), @"[0-9,.]").Success)
             {
                 var t = squareStr;
@@ -358,7 +359,7 @@ namespace Smart.Parser.Lib
                 item = SliceArrayAndTrim(lines, startLine, i);
                 if (item.Count() > 0) // not empty item
                 {
-                    if ((numberIndex < linesWithNumbers.Count && i == linesWithNumbers[numberIndex]) || lines[i].Trim().Count() == 0)
+                    if ((numberIndex < linesWithNumbers.Count && i == linesWithNumbers[numberIndex]) || string.IsNullOrWhiteSpace(lines[i]))
                     {
                         result.Add(item);
                         startLine = i;

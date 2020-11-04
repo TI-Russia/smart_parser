@@ -227,7 +227,7 @@ namespace Smart.Parser.Adapters
                     var field = columnOrdering.FindByPixelIntersection(start, start + c.CellWidth, out interSize);
                    
                     // cannot map some text,so it is a failure
-                    if (field == DeclarationField.None && c.Text.Trim().Length > 0)
+                    if (field == DeclarationField.None && !string.IsNullOrWhiteSpace(c.Text))
                     {
                         return null;
                     }
@@ -271,7 +271,7 @@ namespace Smart.Parser.Adapters
             }
             TColumnInfo colSpan;
             var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
-            if (exactCell.Text.Trim() != "" || exactCell.Col == -1)
+            if (!string.IsNullOrWhiteSpace(exactCell.Text) || exactCell.Col == -1)
             {
                 return exactCell;
             }
@@ -282,7 +282,7 @@ namespace Smart.Parser.Adapters
                 {
                     break;
                 }
-                if (mergedCell.Text.Trim() != "")
+                if (!string.IsNullOrWhiteSpace(mergedCell.Text))
                 {
                     return mergedCell;
                 }
