@@ -23,18 +23,20 @@ def add_regions(apps, schema_editor):
             synonyms = dict()
             assert len(header) == len(items)
             for k, v in zip(header, items):
-                print ("{} {}".format(k, v))
                 if k == 'id':
                     r.id = int(v)
                 elif k == "name":
                     r.name = v
                     synonyms[v] = SynonymClass.Russian
                 elif k == "short_name" or k == "extra_short_name":
-                    synonyms[v] = SynonymClass.RussianShort
+                    if v not in synonyms:
+                        synonyms[v] = SynonymClass.RussianShort
                 elif k == "name_en":
-                    synonyms[v] = SynonymClass.English
+                    if v not in synonyms:
+                        synonyms[v] = SynonymClass.English
                 elif k == "short_name_en":
-                    synonyms[v] = SynonymClass.EnglishShort
+                    if v not in synonyms:
+                        synonyms[v] = SynonymClass.EnglishShort
             r.save()
             for k, v in synonyms.items():
                 if k is None or k == "":
@@ -42,7 +44,7 @@ def add_regions(apps, schema_editor):
                 k = k.strip('*')
                 s = RegionSynonyms()
                 s.region = r
-                s.synonym = k
+                s.synonym = k.lower()
                 s.synonym_class = v
                 s.save()
 

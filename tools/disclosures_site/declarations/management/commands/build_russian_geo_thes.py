@@ -2,10 +2,14 @@ import json
 import logging
 import ssl
 import urllib.parse
-import argparse
 import urllib.request
 from collections import defaultdict
 import mwclient
+import declarations.models as models
+from django.core.management import BaseCommand
+from declarations.models import SynonymClass
+from .declination import set_colloc_to_genitive_case
+
 
 def setup_logging(logfilename="build_geo.log"):
     logger = logging.getLogger("build_thes")
@@ -18,6 +22,7 @@ def setup_logging(logfilename="build_geo.log"):
     logger.addHandler(fh)
 
     return logger
+
 
 def send_sparql_request(sparql):
     sparql = urllib.parse.quote(sparql)
@@ -100,33 +105,10 @@ SPARQL_QUERY = """
 
 """
 
-RussianMainRegionWithObsolete = {
-"Белгородская область","Брянская область","Владимирская область","Воронежская область","Ивановская область",
-"Калужская область","Костромская область","Курская область", "Липецкая область","Московская область",
-"Орловская область","Рязанская область", "Смоленская область","Тамбовская область","Тверская область",
-"Тульская область", "Ярославская область","Москва","Карелия","Республика Коми","Архангельская область",
-"Вологодская область","Калининградская область","Ленинградская область","Мурманская область","Новгородская область",
-"Псковская область","Санкт-Петербург", "Адыгея","Дагестан", "Ингушетия", "Кабардино-Балкария",
-"Калмыкия", "Карачаево-Черкесия","Республика Северная Осетия-Алания", "Чечня",
-"Краснодарский край", "Ставропольский край","Астраханская область", "Волгоградская область", "Ростовская область",
-"Башкортостан", "Марий Эл", "Мордовия", "Татарстан", "Удмуртия",
-"Чувашия", "Кировская область", "Нижегородская область","Оренбургская область","Пензенская область",
-"Пермская область", "Коми-Пермяцкий автономный округ", "Самарская область","Саратовская область","Ульяновская область",
-"Курганская область","Свердловская область","Тюменская область","Ханты-Мансийский автономный округ — Югра",
-"Ямало-Ненецкий автономный округ", "Челябинская область","Республика Алтай", "Бурятия",
-"Тыва", "Хакасия", "Алтайский край", "Красноярский край",
-"Таймырский (Долгано-Ненецкий) автономный округ", "Иркутская область",
-"Усть-Ордынский Бурятский автономный округ", "Кемеровская область", "Новосибирская область", "Омская область",
-"Томская область","Читинская область","Агинский Бурятский автономный округ", "Якутия",
-"Приморский край", "Хабаровский край", "Амурская область","Камчатский край",
-"Магаданская область","Сахалинская область", "Еврейская автономная область", "Чукотский автономный округ",
-"Республика Крым", "Симферополь"}
-
-
 class TGeoThesBuilder:
     def __init__(self, filename):
         self.logger = setup_logging()
-        self.file_name = "rus_geo.txt"
+        self.file_name = filename
         self.thesaurus = dict()
         self.class_to_ru_label = dict()
 
@@ -220,23 +202,99 @@ class TGeoThesBuilder:
             if class_can_have_administration or population > 1000:
                 v['use_for_declarator'] = True
 
-    def check_main_regions(self):
-        rus_names = defaultdict(list)
+    def get_population(self, wikibase_id):
+        return self.thesaurus['entities'][wikibase_id].get ('population', 0)
+
+    def copy_synonyms_from_sql_regions(self):
+        rus_names = dict()
         for k,v in self.thesaurus['entities'].items():
-            rus_names[v['label']].append(k)
+            l = v['label'].lower()
+            if l not in rus_names:
+                rus_names[l] = k
+            elif self.get_population(rus_names[l]) < self.get_population(k):
+                rus_names[l] = k
 
-        for r in RussianMainRegionWithObsolete:
-            if r not in rus_names:
-                raise Exception("cannot find {} in thesaurus".format(r))
+        for r in models.Region.objects.all():
+            wikidata_id = None
+            if r.name == "Карачаево-Черкесская республика":
+                wikidata_id = 'Q5328'
+            elif r.name == "Республика Северная Осетия — Алания":
+                wikidata_id = 'Q5237'
+            elif r.name == "Республика Тува (Тыва)":
+                wikidata_id = 'Q960'
+            elif r.name == "Республика Саха (Якутия)":
+                wikidata_id = 'Q6605'
+            elif r.name.find('Крым') != -1:
+                wikidata_id = 'Q15966495'
+            elif r.name.find('Республика Алтай') != -1:
+                wikidata_id = 'Q5971'
+            else:
+                for s in r.region_synonyms_set.all():
+                    if s.synonym in rus_names:
+                        wikidata_id = rus_names[s.synonym]
+            if wikidata_id is None:
+                raise Exception("cannot find {} in thesaurus".format(r.name))
+            r.wikibase_id = wikidata_id
+            synonyms = dict()
+            for s in r.region_synonyms_set.all():
+                synonyms[s.synonym] = s.synonym_class
+            #sys.stderr.write("{} {} {}\n".format(wikidata_id, r.name, synonyms, self.get_population(wikidata_id)))
+            assert self.get_population(wikidata_id) > 40000
+            self.thesaurus['entities'][wikidata_id]['synonyms'] = synonyms
+            self.thesaurus['entities'][wikidata_id]['federal_subject'] = True
+
+    def add_synonym_from_name_if_missing(self):
+        for k, v in self.thesaurus['entities'].items():
+            if v.get('use_for_declarator', False):
+                if 'synonyms' not in v:
+                    v['synonyms'] = dict()
+                    v['synonyms'][v['label'].lower()] = SynonymClass.Russian
+
+    def add_gorod_as_a_type(self):
+        for k,v in self.thesaurus['entities'].items():
+            if "Q7930989" in v['superclasses']:
+                new_syns = set()
+                for s, sym_class in v.get('synonyms', {}).items():
+                    if sym_class == SynonymClass.Russian:
+                        new_syns.add("город " + s)
+                        new_syns.add("г. " + s)
+                for n in new_syns:
+                    v['synonyms'][n] = SynonymClass.RussianWithType1Before
+
+    def generate_genitive(self):
+        for k,v in self.thesaurus['entities'].items():
+            if v.get('use_for_declarator', False):
+                for s, syn_class in v['synonyms'].items():
+                    if not SynonymClass.is_russian_nominative(syn_class):
+                        continue
+                    for f in set_colloc_to_genitive_case(self.logger, s, syn_class):
+                        if f not in v['synonyms']:
+                            v['synonyms'][f] = SynonymClass.RussianGenitive
 
 
-if __name__ == '__main__':
-    builder = TGeoThesBuilder("rus_geo.txt")
-    #builder.initial_fetch_from_wikibase()
-    builder.read_from_disk()
-    #builder.get_class_names()
-    #builder.get_class_with_populations()
-    #builder.calc_class_can_have_administration()
-    #builder.calc_use_for_declarator()
-    builder.check_main_regions()
-    #builder.write_to_disk()
+
+class Command(BaseCommand):
+    def __init__(self, *args, **kwargs):
+        super(Command, self).__init__(*args, **kwargs)
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--rus-thes-file',
+            dest='rus_thes_file',
+            required=True,
+        )
+
+    def handle(self, *args, **options):
+        builder = TGeoThesBuilder(options['rus_thes_file'])
+        # builder.initial_fetch_from_wikibase()
+        builder.read_from_disk()
+        # builder.get_class_names()
+        # builder.get_class_with_populations()
+        # builder.calc_class_can_have_administration()
+        # builder.calc_use_for_declarator()
+        # builder.copy_synonyms_from_sql_regions()
+        # builder.add_synonym_from_name_if_missing()
+        # builder.add_gorod_as_a_type()
+        #assert len(json.loads(aot.synthesize("бай-тал", "N"))['forms']) == 0
+        #builder.generate_genitive()
+        #builder.write_to_disk()

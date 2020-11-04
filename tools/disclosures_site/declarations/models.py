@@ -67,10 +67,18 @@ class SynonymClass:
     English = 1
     EnglishShort = 2
     RussianShort = 3
+    RussianWithTypeBefore = 4
+
+    RussianGenitive = 5
+
+    @staticmethod
+    def is_russian_nominative(syn_class):
+        return syn_class == SynonymClass.Russian or syn_class == SynonymClass.RussianWithTypeBefore or \
+               syn_class == SynonymClass.RussianShort
 
 
 class Region_Synonyms(models.Model):
-    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
+    region = models.ForeignKey('declarations.region', verbose_name="region", on_delete=models.CASCADE)
     synonym = models.TextField(verbose_name='region synonym')
     synonym_class = models.IntegerField(null=True) #see SynonymClass
 
