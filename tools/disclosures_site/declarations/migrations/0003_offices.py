@@ -3,12 +3,14 @@ import gzip
 import json
 from declarations.rubrics import build_one_rubric
 import declarations.models as models
+import os
 
 
 #echo  "select *  from declarations_region" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator  | gzip -c > data/regions.txt.gz
 def add_offices(apps, schema_editor):
     clear_offices(apps, schema_editor)
-    with gzip.open("data/offices.txt.gz") as inp:
+    filepath = os.path.join(os.path.dirname(__file__), "../../data/offices.txt.gz")
+    with gzip.open(filepath) as inp:
         offices = json.load(inp)
     office_hierarchy = models.TOfficeHierarchy(use_office_types=False, init_from_json=offices)
     Office = apps.get_model('declarations', 'Office')
@@ -26,7 +28,6 @@ def add_offices(apps, schema_editor):
 def clear_offices(apps, schema_editor):
     Office = apps.get_model('declarations', 'Office')
     Office.objects.all().delete()
-
 
 
 class Migration(migrations.Migration):

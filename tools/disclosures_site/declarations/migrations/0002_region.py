@@ -2,13 +2,15 @@ from django.db import migrations, models
 from declarations.models import SynonymClass
 import gzip
 import json
+import os
 
 #echo  "select *  from declarations_region" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator  | gzip -c > data/regions.txt.gz
 def add_regions(apps, schema_editor):
     clear_regions(apps, schema_editor)
     Region = apps.get_model('declarations', 'Region')
     RegionSynonyms = apps.get_model('declarations', 'Region_Synonyms')
-    with gzip.open("data/regions.txt.gz") as inp:
+    filepath = os.path.join(os.path.dirname(__file__), "../../data/regions.txt.gz")
+    with gzip.open(filepath) as inp:
         regions = json.load(inp)
     for r in regions:
         rec = Region(
