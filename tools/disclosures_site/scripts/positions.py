@@ -10,6 +10,7 @@ def parse_args():
     parser.add_argument("--raw-positions", dest='raw_positions', required=True)
     return parser.parse_args()
 
+
 class TGraphCluster:
 
     def __init__(self, item, count):
