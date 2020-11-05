@@ -44,10 +44,10 @@ def clear_regions(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    initial = True
+    initial = False
 
     dependencies = [
-        ('declarations', '0006_init_regions'),
+        ('declarations', '0001_initial'),
     ]
     operations = [
         migrations.RunPython(add_regions, clear_regions)
