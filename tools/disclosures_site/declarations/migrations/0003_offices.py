@@ -20,7 +20,6 @@ def add_offices(apps, schema_editor):
                    region_id=office['region_id'],
                    rubric_id=build_one_rubric(None, office_hierarchy, office['id'])
                    )
-        print (c.rubric_id)
         c.save()
 
 

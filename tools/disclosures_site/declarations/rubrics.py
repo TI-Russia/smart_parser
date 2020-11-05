@@ -129,7 +129,6 @@ def build_one_rubric(logger, office_hierarchy, office_id):
 def build_rubrics(logger=None):
     office_hierarchy = models.TOfficeHierarchy(use_office_types=False)
     for office in models.Office.objects.all():
-        print("{} ".format(office.id))
         rubric_id = build_one_rubric(logger, office_hierarchy, office.id)
         if rubric_id is not None:
             office.rubric_id = rubric_id
