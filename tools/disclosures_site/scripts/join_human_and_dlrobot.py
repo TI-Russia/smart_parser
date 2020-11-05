@@ -260,9 +260,11 @@ def main(args):
     joiner = TJoiner(args, logger)
     if not args.only_rebuild_office_to_domain:
         joiner.copy_new_dlrobot_files()
-        joiner.copy_old_dlrobot_files()
+        if args.old_dlrobot_human_json is not None:
+            joiner.copy_old_dlrobot_files()
         joiner.copy_human_files()
-        joiner.copy_old_human_files_that_were_deleted_in_declarator()
+        if args.old_dlrobot_human_json is not None:
+            joiner.copy_old_human_files_that_were_deleted_in_declarator()
         joiner.output_dlrobot_human.write()
 
     joiner.calc_office_id()

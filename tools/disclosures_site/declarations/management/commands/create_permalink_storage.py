@@ -51,16 +51,19 @@ class Command(BaseCommand):
         )
 
     def save_permalinks(self, logger, django_db_model, db:TPermaLinksDB):
-        cnt = 0
-        max_value = 0
-        for record in queryset_iterator(django_db_model.objects.all()):
-            cnt += 1
-            if (cnt % 3000) == 0:
-                logger.debug("{}:{}".format(str(django_db_model), cnt))
-            db.put_record_id(record)
-            max_value = max(record.id, max_value)
+        if django_db_model.objects.count() == 0:
+            db.save_next_primary_key_value(django_db_model, 0)
+        else:
+            cnt = 0
+            max_value = 0
+            for record in queryset_iterator(django_db_model.objects.all()):
+                cnt += 1
+                if (cnt % 3000) == 0:
+                    logger.debug("{}:{}".format(str(django_db_model), cnt))
+                db.put_record_id(record)
+                max_value = max(record.id, max_value)
 
-        db.save_next_primary_key_value(django_db_model, max_value + 1)
+            db.save_next_primary_key_value(django_db_model, max_value + 1)
 
     def handle(self, *args, **options):
         logger = setup_logging()

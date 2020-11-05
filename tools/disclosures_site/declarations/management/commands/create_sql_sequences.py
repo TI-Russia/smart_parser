@@ -17,6 +17,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
+        self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
         self.primary_keys_builder.create_sql_sequences()
