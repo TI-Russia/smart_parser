@@ -9,6 +9,8 @@ import urllib
 from declarations.common import resolve_fullname, resolve_person_name_from_search_request
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from .rubrics import fill_combo_box_with_rubrics
+from datetime import datetime
+
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -50,13 +52,22 @@ class StatisticsView(generic.TemplateView):
         return context
 
 
+def fill_combo_box_with_section_years():
+    res = [("", "")]
+    for year in range(2008, datetime.now().year):
+        res.append((str(year), str(year)))
+    return res
+
+
 class CommonSearchForm(forms.Form):
     search_request = forms.CharField(
         widget=forms.TextInput(attrs={'size': 80}),
         strip=True,
+        required=False,
+        empty_value="",
         label="ФИО")
     office_request = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 80}),
+        widget=forms.TextInput(attrs={'size': 40}),
         required=False,
         empty_value="",
         label="Ведомство")
@@ -64,6 +75,10 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Рубрика",
         choices=fill_combo_box_with_rubrics)
+    section_year = forms.ChoiceField(
+        required=False,
+        label="Год",
+        choices=fill_combo_box_with_section_years)
 
 
 def check_Russian_name(name1, name2):
@@ -85,7 +100,7 @@ def compare_Russian_fio(search_query, person_name):
         return True
     if fio1['family_name'].lower() != fio2['family_name'].lower():
         return False
-    return     check_Russian_name(fio1.get('name'), fio2.get('name')) \
+    return check_Russian_name(fio1.get('name'), fio2.get('name')) \
            and check_Russian_name(fio1.get('patronymic'), fio2.get('patronymic'))
 
 
@@ -107,7 +122,8 @@ class CommonSearchView(FormView, generic.ListView):
         return {
             'search_request': self.request.GET.get('search_request'),
             'office_request': self.request.GET.get('office_request'),
-            'office_rubric': self.request.GET.get('office_rubric')
+            'office_rubric': self.request.GET.get('office_rubric'),
+            'section_year': self.request.GET.get('section_year'),
         }
 
     def query_elastic_search(self, match_operator="OR"):
@@ -127,8 +143,6 @@ class CommonSearchView(FormView, generic.ListView):
                         'operator': match_operator
                     }
                 }
-
-
                 search_results = self.elastic_search_document.search().query('match', **query_dict)
             return search_results
         except Exception:
@@ -137,6 +151,8 @@ class CommonSearchView(FormView, generic.ListView):
     def process_search_results(self, search_results, max_count, person_name_filtering=False):
         object_list = list()
         person_name_query = self.get_initial().get('search_request')
+        if len(person_name_query) == 0:
+            person_name_filtering = False
         max_count = min(search_results.count(), max_count)
         for x in search_results[:max_count]:
             try:
@@ -146,7 +162,7 @@ class CommonSearchView(FormView, generic.ListView):
             except Exception as exp:
                 logging.getLogger('django').error("cannot get record, id={}".format(x.id))
                 raise
-        self.hits_count = len(object_list)
+        self.hits_count = search_results.count()
         return object_list
 
     def process_query(self, max_count=100, match_operator="OR"):
@@ -201,14 +217,15 @@ class SectionSearchView(CommonSearchView):
 
     def query_elastic_search(self):
         query = self.get_initial().get('search_request')
-        if query is None or len(query) == 0:
-            return None
         try:
-            if query.startswith('{') and query.endswith('}'):
+            if query is not None and query.startswith('{') and query.endswith('}'):
                 query_dict = json.loads(query)
                 return self.elastic_search_document.search().query('match', **query_dict)
             else:
-                query_dict = {"query": {"bool": {"must": {"match": {"person_name": query} }}}}
+                should_items = []
+                if query is not None and query != "":
+                    should_items.append({"match": {"person_name": query}})
+
                 office_query = self.get_initial().get('office_request')
                 if office_query is not None and len(office_query) > 0:
                     offices_search = ElasticOfficeDocument.search().query('match', name=office_query)
@@ -216,13 +233,23 @@ class SectionSearchView(CommonSearchView):
                     if total == 0:
                         return None
                     offices = list(o.id for o in offices_search[0:total])
-                    query_dict['query']['bool']['should'] = [{"terms":{"office_id": offices}}]
+                    should_items.append({"terms": {"office_id": offices}})
+
                 office_rubric = self.get_initial().get('office_rubric')
                 if office_rubric is not None and office_rubric != '-1':
-                    should = query_dict['query']['bool'].get('should', [])
-                    should.append({"terms": {"rubric_id": [int(office_rubric)]}})
-                    query_dict['query']['bool']['should'] = should
-                    query_dict['query']['bool']['minimum_should_match'] = len(should)
+                    should_items.append({"terms": {"rubric_id": [int(office_rubric)]}})
+
+                income_year = self.get_initial().get('section_year')
+                if income_year is not None and income_year != '':
+                    should_items.append({"terms": {"income_year": [int(income_year)]}})
+
+                if len(should_items) == 0:
+                    return None
+
+                query_dict = {"query": {"bool": {
+                               "should": should_items,
+                               "minimum_should_match": len(should_items)
+                           }}}
                 search = self.elastic_search_document.search()
                 search_results = search.update_from_dict(query_dict)
                 return search_results
@@ -246,6 +273,5 @@ class FileSearchView(CommonSearchView):
     def get_queryset(self):
         # using 300 here to allow search bots to crawl all file links going from one office
         object_list = self.process_query(max_count=300)
-
         object_list.sort(key=lambda x: x.file_path, reverse=True)
         return object_list

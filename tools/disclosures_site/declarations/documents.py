@@ -26,7 +26,8 @@ class ElasticSectionDocument(Document):
             'id',
             'person_name',
             'position',
-            'department'
+            'department',
+            'income_year'
         ]
 
     def prepare_source_document_id(self, instance):

@@ -3,31 +3,35 @@
 {% block title %}Найденные декларации {% endblock title %}
 
 {% block content %}
-
+<style>
+    div.search_input {
+        padding-top: 5x;
+        padding-bottom: 5px;
+    }
+</style>
 <form action="{% url 'section_search' %}" method="get">
-    <table>
-        <tr>
-            <td>{{form.search_request.label_tag}}</td>
-            <td>{{form.search_request}}</td>
-            <td><input type="submit" value="Поиск"></td>
-       </tr>
-        <tr>
-            <td><label for="id_office_request">Ведомство:</label></td>
-            <td>{{form.office_request}} </td>
-        </tr>
-        <tr>
-            <td><label for="id_office_rubric">Рубрика:</label></td>
-            <td>{{form.office_rubric}} </td>
-        </tr>
-    </table>
+    <div class="search_input">
+        {{form.search_request.label_tag}}
+        {{form.search_request}}
+        <input type="submit" value="Поиск">
+    </div>
+    <div class="search_input">
+        {{form.office_rubric.label_tag}}
+        {{form.office_rubric}}
+        {{form.section_year.label_tag}}
+        {{form.section_year}}
+    </div>
+    <div class="search_input">
+        {{form.office_request.label_tag}}
+        {{form.office_request}}
+    </div>
 </form>
 
 
-{% if form.search_request.value %}
+{% if hits_count %}
     <br/>
     Число найденных деклараций: {{ hits_count }}
     <br/>
-
 
     <table cellpadding="5">
         <tr>
@@ -49,6 +53,7 @@
         </tr>
         {% endfor %}
     </table>
+
 
     {% include "search/paginator.html" %}
 
