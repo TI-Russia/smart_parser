@@ -20,13 +20,14 @@ class ElasticSectionDocument(Document):
     office_id = IntegerField()
     rubric_id = IntegerField()
     position_and_department = TextField()
+    income_size = IntegerField()
 
     class Django:
         model = Section
         fields = [
             'id',
             'person_name',
-            'income_year'
+            'income_year',
         ]
 
     def prepare_source_document_id(self, instance):
@@ -47,6 +48,9 @@ class ElasticSectionDocument(Document):
                 str += " "
             str += instance.department
         return str
+
+    def prepare_income_size(self, instance):
+        return instance.get_declarant_income_size()
 
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])

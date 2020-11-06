@@ -303,15 +303,18 @@ class Section(models.Model):
         result = Relative.sort_by_visual_order(list(relatives))
         return result
 
-    def permalink_passports(self):
-        main_income = 0
+    def get_declarant_income_size(self):
         if hasattr(self, "tmp_income_set"):
-            incomes = self.tmp_income_set
+            incomes = self.tmp_income_set # used during the main section import
         else:
             incomes = self.income_set.all()
         for i in incomes:
             if i.relative == Relative.main_declarant_code:
-                main_income = i.size
+                return i.size
+        return 0
+
+    def permalink_passports(self):
+        main_income = self.get_declarant_income_size()
         yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
 
 
