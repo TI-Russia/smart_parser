@@ -18,17 +18,21 @@
     <div class="search_input">
         {{form.office_rubric.label_tag}}
         {{form.office_rubric}}
+        &nbsp;
         {{form.section_year.label_tag}}
         {{form.section_year}}
-    </div>
-    <div class="search_input">
+        &nbsp;
         {{form.office_request.label_tag}}
         {{form.office_request}}
+    </div>
+    <div class="search_input">
+        {{form.position_and_department.label_tag}}
+        {{form.position_and_department}}
     </div>
 </form>
 
 
-{% if hits_count %}
+{% if hits_count is not None %}
     <br/>
     Число найденных деклараций: {{ hits_count }}
     <br/>

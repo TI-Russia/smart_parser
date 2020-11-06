@@ -1,4 +1,4 @@
-from django_elasticsearch_dsl import Document, IntegerField
+from django_elasticsearch_dsl import Document, IntegerField, TextField
 from django_elasticsearch_dsl.registries import registry
 from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from django.conf import settings
@@ -19,14 +19,13 @@ class ElasticSectionDocument(Document):
     source_document_id = IntegerField()
     office_id = IntegerField()
     rubric_id = IntegerField()
+    position_and_department = TextField()
 
     class Django:
         model = Section
         fields = [
             'id',
             'person_name',
-            'position',
-            'department',
             'income_year'
         ]
 
@@ -38,6 +37,16 @@ class ElasticSectionDocument(Document):
 
     def prepare_rubric_id(self, instance):
         return OFFICES.offices[instance.source_document.office.id]['rubric_id']
+
+    def prepare_position_and_department(self, instance):
+        str = ""
+        if instance.position is not None:
+            str += instance.position
+        if instance.department is not None:
+            if len(str) > 0:
+                str += " "
+            str += instance.department
+        return str
 
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])

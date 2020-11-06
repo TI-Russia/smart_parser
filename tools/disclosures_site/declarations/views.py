@@ -66,11 +66,6 @@ class CommonSearchForm(forms.Form):
         required=False,
         empty_value="",
         label="ФИО")
-    office_request = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 40}),
-        required=False,
-        empty_value="",
-        label="Ведомство")
     office_rubric = forms.ChoiceField(
         required=False,
         label="Рубрика",
@@ -79,6 +74,16 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Год",
         choices=fill_combo_box_with_section_years)
+    office_request = forms.CharField(
+        widget=forms.TextInput(attrs={'size': 28}),
+        required=False,
+        empty_value="",
+        label="Ведомство")
+    position_and_department = forms.CharField(
+        widget=forms.TextInput(attrs={'size': 28}),
+        required=False,
+        empty_value="",
+        label="Должность или отдел")
 
 
 def check_Russian_name(name1, name2):
@@ -124,6 +129,8 @@ class CommonSearchView(FormView, generic.ListView):
             'office_request': self.request.GET.get('office_request'),
             'office_rubric': self.request.GET.get('office_rubric'),
             'section_year': self.request.GET.get('section_year'),
+            'official_position': self.request.GET.get('official_position'),
+            'position_and_department': self.request.GET.get('position_and_department'),
         }
 
     def query_elastic_search(self, match_operator="OR"):
@@ -242,6 +249,10 @@ class SectionSearchView(CommonSearchView):
                 income_year = self.get_initial().get('section_year')
                 if income_year is not None and income_year != '':
                     should_items.append({"terms": {"income_year": [int(income_year)]}})
+
+                pos_and_dep = self.get_initial().get('position_and_department')
+                if pos_and_dep is not None and pos_and_dep != '':
+                    should_items.append({"terms": {"position_and_department": [pos_and_dep]}})
 
                 if len(should_items) == 0:
                     return None
