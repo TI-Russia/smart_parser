@@ -121,6 +121,21 @@ class CommonSearchView(FormView, generic.ListView):
         if hasattr(self, "hits_count"):
             context['hits_count'] = self.hits_count
             context['query_fields'] = self.get_query_in_cgi()
+            old_sort_by, old_order = self.get_sort_order()
+            old_cgi_fields = self.get_initial()
+            for field in self.elastic_search_document._fields.keys():
+                new_cgi_fields = dict(old_cgi_fields.items())
+                new_cgi_fields["sort_by"] = field
+                if field == old_sort_by and old_order == "asc":
+                    new_cgi_fields["order"] = "desc"
+                else:
+                    new_cgi_fields.pop("order", None)
+                context['sort_by_' + field]  = self.get_query_in_cgi(cgi_fields=new_cgi_fields)
+            cgi_fields_wo_order = dict(old_cgi_fields.items())
+            cgi_fields_wo_order.pop("order", None)
+            cgi_fields_wo_order.pop("sort_by", None)
+            context['without_order'] = self.get_query_in_cgi(cgi_fields=cgi_fields_wo_order)
+
         return context
 
     def get_initial(self):
@@ -129,8 +144,9 @@ class CommonSearchView(FormView, generic.ListView):
             'office_request': self.request.GET.get('office_request'),
             'office_rubric': self.request.GET.get('office_rubric'),
             'section_year': self.request.GET.get('section_year'),
-            'official_position': self.request.GET.get('official_position'),
             'position_and_department': self.request.GET.get('position_and_department'),
+            'sort_by': self.request.GET.get('sort_by'),
+            'order': self.request.GET.get('order'),
         }
 
     def query_elastic_search(self, match_operator="OR"):
@@ -156,21 +172,27 @@ class CommonSearchView(FormView, generic.ListView):
             return None
 
     def process_search_results(self, search_results, max_count, person_name_filtering=False):
-        object_list = list()
         person_name_query = self.get_initial().get('search_request')
-        if len(person_name_query) == 0:
+        if person_name_query is None or len(person_name_query) == 0:
             person_name_filtering = False
         max_count = min(search_results.count(), max_count)
-        for x in search_results[:max_count]:
+        object_list = list()
+        for search_doc in search_results[:max_count]:
             try:
-                if not person_name_filtering or compare_Russian_fio(person_name_query, x.person_name):
-                    rec = self.model.objects.get(pk=x.id)
-                    object_list.append(rec)
+                if not person_name_filtering or compare_Russian_fio(person_name_query, search_doc.person_name):
+                    object_list.append(search_doc)
             except Exception as exp:
-                logging.getLogger('django').error("cannot get record, id={}".format(x.id))
+                logging.getLogger('django').error("cannot get record, id={}".format(search_doc.id))
                 raise
         self.hits_count = search_results.count()
         return object_list
+
+    def get_sort_order(self):
+        sort_by = self.get_initial().get('sort_by')
+        order = self.get_initial().get('order')
+        if order is None:
+            order = 'asc'
+        return sort_by, order
 
     def process_query(self, max_count=100, match_operator="OR"):
         search_results = self.query_elastic_search(match_operator)
@@ -178,9 +200,11 @@ class CommonSearchView(FormView, generic.ListView):
             return []
         return self.process_search_results(search_results, max_count)
 
-    def get_query_in_cgi(self):
+    def get_query_in_cgi(self, cgi_fields=None):
+        if cgi_fields is None:
+            cgi_fields = self.get_initial()
         query_fields = []
-        for (k, v) in self.get_initial().items():
+        for (k, v) in cgi_fields.items():
             if v is not None and len(v) > 0:
                 query_fields.append((k, v))
         query_fields = urllib.parse.urlencode(query_fields)
@@ -261,6 +285,10 @@ class SectionSearchView(CommonSearchView):
                                "should": should_items,
                                "minimum_should_match": len(should_items)
                            }}}
+                sort_by, order = self.get_sort_order()
+                if sort_by is not None:
+                    query_dict['sort'] = [{sort_by: {"order": order}}]
+
                 search = self.elastic_search_document.search()
                 search_results = search.update_from_dict(query_dict)
                 return search_results
@@ -272,7 +300,8 @@ class SectionSearchView(CommonSearchView):
         if search_results is None:
             return []
         object_list = self.process_search_results(search_results, max_count=1000, person_name_filtering=True)
-        object_list.sort(key=lambda x: x.person_name)
+        if self.get_sort_order()[0] is None:
+            object_list.sort(key=lambda x: x.person_name)
         return object_list
 
 

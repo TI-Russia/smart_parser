@@ -40,9 +40,10 @@
     <table cellpadding="5">
         <tr>
             <th>ID</th>
-            <th>ФИО</th>
-            <th>Год</th>
-            <th>Декларант</th>
+            <th><a href="?{{without_order}}">ФИО</a></th>
+            <th><a href="?{{sort_by_income_year}}">Год</a></th>
+            <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
+            <th><a href="?{{sort_by_income_size}}">Доход</a></th>
         </tr>
         {% for section in object_list %}
         <tr>
@@ -54,6 +55,7 @@
                 <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
                 {% endif %}
             </td>
+            <td>{{ section.income_size }}</td>
         </tr>
         {% endfor %}
     </table>
