@@ -175,7 +175,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 
     # to rebuild one index
-    #python manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
+    #python3 manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
 
     # index sizes
     # curl 127.0.0.1:9200/_cat/indices

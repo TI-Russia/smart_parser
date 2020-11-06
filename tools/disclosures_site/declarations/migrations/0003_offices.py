@@ -12,7 +12,7 @@ def add_offices(apps, schema_editor):
     filepath = os.path.join(os.path.dirname(__file__), "../../data/offices.txt.gz")
     with gzip.open(filepath) as inp:
         offices = json.load(inp)
-    office_hierarchy = models.TOfficeHierarchy(use_office_types=False, init_from_json=offices)
+    office_hierarchy = models.TOfficeTableInMemory(use_office_types=False, init_from_json=offices)
     Office = apps.get_model('declarations', 'Office')
     for office in offices:
         c = Office(id=office['id'],

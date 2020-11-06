@@ -75,7 +75,7 @@ class Region_Synonyms(models.Model):
     synonym_class = models.IntegerField(null=True) #see SynonymClass
 
 
-class TOfficeHierarchy:
+class TOfficeTableInMemory:
     group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
 
     def go_to_the_top(self, id):
@@ -88,7 +88,7 @@ class TOfficeHierarchy:
                 return id
             parent = self.offices[self.offices[id]['parent_id']]
             if self.use_office_types:
-                if parent['type_id'] in TOfficeHierarchy.group_types:
+                if parent['type_id'] in TOfficeTableInMemory.group_types:
                     return id
             id = parent['id']
         return id
@@ -106,7 +106,9 @@ class TOfficeHierarchy:
                      'id': o.id,
                      'name': o.name,
                      'parent_id': o.parent_id,
-                     'type_id': o.type_id}
+                     'type_id': o.type_id,
+                     'rubric_id': o.rubric_id
+                }
         else:
             for o in init_from_json:
                 self.offices[o['id']] = o

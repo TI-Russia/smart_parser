@@ -73,8 +73,8 @@ RubricsInRussian = {
 }
 
 
-def get_russian_name(rubric_id):
-    return RubricsInRussian[rubric_id]['name']
+def fill_combo_box_with_rubrics():
+    return [(-1, '')] + list ( (k, v['name']) for k, v in RubricsInRussian.items())
 
 
 def check_rubric(office_hierarchy, office_id, rubric):
@@ -127,7 +127,7 @@ def build_one_rubric(logger, office_hierarchy, office_id):
 
 
 def build_rubrics(logger=None):
-    office_hierarchy = models.TOfficeHierarchy(use_office_types=False)
+    office_hierarchy = models.TOfficeTableInMemory(use_office_types=False)
     for office in models.Office.objects.all():
         rubric_id = build_one_rubric(logger, office_hierarchy, office.id)
         if rubric_id is not None:

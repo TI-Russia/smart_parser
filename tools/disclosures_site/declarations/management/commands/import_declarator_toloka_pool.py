@@ -36,7 +36,7 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.office_hierarchy = models.TOfficeHierarchy()
+        self.office_hierarchy = models.TOfficeTableInMemory()
         factories = TSectionPassportFactory.get_all_passport_factories(self.office_hierarchy)
         #factories = TSectionPassportFactory.get_all_passport_factories()
         self.stable_key_to_sections = TSectionPassportFactory.get_all_passports_dict(factories)

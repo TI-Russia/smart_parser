@@ -8,6 +8,7 @@ import logging
 import urllib
 from declarations.common import resolve_fullname, resolve_person_name_from_search_request
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
+from .rubrics import fill_combo_box_with_rubrics
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -59,9 +60,13 @@ class CommonSearchForm(forms.Form):
         required=False,
         empty_value="",
         label="Ведомство")
+    office_rubric = forms.ChoiceField(
+        required=False,
+        label="Рубрика",
+        choices=fill_combo_box_with_rubrics)
 
 
-def check_Russiam_name(name1, name2):
+def check_Russian_name(name1, name2):
     if name1 is None or name2 is None:
         return True
     if len(name1) == 0 or len(name2) == 0:
@@ -80,8 +85,8 @@ def compare_Russian_fio(search_query, person_name):
         return True
     if fio1['family_name'].lower() != fio2['family_name'].lower():
         return False
-    return     check_Russiam_name(fio1.get('name'), fio2.get('name')) \
-           and check_Russiam_name(fio1.get('patronymic'), fio2.get('patronymic'))
+    return     check_Russian_name(fio1.get('name'), fio2.get('name')) \
+           and check_Russian_name(fio1.get('patronymic'), fio2.get('patronymic'))
 
 
 class CommonSearchView(FormView, generic.ListView):
@@ -101,7 +106,8 @@ class CommonSearchView(FormView, generic.ListView):
     def get_initial(self):
         return {
             'search_request': self.request.GET.get('search_request'),
-            'office_request': self.request.GET.get('office_request')
+            'office_request': self.request.GET.get('office_request'),
+            'office_rubric': self.request.GET.get('office_rubric')
         }
 
     def query_elastic_search(self, match_operator="OR"):
@@ -131,6 +137,7 @@ class CommonSearchView(FormView, generic.ListView):
     def process_search_results(self, search_results, max_count, person_name_filtering=False):
         object_list = list()
         person_name_query = self.get_initial().get('search_request')
+        max_count = min(search_results.count(), max_count)
         for x in search_results[:max_count]:
             try:
                 if not person_name_filtering or compare_Russian_fio(person_name_query, x.person_name):
@@ -201,20 +208,23 @@ class SectionSearchView(CommonSearchView):
                 query_dict = json.loads(query)
                 return self.elastic_search_document.search().query('match', **query_dict)
             else:
-                query_string = "(person_name: {})".format(query)
+                query_dict = {"query": {"bool": {"must": {"match": {"person_name": query} }}}}
                 office_query = self.get_initial().get('office_request')
                 if office_query is not None and len(office_query) > 0:
                     offices_search = ElasticOfficeDocument.search().query('match', name=office_query)
                     total = offices_search.count()
                     if total == 0:
                         return None
-                    offices = list(str(o.id) for o in offices_search[0:total])
-                    office_query = " AND (office_id: ({}))".format(" OR ".join(offices))
-                    query_string += office_query
-
-                search_results = self.elastic_search_document.search().query('query_string',
-                       query=query_string
-                     )
+                    offices = list(o.id for o in offices_search[0:total])
+                    query_dict['query']['bool']['should'] = [{"terms":{"office_id": offices}}]
+                office_rubric = self.get_initial().get('office_rubric')
+                if office_rubric is not None and office_rubric != '-1':
+                    should = query_dict['query']['bool'].get('should', [])
+                    should.append({"terms": {"rubric_id": [int(office_rubric)]}})
+                    query_dict['query']['bool']['should'] = should
+                    query_dict['query']['bool']['minimum_should_match'] = len(should)
+                search = self.elastic_search_document.search()
+                search_results = search.update_from_dict(query_dict)
                 return search_results
         except Exception as e:
             return None
