@@ -7,6 +7,8 @@ from declarations.documents import ElasticSectionDocument
 class ElasticTestCase(TestCase):
 
     def test_elastic(self):
+        self.assertGreater(models.Office.objects.count(), 0)
+
         ElasticSectionDocument.init()
         ElasticSectionDocument._index._name.endswith("_test")
         ElasticSectionDocument.search().query().delete()
@@ -17,9 +19,7 @@ class ElasticTestCase(TestCase):
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
 
-        ofc = models.Office()
-        ofc.name = "some name"
-        ofc.save()
+        ofc = models.Office.objects.get(id=1)
 
         src_doc = models.Source_Document()
         src_doc.id = 1
