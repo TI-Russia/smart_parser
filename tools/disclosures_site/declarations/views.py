@@ -3,7 +3,6 @@ from django.views import generic
 from django.views.generic.edit import FormView
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from django import forms
-import json
 import logging
 import urllib
 from declarations.common import resolve_fullname, resolve_person_name_from_search_request
@@ -170,7 +169,6 @@ class CommonSearchView(FormView, generic.ListView):
 
     def get_initial(self):
         return {
-            'search_request': self.request.GET.get('search_request'),
             'person_name': self.request.GET.get('person_name'),
             'office_request': self.request.GET.get('office_request'),
             'rubric_id': self.request.GET.get('rubric_id'),
@@ -181,29 +179,9 @@ class CommonSearchView(FormView, generic.ListView):
             'order': self.request.GET.get('order'),
             'name': self.request.GET.get('name'),
             'file_path': self.request.GET.get('file_path'),
+            'source_document_id': self.request.GET.get('source_document_id'),
+            'office_id': self.request.GET.get('office_id'),
         }
-
-    def query_elastic_search_old(self, match_operator="OR"):
-        query = self.get_initial().get('search_request')
-        if query is None:
-            return None
-        if len(query) == 0:
-            return None
-        try:
-            if query.startswith('{') and query.endswith('}'):
-                query_dict = json.loads(query)
-            else:
-                query_dict = {
-                    #self.elastic_search_document.default_field_name: query,
-                    self.elastic_search_document.default_field_name : {
-                        'query': query,
-                        'operator': match_operator
-                    }
-                }
-            search_results = self.elastic_search_document.search().query('match', **query_dict)
-            return search_results
-        except Exception:
-            return None
 
     def query_elastic_search(self):
         def add_should_item(field_name, elastic_search_operaror, field_type, should_items):
@@ -219,6 +197,8 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("income_year", "term", int, should_items)
             add_should_item("pos_and_dep", "match", str, should_items)
             add_should_item("file_path", "match", str, should_items)
+            add_should_item("source_document_id", "term", int, should_items)
+            add_should_item("office_id", "term", int, should_items)
 
             office_query = self.get_initial().get('office_request')
             if office_query is not None and len(office_query) > 0:
@@ -249,17 +229,21 @@ class CommonSearchView(FormView, generic.ListView):
         except Exception as e:
             return None
 
-    def process_search_results(self, search_results):
-        person_name_query = self.get_initial().get('search_request')
+    def get_person_name_field(self):
+        person_name_query = self.get_initial().get('person_name')
         if person_name_query is None or len(person_name_query) == 0:
-            person_name_filtering = False
+            return None
         if 'person_name' not in self.elastic_search_document._fields:
-            person_name_filtering = False
+            return None
+        return person_name_query
+
+    def process_search_results(self, search_results):
+        person_name_query = self.get_person_name_field()
         max_count = min(search_results.count(), self.max_document_count)
         object_list = list()
         for search_doc in search_results[:max_count]:
             try:
-                if not person_name_filtering or compare_Russian_fio(person_name_query, search_doc.person_name):
+                if person_name_query is None or compare_Russian_fio(person_name_query, search_doc.person_name):
                     object_list.append(search_doc)
             except Exception as exp:
                 logging.getLogger('django').error("cannot get record, id={}".format(search_doc.id))
@@ -312,9 +296,13 @@ class OfficeSearchView(CommonSearchView):
     def get_queryset(self):
         if self.get_initial().get('name') is None:
             try:
-                object_list = list(models.Office.objects.all())
-                object_list.sort(key=lambda x: x.source_document_count, reverse=True)
-                return object_list
+                search = self.elastic_search_document.search()
+                query_dict = {
+                        "query": { "range": {"source_document_count":{"gte": 1}} },
+                        "sort": [{"source_document_count": {"order": "desc"}}]
+                }
+                search_results = search.update_from_dict(query_dict)
+                return self.process_search_results(search_results)
             except Exception as exp:
                 raise exp
         else:
