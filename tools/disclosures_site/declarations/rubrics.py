@@ -74,7 +74,7 @@ RubricsInRussian = {
 
 
 def fill_combo_box_with_rubrics():
-    return [(-1, '')] + list ( (k, v['name']) for k, v in RubricsInRussian.items())
+    return [('', '')] + list ( (k, v['name']) for k, v in RubricsInRussian.items())
 
 
 def check_rubric(office_hierarchy, office_id, rubric):

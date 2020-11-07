@@ -11,23 +11,26 @@
 </style>
 <form action="{% url 'section_search' %}" method="get">
     <div class="search_input">
-        {{form.search_request.label_tag}}
-        {{form.search_request}}
+        {{form.person_name.label_tag}}
+        {{form.person_name}}
         <input type="submit" value="Поиск">
     </div>
     <div class="search_input">
-        {{form.office_rubric.label_tag}}
-        {{form.office_rubric}}
-        &nbsp;
-        {{form.section_year.label_tag}}
-        {{form.section_year}}
-        &nbsp;
-        {{form.office_request.label_tag}}
-        {{form.office_request}}
+        {{form.rubric_id.label_tag}}
+        {{form.rubric_id}}
+        &nbsp;&nbsp;&nbsp;
+        {{form.income_year.label_tag}}
+        {{form.income_year}}
+        &nbsp;&nbsp;&nbsp;
+        {{form.region_id.label_tag}}
+        {{form.region_id}}
     </div>
     <div class="search_input">
         {{form.position_and_department.label_tag}}
         {{form.position_and_department}}
+        &nbsp;
+        {{form.office_request.label_tag}}
+        {{form.office_request}}
     </div>
 </form>
 
@@ -40,7 +43,7 @@
     <table cellpadding="5">
         <tr>
             <th>ID</th>
-            <th><a href="?{{without_order}}">ФИО</a></th>
+            <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
             <th><a href="?{{sort_by_income_year}}">Год</a></th>
             <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
             <th><a href="?{{sort_by_income_size}}">Доход</a></th>

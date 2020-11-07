@@ -22,6 +22,7 @@ class ElasticSectionDocument(Document):
     position_and_department = TextField()
     income_size = IntegerField()
     person_id = IntegerField()
+    region_id = IntegerField()
 
     class Django:
         model = Section
@@ -36,6 +37,9 @@ class ElasticSectionDocument(Document):
 
     def prepare_office_id(self, instance):
         return instance.source_document.office.id
+
+    def prepare_region_id(self, instance):
+        return instance.source_document.office.region_id
 
     def prepare_rubric_id(self, instance):
         return OFFICES.offices[instance.source_document.office.id]['rubric_id']
@@ -67,6 +71,7 @@ person_search_index.settings(
 @person_search_index.document
 class ElasticPersonDocument(Document):
     default_field_name = "person_name"
+    section_count = IntegerField()
 
     class Django:
         model = Person
@@ -74,6 +79,8 @@ class ElasticPersonDocument(Document):
             'id',
             'person_name',
         ]
+    def prepare_section_count(self, instance):
+        return instance.section_count
 
 
 office_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['office_index_name'])
@@ -87,6 +94,7 @@ office_search_index.settings(
 class ElasticOfficeDocument(Document):
     default_field_name = "name"
     parent_id = IntegerField()
+    source_document_count = IntegerField()
 
     class Django:
         model = Office
@@ -97,6 +105,9 @@ class ElasticOfficeDocument(Document):
 
     def prepare_parent_id(self, instance):
         return instance.parent_id
+
+    def prepare_source_document_count(self, instance):
+        return instance.source_document_count
 
 
 file_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['file_index_name'])

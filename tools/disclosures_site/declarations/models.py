@@ -16,9 +16,13 @@ class Office(models.Model):
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
     rubric_id = models.IntegerField(null=True, default=None) # see TOfficeRubrics
+
     @property
     def source_document_count(self):
-        return self.source_document_set.all().count()
+        try:
+            return self.source_document_set.all().count()
+        except Exception as exp:
+            raise
 
     def get_source_documents(self, max_count=10):
         cnt = 0
