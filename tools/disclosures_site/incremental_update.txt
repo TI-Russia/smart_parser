@@ -186,3 +186,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
      sudo systemctl stop disclosures
      sudo systemctl start disclosures
+
+#15  посылаем данные dlrobot в облако
+    python3 scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
+        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder declarator/dlrobot_updates \
+        --yandex-disk-token-file ~/.yandex_token
