@@ -1,13 +1,9 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference, TIntersectionStatus
 import shutil
 import os
-import re
 import argparse
-import hashlib
 import logging
-from collections import defaultdict
-from robots.common.robot_project import TRobotProject
-import yadisk
+import psutil
+
 
 def setup_logging(logfilename):
     logger = logging.getLogger("backuper")
@@ -36,15 +32,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main(args):
-    logger = setup_logging("backuper.log")
-
-    with open (args.yandex_disk_token_file) as inp:
-        yandex_disk = yadisk.YaDisk(token=inp.read().strip())
-        assert yandex_disk.check_token()
-        logger.info("check {} exists in the cloud".format(args.output_cloud_folder))
-        assert yandex_disk.exists(args.output_cloud_folder)
-
+def create_tar_file(logger, args):
     tmp_folder = "dlrobot.{}".format(args.max_ctime)
     os.mkdir(tmp_folder)
     with os.scandir(args.input_dlrobot_folder) as it:
@@ -60,9 +48,28 @@ def main(args):
 
     logger.info("remove {}".format(tmp_folder))
     shutil.rmtree(tmp_folder, ignore_errors=True)
+    return tar_file
 
-    logger.info("upload  {} to {}".format(tar_file, args.output_cloud_folder))
-    yandex_disk.upload(tar_file, os.path.join(args.output_cloud_folder, tar_file))
+
+def check_yandex_disk_is_running():
+    for proc in psutil.process_iter():
+        cmdline = " ".join(proc.cmdline())
+        if proc.pid != os.getpid():
+            if 'yandex-disk' in cmdline:
+                return True
+    return False
+
+
+def main(args):
+    logger = setup_logging("backuper.log")
+    assert check_yandex_disk_is_running()
+
+    tar_file = create_tar_file(logger, args)
+
+    logger.info("move {} to {}".format(tar_file, args.output_cloud_folder))
+    shutil.move(tar_file, args.output_cloud_folder)
+
+    logger.info("all done")
 
 
 if __name__ == '__main__':

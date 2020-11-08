@@ -54,8 +54,9 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #=====================================================================
 
 #3.1 создание нового каталога
-    # all projects that older than 5 hours in order not to get a race condition
+    cd $DLROBOT_UPDATES_FOLDER/
     export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
+    # all projects that older than 5 hours in order not to get a race condition
     export CRAWL_EPOCH=`python3 -c "import time; print (int(time.time() - 60 * 5))"`
     export DLROBOT_FOLDER=$DLROBOT_UPDATES_FOLDER/$CRAWL_EPOCH
 
@@ -90,11 +91,16 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 #3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок
    python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
-   python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+   # возможно python3 /var/... disclosures_site/manage.py, поскольку в $TOOLS/disclosures_site/ - новый код
 
 
 #3.8.  инициализация базы disclosures
     follow $TOOLS/disclosures_site/INSTALL.txt
+
+
+#3.8.1
+python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+
 
 #3.9.  Импорт json в dislosures_db
    cd $DLROBOT_FOLDER
@@ -188,6 +194,6 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
      sudo systemctl start disclosures
 
 #15  посылаем данные dlrobot в облако
-    python3 scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
+    python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder declarator/dlrobot_updates \
         --yandex-disk-token-file ~/.yandex_token
