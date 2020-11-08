@@ -12,3 +12,10 @@ if __name__ == "__main__":
     except RobotHttpException as exp:
         assert exp.http_code == 520
         #todo: why urlib cannot resolve redirects for http://gibdd.ru  -> гибдд.рф?
+
+    try:
+        s = make_http_request(logging, "http://5%20июня%20запретят%20розничную%20продажу%20алкоголя", "GET")
+    except RobotHttpException as exp:
+        #no UnicodeException for this url
+        pass
+
