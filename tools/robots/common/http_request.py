@@ -33,7 +33,8 @@ class TRequestPolicy:
     @staticmethod
     def initialize():
         TRequestPolicy.SSL_CONTEXT = ssl._create_unverified_context()
-        TRequestPolicy.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
+        #TRequestPolicy.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
+        TRequestPolicy.SSL_CONTEXT.set_ciphers('DEFAULT@SECLEVEL=1')
 
     # decrement HTTP_503_ERRORS_COUNT on successful http_request
     @staticmethod
@@ -151,17 +152,17 @@ if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
 
 
 def make_http_request_urllib(logger, url, method):
-    url = _prepare_url_before_http_request(logger, url, method)
-
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={'User-Agent': get_user_agent()},
-        method=method
-    )
-
-    logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
     try:
+        url = _prepare_url_before_http_request(logger, url, method)
+
+        req = urllib.request.Request(
+            url,
+            data=None,
+            headers={'User-Agent': get_user_agent()},
+            method=method
+        )
+
+        logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
         with urllib.request.urlopen(req, context=TRequestPolicy.SSL_CONTEXT, timeout=TRequestPolicy.HTTP_TIMEOUT) as request:
             data = '' if method == "HEAD" else request.read()
             headers = request.info()

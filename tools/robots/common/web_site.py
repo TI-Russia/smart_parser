@@ -1,4 +1,5 @@
 from robots.common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
+from robots.common.http_request import  RobotHttpException
 from collections import defaultdict
 from robots.common.primitives import get_site_domain_wo_www, get_html_title
 import os
@@ -38,6 +39,7 @@ class TRobotWebSite:
         if init_json is not None:
             self.morda_url = init_json['morda_url']
             self.office_name = init_json.get('name', '')
+            self.enable_urllib = init_json.get('enable_urllib', True)
             self.robot_steps = list()
             self.export_env.from_json(init_json.get('exported_files'))
             for step_no, step in enumerate(init_json.get('steps', list())):
@@ -45,6 +47,7 @@ class TRobotWebSite:
             for url, info in init_json.get('url_nodes', dict()).items():
                 self.url_nodes[url] = TUrlInfo(init_json=info)
         else:
+            self.enable_urllib = True
             self.morda_url = ""
             self.office_name = ""
             self.robot_steps = list()
@@ -56,7 +59,22 @@ class TRobotWebSite:
 
     def init_morda_url_if_necessary(self):
         if len(self.url_nodes) == 0:
-            title = get_html_title(TDownloadedFile(self.morda_url).data)
+            title = None
+            for i in range(3):
+                try:
+                    html_data = TDownloadedFile(self.morda_url).data
+                    title = get_html_title(html_data)
+                    break
+                except RobotHttpException as exp:
+                    self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.morda_url))
+                    time.sleep(3)
+            if title is None:
+                self.parent_project.selenium_driver.navigate(self.morda_url)
+                time.sleep(3)
+                title = self.parent_project.selenium_driver.the_driver.title
+                self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
+                self.enable_urllib = False
+
             self.url_nodes[self.morda_url] = TUrlInfo(title=title)
 
     def get_domain_name(self):
@@ -76,6 +94,7 @@ class TRobotWebSite:
         return {
             'morda_url': self.morda_url,
             'name': self.office_name,
+            'enable_urllib': self.enable_urllib,
             'steps': [s.to_json() for s in self.robot_steps],
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
             'exported_files': self.export_env.to_json()
