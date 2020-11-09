@@ -7,6 +7,8 @@ rm $FOLDER/*.txt.visited_pages $FOLDER/*.txt.result_summary $FOLDER/*.txt.click_
 
 ls $FOLDER/*.txt | xargs --verbose -n 1 -P 4 python3 dlrobot.py --project
 
+git diff --exit-code  $FOLDER
+
 if [ $? -eq 0 ]; then
     echo  "==== TESTS PASSED ====="!
 else
