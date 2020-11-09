@@ -48,7 +48,8 @@ class TImporter:
             if office_id is None:
                 continue
             if int(office_id) not in db_offices:
-                TImporter.logger.error("cannot find office {} references in dlrobot_human.json ".format(office_id))
+                TImporter.logger.error("cannot find office id={} from {} in sql table ".format(
+                    office_id, self.args['dlrobot_human']))
                 raise Exception("integrity failed")
             office_to_source_documents[office_id].append(sha256)
         return office_to_source_documents

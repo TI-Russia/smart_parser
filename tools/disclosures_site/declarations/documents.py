@@ -3,6 +3,7 @@ from django_elasticsearch_dsl.registries import registry
 from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from django.conf import settings
 from elasticsearch_dsl import Index
+from django.db.utils import DatabaseError
 
 section_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'])
 section_search_index.settings(
@@ -10,7 +11,7 @@ section_search_index.settings(
     number_of_replicas=0
 )
 
-OFFICES = TOfficeTableInMemory()
+OFFICES = None
 
 @registry.register_document
 @section_search_index.document
@@ -104,6 +105,7 @@ class ElasticOfficeDocument(Document):
         ]
 
     def prepare_parent_id(self, instance):
+        assert OFFICES is not None
         return instance.parent_id
 
     def prepare_source_document_count(self, instance):
@@ -134,12 +136,21 @@ class ElasticFileDocument(Document):
 
 
 def stop_elastic_indexing():
+    ElasticOfficeDocument.django.ignore_signals = True
     ElasticSectionDocument.django.ignore_signals = True
     ElasticPersonDocument.django.ignore_signals = True
     ElasticFileDocument.django.ignore_signals = True
 
 
 def start_elastic_indexing():
+    ElasticOfficeDocument.django.ignore_signals = False
     ElasticSectionDocument.django.ignore_signals = False
     ElasticPersonDocument.django.ignore_signals = False
     ElasticFileDocument.django.ignore_signals = False
+
+
+try:
+    OFFICES = TOfficeTableInMemory()
+except DatabaseError as exp:
+    stop_elastic_indexing()
+    print("stop_elastic_indexing because there is no offices")
