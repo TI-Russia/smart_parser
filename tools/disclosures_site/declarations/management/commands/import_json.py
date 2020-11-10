@@ -142,7 +142,7 @@ class TImporter:
                         section_id = self.primary_keys_builder.get_record_id(json_reader.section)
                         if section_id >= self.first_new_section_id:
                             passports = list(json_reader.section.permalink_passports())
-                            TImporter.logger.error("found new section {}, set section.id to {}".format(
+                            TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 passports[0], section_id))
                         json_reader.save_to_database(section_id)
                         imported_sections += 1
@@ -243,10 +243,6 @@ class ImportJsonCommand(BaseCommand):
                 cnt += 1
 
         TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
-
-        TImporter.logger.info("reindex elastic index declarations.Section")
-        ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
-        start_elastic_indexing()
         TImporter.logger.info("all done")
 
 Command=ImportJsonCommand

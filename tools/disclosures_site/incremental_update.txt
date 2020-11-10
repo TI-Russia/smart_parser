@@ -120,7 +120,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
         --settings disclosures.settings.dev \
         --permanent-links-db permalinks.dbm
 
-#9.  тестирование сливалки
+#9.  (факультативно) тестирование сливалки
    export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
 
    cd $TOOLS/disclosures_site/toloka/pools
@@ -148,7 +148,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #11  Коммит статистики
    cd $TOOLS/disclosures_site
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   git commit data/statistics.json
+   git commit -m "new statistics" data/statistics.json
    git push
 
 #12
@@ -200,4 +200,4 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #15  посылаем данные dlrobot в облако
     python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder declarator/dlrobot_updates \
-        --yandex-disk-token-file ~/.yandex_token
+

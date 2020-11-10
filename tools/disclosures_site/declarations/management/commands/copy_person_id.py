@@ -177,12 +177,6 @@ class Command(BaseCommand):
                 merge_count += 1
 
         self.logger.info("set human person id to {} records".format(merge_count))
-
-        self.logger.info("rebuild elastic search for person")
-        ElasticManagement().handle(action="rebuild", models=["declarations.Person"], force=True, parallel=True,
-                                   count=True)
-        
-        start_elastic_indexing()
         self.update_primary_keys()
         self.logger.info("all done")
 

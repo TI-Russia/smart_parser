@@ -159,7 +159,6 @@ class Command(BaseCommand):
         else:
             self.logger.info('Warning! Threshold is not set. Is it just a test?')
 
-
     def filter_table(self, model_type, lower_bound, upper_bound):
         records = model_type.objects
         if lower_bound != '':
@@ -331,7 +330,7 @@ class Command(BaseCommand):
         dump_file_name = self.options.get("result_pairs_file")
         if dump_file_name:
             dump_stream = open(dump_file_name, "w", encoding="utf8")
-            self.logger.debug(u'write result pairs to {}\n'.format(dump_file_name))
+            self.logger.debug('write result pairs to {}\n'.format(dump_file_name))
 
         for lower_bound, upper_bound in self.get_family_name_bounds():
             self.logger.debug("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
@@ -345,6 +344,5 @@ class Command(BaseCommand):
 
         if dump_stream is not None:
             dump_stream.close()
-        start_elastic_indexing()
 
 RunDedupe=Command
