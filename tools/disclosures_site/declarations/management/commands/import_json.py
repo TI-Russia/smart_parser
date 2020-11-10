@@ -11,7 +11,6 @@ import os
 from functools import partial
 import json
 import logging
-from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
 from declarations.input_json import  TDlrobotHumanFile
 from collections import defaultdict
 from robots.dlrobot.scripts.cloud.smart_parser_cache_client import TSmartParserCacheClient
@@ -242,6 +241,7 @@ class ImportJsonCommand(BaseCommand):
                 importer.import_office(office_id)
                 cnt += 1
 
+        start_elastic_indexing()
         TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
         TImporter.logger.info("all done")
 
