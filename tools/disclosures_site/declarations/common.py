@@ -28,8 +28,9 @@ def resolve_fullname(name, as_list=False):
     """
     # clean up
     # Мурашев J1.JI.
-    name = re.sub(r"J[1I].", u"Л.", name)
-    name = re.sub(r"\s+\(м/с\)", u"", name, flags=re.U)
+    name = re.sub(r"J[1I].", "Л.", name)
+    name = re.sub(r"\s+\(м/с\)", "", name, flags=re.U)
+    name = re.sub(r"\W+$", "", name)
     if re.match(r"^((жена)|(сын)|(дочь)|(супруг)|(супруга))\s+",  name, flags=re.IGNORECASE) is not None:
         return None
     if re.search(r"\s((жена)|(сын)|(дочь)|(супруг)|(супруга))$",  name, flags=re.IGNORECASE) is not None:
@@ -76,7 +77,7 @@ def resolve_fullname(name, as_list=False):
 
     if not parts:
         return None
-    
+
     if len(parts[0]) == 0:
         return None
 

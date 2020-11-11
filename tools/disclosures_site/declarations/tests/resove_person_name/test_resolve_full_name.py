@@ -8,6 +8,8 @@ class ResolveFullNameTestCase(TestCase):
         def _P(fio):
             return resolve_fullname(fio, as_list=True)
         self.assertEqual(_P("Мамедов Чингиз Георгиевич"), ("Мамедов", "Чингиз", "Георгиевич"))
+        self.assertEqual(_P("Мамедов Чингиз Георгиевич,"), ("Мамедов", "Чингиз", "Георгиевич"))
+        self.assertEqual(_P("Мамедов Чингиз Георгиевич*"), ("Мамедов", "Чингиз", "Георгиевич"))
         self.assertEqual(_P("Мамедов Ч.Г."), ("Мамедов", "Ч", "Г"))
         self.assertEqual(_P("Мамедов ЧГ"), ("Мамедов", "Ч", "Г"))
         self.assertEqual(_P("МамедовЧГ."), ("Мамедов", "Ч", "Г"))
@@ -18,6 +20,7 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Мамедов .Ч. Г."), ("Мамедов", "Ч", "Г"))
         self.assertEqual(_P("Мамедов Ч..Г."), ("Мамедов", "Ч", "Г"))
 
+
         self.assertEqual(_P("квартира"), None)
         self.assertEqual(_P("Иванов"), None)
         self.assertEqual(_P("Иванов .."), None)
@@ -25,4 +28,5 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Мамедов Ч."), None)
         self.assertEqual(_P("Жена Суконцева А.В."), None)
         self.assertEqual(_P("Журавлев А.В. Супруга"), None)
+
 
