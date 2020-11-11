@@ -9,6 +9,7 @@ import sys
 from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
+from declarations.common import resolve_fullname
 
 
 def setup_logging(logfilename):
@@ -185,6 +186,9 @@ class Command(BaseCommand):
                         s.dedupe_score = None
                         s.person_id = None
                         s.save() # do it to disable constraint delete
+            if resolve_fullname(s.person_name) is None:
+                self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
+                continue
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()
             assert k is not None
             if len(v['family_name']) == 0:
