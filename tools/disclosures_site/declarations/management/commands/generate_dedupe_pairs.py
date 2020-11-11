@@ -291,7 +291,7 @@ class Command(BaseCommand):
         elif self.options.get("input_dedupe_objects") is not None:
             yield None, None
         else:
-            all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,З,И,К,КЛ,КС,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,ШП,Щ,Э,Ю,Я,'.split(',')
+            all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,ЖР,З,И,К,КИ,КП,КС,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,ТП,У,Ф,Х,Ц,Ч,Ш,ШП,Щ,Э,Ю,Я,'.split(',')
             for x in range(1, len(all_borders)):
                 yield all_borders[x-1], all_borders[x]
 

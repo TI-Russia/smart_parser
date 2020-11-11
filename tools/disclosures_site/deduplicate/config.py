@@ -6,28 +6,21 @@ import pickle
 import re
 
 
-
-
-def list_intersection(list1, list2):
-    set_list1 = set(d for d in list1)
-    set_list2 = set(d for d in list2)
-    return len(set_list1.intersection(set_list2))
-
-
 def intersection_weight(set1, set2):
     return sum(set1.intersection(set2))
+
 
 def num_category(field_1, field_2):
     return field_1
 
+
 def abs_diff(field_1, field_2):
     return abs(float(field_1) - float(field_2))
+
 
 def num_diff(field_1, field_2):
     return field_1 - field_2
 
-def float_diff(field_1, field_2):
-    return float(field_1) - float(field_2)
 
 fields = [
     {'field': 'full_name', 'variable name': 'person', 'type': 'String'},
@@ -51,7 +44,7 @@ fields = [
     {'field': 'children_number', 'type': 'Custom', 'comparator': num_diff},
     {'field': 'min_year', 'type': 'Custom', 'comparator': num_diff},
 
-    {'field': 'realestates_shared_size', 'type': 'Custom', 'comparator': intersection_weight},
+    #{'field': 'realestates_shared_size', 'type': 'Custom', 'comparator': intersection_weight},
 
 ]
 
