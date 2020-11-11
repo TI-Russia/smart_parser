@@ -13,6 +13,25 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Region',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.TextField(verbose_name='region name')),
+                ('wikibase_id', models.CharField(max_length=10, null=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Region_Synonyms',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('synonym', models.TextField(verbose_name='region synonym')),
+                ('synonym_class', models.IntegerField(null=True)),
+                ('region',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.region',
+                                   verbose_name='region')),
+            ],
+        ),
+        migrations.CreateModel(
             name='Office',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -20,27 +39,64 @@ class Migration(migrations.Migration):
                 ('type_id', models.IntegerField(null=True)),
                 ('parent_id', models.IntegerField(null=True)),
                 ('region_id', models.IntegerField(null=True)),
+                ('rubric_id', models.IntegerField(default=None, null=True))
             ],
         ),
         migrations.CreateModel(
             name='Person',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
                 ('person_name', models.CharField(max_length=64, verbose_name='person name')),
                 ('declarator_person_id', models.IntegerField(null=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Section',
+            name='Source_Document',
+            fields=[
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
+                ('sha256', models.CharField(max_length=200)),
+                ('file_path', models.CharField(max_length=128)),
+                ('intersection_status', models.CharField(max_length=16)),
+                ('office', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.office',
+                                             verbose_name='office name')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Declarator_File_Reference',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('declarator_documentfile_id', models.IntegerField(null=True)),
+                ('declarator_document_id', models.IntegerField(null=True)),
+                ('declarator_document_file_url', models.TextField(null=True)),
+                ('source_document',models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                                 to='declarations.source_document', verbose_name='source document')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Web_Reference',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('dlrobot_url', models.TextField(null=True)),
+                ('crawl_epoch', models.IntegerField(null=True)),
+                ('source_document',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.source_document',
+                                   verbose_name='source document')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Section',
+            fields=[
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
                 ('person_name', models.CharField(max_length=64, verbose_name='person name')),
                 ('income_year', models.IntegerField(null=True)),
                 ('department', models.TextField(null=True)),
                 ('position', models.TextField(null=True)),
                 ('person', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='declarations.Person', verbose_name='person id')),
                 ('dedupe_score', models.FloatField(blank=True, default=0.0, null=True)),
-            ],
+                ('source_document', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                                                 to='declarations.source_document', verbose_name='source document')),
+            ]
+
         ),
         migrations.CreateModel(
             name='Vehicle',
@@ -50,24 +106,6 @@ class Migration(migrations.Migration):
                 ('name', models.TextField()),
                 ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.Section')),
             ],
-        ),
-        migrations.CreateModel(
-            name='SPJsonFile',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sha256', models.CharField(max_length=200)),
-                ('web_domain', models.CharField(max_length=64)),
-                ('file_path', models.CharField(max_length=128)),
-                ('intersection_status', models.CharField(max_length=16)),
-                ('declarator_documentfile_id', models.IntegerField(null=True)),
-                ('declarator_document_id', models.IntegerField(null=True)),
-                ('office', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.Office', verbose_name='office name')),
-            ],
-        ),
-        migrations.AddField(
-            model_name='section',
-            name='spjsonfile',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='declarations.SPJsonFile', verbose_name='smart parser json file'),
         ),
         migrations.CreateModel(
             name='RealEstate',

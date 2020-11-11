@@ -3,6 +3,8 @@ from declarations.management.commands.generate_dedupe_pairs import RunDedupe
 import os
 import declarations.models as models
 from declarations.management.commands.permalinks import TPermaLinksDB
+import time
+import shutil
 
 
 def create_default_source_document():
@@ -61,6 +63,8 @@ class UseOldPersonId(TestCase):
         person.refresh_from_db()
 
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
+        if os.path.exists(permalinks_path):
+            os.unlink(permalinks_path)
         p = TPermaLinksDB(permalinks_path)
         p.create_db()
         p.save_next_primary_key_value(models.Person, 3)
@@ -98,6 +102,7 @@ class RememberOldPersonId(TestCase):
         db.save_next_primary_key_value(models.Person, 100)
         db.create_sql_sequences()
         db.close()
+        time.sleep(1)
 
         run_dedupe = RunDedupe(None, None)
         run_dedupe.handle(None,

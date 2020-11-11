@@ -167,22 +167,23 @@ class TRobotStep:
         return self.step_passport['check_link_func'].__name__
 
     def add_page_links(self, url, use_selenium=True, use_urllib=True):
-        try:
-            downloaded_file = TDownloadedFile(url)
-        except RobotHttpException as err:
-            self.logger.error(err)
-            return
-        if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
-            return
         html_parser = None
         already_processed_by_urllib = None
-        try:
-            if use_urllib:
+        downloaded_file = None
+        if use_urllib:
+            try:
+                downloaded_file = TDownloadedFile(url)
+            except RobotHttpException as err:
+                self.logger.error(err)
+                return
+            if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
+                return
+            try:
                 html_parser = THtmlParser(downloaded_file.data)
                 already_processed_by_urllib = self.website.find_a_web_page_with_a_similar_html(self, url, html_parser.html_text)
-        except Exception as e:
-            self.logger.error('cannot parse html, exception {}'.format(url, e))
-            return
+            except Exception as e:
+                self.logger.error('cannot parse html, exception {}'.format(url, e))
+                return
 
         try:
             if use_urllib and already_processed_by_urllib is None:
@@ -192,12 +193,12 @@ class TRobotStep:
                     self.logger.debug(
                         'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(url, already_processed_by_urllib))
 
-                if not use_selenium and len(list(html_parser.soup.findAll('a'))) < 10:
+                if not use_selenium and (html_parser is None or len(list(html_parser.soup.findAll('a'))) < 10):
                     self.logger.debug('temporal switch on selenium, since this file can be fully javascripted')
                     use_selenium = True
 
             if use_selenium:  # switch off selenium is almost a panic mode (too many links)
-                if downloaded_file.get_file_extension_only_by_headers() != DEFAULT_HTML_EXTENSION:
+                if downloaded_file is not None and downloaded_file.get_file_extension_only_by_headers() != DEFAULT_HTML_EXTENSION:
                     # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
                     self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
@@ -232,6 +233,8 @@ class TRobotStep:
         self.url_weights = list()
         use_selenium = self.step_passport.get('fallback_to_selenium', True)
         use_urllib = self.step_passport.get('use_urllib', True)
+        if not self.website.enable_urllib:
+            use_urllib = False
         for url_index in range(TRobotStep.max_step_url_count):
             url = self.pop_url_with_max_weight(url_index)
             if url is None:

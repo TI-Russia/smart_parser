@@ -35,6 +35,7 @@ class TSeleniumDriver:
         self.download_folder = download_folder
         assert download_folder != "."
         self.headless = headless
+        #self.headless = False
         self.loglevel = loglevel
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 

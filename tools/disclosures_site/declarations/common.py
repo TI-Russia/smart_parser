@@ -94,7 +94,7 @@ def resolve_person_name_from_search_request(fio):
         'family_name': items[0],
     }
     if len(items) > 1:
-        result['name'] = items[1]
+        result['name'] = items[1].strip()
     if len(items) > 2:
-        result['patronymic'] = " ".join(items[2:])
+        result['patronymic'] = " ".join(items[2:]).strip()
     return result

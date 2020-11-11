@@ -5,12 +5,12 @@
 {% block content %}
 
 <form action="{% url 'office_search' %}" method="get">
-    {{ form.search_request }}
+    {{form.name.label_tag}} {{ form.name }}
     <input type="submit" value="Поиск">
     <br/>
 </form>
 
-{% if form.search_request.value %}
+{% if hits_count is not None %}
   <br/>
   Число найденных ведомств: {{ hits_count }}
   <br/>
@@ -20,7 +20,7 @@
     <tr>
       <th>ID</th>
       <th>Название</th>
-      <th>Документов</th>
+      <th>Кол-во документов</th>
     </tr>
     {% for office in object_list %}
       <tr>

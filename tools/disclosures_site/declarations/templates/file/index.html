@@ -7,14 +7,14 @@
 <form action="{% url 'file_search' %}" method="get">
     <table>
         <tr>
-            <td>File path:</td>
-            <td>{{form.search_request}}</td>
+            <td>{{form.file_path.label_tag}}</td>
+            <td>{{form.file_path}}</td>
             <td><input type="submit" value="Поиск"></td>
        </tr>
     </table>
     </form>
 
-{% if hits_count %}
+{% if hits_count is not None %}
 
     <br/>
       Число найденных документов: {{ hits_count }}

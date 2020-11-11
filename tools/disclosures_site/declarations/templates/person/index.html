@@ -5,28 +5,31 @@
 {% block content %}
 
 <form action="{% url 'person_search' %}" method="get">
-    {{ form.search_request }}
+    {{form.person_name.label_tag}} {{ form.person_name }}
     <input type="submit" value="Поиск">
     <br/>
 </form>
 
-{% if form.search_request.value %}
+{% if hits_count is not None %}
 
     <br/>
       Число найденных декларантов: {{ hits_count }}
     <br/>
 
     <table>
+        <tr>
+            <th>ID</th>
+            <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
+            <th><a href="?{{sort_by_section_count}}">Число секций</a></th>
+        </tr>
+
       {% for person in object_list %}
         <tr>
           <td> {{ person.id }}: </td>
           <td>
-              <a href="/person/{{ person.id }}">
-                  {% for section in person.section_set.all|slice:":1" %}
-                    {{ section.person_name }}
-                  {% endfor %}
-              </a>
+              <a href="/person/{{ person.id }}"> {{ person.person_name }} </a>
           </td>
+          <td> &nbsp;&nbsp;{{ person.section_count }} </td>
         </tr>
       {% endfor %}
     </table>

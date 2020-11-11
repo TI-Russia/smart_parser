@@ -3,34 +3,50 @@
 {% block title %}Найденные декларации {% endblock title %}
 
 {% block content %}
-
+<style>
+    div.search_input {
+        padding-top: 5x;
+        padding-bottom: 5px;
+    }
+</style>
 <form action="{% url 'section_search' %}" method="get">
-    <table>
-        <tr>
-            <td>{{form.search_request.label_tag}}</td>
-            <td>{{form.search_request}}</td>
-            <td><input type="submit" value="Поиск"></td>
-       </tr>
-        <tr>
-            <td><label for="id_office_request">Ведомство:</label></td>
-            <td>{{form.office_request}} </td>
-        </tr>
-    </table>
+    <div class="search_input">
+        {{form.person_name.label_tag}}
+        {{form.person_name}}
+        <input type="submit" value="Поиск">
+    </div>
+    <div class="search_input">
+        {{form.rubric_id.label_tag}}
+        {{form.rubric_id}}
+        &nbsp;&nbsp;&nbsp;
+        {{form.income_year.label_tag}}
+        {{form.income_year}}
+        &nbsp;&nbsp;&nbsp;
+        {{form.region_id.label_tag}}
+        {{form.region_id}}
+    </div>
+    <div class="search_input">
+        {{form.position_and_department.label_tag}}
+        {{form.position_and_department}}
+        &nbsp;
+        {{form.office_request.label_tag}}
+        {{form.office_request}}
+    </div>
 </form>
 
 
-{% if form.search_request.value %}
+{% if hits_count is not None %}
     <br/>
     Число найденных деклараций: {{ hits_count }}
     <br/>
 
-
     <table cellpadding="5">
         <tr>
             <th>ID</th>
-            <th>ФИО</th>
-            <th>Год</th>
-            <th>Декларант</th>
+            <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
+            <th><a href="?{{sort_by_income_year}}">Год</a></th>
+            <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
+            <th><a href="?{{sort_by_income_size}}">Доход</a></th>
         </tr>
         {% for section in object_list %}
         <tr>
@@ -42,9 +58,11 @@
                 <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
                 {% endif %}
             </td>
+            <td>{{ section.income_size }}</td>
         </tr>
         {% endfor %}
     </table>
+
 
     {% include "search/paginator.html" %}
 

@@ -24,6 +24,8 @@ def parse_args():
 
     #options
     parser.add_argument("--only-rebuild-office-to-domain", dest='only_rebuild_office_to_domain', action="store_true", default=False)
+    parser.add_argument("--use-sha256-for-filenames", dest='use_sha256_for_filenames', action="store_true",
+                        default=False)
 
     return parser.parse_args()
 
@@ -84,7 +86,11 @@ class TJoiner:
         if new_file:
             self.web_domain_file_count[web_domain] += 1
             _, extension = os.path.splitext(input_file_path)
-            src_doc.document_path = os.path.join(web_domain, str(self.web_domain_file_count[web_domain]) + extension)
+            if self.args.use_sha256_for_filenames:
+                output_base_name = sha256
+            else:
+                output_base_name = str(self.web_domain_file_count[web_domain])
+            src_doc.document_path = os.path.join(web_domain, output_base_name + extension)
             src_doc.add_web_reference(web_ref)
             if not os.path.exists(input_file_path):
                 self.logger.error("source file {} does not exist, cannot copy it".format(input_file_path))
@@ -254,9 +260,11 @@ def main(args):
     joiner = TJoiner(args, logger)
     if not args.only_rebuild_office_to_domain:
         joiner.copy_new_dlrobot_files()
-        joiner.copy_old_dlrobot_files()
+        if args.old_dlrobot_human_json is not None:
+            joiner.copy_old_dlrobot_files()
         joiner.copy_human_files()
-        joiner.copy_old_human_files_that_were_deleted_in_declarator()
+        if args.old_dlrobot_human_json is not None:
+            joiner.copy_old_human_files_that_were_deleted_in_declarator()
         joiner.output_dlrobot_human.write()
 
     joiner.calc_office_id()

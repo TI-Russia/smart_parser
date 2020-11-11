@@ -29,7 +29,7 @@ class JoinDLrobotAndHuman(TestCase):
         human_files = "human_files.json"
         old_db = "old/dlrobot_human.json"
         self.run_cmd("python3 {} --max-ctime {} --input-dlrobot-folder {} --human-json {} --old-dlrobot-human-json {}"
-                     " --output-domains-folder {}  --output-json {}".format(
+                     " --output-domains-folder {}  --output-json {} --use-sha256-for-filenames ".format(
             script,
             5602811863, #the far future
             input_folder,

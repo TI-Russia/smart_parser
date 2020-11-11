@@ -54,8 +54,9 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #=====================================================================
 
 #3.1 создание нового каталога
-    # all projects that older than 5 hours in order not to get a race condition
+    cd $DLROBOT_UPDATES_FOLDER/
     export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
+    # all projects that older than 5 hours in order not to get a race condition
     export CRAWL_EPOCH=`python3 -c "import time; print (int(time.time() - 60 * 5))"`
     export DLROBOT_FOLDER=$DLROBOT_UPDATES_FOLDER/$CRAWL_EPOCH
 
@@ -89,15 +90,24 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 
 #3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок
-   python3 $TOOLS/disclosures_site/manage.py  create_permalink_storage  --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
-   python3 $TOOLS/disclosures_site/manage.py create_sql_sequences.py  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
+   # возможно python3 /var/... disclosures_site/manage.py, поскольку в $TOOLS/disclosures_site/ - новый код
 
 
 #3.8.  инициализация базы disclosures
-    follow $TOOLS/disclosures_site/INSTALL.txt
+    cd ~/smart_parser/tools/disclosures_site
+    sudo python3 manage.py create_database --settings disclosures.settings.dev --password ??? --skip-checks
+    python3 manage.py makemigrations --settings disclosures.settings.dev
+    python3 manage.py migrate --settings disclosures.settings.dev
+    python3 manage.py test declarations/tests --settings disclosures.settings.dev
+
+
+#3.8.1
+    cd $DLROBOT_FOLDER
+    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+
 
 #3.9.  Импорт json в dislosures_db
-   cd $DLROBOT_FOLDER
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
@@ -110,7 +120,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
         --settings disclosures.settings.dev \
         --permanent-links-db permalinks.dbm
 
-#9.  тестирование сливалки
+#9.  (факультативно) тестирование сливалки
    export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
 
    cd $TOOLS/disclosures_site/toloka/pools
@@ -138,7 +148,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 #11  Коммит статистики
    cd $TOOLS/disclosures_site
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   git commit data/statistics.json
+   git commit -m "new statistics" data/statistics.json
    git push
 
 #12
@@ -175,7 +185,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 
     # to rebuild one index
-    #python manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
+    #python3 manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
 
     # index sizes
     # curl 127.0.0.1:9200/_cat/indices
@@ -186,3 +196,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
      sudo systemctl stop disclosures
      sudo systemctl start disclosures
+
+#15  посылаем данные dlrobot в облако
+    python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
+        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder declarator/dlrobot_updates \
+

@@ -15,10 +15,14 @@ class Office(models.Model):
     region_id = models.IntegerField(null=True)
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
+    rubric_id = models.IntegerField(null=True, default=None) # see TOfficeRubrics
 
     @property
     def source_document_count(self):
-        return self.source_document_set.all().count()
+        try:
+            return self.source_document_set.all().count()
+        except Exception as exp:
+            raise
 
     def get_source_documents(self, max_count=10):
         cnt = 0
@@ -57,7 +61,25 @@ class Office(models.Model):
         return self.get_child_offices(max_count=5)
 
 
-class TOfficeHierarchy:
+class Region(models.Model):
+    name = models.TextField(verbose_name='region name')
+    wikibase_id = models.CharField(max_length=10, null=True)
+
+
+class SynonymClass:
+    Russian = 0
+    English = 1
+    EnglishShort = 2
+    RussianShort = 3
+
+
+class Region_Synonyms(models.Model):
+    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
+    synonym = models.TextField(verbose_name='region synonym')
+    synonym_class = models.IntegerField(null=True) #see SynonymClass
+
+
+class TOfficeTableInMemory:
     group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
 
     def go_to_the_top(self, id):
@@ -66,22 +88,35 @@ class TOfficeHierarchy:
             cnt += 1
             if cnt > 5:
                 raise Exception("too deep structure, probably a cycle found ")
-            if self.offices[id].parent_id is None:
+            if self.offices[id]['parent_id'] is None:
                 return id
-            parent = self.offices[self.offices[id].parent_id]
-            if parent.type_id in TOfficeHierarchy.group_types:
-                return id
-            id = parent.id
+            parent = self.offices[self.offices[id]['parent_id']]
+            if self.use_office_types:
+                if parent['type_id'] in TOfficeTableInMemory.group_types:
+                    return id
+            id = parent['id']
         return id
 
     def get_parent_office(self, office_id):
         return self.transitive_top[int(office_id)]
 
-    def __init__(self):
+    def __init__(self, use_office_types=True, init_from_json=None):
+        self.use_office_types = use_office_types
         self.offices = dict()
         self.transitive_top = dict()
-        for o in Office.objects.all():
-            self.offices[o.id] = o
+        if init_from_json is None:
+            for o in Office.objects.all():
+                self.offices[o.id] = {
+                     'id': o.id,
+                     'name': o.name,
+                     'parent_id': o.parent_id,
+                     'type_id': o.type_id,
+                     'rubric_id': o.rubric_id
+                }
+        else:
+            for o in init_from_json:
+                self.offices[o['id']] = o
+
         for office_id in self.offices:
             self.transitive_top[office_id] = self.go_to_the_top(office_id)
 
@@ -272,15 +307,18 @@ class Section(models.Model):
         result = Relative.sort_by_visual_order(list(relatives))
         return result
 
-    def permalink_passports(self):
-        main_income = 0
+    def get_declarant_income_size(self):
         if hasattr(self, "tmp_income_set"):
-            incomes = self.tmp_income_set
+            incomes = self.tmp_income_set # used during the main section import
         else:
             incomes = self.income_set.all()
         for i in incomes:
             if i.relative == Relative.main_declarant_code:
-                main_income = i.size
+                return i.size
+        return 0
+
+    def permalink_passports(self):
+        main_income = self.get_declarant_income_size()
         yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
 
 

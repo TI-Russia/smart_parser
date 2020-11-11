@@ -11,7 +11,6 @@ import os
 from functools import partial
 import json
 import logging
-from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
 from declarations.input_json import  TDlrobotHumanFile
 from collections import defaultdict
 from robots.dlrobot.scripts.cloud.smart_parser_cache_client import TSmartParserCacheClient
@@ -48,7 +47,8 @@ class TImporter:
             if office_id is None:
                 continue
             if int(office_id) not in db_offices:
-                TImporter.logger.error("cannot find office {} references in dlrobot_human.json ".format(office_id))
+                TImporter.logger.error("cannot find office id={} from {} in sql table ".format(
+                    office_id, self.args['dlrobot_human']))
                 raise Exception("integrity failed")
             office_to_source_documents[office_id].append(sha256)
         return office_to_source_documents
@@ -141,7 +141,7 @@ class TImporter:
                         section_id = self.primary_keys_builder.get_record_id(json_reader.section)
                         if section_id >= self.first_new_section_id:
                             passports = list(json_reader.section.permalink_passports())
-                            TImporter.logger.error("found new section {}, set section.id to {}".format(
+                            TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 passports[0], section_id))
                         json_reader.save_to_database(section_id)
                         imported_sections += 1
@@ -202,7 +202,7 @@ class ImportJsonCommand(BaseCommand):
         parser.add_argument(
             '--dlrobot-human',
             dest='dlrobot_human',
-            required=True`
+            required=True
         )
         parser.add_argument(
             '--smart-parser-human-json-folder',
@@ -241,11 +241,8 @@ class ImportJsonCommand(BaseCommand):
                 importer.import_office(office_id)
                 cnt += 1
 
-        TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
-
-        TImporter.logger.info("reindex elastic index declarations.Section")
-        ElasticManagement().handle(action="rebuild", models=["declarations.Section"], force=True, parallel=True, count=True)
         start_elastic_indexing()
+        TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
         TImporter.logger.info("all done")
 
 Command=ImportJsonCommand

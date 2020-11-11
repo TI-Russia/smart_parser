@@ -1,8 +1,9 @@
-from django_elasticsearch_dsl import Document, IntegerField
+from django_elasticsearch_dsl import Document, IntegerField, TextField
 from django_elasticsearch_dsl.registries import registry
-from declarations.models import Section, Person, Office, Source_Document
+from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from django.conf import settings
 from elasticsearch_dsl import Index
+from django.db.utils import DatabaseError
 
 section_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'])
 section_search_index.settings(
@@ -10,20 +11,26 @@ section_search_index.settings(
     number_of_replicas=0
 )
 
+OFFICES = None
+
 @registry.register_document
 @section_search_index.document
 class ElasticSectionDocument(Document):
     default_field_name = "person_name"
     source_document_id = IntegerField()
     office_id = IntegerField()
+    rubric_id = IntegerField()
+    position_and_department = TextField()
+    income_size = IntegerField()
+    person_id = IntegerField()
+    region_id = IntegerField()
 
     class Django:
         model = Section
         fields = [
             'id',
             'person_name',
-            'position',
-            'department'
+            'income_year',
         ]
 
     def prepare_source_document_id(self, instance):
@@ -31,6 +38,28 @@ class ElasticSectionDocument(Document):
 
     def prepare_office_id(self, instance):
         return instance.source_document.office.id
+
+    def prepare_region_id(self, instance):
+        return instance.source_document.office.region_id
+
+    def prepare_rubric_id(self, instance):
+        return OFFICES.offices[instance.source_document.office.id]['rubric_id']
+
+    def prepare_position_and_department(self, instance):
+        str = ""
+        if instance.position is not None:
+            str += instance.position
+        if instance.department is not None:
+            if len(str) > 0:
+                str += " "
+            str += instance.department
+        return str
+
+    def prepare_income_size(self, instance):
+        return instance.get_declarant_income_size()
+
+    def prepare_person_id(self, instance):
+        return instance.person_id
 
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])
@@ -43,6 +72,7 @@ person_search_index.settings(
 @person_search_index.document
 class ElasticPersonDocument(Document):
     default_field_name = "person_name"
+    section_count = IntegerField()
 
     class Django:
         model = Person
@@ -50,6 +80,8 @@ class ElasticPersonDocument(Document):
             'id',
             'person_name',
         ]
+    def prepare_section_count(self, instance):
+        return instance.section_count
 
 
 office_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['office_index_name'])
@@ -63,6 +95,7 @@ office_search_index.settings(
 class ElasticOfficeDocument(Document):
     default_field_name = "name"
     parent_id = IntegerField()
+    source_document_count = IntegerField()
 
     class Django:
         model = Office
@@ -72,7 +105,11 @@ class ElasticOfficeDocument(Document):
         ]
 
     def prepare_parent_id(self, instance):
+        assert OFFICES is not None
         return instance.parent_id
+
+    def prepare_source_document_count(self, instance):
+        return instance.source_document_count
 
 
 file_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['file_index_name'])
@@ -99,12 +136,21 @@ class ElasticFileDocument(Document):
 
 
 def stop_elastic_indexing():
+    ElasticOfficeDocument.django.ignore_signals = True
     ElasticSectionDocument.django.ignore_signals = True
     ElasticPersonDocument.django.ignore_signals = True
     ElasticFileDocument.django.ignore_signals = True
 
 
 def start_elastic_indexing():
+    ElasticOfficeDocument.django.ignore_signals = False
     ElasticSectionDocument.django.ignore_signals = False
     ElasticPersonDocument.django.ignore_signals = False
     ElasticFileDocument.django.ignore_signals = False
+
+
+try:
+    OFFICES = TOfficeTableInMemory()
+except DatabaseError as exp:
+    stop_elastic_indexing()
+    print("stop_elastic_indexing because there is no offices")
