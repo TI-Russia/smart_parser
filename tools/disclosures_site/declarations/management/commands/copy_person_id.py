@@ -1,13 +1,13 @@
 import declarations.models as models
-from declarations.documents import stop_elastic_indexing, start_elastic_indexing
+from declarations.documents import stop_elastic_indexing
 from django.core.management import BaseCommand
-from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
 import logging
 import pymysql
 import os
 import gc
 import json
 from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.common import resolve_fullname
 
 
 def setup_logging(logfilename="copy_person.log"):
@@ -62,11 +62,14 @@ def get_all_section_from_declarator_with_person_id():
             props_to_person_id[key1] = "AMBIGUOUS_KEY"
         else:
             props_to_person_id[key1] = person_id
-        key2 = build_section_passport(document_id, fio.split(" ")[0], income_main)
-        if key2 in props_to_person_id:
-            props_to_person_id[key2] = "AMBIGUOUS_KEY"
-        else:
-            props_to_person_id[key2] = person_id
+
+        fio_dict = resolve_fullname(fio)
+        if fio_dict is not None and len(fio_dict['family_name']) > 0:
+            key2 = build_section_passport(document_id, fio_dict['family_name'], income_main)
+            if key2 in props_to_person_id:
+                props_to_person_id[key2] = "AMBIGUOUS_KEY"
+            else:
+                props_to_person_id[key2] = person_id
 
     return props_to_person_id
 
@@ -131,7 +134,7 @@ class Command(BaseCommand):
             person.save()
             self.declarator_person_id_to_disclosures_person_id[declarator_person_id] = person.id
         else:
-            person = models.Person(id=person_id)
+            person = models.Person.objects.get(id=person_id)
             assert person is not None
             if person.person_name is None or len(person.person_name) < len(section.person_name):
                 person.person_name = section.person_name
@@ -153,13 +156,14 @@ class Command(BaseCommand):
         for declaration_info in section.source_document.declarator_file_reference_set.all():
             key1 = build_section_passport(declaration_info.declarator_document_id, section.person_name, main_income)
             checked_results.add(section_passports.get(key1))
-            words = section.person_name.split()
-            if len(words) > 0:
-                key2 = build_section_passport(declaration_info.declarator_document_id, words[0], main_income)
+            fio_dict = resolve_fullname(section.person_name)
+            if fio_dict is not None and len(fio_dict['family_name']) > 0:
+                # only by surname
+                key2 = build_section_passport(declaration_info.declarator_document_id, fio_dict['family_name'], main_income)
                 checked_results.add(section_passports.get(key2))
             else:
                 self.logger.error(
-                    "section {} fio={} cannot find surname(first word)".format(section.id, section.person_name))
+                    "section {} fio={} cannot find surname".format(section.id, section.person_name))
 
         if len(checked_results) == 1 and None in checked_results:
             self.logger.debug("section {} fio={} cannot be found in declarator".format(section.id, section.person_name))

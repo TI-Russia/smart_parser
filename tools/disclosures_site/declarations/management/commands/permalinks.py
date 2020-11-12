@@ -4,6 +4,7 @@ import declarations.models as models
 from django.db import connection
 import sys
 
+
 class TPermaLinksDB:
 
     def __init__(self, filename):

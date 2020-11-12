@@ -3,7 +3,7 @@ from django.db import connection
 import sys
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
-import logging
+
 
 
 class Command(BaseCommand):
