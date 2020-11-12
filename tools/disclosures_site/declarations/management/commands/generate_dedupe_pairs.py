@@ -215,9 +215,9 @@ class Command(BaseCommand):
                     continue
                     # no sections for this person, ignore this person
                 self.dedupe_objects[k] = v
-            cnt += 1
-            if cnt % 1000 == 0:
-                self.logger.info("Read {} records from person table".format(cnt))
+                cnt += 1
+                if cnt % 1000 == 0:
+                    self.logger.info("Read {} records from person table".format(cnt))
         self.logger.info("Read {} records from person table".format(cnt))
         if deleted_cnt > 0:
             self.logger.info("Deleted {} records from person table".format(deleted_cnt))

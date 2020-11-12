@@ -50,7 +50,7 @@ class Command(BaseCommand):
             help='write mapping to this fiie'
         )
 
-    def save_permalinks(self, logger, django_db_model, db:TPermaLinksDB):
+    def save_permalinks(self, logger, django_db_model, db: TPermaLinksDB):
         if django_db_model.objects.count() == 0:
             db.save_next_primary_key_value(django_db_model, 0)
         else:

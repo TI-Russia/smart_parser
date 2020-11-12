@@ -90,6 +90,7 @@ class Command(BaseCommand):
         self.options = None
         self.primary_keys_builder = None
         self.logger = None
+        self.declarator_person_id_to_disclosures_person_id = dict()
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -120,14 +121,25 @@ class Command(BaseCommand):
             return get_all_section_from_declarator_with_person_id()
 
     def copy_human_merge(self, section, declarator_person_id):
-        # we think that person ids in declarator db are stable
-        person = models.Person(declarator_person_id=declarator_person_id)
-        person.id = self.primary_keys_builder.get_record_id(person)
+        person_id = self.declarator_person_id_to_disclosures_person_id.get(declarator_person_id)
+        if person_id is None:
+            # we think that person ids in declarator db are stable
+            person = models.Person(declarator_person_id=declarator_person_id)
+            person.id = self.primary_keys_builder.get_record_id(person)
+            if person.person_name is None or len(person.person_name) < len(section.person_name):
+                person.person_name = section.person_name
+            person.save()
+            self.declarator_person_id_to_disclosures_person_id[declarator_person_id] = person.id
+        else:
+            person = models.Person(id=person_id)
+            assert person is not None
+            if person.person_name is None or len(person.person_name) < len(section.person_name):
+                person.person_name = section.person_name
+                person.save()
+
         self.logger.debug("connect section {} to person {}, declarator_person_id={}".format(
             section.id, person.id, declarator_person_id))
-        if person.person_name is None or len(person.person_name) < len(section.person_name):
-            person.person_name = section.person_name
-        person.save()
+
         section.person = person
         section.dedupe_score = None
         section.save()
@@ -169,7 +181,7 @@ class Command(BaseCommand):
         stop_elastic_indexing()
         cnt = 0
         merge_count = 0
-        for section  in queryset_iterator(models.Section.objects):
+        for section in queryset_iterator(models.Section.objects):
             cnt += 1
             if (cnt % 10000) == 0:
                 self.logger.debug("number processed sections = {}".format(cnt))

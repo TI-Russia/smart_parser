@@ -66,7 +66,6 @@ class TPermaLinksDB:
     def close(self):
         self.db.close()
 
-
     def update_person_records_count_and_close(self):
         self.db = dbm.gnu.open(self.filename, "w")
         with connection.cursor() as cursor:
@@ -82,4 +81,3 @@ class TPermaLinksDB:
                 self.save_next_primary_key_value(models.Person, new_value)
             self.recreate_auto_increment_table(models.Person)
         self.close()
-    
