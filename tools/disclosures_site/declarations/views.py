@@ -147,9 +147,14 @@ def compare_Russian_fio(search_query, person_name):
 class CommonSearchView(FormView, generic.ListView):
 
     paginate_by = 20
-    #paginate_by = 2  #temporal
 
     form_class = CommonSearchForm
+
+    def get_paginate_by(self, queryset):
+        user_page_size = self.request.GET.get('page_size')
+        if user_page_size is not None and user_page_size.isdigit():
+            return int(user_page_size)
+        return self.paginate_by
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -181,6 +186,8 @@ class CommonSearchView(FormView, generic.ListView):
             'file_path': self.request.GET.get('file_path'),
             'source_document_id': self.request.GET.get('source_document_id'),
             'office_id': self.request.GET.get('office_id'),
+            'page_size': self.request.GET.get('page_size'),
+            'person_id': self.request.GET.get('person_id'),
         }
 
     def query_elastic_search(self):
@@ -199,6 +206,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("file_path", "match", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)
+            add_should_item("person_id", "term", int, should_items)
 
             office_query = self.get_initial().get('office_request')
             if office_query is not None and len(office_query) > 0:

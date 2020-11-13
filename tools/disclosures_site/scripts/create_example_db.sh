@@ -3,9 +3,14 @@ export HUMAN_FILES_JSON=human_files.json
 
 export TOOLS=~/smart_parser/tools
 export DISCLOSURES_FILES=domains
+
+rm -rf humans_json.dummy
 mkdir humans_jsons.dummy
 export CRAWL_EPOCH=2147483647 # far future (2038 year)
 export SMART_PARSER_SERVER_ADDRESS=localhost:9178
+
+echo "delete  smart parser service"
+pkill -f smart_parser_cache
 
 rm *.log
 #python3 $TOOLS/disclosures_site/scripts/export_human_files.py --document-file-id 33594  --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
@@ -27,6 +32,7 @@ cd smart_parser_cache
 python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache.py &
 SMART_PARSER_PID=$!
 cd -
+sleep 10s
 
 python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py --action put --walk-folder-recursive $DISCLOSURES_FILES
 sleep 1m
@@ -51,4 +57,4 @@ python3 $TOOLS/disclosures_site/manage.py copy_person_id \
 export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
 python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --write-to-db --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
-
+python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f

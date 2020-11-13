@@ -89,9 +89,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
   python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
 
-#3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок
-   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
-   # возможно python3 /var/... disclosures_site/manage.py, поскольку в $TOOLS/disclosures_site/ - новый код
+#3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
+   python3 /var/www/smart_parser/tools/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
 
 #3.8.  инициализация базы disclosures
@@ -154,7 +153,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 #13. создание индексов для elasticsearch
-   python3 manage.py search_index --rebuild  --settings disclosures.settings.dev
+   python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
 
 #14 go to prod (migalka), disclosures.ru is offline
     cd /var/www/smart_parser/tools/disclosures_site
