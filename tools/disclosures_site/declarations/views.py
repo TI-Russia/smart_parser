@@ -10,7 +10,8 @@ from disclosures_site.declarations.statistics import TDisclosuresStatisticsHisto
 from .rubrics import fill_combo_box_with_rubrics
 from datetime import datetime
 from django_elasticsearch_dsl import TextField
-
+from django.http import HttpResponse
+import os
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -38,6 +39,15 @@ class OfficeView(generic.DetailView):
 
 class AboutPageView(generic.TemplateView):
     template_name = 'morda/about.html'
+
+
+def sitemapView(request):
+    sitemap_path = os.path.join(os.path.dirname(__file__), "../disclosures/static/sitemap", "sitemap.txt")
+    with open (sitemap_path) as inp:
+        return HttpResponse(inp.read())
+
+#class SitemapView(generic.TemplateView):
+#    #template_name = 'morda/sitemap.txt'
 
 
 class StatisticsView(generic.TemplateView):
