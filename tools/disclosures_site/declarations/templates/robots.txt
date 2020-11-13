@@ -1,3 +1,4 @@
 User-Agent: *
 Disallow: /private/
 Disallow: /junk/
+Sitemap: /static/sitemap/sitemap.txt

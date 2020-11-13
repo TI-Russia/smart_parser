@@ -27,5 +27,14 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--verbose',
+            dest='verbose',
+            type=int,
+            help='set verbosity, default is DEBUG',
+            default=0
+        )
+
     def handle(self, *args, **options):
         build_rubrics(setup_logging())
