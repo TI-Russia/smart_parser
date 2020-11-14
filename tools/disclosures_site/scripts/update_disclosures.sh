@@ -130,8 +130,7 @@ source $(dirname $0)/update_common.sh
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
     python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
-    sudo systemctl stop disclosures
-    sudo systemctl start disclosures
+    sudo systemctl restart disclosures
     sudo systemctl restart gunicorn.service
     # now prod works on database disclosures_prod_temp
 

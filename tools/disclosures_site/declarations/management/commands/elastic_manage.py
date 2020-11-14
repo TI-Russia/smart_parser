@@ -6,11 +6,12 @@ from django.core.management import BaseCommand
 
 
 class TElasticIndex:
+
     def __init__(self, es, index_name, options):
         self.es = es
         self.dev = index_name + "_dev"
         self.prod = index_name + "_prod"
-        self.prod_sav = index_name + "_prod_sav"
+        self.prod_sav = index_name + options.get("backup_index_name_suffix", "_prod_sav")
         self.enable_increase_check = options.get('enable_increase_check', True)
         self.enable_empty_check = options.get('enable_empty_check', True)
 
@@ -86,11 +87,18 @@ class Command(BaseCommand):
                             action="store_false", default=True)
         parser.add_argument("--skip-empty-check",  dest='enable_empty_check', required=False,
                             action="store_true", default=True)
+        parser.add_argument("--index-name-substr",  dest='index_name_substr', required=False,
+                            default=None, help="can be file, office, section or person")
+        parser.add_argument("--backup-index-name-suffix",  dest='backup_index_name_suffix', required=False,
+                            default="_prod_sav")
 
     def handle(self, *args, **options):
         es = Elasticsearch()
         indices = list()
         for x in settings.ELASTICSEARCH_INDEX_NAMES.values():
+            if options.get('index_name_substr') is not None:
+                if x.find(options.get('index_name_substr')) == -1:
+                    continue
             if x.endswith('_prod'):
                 index_name = x[:-5]
             elif x.endswith('_dev'):
