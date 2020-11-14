@@ -160,11 +160,12 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 #14 go to prod (migalka), disclosures.ru is offline
     cd /var/www/smart_parser/tools/disclosures_site
+    git pull
 
     # it takes more than 30 minutes  to unpack database, in future we have to use a temp databse
     # something like this (not tested yet)
     export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
-    sudo python3 manage.py create_database --settings disclosures.settings.prod --password ??? --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
     python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev

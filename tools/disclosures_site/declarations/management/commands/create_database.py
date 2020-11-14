@@ -19,8 +19,9 @@ class Command(BaseCommand):
         parser.add_argument(
                 '--password',
             dest='password',
-            required=True,
-            help="mysql root password"
+            required=False,
+            help="mysql root password",
+            default="root"
         )
 
     def run_sql(self, cursor, cmd):
@@ -44,9 +45,6 @@ class Command(BaseCommand):
             disclosures_password = settings.DATABASES['default']['PASSWORD']
             with db_connection.cursor() as cursor:
                 if self.check_database_exists(cursor, database_name):
-                    answer = input("delete database {} (yes, no)? ".format(database_name))
-                    if answer != "yes":
-                        return
                     sys.stdout.write("recreate database {}\n".format(database_name))
                 else:
                     sys.stdout.write("create new database {}\n".format(database_name))
