@@ -27,8 +27,6 @@ def parse_args():
     parser.add_argument("--max-ctime", dest='max_ctime', required=True, type=int, help="max ctime of an input folder")
     parser.add_argument("--input-dlrobot-folder", dest='input_dlrobot_folder', required=True)
     parser.add_argument("--output-cloud-folder", dest='output_cloud_folder', required=True)
-    parser.add_argument("--yandex-disk-token-file", dest='yandex_disk_token_file',
-                        required=False, default=os.path.expanduser("~/.yandex_token"))
     return parser.parse_args()
 
 

@@ -139,8 +139,7 @@ source $(dirname $0)/update_common.sh
     mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures
     python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
-    sudo systemctl stop disclosures
-    sudo systemctl start disclosures
+    sudo systemctl restart disclosures
     # now prod works on database disclosures_db
 
     mysqladmin drop  disclosures_prod_temp -u disclosures -pdisclosures
@@ -164,7 +163,7 @@ source $(dirname $0)/update_common.sh
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
 
 
-#17  посылаем данные dlrobot в облако
+#17  посылаем данные dlrobot в католог, который синхонизирутеся с облаком
     python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
-        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder declarator/dlrobot_updates \
+        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER
 

@@ -115,7 +115,7 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Год",
         choices=fill_combo_box_with_section_years)
-    office_id = forms.ChoiceField(
+    region_id = forms.ChoiceField(
         required=False,
         label="Регион",
         choices=fill_combo_box_with_regions)

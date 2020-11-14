@@ -7,6 +7,7 @@ export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
 export HUMAN_FILES_JSON=~/declarator_hdd/declarator/human_files.json
 export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
 export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
+export YANDEX_DISK_FOLDER=~/declarator_hdd/Yandex.Disk/declarator/dlrobot_updates
 export DISCLOSURES_FILES=domains
 export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
