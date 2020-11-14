@@ -43,7 +43,7 @@ class TElasticIndex:
         ic = IndicesClient(self.es)
         ic.freeze(from_index)
         sys.stderr.write("copy  {} to  {}\n".format(from_index, to_index))
-        ic.clone(from_index, to_index,body={"settings": {"index":{"number_of_replicas": 0}}})
+        ic.clone(from_index, to_index, body={"settings": {"index":{"number_of_replicas": 0}}})
         ic.unfreeze(from_index)
         status = ClusterClient(self.es).health(to_index)['status']
         if status != 'green':
@@ -82,18 +82,27 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--action",  dest='action', required=True,
-                            help="can be dev-to-prod, undo-dev-to-prod, backup-prod")
+                            help="can be dev-to-prod, undo-dev-to-prod, backup-prod, copy_single")
         parser.add_argument("--skip-increase-check",  dest='enable_increase_check', required=False,
                             action="store_false", default=True)
         parser.add_argument("--skip-empty-check",  dest='enable_empty_check', required=False,
                             action="store_true", default=True)
-        parser.add_argument("--index-name-substr",  dest='index_name_substr', required=False,
-                            default=None, help="can be file, office, section or person")
+        parser.add_argument("--source-index-name",  dest='source-index_name', required=False,
+                            default=None, help="set source index if action=copy_single")
+        parser.add_argument("--target-index-name",  dest='target-index_name', required=False,
+                            default=None, help="set target index if action=copy_single")
         parser.add_argument("--backup-index-name-suffix",  dest='backup_index_name_suffix', required=False,
                             default="_prod_sav")
 
     def handle(self, *args, **options):
         es = Elasticsearch()
+        if options['action'] == "copy_single":
+            assert options['target_index_name'] is not None
+            assert options['source_index_name'] is not None
+            index = TElasticIndex(es, index_name, options)
+            index.copy_index(options['source_index_name'], options['target_index_name'])
+            return
+
         indices = list()
         for x in settings.ELASTICSEARCH_INDEX_NAMES.values():
             if options.get('index_name_substr') is not None:
