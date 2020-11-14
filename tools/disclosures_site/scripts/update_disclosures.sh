@@ -137,7 +137,7 @@ source $(dirname $0)/update_common.sh
 
     export DISCLOSURES_DATABASE_NAME=disclosures_db
     mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures
-    sudo python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
     sudo systemctl stop disclosures
     sudo systemctl start disclosures

@@ -43,8 +43,9 @@ class TElasticIndex:
         ic = IndicesClient(self.es)
         ic.freeze(from_index)
         sys.stderr.write("copy  {} to  {}\n".format(from_index, to_index))
-        ic.clone(from_index, to_index, body={"settings": {"index":{"number_of_replicas": 0}}})
+        ic.clone(from_index, to_index, body={"settings": {"index": {"number_of_replicas": 0}}})
         ic.unfreeze(from_index)
+        ic.unfreeze(to_index)
         status = ClusterClient(self.es).health(to_index)['status']
         if status != 'green':
             sys.stderr.write("{}\n".format(ClusterClient(self.es).health(to_index)) )
@@ -100,6 +101,7 @@ class Command(BaseCommand):
             assert options['target_index_name'] is not None
             assert options['source_index_name'] is not None
             index = TElasticIndex(es, "dummy", options)
+            index.delete_index(options['target_index_name'])
             index.copy_index(options['source_index_name'], options['target_index_name'])
             return
 
