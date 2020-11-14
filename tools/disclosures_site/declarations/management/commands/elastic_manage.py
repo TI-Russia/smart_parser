@@ -87,9 +87,9 @@ class Command(BaseCommand):
                             action="store_false", default=True)
         parser.add_argument("--skip-empty-check",  dest='enable_empty_check', required=False,
                             action="store_true", default=True)
-        parser.add_argument("--source-index-name",  dest='source-index_name', required=False,
+        parser.add_argument("--source-index-name",  dest='source_index_name', required=False,
                             default=None, help="set source index if action=copy_single")
-        parser.add_argument("--target-index-name",  dest='target-index_name', required=False,
+        parser.add_argument("--target-index-name",  dest='target_index_name', required=False,
                             default=None, help="set target index if action=copy_single")
         parser.add_argument("--backup-index-name-suffix",  dest='backup_index_name_suffix', required=False,
                             default="_prod_sav")
