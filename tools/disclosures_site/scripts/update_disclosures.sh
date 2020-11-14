@@ -1,57 +1,12 @@
-# Процесс создание базы disclosures = dlrobot+declarator
 
-#======================================================================
-#========                     Инициализация                    ========
-#=====================================================================
+# Процесс создание базы disclosures = dlrobot+declarator (раз в месяц?)
 
-#1.1 идем в  ~/smart_parser/tools/INSTALL.txt и выполняем все шаги
+#0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
-#1.2. Объявление переменных (кроме тех, что уже объявлены в ~/smart_parser/tools/INSTALL.txt)
+set -e
 
-export TOOLS=~/smart_parser/tools
-export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
-export HUMAN_FILES_JSON=~/declarator_hdd/declarator/human_files.json
-export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
-export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
+source $(dirname $0)/update_common.sh
 
-export INPUT_DLROBOT_PROJECTS=input_projects
-export DISCLOSURES_FILES=domains
-export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
-
-
-
-#======================================================================
-#======== Обновление ручной базы (declarator), раз в квартал?  ========
-#=====================================================================
-#2.1 построение базы declarator:
-    cd ~
-    git clone sokirko@bitbucket.org:TI-Russia/declarator.git
-    cd declarator/trasparency
-    pip3 install -r ../deploy/requirements.txt
-    echo "CREATE DATABASE declarator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
-    create user if not exists 'declarator'@ identified by 'declarator';
-    GRANT ALL PRIVILEGES ON *.* TO 'declarator'@;" | mysql
-    #browse https://declarator.org/manage/dump_files/ и найти свежий дамп
-    wget https://declarator.org/manage/dump_files/prod????.tar.gz
-    zcat prod????.tar.gz | mysql -D declarator
-
-
-#2.2  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
-    python $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
-
-#2.3  Отправляем все новые Pdf на конвертацию
-    find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving
-
-#2.4 создание ручных json
-    [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
-    cd ~/declarator/transparency
-    source ../venv/bin/activate
-    python3 manage.py export_in_smart_parser_format --output-folder $HUMAN_JSONS_FOLDER
-
-
-#======================================================================
-#======== Получение данных от dlrobot (раз в месяц?)            ========
-#=====================================================================
 
 #3.1 создание нового каталога
     cd $DLROBOT_UPDATES_FOLDER/
@@ -76,17 +31,23 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 #3.3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
+    new_size=$(stat -c%s "dlrobot_human.json")
+    old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.json")
+    if (( $old_size > $new_size )); then
+        echo "the size of dlrobot_human.json is less than the size of older one, check dlrobot_human.json.stats"
+        exit 1
+    endif
 
-#3.4 новый смартпарсер через старые файлы dlrobot
-  python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py  --walk-folder-recursive $DISCLOSURES_FILES --action put
+#3.4 (факультативно) новый смартпарсер через старые файлы dlrobot
+  #python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py  --walk-folder-recursive $DISCLOSURES_FILES --action put
 
 #3.5  (факультативно) переконвертация  pdf, которые не были переконвертированы раньше
- find  $DISCLOSURES_FILES -name '*.pdf' -type f | xargs -n 100 --verbose python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving --conversion-timeout 20
+ #find  $DISCLOSURES_FILES -name '*.pdf' -type f | xargs -n 100 --verbose python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving --conversion-timeout 20
 
 #3.6  (факультативно) Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
-  find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
-  python $TOOLS/disclosures_site/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
-  python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
+  #find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
+  #python $TOOLS/disclosures_site/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
+  #python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
 
 #3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
@@ -95,7 +56,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 #3.8.  инициализация базы disclosures
     cd ~/smart_parser/tools/disclosures_site
-    sudo python3 manage.py create_database --settings disclosures.settings.dev --password ??? --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
     python3 manage.py test declarations/tests --settings disclosures.settings.dev
@@ -120,10 +81,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
         --permanent-links-db permalinks.dbm
 
 #9.  (факультативно) тестирование сливалки
-   export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
-
-   cd $TOOLS/disclosures_site/toloka/pools
-   bash -x make_pools.sh
+   #cd $TOOLS/disclosures_site/toloka/pools
+   #bash -x make_pools.sh
 
 #10.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
@@ -164,6 +123,8 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
     # it takes more than 30 minutes  to unpack database, in future we have to use a temp databse
     # something like this (not tested yet)
+    # todo: try to rename database with renaming all tables
+
     export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
     python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
@@ -171,12 +132,13 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
     sudo systemctl stop disclosures
     sudo systemctl start disclosures
+    sudo systemctl restart gunicorn.service
     # now prod works on database disclosures_prod_temp
 
 
     export DISCLOSURES_DATABASE_NAME=disclosures_db
     mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures
-    sudo python3 manage.py create_database --settings disclosures.settings.prod --password ??? --skip-checks
+    sudo python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
     sudo systemctl stop disclosures
     sudo systemctl start disclosures
@@ -198,7 +160,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
     rm -rf disclosures/static/sitemap
     ln -s  $DLROBOT_FOLDER/sitemap disclosures/static/sitemap
 
-#16  подменяем файл исходников
+#16  подменяем файл документов-исходников
      rm -rf disclosures/static/domains
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
 

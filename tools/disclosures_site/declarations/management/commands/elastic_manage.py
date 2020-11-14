@@ -6,12 +6,13 @@ from django.core.management import BaseCommand
 
 
 class TElasticIndex:
-    def __init__(self, es, index_name, skip_increase_check):
+    def __init__(self, es, index_name, options):
         self.es = es
         self.dev = index_name + "_dev"
         self.prod = index_name + "_prod"
         self.prod_sav = index_name + "_prod_sav"
-        self.skip_increase_check = skip_increase_check
+        self.enable_increase_check = options.get('enable_increase_check', True)
+        self.enable_empty_check = options.get('enable_empty_check', True)
 
     def print_stats(self, title):
         sys.stderr.write("{}:\n{}\n".format(title, self.es.cat.indices(), params={"format": "json"}))
@@ -30,8 +31,12 @@ class TElasticIndex:
     def check(self):
         prod_count = self.document_count(self.prod)
         dev_count = self.document_count(self.dev)
-        if prod_count > dev_count:
-            raise Exception("index {} contains more document than {}".format(self.prod, self.dev))
+        if self.enable_increase_check:
+            if prod_count > dev_count:
+                raise Exception("index {} contains more document than {}".format(self.prod, self.dev))
+        if self.enable_empty_check:
+            if dev_count == 0:
+                raise Exception("index {} contains no documents".format(self.dev))
 
     def copy_index(self, from_index, to_index):
         ic = IndicesClient(self.es)
@@ -47,8 +52,7 @@ class TElasticIndex:
 
 def dev_to_prod(indices):
     for index in indices:
-        if not index.skip_increase_check:
-            index.check()
+        index.check()
 
     for index in indices:
         index.delete_index(index.prod)
@@ -62,6 +66,7 @@ def undo_dev_to_prod(indices):
     for index in indices:
         index.delete_index(index.prod)
         index.copy_index(index.prod_sav, index.prod)
+
 
 def backup_prod(indices):
     for index in indices:
@@ -77,7 +82,9 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--action",  dest='action', required=True,
                             help="can be dev-to-prod, undo-dev-to-prod, backup-prod")
-        parser.add_argument("--skip-increase-check",  dest='skip_increase_check', required=False,
+        parser.add_argument("--skip-increase-check",  dest='enable_increase_check', required=False,
+                            action="store_false", default=True)
+        parser.add_argument("--skip-empty-check",  dest='enable_empty_check', required=False,
                             action="store_true", default=True)
 
     def handle(self, *args, **options):
@@ -91,7 +98,7 @@ class Command(BaseCommand):
             else:
                 raise  Exception ("unknown index name {} ".format(x))
             sys.stderr.write("collect index {}\n".format(index_name))
-            index = TElasticIndex(es, index_name, options.get('skip_increase_check', False))
+            index = TElasticIndex(es, index_name, options)
             indices.append(index)
 
 
