@@ -99,7 +99,7 @@ class Command(BaseCommand):
         if options['action'] == "copy_single":
             assert options['target_index_name'] is not None
             assert options['source_index_name'] is not None
-            index = TElasticIndex(es, index_name, options)
+            index = TElasticIndex(es, "dummy", options)
             index.copy_index(options['source_index_name'], options['target_index_name'])
             return
 
