@@ -143,7 +143,7 @@ class ElasticFileDocument(Document):
             if min_crawl_epoch is None:
                 min_crawl_epoch = web_ref.crawl_epoch
             else:
-                min_crawl_epoch = min(crawl_epoch, web_ref.crawl_epoch)
+                min_crawl_epoch = min(min_crawl_epoch, web_ref.crawl_epoch)
         return min_crawl_epoch
 
     @property
