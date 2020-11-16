@@ -41,9 +41,6 @@ def sitemapView(request):
     with open (sitemap_path) as inp:
         return HttpResponse(inp.read())
 
-#class SitemapView(generic.TemplateView):
-#    #template_name = 'morda/sitemap.txt'
-
 
 class StatisticsView(generic.TemplateView):
     template_name = "statistics/statistics.html"
@@ -78,6 +75,18 @@ def fill_combo_box_with_regions():
                 name = name[:33]
             CACHE_REGIONS.append((r.id, name))
     return CACHE_REGIONS
+
+
+def fill_combo_box_with_first_crawl_epochs():
+    values = list()
+    values.append(('', ''))
+    for epoch in StatisticsView.history.history:
+        epoch_date = datetime.fromtimestamp(epoch.crawl_epoch)
+        dlrobot_birthday = datetime.fromisocalendar(2020, 2, 1)
+        if epoch_date < dlrobot_birthday:
+            epoch_date = dlrobot_birthday
+        values.append((str(epoch.crawl_epoch), epoch_date.strftime("%Y-%m-%d")))
+    return values
 
 
 class CommonSearchForm(forms.Form):
@@ -124,6 +133,10 @@ class CommonSearchForm(forms.Form):
         required=False,
         empty_value="",
         label="Должность или отдел")
+    first_crawl_epoch = forms.ChoiceField(
+        required=False,
+        label="Дата обнаружения",
+        choices=fill_combo_box_with_first_crawl_epochs)
 
 
 def check_Russian_name(name1, name2):
@@ -193,6 +206,7 @@ class CommonSearchView(FormView, generic.ListView):
             'office_id': self.request.GET.get('office_id'),
             'page_size': self.request.GET.get('page_size'),
             'person_id': self.request.GET.get('person_id'),
+            'first_crawl_epoch': self.request.GET.get('first_crawl_epoch'),
         }
 
     def query_elastic_search(self):
@@ -207,11 +221,12 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("rubric_id", "term", int, should_items)
             add_should_item("region_id", "term", int, should_items)
             add_should_item("income_year", "term", int, should_items)
-            add_should_item("pos_and_dep", "match", str, should_items)
+            add_should_item("position_and_department", "match", str, should_items)
             add_should_item("file_path", "match", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)
             add_should_item("person_id", "term", int, should_items)
+            add_should_item("first_crawl_epoch", "term", int, should_items)
 
             office_query = self.get_initial().get('office_request')
             if office_query is not None and len(office_query) > 0:

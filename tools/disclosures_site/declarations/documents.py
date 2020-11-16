@@ -4,6 +4,7 @@ from declarations.models import Section, Person, Office, Source_Document, TOffic
 from django.conf import settings
 from elasticsearch_dsl import Index
 from django.db.utils import DatabaseError
+from datetime import datetime
 
 section_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'])
 section_search_index.settings(
@@ -122,6 +123,7 @@ file_search_index.settings(
 @file_search_index.document
 class ElasticFileDocument(Document):
     office_id = IntegerField()
+    first_crawl_epoch = IntegerField()
     default_field_name = "file_path"
 
     class Django:
@@ -129,11 +131,26 @@ class ElasticFileDocument(Document):
         fields = [
             'id',
             'file_path',
+            'intersection_status'
         ]
 
     def prepare_office_id(self, instance):
         return instance.office_id
 
+    def prepare_first_crawl_epoch(self, instance):
+        min_crawl_epoch = None
+        for web_ref in instance.web_reference_set.all():
+            if min_crawl_epoch is None:
+                min_crawl_epoch = web_ref.crawl_epoch
+            else:
+                min_crawl_epoch = min(crawl_epoch, web_ref.crawl_epoch)
+        return min_crawl_epoch
+
+    @property
+    def get_first_crawl_epoch_str(self):
+        if self.first_crawl_epoch is None:
+            return ''
+        return datetime.fromtimestamp(self.first_crawl_epoch).strftime("%Y-%m-%d")
 
 def stop_elastic_indexing():
     ElasticOfficeDocument.django.ignore_signals = True
