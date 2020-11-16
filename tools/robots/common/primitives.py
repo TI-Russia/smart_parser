@@ -48,7 +48,10 @@ def check_link_sitemap(link_info: TLinkInfo):
 
 def check_anticorr_link_text(link_info: TLinkInfo):
     text = link_info.anchor_text.strip().lower()
-    if text.startswith(u'противодействие'):
+    if text.find('антикоррупционная комиссия') != -1:
+        return True
+
+    if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
         return text.find("коррупц") != -1
     return False
 
