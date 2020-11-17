@@ -71,10 +71,10 @@ def main(args, logger):
             conv_tasks.wait_doc_conversion_finished(args.conversion_timeout)
         else:
             logger.debug("stop conversion finished")
-            conv_tasks.stop_conversion_thread()
+            conv_tasks.stop_conversion_thread(timeout=1)
     except Exception as exp:
         logger.error("exception: {}, stop_conversion_thread".format(exp))
-        conv_tasks.stop_conversion_thread()
+        conv_tasks.stop_conversion_thread(timeout=1)
     if args.receive_files:
         if not receive_files(logger, conv_tasks, sent_files):
             return 1

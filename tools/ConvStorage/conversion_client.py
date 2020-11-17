@@ -28,7 +28,6 @@ class TDocConversionClient(object):
         assert_declarator_conv_alive()
         self.wait_new_tasks = True
         self._input_tasks = queue.Queue()
-        self.lock = threading.Lock()
         self._sent_tasks = list()
         self.conversion_thread = None
         if TDocConversionClient.DECLARATOR_CONV_URL is None:
@@ -45,21 +44,20 @@ class TDocConversionClient(object):
         self.conversion_thread.start()
 
     def _process_files_to_convert_in_a_separate_thread(self):
-        while True:
-            time.sleep(self.input_task_timeout)
-            if self._input_tasks.empty() and not self.wait_new_tasks:
-                break
-            while not self._input_tasks.empty():
-                task = self._input_tasks.get()
-                if is_archive_extension(task.file_extension):
-                    with TemporaryDirectory(prefix="conversion_folder", dir=".") as tmp_folder:
-                        for archive_index, name_in_archive, export_filename in dearchive_one_archive(task.file_extension,
-                                                                                                     task.file_path, 0,
-                                                                                                     tmp_folder):
-                            if export_filename.endswith(DEFAULT_PDF_EXTENSION):
-                                self._send_file_to_conversion_db(export_filename, DEFAULT_PDF_EXTENSION, task.rebuild)
-                else:
-                    self._send_file_to_conversion_db(task.file_path, task.file_extension, task.rebuild)
+        while self.wait_new_tasks:
+            try:
+                task = self._input_tasks.get(timeout=self.input_task_timeout)
+            except queue.Empty as exp:
+                continue
+            if is_archive_extension(task.file_extension):
+                with TemporaryDirectory(prefix="conversion_folder", dir=".") as tmp_folder:
+                    for archive_index, name_in_archive, export_filename in dearchive_one_archive(task.file_extension,
+                                                                                                 task.file_path, 0,
+                                                                                                 tmp_folder):
+                        if export_filename.endswith(DEFAULT_PDF_EXTENSION):
+                            self._send_file_to_conversion_db(export_filename, DEFAULT_PDF_EXTENSION, task.rebuild)
+            else:
+                self._send_file_to_conversion_db(task.file_path, task.file_extension, task.rebuild)
 
     def _register_task(self, file_extension, file_contents, sha256, rebuild):
         conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
@@ -68,62 +66,62 @@ class TDocConversionClient(object):
         else:
             path = '/convert_if_absent/file'
         path += file_extension
-        conn.request("PUT", path, file_contents)
-        response = conn.getresponse()
-        if response.code != 201:
-            self.logger.error("could not put a task to conversion queue")
-            return False
-        else:
-            self.lock.acquire()
-            try:
+        try:
+            conn.request("PUT", path, file_contents)
+            response = conn.getresponse()
+            if response.code != 201:
+                self.logger.error("could not put a task to conversion queue")
+                return False
+            else:
                 self._sent_tasks.append(sha256)
-            finally:
-                self.lock.release()
-        return True
+            return True
+        except http.client.HTTPException as exp:
+            self.logger.error("got exception {} in _register_task ".format(str(exp)))
+            return False
 
     def _send_file_to_conversion_db(self, filename, file_extension, rebuild):
-        try:
-            with open(filename, "rb") as f:
-                file_contents = f.read()
-                starter = file_contents[:5].decode('latin', errors="ignore")
-                if starter != '%PDF-':
-                    self.logger.debug("{} has bad pdf starter, do  not send it".format(filename))
-                    return
-                hashcode = hashlib.sha256(file_contents).hexdigest()
-
+        with open(filename, "rb") as f:
+            file_contents = f.read()
+            starter = file_contents[:5].decode('latin', errors="ignore")
+            if starter != '%PDF-':
+                self.logger.debug("{} has bad pdf starter, do  not send it".format(filename))
+                return
+            hashcode = hashlib.sha256(file_contents).hexdigest()
             if hashcode in self._sent_tasks:
                 return
-            if not rebuild:
-                if self.check_file_was_converted(hashcode):
-                    return
-            self.logger.debug("register conversion task for {}".format(filename))
-            if self._register_task(file_extension, file_contents, hashcode, rebuild):
-                self.all_pdf_size_sent_to_conversion += Path(filename).stat().st_size
 
-        except Exception as exp:
-            self.logger.error("cannot process {}: {}".format(filename, exp))
+        if not rebuild:
+            if self.check_file_was_converted(hashcode):
+                return
+        self.logger.debug("register conversion task for {}".format(filename))
+        if self._register_task(file_extension, file_contents, hashcode, rebuild):
+            self.all_pdf_size_sent_to_conversion += Path(filename).stat().st_size
 
     def _wait_conversion_tasks(self, timeout_in_seconds):
-        start_time = time.time()
+        self.logger.debug("wait the conversion server convert all files for {} seconds".format(timeout_in_seconds))
+        end_time = time.time() + timeout_in_seconds
         self.logger.info("number of conversion tasks to be waited: {}".format(len(self._sent_tasks)))
-        while len(self._sent_tasks) > 0:
-            time.sleep(10)
+        while len(self._sent_tasks) > 0 and time.time() < end_time:
             for sha256 in list(self._sent_tasks):
                 if self.check_file_was_converted(sha256):
                     self.logger.debug("{} was converted".format(sha256))
-                    self.lock.acquire()
-                    try:
-                        self._sent_tasks.remove(sha256)
-                    finally:
-                        self.lock.release()
-            if time.time() > start_time + timeout_in_seconds:
-                self.logger.info("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
-                break
+                    self._sent_tasks.pop(0)
+                else:
+                    break
+            if len(self._sent_tasks) > 0:
+                time.sleep(10)
+
+        if len(self._sent_tasks) > 0:
+            self.logger.info("timeout exit, {} conversion tasks were not completed".format(len(self._sent_tasks)))
 
     def check_file_was_converted(self, sha256):
         conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
-        conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
-        return conn.getresponse().code == 200
+        try:
+            conn.request("GET", "?download_converted_file=0&sha256=" + sha256)
+            return conn.getresponse().code == 200
+        except http.client.HTTPException as exp:
+            self.logger.error("got exception {} in check_file_was_converted ".format(str(exp)))
+            return False
 
     def get_stats(self):
         data = None
@@ -148,13 +146,17 @@ class TDocConversionClient(object):
 
     def retrieve_document(self, sha256, output_file_name):
         conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
-        conn.request("GET", "?sha256=" + sha256)
-        response = conn.getresponse()
-        if response.code == 200:
-            with open(output_file_name, "wb") as out:
-                out.write(response.read())
-            return True
-        else:
+        try:
+            conn.request("GET", "?sha256=" + sha256)
+            response = conn.getresponse()
+            if response.code == 200:
+                with open(output_file_name, "wb") as out:
+                    out.write(response.read())
+                return True
+            else:
+                return False
+        except http.client.HTTPException as exp:
+            self.logger.error("got exception {} in retrieve_document ".format(str(exp)))
             return False
 
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):
@@ -169,9 +171,14 @@ class TDocConversionClient(object):
             return True
         return False
 
-    def stop_conversion_thread(self):
-        self.wait_new_tasks = False
-        self.conversion_thread.join(1)
+    def stop_conversion_thread(self, timeout=None):
+        if timeout is None:
+            timeout = self.input_task_timeout + 1
+        if self.conversion_thread is not None:
+            self.logger.debug("stop the input conversion client thread")
+            self.wait_new_tasks = False
+            self.conversion_thread.join(timeout)
+            self.conversion_thread = None
 
     def wait_doc_conversion_finished(self, timeout_in_seconds):
         try:
@@ -180,11 +187,7 @@ class TDocConversionClient(object):
                 while not self._input_tasks.empty():
                     time.sleep(1) # time to send tasks
 
-            self.logger.debug("stop the input conversion client thread")
-            self.wait_new_tasks = False
-            self.conversion_thread.join(self.input_task_timeout + 1)
-
-            self.logger.debug("wait the conversion server convert all files for {} seconds".format(timeout_in_seconds))
+            self.stop_conversion_thread()
             self._wait_conversion_tasks(timeout_in_seconds)
         except Exception as exp:
             self.logger.error("wait_doc_conversion_finished: exception {}".format(exp))
