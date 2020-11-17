@@ -9,6 +9,8 @@ import re
 from robots.common.link_info import TLinkInfo, TClickEngine
 from robots.common.html_parser import THtmlParser
 
+# see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
+MAX_LINKS_ON_ONE_WEB_PAGE = 1000
 
 def get_office_domain(web_domain):
     index = 2
@@ -90,7 +92,7 @@ def find_links_in_html_by_text(step_info, main_url, html_parser: THtmlParser):
     element_index = 0
     links_to_process = list(html_parser.soup.findAll('a'))
     logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
-    for html_link in links_to_process:
+    for html_link in links_to_process[:MAX_LINKS_ON_ONE_WEB_PAGE]:
         href = html_link.attrs.get('href')
         if href is not None:
             element_index += 1
@@ -101,7 +103,7 @@ def find_links_in_html_by_text(step_info, main_url, html_parser: THtmlParser):
             if step_info.normalize_and_check_link(link_info):
                 step_info.add_link_wrapper(link_info)
 
-    for frame in html_parser.soup.findAll('iframe'):
+    for frame in html_parser.soup.findAll('iframe')[:MAX_LINKS_ON_ONE_WEB_PAGE]:
         href = frame.attrs.get('src')
         if href is not None:
             element_index += 1
@@ -138,6 +140,8 @@ def click_all_selenium(step_info, main_url, driver_holder):
     elements = driver_holder.navigate_and_get_links(main_url)
     page_html = driver_holder.the_driver.page_source
     for element_index in range(len(elements)):
+        if element_index >= MAX_LINKS_ON_ONE_WEB_PAGE:
+            break
         element = elements[element_index]
         link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
         if len(link_text) == 0:
