@@ -1,4 +1,5 @@
-INPUT_FILE=1501.pdf 
+INPUT_FILE=../files/1501.pdf
+DOCX_FILE=1501.pdf.docx 
 source ../setup_tests.sh
 
 python ../../scripts/recreate_database.py  --forget-old-data
@@ -8,9 +9,9 @@ conv_server_pid=$!
 disown
 
 function convert_file() {
-    [ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
-    python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 60 --rebuild
-    if [ ! -f $INPUT_FILE.docx ]; then
+    rm -rf $DOCX_FILE
+    python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 60 --rebuild --output-folder .
+    if [ ! -f $DOCX_FILE ]; then
         kill $conv_server_pid >/dev/null
         echo "cannot get converted file"
         exit  1

@@ -1,4 +1,5 @@
-INPUT_FILE=a.pdf 
+INPUT_FILE=../files/for_ocr.pdf 
+
 source ../setup_tests.sh
 
 python ../../scripts/recreate_database.py --forget-old-data

@@ -1,5 +1,6 @@
-INPUT_FILE=a.pdf 
-[ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
+INPUT_FILE=../files/complicated.pdf 
+DOCX_FILE=complicated.pdf.docx
+rm -rf $DOCX_FILE
 
 source ../setup_tests.sh
 
@@ -11,16 +12,16 @@ conv_server_pid=$!
 disown
 
 
-python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180 --output-folder .
 
 kill $conv_server_pid >/dev/null
 
-if [ ! -f $INPUT_FILE.docx ]; then
+if [ ! -f $DOCX_FILE ]; then
   echo "cannot get converted file"
   exit  1
 fi
 
-filesize=`stat --printf="%s" $INPUT_FILE.docx`
+filesize=`stat --printf="%s" $DOCX_FILE`
 if [ $filesize -ge 15000 ]; then
   echo "the size of the output file must be less than 15000 (from Finereader), winword converts it to a chinese doc"
   exit  1

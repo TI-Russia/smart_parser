@@ -1,6 +1,6 @@
-INPUT_FILE=a.pdf 
-
-[ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
+INPUT_FILE=../files/for_ocr.pdf 
+DOCX_FILE=for_ocr.pdf.docx
+rm -rf $DOCX_FILE
 
 source ../setup_tests.sh
 
@@ -11,14 +11,14 @@ python ../../conv_storage_server.py --clear-db --server-address $DECLARATOR_CONV
 conv_server_pid=$!
 disown
 
-python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180 --output-folder .
 
 
 curl $DECLARATOR_CONV_URL/stat | jq > result_stat.json
 
 kill $conv_server_pid >/dev/null
 
-if [ ! -f $INPUT_FILE.docx ]; then
+if [ ! -f $DOCX_FILE ]; then
   echo "cannot get converted file"
   exit  1
 fi

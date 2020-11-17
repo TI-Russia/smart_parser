@@ -1,4 +1,7 @@
-rm good.pdf.docx
+INPUT_FILE=../files/for_ocr.pdf 
+DOCX_FILE=for_ocr.pdf.docx
+rm -rf $DOCX_FILE
+
 source ../setup_tests.sh
 
 python ../../scripts/recreate_database.py --forget-old-data
@@ -8,14 +11,14 @@ python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-j
 conv_server_pid=$!
 disown
 
-python ../../scripts/convert_pdf.py freeze.pdf --conversion-timeout 200
+python ../../scripts/convert_pdf.py ../files/freeze.pdf --conversion-timeout 200 --output-folder .
 
-python ../../scripts/convert_pdf.py good.pdf --conversion-timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE --conversion-timeout 180 --output-folder .
 
 kill $conv_server_pid >/dev/null
 
-if [ ! -f good.pdf.docx ]; then
-    echo "cannot get good file after restart"
+if [ ! -f $DOCX_FILE ]; then
+    echo "cannot get $DOCX_FILE after restart"
     exit 1
 fi 
 

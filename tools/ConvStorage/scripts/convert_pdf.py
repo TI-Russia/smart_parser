@@ -31,6 +31,7 @@ def parse_args():
     parser.add_argument("--conversion-timeout", dest='conversion_timeout', type=int, default=60*30)
     parser.add_argument("--conversion-server", dest='conversion_server', required=False)
     parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false", required=False)
+    parser.add_argument("--output-folder", dest='output_folder', default=None,  required=False)
     return parser.parse_args()
 
 
@@ -44,13 +45,15 @@ def send_files(args, logger, conv_tasks):
     return sent_files
 
 
-def receive_files(logger, conv_tasks, sent_files):
+def receive_files(logger, args, conv_tasks, sent_files):
     errors_count = 0
     for filepath in sent_files:
         logger.debug("download docx for {}".format(filepath))
         with open(filepath, "rb") as f:
             sha256hash = hashlib.sha256(f.read()).hexdigest()
         outfile = filepath + ".docx"
+        if args.output_folder is not None:
+            outfile = os.path.join(args.output_folder, os.path.basename(outfile))
         if conv_tasks.retrieve_document(sha256hash, outfile):
             logger.debug("save {}".format(outfile))
         else:
@@ -64,7 +67,7 @@ def main(args, logger):
         TDocConversionClient.DECLARATOR_CONV_URL = args.conversion_server
     conv_tasks = TDocConversionClient(logger)
     conv_tasks.start_conversion_thread()
-
+    sent_files = set()
     try:
         sent_files = send_files(args, logger, conv_tasks)
         if args.receive_files and len(sent_files) > 0:
@@ -76,7 +79,7 @@ def main(args, logger):
         logger.error("exception: {}, stop_conversion_thread".format(exp))
         conv_tasks.stop_conversion_thread(timeout=1)
     if args.receive_files:
-        if not receive_files(logger, conv_tasks, sent_files):
+        if not receive_files(logger, args, conv_tasks, sent_files):
             return 1
     return 0
 

@@ -1,5 +1,6 @@
-INPUT_FILE=good.pdf 
-[ ! -f $INPUT_FILE.docx ] || rm $INPUT_FILE.docx
+INPUT_FILE=../files/good.pdf
+DOCX_FILE=good.pdf.docx  
+[ ! -f $DOCX_FILE ] || rm $DOCX_FILE
 [ ! -f convert_pdf.log ] || rm  convert_pdf.log
                                                
 source ../setup_tests.sh
@@ -11,10 +12,10 @@ python ../../conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-j
 conv_server_pid=$!
 disown
 
-python ../../scripts/convert_pdf.py $INPUT_FILE bad.pdf --conversion-timeout 180
+python ../../scripts/convert_pdf.py $INPUT_FILE ../files/bad.pdf --conversion-timeout 180 --output-folder .
 
 if [ $? -eq 0 ]; then
-    echo "convert_pdf.py must fail on bad.pdf"    
+    echo "convert_pdf.py must fail on ../files/bad.pdf"    
     kill $conv_server_pid >/dev/null
     exit  1
 fi
@@ -30,7 +31,7 @@ if [ $? != 0 ]; then
 fi
 
 
-if [ ! -f $INPUT_FILE.docx ]; then
+if [ ! -f $DOCX_FILE ]; then
   echo "cannot get converted file"
   exit  1
 fi
