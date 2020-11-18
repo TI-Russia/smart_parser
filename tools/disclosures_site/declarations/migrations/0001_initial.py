@@ -59,6 +59,9 @@ class Migration(migrations.Migration):
                 ('intersection_status', models.CharField(max_length=16)),
                 ('office', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.office',
                                              verbose_name='office name')),
+                ('max_income_year', models.IntegerField(default=None, null=True)),
+                ('min_income_year', models.IntegerField(default=None, null=True)),
+                ('section_count', models.IntegerField(default=0, null=True)),
             ],
         ),
         migrations.CreateModel(
