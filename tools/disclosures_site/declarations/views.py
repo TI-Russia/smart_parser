@@ -284,9 +284,9 @@ class CommonSearchView(FormView, generic.ListView):
                     normal_documents.append(search_doc)
                 else:
                     doubtful_documents.append(search_doc)
-        self.hits_count = search_results.count()
         if len (normal_documents) == 0:
             normal_documents.extend(doubtful_documents)
+        self.hits_count = search_results.count()
 
         return normal_documents
 
@@ -321,7 +321,8 @@ class CommonSearchView(FormView, generic.ListView):
         sort_by, order = self.get_sort_order()
         if sort_by == "person_name":
             object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
-
+        elif sort_by == "name":
+            object_list.sort(key=lambda x: x.name, reverse=(order == "desc"))
         return object_list
 
 
@@ -329,7 +330,7 @@ class OfficeSearchView(CommonSearchView):
     model = models.Office
     template_name = 'office/index.html'
     elastic_search_document = ElasticOfficeDocument
-    default_sort_field = ("source_document_count", "desc")
+    default_sort_field = None
     max_document_count = 500
 
     def get_queryset(self):
@@ -376,7 +377,7 @@ class FileSearchView(CommonSearchView):
     template_name = 'file/index.html'
     elastic_search_document = ElasticFileDocument
     default_sort_field = ("file_path", "asc")
-    max_document_count = 300         # using 300 here to allow search bots to crawl all file links going from one office
+    max_document_count = 300
 
     def get_queryset(self):
         return self.get_queryset_common()

@@ -18,9 +18,9 @@
 
 <table>
     <tr>
-      <th>ID</th>
-      <th>Название</th>
-      <th>Кол-во документов</th>
+      <th><a href="?{{sort_by_id}}">ID</a></th>
+      <th><a href="?{{sort_by_name}}">Название</a></th>
+      <th><a href="?{{sort_by_source_document_count}}">Кол-во документов</a></th>
     </tr>
     {% for office in object_list %}
       <tr>

@@ -55,7 +55,7 @@
             <td>{{ section.income_year }}</td>
             <td>
                 {% if section.person_id %}
-                <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
+                <a href="/section/?person_id={{ section.id }}"> {{section.person_id }} </a>
                 {% endif %}
             </td>
             <td>{{ section.income_size }}</td>
