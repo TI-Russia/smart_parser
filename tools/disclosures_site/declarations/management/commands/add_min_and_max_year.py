@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 import declarations.models as models
-# temporal script 
+# temporal script
 
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
@@ -13,3 +13,4 @@ class Command(BaseCommand):
                 s.min_income_year = min (s.income_year for s in sections)
                 s.max_income_year = max (s.income_year for s in sections)
                 s.section_count = len(sections)
+                s.save()
