@@ -215,6 +215,17 @@ class CommonSearchView(FormView, generic.ListView):
             fio = resolve_person_name_pattern_from_search_request(person_name)
             should_items.append({"match": {"person_name": fio['family_name']}})
 
+    def build_office_full_text_elastic_search_query(self, should_items):
+        office_query = self.get_initial().get('office_request')
+        if office_query is not None and len(office_query) > 0:
+            oqd = {"query": {"match": {"name": {"query": office_query, "operator": "and"}}}}
+            search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
+            total = search_results.count()
+            if total == 0:
+                return None
+            offices = list(o.id for o in search_results[0:total])
+            should_items.append({"terms": {"office_id": offices}})
+
     def query_elastic_search(self):
         def add_should_item(field_name, elastic_search_operaror, field_type, should_items):
             field_value = self.get_initial().get(field_name)
@@ -233,15 +244,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("office_id", "term", int, should_items)
             add_should_item("person_id", "term", int, should_items)
             add_should_item("first_crawl_epoch", "term", int, should_items)
-
-            office_query = self.get_initial().get('office_request')
-            if office_query is not None and len(office_query) > 0:
-                offices_search = ElasticOfficeDocument.search().query('match', name=office_query)
-                total = offices_search.count()
-                if total == 0:
-                    return None
-                offices = list(o.id for o in offices_search[0:total])
-                should_items.append({"terms": {"office_id": offices}})
+            self.build_office_full_text_elastic_search_query(should_items)
 
             if len(should_items) == 0:
                 return None
