@@ -244,6 +244,9 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("office_id", "term", int, should_items)
             add_should_item("person_id", "term", int, should_items)
             add_should_item("first_crawl_epoch", "term", int, should_items)
+            add_should_item("min_income_year", "term", int, should_items)
+            add_should_item("max_income_year", "term", int, should_items)
+            add_should_item("section_count", "term", int, should_items)
             self.build_office_full_text_elastic_search_query(should_items)
 
             if len(should_items) == 0:
@@ -326,6 +329,10 @@ class CommonSearchView(FormView, generic.ListView):
             object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
         elif sort_by == "name":
             object_list.sort(key=lambda x: x.name, reverse=(order == "desc"))
+        elif sort_by == "file_path":
+            object_list.sort(key=lambda x: x.file_path, reverse=(order == "desc"))
+        elif sort_by == "intersection_status":
+            object_list.sort(key=lambda x: x.intersection_status, reverse=(order == "desc"))
         return object_list
 
 

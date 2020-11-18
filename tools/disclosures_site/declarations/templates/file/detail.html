@@ -14,6 +14,12 @@
 
 <b>Intersection status:</b> {{ source_document.intersection_status }} <br/><br/>
 
+<b>Min Income Year:</b> {{ source_document.min_income_year }} <br/><br/>
+
+<b>Max Income Year:</b> {{ source_document.max_income_year }} <br/><br/>
+
+<b>Section Count:</b> {{ source_document.section_count }} <br/><br/>
+
 {% for web_location in source_document.web_reference_set.all %}
     <b>Сайт:</b> <a href="{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>
     <br><br/>

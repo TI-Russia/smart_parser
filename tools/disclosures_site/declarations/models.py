@@ -217,6 +217,11 @@ class Source_Document(models.Model):
     file_path = models.CharField(max_length=128)
     intersection_status = models.CharField(max_length=16)
 
+    # calculated fields (from sql table section)
+    min_income_year = models.IntegerField(null=True, default=None)
+    max_income_year = models.IntegerField(null=True, default=None)
+    section_count = models.IntegerField(null=True, default=0)
+
     @property
     def doc_path(self):
         doc_path = self.file_path

@@ -39,7 +39,7 @@
             {% endfor %}
 
             {% if office.source_document_count > 10 %}
-                <a href=/file?search_request={"office_id":{{office.id}}}>...</a>
+                <a href="/file?office_id={{office.id}}">...</a>
             {% endif %}
             </td>
         </tr>

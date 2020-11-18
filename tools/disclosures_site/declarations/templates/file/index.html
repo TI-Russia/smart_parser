@@ -31,18 +31,24 @@
 
     <table>
         <tr>
-            <th>ID</th>
-            <th>File path</th>
-            <th>First crawl epoch</th>
-            <th>Sources</th>
+            <th><a href="?{{sort_by_id}}">ID</a></th>
+            <th><a href="?{{sort_by_file_path}}">File path</a></th>
+            <th><a href="?{{sort_by_intersection_status}}">Sources</a></th>
+            <th><a href="?{{sort_by_min_income_year}}">Min Year</a></th>
+            <th><a href="?{{sort_by_max_income_year}}">Max Year</a></th>
+            <th><a href="?{{sort_by_section_count}}">Section Count</a></th>
+            <th><a href="?{{sort_by_first_crawl_epoch}}">First crawl epoch</a></th>
         </tr>
 
       {% for file in object_list %}
         <tr>
             <td> {{ file.id }}: </td>
             <td> <a href="/file/{{ file.id }}"> {{ file.file_path }} </a> </td>
-            <td> {{ file.get_first_crawl_epoch_str }} </td>
             <td> {{ file.intersection_status }} </td>
+            <td> {{ file.min_income_year }} </td>
+            <td> {{ file.max_income_year }} </td>
+            <td> {{ file.section_count }} </td>
+            <td> {{ file.get_first_crawl_epoch_str }} </td>
         </tr>
       {% endfor %}
     </table>

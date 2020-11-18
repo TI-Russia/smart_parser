@@ -124,9 +124,10 @@ class TImporter:
         if common_income_year is not None:
             common_income_year = int(common_income_year)
 
-        imported_sections = 0
+        imported_section_years = list()
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
+
         for p in input_json['persons']:
             section_index += 1
             income_year = p.get('year', common_income_year)
@@ -144,10 +145,18 @@ class TImporter:
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 passports[0], section_id))
                         json_reader.save_to_database(section_id)
-                        imported_sections += 1
+                        imported_section_years.append(income_year)
+
                 except (DatabaseError, TSmartParserJsonReader.SerializerException) as exp:
                     TImporter.logger.error("Error! cannot import section N {}: {} ".format(section_index, exp))
-        return imported_sections
+
+        if len(imported_section_years) > 0:
+            source_document_in_db.min_income_year = min(imported_section_years)
+            source_document_in_db.max_income_year = max(imported_section_years)
+            source_document_in_db.section_count = len(imported_section_years)
+            source_document_in_db.save()
+
+        return len(imported_section_years)
 
     def get_smart_parser_json(self, all_imported_human_jsons, sha256, src_doc):
         response = self.smart_parser_cache_client.retrieve_json_by_sha256(sha256)

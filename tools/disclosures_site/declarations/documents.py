@@ -131,7 +131,10 @@ class ElasticFileDocument(Document):
         fields = [
             'id',
             'file_path',
-            'intersection_status'
+            'intersection_status',
+            'min_income_year',
+            'max_income_year',
+            'section_count'
         ]
 
     def prepare_office_id(self, instance):
