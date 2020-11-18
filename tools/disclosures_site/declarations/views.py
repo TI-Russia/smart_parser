@@ -5,7 +5,7 @@ from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOff
 from django import forms
 import logging
 import urllib
-from declarations.common import resolve_fullname, resolve_person_name_from_search_request
+from declarations.common import resolve_fullname, resolve_person_name_pattern_from_search_request
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from .rubrics import fill_combo_box_with_rubrics
 from datetime import datetime
@@ -152,7 +152,7 @@ def check_Russian_name(name1, name2):
 def compare_Russian_fio(search_query, person_name):
     if search_query.find(' ') == -1 and search_query.find('.') == -1:
         return True
-    fio1 = resolve_person_name_from_search_request(search_query)
+    fio1 = resolve_person_name_pattern_from_search_request(search_query)
     fio2 = resolve_fullname(person_name)
     if fio1 is None or fio2 is None:
         return False
@@ -208,6 +208,13 @@ class CommonSearchView(FormView, generic.ListView):
             'first_crawl_epoch': self.request.GET.get('first_crawl_epoch'),
         }
 
+    def build_person_name_elastic_search_query(self, should_items):
+        person_name = self.get_initial().get("person_name")
+        if person_name is not None and person_name != '':
+            should_items.append({"match": {"person_name": person_name}})
+            fio = resolve_person_name_pattern_from_search_request(person_name)
+            should_items.append({"match": {"person_name": fio['family_name']}})
+
     def query_elastic_search(self):
         def add_should_item(field_name, elastic_search_operaror, field_type, should_items):
             field_value = self.get_initial().get(field_name)
@@ -215,7 +222,7 @@ class CommonSearchView(FormView, generic.ListView):
                 should_items.append({elastic_search_operaror: {field_name: field_type(field_value)}})
         try:
             should_items = []
-            add_should_item("person_name", "match", str, should_items)
+            self.build_person_name_elastic_search_query(should_items)
             add_should_item("name", "match", str, should_items)
             add_should_item("rubric_id", "term", int, should_items)
             add_should_item("region_id", "term", int, should_items)
@@ -264,7 +271,7 @@ class CommonSearchView(FormView, generic.ListView):
             return None
         return person_name_query
 
-    def process_search_results(self, search_results):
+    def filter_search_results(self, search_results):
         person_name_query = self.get_person_name_field()
         max_count = min(search_results.count(), self.max_document_count)
         normal_documents = list()
@@ -310,7 +317,7 @@ class CommonSearchView(FormView, generic.ListView):
         search_results = self.query_elastic_search()
         if search_results is None:
             return []
-        object_list = self.process_search_results(search_results)
+        object_list = self.filter_search_results(search_results)
         sort_by, order = self.get_sort_order()
         if sort_by == "person_name":
             object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
@@ -334,7 +341,7 @@ class OfficeSearchView(CommonSearchView):
                         "sort": [{"source_document_count": {"order": "desc"}}]
                 }
                 search_results = search.update_from_dict(query_dict)
-                return self.process_search_results(search_results)
+                return self.filter_search_results(search_results)
             except Exception as exp:
                 raise exp
         else:

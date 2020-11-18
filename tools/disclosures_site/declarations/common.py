@@ -91,13 +91,14 @@ def resolve_fullname(name, as_list=False):
         }
 
 
-def resolve_person_name_from_search_request(fio):
-    # Иванов И.И.
+def resolve_person_name_pattern_from_search_request(fio):
+    # Иванов
     # Иванов Иван
+    # Иванов И.И.
     # Иванов Иван Иванович
     items = list(re.split("[ .]+", fio))
     if len(items) == 0:
-        return None
+        return {'family_name': fio.strip()}
     result = {
         'family_name': items[0],
     }

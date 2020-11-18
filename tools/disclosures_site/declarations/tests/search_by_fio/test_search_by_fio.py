@@ -49,5 +49,11 @@ class FioSearchTestCase(TestCase):
         res = self.search_sections_by_fio("Иван Ильич")
         self.assertEqual(len(res), 3)
 
+        res = self.search_sections_by_fio("Ильич")
+        self.assertEqual(len(res), 3)
+
+        res = self.search_sections_by_fio("Один")
+        self.assertEqual(len(res), 1)
+
     def test_fio_compare(self):
         self.assertFalse(compare_Russian_fio("Сокирко Иван Ильич", "Алексей Ильич"))
