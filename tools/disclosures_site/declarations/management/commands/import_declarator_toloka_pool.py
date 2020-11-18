@@ -34,7 +34,7 @@ class Command(BaseCommand):
             dest='output_pool',
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,   *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.office_hierarchy = models.TOfficeTableInMemory()
         factories = TSectionPassportFactory.get_all_passport_factories(self.office_hierarchy)

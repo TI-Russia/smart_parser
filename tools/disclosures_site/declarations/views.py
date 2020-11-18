@@ -155,11 +155,10 @@ def compare_Russian_fio(search_query, person_name):
     fio1 = resolve_person_name_from_search_request(search_query)
     fio2 = resolve_fullname(person_name)
     if fio1 is None or fio2 is None:
-        return True
-    if fio1['family_name'].lower() != fio2['family_name'].lower():
         return False
-    return check_Russian_name(fio1.get('name'), fio2.get('name')) \
-           and check_Russian_name(fio1.get('patronymic'), fio2.get('patronymic'))
+    return fio1['family_name'].lower() == fio2['family_name'].lower() \
+       and check_Russian_name(fio1.get('name'), fio2.get('name')) \
+       and check_Russian_name(fio1.get('patronymic'), fio2.get('patronymic'))
 
 
 class CommonSearchView(FormView, generic.ListView):
@@ -268,16 +267,21 @@ class CommonSearchView(FormView, generic.ListView):
     def process_search_results(self, search_results):
         person_name_query = self.get_person_name_field()
         max_count = min(search_results.count(), self.max_document_count)
-        object_list = list()
+        normal_documents = list()
+        doubtful_documents = list()
         for search_doc in search_results[:max_count]:
-            try:
-                if person_name_query is None or compare_Russian_fio(person_name_query, search_doc.person_name):
-                    object_list.append(search_doc)
-            except Exception as exp:
-                logging.getLogger('django').error("cannot get record, id={}".format(search_doc.id))
-                raise
+            if person_name_query is None:
+                normal_documents.append(search_doc)
+            else:
+                if compare_Russian_fio(person_name_query, search_doc.person_name):
+                    normal_documents.append(search_doc)
+                else:
+                    doubtful_documents.append(search_doc)
         self.hits_count = search_results.count()
-        return object_list
+        if len (normal_documents) == 0:
+            normal_documents.extend(doubtful_documents)
+
+        return normal_documents
 
     def get_sort_order(self):
         sort_by = self.get_initial().get('sort_by')
