@@ -1,10 +1,12 @@
 import csv
 import json
+import os
+import logging
 from django.core.management import BaseCommand
 from declarations.common import resolve_fullname
 import declarations.models as models
-from datetime import datetime
 from declarations.serializers import TSmartParserJsonReader, TSectionPassportFactory
+import pickle
 
 
 class ConvertException(Exception):
@@ -23,26 +25,74 @@ def check_family_name(n1, n2):
     return fio1['family_name'].lower() == fio2['family_name'].lower()
 
 
+def setup_logging(logfilename="convert_pool.log"):
+    logger = logging.getLogger("convert_pool")
+    logger.setLevel(logging.DEBUG)
+
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if os.path.exists(logfilename):
+        os.remove(logfilename)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+
+    return logger
+
+
+class TDbSqueeze:
+    def __init__(self):
+        self.office_hierarchy = None
+        self.stable_key_to_sections = None
+        self.declarator_person_id_to_person_id = None
+
+    def build_squeeze(self, logger):
+        logger.info("build office hierarchy")
+        self.office_hierarchy = models.TOfficeTableInMemory()
+
+        logger.info("build all passports")
+        factories = TSectionPassportFactory.get_all_passport_factories(self.office_hierarchy)
+        self.stable_key_to_sections = TSectionPassportFactory.get_all_passports_dict(factories)
+
+        logger.info("build declarator person id to person id")
+        self.declarator_person_id_to_person_id = dict()
+        for p in models.Person.objects.filter(declarator_person_id__isnull=False):
+               self.declarator_person_id_to_person_id[p.declarator_person_id] = (p.id, p.person_name)
+
+
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
-            '--input-pool',
-            dest='input_pool'
+            '--action',
+            dest='action',
+            default="import",
+            required=False,
+            help="can be prepare or import",
         )
         parser.add_argument(
-            '--output-pool',
-            dest='output_pool',
+            '--input-pools',
+            dest='input_pools',
+            nargs="+",
+            required=False,
+        )
+        parser.add_argument(
+            '--output-folder',
+            dest='output_folder',
+            required=False,
         )
 
     def __init__(self,   *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.office_hierarchy = models.TOfficeTableInMemory()
-        factories = TSectionPassportFactory.get_all_passport_factories(self.office_hierarchy)
-        #factories = TSectionPassportFactory.get_all_passport_factories()
-        self.stable_key_to_sections = TSectionPassportFactory.get_all_passports_dict(factories)
-
-    def log(self, msg):
-        self.stdout.write('{}'.format(datetime.now()) + (' - ' + msg) if msg else '')
+        self.logger = None
+        self.squeeze = TDbSqueeze()
+        self.squeeze_pickled_file_path = "squeeze.pickle"
 
     def convert_line(self, header, section_or_person_id_key, json_key, row):
         id_index = header.index(section_or_person_id_key)
@@ -57,18 +107,22 @@ class Command(BaseCommand):
         input_person_name = sections[0]['person']['name_raw']
         assert sections[0]['source'] == "declarator"
         if section_or_person_id.startswith('person-'):
-            person_id = int(section_or_person_id[len('person-'):])
-            person = models.Person.objects.get(id=person_id)
-            person_sections = list(person.section_set.all())
-            if not check_family_name(person_sections[0].person_name, input_person_name):
+            declarator_person_id = int(section_or_person_id[len('person-'):])
+            if declarator_person_id not in self.squeeze.declarator_person_id_to_person_id:
+                raise ConvertException(
+                    "declarator_person_id {} cannot be found in disclosures, skip this record".format(
+                        declarator_person_id))
+            person_id, person_name =  self.squeeze.declarator_person_id_to_person_id.get(declarator_person_id)
+            if not check_family_name(person_name, input_person_name):
                 raise ConvertException("person id: {} has a different family name, skip this record".format(person_id))
-            return # nothing to set just check that it is the right person
+            return   # nothing to set just check that it is the right person
         else:
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
             json_file = models.Source_Document(office_id=sections[0].get('office_id', -1))
-            passport_factory = TSmartParserJsonReader(year, json_file, sections[0]).get_passport_factory(self.office_hierarchy)
-            section_id, search_results = passport_factory.search_by_passports(self.stable_key_to_sections)
+            passport_factory = TSmartParserJsonReader(year, json_file, sections[0]).get_passport_factory(
+                self.squeeze.office_hierarchy)
+            section_id, search_results = passport_factory.search_by_passports(self.squeeze.stable_key_to_sections)
             if section_id is not None:
                 row[id_index] = str("section-") + str(section_id)
             else:
@@ -78,11 +132,11 @@ class Command(BaseCommand):
                     passport_factory.get_passport_collection()[0],
                     search_results))
 
-    def handle(self, *args, **options):
+    def convert_pool(self, input_file_name, output_folder):
         output_lines = list()
         header = list()
-        self.log("start conversion ...")
-        with open(options['input_pool'], "r") as tsv:
+        self.logger.info("read file {}".format(input_file_name))
+        with open(input_file_name, "r") as tsv:
             csv_reader = csv.reader(tsv, delimiter="\t")
             for task in csv_reader:
                 header = task
@@ -100,12 +154,39 @@ class Command(BaseCommand):
                     output_lines.append(task_row)
                     good_lines += 1
                 except (ConvertException, models.Person.DoesNotExist) as exp:
-                    self.log("Line: {}, Exception: {}, continue\n".format(row_index, exp))
-            self.log("converted {} lines out of {} lines".format(good_lines, row_index))
-        with open(options['output_pool'], 'w') as out_file:
+                    self.logger.error("Line: {}, Exception: {}, continue\n".format(row_index, exp))
+            self.logger.info("converted {} {} lines out of {} lines".format(input_file_name, good_lines, row_index))
+
+        if len(output_lines) == 0:
+            raise Exception("cannot convert file {}, no converted lines".format(input_file_name))
+
+        output_path = os.path.join(output_folder, os.path.basename(input_file_name))
+        self.logger.info("write to file {}".format(output_path))
+        with open(output_path, 'w') as out_file:
             tsv_writer = csv.writer(out_file, delimiter="\t")
             tsv_writer.writerow(header)
             for row in output_lines:
                 tsv_writer.writerow(row)
+
+    def handle(self, *args, **options):
+        self.logger = setup_logging()
+        action = options['action']
+        if action == "prepare":
+            self.squeeze.build_squeeze(self.logger)
+            self.logger.info("write to {}".format(self.squeeze_pickled_file_path))
+            with open(self.squeeze_pickled_file_path, 'wb') as f:
+                pickle.dump(self.squeeze, f)
+        elif action == "import":
+            if not os.path.exists(self.squeeze_pickled_file_path):
+                raise Exception("please create file {} with python3 manage.py import_declarator_toloka_pool --action prepare --settings disclosures.settings.prod".format(self.squeeze_pickled_file_path))
+            self.logger.info("read from {}".format(self.squeeze_pickled_file_path))
+            with open(self.squeeze_pickled_file_path, 'rb') as f:
+                self.squeeze = pickle.load(f)
+            self.logger.info("start conversion ...")
+            for f in options['input_pools']:
+                self.convert_pool(f, options['output_folder'])
+        else:
+            self.logger.error("unknown action {}".format(action))
+
 
 
