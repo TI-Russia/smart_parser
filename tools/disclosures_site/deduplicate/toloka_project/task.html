@@ -8,7 +8,7 @@
                 <th class="first_line" />
                 {{#each json_left.sections}}
                     <th class="first_line">
-                        {{ person.name_raw }}
+                        {{ person.name_raw }}<sup>{{surname_rank}}</sup>
                     </th>
                 {{/each}}
                 <th class="central_cell" ><h3>?</h3> </th>
@@ -69,11 +69,11 @@
             <tr>
                 <th><span class="section_subpart_title">Организация:</span></th>
                 {{#each json_left.sections}}
-                    <td>{{{office}}}</td>
+                    <td>{{{office}}} (<small>{{office_section_count}})</small></td>
                 {{/each}}
                 <th class="central_cell"/>
                 {{#each json_right.sections}}
-                    <td>{{{office}}}</td>
+                    <td>{{{office}}} (<small>{{office_section_count}})</small>)</td>
                 {{/each}}
             </tr>
 
