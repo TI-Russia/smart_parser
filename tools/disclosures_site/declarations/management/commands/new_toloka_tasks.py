@@ -58,34 +58,39 @@ class TolokaTasks:
 
 
 class TDBSqueeze:
-    person_coeff  = +1  # there is no person.id == 0, so le person's id ar positive and section's ids are negative
+    person_coeff = +1  # there is no person.id == 0, so all person ids ar positive and all section ids are negative or zero
     section_coeff = -1
 
     def __init__(self, logger):
         self.logger = logger
-        self.surname_to_unified_ids = defaultdict(list)
         self.office_info = dict()
         self.surname_rank = dict()
         self.id_list = list()
         self.id_cum_weights = list()
 
     @staticmethod
-    def id_is_section(id):
-        return id < 0
+    def unified_id_is_section(id):
+        return id <= 0
 
     @staticmethod
     def unified_id_to_sql_id(id):
-        if TDBSqueeze.id_is_section(id):
+        if TDBSqueeze.unified_id_is_section(id):
             return int(id / TDBSqueeze.section_coeff)
         else:
             return int(id / TDBSqueeze.person_coeff)
 
     @staticmethod
     def id_to_str(id):
-        if TDBSqueeze.id_is_section(id):
+        if TDBSqueeze.unified_id_is_section(id):
             return "section-{}".format(TDBSqueeze.unified_id_to_sql_id(id))
         else:
             return "person-{}".format(TDBSqueeze.unified_id_to_sql_id(id))
+
+    def get_ordered_pairs_count(self, index1):
+        if index1 == 0:
+            return self.id_cum_weights[0]
+        else:
+            return self.id_cum_weights[index1] - self.id_cum_weights[index1 - 1]
 
     def build_office_stats(self):
         self.office_info.clear()
@@ -100,7 +105,7 @@ class TDBSqueeze:
             self.office_info[o.id] = {"section_count": o.section_count}
         self.logger.info("office count = {}".format(len(self.office_info)))
 
-    def build_persons(self):
+    def build_persons(self, surname_to_unified_ids):
         self.logger.info("build persons")
         sql = 'SELECT id, person_name FROM declarations_person where declarator_person_id is not null'
         cnt = 0
@@ -108,11 +113,11 @@ class TDBSqueeze:
             fio = resolve_fullname(p.person_name)
             if fio is not None:
                 surname = fio['family_name'].lower()
-                self.surname_to_unified_ids[surname].append(TDBSqueeze.person_coeff * p.id)
+                surname_to_unified_ids[surname].append(TDBSqueeze.person_coeff * p.id)
                 cnt += 1
         self.logger.info("persons count = {}".format(cnt))
 
-    def build_sections_and_surname_rank(self):
+    def build_sections_and_surname_rank(self, surname_to_unified_ids):
         self.surname_rank.clear()
         surname_to_initials = defaultdict(set)
         sql = 'SELECT id, person_name FROM declarations_section'
@@ -122,7 +127,7 @@ class TDBSqueeze:
             fio = resolve_fullname(s.person_name)
             if fio is not None:
                 surname = fio['family_name'].lower()
-                self.surname_to_unified_ids[surname].append(TDBSqueeze.section_coeff * s.id)
+                surname_to_unified_ids[surname].append(TDBSqueeze.section_coeff * s.id)
                 initials = "{} {}".format(fio.get('name', " ")[0].lower(), fio.get('patronymic', " ")[0].lower())
                 surname_to_initials[surname].add(initials)
                 cnt += 1
@@ -132,12 +137,12 @@ class TDBSqueeze:
         self.surname_rank = list(surname for freq, surname in surname_rank_list)
         self.logger.info("surname count = {}".format(len(self.surname_rank)))
 
-    def build_id_list(self):
+    def build_id_list(self, surname_to_unified_ids):
         self.logger.info("build id list")
         self.id_list = list()
         self.id_cum_weights = list()
         cum_weight = 0
-        for surname, id_list in self.surname_to_unified_ids.items():
+        for surname, id_list in surname_to_unified_ids.items():
             id_list.sort()
             for i in range(len(id_list)):
                 self.id_list.append(id_list[i])
@@ -148,10 +153,10 @@ class TDBSqueeze:
 
     def build(self):
         self.build_office_stats()
-        self.surname_to_unified_ids.clear()
-        self.build_persons()
-        self.build_sections_and_surname_rank()
-        self.build_id_list()
+        surname_to_unified_ids = defaultdict(list)
+        self.build_persons(surname_to_unified_ids)
+        self.build_sections_and_surname_rank(surname_to_unified_ids)
+        self.build_id_list(surname_to_unified_ids)
 
 
 def get_section_year(s):
@@ -160,6 +165,7 @@ def get_section_year(s):
 
 class Command(BaseCommand):
     help = 'Создание пар для толоки'
+
     def add_arguments(self, parser):
         parser.add_argument(
             '--action',
@@ -274,18 +280,12 @@ class Command(BaseCommand):
     def check_auto_negative_fio(self, rec1, rec2):
         fio1 = resolve_fullname(rec1.person_name)
         fio2 = resolve_fullname(rec2.person_name)
-
-        if fio1 is None or fio2 is None:
-            # not normal Russian FIOs
-            if Levenshtein.ratio(rec1.person_name, rec2.person_name) < 0.9:
-                self.logger.debug('auto negative example {} and {} because levenshtein < 0.9'.format(rec1.person_name,
-                                                                                             rec2.person_name))
-                return True
-        else:
-            if not are_compatible_Russian_fios(fio1, fio2):
-                self.logger.debug('auto negative example {} and {} because fio are not compatible'.format(rec1.person_name,
-                                                                                                  rec2.person_name))
-                return True
+        assert fio1 is not None and fio2 is not None
+        assert fio1['family_name'].lower() == fio2['family_name'].lower()
+        if not are_compatible_Russian_fios(fio1, fio2):
+            self.logger.debug('auto negative example {} and {} because fio are not compatible'.format(rec1.person_name,
+                                                                                              rec2.person_name))
+            return True
         return False
 
     # one year, one office, one fio, different incomes -> different people
@@ -375,31 +375,26 @@ class Command(BaseCommand):
     def generate_pairs(self):
         while True:
             for id1 in random.choices(self.db_squeeze.id_list, cum_weights=self.db_squeeze.id_cum_weights, k=100):
-                if TDBSqueeze.id_is_section(id1):
-                    record = models.Section.objects.get(id=TDBSqueeze.unified_id_to_sql_id(id1))
-                else:
-                    record = models.Person.objects.get(id=TDBSqueeze.unified_id_to_sql_id(id1))
-                fio = resolve_fullname(record.person_name)
-                assert fio is not None
-                surname =  fio['family_name'].lower()
-                other_ids_same_surname = self.db_squeeze.surname_to_unified_ids[surname]
-                id2 = random.choice(other_ids_same_surname[other_ids_same_surname.index(id1) + 1:])
+                index1 = self.db_squeeze.id_list.index(id1)
+                index2_start = index1 + 1
+                index2_end = index2_start + self.db_squeeze.get_ordered_pairs_count(index1)
+                id2 = random.choice(self.db_squeeze.id_list[index2_start:index2_end])
                 assert id1 < id2
                 yield TDBSqueeze.id_to_str(id1), TDBSqueeze.id_to_str(id2)
 
     def new_toloka_tasks(self,  task_count, golden_set_ratio, pool_name, goldensets):
         gs_task_count = int(task_count * golden_set_ratio)
         output_file_name = os.path.join(TToloka.TASKS_PATH, pool_name)
-        self.logger.info('  task_count = {}'.format(task_count))
-        self.logger.info('  golden tasks to be found = {}'.format(gs_task_count))
+        self.logger.info('task_count = {}'.format(task_count))
+        self.logger.info('golden tasks to be found = {}'.format(gs_task_count))
 
         prev_tasks = self.read_previous_tasks()
         if output_file_name.endswith('.tsv'):
             output_file_name = output_file_name[0:-4]
         auto_output_file_name = output_file_name + "_auto.tsv"
         output_file_name = output_file_name + ".tsv"
-        self.logger.info('  create file  = {}'.format(output_file_name))
-        self.logger.info('  create file  = {}'.format(auto_output_file_name))
+        self.logger.info('create file  = {}'.format(output_file_name))
+        self.logger.info('create file  = {}'.format(auto_output_file_name))
         tasks = TolokaTasks()
 
         for id1, id2 in self.generate_pairs():
