@@ -20,7 +20,7 @@ TRAIN_FILES = [
   "assignments_train_minkult_01_10-01-2020.tsv",
 ]
 
-
+DJANGO_ROOT = os.path.join(os.path.dirname(__file__), "../..")
 class TConversion:
     def __init__(self):
         self.output_assignment_folder = "../assignments"
@@ -61,7 +61,7 @@ class TConversion:
 if __name__ == '__main__':
     c = TConversion()
     pools = TEST_FILES + TRAIN_FILES
-    #c.prepare_db_squeeze()
-    #c.convert_pools(pools)
+    c.prepare_db_squeeze()
+    c.convert_pools(pools)
     c.make_pool(TEST_FILES, "test_pool_m.tsv")
     c.make_pool(TRAIN_FILES, "train_pool_m.tsv")

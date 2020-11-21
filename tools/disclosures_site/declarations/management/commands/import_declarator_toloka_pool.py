@@ -104,8 +104,11 @@ class Command(BaseCommand):
         sections = person_json.get('sections', [])
         if len(sections) == 0:
             raise ConvertException("cannot find sections or bad format for id: {}".format(section_or_person_id))
-        input_person_name = sections[0]['person']['name_raw']
-        assert sections[0]['source'] == "declarator"
+        if 'person' in  sections[0]:
+            input_person_name = sections[0]['person']['name_raw']
+        else:
+            input_person_name = person_json['fio']
+        #assert sections[0]['source'] == "declarator"
         if section_or_person_id.startswith('person-'):
             declarator_person_id = int(section_or_person_id[len('person-'):])
             if declarator_person_id not in self.squeeze.declarator_person_id_to_person_id:
@@ -179,7 +182,7 @@ class Command(BaseCommand):
         elif action == "import":
             if not os.path.exists(self.squeeze_pickled_file_path):
                 raise Exception("please create file {} with python3 manage.py import_declarator_toloka_pool --action prepare --settings disclosures.settings.prod".format(self.squeeze_pickled_file_path))
-            self.logger.info("read from {}".format(self.squeeze_pickled_file_path))
+            self.logger.info("read {}".format(self.squeeze_pickled_file_path))
             with open(self.squeeze_pickled_file_path, 'rb') as f:
                 self.squeeze = pickle.load(f)
             self.logger.info("start conversion ...")

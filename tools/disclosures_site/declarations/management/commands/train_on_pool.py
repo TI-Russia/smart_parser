@@ -5,7 +5,7 @@ import dedupe
 from django.core.management import BaseCommand
 
 from .dedupe_adapter import dedupe_object_writer, describe_dedupe, pool_to_dedupe
-from .toloka_utils import readTolokaGoldenPool
+from deduplicate.toloka import TToloka
 
 from sklearn.ensemble import RandomForestClassifier
 import json
@@ -108,7 +108,7 @@ class Command(BaseCommand):
         pool_to_dedupe(self.train_pool, self.train_objects, match, distinct)
 
         if self.options['additional_train_pool'] is not None:
-            add_train_pool = readTolokaGoldenPool(self.options["additional_train_pool"])
+            add_train_pool = TToloka.read_toloka_golden_pool(self.options["additional_train_pool"])
             pool_to_dedupe(add_train_pool, self.train_objects, match, distinct)
 
         self.stdout.write("Total data records loaded: {}".format(len(self.train_objects)))
@@ -139,7 +139,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Started at: {}'.format(datetime.now()))
         self.init_options(options)
-        self.train_pool = readTolokaGoldenPool(options["train_pool"])
+        self.train_pool = TToloka.read_toloka_golden_pool(options["train_pool"])
 
         from deduplicate.config import fields
         self.dedupe = dedupe.Dedupe(fields, num_cores=2)

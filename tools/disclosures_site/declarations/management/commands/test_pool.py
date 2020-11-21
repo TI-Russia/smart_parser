@@ -11,14 +11,12 @@ from datetime import datetime
 from django.core.management import BaseCommand
 
 from collections import Counter
-from .toloka_utils import readTolokaGoldenPool, calcMetrics
+from deduplicate.toloka import TToloka
 from .dedupe_adapter import \
     dedupe_object_writer, \
     describe_dedupe, \
     get_pairs_from_clusters, \
     pool_to_dedupe
-
-import deduplicate
 
 # more info on 70..100 to get more accuracy
 ROC_POINTS = list(range(0, 71, 10)) + list(range(71, 100))
@@ -30,7 +28,7 @@ def process_test_with_threshold(point):
         dedupe_model = dedupe.StaticDedupe(sf, num_cores=1)
         clustered_dupes = dedupe_model.match(self.dedupe_objects, point['Threshold'])
         pairs = get_pairs_from_clusters(clustered_dupes)
-        (metrics, results) = calcMetrics(pairs, self.test_data)
+        (metrics, results) = TToloka.calc_metrics(pairs, self.test_data)
         point.update(metrics)
         return point, results, clustered_dupes
 
@@ -164,7 +162,7 @@ class Command(BaseCommand):
         for t in ROC_POINTS:
             threshold = t / 100.0
             pairs = get_pairs_from_clusters(clustered_dupes, threshold=threshold)
-            (metrics, test_results) = calcMetrics(pairs, self.test_data)
+            (metrics, test_results) = TToloka.calc_metrics(pairs, self.test_data)
             self.print_test_output(test_results)
 
             metrics['Threshold'] = threshold
@@ -172,7 +170,7 @@ class Command(BaseCommand):
             output_points_file.write(json.dumps(metrics) + "\n")
 
     def process_test(self, test_pool_file_name, output_points_file):
-        self.test_data = readTolokaGoldenPool(test_pool_file_name)
+        self.test_data = TToloka.read_toloka_golden_pool(test_pool_file_name)
         self.log(
             "Mark distribution in {}: {}".format(self.options["test_pool"], repr(Counter(self.test_data.values()))))
         self.fill_dedupe_data()

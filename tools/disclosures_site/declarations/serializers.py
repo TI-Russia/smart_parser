@@ -2,7 +2,7 @@ from . import models
 from declarations.common import normalize_whitespace
 from declarations.countries import get_country_code
 from django.db import connection
-
+import re
 
 def read_incomes(section_json):
     for i in section_json.get('incomes', []):
@@ -162,7 +162,7 @@ class TSmartParserJsonReader:
             raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
         self.section.person_name = normalize_fio(fio)
         self.section.position = person_info.get("role")
-        self.section.department =  person_info.get("department")
+        self.section.department = person_info.get("department")
 
     def get_passport_factory(self, office_hierarchy=None):
         return TSectionPassportFactory(
@@ -187,3 +187,65 @@ class TSmartParserJsonReader:
         models.Vehicle.objects.bulk_create(self.set_section(self.vehicles))
 
 
+def whitespace_remover(val):
+    """
+    Return modified val where all consequent
+    whitespaces replaced with space
+    """
+    return (re.sub('\s+', ' ', val)).strip()
+
+
+def build_person_info_json(section):
+    fio = section.person_name
+    if fio is None or len(fio) == 0 and section.person is not None:
+        fio = section.person.person_name
+
+    person_info = {
+        "name_raw": fio
+    }
+    if section.position:
+        person_info['role'] = whitespace_remover(section.position)
+    if section.department:
+        person_info['department'] = whitespace_remover(section.department)
+    return person_info
+
+
+def get_relative_str(some_record):
+    name = models.Relative(some_record.relative).name
+    if len(name) == 0:
+        return None
+    else:
+        return name
+
+
+def get_section_json(section):
+    """Returns Json section representation for yandex.toloka TSV """
+    section_json = {"person": build_person_info_json(section)}
+
+    section_json['incomes'] = []
+    for income in section.income_set.all():
+        section_json['incomes'].append ({"size": income.size, "relative": get_relative_str(income)})
+
+    for v in section.vehicle_set.all():
+        if 'vehicles' not in section_json:
+            section_json['vehicles'] = []
+        section_json['vehicles'].append({"text": v.name, "relative": get_relative_str(v)})
+
+    for v in section.realestate_set.all():
+        if 'real_estates' not in section_json:
+            section_json['real_estates'] = []
+        r = {
+            "square": v.square,
+            "type_raw": "" if v.type is None else v.type,
+            "owntype_raw": "" if v.owntype is None else v.own_type_str,
+            "relative": get_relative_str(v),
+            "country_raw": "" if v.country is None  else v.country_str
+        }
+        section_json['real_estates'].append(r)
+
+    section_json['year'] = str(section.income_year)
+    section_json['source'] = "disclosures"
+    section_json['office'] = whitespace_remover(section.source_document.office.name)
+    section_json['office_id'] = section.source_document.office.id
+
+    return section_json
