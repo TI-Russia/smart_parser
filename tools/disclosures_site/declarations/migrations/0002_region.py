@@ -18,23 +18,18 @@ def add_regions(apps, schema_editor):
             name=r['name']
         )
         rec.save()
+
         synonyms = {
-            r['name']: SynonymClass.Russian,
             r["short_name"]: SynonymClass.RussianShort,
             r["extra_short_name"]: SynonymClass.RussianShort,
+            r["extra_short_name"]: SynonymClass.EnglishShort,
             r["name_en"]: SynonymClass.English,
-            r["extra_short_name"]: SynonymClass.EnglishShort
+            r['name']: SynonymClass.Russian, # it  should be the last line in this dict, since r['name'] can be equal to r["short_name"]
         }
 
         for k, v in synonyms.items():
-            if k == "":
-                continue
-            k = k.strip('*')
-            s = RegionSynonyms()
-            s.region = rec
-            s.synonym = k
-            s.synonym_class = v
-            s.save()
+            if k != "":
+                RegionSynonyms(region=rec, synonym=k.strip('*'), synonym_class=v).save()
 
 
 def clear_regions(apps, schema_editor):
