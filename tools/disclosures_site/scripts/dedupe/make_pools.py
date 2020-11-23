@@ -21,6 +21,8 @@ TRAIN_FILES = [
 ]
 
 DJANGO_ROOT = os.path.join(os.path.dirname(__file__), "../..")
+
+
 class TConversion:
     def __init__(self):
         self.output_assignment_folder = "../assignments"
@@ -39,7 +41,7 @@ class TConversion:
             exit(1)
 
     def make_pool(self, input_files, output_pool):
-        script = os.path.join(self.declarator_path, "scripts/toloka_stats.py")
+        script = os.path.join(DJANGO_ROOT, "scripts/dedupe/make_pool.py")
         cmd = "python3 {} --input-folder {}  -m {} {}".format(
             script,
             self.output_assignment_folder,

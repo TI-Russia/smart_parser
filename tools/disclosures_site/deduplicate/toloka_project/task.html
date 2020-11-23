@@ -8,13 +8,13 @@
                 <th class="first_line" />
                 {{#each json_left.sections}}
                     <th class="first_line">
-                        {{ person.name_raw }}<sup>{{surname_rank}}</sup>
+                        <span style="font-weight:normal"><sup>{{surname_rank}}</sup></span>{{ person.name_raw }}
                     </th>
                 {{/each}}
-                <th class="central_cell" ><h3>?</h3> </th>
+                <th class="central_cell" >{{field type="checkbox" name="person_name"}} </th>
                 {{#each json_right.sections}}
                     <th class="first_line">
-                        {{ person.name_raw }}
+                        <span style="font-weight:normal"><sup>{{surname_rank}}</sup></span>{{ person.name_raw }}
                     </th>
                 {{/each}}
             </tr>
@@ -46,7 +46,11 @@
                             {{get_income this relative }}
                         </td>
                     {{/each}}
-                    <th class="central_cell"/>
+                    <th class="central_cell" >
+                        {{#unless relative}}
+                            {{field type="checkbox" name="income"}}
+                        {{/unless}}
+                        </th>
                     {{#each ../json_right.sections}}
                         <td>
                             {{get_income this relative }}
@@ -60,20 +64,42 @@
                 {{#each json_left.sections}}
                     <td>{{{ person.role }}}</td>
                 {{/each}}
-                <th class="central_cell"/>
+                <th class="central_cell">{{field type="checkbox" name="position"}} </th>
                 {{#each json_right.sections}}
                     <td>{{{ person.role }}}</td>
                 {{/each}}
             </tr>
 
             <tr>
+                <th><span class="section_subpart_title">Регион:</span></th>
+                {{#each json_left.sections}}
+                    <td>{{office_region}}</td>
+                {{/each}}
+                <th class="central_cell">{{field type="checkbox" name="region"}} </th>
+                {{#each json_right.sections}}
+                    <td>{{office_region}}</td>
+                {{/each}}
+            </tr>
+
+            <tr>
                 <th><span class="section_subpart_title">Организация:</span></th>
                 {{#each json_left.sections}}
-                    <td>{{{office}}} (<small>{{office_section_count}})</small></td>
+                    <td>{{{office}}} <small>({{office_section_count}})</small></td>
                 {{/each}}
-                <th class="central_cell"/>
+                <th class="central_cell">{{field type="checkbox" name="office"}} </th>
                 {{#each json_right.sections}}
-                    <td>{{{office}}} (<small>{{office_section_count}})</small>)</td>
+                    <td>{{{office}}} <small>({{office_section_count}})</small></td>
+                {{/each}}
+            </tr>
+
+            <tr>
+                <th><span class="section_subpart_title">Рубрика:</span></th>
+                {{#each json_left.sections}}
+                    <td>{{{office_rubric}}}</td>
+                {{/each}}
+                <th class="central_cell">{{field type="checkbox" name="rubric"}}</th>
+                {{#each json_right.sections}}
+                    <td>{{{office_rubric}}}</td>
                 {{/each}}
             </tr>
 
@@ -91,7 +117,11 @@
                             {{ get_vehicles this relative }}
                         </td>
                     {{/each}}
-                    <th class="central_cell"/>
+                    <th class="central_cell">
+                        {{#unless relative}}
+                            {{field type="checkbox" name="vehicle"}}
+                        {{/unless}}
+                    </th>
                     {{#each ../json_right.sections}}
                         <td>
                             {{ get_vehicles this relative }}
@@ -114,7 +144,11 @@
                             {{{ get_realty this relative }}}
                         </td>
                     {{/each}}
-                    <th class="central_cell"/>
+                    <th class="central_cell">
+                          {{#unless relative}}
+                          {{field type="checkbox" name="realty"}}
+                          {{/unless}}
+                    </th>
                     {{#each ../json_right.sections}}
                         <td>
                             {{{ get_realty this relative }}}
@@ -125,8 +159,10 @@
             </tbody>
         </table>
     </div>
-
-    <div class="footer">
+   <div style="footer">
+    <span style="width:400px;display: inline-block"/>
+   </div>    <div style="footer">
+        <span style="width:200px;display: inline-block"/>
         {{field type="radio" name="result" label="Это один человек" value="YES" hotkey="1"}}
         {{field type="radio" name="result" label="Это разные люди" value="NO" hotkey="2"}}
         {{field type="radio" name="result" label="Мало информации" value="UNK" hotkey="3"}}

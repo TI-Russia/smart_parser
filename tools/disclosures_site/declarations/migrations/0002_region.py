@@ -22,7 +22,8 @@ def add_regions(apps, schema_editor):
         synonyms = {
             r["short_name"]: SynonymClass.RussianShort,
             r["extra_short_name"]: SynonymClass.RussianShort,
-            r["extra_short_name"]: SynonymClass.EnglishShort,
+            r["short_name_en"]: SynonymClass.EnglishShort,
+            r["extra_short_name_en"]: SynonymClass.EnglishShort,
             r["name_en"]: SynonymClass.English,
             r['name']: SynonymClass.Russian, # it  should be the last line in this dict, since r['name'] can be equal to r["short_name"]
         }

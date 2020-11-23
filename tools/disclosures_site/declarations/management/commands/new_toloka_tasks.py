@@ -3,12 +3,12 @@ import csv
 import json
 import os
 from collections import defaultdict
-import Levenshtein
 from deduplicate.toloka import TToloka
 from django.core.management import BaseCommand
 import declarations.models as models
 import django.db.utils
 from declarations.common import resolve_fullname
+from declarations.rubrics import get_russian_rubric_str
 from declarations.serializers import get_section_json
 import random
 import logging
@@ -163,6 +163,7 @@ def get_section_year(s):
     return int(s.get('years', s['year']))
 
 
+
 class Command(BaseCommand):
     help = 'Создание пар для толоки'
 
@@ -211,6 +212,18 @@ class Command(BaseCommand):
         self.logger = setup_logging()
         self.db_squeeze = TDBSqueeze(self.logger)
         self.db_squeeze_pickled_file_path = "squeeze.pickle"
+        self.region_id_to_name = self.read_regions()
+
+
+    def read_regions(self):
+        region_id_to_name = dict()
+        for r in models.Region_Synonyms.objects.all():
+            if r.synonym_class == models.SynonymClass.Russian:
+                region_id_to_name[r.region_id] = r.synonym
+            if r.synonym_class == models.SynonymClass.RussianShort and r.region_id not in region_id_to_name:
+                region_id_to_name[r.region_id] = r.synonym
+        self.logger.debug("read {} regions".format(len(region_id_to_name)))
+        return region_id_to_name
 
     def prepare_data(self):
         self.logger.info("Serializing from DB...")
@@ -328,12 +341,15 @@ class Command(BaseCommand):
         surname_rank = self.db_squeeze.surname_rank.index(surname)
         sections = list()
         for s in section_sql_records:
-            json_dict = get_section_json(s)
-            office_id = json_dict['office_id']
-            json_dict['office_section_count'] = self.db_squeeze.office_info[office_id]['section_count']
-            json_dict['surname_rank'] = surname_rank
-            sections.append(json_dict)
-        return  {'sections': sections}
+            section_json = get_section_json(s)
+            office_id = section_json['office_id']
+            section_json['office_section_count'] = self.db_squeeze.office_info[office_id]['section_count']
+            office = models.Office.objects.get(id=office_id)
+            section_json['office_rubric'] = get_russian_rubric_str(office.rubric_id)
+            section_json['office_region'] = self.region_id_to_name.get(office.region_id, "")
+            section_json['surname_rank'] = surname_rank
+            sections.append(section_json)
+        return {'sections': sections}
 
     def add_task_line(self, id1, id2, golden_result, tasks):
         rec1 = self.create_record(id1)
@@ -382,19 +398,16 @@ class Command(BaseCommand):
                 assert id1 < id2
                 yield TDBSqueeze.id_to_str(id1), TDBSqueeze.id_to_str(id2)
 
-    def new_toloka_tasks(self,  task_count, golden_set_ratio, pool_name, goldensets):
+    def new_toloka_tasks(self, task_count, golden_set_ratio, pool_name, goldensets):
         gs_task_count = int(task_count * golden_set_ratio)
         output_file_name = os.path.join(TToloka.TASKS_PATH, pool_name)
         self.logger.info('task_count = {}'.format(task_count))
         self.logger.info('golden tasks to be found = {}'.format(gs_task_count))
-
         prev_tasks = self.read_previous_tasks()
         if output_file_name.endswith('.tsv'):
             output_file_name = output_file_name[0:-4]
-        auto_output_file_name = output_file_name + "_auto.tsv"
         output_file_name = output_file_name + ".tsv"
         self.logger.info('create file  = {}'.format(output_file_name))
-        self.logger.info('create file  = {}'.format(auto_output_file_name))
         tasks = TolokaTasks()
 
         for id1, id2 in self.generate_pairs():
@@ -428,17 +441,14 @@ class Command(BaseCommand):
             random.shuffle(tasks.output_lines)  # do not delete it, you can easily forget it in toloka interface
             for row in tasks.output_lines:
                 tsv_writer.writerow(row)
-
-
-        self.logger.info('TSV results:')
         self.logger.info('All tasks count in result TSV: {}'.format(len(tasks.output_lines)))
         self.logger.info('Golden Set tasks count in result TSV: {}'.format(golden_count))
         self.logger.info(
             'Auto positive examples (not written to the result file): {}'.format(len(tasks.auto_positive_examples)))
         self.logger.info(
             'Auto negative examples (not written to the result file): {}'.format(len(tasks.auto_negative_examples)))
-        self.logger.info('Export to TSV completed, do not forget to add new pools {} and {} to the repository.'.format(
-            output_file_name, auto_output_file_name))
+        self.logger.info('Export to TSV completed, do not forget to add new pools {} to the repository.'.format(
+            output_file_name))
 
     def handle(self, *args, **options):
         self.logger.info('Started')
@@ -453,3 +463,4 @@ class Command(BaseCommand):
             pool_name=options['output_name'],
             goldensets=self.get_golden_examples(options['goldenset_file'])
         )
+
