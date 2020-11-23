@@ -189,6 +189,9 @@ class Command(BaseCommand):
             if resolve_fullname(s.person_name) is None:
                 self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
                 continue
+            if s.get_declarant_income_size() == 0:
+                self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
+                continue
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()
             assert k is not None
             if len(v['family_name']) == 0:

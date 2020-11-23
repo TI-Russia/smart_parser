@@ -120,7 +120,12 @@ class TDBSqueeze:
     def build_sections_and_surname_rank(self, surname_to_unified_ids):
         self.surname_rank.clear()
         surname_to_initials = defaultdict(set)
-        sql = 'SELECT id, person_name FROM declarations_section'
+        sql = """
+                select s.id as id, s.person_name as person_name  
+                from declarations_section s 
+                join declarations_income i on i.section_id = s.id
+                where i.relative = "{}"
+            """.format(models.Relative.main_declarant_code)
         self.logger.info("build sections")
         cnt = 0
         for s in models.Section.objects.raw(sql):
@@ -396,6 +401,9 @@ class Command(BaseCommand):
                 index2_end = index2_start + self.db_squeeze.get_ordered_pairs_count(index1)
                 id2 = random.choice(self.db_squeeze.id_list[index2_start:index2_end])
                 assert id1 < id2
+                # do not yield (person, person)
+                if not self.db_squeeze.unified_id_is_section(id1) and not self.db_squeeze.unified_id_is_section(id2):
+                    continue
                 yield TDBSqueeze.id_to_str(id1), TDBSqueeze.id_to_str(id2)
 
     def new_toloka_tasks(self, task_count, golden_set_ratio, pool_name, goldensets):

@@ -63,7 +63,6 @@ class TTolokaStats:
         self.golden_task_assignments = 0
 
     def collect_stats(self, filename):
-        print ("open file {}".format(filename))
         with open(filename, "r", encoding="utf-8") as tsv:
             for task in csv.DictReader(open(filename), delimiter="\t"):
                 if task['INPUT:id_left'] == "" or task['INPUT:id_right'] == "":

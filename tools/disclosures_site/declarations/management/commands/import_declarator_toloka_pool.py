@@ -94,7 +94,7 @@ class Command(BaseCommand):
         self.squeeze = TDbSqueeze()
         self.squeeze_pickled_file_path = "squeeze.pickle"
 
-    def convert_line(self, header, section_or_person_id_key, json_key, row):
+    def convert_one_id(self, header, section_or_person_id_key, json_key, row):
         id_index = header.index(section_or_person_id_key)
         assert id_index != -1
         section_or_person_id = row[id_index]
@@ -108,7 +108,7 @@ class Command(BaseCommand):
             input_person_name = sections[0]['person']['name_raw']
         else:
             input_person_name = person_json['fio']
-        #assert sections[0]['source'] == "declarator"
+
         if section_or_person_id.startswith('person-'):
             declarator_person_id = int(section_or_person_id[len('person-'):])
             if declarator_person_id not in self.squeeze.declarator_person_id_to_person_id:
@@ -118,7 +118,7 @@ class Command(BaseCommand):
             person_id, person_name =  self.squeeze.declarator_person_id_to_person_id.get(declarator_person_id)
             if not check_family_name(person_name, input_person_name):
                 raise ConvertException("person id: {} has a different family name, skip this record".format(person_id))
-            return   # nothing to set just check that it is the right person
+            row[id_index] = str("person-") + str(person_id)
         else:
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
@@ -152,8 +152,8 @@ class Command(BaseCommand):
                 row_index += 1
                 try:
                     if ''.join(task_row).strip() != '':
-                        self.convert_line(header, 'INPUT:id_left', 'INPUT:json_left', task_row)
-                        self.convert_line(header, 'INPUT:id_right', 'INPUT:json_right', task_row)
+                        self.convert_one_id(header, 'INPUT:id_left', 'INPUT:json_left', task_row)
+                        self.convert_one_id(header, 'INPUT:id_right', 'INPUT:json_right', task_row)
                     output_lines.append(task_row)
                     good_lines += 1
                 except (ConvertException, models.Person.DoesNotExist) as exp:

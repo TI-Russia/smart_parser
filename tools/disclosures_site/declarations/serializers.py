@@ -156,10 +156,13 @@ class TSmartParserJsonReader:
     def init_person_info(self):
         person_info = self.section_json.get('person')
         if person_info is None:
-            raise TSmartParserJsonReader.SerializerException("cannot find 'person'  key in json")
-        fio = person_info.get('name', person_info.get('name_raw'))
-        if fio is None:
-            raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
+            fio = self.section_json.get('fio')
+            if fio is None:
+                raise TSmartParserJsonReader.SerializerException("cannot find nor 'person' neither 'fio' key in json")
+        else:
+            fio = person_info.get('name', person_info.get('name_raw'))
+            if fio is None:
+                raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
         self.section.person_name = normalize_fio(fio)
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
