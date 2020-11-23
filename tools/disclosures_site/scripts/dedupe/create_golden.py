@@ -2,7 +2,7 @@ import csv
 import argparse
 import logging
 import csv
-
+import random
 
 def setup_logging(logfilename="create_golden.log"):
     logger = logging.getLogger("golden")
@@ -25,18 +25,19 @@ def parse_args():
     parser = argparse.ArgumentParser("Usage: %prog [options] input_tsv1 input_tsv2 ...")
     parser.add_argument('--negative-ratio', dest="negative_ratio", type=int,
                         help='try to delete negative cases to achieve the given ratio in percent \
-                             for example --negative-ratio 50 means that the count of postives and negatives must the same' )
+                             for example --negative-ratio 50 means that the count of postives and negatives must the same')
     parser.add_argument('--output-file', dest="output_file")
+    parser.add_argument('--max-cases-number', dest="max_cases_count", type=int, default=20)
     parser.add_argument('input_files', nargs='+', help='input assignment files from toloka')
     args = parser.parse_args()
     return args
 
 
 class TFileCollector:
-    def __init__(self, negative_ratio):
+    def __init__(self, args):
         self.logger = setup_logging()
         self.tasks = list()
-        self.negative_ratio = negative_ratio
+        self.args = args
 
     def collect_data(self, filename):
         self.logger.info("open file {}".format(filename))
@@ -46,12 +47,18 @@ class TFileCollector:
                     continue  # skip empty lines
                 task['GOLDEN:result'] = task['OUTPUT:result']
                 task['HINT:text'] = task['OUTPUT:comments']
+                if len(task['HINT:text']) == 0:
+                    task['HINT:text'] = "_"
+
                 self.tasks.append(task)
 
     def try_to_achieve_negative_ratio(self):
-        if self.negative_ratio is None:
+        if self.args.negative_ratio is None:
             return
-        goal_negative_count = (float(self.negative_ratio) / 100.0) * len(self.tasks)
+        positive_count = sum(1 for t in self.tasks if t['GOLDEN:result'].lower() == 'yes')
+        goal_positive_ratio = 1.0 - float(self.args.negative_ratio) / 100.0
+        goal_count = float(positive_count) / goal_positive_ratio
+        goal_negative_count = goal_count - positive_count
         negative_cnt = 0
         new_tasks = list()
         self.logger.info("goal_negative_count = {}".format(goal_negative_count))
@@ -66,19 +73,19 @@ class TFileCollector:
             len(self.tasks) - len(new_tasks) ))
         self.tasks = new_tasks
 
-
     def write_output(self, output_filename):
+        random.shuffle(self.tasks)
         with open(output_filename, 'w') as csvfile:
             fieldnames = ['INPUT:id_left', 'INPUT:id_right',  'INPUT:json_left', 'INPUT:json_right', 'GOLDEN:result', 'HINT:text']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter="\t", extrasaction="ignore")
             writer.writeheader()
-            for t in self.tasks:
+            for t in self.tasks[:self.args.max_cases_count]:
                 writer.writerow(t)
 
 
 if __name__ == '__main__':
     args = parse_args()
-    c = TFileCollector(args.negative_ratio)
+    c = TFileCollector(args)
     for f in args.input_files:
         c.collect_data(f)
     c.try_to_achieve_negative_ratio()
