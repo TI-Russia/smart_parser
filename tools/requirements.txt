@@ -27,3 +27,5 @@ django-meta
 requests
 gunicorn
 psycopg2-binary
+matplotlib
+
