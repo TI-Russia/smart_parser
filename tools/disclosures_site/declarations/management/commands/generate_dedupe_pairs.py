@@ -175,6 +175,7 @@ class Command(BaseCommand):
         if not self.rebuild:
             sections = sections.filter(person=None)
         cnt = 0
+        take_sections_with_empty_income = self.options.get('take_sections_with_empty_income', False)
         for s in sections.all():
             if s.person is not None:
                 if s.person.declarator_person_id is not None:
@@ -189,7 +190,7 @@ class Command(BaseCommand):
             if resolve_fullname(s.person_name) is None:
                 self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
                 continue
-            if s.get_declarant_income_size() == 0:
+            if not take_sections_with_empty_income and s.get_declarant_income_size() == 0:
                 self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
                 continue
             k, v = TPersonFields(None, s).get_dedupe_id_and_object()

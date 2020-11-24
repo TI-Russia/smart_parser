@@ -24,7 +24,6 @@ class CreateNewPersonId(TestCase):
 
         models.Section(id=1, source_document=src_doc, person_name="Иванов Иван Иванович").save()
         models.Section(id=2, source_document=src_doc, person_name="Иванов И. И.").save()
-
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
         p = TPermaLinksDB(permalinks_path)
         p.create_db()
@@ -36,6 +35,7 @@ class CreateNewPersonId(TestCase):
                           write_to_db=True,
                           fake_dedupe=True,
                           surname_bounds=',',
+                          take_sections_with_empty_income=True,
                           rebuild=True)
 
         self.assertEqual(models.Person.objects.count(), 1)
@@ -77,6 +77,7 @@ class UseOldPersonId(TestCase):
                           write_to_db=True,
                           fake_dedupe=True,
                           surname_bounds=',',
+                          take_sections_with_empty_income=True,
                           rebuild=True)
 
         sec1 = models.Section.objects.get(id=1)
@@ -90,6 +91,7 @@ class RememberOldPersonId(TestCase):
 
     def test(self):
         src_doc = create_default_source_document()
+        models.Section.objects.all().delete()
         models.Section(id=1, source_document=src_doc, person_name="Иванов Иван Иванович").save()
         models.Section(id=2, source_document=src_doc, person_name="Иванов И. И.").save()
 
@@ -110,6 +112,7 @@ class RememberOldPersonId(TestCase):
                           write_to_db=True,
                           fake_dedupe=True,
                           surname_bounds=',',
+                          take_sections_with_empty_income=True,
                           rebuild=True)
 
         sec1 = models.Section.objects.get(id=1)

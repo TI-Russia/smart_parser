@@ -41,7 +41,7 @@ class ElasticSectionDocument(Document):
         return instance.source_document.office.id
 
     def prepare_region_id(self, instance):
-        return instance.source_document.office.region_id
+        return int(instance.source_document.office.region_id)
 
     def prepare_rubric_id(self, instance):
         return OFFICES.offices[instance.source_document.office.id]['rubric_id']
