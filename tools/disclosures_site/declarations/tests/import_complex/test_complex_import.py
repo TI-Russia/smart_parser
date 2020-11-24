@@ -16,6 +16,7 @@ class ComplexImportTestCase(TestCase):
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
         p = TPermaLinksDB(permalinks_path)
         p.create_db()
+        p.create_sql_sequences()
         p.close()
 
         os.environ['SMART_PARSER_SERVER_ADDRESS'] = "localhost:8178"
