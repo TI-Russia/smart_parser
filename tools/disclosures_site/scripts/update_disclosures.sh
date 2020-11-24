@@ -8,7 +8,7 @@ set -e
 source $(dirname $0)/update_common.sh
 
 
-#3.1 создание нового каталога
+#3.1 создание нового каталога и файла настройки .profile
     cd $DLROBOT_UPDATES_FOLDER/
     export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
     # all projects that older than 5 hours in order not to get a race condition
@@ -17,12 +17,18 @@ source $(dirname $0)/update_common.sh
 
     mkdir -p $DLROBOT_FOLDER
     cd $DLROBOT_FOLDER
+    cp $TOOLS/disclosures_site/scripts/update_common.sh  .profile
+    echo "" >> .profile
+    echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
+    echo "export CRAWL_EPOCH=$CRAWL_EPOCH" >> .profile
+    echo "export OLD_DLROBOT_FOLDER=$OLD_DLROBOT_FOLDER" >> .profile
 
+    cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER
 
 #3.2  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
     python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
         --max-ctime $CRAWL_EPOCH \
-        --input-dlrobot-folder  $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
+        --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
         --human-json $HUMAN_FILES_JSON \
         --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
         --output-domains-folder $DISCLOSURES_FILES \
@@ -59,8 +65,8 @@ source $(dirname $0)/update_common.sh
     python3 manage.py create_database --settings disclosures.settings.dev --skip-checks
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
+    python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
     python3 manage.py test declarations/tests --settings disclosures.settings.dev
-
 
 #3.8.1
     cd $DLROBOT_FOLDER
@@ -163,7 +169,7 @@ source $(dirname $0)/update_common.sh
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
 
 
-#17  посылаем данные dlrobot в католог, который синхонизирутеся с облаком
+#17  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком
     python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER
 
