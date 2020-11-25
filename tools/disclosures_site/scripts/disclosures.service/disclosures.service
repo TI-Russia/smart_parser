@@ -1,5 +1,6 @@
 [Unit]
 Description=Production http-service for disclosures.ru
+After=mysql.service
 
 [Service]
 User=sokirko
