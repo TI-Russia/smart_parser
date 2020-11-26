@@ -8,7 +8,7 @@ set -e
 source $(dirname $0)/update_common.sh
 
 
-#3.1 создание нового каталога и файла настройки .profile
+#1 создание нового каталога и файла настройки .profile
     cd $DLROBOT_UPDATES_FOLDER/
     export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
     # all projects that older than 5 hours in order not to get a race condition
@@ -25,7 +25,7 @@ source $(dirname $0)/update_common.sh
 
     cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER
 
-#3.2  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
+#2  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
     python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
         --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
@@ -35,7 +35,7 @@ source $(dirname $0)/update_common.sh
         --output-json dlrobot_human.json
 
 
-#3.3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
+#3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
     new_size=$(stat -c%s "dlrobot_human.json")
     old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.json")
@@ -44,7 +44,7 @@ source $(dirname $0)/update_common.sh
         exit 1
     endif
 
-#3.4 (факультативно) новый смартпарсер через старые файлы dlrobot
+#4 (факультативно) новый смартпарсер через старые файлы dlrobot
   #python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py  --walk-folder-recursive $DISCLOSURES_FILES --action put
 
 #3.5  (факультативно) переконвертация  pdf, которые не были переконвертированы раньше
@@ -56,11 +56,11 @@ source $(dirname $0)/update_common.sh
   #python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
 
-#3.7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
+#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
    python3 /var/www/smart_parser/tools/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
 
-#3.8.  инициализация базы disclosures
+#8.  инициализация базы disclosures
     cd ~/smart_parser/tools/disclosures_site
     python3 manage.py create_database --settings disclosures.settings.dev --skip-checks
     python3 manage.py makemigrations --settings disclosures.settings.dev
@@ -68,12 +68,12 @@ source $(dirname $0)/update_common.sh
     python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
     python3 manage.py test declarations/tests --settings disclosures.settings.dev
 
-#3.8.1
+#9
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
 
-#3.9.  Импорт json в dislosures_db (может быть, стоит запускать в 2 потока, а то памяти на мигалке не хватает)
+#10  Импорт json в dislosures_db (может быть, стоит запускать в 2 потока, а то памяти на мигалке не хватает)
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
@@ -86,16 +86,9 @@ source $(dirname $0)/update_common.sh
         --settings disclosures.settings.dev \
         --permanent-links-db permalinks.dbm
 
-#9.  (факультативно) тестирование сливалки
-   #cd $TOOLS/disclosures_site/toloka/pools
-   #bash -x make_pools.sh
-
-#10.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+#11.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
-   export DISCLOSURES_DB_HOST=migalka
-   export DEDUPE_HOSTS=lena,avito
-   export DEDUPE_HOSTS_SPACES="lena avito"
    for host in $DEDUPE_HOSTS_SPACES; do
         scp $DLROBOT_FOLDER/permalinks.dbm $host:/tmp
         ssh $host git -C ~/smart_parser pull
@@ -107,23 +100,23 @@ source $(dirname $0)/update_common.sh
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
                  
 
-#11  Коммит статистики
+#12  Коммит статистики
    cd $TOOLS/disclosures_site
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    git commit -m "new statistics" data/statistics.json
    git push
 
-#12
+#13
  cd $DLROBOT_FOLDER
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
-#13. создание индексов для elasticsearch
+#14 создание индексов для elasticsearch
    python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
 
-#13.1 создание sitemap (можно параллельно с индексированием elasticsearch)
+#15 создание sitemap (можно параллельно с индексированием elasticsearch)
   python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
 
-#14 go to prod (migalka), disclosures.ru is offline
+#16 go to prod (migalka), disclosures.ru is offline
     cd /var/www/smart_parser/tools/disclosures_site
     git pull
 
@@ -160,16 +153,16 @@ source $(dirname $0)/update_common.sh
     # some query example
     #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
 
-#15 копируем файлы sitemap
+#17 копируем файлы sitemap
     rm -rf disclosures/static/sitemap
     ln -s  $DLROBOT_FOLDER/sitemap disclosures/static/sitemap
 
-#16  подменяем файл документов-исходников
+#18  подменяем файл документов-исходников
      rm -rf disclosures/static/domains
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
 
 
-#17  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком
+#19  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком
     python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER
 

@@ -309,7 +309,7 @@ class Command(BaseCommand):
                 self.logger.info('read dedupe settings from {}'.format(sf.name))
                 self.dedupe = dedupe.StaticDedupe(sf, num_cores=self.options['num_cores'])
                 if logging.getLogger().getEffectiveLevel() > 1:
-                    describe_dedupe(self.stdout, self.dedupe)
+                    describe_dedupe(self.logger, self.dedupe)
 
     def cluster_with_dedupe(self):
         if self.options.get("fake_dedupe", False):
