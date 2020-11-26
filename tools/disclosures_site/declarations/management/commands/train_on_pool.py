@@ -13,6 +13,27 @@ import logging
 from datetime import datetime
 
 
+def setup_logging(logfilename="train_pool.log"):
+    logger = logging.getLogger("train_pool")
+    logger.setLevel(logging.DEBUG)
+
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if os.path.exists(logfilename):
+        os.remove(logfilename)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+    return logger
+
+
 class Command(BaseCommand):
     help = 'Обучение модели Dedupe на основе train+test пула'
 
@@ -85,6 +106,7 @@ class Command(BaseCommand):
         self.dedupe_train_recall = 0.95
         self.threshold = None
         self.options = None
+        self.logger = setup_logging()
 
     def init_options(self, options):
         self.dedupe_train_recall = options['dedupe_train_recall']
@@ -105,15 +127,15 @@ class Command(BaseCommand):
         self.train_objects = {}
         match = []
         distinct = []
-        pool_to_dedupe(self.train_pool, self.train_objects, match, distinct)
+        pool_to_dedupe(self.logger, self.train_pool, self.train_objects, match, distinct)
 
         if self.options['additional_train_pool'] is not None:
             add_train_pool = TToloka.read_toloka_golden_pool(self.options["additional_train_pool"])
-            pool_to_dedupe(add_train_pool, self.train_objects, match, distinct)
+            pool_to_dedupe(self.logger, add_train_pool, self.train_objects, match, distinct)
 
-        self.stdout.write("Total data records loaded: {}".format(len(self.train_objects)))
-        self.stdout.write("Match pairs: {}".format(len(match)))
-        self.stdout.write("Distinct pairs: {}".format(len(distinct)))
+        self.logger.info("Total data records loaded: {}".format(len(self.train_objects)))
+        self.logger.info("Match pairs: {}".format(len(match)))
+        self.logger.info("Distinct pairs: {}".format(len(distinct)))
 
         self.train_pairs = {
             'match': match,
@@ -128,7 +150,7 @@ class Command(BaseCommand):
 
     def write_dedupe_aux_params(self):
         with open(self.options["train_options"], 'w', encoding="utf8") as sf:
-            self.stdout.write('write dedupe threshold to {}'.format(sf.name))
+            self.logger.info('write dedupe threshold to {}'.format(sf.name))
             params = {
                 "threshold": self.threshold,
                 "options": self.options
@@ -137,7 +159,7 @@ class Command(BaseCommand):
             json.dump(params, sf, ensure_ascii=False)
 
     def handle(self, *args, **options):
-        self.stdout.write('Started at: {}'.format(datetime.now()))
+        self.logger.info('Started at: {}'.format(datetime.now()))
         self.init_options(options)
         self.train_pool = TToloka.read_toloka_golden_pool(options["train_pool"])
 
@@ -148,21 +170,21 @@ class Command(BaseCommand):
 
         self.build_train_objects_and_pairs()
 
-        self.stdout.write("Start of sampling...")
+        self.logger.info("Start of sampling...")
         self.dedupe.sample(self.train_objects)
 
-        self.stdout.write("run dedupe markPairs distint count={} match count={}".format(
+        self.logger.info("run dedupe markPairs distint count={} match count={}".format(
             len(self.train_pairs['distinct']), len(self.train_pairs['match']))
         )
         self.dedupe.markPairs(self.train_pairs)
 
-        self.stdout.write('Training...')
+        self.logger.info('Training...')
         self.dedupe.train(recall=self.dedupe_train_recall, index_predicates=False)
 
         self.threshold = float(self.dedupe.threshold(self.train_objects))
-        self.stdout.write('Selected threshold = {}'.format(self.threshold))
+        self.logger.info('Selected threshold = {}'.format(self.threshold))
         with open(options["model_file"], 'wb') as sf:
-            self.stdout.write('write dedupe settings to {}'.format(sf.name))
+            self.logger.info('write dedupe settings to {}'.format(sf.name))
             self.dedupe.writeSettings(sf, index=False)
 
         if self.options['output_training_pairs_file']:
@@ -170,4 +192,4 @@ class Command(BaseCommand):
                 self.dedupe.writeTraining(tf)
 
         self.write_dedupe_aux_params()
-        describe_dedupe(self.stdout, self.dedupe)
+        describe_dedupe(self.logger, self.dedupe)

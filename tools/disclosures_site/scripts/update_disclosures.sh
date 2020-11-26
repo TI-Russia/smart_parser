@@ -82,7 +82,7 @@ source $(dirname $0)/update_common.sh
                --process-count 2  \
                --permanent-links-db permalinks.dbm
 
-   python3 $TOOLS/disclosures_site/manage.py copy_person_id
+   python3 $TOOLS/disclosures_site/manage.py copy_person_id \
         --settings disclosures.settings.dev \
         --permanent-links-db permalinks.dbm
 

@@ -193,22 +193,24 @@ class TPersonFields:
         }
 
 
-def describe_dedupe(stdout, dedupe):
-    stdout.write("Dedupe blocking predicates:")
+def describe_dedupe(logger, dedupe):
+    logger.info("Dedupe blocking predicates:")
     for p in dedupe.predicates:
-        stdout.write("\t" + repr(p))
-    stdout.write("ML type: {}\n".format(type(dedupe.classifier)))
-    stdout.write("ML weights:" + "\n")
+        logger.info("\t" + repr(p))
+    logger.info("ML type: {}\n".format(type(dedupe.classifier)))
+    logger.info("ML weights:" + "\n")
     if hasattr(dedupe.classifier, "weights"):
         weights = dedupe.classifier.weights
     else:
         weights = dedupe.classifier.feature_importances_
     weights_str = "\n".join(map(repr, zip(dedupe.data_model.primary_fields, weights)))
-    stdout.write(weights_str + "\n")
+    logger.info(weights_str + "\n")
 
 
-def get_pairs_from_clusters(clustered_dupes, threshold=0):
+def get_pairs_from_clusters(logger, clustered_dupes, threshold=0):
     for (cluster_id, cluster) in enumerate(clustered_dupes):
+        if logger:
+            logger.debug("cluster_id = {}".format(cluster_id))
         id_set, scores = cluster
         for id1, score1 in zip(id_set, scores):
             for id2, score2 in zip(id_set, scores):
@@ -240,11 +242,9 @@ def convert_to_dedupe(id):
         assert False
 
 
-def pool_to_dedupe(pairs, single_objects, match, distinct, ignore_empty=True):
+def pool_to_dedupe(logger, pairs, single_objects, match, distinct, ignore_empty=True):
     """ Converts pairs to Dedupe dicts, sets missing objects of the input pairs to UNK
     """
-    logger = logging.getLogger('dedupe_declarator_logger')
-
     sys.stdout.flush()
     missing_cnt = 0
     processed_cnt = 0
@@ -263,8 +263,10 @@ def pool_to_dedupe(pairs, single_objects, match, distinct, ignore_empty=True):
                 raise django.core.exceptions.ObjectDoesNotExist()
             single_objects[k2] = v2
             if mark == "YES":
+                logger.debug("{} {} -> YES".format(id1, id2))
                 match.append((v1, v2))
             elif mark == "NO":
+                logger.debug("{} {} -> NO".format(id1, id2))
                 distinct.append((v1, v2))
         except django.core.exceptions.ObjectDoesNotExist as e:
             missing_cnt += 1
@@ -272,6 +274,6 @@ def pool_to_dedupe(pairs, single_objects, match, distinct, ignore_empty=True):
             logger.debug("set pair {0} {1} to UNK, since one them is not found in DB".format(id1, id2))
             pairs[(id1, id2)] = 'UNK'
 
-    logger.info("\nconvert pool to dedupe: pool size = {0}, missing_count={1}\n".format(
+    logger.info("convert pool to dedupe: pool size = {0}, missing_count={1}".format(
         processed_cnt, missing_cnt
     ))

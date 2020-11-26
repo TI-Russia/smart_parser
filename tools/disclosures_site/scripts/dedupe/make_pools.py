@@ -42,11 +42,10 @@ class TConversion:
 
     def make_pool(self, input_files, output_pool):
         script = os.path.join(DJANGO_ROOT, "scripts/dedupe/make_pool.py")
-        cmd = "python3 {} --input-folder {}  -m {} {}".format(
+        cmd = "python3 {} -m {} {}".format(
             script,
-            self.output_assignment_folder,
             output_pool,
-            " ".join(input_files)
+            " ".join(list(os.path.join(self.output_assignment_folder, x) for x in input_files))
         )
         print(cmd)
         if os.system(cmd) != 0:

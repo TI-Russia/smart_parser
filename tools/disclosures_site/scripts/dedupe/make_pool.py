@@ -1,20 +1,17 @@
-import os
 import csv
-import optparse
+import argparse
 from collections import defaultdict, Counter
 
 
-def parse_opts():
-    optp = optparse.OptionParser("Usage: %prog [options] input_tsv1 input_tsv2 ...")
-    optp.add_option('-u', '--output-unison-tsv', dest="output_unison_tsv")
-    optp.add_option('-m', '--output-majority-vote-tsv', dest="output_majority_vote_tsv")
-    optp.add_option('-f', '--fix-list', dest="fix_list", default=None)
-    optp.add_option('-v', '--verbose', dest="verbose", default=0, type=int)
-    optp.add_option('--input-folder', dest="input_folder", default=None)
-    (opts, args) = optp.parse_args()
-    if len(args) == 0:
-        optp.error("incorrect number of arguments")
-    return opts, args
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-u', '--output-unison-tsv', dest="output_unison_tsv")
+    parser.add_argument('-m', '--output-majority-vote-tsv', dest="output_majority_vote_tsv")
+    parser.add_argument('-f', '--fix-list', dest="fix_list", default=None)
+    parser.add_argument('-v', '--verbose', dest="verbose", default=0, type=int)
+    parser.add_argument('--take-golden', dest="take_golden", default=False, action="store_true")
+    parser.add_argument('inputfiles', nargs="+")
+    return parser.parse_args()
 
 
 # there is an answer with a majority vote
@@ -55,11 +52,12 @@ class TToloker:
 
 
 class TTolokaStats:
-    def __init__(self, fixlist, verbose):
+    def __init__(self, fixlist, args):
         self.tolokers = defaultdict(TToloker)
         self.tasks = defaultdict(list)  # tasks wo golden
         self.fixlist = fixlist
-        self.verbose = verbose
+        self.verbose = args.verbose
+        self.args = args
         self.golden_task_assignments = 0
 
     def collect_stats(self, filename):
@@ -71,20 +69,12 @@ class TTolokaStats:
                 self.tolokers[task['ASSIGNMENT:worker_id']].update(task)
 
                 task_id = task['INPUT:id_left'] + " " + task['INPUT:id_right']
-                if task["GOLDEN:result"] == "":
+                if task["GOLDEN:result"] == "" or args.take_golden:
                     self.tasks[task_id].append(task)
                 else:
                     self.golden_task_assignments += 1
 
-    def get_fixed_answer(self, id1, id2, answer):
-        if id1 > id2:
-            id1, id2 = id2, id1
-        if id1 == id2:
-            return (None, None, None)
-        fixed_answer = self.fixlist.get((id1, id2), answer)
-        return id1, id2, fixed_answer
-
-    def write_tolokers_stats(self, aggr_fail, aggr_pass, name):
+    def write_tolokers_stats(self, fixed_by_fix_list_count, aggr_fail, aggr_pass, name):
         rank_list = []
         for toloker_id, v in aggr_fail.items():
             toloker = self.tolokers[toloker_id]
@@ -106,10 +96,13 @@ class TTolokaStats:
         all_tolokers.update(aggr_pass.keys())
         all_tolokers_count = len(all_tolokers)
         print("Average Error Rate={}".format(errors_rate_sum / float(all_tolokers_count)))
+        print("fixed examples via fixlist {}".format(fixed_by_fix_list_count))
+
 
     def write_aggregated_tsv(self, filename, aggregation):
         aggr_pass = defaultdict(int)
         aggr_fail = defaultdict(int)
+        fixed_by_fix_list_count = 0
         if filename is None:
             return
         with open(filename, "w", encoding="utf-8") as of:
@@ -117,36 +110,39 @@ class TTolokaStats:
             of.write("\t".join(header) + "\n")
             lines_count = 0
             fixed_count = 0
+
             for id, task_list in self.tasks.items():
-                answer = aggregation(task_list)
-                id1, id2, fixed_answer = self.get_fixed_answer(task_list[0]["INPUT:id_left"],
-                                                               task_list[0]["INPUT:id_right"], answer)
-                if fixed_answer is not None:
-                    of.write("\t".join((id1, id2, fixed_answer)).strip() + "\n")
-                    lines_count += 1
-                    for task in task_list:
-                        toloker = task['ASSIGNMENT:worker_id']
-                        if task['OUTPUT:result'] == fixed_answer:
-                            aggr_pass[toloker] += 1
-                        else:
-                            aggr_fail[toloker] += 1
-                    if fixed_answer != answer:
-                        fixed_count += 1
+                id1, id2 = task_list[0]["INPUT:id_left"], task_list[0]["INPUT:id_right"]
+                if id1 == id2:
+                    continue
+                if id1 > id2:
+                    id1, id2 = id2, id1
+                assert len(task_list) > 0
+                tolokers_answer = aggregation(task_list)
+                if task_list[0]["GOLDEN:result"] != "":
+                    correct_answer = task_list[0]["GOLDEN:result"]
+                elif (id1, id2) in self.fixlist:
+                    correct_answer = self.fixlist.get((id1, id2))
+                    if tolokers_answer != correct_answer:
+                        fixed_by_fix_list_count += 1
+                else:
+                    correct_answer = tolokers_answer
+                    if correct_answer is None:
+                        continue
+
+                of.write("\t".join((id1, id2, correct_answer)).strip() + "\n")
+                lines_count += 1
+                for task in task_list:
+                    toloker = task['ASSIGNMENT:worker_id']
+                    if task['OUTPUT:result'] == correct_answer:
+                        aggr_pass[toloker] += 1
+                    else:
+                        aggr_fail[toloker] += 1
+                if correct_answer != tolokers_answer:
+                    fixed_count += 1
 
             print("write {} examples to {}".format(lines_count, filename))
-            print("fixed examples via fixlist {}".format(fixed_count))
-
-            self.write_tolokers_stats(aggr_fail, aggr_pass, aggregation.__name__)
-
-    def get_fixed_answers_count(self):
-        sum = 0
-        for id, task_list in self.tasks.items():
-            for task in task_list:
-                id1, id2, answer = self.get_fixed_answer(task['INPUT:id_left'], task['INPUT:id_right'],
-                                                         task['OUTPUT:result'])
-                if answer != task['OUTPUT:result']:
-                    sum += 1
-        return sum
+            self.write_tolokers_stats(fixed_by_fix_list_count, aggr_fail, aggr_pass, aggregation.__name__)
 
     def print_stats(self):
         task_answer_stats = defaultdict(int)
@@ -158,14 +154,9 @@ class TTolokaStats:
         print("Average overlap: {}".format(mean(list(len(t) for t in self.tasks.values()))))
         print("Found assignments without golden: {}".format(sum(list(len(t) for t in self.tasks.values()))))
         print("Golden task assignments: {}".format(self.golden_task_assignments))
-        print("Fixed assignments via fixlist: {}".format(self.get_fixed_answers_count()))
 
 
 def read_fix_list(filename):
-    if opts.fix_list is None:
-        print("do not generate a production pool without fixlist.tsv and do not commit it!")
-        return {}
-
     fix_list = {}
     possible_answers = ["YES", "NO", "UNK"]
     for l in open(filename):
@@ -186,15 +177,17 @@ def read_fix_list(filename):
 
 
 if __name__ == '__main__':
-    opts, input_tsvs = parse_opts()
-    fixlist = read_fix_list(opts.fix_list)
-    stats = TTolokaStats(fixlist, opts.verbose)
-    for input_tsv in input_tsvs:
-        if opts.input_folder is not None:
-            input_tsv = os.path.join(opts.input_folder, input_tsv)
+    args = parse_args()
+    if args.fix_list is None:
+        print("do not generate a production pool without fixlist.tsv and do not commit it!")
+        fixlist = dict()
+    else:
+        fixlist = read_fix_list(args.fix_list)
+    stats = TTolokaStats(fixlist, args)
+    for input_tsv in args.inputfiles:
         stats.collect_stats(input_tsv)
 
-    stats.write_aggregated_tsv(opts.output_unison_tsv, get_unison_vote)
-    stats.write_aggregated_tsv(opts.output_majority_vote_tsv, get_majority_vote)
+    stats.write_aggregated_tsv(args.output_unison_tsv, get_unison_vote)
+    stats.write_aggregated_tsv(args.output_majority_vote_tsv, get_majority_vote)
 
     stats.print_stats()
