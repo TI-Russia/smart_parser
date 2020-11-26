@@ -73,13 +73,13 @@ source $(dirname $0)/update_common.sh
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
 
-#3.9.  Импорт json в dislosures_db
+#3.9.  Импорт json в dislosures_db (может быть, стоит запускать в 2 потока, а то памяти на мигалке не хватает)
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                --dlrobot-human dlrobot_human.json   \
-               --process-count 3  \
+               --process-count 2  \
                --permanent-links-db permalinks.dbm
 
    python3 $TOOLS/disclosures_site/manage.py copy_person_id
