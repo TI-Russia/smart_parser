@@ -117,6 +117,10 @@ source $(dirname $0)/update_common.sh
 #15 создание sitemap (можно параллельно с индексированием elasticsearch)
   python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
 
+
+#16
+  python3 manage.py build_surname_rank  --settings disclosures.settings.dev
+
 #16 go to prod (migalka), disclosures.ru is offline
     cd /var/www/smart_parser/tools/disclosures_site
     git pull

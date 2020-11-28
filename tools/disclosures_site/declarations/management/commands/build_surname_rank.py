@@ -82,25 +82,26 @@ class Command(BaseCommand):
         return surname_rank_dict, name_rank_dict, all_ids
 
     def write_temp_file(self, all_ids, surname_rank_dict, name_rank_dict, temp_path):
+        def get_value_str(seq):
+            for id, surname, name in seq:
+                yield "({},{},{})".format(id, surname_rank_dict[surname], name_rank_dict[name])
+
         self.logger.info("create temp file {}".format(temp_path))
         with open(temp_path, "w") as outp:
             outp.write("""
-                create temporary table tmp_surname_rank (
+                create temporary table tmp_surname_rank 
+                (
                       `id` int,
                       `surname_rank` int,
-                      `name_rank` int);
+                      `name_rank` int
+                );
                 """)
-            index = 0
-            for id, surname, name in all_ids:
-                if index % 10000 == 0:
-                    if index > 0:
-                        outp.write(";\n")
-                    outp.write("insert into `tmp_surname_rank` values")
-                outp.write("({},{},{})".format(id, surname_rank_dict[surname], name_rank_dict[name]))
-                if index + 1 < len(all_ids):
-                    outp.write(",")
-                index += 1
-            outp.write(";\n")
+            max_items_in_line = 10000
+            for i in range(0, len(all_ids), max_items_in_line):
+                outp.write("insert into tmp_surname_rank values ")
+                outp.write(",".join(get_value_str(all_ids[i:i+max_items_in_line])))
+                outp.write(";\n")
+
             outp.write(
                 """
                 update declarations_section s 
