@@ -98,7 +98,6 @@ class TTolokaStats:
         print("Average Error Rate={}".format(errors_rate_sum / float(all_tolokers_count)))
         print("fixed examples via fixlist {}".format(fixed_by_fix_list_count))
 
-
     def write_aggregated_tsv(self, filename, aggregation):
         aggr_pass = defaultdict(int)
         aggr_fail = defaultdict(int)

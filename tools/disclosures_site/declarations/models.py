@@ -302,6 +302,8 @@ class Section(models.Model):
     department = models.TextField(null=True)
     position = models.TextField(null=True)
     dedupe_score = models.FloatField(blank=True, null=True, default=0.0)
+    surname_rank = models.IntegerField(null=True)
+    name_rank = models.IntegerField(null=True)
 
     @property
     def section_parts(self):

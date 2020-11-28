@@ -102,6 +102,7 @@ source $(dirname $0)/update_common.sh
 
 #12  Коммит статистики
    cd $TOOLS/disclosures_site
+   git pull
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    git commit -m "new statistics" data/statistics.json
    git push

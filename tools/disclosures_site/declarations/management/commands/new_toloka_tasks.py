@@ -50,12 +50,6 @@ def are_compatible_Russian_fios(fio1, fio2):
             )
 
 
-class TolokaTasks:
-    def __init__(self):
-        self.output_lines = []
-        self.auto_negative_examples = []
-        self.auto_positive_examples = []
-
 
 class TDBSqueeze:
     person_coeff = +1  # there is no person.id == 0, so all person ids ar positive and all section ids are negative or zero
@@ -168,6 +162,29 @@ def get_section_year(s):
     return int(s.get('years', s['year']))
 
 
+class TOneTask:
+    verdict_yes = "YES"
+    verdict_no = "NO"
+    verdict_unknown = "UNK"
+
+    def __init__(self, id_left, id_right, json_left=None, json_right=None, verdict=None):
+        self.id_left = id_left
+        self.id_right = id_right
+        self.json_left = json_left
+        self.json_left_str = json.dumps(json_left, ensure_ascii=False)
+        self.json_right = json_right
+        self.json_right_str = json.dumps(json_right, ensure_ascii=False)
+        self.golden = ""
+
+        if self.json_left_str == self.json_right_str:
+            # no difference in data, no sense to show it to tolokers
+            self.verdict = TOneTask.verdict_yes
+        else:
+            self.verdict = verdict
+            if self.verdict is None:
+                self.verdict = TOneTask.verdict_unknown
+
+
 
 class Command(BaseCommand):
     help = 'Создание пар для толоки'
@@ -210,6 +227,10 @@ class Command(BaseCommand):
             nargs='+',
             dest='office_id',
             help='section office id (can me many)',
+        )
+        parser.add_argument(
+            '--pool-to-test-auto-negative',
+            dest='pool_to_test_auto_negative',
         )
 
     def __init__(self, *args, **kwargs):
@@ -356,42 +377,25 @@ class Command(BaseCommand):
             sections.append(section_json)
         return {'sections': sections}
 
-    def add_task_line(self, id1, id2, golden_result, tasks):
+    def get_one_task(self, id1, id2):
         rec1 = self.create_record(id1)
         rec2 = self.create_record(id2)
 
         if (self.check_auto_negative_fio(rec1, rec2) or
                 self.check_auto_negative_office(rec1, rec2)):
-            return False
+            return TOneTask(id1, id2, verdict=TOneTask.verdict_no)
 
         sections1 = self.get_sections(rec1)
         sections2 = self.get_sections(rec2)
         if len(set(sections1).intersection(set(sections2))) > 0:
             self.logger.debug("{} and {} have at least one section in common, ignore it".format(id1, id2))
-            return False
+            return TOneTask(id1, id2, verdict=TOneTask.verdict_no)
 
         p1_json = self.build_section_json_for_toloka(sections1)
         p2_json = self.build_section_json_for_toloka(sections2)
 
         id1, id2, p1_json, p2_json = self.__sort_left_right_json_data(id1, id2, p1_json, p2_json)
-        js1 = json.dumps(p1_json, ensure_ascii=False)
-        js2 = json.dumps(p2_json, ensure_ascii=False)
-
-        if js1 == js2:
-            # no difference in data, no sense to show it to tolokers
-            tasks.auto_positive_examples.append([id1, id2, "YES"])
-            return False
-
-        row = [
-            id1,
-            id2,
-            js1,
-            js2,
-            golden_result
-        ]
-
-        tasks.output_lines.append(row)
-        return True
+        return TOneTask(id1, id2, p1_json, p2_json)
 
     def generate_pairs(self):
         while True:
@@ -416,27 +420,34 @@ class Command(BaseCommand):
             output_file_name = output_file_name[0:-4]
         output_file_name = output_file_name + ".tsv"
         self.logger.info('create file  = {}'.format(output_file_name))
-        tasks = TolokaTasks()
-
+        tasks = list()
+        auto_negative_count = 0
+        auto_positive_count = 0
         for id1, id2 in self.generate_pairs():
             if (id1, id2) in prev_tasks or (id2, id1) in prev_tasks:
                 continue
-            self.add_task_line(id1, id2, "", tasks)
-            if len(tasks.output_lines) >= task_count:
-                break
+            task = self.get_one_task(id1, id2)
+            if task.verdict == TOneTask.verdict_unknown:
+                tasks.append(task)
+                if len(tasks) >= task_count:
+                    break
+            elif task.verdict == TOneTask.verdict_yes:
+                auto_positive_count += 1
+            else:
+                auto_negative_count += 1
 
         golden_count = 0
         for id1, id2, golden_result in goldensets:
-            added = False
             try:
-                added = self.add_task_line(id1, id2, golden_result, tasks)
-            except django.db.utils.IntegrityError as err:
-                pass
-
-            if added:
+                task = self.get_one_task(id1, id2)
+                task.golden = golden_result
+                assert task.verdict == TOneTask.verdict_unknown
+                tasks.append(task)
                 golden_count += 1
                 if golden_count >= gs_task_count:
                     break
+            except django.db.utils.IntegrityError as err:
+                pass
 
         #if golden_count < gs_task_count:
         #    raise Exception("cannot find  enough golden-set examples found {0}, must be at least {1}".format(golden_count,gs_task_count))
@@ -447,16 +458,38 @@ class Command(BaseCommand):
             tsv_writer = csv.writer(out_file, delimiter="\t")
             tsv_writer.writerow(header)
             random.shuffle(tasks.output_lines)  # do not delete it, you can easily forget it in toloka interface
-            for row in tasks.output_lines:
-                tsv_writer.writerow(row)
-        self.logger.info('All tasks count in result TSV: {}'.format(len(tasks.output_lines)))
+            for t in tasks:
+                tsv_writer.writerow([t.id_left, t.id_right, t.json_left_str, t.json_right_str, t.golden])
+
+        self.logger.info('All tasks count in result TSV: {}'.format(len(tasks)))
         self.logger.info('Golden Set tasks count in result TSV: {}'.format(golden_count))
-        self.logger.info(
-            'Auto positive examples (not written to the result file): {}'.format(len(tasks.auto_positive_examples)))
-        self.logger.info(
-            'Auto negative examples (not written to the result file): {}'.format(len(tasks.auto_negative_examples)))
+        self.logger.info('Auto positive examples (not written to the result file): {}'.format(auto_positive_count))
+        self.logger.info('Auto negative examples (not written to the result file): {}'.format(auto_negative_count))
         self.logger.info('Export to TSV completed, do not forget to add new pools {} to the repository.'.format(
             output_file_name))
+
+    def apply_auto_negative_rules(self, test_pool_path):
+        test_data = TToloka.read_toloka_golden_pool(test_pool_path)
+        self.logger.info("check {} cases".format(len(list(test_data.items()))))
+        tn  = 0
+        fn = 0
+        for ((id1, id2), mark) in test_data.items():
+            task = self.get_one_task(id1, id2)
+            if task.verdict == TOneTask.verdict_unknown:
+                surname_rank = task.json_left['sections'][0]['surname_rank']
+                rubric_left = set(s['office_rubric'] for s in task.json_left['sections'])
+                rubric_right = set(s['office_rubric'] for s in task.json_right['sections'])
+                if surname_rank < 300:
+                    if len(rubric_left.intersection(rubric_right)) == 0:
+                        if mark != "NO":
+                            self.logger.info("false negative: {} {}".format(id1, id2))
+                            fn += 1
+                        else:
+                            self.logger.info("true negative: {} {}".format(id1, id2))
+                            tn +=1
+
+        self.logger.info("true negative = {}, false negative = {}".format(tn, fn))
+
 
     def handle(self, *args, **options):
         self.logger.info('Started')
@@ -465,10 +498,13 @@ class Command(BaseCommand):
             return
 
         self.load_data(options)
-        self.new_toloka_tasks(
-            task_count=options.get('pairs_amount'),
-            golden_set_ratio=options.get('goldenset_ratio'),
-            pool_name=options['output_name'],
-            goldensets=self.get_golden_examples(options['goldenset_file'])
-        )
+        if options.get('pool_to_test_auto_negative') is not None:
+            self.apply_auto_negative_rules(options.get('pool_to_test_auto_negative'))
+        else:
+            self.new_toloka_tasks(
+                task_count=options.get('pairs_amount'),
+                golden_set_ratio=options.get('goldenset_ratio'),
+                pool_name=options['output_name'],
+                goldensets=self.get_golden_examples(options['goldenset_file'])
+            )
 

@@ -63,6 +63,12 @@ class Command(BaseCommand):
             help='test pool in toloka tsv format, possible many times',
         )
         parser.add_argument(
+            '--test-only-human-rules',
+            dest='test_only_human_rules',
+            default=False,
+            action="store_true",
+        )
+        parser.add_argument(
             '--dedupe-model-file',
             dest='model_file',
             default="dedupe.info",
@@ -200,6 +206,7 @@ class Command(BaseCommand):
             self.print_roc_points(test_pool_file_name, output_points_file)
             #self.print_roc_points_quick_and_dirty(test_pool_file_name, output_points_file)
 
+
     def handle(self, *args, **options):
 
         self.init_options(options)
@@ -211,5 +218,8 @@ class Command(BaseCommand):
 
         with open(self.options["points_file"], 'w', encoding="utf8") as outf:
             for test_pool in options["test_pool"]:
-                self.process_test(test_pool, outf)
+                if options['test_only_human_rules']:
+                    self.apply_auto_negative_rules()
+                else:
+                    self.process_test(test_pool, outf)
 

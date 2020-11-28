@@ -41,7 +41,11 @@ class ElasticSectionDocument(Document):
         return instance.source_document.office.id
 
     def prepare_region_id(self, instance):
-        return int(instance.source_document.office.region_id)
+        region_id = instance.source_document.office.region_id
+        if region_id  is None:
+            return 0 # there is no sql record with  region_id = 0
+        else:
+            return region_id
 
     def prepare_rubric_id(self, instance):
         return OFFICES.offices[instance.source_document.office.id]['rubric_id']

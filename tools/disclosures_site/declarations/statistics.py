@@ -69,7 +69,7 @@ class TDisclosuresStatisticsHistory:
     def check_statistics(self, prev, curr):
         def check_sum_metric_increase(values_to_sum):
             metric_str = "+".join(values_to_sum)
-            sys.stderr.write("check {} increases...\n")
+            sys.stderr.write("check {} increases...\n".format(metric_str))
             old = sum(prev.metrics[x] for x in values_to_sum)
             new = sum(curr.metrics[x] for x in values_to_sum)
             if old > new:
