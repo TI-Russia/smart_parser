@@ -251,7 +251,7 @@ class Command(BaseCommand):
 
     def write_results_to_file(self, clustered_dupes, dump_stream):
         self.logger.info('{} clusters generated'.format(len(clustered_dupes)))
-        for id1, id2, score1, score2 in get_pairs_from_clusters(clustered_dupes):
+        for id1, id2, score1, score2 in get_pairs_from_clusters(None, clustered_dupes):
             dump_stream.write("\t".join((id1, id2, str(score1), str(score2))) + "\n")
 
     def link_section_to_person(self, section, person, dedupe_score):
@@ -309,7 +309,7 @@ class Command(BaseCommand):
                 self.logger.info('read dedupe settings from {}'.format(sf.name))
                 self.dedupe = dedupe.StaticDedupe(sf, num_cores=self.options['num_cores'])
                 if logging.getLogger().getEffectiveLevel() > 1:
-                    describe_dedupe(self.stdout, self.dedupe)
+                    describe_dedupe(self.logger, self.dedupe)
 
     def cluster_with_dedupe(self):
         if self.options.get("fake_dedupe", False):

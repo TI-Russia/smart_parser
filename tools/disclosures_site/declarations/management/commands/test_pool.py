@@ -5,7 +5,6 @@ import dedupe
 import logging
 import json
 import os
-import sys
 from datetime import datetime
 
 from django.core.management import BaseCommand
@@ -22,15 +21,27 @@ from .dedupe_adapter import \
 ROC_POINTS = list(range(0, 71, 10)) + list(range(71, 100))
 
 
-def process_test_with_threshold(point):
-    self = point['self']
-    with open(self.options["model_file"], 'rb') as sf:
-        dedupe_model = dedupe.StaticDedupe(sf, num_cores=1)
-        clustered_dupes = dedupe_model.match(self.dedupe_objects, point['Threshold'])
-        pairs = get_pairs_from_clusters(clustered_dupes)
-        (metrics, results) = TToloka.calc_metrics(pairs, self.test_data)
-        point.update(metrics)
-        return point, results, clustered_dupes
+
+
+def setup_logging(logfilename="test_pool.log"):
+    logger = logging.getLogger("toloka")
+    logger.setLevel(logging.DEBUG)
+
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if os.path.exists(logfilename):
+        os.remove(logfilename)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(logfilename, encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+    return logger
 
 
 class Command(BaseCommand):
@@ -95,6 +106,7 @@ class Command(BaseCommand):
         self.dedupe_objects = {}
         self.match = []
         self.distinct = []
+        self.logger = setup_logging()
 
     def init_options(self, options):
         self.options = options
@@ -111,9 +123,9 @@ class Command(BaseCommand):
         self.dedupe_objects = {}
         self.match = []
         self.distinct = []
-        pool_to_dedupe(self.test_data, self.dedupe_objects, self.match, self.distinct)
+        pool_to_dedupe(self.logger, self.test_data, self.dedupe_objects, self.match, self.distinct)
 
-        self.log("Read {} objects from DB".format(len(self.dedupe_objects)))
+        self.log("Read {} objects from the input pool".format(len(self.dedupe_objects)))
 
         dump_file_name = self.options["dump_dedupe_objects_file"]
         if dump_file_name:
@@ -123,8 +135,16 @@ class Command(BaseCommand):
                     of.write("\t".join((k, json_value)) + "\n")
 
     def log(self, m):
-        if self.options['verbose'] > 0:
-            self.stdout.write(m)
+        self.logger.debug(m)
+
+    def process_test_with_threshold(self, point):
+        with open(self.options["model_file"], 'rb') as sf:
+            dedupe_model = dedupe.StaticDedupe(sf, num_cores=1)
+            clustered_dupes = dedupe_model.match(self.dedupe_objects, point['Threshold'])
+            pairs = get_pairs_from_clusters(self.logger, clustered_dupes)
+            (metrics, results) = TToloka.calc_metrics(pairs, self.test_data)
+            point.update(metrics)
+            return point, results, clustered_dupes
 
     def print_test_output(self, test_results):
         if self.options.get("test_output") is not None:
@@ -144,24 +164,20 @@ class Command(BaseCommand):
             points.append ({'Threshold': t / 100.0})
 
         for p in points:
-            p['self'] = self
             p['TestName'] = os.path.basename(test_pool_file_name)
 
-        for metrics, _, _ in map(process_test_with_threshold, points):
-            metrics.pop('self')
-            output_points_file.write (json.dumps(metrics) + "\n")
-
+        for metrics, _, _ in map(self.process_test_with_threshold, points):
+            output_points_file.write(json.dumps(metrics) + "\n")
 
     # ignore reweighting inside clusters, use print_roc_points_quick_and_dirty for larger models
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.squareform.html
     def print_roc_points_quick_and_dirty(self, test_pool_file_name, output_points_file):
-        clustered_dupes  = []
         with open(self.options["model_file"], 'rb') as sf:
             dedupe_model = dedupe.StaticDedupe(sf)
             clustered_dupes = dedupe_model.match(self.dedupe_objects, 0)
         for t in ROC_POINTS:
             threshold = t / 100.0
-            pairs = get_pairs_from_clusters(clustered_dupes, threshold=threshold)
+            pairs = get_pairs_from_clusters(self.logger, clustered_dupes, threshold=threshold)
             (metrics, test_results) = TToloka.calc_metrics(pairs, self.test_data)
             self.print_test_output(test_results)
 
@@ -176,10 +192,10 @@ class Command(BaseCommand):
         self.fill_dedupe_data()
         if self.options.get('threshold') is not None:
             threshold = self.options.get('threshold')
-            metrics, test_results, dupes = process_test_with_threshold({'Threshold': threshold, 'self': self})
+            metrics, test_results, dupes = self.process_test_with_threshold({'Threshold': threshold, 'self': self})
             self.print_test_output(test_results)
             metrics.pop('self')
-            self.stdout.write(json.dumps(metrics) + "\n")
+            self.logger.info(json.dumps(metrics) + "\n")
         else:
             self.print_roc_points(test_pool_file_name, output_points_file)
             #self.print_roc_points_quick_and_dirty(test_pool_file_name, output_points_file)
@@ -191,7 +207,7 @@ class Command(BaseCommand):
 
         if self.options.get("verbose") > 0:
             with open(self.options["model_file"], 'rb') as sf:
-                describe_dedupe(sys.stdout, dedupe.StaticDedupe(sf))
+                describe_dedupe(self.logger, dedupe.StaticDedupe(sf))
 
         with open(self.options["points_file"], 'w', encoding="utf8") as outf:
             for test_pool in options["test_pool"]:
