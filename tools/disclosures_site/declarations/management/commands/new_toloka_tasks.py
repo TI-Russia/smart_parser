@@ -50,7 +50,6 @@ def are_compatible_Russian_fios(fio1, fio2):
             )
 
 
-
 class TDBSqueeze:
     person_coeff = +1  # there is no person.id == 0, so all person ids ar positive and all section ids are negative or zero
     section_coeff = -1
@@ -111,9 +110,7 @@ class TDBSqueeze:
                 cnt += 1
         self.logger.info("persons count = {}".format(cnt))
 
-    def build_sections_and_surname_rank(self, surname_to_unified_ids):
-        self.surname_rank.clear()
-        surname_to_initials = defaultdict(set)
+    def build_sections_and(self, surname_to_unified_ids):
         sql = """
                 select s.id as id, s.person_name as person_name  
                 from declarations_section s 
@@ -128,13 +125,8 @@ class TDBSqueeze:
                 surname = fio['family_name'].lower()
                 surname_to_unified_ids[surname].append(TDBSqueeze.section_coeff * s.id)
                 initials = "{} {}".format(fio.get('name', " ")[0].lower(), fio.get('patronymic', " ")[0].lower())
-                surname_to_initials[surname].add(initials)
                 cnt += 1
         self.logger.info("sections count = {}".format(cnt))
-
-        surname_rank_list = sorted(((len(v), k) for k, v in surname_to_initials.items()), reverse=True)
-        self.surname_rank = list(surname for freq, surname in surname_rank_list)
-        self.logger.info("surname count = {}".format(len(self.surname_rank)))
 
     def build_id_list(self, surname_to_unified_ids):
         self.logger.info("build id list")
@@ -154,7 +146,7 @@ class TDBSqueeze:
         self.build_office_stats()
         surname_to_unified_ids = defaultdict(list)
         self.build_persons(surname_to_unified_ids)
-        self.build_sections_and_surname_rank(surname_to_unified_ids)
+        self.build_sections_and(surname_to_unified_ids)
         self.build_id_list(surname_to_unified_ids)
 
 
@@ -239,7 +231,6 @@ class Command(BaseCommand):
         self.db_squeeze = TDBSqueeze(self.logger)
         self.db_squeeze_pickled_file_path = "squeeze.pickle"
         self.region_id_to_name = self.read_regions()
-
 
     def read_regions(self):
         region_id_to_name = dict()
@@ -327,34 +318,15 @@ class Command(BaseCommand):
             return True
         return False
 
-    # one year, one office, one fio, different incomes -> different people
-    def check_auto_negative_office(self, rec1, rec2):
-        try:
-            if rec1.person_name != rec2.person_name:
-                return False
-            sections1 = rec1.get_sections()
-            sections2 = rec2.get_sections()
-            if len(sections1) != 1 or len(sections2) != 1:
-                return False
-
-            if sections1[0].document.income_year != sections2[0].document.income_year:
-                return False
-
-            if sections1[0].document.office.name != sections2[0].document.office.name:
-                return False
-
-            income1 = int(sections1[0].income_set.filter(relative=None).first().size / 100)
-            income2 = int(sections2[0].income_set.filter(relative=None).first().size / 100)
-            if income1 == income2:
-                return False
-
-            self.logger.debug(
-                'auto negative example {}, incomes {}  and {} one year, one office, one fio, different incomes -> different people'.format(
-                    rec1.person_name,
-                    income1,
-                    income2))
-        except:
-            return False  # no incomes
+    def check_auto_negative_freq_fio(self, rec1, rec2):
+        if isinstance(rec1, models.Section) and isinstance(rec2, models.Section):
+            if rec1.surname_rank < 300 and (rec1.name_rank < 200 or rec2.name_rank < 200):
+                if rec1.source_document.office.rubric_id != rec2.source_document.office.rubric_id:
+                    self.logger.debug("section {} and secion {} ({}) are filtered out by "
+                                      "rule check_auto_negative_freq_fio".format(
+                        rec1.id, rec2.id, rec1.person_name))
+                    return True
+        return False
 
     def get_sections(self, record):
         if isinstance(record, models.Person):
@@ -363,8 +335,6 @@ class Command(BaseCommand):
             return [record]
 
     def build_section_json_for_toloka(self, section_sql_records):
-        surname = resolve_fullname(section_sql_records[0].person_name)['family_name'].lower()
-        surname_rank = self.db_squeeze.surname_rank.index(surname)
         sections = list()
         for s in section_sql_records:
             section_json = get_section_json(s)
@@ -373,29 +343,29 @@ class Command(BaseCommand):
             office = models.Office.objects.get(id=office_id)
             section_json['office_rubric'] = get_russian_rubric_str(office.rubric_id)
             section_json['office_region'] = self.region_id_to_name.get(office.region_id, "")
-            section_json['surname_rank'] = surname_rank
+            section_json['surname_rank'] = s.surname_rank
+            section_json['name_rank'] = s.name_rank
             sections.append(section_json)
         return {'sections': sections}
 
     def get_one_task(self, id1, id2):
         rec1 = self.create_record(id1)
         rec2 = self.create_record(id2)
-
-        if (self.check_auto_negative_fio(rec1, rec2) or
-                self.check_auto_negative_office(rec1, rec2)):
-            return TOneTask(id1, id2, verdict=TOneTask.verdict_no)
-
         sections1 = self.get_sections(rec1)
         sections2 = self.get_sections(rec2)
-        if len(set(sections1).intersection(set(sections2))) > 0:
-            self.logger.debug("{} and {} have at least one section in common, ignore it".format(id1, id2))
-            return TOneTask(id1, id2, verdict=TOneTask.verdict_no)
-
         p1_json = self.build_section_json_for_toloka(sections1)
         p2_json = self.build_section_json_for_toloka(sections2)
-
         id1, id2, p1_json, p2_json = self.__sort_left_right_json_data(id1, id2, p1_json, p2_json)
-        return TOneTask(id1, id2, p1_json, p2_json)
+        task = TOneTask(id1, id2, p1_json, p2_json)
+
+        if (self.check_auto_negative_fio(rec1, rec2) or
+                self.check_auto_negative_freq_fio(rec1, rec2)):
+            task.verdict = TOneTask.verdict_no
+
+        if len(set(sections1).intersection(set(sections2))) > 0:
+            self.logger.debug("{} and {} have at least one section in common, ignore it".format(id1, id2))
+            task.verdict = TOneTask.verdict_no
+        return task
 
     def generate_pairs(self):
         while True:
@@ -441,9 +411,9 @@ class Command(BaseCommand):
             try:
                 task = self.get_one_task(id1, id2)
                 task.golden = golden_result
-                assert task.verdict == TOneTask.verdict_unknown
-                tasks.append(task)
-                golden_count += 1
+                if task.verdict == TOneTask.verdict_unknown:
+                    tasks.append(task) # old golden tasks can banned by new auto rules
+                    golden_count += 1
                 if golden_count >= gs_task_count:
                     break
             except django.db.utils.IntegrityError as err:
@@ -457,7 +427,7 @@ class Command(BaseCommand):
                       TToloka.JSON_LEFT, TToloka.JSON_RIGHT, TToloka.GOLDEN]
             tsv_writer = csv.writer(out_file, delimiter="\t")
             tsv_writer.writerow(header)
-            random.shuffle(tasks.output_lines)  # do not delete it, you can easily forget it in toloka interface
+            random.shuffle(tasks)  # do not delete it, you can easily forget it in toloka interface
             for t in tasks:
                 tsv_writer.writerow([t.id_left, t.id_right, t.json_left_str, t.json_right_str, t.golden])
 
@@ -471,15 +441,16 @@ class Command(BaseCommand):
     def apply_auto_negative_rules(self, test_pool_path):
         test_data = TToloka.read_toloka_golden_pool(test_pool_path)
         self.logger.info("check {} cases".format(len(list(test_data.items()))))
-        tn  = 0
+        tn = 0
         fn = 0
         for ((id1, id2), mark) in test_data.items():
             task = self.get_one_task(id1, id2)
             if task.verdict == TOneTask.verdict_unknown:
                 surname_rank = task.json_left['sections'][0]['surname_rank']
+                name_rank = task.json_left['sections'][0]['name_rank']
                 rubric_left = set(s['office_rubric'] for s in task.json_left['sections'])
                 rubric_right = set(s['office_rubric'] for s in task.json_right['sections'])
-                if surname_rank < 300:
+                if surname_rank < 300 and name_rank < 200:
                     if len(rubric_left.intersection(rubric_right)) == 0:
                         if mark != "NO":
                             self.logger.info("false negative: {} {}".format(id1, id2))
@@ -489,7 +460,6 @@ class Command(BaseCommand):
                             tn +=1
 
         self.logger.info("true negative = {}, false negative = {}".format(tn, fn))
-
 
     def handle(self, *args, **options):
         self.logger.info('Started')

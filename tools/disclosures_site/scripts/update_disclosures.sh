@@ -107,7 +107,7 @@ source $(dirname $0)/update_common.sh
    git commit -m "new statistics" data/statistics.json
    git push
 
-#13
+#13 (13-16) can be run in parallel
  cd $DLROBOT_FOLDER
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
@@ -117,9 +117,8 @@ source $(dirname $0)/update_common.sh
 #15 создание sitemap (можно параллельно с индексированием elasticsearch)
   python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
 
-
 #16
-  python3 manage.py build_surname_rank  --settings disclosures.settings.dev
+  python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
 #16 go to prod (migalka), disclosures.ru is offline
     cd /var/www/smart_parser/tools/disclosures_site
@@ -167,7 +166,8 @@ source $(dirname $0)/update_common.sh
      ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
 
 
-#19  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком
+#19  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
+    cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/send_source_documents_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER
 

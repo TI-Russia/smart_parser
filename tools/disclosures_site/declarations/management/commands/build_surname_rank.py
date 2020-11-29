@@ -51,7 +51,7 @@ class Command(BaseCommand):
         if fio is None:
             return None, None
         surname = fio['family_name'].lower()
-        name = "{} {}".format(fio.get('name', " ")[0].lower(), fio.get('patronymic', " ")[0].lower())
+        name = "{} {}".format(fio.get('name', " ").lower(), fio.get('patronymic', " ").lower())
         return surname, name
 
     def build_dicts(self):
@@ -67,8 +67,6 @@ class Command(BaseCommand):
                 surname_to_name[surname].add(name)
                 name_to_surname[name].add(surname)
                 cnt += 1
-                #if cnt > 10000:
-                #    break
         self.logger.info("processed {} sections".format(cnt))
 
         surname_rank_list = sorted(((len(v), k) for k, v in surname_to_name.items()), reverse=True)
