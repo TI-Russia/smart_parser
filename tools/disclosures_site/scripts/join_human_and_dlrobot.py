@@ -6,7 +6,7 @@ import argparse
 import hashlib
 import logging
 from collections import defaultdict
-from robots.common.robot_project import TRobotProject
+from common.robot_project import TRobotProject
 
 
 def parse_args():

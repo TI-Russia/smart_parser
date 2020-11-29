@@ -1,5 +1,5 @@
 from declarations.input_json import TSourceDocument, TDeclaratorReference,  TDlrobotHumanFile, TIntersectionStatus
-from robots.common.archives import dearchive_one_archive
+from common.archives import dearchive_one_archive
 
 import pymysql
 import os

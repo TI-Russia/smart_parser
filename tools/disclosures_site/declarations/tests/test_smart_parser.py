@@ -15,7 +15,7 @@ class SmartParserServerForTesting:
         if os.path.exists(self.workdir):
             shutil.rmtree(self.workdir)
         os.mkdir(self.workdir)
-        tool_dir = os.path.join(os.path.dirname(__file__), "../../../robots/dlrobot/scripts/cloud")
+        tool_dir = os.path.join(os.path.dirname(__file__), "../../../dlrobot/scripts/cloud")
         server_script = os.path.join(tool_dir, "smart_parser_cache.py")
         assert os.path.exists (server_script)
         self.server = subprocess.Popen(

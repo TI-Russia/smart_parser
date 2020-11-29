@@ -8,8 +8,8 @@ import hashlib
 import os
 import queue
 import json
-from robots.common.archives import dearchive_one_archive, is_archive_extension
-from robots.common.content_types import DEFAULT_PDF_EXTENSION
+from common.archives import dearchive_one_archive, is_archive_extension
+from common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
