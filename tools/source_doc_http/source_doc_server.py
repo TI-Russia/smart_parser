@@ -34,6 +34,7 @@ def parse_args():
     parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
     parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="source_doc_server.log")
     parser.add_argument("--data-folder",  dest='data_folder', required=False, default=".")
+    args.max_bin_file_size = None
 
     args = parser.parse_args()
     if args.server_address is None:
@@ -43,29 +44,44 @@ def parse_args():
 
 class TSourceDocHTTPServer(http.server.HTTPServer):
     header_repeat_max_len = 20
-    max_bin_file_size = 10* (2**30)
 
     def get_bin_file_path(self, i):
         return os.path.join(self.args.data_folder, "{}.bin".format(i))
 
     def __init__(self, args):
         self.args = args
+        self.max_bin_file_size = self.args.max_bin_file_size
+        if self.max_bin_file_size is None:
+            self.max_bin_file_size = 10 * (2 ** 30)
         self.logger =  setup_logging(args.log_file_name)
+        self.stats = None
+        self.src_doc_params = None
+        self.files = list()
+        self.load_from_disk()
+        host, port = self.args.server_address.split(":")
+        self.logger.debug("start server on {}:{}".format(host, int(port)))
+        try:
+            super().__init__((host, int(port)), TSourceDocRequestHandler)
+        except Exception as exp:
+            self.logger.error(exp)
+            raise
+
+    def load_from_disk(self):
         self.stats = {
             'bin_files_count': 1,
             'all_file_size': 0,
             'source_doc_count': 0
         }
-        assert  os.path.exists(args.data_folder)
-        dbm_path = os.path.join(args.data_folder, "header.dbm")
+        assert os.path.exists(self.args.data_folder)
+        dbm_path = os.path.join(self.args.data_folder, "header.dbm")
         if os.path.exists(dbm_path):
             self.src_doc_params = dbm.gnu.open(dbm_path, "ws")
             self.stats = json.loads(self.src_doc_params.get('stats'))
         else:
             self.logger.info("create new file {}".format(dbm_path))
-            self.src_doc_params = dbm.gnu.open(dbm_path,"cs")
+            self.src_doc_params = dbm.gnu.open(dbm_path, "cs")
 
-        self.files = list()
+        self.files.clear()
         for i in range(self.stats['bin_files_count'] - 1):
             fp = open(self.get_bin_file_path(i), "rb")
             assert fp is not None
@@ -75,13 +91,12 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         assert fp is not None
         self.files.append(fp)
 
-        host, port = self.args.server_address.split(":")
-        self.logger.debug("start server on {}:{}".format(host, int(port)))
-        try:
-            super().__init__((host, int(port)), TSourceDocRequestHandler)
-        except Exception as exp:
-            self.logger.error(exp)
-            raise
+    def close_files(self):
+        for f in self.files:
+            self.logger.debug("close {}".format(f.name))
+            f.close()
+        self.files.clear()
+        self.src_doc_params.close()
 
     def get_source_document(self, sha256):
         file_info = self.src_doc_params.get(sha256)
@@ -126,12 +141,15 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         if self.files[-1].tell() > self.max_bin_file_size:
             self.create_new_bin_file()
         self.write_repeat_header_to_bin_file(file_bytes, file_extension)
+        start_file_pos = self.files[-1].tell()
+        self.files[-1].write(file_bytes)
+        self.files[-1].flush()
         self.src_doc_params[sha256] = "{};{};{};{}".format(
             len(self.files) - 1,
-            self.files[-1].tell(),
+            start_file_pos,
             len(file_bytes),
             file_extension)
-        self.files[-1].write(file_bytes)
+
         self.logger.debug("put source document {} to bin file {}".format(sha256, len(self.files) - 1 ))
         self.update_stats(len(file_bytes))
 
@@ -142,7 +160,6 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
 class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
 
     timeout = 10*60
-    HTTP_SERVER = None
 
     def parse_cgi(self, query_components):
         query = urllib.parse.urlparse(self.path).query
@@ -157,7 +174,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def send_error_wrapper(self, message, http_code=http.HTTPStatus.BAD_REQUEST, log_error=True):
         if log_error:
-            self.HTTP_SERVER.logger.error(message)
+            self.server.logger.error(message)
         http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
 
     def process_get_source_document(self):
@@ -170,7 +187,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_error_wrapper('sha256 not in cgi', log_error=True)
             return
 
-        file_data, file_extension = self.HTTP_SERVER.get_source_document(query_components['sha256'])
+        file_data, file_extension = self.server.get_source_document(query_components['sha256'])
         if file_data is None:
             self.send_error_wrapper("not found", http_code=http.HTTPStatus.NOT_FOUND, log_error=True)
             return
@@ -190,14 +207,14 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             elif path == "/stats":
                 self.send_response(200)
                 self.end_headers()
-                stats = json.dumps(self.HTTP_SERVER.get_stats()) + "\n"
+                stats = json.dumps(self.server.get_stats()) + "\n"
                 self.wfile.write(stats.encode('utf8'))
             elif path == "/get_source_document":
                 self.process_get_source_document()
             else:
                 self.send_error_wrapper("unsupported action", log_error=False)
         except Exception as exp:
-            self.HTTP_SERVER.logger.error(exp)
+            self.server.logger.error(exp)
             return
 
 
@@ -214,7 +231,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             return
         file_length = int(file_length)
 
-        self.HTTP_SERVER.logger.debug(
+        self.server.logger.debug(
             "start reading file {} file size {} from {}".format(self.path, file_length, self.client_address[0]))
 
         try:
@@ -224,7 +241,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            self.HTTP_SERVER.save_source_document(file_bytes, file_extension)
+            self.server.save_source_document(file_bytes, file_extension)
         except Exception as exp:
             self.send_error_wrapper('writing failed: {}'.format(str(exp)))
             return
@@ -235,13 +252,13 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     args = parse_args()
-    TSourceDocRequestHandler.HTTP_SERVER = TSourceDocHTTPServer(args)
+    server = TSourceDocHTTPServer(args)
     try:
-        TSourceDocRequestHandler.HTTP_SERVER.serve_forever()
+        server.serve_forever()
     except KeyboardInterrupt:
-        TSourceDocRequestHandler.HTTP_SERVER.logger.info("ctrl+c received")
+        server.logger.info("ctrl+c received")
     except Exception as exp:
-        TSourceDocRequestHandler.HTTP_SERVER.logger.error("general exception: {}".format(exp))
+        server.logger.error("general exception: {}".format(exp))
     finally:
         sys.exit(1)
 
